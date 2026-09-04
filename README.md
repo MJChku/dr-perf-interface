@@ -19,14 +19,24 @@ bin/drperf ./myapp         # or: bin/drperf python app.py
 ```
 cost per call, in instructions
 
-  handle = 1,333.7*q + 362.4   (inflight: no effect; 12% of the cost follows no declared state)
-  ingest = 152*batch + 15   (bytes: moved in step with batch)
-  parse  = 5*len + 486   (entries: did not vary)
+  handle = 1,336.7*q + 363.4   (inflight: no effect; 12% of the cost follows no declared state)
+      q: 504.7 parse [base], 287 __printf_buffer [libc.so.6], 95 __printf_buffer_write [libc.so.6]
+      constant: 170.8 parse [base], 81.5 __memcpy_avx_unaligned_erms [libc.so.6]
+      unexplained: 2,053.1 parse [base]
+  ingest = 152*batch + 16   (bytes: moved in step with batch)
+      batch: 152 ingest [base]
+      constant: 11 ingest [base], 2 _init [base], 2 perfmark_end [libperfmark.so]
+  parse  = 5*len + 487   (entries: did not vary)
+      len: 5 parse [base]
+      constant: 482 parse [base]
 
 relations
 
   handle.inflight = cum(ingest.batch) - cum(handle.q)   (holds at all 57 calls)
 ```
+
+Each term is broken down into the functions it comes from, largest first, so a
+coefficient that moves points at the code that moved it.
 
 That is the whole interface: `drperf` followed by the command you would have
 run anyway. No options.
@@ -70,7 +80,8 @@ Outside DynamoRIO the markers are empty functions, one call each.
   line says why it has none: it never varied, it moved in step with another
   state, or the cost did not follow it.
 - Cost that follows no declared state is reported as a percentage and left out
-  of the formula, never smeared into a coefficient.
+  of the formula, never smeared into a coefficient. It is broken down by
+  function too, under `unexplained`.
 - `cum(R.s)`, `last(R.s)`, `count(R)` and `cumend(R.s)` are counters over the
   triggers that began (or ended) before the one being explained. A relation is
   reported only if it holds exactly at every trigger.

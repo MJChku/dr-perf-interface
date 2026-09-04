@@ -24,6 +24,21 @@ import derive   # noqa: E402
 import runner   # noqa: E402
 
 
+def short(sym, n=44):
+    return sym if len(sym) <= n else sym[:n - 1] + "\u2026"
+
+
+def blame(entries, total, top=3, floor=0.05):
+    """The few functions that carry a term, largest first; entries too small to
+    matter are left out rather than padding the line."""
+    out = []
+    for (mod, sym), v in sorted(entries.items(), key=lambda kv: -abs(kv[1]))[:top]:
+        if total and abs(v) < floor * abs(total):
+            break
+        out.append("%s %s [%s]" % (derive.fmt(v), short(sym), mod))
+    return out
+
+
 def cost_lines(rs, keys, slots, recs):
     """One line per region: name = a*state + ... + constant."""
     out = []
@@ -39,11 +54,18 @@ def cost_lines(rs, keys, slots, recs):
             continue
         regimes = derive.derive(vecs, slots)
         if not regimes:
-            tot = sum(sum(c for b, c in vecs[v].items()
-                          if not derive.is_runtime(slots.get(b, ("?", "?", None)))) * n
-                      for v, n in trig.items())
+            tot, by_sym = 0.0, {}
+            for v, n in trig.items():
+                for b, c in vecs[v].items():
+                    sym = slots.get(b, ("?", "?", None))[:2]
+                    if derive.is_runtime(sym):
+                        continue
+                    tot += c * n
+                    by_sym[sym] = by_sym.get(sym, 0.0) + c * n / max(calls, 1)
+            per_call = tot / max(calls, 1)
             heads.append(R)
-            bodies.append((derive.fmt(tot / max(calls, 1)), ""))
+            b = blame(by_sym, per_call)
+            bodies.append((derive.fmt(per_call), "", ["      %s" % ", ".join(b)] if b else []))
             continue
         for r in regimes:
             r.c -= inside + nested * (inside + outside)
@@ -74,14 +96,31 @@ def cost_lines(rs, keys, slots, recs):
             if share > 0.05:
                 says.append("%.0f%% of the cost follows no declared state" % (100 * share))
             note = ("   (" + "; ".join(says) + ")") if says else ""
+            # which functions the coefficients and the constant come from
+            extra = []
+            for j, nm in enumerate(names):
+                if nm not in kept:
+                    continue
+                b = blame(r.by_sym_a[j], r.a[j])
+                if b:
+                    extra.append("      %s: %s" % (nm, ", ".join(b)))
+            b = blame(r.by_sym_c, r.c)
+            if b:
+                extra.append("      constant: %s" % ", ".join(b))
+            if share > 0.05:
+                mean_irr = sum(r.irr.values()) / len(r.values) if r.values else 0.0
+                b = blame(r.by_sym_irr, mean_irr)
+                if b:
+                    extra.append("      unexplained: %s" % ", ".join(b))
             heads.append(head)
             const = max(r.c, 0.0)
             if not terms or const >= 1:
                 terms = terms + [derive.fmt(const)]
-            bodies.append((" + ".join(terms), note))
+            bodies.append((" + ".join(terms), note, extra))
     w = max([len(h) for h in heads] + [1])
-    for h, (b, note) in zip(heads, bodies):
+    for h, (b, note, extra) in zip(heads, bodies):
         out.append("  %-*s = %s%s" % (w, h, b, note))
+        out.extend(extra)
     return out
 
 
