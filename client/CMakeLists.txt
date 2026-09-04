@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.14)
+project(drperf C CXX)
+if(NOT DEFINED DynamoRIO_DIR)
+  set(DynamoRIO_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/dynamorio/cmake")
+endif()
+find_package(DynamoRIO 11.3 REQUIRED)
+add_library(drperf SHARED drperf.c)
+configure_DynamoRIO_client(drperf)
+foreach(ext drmgr drreg drwrap drutil drx drsyms drcontainers)
+  use_DynamoRIO_extension(drperf ${ext})
+endforeach()
+set_target_properties(drperf PROPERTIES
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../build")

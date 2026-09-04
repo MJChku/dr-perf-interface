@@ -1,0 +1,18 @@
+[package]
+name = "rust_delta"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+perfmark = { path = "../../perfmark/rust" }
+
+[features]
+# The "delta": a validation pass added to bind_batch.  Build both variants:
+#   cargo build --release                       -> base
+#   cargo build --release --features delta      -> head
+delta = []
+
+[profile.release]
+debug = 1
+strip = false

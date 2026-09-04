@@ -1,0 +1,13 @@
+[package]
+name = "rust_suite"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+description = "drperf test suite on Rust: one binary per case, see REPORT in the scratchpad"
+
+[dependencies]
+perfmark = { path = "../../perfmark/rust" }
+
+[profile.release]
+debug = 1
+strip = false

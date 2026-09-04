@@ -1,0 +1,38 @@
+# build products
+build/
+client/build/
+perfmark/libperfmark.so
+examples/*/bin/
+examples/*/target/
+examples/*/target-delta/
+**/__pycache__/
+*.pyc
+*.o
+*.so
+
+# profiling output
+out/
+*.json.trace
+*.json.blocks
+*.json.slots
+
+# third-party trees fetched or built locally (see third_party/*.sh)
+third_party/dynamorio
+third_party/DynamoRIO-*/
+third_party/*.tar.gz
+third_party/vllm-cpu/vllm/
+third_party/vllm-cpu/.venv/
+third_party/vllm-cpu/*.log
+third_party/hf/
+
+# working notes for the coding agent, not part of the tool
+CLAUDE.md
+.claude/
+
+# internal brief for the coding session, not part of the tool
+TASK.md
+
+# development front end, not part of the released tool
+bin/drperf-dev
+lib/symcost.py
+perfmark/python/perfmark_boot.py

@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""drperf COMMAND [ARGS...]
+
+Run a program under DynamoRIO and print, for each marked region, the cost
+function of the states it declared, and the relations between those states
+across regions.  Nothing else, and no options.
+
+    drperf ./myapp
+    drperf python app.py
+
+Cost is instructions per call, counted exactly on every thread that ran while
+the region was open.  A coefficient appears only for a state that varied in
+this run; a state that did not vary is part of the constant.
+"""
+import os
+import shutil
+import sys
+import tempfile
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, os.path.join(ROOT, "lib"))
+import derive   # noqa: E402
+import runner   # noqa: E402
+
+
+def cost_lines(rs, keys, slots, recs):
+    """One line per region: name = a*state + ... + constant."""
+    out = []
+    regions = sorted(set(k["region"] for k in keys.values()
+                         if not k["region"].startswith(runner.CALIB) and ":" not in k["region"]
+                         and k["region"] != "_perfmark_capture"))
+    inside, outside = runner.marker_cost(rs)
+    heads, bodies = [], []
+    for R in regions:
+        vecs, trig, names, nested = derive.inclusive_vectors(keys, R, recs)
+        calls = sum(trig.values())
+        if not vecs:
+            continue
+        regimes = derive.derive(vecs, slots)
+        if not regimes:
+            tot = sum(sum(c for b, c in vecs[v].items()
+                          if not derive.is_runtime(slots.get(b, ("?", "?", None)))) * n
+                      for v, n in trig.items())
+            heads.append(R)
+            bodies.append((derive.fmt(tot / max(calls, 1)), ""))
+            continue
+        for r in regimes:
+            r.c -= inside + nested * (inside + outside)
+            terms, kept, no_effect, tied, fixed = [], [], [], [], []
+            for j, nm in enumerate(names):
+                if len(set(v[j] for v in r.values)) <= 1:
+                    fixed.append(nm)          # never changed: nothing to measure
+                elif j in r.dependent:
+                    tied.append(nm)           # moved in step with another state
+                elif abs(r.a[j]) < 1e-12:
+                    no_effect.append(nm)      # varied, and the cost did not follow
+                else:
+                    terms.append("%s*%s" % (derive.fmt(r.a[j]), nm))
+                    kept.append(nm)
+            head = R
+            if len(regimes) > 1 and names:
+                bound = r.values[-1][0] if r is regimes[0] else r.values[0][0]
+                head = "%s when %s %s %s" % (R, names[0], "<=" if r is regimes[0] else ">=", derive.fmt(bound))
+            # every declared state is accounted for, whether or not it is in the formula
+            says = []
+            if no_effect:
+                says.append("%s: no effect" % ", ".join(no_effect))
+            if tied:
+                says.append("%s: moved in step with %s" % (", ".join(tied), " and ".join(kept) or "the rest"))
+            if fixed:
+                says.append("%s: did not vary" % ", ".join(fixed))
+            share = r.irr_share()
+            if share > 0.05:
+                says.append("%.0f%% of the cost follows no declared state" % (100 * share))
+            note = ("   (" + "; ".join(says) + ")") if says else ""
+            heads.append(head)
+            const = max(r.c, 0.0)
+            if not terms or const >= 1:
+                terms = terms + [derive.fmt(const)]
+            bodies.append((" + ".join(terms), note))
+    w = max([len(h) for h in heads] + [1])
+    for h, (b, note) in zip(heads, bodies):
+        out.append("  %-*s = %s%s" % (w, h, b, note))
+    return out
+
+
+def strip_aliases(e):
+    """Remove the " (= other, names)" groups, matching parentheses."""
+    while " (= " in e:
+        i = e.index(" (= ")
+        depth, j = 0, i + 1
+        while j < len(e):
+            if e[j] == "(":
+                depth += 1
+            elif e[j] == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            j += 1
+        e = e[:i] + e[j + 1:]
+    return e
+
+
+def tidy(e):
+    """Readable relation: aliases dropped, a positive term first."""
+    e = strip_aliases(e).strip()
+    parts, cur = [], ""
+    for tok in e.split(" "):
+        if tok in ("+", "-") and cur:
+            parts.append(cur.strip())
+            cur = tok + " "
+        else:
+            cur += tok + " "
+    if cur.strip():
+        parts.append(cur.strip())
+    pos = [p for p in parts if not p.startswith("-")]
+    neg = [p for p in parts if p.startswith("-")]
+    parts = pos + neg
+    out = ""
+    for i, p in enumerate(parts):
+        p = p[2:].strip() if p.startswith("+ ") else p
+        if i == 0:
+            out = p.lstrip("+ ").strip()
+        else:
+            out += " " + (p if p.startswith("-") else "+ " + p.lstrip("+ ").strip())
+    return " ".join(out.split())
+
+
+def trivial(t, R, f):
+    """True for a relation that only restates how often the region ran: it
+    refers to its own state and otherwise only to call counts."""
+    own = "%s.%s)" % (R, f)
+    if own not in t:
+        return False
+    others = [w for w in t.replace("+", " ").replace("-", " ").split()
+              if "(" in w and own not in w]
+    return all(w.startswith("count(") for w in others)
+
+
+def relation_lines(recs):
+    """Exact relations between the states of different regions."""
+    # the cumulative features are built by walking the trigger stream, so the
+    # records must be in the order the markers fired
+    recs = sorted(recs, key=lambda r: (r.get("run", 0), r["seq"]))
+    regions, states = runner.trace_regions(recs, False)
+    out = []
+    for R in regions:
+        for f in states[R]:
+            names, rows = runner.feature_rows(recs, R, f, False)
+            ys = [y for _, y in rows]
+            if len(rows) < 3 or len(set(ys)) <= 1:
+                continue
+            for e in runner.exact_relations(names, rows, 3):
+                t = tidy(e)
+                if trivial(t, R, f):
+                    continue
+                out.append("  %s.%s = %s   (holds at all %d calls)" % (R, f, t, len(rows)))
+                break
+    return out
+
+
+def main(argv):
+    if not argv or argv[0] in ("-h", "--help"):
+        sys.stderr.write(__doc__)
+        return 2
+    tmp = tempfile.mkdtemp(prefix="drperf.")
+    try:
+        out = os.path.join(tmp, "run")
+        rc, output, files = runner.run(argv, out)
+        if rc != 0 or not files:
+            sys.stderr.write(output)
+            return rc or 1
+        rs = runner.load_runs(out)
+        keys, slots = runner.blocks_of_set(rs)
+        if not keys:
+            sys.stderr.write("drperf: the program ran, but no marked region was reached.\n")
+            return 1
+        slots = runner.demangle_slots(slots)
+        recs = [r for r in runner.load_traces_all(rs) if not r["region"].startswith(runner.CALIB)]
+        costs = cost_lines(rs, keys, slots, recs)
+        rels = relation_lines(recs)
+        print("cost per call, in instructions")
+        print()
+        for line in costs:
+            print(line)
+        if rels:
+            print()
+            print("relations")
+            print()
+            for line in rels:
+                print(line)
+        return 0
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
