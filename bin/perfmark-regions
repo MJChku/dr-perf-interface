@@ -1,0 +1,322 @@
+#!/usr/bin/env python3
+"""Comment perfmark regions out of Python sources, and back in, losslessly.
+
+A `with region(...)` marker costs about 1.4 us per entry through the
+`@contextmanager` shim and roughly 0.4 us through any cheaper one, because the
+statement still runs. When nobody is profiling, the only way to pay nothing is
+to not have the statement: this rewrites
+
+    with region("name", n=len(x)):
+        body
+        more
+
+into
+
+    # perfmark:off with region("name", n=len(x)):
+    body
+    more
+    # perfmark:end
+
+and back. `off` dedents the body, `on` re-indents it, and the end sentinel is
+what makes `on` unambiguous. The transform is checked by round-tripping: `off`
+followed by `on` must reproduce the file byte for byte, and every rewritten
+file must still parse.
+
+    bin/perfmark-regions off  path/to/src    # markers out, zero runtime cost
+    bin/perfmark-regions on   path/to/src    # markers back in
+    bin/perfmark-regions status path/to/src  # how many are on, off, skipped
+    bin/perfmark-regions check path/to/src   # prove the round trip on every file
+
+Regions it refuses to touch, reporting them instead of guessing: a `with` that
+holds another context manager beside the region, and a body containing a
+multi-line string, whose contents dedenting would silently rewrite.
+"""
+
+import argparse
+import ast
+import io
+import pathlib
+import re
+import shutil
+import sys
+import tokenize
+
+OFF = "# perfmark:off "
+END = "# perfmark:end"
+INDENT = 4
+
+
+def _is_region_call(node):
+    call = node
+    if not isinstance(call, ast.Call):
+        return False
+    func = call.func
+    if isinstance(func, ast.Name):
+        return func.id == "region"
+    return isinstance(func, ast.Attribute) and func.attr == "region"
+
+
+def _multiline_string_lines(src):
+    """Line numbers covered by a string token that spans lines."""
+    spans = set()
+    try:
+        for tok in tokenize.generate_tokens(io.StringIO(src).readline):
+            if tok.type == tokenize.STRING and tok.end[0] > tok.start[0]:
+                spans.update(range(tok.start[0], tok.end[0] + 1))
+    except (tokenize.TokenError, IndentationError):
+        pass
+    return spans
+
+
+def lines_of(src):
+    return src.splitlines(keepends=True)
+
+
+def turn_off(src, path="<src>"):
+    """Comment every region header out and dedent its body. Returns (src, n, skipped)."""
+    skipped = []
+    changed = 0
+    while True:
+        tree = ast.parse(src)
+        target = None
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.With):
+                continue
+            items = node.items
+            if not any(_is_region_call(i.context_expr) for i in items):
+                continue
+            key = (node.lineno, node.col_offset)
+            if key in {s[0] for s in skipped}:
+                continue
+            if len(items) != 1 or items[0].optional_vars is not None:
+                skipped.append((key, f"{path}:{node.lineno}: region shares its `with`"))
+                continue
+            target = node
+            break
+        if target is None:
+            return src, changed, [s[1] for s in skipped]
+
+        lines = lines_of(src)
+        head_start = target.lineno - 1
+        # The header ends at the line whose colon opens the block, which is not
+        # always the line before the first statement: a comment may sit between
+        # them, and commenting that out too would be noise.
+        depth = 0
+        head_end = head_start
+        for offset, line in enumerate(lines_of(src)[head_start:], start=head_start):
+            depth += line.count("(") + line.count("[") + line.count("{")
+            depth -= line.count(")") + line.count("]") + line.count("}")
+            if depth <= 0 and line.rstrip().endswith(":"):
+                head_end = offset + 1
+                break
+        body_start = head_end
+        body_end = target.end_lineno  # exclusive, 0-based end
+        if _multiline_string_lines(src) & set(range(body_start + 1, body_end + 1)):
+            skipped.append(
+                (
+                    (target.lineno, target.col_offset),
+                    f"{path}:{target.lineno}: body holds a multi-line string",
+                )
+            )
+            continue
+
+        pad = " " * target.col_offset
+        # keep everything after the statement's own indent, so a header that
+        # spans lines keeps its continuation indentation and `on` restores the
+        # original bytes
+        head = [
+            pad + OFF + (line[len(pad) :] if line.startswith(pad) else line.lstrip())
+            for line in lines[head_start:body_start]
+        ]
+        body = []
+        for line in lines[body_start:body_end]:
+            if line.strip():
+                if not line.startswith(pad + " " * INDENT):
+                    skipped.append(
+                        (
+                            (target.lineno, target.col_offset),
+                            f"{path}:{target.lineno}: body is not indented by {INDENT}",
+                        )
+                    )
+                    body = None
+                    break
+                body.append(pad + line[target.col_offset + INDENT :])
+            else:
+                body.append(line)
+        if body is None:
+            continue
+        tail = [pad + END + "\n"]
+        src = "".join(lines[:head_start] + head + body + tail + lines[body_end:])
+        changed += 1
+
+
+def turn_on(src):
+    """Undo `turn_off`: uncomment headers and re-indent to the end sentinel."""
+    changed = 0
+    while True:
+        lines = lines_of(src)
+        start = None
+        for i, line in enumerate(lines):
+            if line.lstrip().startswith(OFF.strip()):
+                start = i
+                break
+        if start is None:
+            return src, changed
+        pad = lines[start][: len(lines[start]) - len(lines[start].lstrip())]
+        head = []
+        i = start
+        while i < len(lines) and lines[i].lstrip().startswith(OFF.strip()):
+            head.append(pad + lines[i].lstrip()[len(OFF) :])
+            i += 1
+        depth = 0
+        body = []
+        while i < len(lines):
+            stripped = lines[i].strip()
+            if stripped == END and depth == 0:
+                break
+            if stripped.startswith(OFF.strip()):
+                depth += 1
+            elif stripped == END:
+                depth -= 1
+            body.append(" " * INDENT + lines[i] if lines[i].strip() else lines[i])
+            i += 1
+        src = "".join(lines[:start] + head + body + lines[i + 1 :])
+        changed += 1
+
+
+NOQA = "  # noqa: F401  # perfmark"
+
+
+def find_ruff():
+    """Whatever ruff the project uses: PATH first, then a venv beside the code."""
+    found = shutil.which("ruff")
+    if found:
+        return found
+    for base in (pathlib.Path.cwd(), *pathlib.Path.cwd().parents):
+        candidate = base / ".venv" / "bin" / "ruff"
+        if candidate.exists():
+            return str(candidate)
+    return "ruff"
+
+
+def strip_noqa(src):
+    return src.replace(NOQA, "")
+
+
+def mark_dead_imports(paths, ruff):
+    """Imports that exist only for markers go unused once the markers are off.
+
+    Ruff is the oracle: whatever it reports as F401 after the transform gets a
+    suppression that `on` removes again. Nothing is deleted, so turning the
+    markers back on cannot lose an import.
+    """
+    import json
+    import subprocess
+
+    try:
+        out = subprocess.run(
+            [
+                ruff,
+                "check",
+                "--select",
+                "F401",
+                "--output-format",
+                "json",
+                *map(str, paths),
+            ],
+            capture_output=True,
+            text=True,
+        ).stdout
+        items = json.loads(out or "[]")
+    except (OSError, ValueError):
+        return 0
+    by_file = {}
+    for item in items:
+        by_file.setdefault(item["filename"], set()).add(item["location"]["row"])
+    for name, rows in by_file.items():
+        path = pathlib.Path(name)
+        lines = path.read_text().splitlines(keepends=True)
+        for row in rows:
+            line = lines[row - 1]
+            if NOQA.strip() not in line:
+                lines[row - 1] = line.rstrip("\n") + NOQA + "\n"
+        path.write_text("".join(lines))
+    return sum(len(v) for v in by_file.values())
+
+
+def _files(paths):
+    for p in paths:
+        path = pathlib.Path(p)
+        if path.is_dir():
+            yield from sorted(path.rglob("*.py"))
+        elif path.suffix == ".py":
+            yield path
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    ap.add_argument("mode", choices=("off", "on", "status", "check"))
+    ap.add_argument("paths", nargs="+")
+    args = ap.parse_args(argv)
+
+    totals = {"on": 0, "off": 0, "files": 0, "skipped": []}
+    for path in _files(args.paths):
+        src = path.read_text()
+        # a commented header still contains the words "with region(", so count
+        # statements, not substrings
+        live = len(re.findall(r"^\s*with (?:perf\.)?region\(", src, re.M))
+        dead = len(re.findall(r"^\s*" + re.escape(OFF) + r"with ", src, re.M))
+        if args.mode == "status":
+            if live or dead:
+                totals["on"] += live
+                totals["off"] += dead
+                totals["files"] += 1
+            continue
+        if args.mode == "check":
+            if not live:
+                continue
+            off_src, n, skipped = turn_off(src, str(path))
+            back, m = turn_on(off_src)
+            ast.parse(off_src)
+            if back != src:
+                print(f"ROUND TRIP FAILED: {path}")
+                return 1
+            totals["on"] += n
+            totals["files"] += 1
+            totals["skipped"] += skipped
+            continue
+        if args.mode == "off":
+            new, n, skipped = turn_off(src, str(path))
+            totals["skipped"] += skipped
+        else:
+            new, n = turn_on(strip_noqa(src))
+        if new != src:
+            ast.parse(new)
+            path.write_text(new)
+            totals[args.mode] += n
+            totals["files"] += 1
+
+    if args.mode == "off" and totals["off"]:
+        n = mark_dead_imports(
+            list(_files(args.paths)), "/home/ubuntu/compression/ditto_kv/.venv/bin/ruff"
+        )
+        if n:
+            print(f"suppressed {n} imports left unused by the transform")
+    if args.mode == "status":
+        print(
+            f"{totals['on']} live markers, {totals['off']} commented out, "
+            f"in {totals['files']} files"
+        )
+    elif args.mode == "check":
+        print(f"round trip clean for {totals['on']} markers in {totals['files']} files")
+    else:
+        print(f"{args.mode}: {totals[args.mode]} markers in {totals['files']} files")
+    for note in totals["skipped"]:
+        print(f"  skipped {note}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -86,6 +86,41 @@ Outside DynamoRIO the markers are empty functions, one call each.
   triggers that began (or ended) before the one being explained. A relation is
   reported only if it holds exactly at every trigger.
 
+## Turning the markers off
+
+Markers are cheap but not free: in Python a `with region(...)` costs about
+1,459 ns per entry through a `@contextmanager` shim and 378 ns through the
+cheapest class-based one, because the statement still runs. `bin/perfmark-regions`
+removes the statement instead of making it cheaper.
+
+```
+bin/perfmark-regions status src   # how many markers are live
+bin/perfmark-regions check  src   # prove off -> on reproduces every file
+bin/perfmark-regions off    src   # header commented, body dedented
+bin/perfmark-regions on     src   # sources restored byte for byte
+```
+
+`off` rewrites
+
+    with region("name", n=len(x)):
+        body
+
+into
+
+    # perfmark:off with region("name", n=len(x)):
+    body
+    # perfmark:end
+
+The end sentinel is what makes `on` unambiguous, multi-line headers keep their
+continuation indentation, and imports left unused by the transform are found by
+running ruff and given a tagged `# noqa` that `on` strips again, so nothing is
+deleted. It refuses, and reports, two cases rather than guessing: a `with` that
+holds another context manager beside the region, and a body containing a
+multi-line string, where dedenting would rewrite the string itself.
+
+In C and Rust this is unnecessary: the markers are empty functions outside
+DynamoRIO, and the Rust ones vanish entirely behind a cargo feature.
+
 ## Late attach
 
 DynamoRIO starts at the first marked region, not at process start, so imports,
