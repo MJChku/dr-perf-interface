@@ -62,6 +62,7 @@ typedef struct _rkey_t {
     char region[RNAME_MAX];
     char state_name[RNAME_MAX]; /* first declared state (kept for readers of the JSON) */
     int64 state_value;
+    bool overflow;              /* the "<other>" bucket: state combinations beyond the budget */
     int nkstates;               /* declared states in the key: 0 (none) .. KEY_STATES */
     char kname[KEY_STATES][STATE_NAME_MAX];
     int64 kval[KEY_STATES];
@@ -326,6 +327,7 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
     char kbuf[2 * RNAME_MAX + KEY_STATES * (STATE_NAME_MAX + 24) + 32];
     char nbuf[STATE_NAME_MAX];
     const char *root = rootkey != NULL ? rootkey->region : "";
+    bool overflow = false;
     const char *state_name = names[0];
     int64 state_value = vals[0];
     rkey_t *k;
@@ -367,6 +369,7 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
     dr_mutex_lock(keys_lock);
     k = hashtable_lookup(&key_table, kbuf);
     if (k == NULL && !region_key_budget(region)) {
+        overflow = true;
         /* out of budget: one shared bucket per region, not counted per state */
         dr_snprintf(kbuf, sizeof(kbuf), "%s\1<other>", region);
         kbuf[sizeof(kbuf) - 1] = '\0';
@@ -374,6 +377,7 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
         nk = 0;
         names = &empty_name;
         vals = &zero_val;
+        overflow = true;
     }
     if (k == NULL) {
         k = dr_global_alloc(sizeof(*k));
@@ -384,6 +388,7 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
         safe_strcpy(k->root, root, RNAME_MAX);
         k->state_value = nk > 0 ? vals[0] : 0;
         k->nkstates = (nk == 1 && names[0][0] == '\0') ? 0 : nk;
+        k->overflow = overflow;
         for (i = 0; i < nk && i < KEY_STATES; i++) {
             safe_strcpy(k->kname[i], names[i], STATE_NAME_MAX);
             k->kval[i] = vals[i];
@@ -1113,7 +1118,7 @@ write_key(file_t f, rkey_t *k, bool first)
         /* "K index region nk name1 value1 ... root count" */
         dr_fprintf(blocks_file, "K %d ", k->index);
         json_str(blocks_file, k->region);
-        dr_fprintf(blocks_file, " %d", k->nkstates);
+        dr_fprintf(blocks_file, " %d", k->overflow ? -1 : k->nkstates);
         for (i = 0; i < k->nkstates; i++) {
             dr_fprintf(blocks_file, " ");
             json_str(blocks_file, k->kname[i]);

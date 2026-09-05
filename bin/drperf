@@ -48,7 +48,7 @@ def cost_lines(rs, keys, slots, recs):
     inside, outside = runner.marker_cost(rs)
     heads, bodies = [], []
     for R in regions:
-        vecs, trig, names, nested = derive.inclusive_vectors(keys, R, recs)
+        vecs, trig, names, nested, dropped = derive.inclusive_vectors(keys, R, recs)
         calls = sum(trig.values())
         if not vecs:
             continue
@@ -65,7 +65,9 @@ def cost_lines(rs, keys, slots, recs):
             per_call = tot / max(calls, 1)
             heads.append(R)
             b = blame(by_sym, per_call)
-            bodies.append((derive.fmt(per_call), "", ["      %s" % ", ".join(b)] if b else []))
+            note = ("   (%d of %d calls not modelled: too many distinct states)"
+                    % (dropped, dropped + calls)) if dropped else ""
+            bodies.append((derive.fmt(per_call), note, ["      %s" % ", ".join(b)] if b else []))
             continue
         for r in regimes:
             r.c -= inside + nested * (inside + outside)
@@ -92,6 +94,9 @@ def cost_lines(rs, keys, slots, recs):
                 says.append("%s: moved in step with %s" % (", ".join(tied), " and ".join(kept) or "the rest"))
             if fixed:
                 says.append("%s: did not vary" % ", ".join(fixed))
+            if dropped:
+                says.append("%d of %d calls not modelled: too many distinct states"
+                            % (dropped, dropped + calls))
             share = r.irr_share()
             if share > 0.05:
                 says.append("%.0f%% of the cost follows no declared state" % (100 * share))

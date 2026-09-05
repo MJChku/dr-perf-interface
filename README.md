@@ -82,6 +82,10 @@ Outside DynamoRIO the markers are empty functions, one call each.
 - Cost that follows no declared state is reported as a percentage and left out
   of the formula, never smeared into a coefficient. It is broken down by
   function too, under `unexplained`.
+- A region keeps at most 128 distinct state combinations. Calls beyond that are
+  reported as not modelled rather than merged into a state point they do not
+  belong to. A state with very many values (a monotonically growing counter,
+  say) will hit this; declare something coarser.
 - `cum(R.s)`, `last(R.s)`, `count(R)` and `cumend(R.s)` are counters over the
   triggers that began (or ended) before the one being explained. A relation is
   reported only if it holds exactly at every trigger.

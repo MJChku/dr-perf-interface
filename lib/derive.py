@@ -59,14 +59,17 @@ def load_blocks(prefix):
             if line.startswith("K "):
                 parts = _tokens(line[2:])
                 idx, region = parts[0], parts[1]
+                over = False
                 if isinstance(parts[2], int):
                     nk = parts[2]
+                    if nk < 0:          # state combinations beyond the per-region budget
+                        over, nk = True, 0
                     states = [(parts[3 + 2 * i], parts[4 + 2 * i]) for i in range(nk)]
                     root, count = parts[3 + 2 * nk], parts[4 + 2 * nk]
                 else:
                     states = [(parts[2], parts[3])] if parts[2] != "" else []
                     root, count = parts[4], parts[5]
-                cur = {"region": region, "states": states,
+                cur = {"region": region, "states": states, "overflow": over,
                        "state_name": states[0][0] if states else "",
                        "state_value": states[0][1] if states else 0,
                        "root": root, "count": count, "vec": {}}
@@ -89,19 +92,29 @@ def load_blocks(prefix):
 
 
 def per_state(keys, region):
-    """({state tuple: (summed vec, triggers)}, state names) over every key of the region (all roots)."""
-    out, names = {}, None
-    for k in keys.values():
-        if k["region"] != region or k["count"] == 0:
+    """({state tuple: (summed vec, triggers)}, state names, calls left out).
+
+    A region can also carry a bucket for the state combinations beyond the
+    client's per-region budget, and older runs recorded a key with no states at
+    all.  Those calls cannot be placed at a state point, so they are counted and
+    dropped rather than merged into a point they do not belong to."""
+    mine = [k for k in keys.values() if k["region"] == region and k["count"] > 0]
+    names = ()
+    for k in mine:
+        if k["states"] and not k.get("overflow"):
+            names = tuple(n for n, _ in k["states"])
+            break
+    out, dropped = {}, 0
+    for k in mine:
+        if k.get("overflow") or len(k["states"]) != len(names):
+            dropped += k["count"]
             continue
         v = tuple(float(val) for _, val in k["states"])
-        if names is None:
-            names = tuple(n for n, _ in k["states"])
         vec, n = out.get(v, ({}, 0))
         for slot, c in k["vec"].items():
             vec[slot] = vec.get(slot, 0) + c
         out[v] = (vec, n + k["count"])
-    return out, (names or ())
+    return out, names, dropped
 
 
 def per_trigger(states):
@@ -313,9 +326,9 @@ def _same(a, b):
 
 def inclusive_vectors(keys, region, recs):
     """(per-trigger vectors per state point, triggers per point, state names,
-    nested marked triggers per call) with nested regions' per-trigger vectors
-    added according to the trace nesting."""
-    own, names = per_state(keys, region)
+    nested marked triggers per call, calls left out) with nested regions'
+    per-trigger vectors added according to the trace nesting."""
+    own, names, dropped = per_state(keys, region)
     vecs, trig = per_trigger(own)
     nested_vecs = {}   # (region, state tuple) -> (summed vec, triggers)
     for k in keys.values():
@@ -357,7 +370,7 @@ def inclusive_vectors(keys, region, recs):
             for slot, c in acc[v].items():
                 base[slot] = base.get(slot, 0.0) + c / cnt[v]
         out[v] = base
-    return out, trig, names, (inner_total / parents if parents else 0.0)
+    return out, trig, names, (inner_total / parents if parents else 0.0), dropped
 
 
 # ---------------------------------------------------------------- report
