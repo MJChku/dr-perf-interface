@@ -57,6 +57,34 @@ def run(cmd, out, timeout=None):
     return rc, so + se, files
 
 
+def validity(rs):
+    """What went wrong in the run itself, in words.  The counts stop being exact
+    when the client runs out of room, and a caller that prints formulas without
+    checking this is printing fiction."""
+    out = []
+    for run in rs["runs"]:
+        d = run["data"].get("drperf", {})
+        if d.get("slots_overflow"):
+            out.append("%s basic blocks did not fit the counter table of %s slots: their counts "
+                       "were merged into one slot" % (fmt_int(d["slots_overflow"]), fmt_int(d.get("max_slots", 0))))
+        if d.get("counter_denied"):
+            out.append("%s region keys got no counter array: the memory budget ran out"
+                       % fmt_int(d["counter_denied"]))
+        if d.get("state_overflows"):
+            out.append("%s states were dropped at the marker: more than the client keeps"
+                       % fmt_int(d["state_overflows"]))
+        if d.get("unmatched_ends"):
+            out.append("%s region ends had no matching begin" % fmt_int(d["unmatched_ends"]))
+        if d.get("trace_dropped"):
+            out.append("%s region triggers were left out of the trace: relations and nesting "
+                       "are computed from a truncated trace" % fmt_int(d["trace_dropped"]))
+    return sorted(set(out))
+
+
+def fmt_int(n):
+    return "{:,}".format(int(n))
+
+
 def load_runs(out):
     """The run set as the readers below expect it."""
     runs = []

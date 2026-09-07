@@ -48,7 +48,10 @@
 #define STATE_VAL_MAX 64
 #define TRACE_CHUNK 256
 #define MAX_KEYS 65536
-#define KEYS_PER_REGION 128   /* distinct state combinations kept per region */
+#define KEYS_PER_REGION 128        /* distinct state combinations kept per region */
+/* Counter arrays are mapped, not committed: a key only faults in the pages of
+ * the blocks it actually runs, so this bounds address space, not memory. */
+#define COUNTER_BUDGET (96ULL << 30)
 #define KEY_STATES 4        /* declared states that form a key (perfmark_begin_v) */
 
 /* ------------------------------------------------------------------ types */
@@ -120,13 +123,9 @@ typedef struct _thread_t {
     kstats_t *stats;            /* per-key statistics, indexed by key index; thread-private */
     hashtable_t key_cache;      /* key string -> rkey_t*, thread-private */
     struct {
-        const char *region;
-        const char *sname[KEY_STATES];
-        int64 sval[KEY_STATES];
-        int nk;
-        const char *root;       /* root region name: what the key actually uses */
+        uint64 hash;            /* of the key's contents, not its addresses */
         rkey_t *key;
-    } fast[512];                /* pointer-keyed cache in front of key_cache */
+    } fast[512];                /* content-keyed cache in front of key_cache */
     trace_chunk_t *trace_head, *trace_tail;
     struct _thread_t *next;
 } thread_t;
@@ -147,7 +146,7 @@ typedef struct {
 
 static char opt_out[512] = "drperf.json";
 static int opt_top = 25;
-static uint64 opt_max_slots = 128 * 1024;   /* counter slots per key per thread (1 MB) */
+static uint64 opt_max_slots = 1024 * 1024;   /* counter slots per key per thread (8 MB) */
 static int64 opt_trace = 500000;
 static bool opt_rep_expand = true;
 static bool opt_symbols = true;
@@ -176,6 +175,8 @@ static int *slot_mod;
 static int *slot_sym;
 static uint64 *dummy_slots;
 static uint64 slots_overflow;
+static uint64 counter_bytes;
+static volatile int64 counter_denied;
 
 static hashtable_t key_table;
 static struct { char region[RNAME_MAX]; int n; } region_keys[64];
@@ -275,8 +276,17 @@ slots_for(rkey_t *k, thread_t *t)
         return s;
     dr_mutex_lock(keys_lock);
     if (k->tslots[t->index] == NULL) {
-        s = dr_raw_mem_alloc(opt_max_slots * sizeof(uint64), DR_MEMPROT_READ | DR_MEMPROT_WRITE, NULL);
+        uint64 bytes = opt_max_slots * sizeof(uint64);
+        if (counter_bytes + bytes > COUNTER_BUDGET) {
+            /* out of counter memory: this key counts nowhere rather than into
+               another key's array, and the run says so */
+            dr_atomic_add64_return_sum(&counter_denied, 1);
+            dr_mutex_unlock(keys_lock);
+            return dummy_slots;
+        }
+        s = dr_raw_mem_alloc(bytes, DR_MEMPROT_READ | DR_MEMPROT_WRITE, NULL);
         DR_ASSERT_MSG(s != NULL, "drperf: cannot allocate region slot array");
+        counter_bytes += bytes;
         k->tslots[t->index] = s;
     }
     s = k->tslots[t->index];
@@ -305,18 +315,27 @@ set_thread_cur(thread_t *t, uint64 *slots)
     *(uint64 *volatile *)((byte *)t->total_ptr + sizeof(void *)) = slots;
 }
 
-static void
-remember_key(thread_t *t, uint h, const char *region, int nk, const char *const *names,
-             const int64 *vals, rkey_t *k)
+/* Does this key describe exactly (region, states, root)?  Compares the copies
+ * the key owns, so it is safe against the caller's strings being freed. */
+static bool
+key_matches(rkey_t *k, const char *region, int nk, const char *const *names, const int64 *vals,
+            const char *root)
 {
-    int i;
-    t->fast[h].region = region;
-    t->fast[h].root = k->root;      /* stable storage inside the key */
-    t->fast[h].nk = nk;
-    for (i = 0; i < nk && i < KEY_STATES; i++) {
-        t->fast[h].sname[i] = names[i];
-        t->fast[h].sval[i] = vals[i];
+    int i, want = (nk == 1 && names[0][0] == '\0') ? 0 : nk;
+    if (k->overflow || k->nkstates != want || strcmp(k->region, region) != 0 ||
+        strcmp(k->root, root) != 0)
+        return false;
+    for (i = 0; i < want && i < KEY_STATES; i++) {
+        if (k->kval[i] != vals[i] || strcmp(k->kname[i], names[i]) != 0)
+            return false;
     }
+    return true;
+}
+
+static void
+remember_key(thread_t *t, uint h, uint64 hv, rkey_t *k)
+{
+    t->fast[h].hash = hv;
     t->fast[h].key = k;
 }
 
@@ -332,21 +351,28 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
     int64 state_value = vals[0];
     rkey_t *k;
     uint h;
+    uint64 hv;
+    const char *cp;
     int i, pos, w;
     bool hit;
-    /* Fast path for every region, not just single-state ones: the marker fires
-     * once per region, and building the string key below costs microseconds. */
-    h = (uint)((ptr_uint_t)region >> 4) ^ (uint)(root[0] * 31 + root[1]) ^ (uint)nk;
-    for (i = 0; i < nk && i < KEY_STATES; i++)
-        h ^= (uint)((ptr_uint_t)names[i] >> 4) ^ (uint)(vals[i] * 2654435761u);
-    h &= 511;
-    /* the key uses the root region's NAME, so compare that, not the root key
-     * pointer: a root whose own state changes every call has a new pointer
-     * each time but the same name */
-    hit = t->fast[h].key != NULL && t->fast[h].region == region && t->fast[h].nk == nk &&
-          strcmp(t->fast[h].root, root) == 0;
-    for (i = 0; hit && i < nk && i < KEY_STATES; i++)
-        hit = t->fast[h].sname[i] == names[i] && t->fast[h].sval[i] == vals[i];
+    /* Fast path.  The marker fires once per region and building the string key
+     * below costs microseconds, so hash the contents and verify against the
+     * key's own copies: the caller's strings may be freed and their addresses
+     * reused (Python bytes are), so comparing addresses can return another
+     * region's key. */
+    hv = 1469598103934665603ULL;
+    for (cp = region; *cp != '\0'; cp++)
+        hv = (hv ^ (unsigned char)*cp) * 1099511628211ULL;
+    for (cp = root; *cp != '\0'; cp++)
+        hv = (hv ^ (unsigned char)*cp) * 1099511628211ULL;
+    for (i = 0; i < nk && i < KEY_STATES; i++) {
+        for (cp = names[i]; *cp != '\0'; cp++)
+            hv = (hv ^ (unsigned char)*cp) * 1099511628211ULL;
+        hv = (hv ^ (uint64)vals[i]) * 1099511628211ULL;
+    }
+    h = (uint)(hv & 511);
+    hit = t->fast[h].hash == hv && t->fast[h].key != NULL &&
+          key_matches(t->fast[h].key, region, nk, names, vals, root);
     if (hit)
         return t->fast[h].key;
 
@@ -363,12 +389,13 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
     kbuf[sizeof(kbuf) - 1] = '\0';
     k = hashtable_lookup(&t->key_cache, kbuf);
     if (k != NULL) {
-        remember_key(t, h, region, nk, names, vals, k);
+        remember_key(t, h, hv, k);
         return k;
     }
     dr_mutex_lock(keys_lock);
     k = hashtable_lookup(&key_table, kbuf);
-    if (k == NULL && !region_key_budget(region)) {
+    if (k == NULL &&
+        (counter_bytes + opt_max_slots * sizeof(uint64) > COUNTER_BUDGET || !region_key_budget(region))) {
         overflow = true;
         /* out of budget: one shared bucket per region, not counted per state */
         dr_snprintf(kbuf, sizeof(kbuf), "%s\1<other>", region);
@@ -406,7 +433,7 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
     }
     dr_mutex_unlock(keys_lock);
     hashtable_add(&t->key_cache, kbuf, k);
-    remember_key(t, h, region, nk, names, vals, k);
+    remember_key(t, h, hv, k);
     return k;
 }
 
@@ -1255,10 +1282,10 @@ event_exit(void)
                dr_get_process_id());
     json_str(f, dr_get_application_name());
     dr_fprintf(f, ",\n    \"rep_expand\": %s, \"symbols\": %s, \"max_slots\": %llu, "
-               "\"slots_used\": %llu, \"slots_overflow\": %llu,\n",
+               "\"slots_used\": %llu, \"slots_overflow\": %llu, \"counter_denied\": %lld,\n",
                opt_rep_expand ? "true" : "false", opt_symbols ? "true" : "false",
                (unsigned long long)opt_max_slots, (unsigned long long)next_slot,
-               (unsigned long long)slots_overflow);
+               (unsigned long long)slots_overflow, (long long)counter_denied);
     dr_fprintf(f, "    \"marker_seen\": %s, \"unmatched_ends\": %lld, \"depth_overflows\": %lld, "
                "\"state_overflows\": %lld, \"threads\": %d,\n",
                marker_seen ? "true" : "false", (long long)unmatched_ends, (long long)depth_overflows,

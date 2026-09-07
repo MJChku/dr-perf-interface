@@ -11,8 +11,10 @@ basic block $\beta$ attributed to $t$ on all threads;
 $\mathrm{cost}(t) = \sum_\beta n_\beta(t)$. Counts are exact and, for
 deterministic single-threaded programs, reproducible to the instruction. Only
 per-point means $c_\beta(v)$ over triggers with $v(t) = v$ are stored, for at
-most 128 points per region; calls beyond that are counted and reported, not
-placed at a point.
+most 128 points per region and within a bounded counter allocation; calls
+beyond either are counted and reported, not placed at a point.  Blocks beyond
+the counter table are merged into one slot, which is reported and invalidates
+the run.
 
 **Cost formulae (`derive`).** Over the observed points $V \subset \mathbb{Z}^k$,
 $|V| \ge k + 2$, each block gets a least-squares plane

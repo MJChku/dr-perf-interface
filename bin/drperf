@@ -222,8 +222,13 @@ def main(argv):
             return 1
         slots = runner.demangle_slots(slots)
         recs = [r for r in runner.load_traces_all(rs) if not r["region"].startswith(runner.CALIB)]
+        warn = runner.validity(rs)
         costs = cost_lines(rs, keys, slots, recs)
         rels = relation_lines(recs)
+        if warn:
+            for w in warn:
+                sys.stderr.write("drperf: %s\n" % w)
+            sys.stderr.write("drperf: the numbers below are not trustworthy.\n\n")
         print("cost per call, in instructions")
         print()
         for line in costs:

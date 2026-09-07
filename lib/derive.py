@@ -185,15 +185,22 @@ def _solve(A, b):
 
 
 def affine_fit(vs, ys):
-    """Least-squares plane through (state tuple, count) points, on centred
-    variables: (coefficients, intercept, worst deviation, dependent variables)."""
+    """Least-squares plane through (state tuple, count) points, on centred and
+    scaled variables: (coefficients, intercept, worst deviation, dependent
+    variables).
+
+    Scaling matters: a declared state that is a product can be 1e12 while
+    another is 10, and solving the normal equations on the raw columns loses
+    the small one to rounding."""
     k, n = len(vs[0]), len(vs)
     mx = [sum(v[j] for v in vs) / n for j in range(k)]
     my = sum(ys) / n
-    X = [[v[j] - mx[j] for j in range(k)] for v in vs]
+    sc = [max(abs(v[j] - mx[j]) for v in vs) or 1.0 for j in range(k)]
+    X = [[(v[j] - mx[j]) / sc[j] for j in range(k)] for v in vs]
     A = [[sum(X[i][p] * X[i][q] for i in range(n)) for q in range(k)] for p in range(k)]
     b = [sum(X[i][p] * (ys[i] - my) for i in range(n)) for p in range(k)]
     a, dep = _solve(A, b)
+    a = [a[j] / sc[j] for j in range(k)]        # back to instructions per unit
     c = my - sum(a[j] * mx[j] for j in range(k))
     dev = max(abs(y - (sum(a[j] * v[j] for j in range(k)) + c)) for v, y in zip(vs, ys))
     return a, c, dev, dep
