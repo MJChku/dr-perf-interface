@@ -197,6 +197,10 @@ state combinations, which bounds memory when a declared state has many values.
 - The numbers describe these binaries on this CPU. A toolchain or machine
   change invalidates a baseline.
 - Kernel time is not counted; syscalls per region are reported as the hint.
+- The runner pins `PYTHONHASHSEED=0` and, unless you set them yourself,
+  `OMP_NUM_THREADS`, `MKL_NUM_THREADS` and `OPENBLAS_NUM_THREADS` to 4, so runs
+  are comparable. An application that chooses its own thread count ignores
+  this. Set them in the environment to override.
 - DynamoRIO 11.3.0 crashes in `dr_get_proc_address` on some torch libraries, so
   markers are looked up only in modules named `*perfmark*` and the main
   executable; module names come from file names because SONAME parsing is wrong
