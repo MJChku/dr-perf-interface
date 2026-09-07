@@ -151,6 +151,7 @@ static int64 opt_trace = 500000;
 static bool opt_rep_expand = true;
 static bool opt_symbols = true;
 static bool opt_verbose = false;
+static bool opt_block_counters = true;   /* -no_block_counters: keep only the thread total */
 static bool opt_blocks = false;
 static file_t blocks_file = INVALID_FILE;
 static byte *slot_used;          /* slots referenced by any region (for the .slots table) */
@@ -285,7 +286,13 @@ slots_for(rkey_t *k, thread_t *t)
             return dummy_slots;
         }
         s = dr_raw_mem_alloc(bytes, DR_MEMPROT_READ | DR_MEMPROT_WRITE, NULL);
-        DR_ASSERT_MSG(s != NULL, "drperf: cannot allocate region slot array");
+        if (s == NULL) {
+            /* the counting code writes through this pointer, so it must never
+               be null: count nowhere and say so rather than fault in the app */
+            dr_atomic_add64_return_sum(&counter_denied, 1);
+            dr_mutex_unlock(keys_lock);
+            return dummy_slots;
+        }
         counter_bytes += bytes;
         k->tslots[t->index] = s;
     }
@@ -301,7 +308,10 @@ stats_for(rkey_t *k, thread_t *t)
     if (t->stats == NULL) {
         t->stats = dr_raw_mem_alloc(MAX_KEYS * sizeof(kstats_t), DR_MEMPROT_READ | DR_MEMPROT_WRITE,
                                     NULL);
-        DR_ASSERT_MSG(t->stats != NULL, "drperf: cannot allocate stats table");
+        if (t->stats == NULL) {
+            dr_fprintf(STDERR, "drperf: out of memory for per-thread statistics\n");
+            dr_abort();
+        }
     }
     s = &t->stats[k->index];
     if (s->count == 0 && s->incl_min == 0)
@@ -423,6 +433,10 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
         k->index = nkeys++;
         DR_ASSERT_MSG(k->index < MAX_KEYS, "drperf: too many region keys");
         k->tslots = dr_global_alloc(MAX_THREADS * sizeof(uint64 *));
+        if (k->tslots == NULL) {
+            dr_fprintf(STDERR, "drperf: out of memory for region keys\n");
+            dr_abort();
+        }
         memset(k->tslots, 0, MAX_THREADS * sizeof(uint64 *));
         hashtable_add(&key_table, kbuf, k);
         if (keys_tail == NULL)
@@ -869,11 +883,13 @@ event_insert(void *drcontext, void *tag, instrlist_t *bb, instr_t *inst, bool fo
         bb, inst,
         INSTR_CREATE_add(drcontext, dr_raw_tls_opnd(drcontext, tls_seg, TLS_TOTAL),
                          OPND_CREATE_INT32(n)));
-    dr_insert_read_raw_tls(drcontext, bb, inst, tls_seg, TLS_CUR, reg);
-    instrlist_meta_preinsert(
-        bb, inst,
-        INSTR_CREATE_add(drcontext, OPND_CREATE_MEM64(reg, (int)(slot * sizeof(uint64))),
-                         OPND_CREATE_INT32(n)));
+    if (opt_block_counters) {
+        dr_insert_read_raw_tls(drcontext, bb, inst, tls_seg, TLS_CUR, reg);
+        instrlist_meta_preinsert(
+            bb, inst,
+            INSTR_CREATE_add(drcontext, OPND_CREATE_MEM64(reg, (int)(slot * sizeof(uint64))),
+                             OPND_CREATE_INT32(n)));
+    }
     if (drreg_unreserve_register(drcontext, bb, inst, reg) != DRREG_SUCCESS ||
         drreg_unreserve_aflags(drcontext, bb, inst) != DRREG_SUCCESS)
         DR_ASSERT(false);
@@ -1431,6 +1447,8 @@ parse_options(int argc, const char *argv[])
             opt_blocks = true;
         } else if (strcmp(argv[i], "-no_rep_expand") == 0) {
             opt_rep_expand = false;
+        } else if (strcmp(argv[i], "-no_block_counters") == 0) {
+            opt_block_counters = false;
         } else if (strcmp(argv[i], "-no_symbols") == 0) {
             opt_symbols = false;
         } else if (strcmp(argv[i], "-verbose") == 0) {
