@@ -137,10 +137,18 @@ def demangle_all(names):
 
 
 def _num(v):
+    """Declared states are integers and the relations are claimed to be exact,
+    so they stay integers: Python's are arbitrary precision, while float loses
+    the low bits above 2**53 and would call a relation exact that is not."""
+    if isinstance(v, bool):
+        return None
+    if isinstance(v, int):
+        return v
     try:
-        return float(v)
+        f = float(v)
     except (TypeError, ValueError):
         return None
+    return int(f) if f.is_integer() else f
 
 
 def is_structural(name):
@@ -178,20 +186,20 @@ def feature_rows(recs, target_region, target_field, structural=False):
             for k, v in e["state"].items():
                 x = _num(v)
                 if x is not None:
-                    cumend[(e["region"], k)] = cumend.get((e["region"], k), 0.0) + x
+                    cumend[(e["region"], k)] = cumend.get((e["region"], k), 0) + x
             ei += 1
         if r["region"] == target_region and target_field in r["state"] and _num(r["state"][target_field]) is not None:
             f = []
             for R in regions:
-                f.append(float(count.get(R, 0)))
+                f.append(count.get(R, 0))
                 for st in states[R]:
-                    f += [cum.get((R, st), 0.0), cumend.get((R, st), 0.0), last.get((R, st), 0.0)]
+                    f += [cum.get((R, st), 0), cumend.get((R, st), 0), last.get((R, st), 0)]
             rows.append((f, _num(r["state"][target_field])))
         count[r["region"]] = count.get(r["region"], 0) + 1
         for k, v in r["state"].items():
             x = _num(v)
             if x is not None:
-                cum[(r["region"], k)] = cum.get((r["region"], k), 0.0) + x
+                cum[(r["region"], k)] = cum.get((r["region"], k), 0) + x
                 last[(r["region"], k)] = x
     return names, rows
 
@@ -224,9 +232,11 @@ def exact_relations(names, rows, max_terms=3, coefs=(1, -1, 2, -2)):
                 ok = True
                 for (f, y) in rows:
                     pred = sum(c * f[j] for c, j in zip(cs, combo))
+                    d = y - pred
                     if offset is None:
-                        offset = y - pred
-                    elif abs(y - pred - offset) > 1e-9:
+                        offset = d
+                    elif d != offset if isinstance(d, int) and isinstance(offset, int) \
+                            else abs(d - offset) > 1e-9:
                         ok = False
                         break
                 if ok:

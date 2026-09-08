@@ -91,6 +91,18 @@ def load_blocks(prefix):
     return keys, slots
 
 
+def _val(x):
+    """State values stay integers when they are integral: converting to float
+    merges combinations that differ only above 2**53."""
+    if isinstance(x, int):
+        return x
+    try:
+        f = float(x)
+    except (TypeError, ValueError):
+        return 0
+    return int(f) if f.is_integer() else f
+
+
 def per_state(keys, region):
     """({state tuple: (summed vec, triggers)}, state names, calls left out).
 
@@ -109,7 +121,7 @@ def per_state(keys, region):
         if k.get("overflow") or len(k["states"]) != len(names):
             dropped += k["count"]
             continue
-        v = tuple(float(val) for _, val in k["states"])
+        v = tuple(_val(val) for _, val in k["states"])
         vec, n = out.get(v, ({}, 0))
         for slot, c in k["vec"].items():
             vec[slot] = vec.get(slot, 0) + c
@@ -295,13 +307,7 @@ def key_state(r):
     nk = r.get("nk")
     if nk is None:                 # older trace: the first entry is the key state
         nk = 1 if vals else 0
-    out = []
-    for x in vals[:nk]:
-        try:
-            out.append(float(x))
-        except (TypeError, ValueError):
-            out.append(0.0)
-    return tuple(out)
+    return tuple(_val(x) for x in vals[:nk])
 
 
 def nested_map(recs, target):
@@ -331,53 +337,36 @@ def _same(a, b):
     return len(a) == len(b) and all(abs(x - y) < 1e-9 for x, y in zip(a, b))
 
 
+def nested_calls(recs, region):
+    """{nested region: calls per trigger of `region`}, from the trace nesting.
+    What a region's own cost leaves out, so the reader can compose it."""
+    counts, parents = {}, 0
+    for pv, inner in nested_map(recs, region):
+        parents += 1
+        for (reg, _sv), m in inner.items():
+            counts[reg] = counts.get(reg, 0) + m
+    if not parents:
+        return {}
+    return {r: n / parents for r, n in counts.items()}
+
+
 def inclusive_vectors(keys, region, recs):
     """(per-trigger vectors per state point, triggers per point, state names,
-    nested marked triggers per call, calls left out) with nested regions'
-    per-trigger vectors added according to the trace nesting."""
+    nested marked triggers per call, calls left out).
+
+    The vectors are the region's OWN cost: instructions counted while it was the
+    innermost open region.  Regions nested inside it are not folded in, because
+    the client aggregates a nested region over every parent that called it, so
+    folding its mean into each parent erases the parent's own dependence on its
+    state.  `nested_calls` says what was left out."""
     own, names, dropped = per_state(keys, region)
     vecs, trig = per_trigger(own)
-    nested_vecs = {}   # (region, state tuple) -> (summed vec, triggers)
-    for k in keys.values():
-        if k["region"] == region or k["count"] == 0:
-            continue
-        key = (k["region"], tuple(float(v) for _, v in k["states"]))
-        vec, n = nested_vecs.get(key, ({}, 0))
-        for slot, c in k["vec"].items():
-            vec[slot] = vec.get(slot, 0) + c
-        nested_vecs[key] = (vec, n + k["count"])
-    acc = {v: {} for v in vecs}
-    cnt = {v: 0 for v in vecs}
+    vecs, trig = per_trigger(own)
     inner_total = parents = 0
     for pv, inner in nested_map(recs, region):
-        v = None
-        for cand in vecs:
-            if _same(cand, pv):
-                v = cand
-        if v is None:
-            continue
-        cnt[v] += 1
         parents += 1
-        for (reg, sv), m in inner.items():
-            inner_total += m
-            nv = None
-            for cand, val in nested_vecs.items():
-                if cand[0] == reg and _same(cand[1], sv):
-                    nv = val
-                    break
-            if nv is None:
-                continue
-            vec, n = nv
-            for slot, c in vec.items():
-                acc[v][slot] = acc[v].get(slot, 0.0) + m * c / n
-    out = {}
-    for v in vecs:
-        base = dict(vecs[v])
-        if cnt[v]:
-            for slot, c in acc[v].items():
-                base[slot] = base.get(slot, 0.0) + c / cnt[v]
-        out[v] = base
-    return out, trig, names, (inner_total / parents if parents else 0.0), dropped
+        inner_total += sum(inner.values())
+    return vecs, trig, names, (inner_total / parents if parents else 0.0), dropped
 
 
 # ---------------------------------------------------------------- report

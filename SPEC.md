@@ -50,13 +50,17 @@ $\mathrm{cum}_{R,u}(t) = \sum u(t')$ over that set, $\mathrm{last}_{R,u}(t)$ =
 $u$ of its latest member, $\mathrm{cumend}_{R,u}(t) = \sum u(t')$ over
 $\{\rho(t') = R,\ e(t') < b(t)\}$. `learn` reports every
 $x(t) = \sum_{j \in S} \gamma_j \varphi_j(t) + \delta$ with $|S| \le 3$,
-$\gamma_j \in \{\pm 1, \pm 2\}$, holding exactly at every trigger of $A$;
+$\gamma_j \in \{\pm 1, \pm 2\}$, holding exactly at every trigger of $A$
+(in integer arithmetic, so "exact" means exact);
 otherwise a least-squares fit, labelled approximate. Guaranteed: an exact
 relation describes the run, not an estimate (R1). Not provided: relations
 through undeclared variables, causality, happens-before (the order is the
 counter's), protection against coincidence when candidates outnumber
 triggers, so a relation counts only if exact in every run.
 
-**Composition.** $\mathrm{incl}(t) = \mathrm{self}(t) + \sum \mathrm{self}(t')$
-over triggers nested in $t$ on its thread is an identity of the measurement,
-not a model.
+**Composition.** A region's cost is its *own*: instructions counted while it
+was the innermost open region. Regions nested inside it are excluded and named,
+with their calls per trigger, so the reader can compose. They are not folded in
+automatically: the client aggregates a nested region over every parent that
+called it, so adding its mean to each parent would erase the parent's own
+dependence on its state.

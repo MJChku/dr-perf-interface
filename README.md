@@ -93,7 +93,11 @@ Outside DynamoRIO the markers are empty functions, one call each.
   truncated trigger trace. Formulas printed after such a warning are fiction.
 - `cum(R.s)`, `last(R.s)`, `count(R)` and `cumend(R.s)` are counters over the
   triggers that began (or ended) before the one being explained. A relation is
-  reported only if it holds exactly at every trigger.
+  reported only if it holds exactly at every trigger, in integer arithmetic.
+- A region's cost is its own. Regions nested inside it are excluded and named
+  with their calls per trigger (`excludes parse x10.5`), so you can compose
+  them yourself; they are not folded in, because the client aggregates a nested
+  region over every parent that called it.
 
 ## Turning the markers off
 

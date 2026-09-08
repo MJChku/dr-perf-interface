@@ -112,6 +112,7 @@ typedef struct _trace_chunk_t {
 
 typedef struct _thread_t {
     volatile uint64 *total_ptr; /* raw TLS slot 0 of this thread */
+    uint64 *followed;           /* what the leader last installed for this thread */
     uint64 final_total;
     uint64 sys;
     thread_id_t tid;
@@ -319,10 +320,24 @@ stats_for(rkey_t *k, thread_t *t)
     return s;
 }
 
+/* Only the thread itself stores here while it is running its own regions. */
 static void
 set_thread_cur(thread_t *t, uint64 *slots)
 {
     *(uint64 *volatile *)((byte *)t->total_ptr + sizeof(void *)) = slots;
+    t->followed = slots;
+}
+
+/* Point a thread that has no region of its own at the leader's counters.  Runs
+ * on the leader, so it may only replace the value it installed itself: a thread
+ * that opened its own region between the depth check and here has stored its
+ * own pointer, the exchange fails, and its work stays in its own region. */
+static void
+steer_follower(thread_t *t, uint64 *slots)
+{
+    uint64 **cur = (uint64 **)((byte *)t->total_ptr + sizeof(void *));
+    if (__sync_bool_compare_and_swap(cur, t->followed, slots))
+        t->followed = slots;
 }
 
 /* Does this key describe exactly (region, states, root)?  Compares the copies
@@ -482,7 +497,7 @@ update_shared(thread_t *self)
         dr_rwlock_read_lock(threads_rw);
         for (t = threads; t != NULL; t = t->next) {
             if (t->alive && t->depth == 0)
-                set_thread_cur(t, slots_for(nk, t));
+                steer_follower(t, slots_for(nk, t));
         }
         dr_rwlock_read_unlock(threads_rw);
     }

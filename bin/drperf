@@ -46,9 +46,11 @@ def cost_lines(rs, keys, slots, recs):
                          if not k["region"].startswith(runner.CALIB) and ":" not in k["region"]
                          and k["region"] != "_perfmark_capture"))
     inside, outside = runner.marker_cost(rs)
+    nested_of = {}
     heads, bodies = [], []
     for R in regions:
         vecs, trig, names, nested, dropped = derive.inclusive_vectors(keys, R, recs)
+        nested_of[R] = derive.nested_calls(recs, R)
         calls = sum(trig.values())
         if not vecs:
             continue
@@ -65,8 +67,18 @@ def cost_lines(rs, keys, slots, recs):
             per_call = tot / max(calls, 1)
             heads.append(R)
             b = blame(by_sym, per_call)
-            note = ("   (%d of %d calls not modelled: too many distinct states)"
-                    % (dropped, dropped + calls)) if dropped else ""
+            says = ["observed mean over %d call%s: %s" % (
+                calls, "" if calls == 1 else "s",
+                "one state point, nothing to model" if len(vecs) < 2 else
+                "%d state points, fewer than the %d needed" % (len(vecs), max(derive.MIN_VALUES, len(names) + 2)))]
+            if dropped:
+                says.append("%d of %d calls not modelled: too many distinct states"
+                            % (dropped, dropped + calls))
+            inner = nested_of.get(R) or {}
+            if inner:
+                says.append("excludes %s" % ", ".join(
+                    "%s x%.3g" % (n, c) for n, c in sorted(inner.items(), key=lambda kv: -kv[1])))
+            note = "   (" + "; ".join(says) + ")"
             bodies.append((derive.fmt(per_call), note, ["      %s" % ", ".join(b)] if b else []))
             continue
         for r in regimes:
@@ -97,6 +109,10 @@ def cost_lines(rs, keys, slots, recs):
             if dropped:
                 says.append("%d of %d calls not modelled: too many distinct states"
                             % (dropped, dropped + calls))
+            inner = nested_of.get(R) or {}
+            if inner:
+                says.append("excludes %s" % ", ".join(
+                    "%s x%.3g" % (n, c) for n, c in sorted(inner.items(), key=lambda kv: -kv[1])))
             share = r.irr_share()
             if share > 0.05:
                 says.append("%.0f%% of the cost follows no declared state" % (100 * share))
