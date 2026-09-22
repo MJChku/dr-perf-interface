@@ -146,9 +146,15 @@ includes both [native kernel databases](examples/causal_video/evidence/kernel-da
 ## Use
 
 ```
-./build.sh                 # DynamoRIO 11.3.0, marker library, client, examples
+./build.sh                 # pinned GX DynamoRIO fork, markers, client, examples
 bin/drperf ./myapp         # or: bin/drperf python app.py
 ```
+
+The build fetches [MJChku/dynamorio at `7c0717f412f8`](https://github.com/MJChku/dynamorio/tree/7c0717f412f8aae9199b49aff95557ada2cf3413),
+including the late-attach, `close_range`, and native-replacement fixes used by
+GXVM. It builds and installs under `third_party/`; a local GX checkout is not
+required. Install Git, CMake, a C/C++ compiler, Make, and development headers for
+zlib. Set `DRPERF_BUILD_JOBS` to limit build parallelism (default 8).
 
 ```
 cost per call, in instructions
@@ -183,10 +189,34 @@ DRPERF_EXCLUDE_CUDA_MODULE=gx_cuda.so DRPERF_FOLLOW_THREADS=0 bin/drperf python 
 synchronous callees beneath exported CUDA driver/runtime and GPU-library APIs
 (cuBLAS, cuDNN, cuSOLVER, cuSPARSE, cuFFT, cuRAND, cuTENSOR) are excluded.
 `DRPERF_FOLLOW_THREADS=0` prevents unmarked threads from inheriting the leader's
-region; explicitly marked worker regions still count. Both are opt-in; default
-measurement retains worker attribution and excludes no CUDA module. Raw output
-records the scope and exclusion counters; an unmatched exclusion is invalid.
+region; explicitly marked worker regions still count. Worker attribution stays
+enabled by default. GX is detected automatically when `gx_cuda.so` loads; its
+CUDA calls are excluded without environment settings. Other CUDA modules need
+an explicit selection. Raw output records the scope and exclusion counters;
+an unmatched exclusion is invalid.
 Asynchronous work outside that module is not excluded by a call-stack boundary.
+
+When `gx_cuda.so` loads, drperf also installs a native replacement at GX's
+`gxvm_gpu_native_run` boundary. The original entry and its callback run outside
+DynamoRIO's code cache, then counting resumes in host code. Thus emulated device
+work, including translated NCCL, is excluded from both execution instrumentation
+and instruction counts. GX loader/dispatch stubs still execute under DynamoRIO;
+CUDA call-stack exclusion keeps their synchronous work out of the counts. This
+is functional GX emulation and does not start GXVM timing.
+
+No GX-specific flags are needed for these defaults. Use
+`DRPERF_NATIVE_GX=0` to disable automatic GX handling (`-no_auto_gx` for direct
+client launches); add `DRPERF_EXCLUDE_CUDA_MODULE=gx_cuda.so` for counting-only
+exclusion. For a renamed emulator, explicitly set `DRPERF_NATIVE_GX=1` and its
+module basename. A missing native-work entry is an error, not a silent fallback.
+Raw metadata records `native_gx_hooks` and `native_gx_calls`; zero calls means
+that workload did not use the device-work boundary. Native instructions do not
+contribute to the instrumented-only `excluded_instructions` diagnostic.
+
+Do not use whole-module `-native_exec_list gx_cuda.so`: it also bypasses GX's
+loader interposition and previously crashed or silently lost all marker
+coverage. The explicit work boundary preserves host instrumentation. See the
+[GX debugging record](vllm_bug.md) and `tests/test_gx_native.py` for validation.
 
 [Source-region benchmarks](benchmarks/README.md) collect 1,000 regions from
 vLLM, Wan, V8 RegExp, JavaScript runtimes, compilers, and libraries, including
@@ -324,6 +354,24 @@ model loading and warm-up run natively and are never translated. A small
 preloaded library (`build/libdrperf_attach.so`) reserves DynamoRIO's address
 space, and the marker library starts it at the first region. Threads that
 already exist are taken over.
+
+Some allocator workers (including jemalloc's background thread in the GX/vLLM
+workload) block SIGILL, the signal DynamoRIO uses for takeover. The bundled
+runtime enables ptrace-assisted signal unmasking by default before strict
+takeover, using the same option as GXVM. This does not enable GXVM timing.
+The container must permit ptrace (for example, `--cap-add=SYS_PTRACE` with
+`--security-opt seccomp=unconfined`). `DRPERF_ATTACH_UNMASK_SIGNAL=0` opts out;
+takeover still fails if an existing worker cannot be captured. To test other
+matching runtime/client/attach builds, use `DRPERF_DRRUN`, `DRPERF_CLIENT` and
+`DRPERF_ATTACH`. Stock 11.3 lacks the signal-unmasking option. Do not
+substitute `-unsafe_ignore_takeover_timeout`, which can leave workers unmeasured.
+
+For the Qwen + ditto FTL workload under plain GX, strict late attach captured
+189 existing threads in 0.31 seconds, including the blocked allocator worker.
+Engine initialization took 9.7–9.9 seconds versus 89.1 seconds with early attach.
+Both modes completed 48 requests and recorded all 103 application region names.
+This validates the single-process Qwen case; the eight-worker Kimi preset still
+uses early attachment pending separate validation.
 
 For vLLM this is the difference between 280 seconds and 26 (12 native), because
 almost all of that run is PyTorch and vLLM startup that no region covers.

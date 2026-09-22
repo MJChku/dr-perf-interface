@@ -24,6 +24,8 @@
  *   0 = off)  -blocks (dump per-region per-basic-block counts to FILE.blocks
  *   and the block table to FILE.slots)  -no_rep_expand  -no_symbols  -verbose
  *   -exclude_cuda_module BASENAME  -no_follow_threads  -max_states_per_region N
+ *   -native_gx (execute GX's explicit emulation-work boundary natively)
+ *   -no_auto_gx (disable automatic GX counting/native-work exclusions)
  */
 #include "dr_api.h"
 #include "drmgr.h"
@@ -158,6 +160,10 @@ static bool opt_verbose = false;
 static bool opt_block_counters = true;   /* -no_block_counters: keep only the thread total */
 static bool opt_blocks = false;
 static bool opt_follow_threads = true;
+static bool opt_native_gx = false;
+static bool opt_auto_gx = true;
+static int native_gx_hooks;
+static int64 native_gx_calls;
 static char opt_exclude_cuda_module[128];
 static int excluded_wrappers;
 static int64 excluded_calls;
@@ -824,6 +830,30 @@ exclude_cuda_symbol(const char *name, size_t offset, void *data)
     return true;
 }
 
+/* GX provides an explicit boundary around emulated device work. Replacing only
+ * this entry preserves instrumentation of the loader, CUDA dispatch, and the
+ * host application. Calling the original entry also preserves its semantics.
+ * This mode is for functional GX, not simultaneous GXVM timing simulation. */
+typedef void (*gx_body_fn)(void *, int);
+typedef void (*gx_native_entry_fn)(unsigned, gx_body_fn, void *);
+
+static void
+run_native_gx(unsigned device, gx_body_fn body, void *argument)
+{
+    void *drcontext = dr_get_current_drcontext();
+    gx_native_entry_fn original = (gx_native_entry_fn)dr_read_saved_reg(
+        drcontext, DRWRAP_REPLACE_NATIVE_DATA_SLOT);
+    dr_atomic_add64_return_sum(&native_gx_calls, 1);
+    if (!dr_mark_safe_to_suspend(drcontext, true))
+        dr_abort();
+    dr_switch_to_app_state(drcontext);
+    original(device, body, argument);
+    dr_switch_to_dr_state(drcontext);
+    if (!dr_mark_safe_to_suspend(drcontext, false))
+        dr_abort();
+    drwrap_replace_native_fini(drcontext);
+}
+
 static void
 event_module_load(void *drcontext, const module_data_t *mod, bool loaded)
 {
@@ -847,7 +877,24 @@ event_module_load(void *drcontext, const module_data_t *mod, bool loaded)
         nmodules++;
     }
     dr_mutex_unlock(slots_lock);
+    /* Detect the loaded emulator, including when a launcher sets LD_PRELOAD
+     * after drperf starts. Plain applications keep the default counting scope.
+     * An explicit different exclusion module remains authoritative. */
+    if (opt_auto_gx && name && strcmp(name, "gx_cuda.so") == 0 &&
+        (!opt_exclude_cuda_module[0] || strcmp(opt_exclude_cuda_module, name) == 0)) {
+        safe_strcpy(opt_exclude_cuda_module, name, sizeof(opt_exclude_cuda_module));
+        opt_native_gx = true;
+    }
     if (opt_exclude_cuda_module[0] && name && strcmp(name, opt_exclude_cuda_module) == 0) {
+        if (opt_native_gx) {
+            app_pc entry = (app_pc)dr_get_proc_address(mod->handle, "gxvm_gpu_native_run");
+            if (entry == NULL || !drwrap_replace_native(entry, (app_pc)run_native_gx,
+                                                       true, 0, entry, false)) {
+                dr_fprintf(STDERR, "drperf: cannot install GX native-work boundary in %s\n", name);
+                dr_abort();
+            }
+            native_gx_hooks++;
+        }
         /* DR 11.3's ELF export iterator misses symbols in some GNU-hash
          * libraries. Enumerate on-disk symbols, then resolve exported APIs. */
         if (drsym_enumerate_symbols(mod->full_path, exclude_cuda_symbol, (void *)mod,
@@ -1459,6 +1506,8 @@ event_exit(void)
     dr_fprintf(f, ",\n    \"excluded_cuda_module\": ");
     json_str(f, opt_exclude_cuda_module);
     dr_fprintf(f, ", \"follow_unmarked_threads\": %s", opt_follow_threads ? "true" : "false");
+    dr_fprintf(f, ", \"native_gx\": %s, \"native_gx_hooks\": %d, \"native_gx_calls\": %lld",
+               opt_native_gx ? "true" : "false", native_gx_hooks, (long long)native_gx_calls);
     dr_fprintf(f, ", \"max_states_per_region\": %d, \"max_keys\": %d, "
                "\"counter_budget_bytes\": %llu, \"counter_bytes\": %llu",
                opt_max_states_per_region, MAX_KEYS,
@@ -1642,6 +1691,10 @@ parse_options(int argc, const char *argv[])
             safe_strcpy(opt_exclude_cuda_module, argv[++i], sizeof(opt_exclude_cuda_module));
         } else if (strcmp(argv[i], "-no_follow_threads") == 0) {
             opt_follow_threads = false;
+        } else if (strcmp(argv[i], "-native_gx") == 0) {
+            opt_native_gx = true;
+        } else if (strcmp(argv[i], "-no_auto_gx") == 0) {
+            opt_auto_gx = false;
         } else if (strcmp(argv[i], "-verbose") == 0) {
             opt_verbose = true;
         } else {
@@ -1658,11 +1711,16 @@ dr_client_main(client_id_t id, int argc, const char *argv[])
     module_data_t *main_mod;
     dr_set_client_name("drperf", "https://github.com/DynamoRIO/dynamorio/issues");
     parse_options(argc, argv);
+    if (opt_native_gx && !opt_exclude_cuda_module[0]) {
+        dr_fprintf(STDERR, "drperf: -native_gx requires -exclude_cuda_module\n");
+        dr_abort();
+    }
     if (!drmgr_init() || drreg_init(&ops) != DRREG_SUCCESS || !drwrap_init() || !drutil_init() ||
         !drx_init())
         DR_ASSERT(false);
-    if ((opt_symbols || opt_exclude_cuda_module[0]) && drsym_init(0) != DRSYM_SUCCESS) {
-        if (opt_exclude_cuda_module[0]) {
+    if ((opt_symbols || opt_exclude_cuda_module[0] || opt_auto_gx) &&
+        drsym_init(0) != DRSYM_SUCCESS) {
+        if (opt_exclude_cuda_module[0] || opt_auto_gx) {
             dr_fprintf(STDERR, "drperf: drsym_init failed; requested CUDA exclusion unavailable\n");
             dr_abort();
         }
@@ -1697,7 +1755,13 @@ dr_client_main(client_id_t id, int argc, const char *argv[])
         main_module_start = main_mod->start;
         dr_free_module_data(main_mod);
     }
+    /* Newer drmgr versions own these event registries; 11.3 exposes only the
+     * core registrations. Its newer headers forbid the core names by macro. */
+#ifdef dr_register_exit_event
+    drmgr_register_exit_event(event_exit);
+#else
     dr_register_exit_event(event_exit);
+#endif
     if (!drmgr_register_thread_init_event(event_thread_init) ||
         !drmgr_register_thread_exit_event(event_thread_exit) ||
         !drmgr_register_bb_app2app_event(event_app2app, NULL) ||
@@ -1705,7 +1769,11 @@ dr_client_main(client_id_t id, int argc, const char *argv[])
         !drmgr_register_module_load_event(event_module_load) ||
         !drmgr_register_pre_syscall_event(event_pre_syscall))
         DR_ASSERT(false);
+#ifdef dr_register_filter_syscall_event
+    drmgr_register_filter_syscall_event(event_filter_syscall);
+#else
     dr_register_filter_syscall_event(event_filter_syscall);
+#endif
     if (opt_verbose)
         dr_fprintf(STDERR, "drperf: initialized, output -> %s\n", opt_out);
 }

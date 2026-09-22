@@ -2,7 +2,7 @@
 # Build everything: perfmark library, drperf DynamoRIO client, C test, Rust example.
 set -eu
 cd "$(dirname "$0")"
-[ -x third_party/dynamorio/bin64/drrun ] || third_party/get_dynamorio.sh
+third_party/get_dynamorio.sh
 mkdir -p build
 gcc -O2 -fPIC -shared -fvisibility=hidden -o build/libperfmark.so perfmark/perfmark.c -ldl
 cp build/libperfmark.so perfmark/libperfmark.so
@@ -10,9 +10,11 @@ cp build/libperfmark.so perfmark/libperfmark.so
 # at process start (see README, "Late attach")
 gcc -O2 -shared -fPIC -o build/libdrperf_attach.so perfmark/attach.c \
     -Lthird_party/dynamorio/lib64/release -ldynamorio \
-    -Wl,-rpath,"$PWD/third_party/dynamorio/lib64/release"
-cmake -S client -B client/build -DCMAKE_BUILD_TYPE=Release >/dev/null
-cmake --build client/build -j8 | grep -v "^\[" || true
+    '-Wl,-rpath,$ORIGIN/../third_party/dynamorio/lib64/release'
+cmake -S client -B client/build -DCMAKE_BUILD_TYPE=Release \
+    -DDynamoRIO_DIR="$PWD/third_party/dynamorio/cmake" \
+    -DDRPERF_OUTPUT_DIRECTORY="$PWD/build" >/dev/null
+cmake --build client/build -j "${DRPERF_BUILD_JOBS:-8}"
 gcc -O2 -o build/ctest tests/ctest.c -Lbuild -lperfmark -Wl,-rpath,"$PWD/build"
 gcc -O2 -pthread -o build/cthreads tests/cthreads.c -Lbuild -lperfmark -Wl,-rpath,"$PWD/build"
 gcc -O2 -pthread -o build/cmarkers tests/cmarkers.c -Lbuild -lperfmark -Wl,-rpath,"$PWD/build"

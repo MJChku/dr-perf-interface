@@ -14,9 +14,9 @@ import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "lib"))
-DRRUN = os.path.join(ROOT, "third_party", "dynamorio", "bin64", "drrun")
-CLIENT = os.path.join(ROOT, "build", "libdrperf.so")
-ATTACH = os.path.join(ROOT, "build", "libdrperf_attach.so")
+DRRUN = os.environ.get("DRPERF_DRRUN", os.path.join(ROOT, "third_party", "dynamorio", "bin64", "drrun"))
+CLIENT = os.environ.get("DRPERF_CLIENT", os.path.join(ROOT, "build", "libdrperf.so"))
+ATTACH = os.environ.get("DRPERF_ATTACH", os.path.join(ROOT, "build", "libdrperf_attach.so"))
 PERFMARK = os.path.join(ROOT, "build", "libperfmark.so")
 CALIB = "_perfmark_calibration"
 
@@ -31,6 +31,54 @@ def state_budget_options(env):
         raise ValueError("DRPERF_MAX_STATES_PER_REGION "
                          "must be an integer between 1 and 65535")
     return ["-max_states_per_region", str(int(value))]
+
+
+def native_exec_options(env):
+    """Experimental native execution of selected non-GX modules.
+
+    GX uses the client's automatic work boundary; whole-module native execution
+    can bypass loader interposition and lose instrumentation or crash.
+    """
+    value = (env.get("DRPERF_NATIVE_EXEC_MODULES") or "").strip()
+    if not value or value.lower() == "none":
+        return []
+    for mod in value.split(","):
+        if not re.fullmatch(r"[A-Za-z0-9_.-]{1,127}", mod.strip()):
+            raise ValueError("DRPERF_NATIVE_EXEC_MODULES must be module basenames, comma-separated")
+    modules = [m.strip() for m in value.split(",")]
+    if "gx_cuda.so" in modules:
+        raise ValueError("GX whole-module native execution is unsupported; "
+                         "leave DRPERF_NATIVE_EXEC_MODULES unset for automatic GX handling")
+    return ["-native_exec_list", ";".join(modules)]
+
+
+def native_gx_options(env):
+    # The client detects gx_cuda.so itself. Explicit 0 disables that default;
+    # explicit 1 also supports a differently named emulator in integration tests.
+    value = env.get("DRPERF_NATIVE_GX")
+    if value is None:
+        return []
+    if value not in ("0", "1"):
+        raise ValueError("DRPERF_NATIVE_GX must be 0 or 1")
+    if value == "0":
+        return ["-no_auto_gx"]
+    if not env.get("DRPERF_EXCLUDE_CUDA_MODULE"):
+        raise ValueError("DRPERF_NATIVE_GX requires DRPERF_EXCLUDE_CUDA_MODULE")
+    if native_exec_options(env):
+        raise ValueError("DRPERF_NATIVE_GX cannot be combined with DRPERF_NATIVE_EXEC_MODULES")
+    return ["-native_gx"]
+
+
+def late_attach_options(env):
+    """Permit strict takeover of existing threads that block DR's SIGILL.
+
+    Requires a runtime with -attach_unmask_suspend_signal (not stock 11.3)
+    and ptrace permission. Never ignore takeover failures.
+    """
+    value = env.get("DRPERF_ATTACH_UNMASK_SIGNAL", "1")
+    if value not in ("0", "1"):
+        raise ValueError("DRPERF_ATTACH_UNMASK_SIGNAL must be 0 or 1")
+    return ["-attach_unmask_suspend_signal"] if value == "1" else []
 
 
 def build_env():
@@ -58,8 +106,10 @@ def run(cmd, out, timeout=None):
     path = os.path.join(out, "run.%p.json")
     env = build_env()
     env["DRPERF_LATE"] = "1"
-    env["DYNAMORIO_OPTIONS"] = "-code_api -client_lib '%s;0;%s'" % (
-        CLIENT, " ".join(["-o", path, "-blocks"] + state_budget_options(env)))
+    env["DYNAMORIO_OPTIONS"] = "-code_api %s-client_lib '%s;0;%s'" % (
+        "".join(o + " " for o in native_exec_options(env) + late_attach_options(env)),
+        CLIENT, " ".join(["-o", path, "-blocks"] + state_budget_options(env)
+                         + native_gx_options(env)))
     excluded = env.get("DRPERF_EXCLUDE_CUDA_MODULE", "")
     if excluded:
         if not re.fullmatch(r"[A-Za-z0-9_.-]{1,127}", excluded):
@@ -83,6 +133,8 @@ def validity(rs):
     out = []
     for run in rs["runs"]:
         d = run["data"].get("drperf", {})
+        if d.get("native_gx") and not d.get("native_gx_hooks"):
+            out.append("requested GX native-work boundary was not found")
         if d.get("excluded_cuda_module") and not d.get("excluded_cuda_exports"):
             out.append("requested CUDA exclusion matched no exports: " + d["excluded_cuda_module"])
         if d.get("slots_overflow"):

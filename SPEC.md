@@ -23,7 +23,10 @@ budgets and the allocated counter bytes.
 
 **Optional measurement scope.** `DRPERF_FOLLOW_THREADS=0` attributes instructions
 only while their own thread has an open region; unmarked workers do not inherit
-the leader's region. `DRPERF_EXCLUDE_CUDA_MODULE=basename` suppresses the selected
+the leader's region. `DRPERF_NATIVE_EXEC_MODULES=basenames` requests native
+execution of whole modules (experimental DynamoRIO `-native_exec_list`);
+this bypasses instrumentation and is not a validated GX measurement mode
+(see README). `DRPERF_EXCLUDE_CUDA_MODULE=basename` suppresses the selected
 module's blocks and synchronous callees beneath its exported CUDA driver/runtime
 and cuBLAS/cuDNN/cuSOLVER/cuSPARSE/cuFFT/cuRAND/cuTENSOR APIs. Exclusion depth is
 thread-local and nested; normal return restores counting. Asynchronous callee
@@ -31,8 +34,19 @@ work on another thread is outside this stack scope. Raw output records the
 scope, matched exports, call count and excluded instructions. The latter is a
 process-wide diagnostic, not a per-region cost. An exclusion matching no exports
 invalidates the run. These options change what cost means; compare identical
-scopes and check remaining module attribution. Defaults retain the measurement
-above. Exclusion still instruments execution and is not a wall-time speedup.
+scopes and check remaining module attribution. Non-GX programs retain the
+measurement above. Counting exclusion alone still instruments execution.
+
+Loading `gx_cuda.so` automatically enables its CUDA-module exclusion and
+executes its `gxvm_gpu_native_run` entry and its dynamic callees natively, returning
+to instrumented host code afterward. This additional device-work boundary can
+also be used on emulator worker threads. Native work contributes no instruction
+counts, including to the `excluded_instructions` diagnostic. Raw metadata
+records installed boundaries and native calls. It is for functional GX, without
+GXVM timing. GX loader/dispatch stubs remain instrumented.
+`DRPERF_NATIVE_GX=0` (`-no_auto_gx`) disables automatic GX handling. Explicit
+`DRPERF_NATIVE_GX=1` with a CUDA-module selection supports renamed emulators.
+Do not combine GX work-boundary replacement with whole-module native execution.
 
 **Cost formulae (`derive`).** Over the observed points $V \subset \mathbb{Z}^k$,
 $|V| \ge k + 2$, each block gets a least-squares plane
