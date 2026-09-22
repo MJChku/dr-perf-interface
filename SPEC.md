@@ -11,10 +11,15 @@ basic block $\beta$ attributed to $t$ on all threads;
 $\mathrm{cost}(t) = \sum_\beta n_\beta(t)$. Counts are exact and, for
 deterministic single-threaded programs, reproducible to the instruction. Only
 per-point means $c_\beta(v)$ over triggers with $v(t) = v$ are stored, for at
-most 128 points per region and within a bounded counter allocation; calls
+most 4,096 points per region by default (configurable with
+`DRPERF_MAX_STATES_PER_REGION` or the client option `-max_states_per_region`)
+and within a bounded counter allocation; calls
 beyond either are counted and reported, not placed at a point.  Blocks beyond
 the counter table are merged into one slot, which is reported and invalidates
-the run.
+the run. Counter arrays share a 96-GiB virtual-address budget. A separate
+process-wide bound of 65,536 region keys, including overflow buckets, terminates
+measurement with an explicit error if reached. The raw report records these
+budgets and the allocated counter bytes.
 
 **Optional measurement scope.** `DRPERF_FOLLOW_THREADS=0` attributes instructions
 only while their own thread has an open region; unmarked workers do not inherit

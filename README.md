@@ -218,8 +218,15 @@ You declare a region and the integers that matter to it. Nothing else is added
 to the program. Every declared integer state forms part of the key, and the
 formula is derived in all of them. PCV storage is dynamically sized in the
 client and bindings; there is no fixed four-PCV limit. Fitting k PCVs still
-needs at least max(3, k+2) distinct observed states, within the existing
-128-state-per-region measurement budget.
+needs at least max(3, k+2) distinct observed states. The default measurement
+budget is 4,096 distinct state combinations per region; it is configurable:
+
+```bash
+DRPERF_MAX_STATES_PER_REGION=8192 bin/drperf python app.py
+```
+
+The native client option is `-max_states_per_region N` (1–65,535). The effective
+budget is also constrained by the process-wide counter allocation described below.
 
 ```c
 #include "perfmark.h"
@@ -253,11 +260,16 @@ Outside DynamoRIO the markers are empty functions, one call each.
   `unexplained`, as a percentage and by function. An omitted variable can still
   hide in a coefficient or constant if it is correlated with a PCV or averaged
   into the state means. Low unexplained cost alone is not proof of completeness.
-- A region keeps at most 128 distinct state combinations, and the counter
+- A region keeps up to 4,096 distinct state combinations by default, and the counter
   arrays are bounded in address space. Calls beyond either limit are reported
   as not modelled rather than merged into a state point they do not belong to.
-  A state with very many values (a monotonically growing counter, say) will hit
-  this; declare something coarser.
+  Raise `DRPERF_MAX_STATES_PER_REGION` to retain more points. Each state/thread
+  counter array reserves 8 MiB of virtual address space with the default block
+  capacity; only touched pages consume physical memory. The shared counter
+  budget remains 96 GiB, so raising the state budget does not guarantee that
+  every point fits. There is also a process-wide bound of 65,536 region keys,
+  including overflow buckets; reaching it terminates measurement with an error.
+  Raw output records the configured budget and counter allocation.
 - When the run itself was not clean, the tool says so on stderr before printing
   anything: basic blocks that did not fit the counter table, state combinations
   that got no counters, states dropped at the marker, unmatched region ends, a
@@ -362,8 +374,9 @@ by (region, declared states, root region) and aggregated per thread, merged at
 exit. Threads with no open region of their own count into the innermost region
 of the leader, each with a private counter array, so counts stay exact under
 concurrency. The marker path takes no lock. `rep movs/stos` are expanded so
-each iteration counts one instruction. A region keeps at most 128 distinct
-state combinations, which bounds memory when a declared state has many values.
+each iteration counts one instruction. A region keeps up to 4,096 distinct
+state combinations by default. The configurable state budget and the shared
+counter budget bound storage when a declared state has many values.
 
 ## Caveats
 

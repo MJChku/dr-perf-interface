@@ -23,7 +23,7 @@
  * Options (client args):  -o FILE  -top N  -max_slots N  -trace N (records,
  *   0 = off)  -blocks (dump per-region per-basic-block counts to FILE.blocks
  *   and the block table to FILE.slots)  -no_rep_expand  -no_symbols  -verbose
- *   -exclude_cuda_module BASENAME  -no_follow_threads
+ *   -exclude_cuda_module BASENAME  -no_follow_threads  -max_states_per_region N
  */
 #include "dr_api.h"
 #include "drmgr.h"
@@ -49,7 +49,7 @@
 #define STATE_VAL_MAX 64
 #define TRACE_CHUNK 256
 #define MAX_KEYS 65536
-#define KEYS_PER_REGION 128        /* distinct state combinations kept per region */
+#define DEFAULT_STATES_PER_REGION 4096
 /* Counter arrays are mapped, not committed: a key only faults in the pages of
  * the blocks it actually runs, so this bounds address space, not memory. */
 #define COUNTER_BUDGET (96ULL << 30)
@@ -150,6 +150,7 @@ typedef struct {
 static char opt_out[512] = "drperf.json";
 static int opt_top = 25;
 static uint64 opt_max_slots = 1024 * 1024;   /* counter slots per key per thread (8 MB) */
+static int opt_max_states_per_region = DEFAULT_STATES_PER_REGION;
 static int64 opt_trace = 500000;
 static bool opt_rep_expand = true;
 static bool opt_symbols = true;
@@ -189,13 +190,11 @@ static uint64 counter_bytes;
 static volatile int64 counter_denied;
 
 static hashtable_t key_table;
-static struct { char region[RNAME_MAX]; int n; } region_keys[64];
-static int nregion_keys;
+static hashtable_t region_key_counts; /* region name -> retained key count */
 
-/* A region whose declared state takes very many values would otherwise get a
- * counter array per value.  A formula needs a handful of points, so keep the
- * first KEYS_PER_REGION combinations and fold the rest into one bucket that
- * the analysis ignores. */
+/* Called under keys_lock only for a new state key. Keep the configured number
+ * of points for every region, including workloads with more than 64 regions.
+ * Beyond the budget, calls go into an explicitly unmodelled overflow bucket. */
 static void safe_strcpy(char *dst, const char *src, size_t n);
 
 static const char *empty_name = "";
@@ -204,21 +203,26 @@ static const int64 zero_val = 0;
 static bool
 region_key_budget(const char *region)
 {
-    int i;
-    for (i = 0; i < nregion_keys; i++) {
-        if (strcmp(region_keys[i].region, region) == 0) {
-            if (region_keys[i].n >= KEYS_PER_REGION)
-                return false;
-            region_keys[i].n++;
-            return true;
+    int *count = hashtable_lookup(&region_key_counts, (void *)region);
+    if (count == NULL) {
+        count = dr_global_alloc(sizeof(*count));
+        if (count == NULL) {
+            dr_fprintf(STDERR, "drperf: out of memory for region state budgets\n");
+            dr_abort();
         }
+        *count = 0;
+        hashtable_add(&region_key_counts, (void *)region, count);
     }
-    if (nregion_keys < (int)(sizeof(region_keys) / sizeof(region_keys[0]))) {
-        safe_strcpy(region_keys[nregion_keys].region, region, RNAME_MAX);
-        region_keys[nregion_keys].n = 1;
-        nregion_keys++;
-    }
+    if (*count >= opt_max_states_per_region)
+        return false;
+    (*count)++;
     return true;
+}
+
+static void
+free_region_key_count(void *count)
+{
+    dr_global_free(count, sizeof(int));
 }
 static rkey_t *keys, *keys_tail;
 static int nkeys;
@@ -456,6 +460,12 @@ get_key(thread_t *t, const char *region, int nk, const char *const *names, const
         overflow = true;
     }
     if (k == NULL) {
+        /* Do not rely on a debug-only assertion before indexing thread stats. */
+        if (nkeys >= MAX_KEYS) {
+            dr_fprintf(STDERR, "drperf: process-wide limit of %d region keys reached; "
+                       "reduce -max_states_per_region or split the measurement\n", MAX_KEYS);
+            dr_abort();
+        }
         k = dr_global_alloc(sizeof(*k));
         memset(k, 0, sizeof(*k));
         safe_strcpy(k->region, region, RNAME_MAX);
@@ -1449,6 +1459,10 @@ event_exit(void)
     dr_fprintf(f, ",\n    \"excluded_cuda_module\": ");
     json_str(f, opt_exclude_cuda_module);
     dr_fprintf(f, ", \"follow_unmarked_threads\": %s", opt_follow_threads ? "true" : "false");
+    dr_fprintf(f, ", \"max_states_per_region\": %d, \"max_keys\": %d, "
+               "\"counter_budget_bytes\": %llu, \"counter_bytes\": %llu",
+               opt_max_states_per_region, MAX_KEYS,
+               (unsigned long long)COUNTER_BUDGET, (unsigned long long)counter_bytes);
     dr_fprintf(f, ", \"excluded_cuda_exports\": %d, \"excluded_cuda_calls\": %lld, \"excluded_instructions\": %llu",
                excluded_wrappers, (long long)excluded_calls, (unsigned long long)excluded_total);
     dr_fprintf(f, ",\n    \"rep_expand\": %s, \"symbols\": %s, \"max_slots\": %llu, "
@@ -1552,6 +1566,7 @@ event_exit(void)
     free_modsyms();
     hashtable_delete(&slot_table);
     hashtable_delete(&key_table);
+    hashtable_delete(&region_key_counts);
     hashtable_delete(&mod_table);
     hashtable_delete(&sym_table);
     dr_raw_mem_free(slot_pc, opt_max_slots * sizeof(app_pc));
@@ -1596,6 +1611,20 @@ parse_options(int argc, const char *argv[])
             if (dr_sscanf(argv[++i], "%d", &v) != 1 || v < 1024)
                 v = 1024;
             opt_max_slots = (uint64)v;
+        } else if (strcmp(argv[i], "-max_states_per_region") == 0 && i + 1 < argc) {
+            const char *value = argv[++i], *p;
+            uint64 limit = 0;
+            for (p = value; *p >= '0' && *p <= '9'; p++) {
+                limit = limit * 10 + (*p - '0');
+                if (limit >= MAX_KEYS)
+                    break;
+            }
+            if (*value == '\0' || *p != '\0' || limit == 0 || limit >= MAX_KEYS) {
+                dr_fprintf(STDERR, "drperf: -max_states_per_region must be an integer "
+                           "between 1 and %d\n", MAX_KEYS - 1);
+                dr_abort();
+            }
+            opt_max_states_per_region = (int)limit;
         } else if (strcmp(argv[i], "-trace") == 0 && i + 1 < argc) {
             if (dr_sscanf(argv[++i], "%d", &v) != 1 || v < 0)
                 v = 0;
@@ -1647,6 +1676,8 @@ dr_client_main(client_id_t id, int argc, const char *argv[])
     threads_rw = dr_rwlock_create();
     hashtable_init_ex(&slot_table, 20, HASH_INTPTR, false, false, NULL, NULL, NULL);
     hashtable_init_ex(&key_table, 8, HASH_STRING, true, false, NULL, NULL, NULL);
+    hashtable_init_ex(&region_key_counts, 8, HASH_STRING, true, false,
+                      free_region_key_count, NULL, NULL);
     hashtable_init_ex(&mod_table, 10, HASH_INTPTR, false, false, NULL, NULL, NULL);
     hashtable_init_ex(&sym_table, 16, HASH_STRING, true, false, NULL, NULL, NULL);
     slot_pc = dr_raw_mem_alloc(opt_max_slots * sizeof(app_pc), DR_MEMPROT_READ | DR_MEMPROT_WRITE, NULL);

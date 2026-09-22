@@ -8,6 +8,9 @@ across regions.  Nothing else, and no options.
     drperf ./myapp
     drperf python app.py
 
+Set DRPERF_MAX_STATES_PER_REGION to change the default 4096 retained state
+combinations per region (subject to the shared counter-memory budget).
+
 Cost is instructions per call, counted exactly on every thread that ran while
 the region was open.  A coefficient appears only for a state that varied in
 this run; a state that did not vary is part of the constant.
@@ -227,7 +230,11 @@ def main(argv):
     tmp = tempfile.mkdtemp(prefix="drperf.")
     try:
         out = os.path.join(tmp, "run")
-        rc, output, files = runner.run(argv, out)
+        try:
+            rc, output, files = runner.run(argv, out)
+        except ValueError as error:
+            sys.stderr.write("drperf: %s\n" % error)
+            return 2
         if rc != 0 or not files:
             sys.stderr.write(output)
             return rc or 1

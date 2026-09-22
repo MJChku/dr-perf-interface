@@ -21,6 +21,18 @@ PERFMARK = os.path.join(ROOT, "build", "libperfmark.so")
 CALIB = "_perfmark_calibration"
 
 
+def state_budget_options(env):
+    """Validate the state budget before embedding it in DynamoRIO options."""
+    value = env.get("DRPERF_MAX_STATES_PER_REGION")
+    if value is None:
+        return []
+    value = str(value)
+    if not re.fullmatch(r"[0-9]{1,5}", value) or not 1 <= int(value) <= 65535:
+        raise ValueError("DRPERF_MAX_STATES_PER_REGION "
+                         "must be an integer between 1 and 65535")
+    return ["-max_states_per_region", str(int(value))]
+
+
 def build_env():
     """A repeatable environment: fixed hash seed and thread counts, no ASLR
     (added by the caller), and the marker library and Python binding found."""
@@ -47,7 +59,7 @@ def run(cmd, out, timeout=None):
     env = build_env()
     env["DRPERF_LATE"] = "1"
     env["DYNAMORIO_OPTIONS"] = "-code_api -client_lib '%s;0;%s'" % (
-        CLIENT, " ".join(["-o", path, "-blocks"]))
+        CLIENT, " ".join(["-o", path, "-blocks"] + state_budget_options(env)))
     excluded = env.get("DRPERF_EXCLUDE_CUDA_MODULE", "")
     if excluded:
         if not re.fullmatch(r"[A-Za-z0-9_.-]{1,127}", excluded):
