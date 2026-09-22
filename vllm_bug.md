@@ -1,4 +1,24 @@
-# DynamoRIO `-native_exec_list gx_cuda.so` crashes under the GX GPU emulator (blocks fast drperf runs of vLLM + the ditto tier)
+# Fixed: drperf coverage of vLLM + ditto FTL under GX
+
+**Status: fixed (2026-09-23), shipped in
+[1a4b23b](https://github.com/MJChku/dr-perf-interface/commit/1a4b23b).**
+Run `./build.sh` to install the pinned GX DynamoRIO fork and rebuild drperf.
+Strict late attachment now unmasks the takeover signal blocked by jemalloc's
+background thread. GX is detected automatically: CUDA work is excluded from
+instruction counts, and emulated device work runs natively through
+`gxvm_gpu_native_run`. GXVM timing is not used.
+
+Validated with 21 passing tests, 48 Qwen/vLLM requests with all 103 application
+regions and 14,792 calls captured without validity errors, and a two-rank
+GX/NCCL test with correct results and identical host counts after native return.
+Engine initialization took 9.7 seconds versus 89.1 seconds with early attachment.
+
+The fix uses GX's explicit device-work boundary. Whole-module
+`-native_exec_list gx_cuda.so` remains unsupported; loader/dispatch stubs remain
+instrumented. Eight-worker Kimi late attachment still needs separate validation.
+The original failure report and investigation are retained below as history.
+
+## Original report: whole-module native execution crashes
 
 Status 2026-09-22: the whole-module native option still fails. The follow-up
 below implements and tests a narrower native-work boundary. Earlier runs
