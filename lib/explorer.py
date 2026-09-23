@@ -57,6 +57,12 @@ def relation_text(relation):
 
 def cost_lines(model):
     """Render the already-checked portable interfaces; do not fit them twice."""
+    # Portable reports encode large int64 state values as decimal strings.
+    # Keep them exact when printing bounds instead of passing strings to the
+    # numerical coefficient formatter (or converting through a float).
+    def boundary(value):
+        return f"{int(value):,}" if isinstance(value, str) else derive.fmt(value)
+
     lines = []
     for region in model["regions"]:
         if not region["regimes"]:
@@ -71,7 +77,7 @@ def cost_lines(model):
             if fit["dependent"]:
                 notes.append("tied PCVs: " + ", ".join(fit["dependent"]))
             if len(region["regimes"]) > 1:
-                notes.append(", ".join("%s <= %s <= %s" % (derive.fmt(lo), state, derive.fmt(hi))
+                notes.append(", ".join("%s <= %s <= %s" % (boundary(lo), state, boundary(hi))
                                        for state, (lo, hi) in zip(region["states"], fit["range"])))
             lines.append("  %s = %s   (%s)" % (region["name"], " + ".join(terms), "; ".join(notes)))
             groups = list(zip(region["states"], fit["attribution"]["coefficients"]))

@@ -86,6 +86,15 @@ class Relations(unittest.TestCase):
 
 
 class ExportIntegrity(unittest.TestCase):
+    def test_cli_formats_portable_int64_regime_bounds_exactly(self):
+        value = 2**60 + 3
+        fit = {"coefficients": [1], "constant": 0, "dependent": [],
+               "unexplainedShare": 0, "range": [[str(value), str(value + 9)]],
+               "attribution": {"coefficients": [[]], "constant": [], "unexplained": []}}
+        model = {"regions": [{"name": "large", "states": ["n"], "regimes": [fit, fit]}]}
+        lines = explorer.cost_lines(model)
+        self.assertIn(f"{value:,} <= n <= {value + 9:,}", lines[0])
+
     def test_all_region_nesting_matches_existing_reader(self):
         records=[
             {'region':'outer','state':{'n':3},'seq':1,'seq_end':14,'tid':1},
