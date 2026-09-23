@@ -183,7 +183,9 @@ formulas, a panel of cross-region state relationships, and what-if changes to
 one or more PCVs. It predicts changes **per region**, without adding them into
 total cost or latency. Relationships are checked on the recorded trace and
 selected explicitly as scenario assumptions. New runs can validate the state
-predictions and cost formulas separately.
+predictions and cost formulas separately. The explorer can suggest small PCV
+experiments that distinguish competing equations, and compare region interfaces
+at shared states across runs or code versions.
 
 ```sh
 DRPERF_REPORT=out/app.drperf.json bin/drperf python app.py

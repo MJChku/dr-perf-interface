@@ -73,9 +73,10 @@ Build drperf with `./build.sh`, then:
 examples/explorer/verify.sh
 ```
 
-This executes all five workloads, exports their models, validates the two
-scenarios, and writes results under `out/explorer-validation/`. The raw sidecars
-are temporary and removed after each export. No GPU is used.
+This executes the five pipeline workloads and two call-structure controls,
+exports their models, validates the scenarios, and writes results under
+`out/explorer-validation/`. The raw sidecars are temporary and removed after
+each export. No GPU is used.
 
 To explore the bundled measurements without running DynamoRIO:
 
@@ -121,3 +122,49 @@ observationally equivalent explanations, find an intervention where they
 predict different states, run that small case, and retain the explanation that
 survives. A successful test supports that intervention; it does not establish a
 universal causal model or predict changed scheduling and call structure.
+
+The explorer can now propose this experiment itself. Select relationship
+assumptions and click **Find distinguishing experiments**, or run:
+
+```sh
+bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+  --assume-first --suggest-experiments -o out/experiments.json
+```
+
+In the bundled refined report, the bounded search tries eight probes and
+suggests multiplying `decode.tokens` by two. Its independently measured outcome
+is the expansion-changed report above. Some other probes cannot be replayed:
+adding one token makes the selected `dispatch.items = copy.bytes/16` relationship
+produce a fractional state. The tool records that conflict rather than rounding
+or treating it as evidence that the program cannot run.
+
+## When the call structure changes
+
+`call_structure.c` is a measured negative control. Doubling `batch.items`
+increases the number of `item` calls from 36 to 72 while retaining eight batch
+calls. Fixed-trace scenario validation rejects this changed structure instead
+of aligning unrelated calls. **Compare runs** can still compare the seven shared
+`item.bytes` states; their recorded per-call instruction costs are unchanged.
+The control uses recorded counts to retain marker instructions and avoid the
+legacy average nested-marker subtraction. It is included in `verify.sh`.
+
+This distinguishes two questions: whether an existing region's interface has
+changed, and whether a fixed recorded execution can predict a new run. The
+former remains useful even when the latter is inapplicable.
+
+## Scale check on an existing vLLM report
+
+The viewer was also exercised on existing vLLM/ditto measurements, without a
+new GPU run: 104 PCV-schema interfaces, 101 observed relationships, and 14,792
+region calls. The original 103 region names include `rt.query` with two PCV
+schemas, which the exporter keeps separate. With local source mapping and
+bounded relationship discovery, export took about 47 seconds on the development
+host. A tested single-PCV scenario took about 0.30 seconds in the browser worker;
+the panel's 10 ms responsiveness timer had a maximum gap below 12 ms in that run.
+These are host-specific smoke-test measurements, not performance guarantees.
+
+A 12-probe experiment search found competing explanations across load planning,
+allocation, and worker regions. For example, changing `sched.after_alloc.ext_tokens`
+separates candidate explanations for nine downstream PCVs. That is an experiment
+proposal from existing observations, not a validated vLLM intervention. The
+synthetic program above supplies the independently measured validation.

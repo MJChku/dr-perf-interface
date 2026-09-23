@@ -3,8 +3,19 @@
 (function () {
   'use strict';
   const M = window.DrperfModel;
+  const analysis = window.DrperfAnalysis;
+  let scenarioImportGeneration = 0;
+  let scenarioGeneration = 0,
+    scenarioPending = false,
+    scenarioCache = null,
+    comparisonCache = null,
+    proposalModelCache = null;
+  let scenarioValidation = null,
+    scenarioValidationError = '';
+  let experimentCache = null;
   const host = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi() : null;
   const saved = host?.getState() || {};
+  const sourceStatuses = new Map();
   let loadedModel = null,
     rawCosts = saved.rawCosts || false;
   let model = null,
@@ -22,7 +33,12 @@
   let proposals = [],
     proposalDraft = null,
     proposalResult = null;
-  const scenarioModel = () => M.withProposals(model, proposals);
+  const scenarioModel = () => {
+    const key = JSON.stringify(proposals);
+    if (proposalModelCache?.model !== model || proposalModelCache.key !== key)
+      proposalModelCache = { model, key, value: M.withProposals(model, proposals) };
+    return proposalModelCache.value;
+  };
   const root = document.getElementById('app');
   const send = (message) =>
     host
@@ -88,6 +104,26 @@
     );
     if (r.droppedCalls) tags.append(badge(`${r.droppedCalls} calls omitted from fitting`, 'warn'));
     append(card, tags);
+    const statuses = sourceStatuses.get(r.id) || [];
+    if (statuses.some((source) => source.state === 'changed'))
+      card.append(
+        el(
+          'p',
+          'notice warn',
+          'Source differs from the exported snapshot. This is the recorded interface; remeasure edited code before treating it as the current interface.'
+        )
+      );
+    if (statuses.some((source) => source.state === 'unavailable'))
+      append(
+        card,
+        el(
+          'p',
+          'notice warn',
+          'Some source locations are unavailable from the current source root.'
+        ),
+        button('Configure source root', () => send({ type: 'configureSourceRoot' }), 'quiet')
+      );
+
     if (!r.regimes.length)
       append(
         card,
@@ -677,26 +713,77 @@
       if (first) edits.push({ region: first.id, state: first.states[0], op: 'scale', value: 2 });
     }
   }
-  function updateScenario() {
+  function currentScenario() {
+    return {
+      edits: structuredClone(edits),
+      relations: [...assumptionIds],
+      proposals: structuredClone(proposals),
+      costBasis: rawCosts ? 'recorded' : 'calibrated',
+      auditAlternatives
+    };
+  }
+  async function updateScenario() {
     persist();
-    try {
-      result = M.replay(model, {
-        edits: structuredClone(edits),
-        relations: [...assumptionIds],
-        proposals: structuredClone(proposals),
-        costBasis: rawCosts ? 'recorded' : 'calibrated',
-        auditAlternatives
-      });
-      scenarioError = '';
-    } catch (error) {
-      result = null;
-      scenarioError = error.message;
+    const scenario = currentScenario();
+    const key = JSON.stringify(scenario);
+    const paint = () => {
+      const target = document.getElementById('scenario-result');
+      if (target) target.replaceChildren(scenarioResults());
+    };
+    if (
+      scenarioCache?.model === model &&
+      scenarioCache.measured === validationModel &&
+      scenarioCache.key === key
+    ) {
+      paint();
+      return;
     }
-    const target = document.getElementById('scenario-result');
-    if (target) target.replaceChildren(scenarioResults());
+    scenarioCache = { model, measured: validationModel, key };
+    const generation = ++scenarioGeneration;
+    scenarioPending = true;
+    result = null;
+    scenarioError = '';
+    scenarioValidation = null;
+    scenarioValidationError = '';
+    paint();
+    try {
+      const response = await analysis.request('scenario', model, {
+        scenario,
+        measured: validationModel
+      });
+      if (generation !== scenarioGeneration) return;
+      result = response.result;
+      scenarioValidation = response.validation;
+      scenarioValidationError = response.validationError || '';
+      send({
+        type: 'analysisFinished',
+        baseModelId: loadedModel.id,
+        modelId: result.modelId,
+        backend: analysis.backend,
+        changedRegions: result.regions.filter((r) => r.changedCalls).map((r) => r.region)
+      });
+    } catch (error) {
+      if (generation !== scenarioGeneration) return;
+      scenarioError = error.message;
+      send({
+        type: 'analysisFinished',
+        baseModelId: loadedModel.id,
+        error: error.message,
+        backend: analysis.backend
+      });
+    } finally {
+      if (generation === scenarioGeneration) {
+        scenarioPending = false;
+        paint();
+      }
+    }
   }
   function scenarioResults() {
     const main = el('div');
+    if (scenarioPending) {
+      main.append(el('p', 'analysis-pending', 'Checking the scenario…'));
+      return main;
+    }
     if (scenarioError) {
       main.append(el('div', 'notice warn', scenarioError));
       return main;
@@ -891,11 +978,13 @@
         validationName + ' · State propagation and cost prediction are checked separately.'
       )
     );
-    let validation;
-    try {
-      validation = M.validateScenario(model, result.scenario, validationModel);
-    } catch (error) {
-      card.append(el('p', 'notice warn', error.message));
+    const validation = scenarioValidation;
+    if (scenarioValidationError) {
+      card.append(el('p', 'notice warn', scenarioValidationError));
+      return card;
+    }
+    if (!validation) {
+      card.append(el('p', 'muted', 'Checking the new execution…'));
       return card;
     }
     if (!validation.structureMatches) {
@@ -1034,22 +1123,28 @@
       ),
       button(
         'Check proposed relationship',
-        () => {
-          try {
-            proposalResult = M.proposeRelationship(
-              model,
-              proposalDraft.target,
-              proposalDraft.expression
-            );
-          } catch (error) {
-            proposalResult = { error: error.message };
-          }
+        async () => {
+          const currentModel = model,
+            draft = structuredClone(proposalDraft),
+            key = JSON.stringify(draft);
+          proposalResult = { pending: true };
           render();
+          let checked;
+          try {
+            checked = await analysis.request('proposal', currentModel, draft);
+          } catch (error) {
+            checked = { error: error.message };
+          }
+          if (model !== currentModel || JSON.stringify(proposalDraft) !== key) return;
+          proposalResult = checked;
+          if (activeTab === 'scenario') render();
         },
         'secondary'
       )
     );
-    if (proposalResult?.error) card.append(el('p', 'notice warn', proposalResult.error));
+    if (proposalResult?.pending)
+      card.append(el('p', 'analysis-pending', 'Checking recorded target calls…'));
+    else if (proposalResult?.error) card.append(el('p', 'notice warn', proposalResult.error));
     else if (proposalResult) {
       const { relation, check } = proposalResult;
       card.append(
@@ -1199,7 +1294,9 @@
       )
     );
     main.append(card);
-    main.append(proposalView());
+    const results = el('div');
+    results.id = 'scenario-result';
+    main.append(results);
     const availableRelations = scenarioModel().relations;
     const assumptions = append(
       el('section', 'card'),
@@ -1275,10 +1372,297 @@
     }
     assumptions.append(details);
     main.append(assumptions);
-    const results = el('div');
-    results.id = 'scenario-result';
-    main.append(results);
+    main.append(proposalView());
+    main.append(experimentView());
     // Update after insertion by render().
+    return main;
+  }
+  function experimentView() {
+    const card = append(
+      el('section', 'card'),
+      heading(
+        'Choose the next small experiment',
+        'Search for a single PCV change that separates observed explanations. Uses your chosen relationships from the recorded baseline; current interventions are not included.'
+      )
+    );
+    const assumptions = {
+      relations: [...assumptionIds],
+      proposals: structuredClone(proposals),
+      costBasis: rawCosts ? 'recorded' : 'calibrated'
+    };
+    const key = JSON.stringify(assumptions);
+    const current =
+      experimentCache?.model === model && experimentCache.key === key ? experimentCache : null;
+    const action = button(
+      current?.pending ? 'Searching…' : 'Find distinguishing experiments',
+      () => {
+        const cache = (experimentCache = { model, key, pending: true });
+        render();
+        analysis
+          .request('experiments', model, { assumptions })
+          .then((value) => {
+            cache.value = value;
+          })
+          .catch((error) => {
+            cache.error = error.message;
+          })
+          .finally(() => {
+            cache.pending = false;
+            if (experimentCache === cache && activeTab === 'scenario') render();
+          });
+      },
+      'secondary'
+    );
+    action.disabled = !assumptionIds.length || !!current?.pending;
+    card.append(action);
+    if (!assumptionIds.length)
+      card.append(el('p', 'small muted', 'Select at least one relationship assumption first.'));
+    if (current?.error) card.append(el('p', 'notice warn', current.error));
+    if (current?.value) {
+      const value = current.value;
+      card.append(
+        el(
+          'p',
+          'small muted',
+          `${value.search.tried}/${value.search.possibleProbes} candidate probes checked; ${value.search.ambiguousTargets} targets have competing observed equations. ${value.search.truncated ? 'Search was bounded, not exhaustive.' : ''}`
+        )
+      );
+      card.append(
+        el(
+          'p',
+          'notice warn',
+          'These are conditional PCV experiments, not generated program inputs. Check that each change can be implemented while retaining the recorded call structure, then measure a small run.'
+        )
+      );
+      if (!value.suggestions.length)
+        card.append(
+          el(
+            'p',
+            'muted',
+            'No distinguishing experiment found within this search. Agreement is not proof of causality.'
+          )
+        );
+      for (const suggestion of value.suggestions) {
+        const item = el('details', 'experiment-suggestion');
+        const edit = suggestion.edit;
+        item.dataset.experimentRegion = edit.region;
+        item.dataset.experimentState = edit.state;
+        item.dataset.experimentOp = edit.op;
+        item.append(
+          el(
+            'summary',
+            '',
+            `${edit.region}.${edit.state}: ${edit.op === 'add' ? 'add 1' : 'multiply by 2'} · separates ${suggestion.targets.length} target PCVs`
+          )
+        );
+        item.append(
+          el(
+            'p',
+            'small',
+            'Measure: ' + suggestion.targets.map((t) => t.region + '.' + t.state).join(', ')
+          )
+        );
+        for (const check of suggestion.disagreements) {
+          item.append(
+            el(
+              'p',
+              'small',
+              `${check.target.region}.${check.target.state}: ${check.disagreements}/${check.calls} calls disagree`
+            )
+          );
+          append(
+            item,
+            el('code', 'equation', check.selectedEquation),
+            el('code', 'equation', check.candidateEquation)
+          );
+        }
+        item.append(
+          button(
+            'Replace interventions with this probe',
+            () => {
+              edits = structuredClone(suggestion.scenario.edits);
+              auditAlternatives = true;
+              render();
+            },
+            'secondary'
+          )
+        );
+        card.append(item);
+      }
+      if (value.rejected.length) {
+        const failures = el('details');
+        failures.append(
+          el(
+            'summary',
+            '',
+            `${value.rejected.length} probes could not be replayed under the selected assumptions`
+          )
+        );
+        for (const failure of value.rejected)
+          failures.append(
+            el(
+              'p',
+              'small',
+              `${failure.edit.region}.${failure.edit.state} ${failure.edit.op} ${failure.edit.value}: ${failure.reason}`
+            )
+          );
+        card.append(failures);
+      }
+    }
+    return card;
+  }
+  function comparisonView() {
+    const main = el('div');
+    const intro = append(
+      el('section', 'card'),
+      heading(
+        'Compare region interfaces',
+        'Compare measured costs at exactly shared PCV states. This separates changes in a region’s cost from changes in the workload mix. Call order may differ.'
+      )
+    );
+    append(
+      intro,
+      button(
+        validationModel ? 'Choose another comparison report' : 'Choose comparison report',
+        () => send({ type: 'loadValidationReport' }),
+        'secondary'
+      ),
+      el(
+        'p',
+        'small muted',
+        'Assumes PCV names retain their meaning across reports. Each shared state receives equal weight within its region. No region costs are added together, and these differences are not a significance test.'
+      )
+    );
+    main.append(intro);
+    if (!validationModel) return main;
+    if (comparisonCache?.model !== model || comparisonCache.measured !== validationModel) {
+      const cache = (comparisonCache = { model, measured: validationModel, pending: true });
+      analysis
+        .request('comparison', model, {
+          measured: validationModel,
+          options: { costBasis: rawCosts ? 'recorded' : 'calibrated' }
+        })
+        .then((value) => {
+          cache.value = value;
+        })
+        .catch((error) => {
+          cache.error = error.message;
+        })
+        .finally(() => {
+          cache.pending = false;
+          if (comparisonCache === cache && activeTab === 'compare') render();
+        });
+    }
+    if (comparisonCache.pending) {
+      main.append(el('p', 'analysis-pending', 'Comparing observed states…'));
+      return main;
+    }
+    if (comparisonCache.error) {
+      main.append(el('p', 'notice warn', comparisonCache.error));
+      return main;
+    }
+    const comparison = comparisonCache.value;
+    const card = append(el('section', 'card'), heading('Observed differences', validationName));
+    const table = el('table', 'comparison-table');
+    table.append(
+      append(
+        el('thead'),
+        append(
+          el('tr'),
+          ...['Region', 'Shared states', 'Before', 'After', 'Difference'].map((text) =>
+            el('th', '', text)
+          )
+        )
+      )
+    );
+    const body = el('tbody');
+    const rows = [...comparison.regions].sort(
+      (a, b) => Math.abs(b.deltaMean || 0) - Math.abs(a.deltaMean || 0)
+    );
+    for (const row of rows) {
+      const tr = el('tr');
+      tr.dataset.comparisonRegion = row.region;
+      append(
+        tr,
+        append(
+          el('td'),
+          model.regions.some((r) => r.id === row.region)
+            ? button(row.name, () => choose(row.region, 'interface'), 'link-button')
+            : el('span', '', row.name),
+          el('small', 'muted', row.status)
+        ),
+        el(
+          'td',
+          'number',
+          row.pairedStates
+            ? `${row.pairedStates} (${row.beforeStates} → ${row.afterStates} observed)`
+            : 'No paired states'
+        ),
+        el('td', 'number', row.beforeMean == null ? '—' : fmt(row.beforeMean)),
+        el('td', 'number', row.afterMean == null ? '—' : fmt(row.afterMean)),
+        el(
+          'td',
+          'number ' + (row.deltaMean > 0 ? 'increase' : row.deltaMean < 0 ? 'decrease' : ''),
+          row.deltaMean == null ? '—' : `${row.deltaMean > 0 ? '+' : ''}${fmt(row.deltaMean)}`
+        )
+      );
+      body.append(tr);
+      if (!row.points.length && !row.beforeFormulas) continue;
+      const detailRow = el('tr'),
+        cell = el('td');
+      cell.colSpan = 5;
+      const detail = el('details');
+      detail.append(el('summary', '', 'Inspect shared states and formulas'));
+      if (row.changedExpressions?.length)
+        detail.append(
+          el(
+            'p',
+            'notice warn',
+            'Source expressions changed for ' +
+              row.changedExpressions.join(', ') +
+              '. Check that these PCVs still have the same meaning before interpreting the comparison.'
+          )
+        );
+      if (row.unsupportedStates)
+        detail.append(
+          el(
+            'p',
+            'notice warn',
+            `${row.unsupportedStates} shared states have negative calibrated costs and are excluded. Inspect the recorded-count view.`
+          )
+        );
+      for (const formula of row.beforeFormulas || [])
+        detail.append(el('code', 'equation', 'Before: ' + formula));
+      for (const formula of row.afterFormulas || [])
+        detail.append(el('code', 'equation', 'After: ' + formula));
+      for (const change of row.coefficientChanges || [])
+        detail.append(
+          el('p', 'mono small', `${change.state} coefficient: ${change.before} → ${change.after}`)
+        );
+      if (row.coefficientNote) detail.append(el('p', 'small muted', row.coefficientNote));
+      for (const point of row.points.slice(0, 100))
+        detail.append(
+          el(
+            'p',
+            'mono small',
+            `${stateLabel(row.states, point.state)}: ${fmt(point.before)} → ${fmt(point.after)} instructions/call (${point.beforeCalls} and ${point.afterCalls} calls)`
+          )
+        );
+      if (row.points.length > 100)
+        detail.append(
+          el(
+            'p',
+            'small muted',
+            `Showing 100 of ${row.points.length} paired states. The CLI comparison retains all states.`
+          )
+        );
+      cell.append(detail);
+      detailRow.append(cell);
+      body.append(detailRow);
+    }
+    table.append(body);
+    card.append(append(el('div', 'table-scroll'), table));
+    main.append(card);
     return main;
   }
   function render() {
@@ -1384,7 +1768,8 @@
     for (const [key, title] of [
       ['interface', 'Interface'],
       ['relations', 'Relationships'],
-      ['scenario', 'What-if']
+      ['scenario', 'What-if'],
+      ['compare', 'Compare runs']
     ]) {
       const b = button(
         title,
@@ -1409,7 +1794,9 @@
           ? interfaceView(r)
           : activeTab === 'relations'
             ? relationshipsView()
-            : scenarioView()
+            : activeTab === 'compare'
+              ? comparisonView()
+              : scenarioView()
       );
     }
     append(shell, aside, content);
@@ -1422,12 +1809,18 @@
     if (message?.type === 'model') {
       try {
         const previousId = model?.id;
+        ++scenarioGeneration;
+        scenarioCache = null;
+        comparisonCache = null;
+        proposalModelCache = null;
+        experimentCache = null;
         loadedModel = M.validate(message.model);
         model = rawCosts ? M.recordedCosts(loadedModel) : loadedModel;
         const current = host?.getState() || saved;
         const same = current.modelId === model.id;
         selected = message.selected || (same ? current.selected : null) || model.regions[0]?.id;
         if (previousId !== model.id) {
+          sourceStatuses.clear();
           validationModel = null;
           proposalResult = null;
           proposalDraft = null;
@@ -1439,11 +1832,76 @@
       } catch (error) {
         root.replaceChildren(el('div', 'notice error', 'Cannot display report: ' + error.message));
       }
+    } else if (message?.type === 'scenario' && message.modelId === loadedModel?.id) {
+      const generation = ++scenarioImportGeneration,
+        source = loadedModel,
+        scenario = message.scenario;
+      const analysisGeneration = ++scenarioGeneration;
+      scenarioCache = null;
+      scenarioPending = true;
+      result = null;
+      analysis
+        .request('scenario', source, { scenario })
+        .then((response) => {
+          if (
+            generation !== scenarioImportGeneration ||
+            analysisGeneration !== scenarioGeneration ||
+            source !== loadedModel
+          )
+            return;
+          rawCosts = scenario.costBasis === 'recorded';
+          model = rawCosts ? M.recordedCosts(source) : source;
+          edits = structuredClone(scenario.edits);
+          assumptionIds = [...scenario.relations];
+          proposals = structuredClone(scenario.proposals || []);
+          auditAlternatives = !!scenario.auditAlternatives;
+          selected = edits[0]?.region || selected;
+          validationModel = null;
+          proposalModelCache = null;
+          proposalDraft = null;
+          proposalResult = null;
+          activeTab = 'scenario';
+          result = response.result;
+          scenarioPending = false;
+          scenarioError = '';
+          scenarioValidation = null;
+          scenarioValidationError = '';
+          scenarioCache = { model, measured: null, key: JSON.stringify(currentScenario()) };
+          render();
+          send({
+            type: 'analysisFinished',
+            baseModelId: source.id,
+            modelId: result.modelId,
+            backend: analysis.backend,
+            changedRegions: result.regions.filter((r) => r.changedCalls).map((r) => r.region)
+          });
+        })
+        .catch((error) => {
+          if (
+            generation !== scenarioImportGeneration ||
+            analysisGeneration !== scenarioGeneration ||
+            source !== loadedModel
+          )
+            return;
+          scenarioPending = false;
+          scenarioError = error.message;
+          send({
+            type: 'analysisFinished',
+            baseModelId: source.id,
+            error: error.message,
+            backend: analysis.backend
+          });
+          root.prepend(el('p', 'notice warn', 'Cannot open saved scenario: ' + error.message));
+        });
+    } else if (message?.type === 'sourceStatus' && message.modelId === loadedModel?.id) {
+      sourceStatuses.set(message.region, message.sources || []);
+      if (activeTab === 'interface' && selected === message.region) render();
     } else if (message?.type === 'validationModel') {
       try {
         validationModel = M.validate(message.model);
         validationName = message.name || 'Measured report';
-        updateScenario();
+        if (activeTab === 'compare') render();
+        else updateScenario();
       } catch (error) {
         scenarioError = error.message;
         updateScenario();

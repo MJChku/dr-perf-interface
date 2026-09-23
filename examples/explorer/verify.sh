@@ -48,3 +48,36 @@ assert all(r['stateMatches']==r['calls'] for r in checked['regions'])
 print('Expansion intervention: first dispatch relationship fails 24/24 calls; revised relationship matches all calls.')
 print('PASS: propagated states and affine regions match the changed program; refined lookup matches every call.')
 PY
+
+# A changed call structure must not be presented as a validated fixed-trace
+# counterfactual. Shared-state interface comparison remains useful, however.
+gcc -O2 examples/explorer/call_structure.c -Lbuild -lperfmark \
+    -Wl,-rpath,"$PWD/build" -o "$OUT/call-structure"
+PYTHONPATH="$PWD/lib" python3 - "$OUT" <<'PY'
+import os, pathlib, sys, tempfile
+import explorer, runner
+root=pathlib.Path(sys.argv[1]).resolve()
+os.environ['DRPERF_FOLLOW_THREADS']='0'
+for scale, name in ((1,'call-structure-before'),(2,'call-structure-after')):
+    with tempfile.TemporaryDirectory(prefix='.structure-raw-', dir=root) as raw:
+        rc, log, files=runner.run([str(root/'call-structure'),str(scale)],raw,timeout=60)
+        if rc or not files: raise RuntimeError(log)
+        model=explorer.build_model(raw,source_root='.',source_paths=['examples/explorer/call_structure.c'])
+        explorer.write_model(model,root/(name+'.drperf.json'))
+PY
+bin/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
+    --edit batch items scale 2 --validate "$OUT/call-structure-after.drperf.json" \
+    -o "$OUT/call-structure-scenario.json"
+bin/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
+    --compare "$OUT/call-structure-after.drperf.json" -o "$OUT/call-structure-comparison.json"
+python3 - "$OUT" <<'PY'
+import json, pathlib, sys
+root=pathlib.Path(sys.argv[1])
+scenario=json.loads((root/'call-structure-scenario.json').read_text())
+assert not scenario['validation']['structureMatches'],scenario
+assert not scenario['validation']['regions'],scenario
+comparison=json.loads((root/'call-structure-comparison.json').read_text())
+item=next(r for r in comparison['regions'] if r['region']=='item')
+assert item['pairedStates']>=5 and abs(item['deltaMean'])<1e-5,item
+print('PASS: added calls reject fixed-trace validation; item costs match at shared PCV states.')
+PY

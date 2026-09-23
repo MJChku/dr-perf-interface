@@ -1,7 +1,6 @@
 'use strict';
 const vscode = require('vscode');
 const path = require('node:path');
-const fs = require('node:fs/promises');
 const crypto = require('node:crypto');
 const { execFile } = require('node:child_process');
 const Model = require('./media/model');
@@ -12,7 +11,12 @@ function activate(context) {
     panel = null,
     selected = null,
     demo = false,
-    watcher = null;
+    watcher = null,
+    sourceTimer = null,
+    loadSequence = 0,
+    pendingScenario = null,
+    webviewReady = false,
+    analysisStatus = null;
   const changed = new vscode.EventEmitter();
   const lensesChanged = new vscode.EventEmitter();
   const documentHashes = new WeakMap();
@@ -20,6 +24,7 @@ function activate(context) {
   context.subscriptions.push(changed, lensesChanged, output, {
     dispose: () => {
       watcher?.dispose();
+      clearTimeout(sourceTimer);
       panel?.dispose();
     }
   });
@@ -62,6 +67,53 @@ function activate(context) {
     }
     return location.sha256 !== cached.hash;
   }
+  async function getSourceStatus(regionId = selected) {
+    const region = report?.regions.find((r) => r.id === regionId);
+    if (!region) return [];
+    const documents = new Map(
+      vscode.workspace.textDocuments.map((document) => [document.uri.toString(), document])
+    );
+    const files = new Map();
+    return Promise.all(
+      region.sources.map(async (location) => {
+        const uri = sourceUri(location);
+        if (!uri) return { path: location.path, state: 'unavailable' };
+        const document = documents.get(uri.toString());
+        if (document)
+          return { path: location.path, state: stale(document, location) ? 'changed' : 'matches' };
+        try {
+          if (!files.has(uri.toString()))
+            files.set(
+              uri.toString(),
+              vscode.workspace.fs
+                .readFile(uri)
+                .then((bytes) => crypto.createHash('sha256').update(bytes).digest('hex'))
+            );
+          const hash = await files.get(uri.toString());
+          return { path: location.path, state: hash === location.sha256 ? 'matches' : 'changed' };
+        } catch {
+          return { path: location.path, state: 'unavailable' };
+        }
+      })
+    );
+  }
+  async function sendSourceStatus() {
+    if (!panel || !report || !selected) return;
+    const currentReport = report,
+      currentRegionId = selected;
+    const sources = await getSourceStatus(currentRegionId);
+    if (report === currentReport && selected === currentRegionId)
+      panel?.webview.postMessage({
+        type: 'sourceStatus',
+        modelId: report.id,
+        region: currentRegionId,
+        sources
+      });
+  }
+  function scheduleSourceStatus() {
+    clearTimeout(sourceTimer);
+    sourceTimer = setTimeout(() => void sendSourceStatus(), 120);
+  }
   function currentRegion(editor = vscode.window.activeTextEditor) {
     if (!editor) return null;
     const line = editor.selection.active.line + 1;
@@ -82,12 +134,22 @@ function activate(context) {
       sourceAvailable: !!sourceRoot() || demo,
       reportPath: reportUri?.fsPath || 'Bundled example'
     });
+    if (pendingScenario) {
+      panel?.webview.postMessage({
+        type: 'scenario',
+        scenario: pendingScenario,
+        modelId: report.id
+      });
+      pendingScenario = null;
+    }
+    void sendSourceStatus();
   }
   function selectRegion(regionId, reveal = true) {
     if (!report?.regions.some((r) => r.id === regionId)) return;
     selected = regionId;
     if (reveal) showExplorer();
     panel?.webview.postMessage({ type: 'select', region: regionId });
+    void sendSourceStatus();
   }
   async function openSource(regionId, index = 0) {
     const region = report?.regions.find((r) => r.id === regionId);
@@ -133,17 +195,19 @@ function activate(context) {
         localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'media')]
       }
     );
+    webviewReady = false;
     const webview = panel.webview;
     const nonce = crypto.randomBytes(24).toString('base64');
     const media = (file) =>
       webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'media', file));
     webview.html = `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} data:; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} data:; style-src ${webview.cspSource}; script-src 'nonce-${nonce}'; worker-src blob:; connect-src ${webview.cspSource};">
       <link rel="stylesheet" href="${media('explorer.css')}"><title>drperf Region Explorer</title></head>
-      <body><div id="app" aria-live="polite"></div><script nonce="${nonce}" src="${media('expressions.js')}"></script><script nonce="${nonce}" src="${media('model.js')}"></script><script nonce="${nonce}" src="${media('explorer.js')}"></script></body></html>`;
+      <body><div id="app" aria-live="polite"></div><script nonce="${nonce}" src="${media('expressions.js')}"></script><script nonce="${nonce}" src="${media('model.js')}"></script><script nonce="${nonce}" src="${media('analysis-client.js')}" data-expressions="${media('expressions.js')}" data-model="${media('model.js')}" data-worker="${media('analysis-worker.js')}"></script><script nonce="${nonce}" src="${media('explorer.js')}"></script></body></html>`;
     panel.onDidDispose(
       () => {
         panel = null;
+        webviewReady = false;
       },
       null,
       context.subscriptions
@@ -151,7 +215,16 @@ function activate(context) {
     webview.onDidReceiveMessage(
       async (message) => {
         if (!message || typeof message.type !== 'string') return;
-        if (message.type === 'ready') sendModel();
+        if (message.type === 'ready') {
+          webviewReady = true;
+          sendModel();
+        } else if (message.type === 'analysisFinished' && message.baseModelId === report?.id)
+          analysisStatus = message;
+        else if (message.type === 'configureSourceRoot')
+          await vscode.commands.executeCommand(
+            'workbench.action.openSettings',
+            'drperf.sourceRoot'
+          );
         else if (message.type === 'source' && typeof message.region === 'string')
           await openSource(message.region, Number.isInteger(message.index) ? message.index : 0);
         else if (message.type === 'select' && typeof message.region === 'string')
@@ -207,7 +280,10 @@ function activate(context) {
     return Model.validate(JSON.parse(Buffer.from(bytes).toString('utf8')));
   }
   async function load(uri, isDemo = false) {
+    const sequence = ++loadSequence;
     const parsed = await readModel(uri);
+    if (sequence !== loadSequence) return;
+    analysisStatus = null;
     report = parsed;
     reportUri = uri;
     demo = isDemo;
@@ -223,6 +299,7 @@ function activate(context) {
         new vscode.RelativePattern(path.dirname(uri.fsPath), path.basename(uri.fsPath))
       );
       watcher.onDidChange(() => reload());
+      watcher.onDidCreate(() => reload());
     }
   }
   async function reload() {
@@ -247,6 +324,46 @@ function activate(context) {
       showExplorer();
     } catch (error) {
       vscode.window.showErrorMessage('Cannot open drperf report: ' + error.message);
+    }
+  }
+  async function openScenario(uri) {
+    try {
+      if (!report) {
+        await openReport();
+        if (!report) return;
+      }
+      if (!(uri instanceof vscode.Uri))
+        uri = (
+          await vscode.window.showOpenDialog({
+            canSelectMany: false,
+            openLabel: 'Open drperf scenario',
+            filters: { 'drperf scenario': ['json'] }
+          })
+        )?.[0];
+      if (!uri) return;
+      if ((await vscode.workspace.fs.stat(uri)).size > 50 * 1024 * 1024)
+        throw new Error('Scenario file is larger than 50 MiB.');
+      const saved = JSON.parse(
+        Buffer.from(await vscode.workspace.fs.readFile(uri)).toString('utf8')
+      );
+      const scenario = saved.scenario || saved;
+      if (!Array.isArray(scenario.edits) || !Array.isArray(scenario.relations))
+        throw new Error('Invalid saved scenario.');
+      const expected =
+        scenario.costBasis === 'recorded' &&
+        report.measurement?.markerAdjustment !== 'none; marker API instructions retained'
+          ? report.id + ':recorded'
+          : report.id;
+      if (saved.modelId && saved.modelId !== expected)
+        throw new Error(
+          'This scenario belongs to a different report. Open its original report first.'
+        );
+      pendingScenario = scenario;
+      analysisStatus = null;
+      showExplorer();
+      if (webviewReady) sendModel();
+    } catch (error) {
+      vscode.window.showErrorMessage('Cannot open scenario: ' + error.message);
     }
   }
   async function exportReport() {
@@ -395,10 +512,21 @@ function activate(context) {
       }
     })
   );
-  context.subscriptions.push(vscode.workspace.onDidChangeTextDocument(() => lensesChanged.fire()));
-  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(() => lensesChanged.fire()));
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      lensesChanged.fire();
+      if (locations(event.document).length) scheduleSourceStatus();
+    })
+  );
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(() => {
+      lensesChanged.fire();
+      scheduleSourceStatus();
+    })
+  );
   for (const [command, callback] of Object.entries({
     'drperf.openReport': openReport,
+    'drperf.openScenario': openScenario,
     'drperf.showExplorer': showExplorer,
     'drperf.exportReport': exportReport,
     'drperf.refresh': reload,
@@ -428,7 +556,13 @@ function activate(context) {
     load(vscode.Uri.parse(saved)).catch((error) =>
       output.appendLine('Previous report unavailable: ' + error.message)
     );
-  return { load, getReport: () => report, currentRegion };
+  return {
+    load,
+    getReport: () => report,
+    currentRegion,
+    getSourceStatus,
+    getAnalysisStatus: () => analysisStatus
+  };
 }
 
 function deactivate() {}

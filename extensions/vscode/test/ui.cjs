@@ -9,7 +9,7 @@ const output = path.resolve(__dirname, '../../../out/explorer-ui');
 const model = JSON.parse(
   require('node:fs').readFileSync(path.join(base, 'demo/pipeline.drperf.json'), 'utf8')
 );
-const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-test'; style-src 'self'; img-src 'self' data:"><link rel="stylesheet" href="/media/explorer.css"></head><body><div id="app"></div><script nonce="test" src="/media/expressions.js"></script><script nonce="test" src="/media/model.js"></script><script nonce="test" src="/media/explorer.js"></script></body></html>`;
+const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-test'; worker-src blob:; connect-src 'self'; style-src 'self'; img-src 'self' data:"><link rel="stylesheet" href="/media/explorer.css"></head><body><div id="app"></div><script nonce="test" src="/media/expressions.js"></script><script nonce="test" src="/media/model.js"></script><script nonce="test" src="/media/analysis-client.js" data-expressions="/media/expressions.js" data-model="/media/model.js" data-worker="/media/analysis-worker.js"></script><script nonce="test" src="/media/explorer.js"></script></body></html>`;
 (async () => {
   await fs.mkdir(output, { recursive: true });
   const server = http.createServer(async (req, res) => {
@@ -53,6 +53,34 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
     }, model);
     await page.getByRole('heading', { name: 'enqueue', exact: true }).waitFor();
     assert.match(await page.locator('.formula').first().textContent(), /64\*items/);
+    await page.evaluate(
+      (id) =>
+        window.postMessage(
+          {
+            type: 'sourceStatus',
+            modelId: id,
+            region: 'enqueue',
+            sources: [{ path: 'pipeline.c', state: 'changed' }]
+          },
+          '*'
+        ),
+      model.id
+    );
+    await page.getByText(/Source differs from the exported snapshot/).waitFor();
+    await page.evaluate(
+      (id) =>
+        window.postMessage(
+          {
+            type: 'sourceStatus',
+            modelId: id,
+            region: 'enqueue',
+            sources: [{ path: 'pipeline.c', state: 'matches' }]
+          },
+          '*'
+        ),
+      model.id
+    );
+    await page.getByText(/Source differs from the exported snapshot/).waitFor({ state: 'hidden' });
     await page.screenshot({ path: path.join(output, 'interface.png'), fullPage: true });
     await page.getByRole('button', { name: 'Relationships', exact: true }).click();
     assert.equal(await page.locator('.relationship').count(), model.relations.length);
@@ -61,9 +89,28 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
     await page.getByLabel('Filter relationships').fill('');
     await page.screenshot({ path: path.join(output, 'relationships.png'), fullPage: true });
     await page.getByRole('button', { name: 'What-if', exact: true }).click();
+    await page.locator('.scenario-table tbody tr').first().waitFor();
     assert.equal(await page.locator('.scenario-table tbody tr').count(), 1);
+    assert.equal(await page.evaluate(() => window.DrperfAnalysis.backend), 'worker');
     await page.getByRole('button', { name: 'Use first observed equation for each target' }).click();
+    await page.locator('.scenario-table tr[data-region="copy"]').waitFor();
     assert.ok((await page.locator('.scenario-table tbody tr').count()) >= 5);
+    await page
+      .getByRole('button', { name: 'Find distinguishing experiments', exact: true })
+      .click();
+    await page
+      .locator(
+        '.experiment-suggestion[data-experiment-region="decode"][data-experiment-op="scale"]'
+      )
+      .waitFor();
+    assert.match(
+      await page
+        .locator(
+          '.experiment-suggestion[data-experiment-region="decode"][data-experiment-op="scale"]'
+        )
+        .textContent(),
+      /copy.bytes/
+    );
     const copy = page.locator('.scenario-table tr[data-region="copy"]');
     assert.ok((await copy.textContent()).includes('extrapolated'));
     await page.screenshot({ path: path.join(output, 'scenario.png'), fullPage: true });
@@ -84,6 +131,18 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
       /22\.26%/
     );
     await page.screenshot({ path: path.join(output, 'validation.png'), fullPage: true });
+    await page.getByRole('button', { name: 'Compare runs', exact: true }).click();
+    await page.locator('.comparison-table').waitFor();
+    assert.match(
+      await page.locator('tr[data-comparison-region="enqueue"]').textContent(),
+      /paired/
+    );
+    assert.match(
+      await page.locator('tr[data-comparison-region="copy"]').textContent(),
+      /No paired states/
+    );
+    await page.screenshot({ path: path.join(output, 'comparison.png'), fullPage: true });
+    await page.getByRole('button', { name: 'What-if', exact: true }).click();
     await page.getByRole('button', { name: 'Save scenario and per-region results' }).click();
     assert.ok(
       await page.evaluate(() =>
@@ -126,6 +185,52 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
           (m) => m.type === 'exportScenario' && m.scenario.proposals?.length === 1
         )
       )
+    );
+    // The latest edit wins even when worker work is already queued.
+    await page.evaluate(() => {
+      const input = document.querySelector('[aria-label="Intervention value 1"]');
+      for (const value of ['3', '4', '2']) {
+        input.value = value;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+    await page.locator('#scenario-result .analysis-pending').waitFor({ state: 'hidden' });
+    await page.getByRole('button', { name: 'Save scenario and per-region results' }).click();
+    const savedScenario = await page.evaluate(
+      () => window.hostMessages.filter((m) => m.type === 'exportScenario').at(-1).scenario
+    );
+    assert.equal(savedScenario.edits[0].value, 2);
+    // A saved scenario is checked again, and importing it cannot overwrite a
+    // subsequent edit made while that check is running.
+    await page.evaluate(
+      ({ id, scenario }) => {
+        window.dispatchEvent(
+          new MessageEvent('message', { data: { type: 'scenario', modelId: id, scenario } })
+        );
+        const input = document.querySelector('[aria-label="Intervention value 1"]');
+        input.value = '3';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      },
+      { id: model.id, scenario: savedScenario }
+    );
+    await page.locator('#scenario-result .analysis-pending').waitFor({ state: 'hidden' });
+    assert.equal(await page.getByLabel('Intervention value 1', { exact: true }).inputValue(), '3');
+    await page.evaluate(
+      ({ id, scenario }) => window.postMessage({ type: 'scenario', modelId: id, scenario }, '*'),
+      { id: model.id, scenario: savedScenario }
+    );
+    await page.waitForFunction(
+      () =>
+        document.querySelector('[aria-label="Intervention value 1"]')?.value === '2' &&
+        !document.querySelector('#scenario-result .analysis-pending')
+    );
+    assert.equal(
+      await page.getByLabel('Intervention value 2', { exact: true }).inputValue(),
+      '1.5'
+    );
+    assert.match(
+      await page.getByLabel('Relationship for decode.tokens').inputValue(),
+      /^proposed:/
     );
     const bad = structuredClone(model);
     bad.validity.errors = ['slot overflow'];

@@ -40,7 +40,7 @@ Cursor**, or moving the cursor into a region while the panel is open selects its
 interface. Hovering over the annotation shows a compact formula. Source hashes
 flag code that has changed since export.
 
-## Three views
+## Four views
 
 - **Interface:** affine formulas, PCV ranges, observed states, unexplained work,
   per-function attribution, source links, and suggestions for the next small
@@ -54,7 +54,12 @@ flag code that has changed since export.
   observed equations as assumptions, and inspect the affected regions. Results
   show mean explained instructions per call over the same recorded calls,
   changed PCVs, unknown cases, and extrapolation. Save the scenario and results
-  as JSON for review or agent use.
+  as JSON for review or agent use. **Open Saved Scenario** checks and restores
+  it against its original report.
+- **Compare runs:** compare observed costs at exactly shared PCV states across
+  two reports, with equal weight per shared state within each region. It can
+  reveal coefficient changes without confusing
+  a different workload mix with a change in the region's cost.
 
 ## What a scenario means
 
@@ -99,6 +104,11 @@ Reports contain local names, source paths, PCV values, and measurement metadata.
 The extension performs no telemetry and sends no report data to a service. It
 works with local or remote VS Code extension hosts; the viewer itself does not
 need DynamoRIO or Python.
+
+Scenario checks, comparisons, proposals, and experiment searches run in a local
+web worker so the panel remains responsive. Only extension assets are loaded;
+reports stay local. New edits supersede queued scenario work, and stale results
+cannot replace a newer edit or report.
 
 ## Build and test
 
@@ -200,3 +210,45 @@ them disagree. If that change is implemented in the program, a small measured
 run can tell which equation survives. This helps distinguish accidental
 correlations from relationships useful under an intended change. The CLI flag
 is `--audit-alternatives`.
+
+**Find distinguishing experiments** searches from the recorded baseline using
+your selected relationship assumptions. It tries `add 1` and `multiply by 2`
+on source PCVs of competing equations, prioritizes sources that participate in
+more ambiguous targets, and checks up to 12 probes. Suggestions rank by how many
+target PCVs they separate, not by aggregate cost. The panel records rejected
+probes, including changes that produce non-integer states under an assumption.
+
+These are candidate PCV interventions, not generated program inputs. You still
+need to implement a realizable input/configuration change, check that the fixed
+call structure is appropriate, and measure it. A missing suggestion is not
+proof that the equations are equivalent. The CLI can raise the search budget
+to 64 probes:
+
+```sh
+bin/drperf-explore report.drperf.json --assume-first \
+  --suggest-experiments --max-probes 12 -o experiments.json
+```
+
+Every suggested scenario retains its selected equations and checked proposals,
+so it can be replayed independently. The measured demo's decode expansion
+experiment is found automatically by this search.
+
+## Compare interfaces across runs or versions
+
+**Compare runs** pairs interfaces by original region name and PCV names. It
+compares measured per-state means only at exactly shared states, regardless of
+call order. States without a counterpart remain unpaired; negative calibrated
+costs are excluded. The panel also shows both formulas and identifiable
+coefficient differences, and flags changes to captured PCV source expressions.
+PCV meanings still need to be consistent across the reports.
+
+```sh
+bin/drperf-explore before.drperf.json --compare after.drperf.json -o comparison.json
+```
+
+Unlike scenario validation, this comparison does not need a complete trace or
+unchanged call counts. It needs valid instruction measurements with matching
+measurement settings. Each region remains separate, and the observed
+differences are not a statistical significance test. The portable report
+[schema](schemas/report.schema.json) also enables validation and completion
+when editing `*.drperf.json` in VS Code.

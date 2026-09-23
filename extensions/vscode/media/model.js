@@ -99,7 +99,12 @@
           source.line < 1 ||
           !safe(source.endLine) ||
           source.endLine < source.line ||
-          typeof source.sha256 !== 'string'
+          typeof source.sha256 !== 'string' ||
+          (source.expressions !== undefined &&
+            (!source.expressions ||
+              typeof source.expressions !== 'object' ||
+              Array.isArray(source.expressions) ||
+              !Object.values(source.expressions).every((value) => typeof value === 'string')))
         )
           throw new Error('Invalid source location.');
       for (const fit of region.regimes) {
@@ -200,22 +205,23 @@
         throw new Error('Invalid trace event.');
     const markerIds = new Map(),
       stacks = new Map();
-    for (const events of groupedEvents(model.trace.events))
-      for (const event of events) {
-        if (!markerIds.has(event.group)) markerIds.set(event.group, new Set());
-        const used = markerIds.get(event.group);
-        if (used.has(event.seq) || used.has(event.end))
-          throw new Error('Duplicate marker sequence in trace.');
-        used.add(event.seq);
-        used.add(event.end);
-        const thread = id(event.group, event.thread);
-        if (!stacks.has(thread)) stacks.set(thread, []);
-        const stack = stacks.get(thread);
-        while (stack.length && stack.at(-1) < event.seq) stack.pop();
-        if (stack.length && event.end > stack.at(-1))
-          throw new Error('Crossing region boundaries on one thread.');
-        stack.push(event.end);
-      }
+    if (!model.validity?.traceErrors?.length)
+      for (const events of groupedEvents(model.trace.events))
+        for (const event of events) {
+          if (!markerIds.has(event.group)) markerIds.set(event.group, new Set());
+          const used = markerIds.get(event.group);
+          if (used.has(event.seq) || used.has(event.end))
+            throw new Error('Duplicate marker sequence in trace.');
+          used.add(event.seq);
+          used.add(event.end);
+          const thread = id(event.group, event.thread);
+          if (!stacks.has(thread)) stacks.set(thread, []);
+          const stack = stacks.get(thread);
+          while (stack.length && stack.at(-1) < event.seq) stack.pop();
+          if (stack.length && event.end > stack.at(-1))
+            throw new Error('Crossing region boundaries on one thread.');
+          stack.push(event.end);
+        }
     return model;
   }
 
@@ -295,7 +301,7 @@
 
   function exactRelationshipInteger(relation, featureValue) {
     if (relation.expression) {
-      if (!compiledExpressions.has(relation))
+      if (compiledExpressions.get(relation)?.source !== relation.expression)
         compiledExpressions.set(relation, Expressions.compile(relation.expression));
       return Expressions.evaluate(compiledExpressions.get(relation), featureValue);
     }
@@ -393,14 +399,42 @@
     return [...results.values()].map((r) => ({ ...r, holds: r.calls > 0 && r.mismatches === 0 }));
   }
 
-  function proposeRelationship(model, target, expression) {
+  function requireCompleteTrace(model) {
+    if (model.validity?.errors?.length || model.validity?.traceErrors?.length)
+      throw new Error('Measurement or trace validity errors disable scenario predictions.');
+    if (!model.trace?.complete || !model.trace.events.length)
+      throw new Error('A complete recorded trace is required for scenario replay.');
     if (
-      !model.trace?.complete ||
-      !model.trace.events.length ||
-      model.validity?.errors?.length ||
-      model.validity?.traceErrors?.length
+      model.trace.recordCount !== undefined &&
+      model.trace.recordCount !== model.trace.events.length
     )
-      throw new Error('Checking a proposal requires a complete, valid recorded trace.');
+      throw new Error(
+        'Trace event count differs from its completeness metadata. Re-export the raw measurements.'
+      );
+    const regions = new Map(model.regions.map((r) => [r.id, r]));
+    const counts = new Map();
+    for (const event of model.trace.events) {
+      const region = regions.get(event.region),
+        fields = Object.keys(event.values);
+      if (
+        !region ||
+        fields.length !== region.states.length ||
+        fields.some((state) => !region.states.includes(state))
+      )
+        throw new Error(
+          'Trace PCV fields do not match the declared region interface. Re-export the raw measurements.'
+        );
+      counts.set(event.region, (counts.get(event.region) || 0) + 1);
+    }
+    for (const region of model.regions)
+      if ((counts.get(region.id) || 0) !== region.calls)
+        throw new Error(
+          `Trace calls for ${region.id} differ from measured calls. Fixed-trace exploration requires complete matching measurements.`
+        );
+  }
+
+  function proposeRelationship(model, target, expression) {
+    requireCompleteTrace(model);
     if (!target || typeof target.region !== 'string' || typeof target.state !== 'string')
       throw new Error('Invalid proposal target.');
     const region = model.regions.find((r) => r.id === target.region);
@@ -548,16 +582,18 @@
       (scenario.relations !== undefined && !Array.isArray(scenario.relations))
     )
       throw new Error('Invalid scenario.');
+    if (
+      scenario.costBasis !== undefined &&
+      !['recorded', 'calibrated'].includes(scenario.costBasis)
+    )
+      throw new Error('Unknown scenario cost basis.');
     if ((scenario.edits?.length || 0) > 1000 || (scenario.relations?.length || 0) > 10000)
       throw new Error('Scenario exceeds the supported size.');
     const stateId = keyFactory();
     if (scenario.costBasis === 'recorded') model = recordedCosts(model);
     model = withProposals(model, scenario.proposals || []);
     validate(model);
-    if (model.validity?.errors?.length || model.validity?.traceErrors?.length)
-      throw new Error('Measurement or trace validity errors disable scenario predictions.');
-    if (!model.trace.complete || !model.trace.events.length)
-      throw new Error('A complete recorded trace is required for scenario replay.');
+    requireCompleteTrace(model);
     const regionMap = new Map(model.regions.map((r) => [r.id, r]));
     const selected = new Map();
     for (const selectedId of scenario.relations || []) {
@@ -879,37 +915,39 @@
     });
   }
 
+  function measurementSignature(report) {
+    const fields = [
+      'version',
+      'follow_unmarked_threads',
+      'native_gx',
+      'excluded_cuda_module',
+      'rep_expand'
+    ];
+    const settings = (report.provenance?.runs || []).map((run) =>
+      fields.map((key) => run.measurement?.[key] ?? null)
+    );
+    return JSON.stringify({
+      unit: report.measurement?.unit,
+      scope: report.measurement?.scope,
+      markerAdjustment: report.measurement?.markerAdjustment,
+      settings: [...new Set(settings.map((s) => JSON.stringify(s)))].sort()
+    });
+  }
+
   function validateScenario(model, scenario, measured) {
     if (scenario.costBasis === 'recorded') {
       model = recordedCosts(model);
       measured = recordedCosts(measured);
     }
     validate(measured);
+    requireCompleteTrace(measured);
     if (
       measured.validity?.errors?.length ||
       measured.validity?.traceErrors?.length ||
       !measured.trace.complete
     )
       throw new Error('Validation report must have a complete, valid trace.');
-    const signature = (report) => {
-      const fields = [
-        'version',
-        'follow_unmarked_threads',
-        'native_gx',
-        'excluded_cuda_module',
-        'rep_expand'
-      ];
-      const settings = (report.provenance?.runs || []).map((run) =>
-        fields.map((key) => run.measurement?.[key] ?? null)
-      );
-      return JSON.stringify({
-        unit: report.measurement?.unit,
-        scope: report.measurement?.scope,
-        markerAdjustment: report.measurement?.markerAdjustment,
-        settings: [...new Set(settings.map((s) => JSON.stringify(s)))].sort()
-      });
-    };
-    if (signature(model) !== signature(measured))
+    if (measurementSignature(model) !== measurementSignature(measured))
       throw new Error('Measurement scope or instrumentation settings differ between reports.');
     const prediction = replay(model, scenario, { includeTrace: true });
     if (
@@ -1007,6 +1045,303 @@
     };
   }
 
+  function compareInterfaces(before, after, options = {}) {
+    if (options.costBasis === 'recorded') {
+      before = recordedCosts(before);
+      after = recordedCosts(after);
+    }
+    validate(before);
+    validate(after);
+    if (before.validity?.errors?.length || after.validity?.errors?.length)
+      throw new Error('Invalid instruction measurements cannot support an interface comparison.');
+    if (measurementSignature(before) !== measurementSignature(after))
+      throw new Error('Measurement scope or instrumentation settings differ between reports.');
+    // A schema variant can appear when a later report has additional marker
+    // schemas. Match by original name + PCV names, not by display text or order.
+    const key = (region) =>
+      JSON.stringify([region.originalName || region.id, [...region.states].sort()]);
+    const index = (report) => {
+      const out = new Map();
+      for (const region of report.regions) {
+        const k = key(region);
+        if (out.has(k)) throw new Error('Ambiguous interface identity in comparison.');
+        out.set(k, region);
+      }
+      return out;
+    };
+    const left = index(before),
+      right = index(after),
+      rows = [];
+    for (const identity of new Set([...left.keys(), ...right.keys()])) {
+      const a = left.get(identity),
+        b = right.get(identity);
+      if (!a || !b) {
+        rows.push({
+          region: (a || b).id,
+          name: (a || b).name,
+          status: a ? 'only-before' : 'only-after',
+          pairedStates: 0,
+          points: []
+        });
+        continue;
+      }
+      const order = b.states.map((state) => a.states.indexOf(state));
+      const bPoints = new Map(
+        b.points.map((point) => {
+          const aligned = Array(a.states.length);
+          point.state.forEach((value, i) => (aligned[order[i]] = String(value)));
+          return [JSON.stringify(aligned), point];
+        })
+      );
+      const points = [];
+      let unsupported = 0;
+      for (const point of a.points) {
+        const other = bPoints.get(JSON.stringify(point.state.map(String)));
+        if (!other) continue;
+        if (point.observed < 0 || other.observed < 0) {
+          ++unsupported;
+          continue;
+        }
+        points.push({
+          state: point.state,
+          before: point.observed,
+          after: other.observed,
+          delta: other.observed - point.observed,
+          beforeCalls: point.calls,
+          afterCalls: other.calls
+        });
+      }
+      const beforeMean = points.length ? sum(points.map((p) => p.before)) / points.length : null;
+      const afterMean = points.length ? sum(points.map((p) => p.after)) / points.length : null;
+      const changes = [];
+      let coefficientNote =
+        'Coefficient changes need one identifiable fitted regime in both reports.';
+      if (
+        a.regimes.length === 1 &&
+        b.regimes.length === 1 &&
+        !a.regimes[0].dependent.length &&
+        !b.regimes[0].dependent.length
+      ) {
+        for (const state of a.states) {
+          const ai = a.states.indexOf(state),
+            bi = b.states.indexOf(state);
+          const af = a.regimes[0],
+            bf = b.regimes[0];
+          if (af.range[ai][0] === af.range[ai][1] || bf.range[bi][0] === bf.range[bi][1]) continue;
+          const av = af.coefficients[ai],
+            bv = bf.coefficients[bi];
+          const difference =
+            Math.abs(bv - av) <= 1e-9 * Math.max(1, Math.abs(av), Math.abs(bv)) ? 0 : bv - av;
+          changes.push({ state, before: av, after: bv, delta: difference });
+        }
+        coefficientNote =
+          'Coefficient comparisons describe the fitted observations; differing state coverage can change a fitted slope without a code regression.';
+      }
+      const expressions = (region) => {
+        const out = Object.create(null);
+        for (const source of region.sources)
+          for (const [name, text] of Object.entries(source.expressions || {})) {
+            if (!out[name]) out[name] = [];
+            if (!out[name].includes(text)) out[name].push(text);
+          }
+        return out;
+      };
+      const ae = expressions(a),
+        be = expressions(b);
+      const changedExpressions = a.states.filter(
+        (state) =>
+          ae[state] &&
+          be[state] &&
+          JSON.stringify(ae[state].sort()) !== JSON.stringify(be[state].sort())
+      );
+      rows.push({
+        region: a.id,
+        afterRegion: b.id,
+        name: a.name,
+        states: a.states,
+        status: points.length ? 'paired' : 'no-common-states',
+        pairedStates: points.length,
+        beforeStates: a.points.length,
+        afterStates: b.points.length,
+        unsupportedStates: unsupported,
+        beforeMean,
+        afterMean,
+        deltaMean: points.length ? afterMean - beforeMean : null,
+        relativeDelta: beforeMean > 0 ? (afterMean - beforeMean) / beforeMean : null,
+        coefficientChanges: changes,
+        coefficientNote,
+        changedExpressions,
+        beforeFormulas: a.regimes.map((f) => formula(a, f)),
+        afterFormulas: b.regimes.map((f) => formula(b, f)),
+        points
+      });
+    }
+    return {
+      schema: 'drperf.comparison.v1',
+      beforeModelId: before.id,
+      afterModelId: after.id,
+      basis:
+        'Observed per-state means at exactly shared PCV states, weighted equally across states within each region.',
+      assumptions: [
+        'PCV names retain their semantic meaning across reports.',
+        'Differences are measurements, not a significance test or a latency prediction.'
+      ],
+      regions: rows
+    };
+  }
+
+  function findDistinguishingExperiments(model, assumptions, options = {}) {
+    const maxProbes = options.maxProbes ?? 12;
+    if (!safe(maxProbes) || maxProbes < 1 || maxProbes > 64)
+      throw new Error('Experiment search supports 1 to 64 probes.');
+    if (!assumptions || !Array.isArray(assumptions.relations) || !assumptions.relations.length)
+      throw new Error('Choose relationship assumptions before searching for experiments.');
+    if (assumptions.edits?.length)
+      throw new Error(
+        'Experiment search starts from the recorded baseline; omit existing interventions.'
+      );
+    if (
+      assumptions.costBasis !== undefined &&
+      !['recorded', 'calibrated'].includes(assumptions.costBasis)
+    )
+      throw new Error('Unknown scenario cost basis.');
+    if (
+      !model.trace?.complete ||
+      !model.trace.events.length ||
+      model.validity?.errors?.length ||
+      model.validity?.traceErrors?.length
+    )
+      throw new Error('Experiment search requires a complete, valid recorded trace.');
+    const original = model;
+    if (assumptions.costBasis === 'recorded') model = recordedCosts(model);
+    model = withProposals(model, assumptions.proposals || []);
+    validate(model);
+    requireCompleteTrace(model);
+    const selected = new Map();
+    for (const relationId of assumptions.relations) {
+      const relation = model.relations.find((r) => r.id === relationId);
+      if (!relation) throw new Error('Unknown relationship assumption.');
+      const key = id(relation.target.region, relation.target.state);
+      if (selected.has(key)) throw new Error('Choose one relationship per target PCV.');
+      selected.set(key, relation);
+    }
+    const candidates = model.relations.filter((r) =>
+      selected.has(id(r.target.region, r.target.state))
+    );
+    const checks = verifyRelationships(
+      model,
+      candidates.map((r) => r.id)
+    );
+    const verified = new Set(checks.filter((c) => c.holds).map((c) => c.id));
+    if ([...selected.values()].some((r) => !verified.has(r.id)))
+      throw new Error('A selected relationship does not hold in the recorded trace.');
+    const ambiguous = new Map();
+    for (const r of candidates) {
+      const key = id(r.target.region, r.target.state);
+      if (verified.has(r.id) && r.id !== selected.get(key).id) {
+        if (!ambiguous.has(key)) ambiguous.set(key, [selected.get(key)]);
+        ambiguous.get(key).push(r);
+      }
+    }
+    const inputs = new Map();
+    for (const [target, relations] of ambiguous)
+      for (const relation of relations) {
+        for (const term of relation.terms) {
+          if (term.kind === 'count' || (!relation.expression && term.coefficient === 0)) continue;
+          const key = id(term.region, term.state);
+          if (key === target) continue;
+          if (!inputs.has(key))
+            inputs.set(key, { region: term.region, state: term.state, targets: new Set() });
+          inputs.get(key).targets.add(target);
+        }
+      }
+    const sources = [...inputs.values()].sort(
+      (a, b) =>
+        b.targets.size - a.targets.size ||
+        id(a.region, a.state).localeCompare(id(b.region, b.state))
+    );
+    const probes = sources.flatMap((source) => [
+      { region: source.region, state: source.state, op: 'add', value: 1 },
+      { region: source.region, state: source.state, op: 'scale', value: 2 }
+    ]);
+    const suggestions = [],
+      rejected = [];
+    let tried = 0;
+    for (const edit of probes.slice(0, maxProbes)) {
+      ++tried;
+      const scenario = {
+        relations: assumptions.relations,
+        proposals: assumptions.proposals || [],
+        costBasis: assumptions.costBasis || 'calibrated',
+        edits: [edit],
+        auditAlternatives: true
+      };
+      try {
+        // Proposals were already checked above. Keeping them in the exported
+        // scenario still makes each suggestion independently replayable.
+        const result = replay(model, { ...scenario, proposals: [] });
+        const disagreements = result.alternativeChecks.filter(
+          (check) =>
+            check.disagreements &&
+            id(check.target.region, check.target.state) !== id(edit.region, edit.state)
+        );
+        if (!disagreements.length) continue;
+        const targets = [
+          ...new Map(
+            disagreements.map((check) => [
+              id(check.target.region, check.target.state),
+              check.target
+            ])
+          ).values()
+        ];
+        suggestions.push({
+          edit,
+          scenario,
+          targets,
+          disagreements,
+          changedRegions: result.regions
+            .filter((r) => r.changedCalls)
+            .map((r) => ({
+              region: r.region,
+              calls: r.calls,
+              changedCalls: r.changedCalls,
+              modelledCalls: r.modelledCalls,
+              unknownCalls: r.unknownCalls,
+              support: r.support,
+              unexplainedCalls: r.unexplainedCalls
+            }))
+        });
+      } catch (error) {
+        rejected.push({ edit, reason: error.message });
+      }
+    }
+    suggestions.sort(
+      (a, b) =>
+        b.targets.length - a.targets.length || b.disagreements.length - a.disagreements.length
+    );
+    return {
+      schema: 'drperf.experiments.v1',
+      modelId: original.id,
+      assumptions: {
+        relations: assumptions.relations,
+        proposals: assumptions.proposals || [],
+        costBasis: assumptions.costBasis || 'calibrated'
+      },
+      contract:
+        'Candidate single-PCV interventions from the recorded baseline under selected assumptions. Differences are one-step equation disagreements, not causal evidence. Realizable program inputs must be supplied and measured separately. Call structure stays fixed.',
+      search: {
+        possibleProbes: probes.length,
+        tried,
+        maxProbes,
+        truncated: probes.length > tried,
+        ambiguousTargets: ambiguous.size,
+        operations: ['add 1', 'multiply by 2']
+      },
+      suggestions,
+      rejected
+    };
+  }
+
   function suggestedExperiments(model, region) {
     const suggestions = [];
     if (!region.regimes.length)
@@ -1055,6 +1390,8 @@
     validateScenario,
     proposeRelationship,
     withProposals,
-    recordedCosts
+    recordedCosts,
+    compareInterfaces,
+    findDistinguishingExperiments
   };
 });

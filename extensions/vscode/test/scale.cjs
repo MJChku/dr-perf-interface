@@ -19,7 +19,7 @@ const M = require('../media/model');
   const output = path.resolve(__dirname, '../../../out/explorer-ui');
   await fs.mkdir(output, { recursive: true });
   const html =
-    '<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/media/explorer.css"></head><body><div id="app"></div><script src="/media/expressions.js"></script><script src="/media/model.js"></script><script src="/media/explorer.js"></script></body></html>';
+    '<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="/media/explorer.css"></head><body><div id="app"></div><script src="/media/expressions.js"></script><script src="/media/model.js"></script><script src="/media/analysis-client.js" data-expressions="/media/expressions.js" data-model="/media/model.js" data-worker="/media/analysis-worker.js"></script><script src="/media/explorer.js"></script></body></html>';
   const server = http.createServer(async (req, res) => {
     if (req.url === '/') {
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -51,7 +51,13 @@ const M = require('../media/model');
     await page.goto(`http://127.0.0.1:${server.address().port}`);
     let start = performance.now();
     await page.evaluate(
-      ({ model, selected }) => window.postMessage({ type: 'model', model, selected }, '*'),
+      ({ model, selected }) => {
+        window.hostMessages = [];
+        window.addEventListener('drperfHostMessage', (event) =>
+          window.hostMessages.push(event.detail)
+        );
+        window.postMessage({ type: 'model', model, selected }, '*');
+      },
       { model, selected }
     );
     await page
@@ -71,10 +77,31 @@ const M = require('../media/model');
       .click();
     start = performance.now();
     await page.getByLabel('Intervention value 1', { exact: true }).fill('1');
-    await page.waitForFunction(() => !document.querySelector('.scenario-table tbody tr'));
+    await page.waitForFunction(() => {
+      const status = window.hostMessages.filter((m) => m.type === 'analysisFinished').at(-1);
+      return (
+        status?.changedRegions?.length === 0 &&
+        !document.querySelector('#scenario-result .analysis-pending')
+      );
+    });
     const identityMs = performance.now() - start;
+    await page.evaluate(() => {
+      window.heartbeatGaps = [];
+      let previous = performance.now();
+      window.heartbeatTimer = setInterval(() => {
+        const now = performance.now();
+        window.heartbeatGaps.push(now - previous);
+        previous = now;
+      }, 10);
+    });
+    start = performance.now();
     await page.getByLabel('Intervention value 1', { exact: true }).fill('2');
     await page.locator('.scenario-table tbody tr').first().waitFor();
+    const scenarioMs = performance.now() - start;
+    const heartbeat = await page.evaluate(() => {
+      clearInterval(window.heartbeatTimer);
+      return { ticks: window.heartbeatGaps.length, maxGapMs: Math.max(0, ...window.heartbeatGaps) };
+    });
     await page.screenshot({ path: path.join(output, 'large-scenario.png'), fullPage: true });
     assert.deepEqual(errors, []);
     console.log(
@@ -85,6 +112,9 @@ const M = require('../media/model');
           calls: model.trace.events.length,
           interfaceMs,
           identityMs,
+          scenarioMs,
+          heartbeat,
+          analysisBackend: await page.evaluate(() => window.DrperfAnalysis.backend),
           renderedScenarioRows: await page.locator('.scenario-table tbody tr').count(),
           errors
         },

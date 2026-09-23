@@ -200,7 +200,9 @@ test('a tampered observed equation gives counterexamples and cannot silently pro
 
 test('scenario validation rejects a changed call structure instead of inventing alignment', () => {
   const changed = clone();
-  changed.trace.events.pop();
+  const removed = changed.trace.events.pop();
+  --changed.trace.recordCount;
+  --changed.regions.find((r) => r.id === removed.region).calls;
   const result = Model.validateScenario(
     report,
     { edits: [{ region: 'enqueue', state: 'items', op: 'scale', value: 1 }], relations: [] },
@@ -208,6 +210,31 @@ test('scenario validation rejects a changed call structure instead of inventing 
   );
   assert.equal(result.structureMatches, false);
   assert.equal(result.regions.length, 0);
+});
+
+test('incomplete or mismatched trace metadata cannot silently support scenarios', () => {
+  const input = {
+    edits: [{ region: 'enqueue', state: 'items', op: 'scale', value: 2 }],
+    relations: []
+  };
+  const missing = clone();
+  missing.trace.events.pop();
+  assert.throws(() => Model.replay(missing, input), /completeness metadata/);
+  --missing.trace.recordCount;
+  assert.throws(() => Model.replay(missing, input), /differ from measured calls/);
+  const renamed = clone();
+  renamed.trace.events.find((e) => e.region === 'enqueue').values = { other: 7 };
+  assert.throws(() => Model.replay(renamed, input), /PCV fields/);
+  assert.throws(
+    () =>
+      Model.proposeRelationship(
+        renamed,
+        { region: 'copy', state: 'bytes' },
+        '8 * last("decode", "tokens")'
+      ),
+    /PCV fields/
+  );
+  assert.doesNotThrow(() => Model.validate(missing), 'recorded interfaces remain viewable');
 });
 
 test('scenario validation separates state errors from formula errors', () => {
@@ -324,4 +351,23 @@ test('an intervention distinguishes observationally equivalent relationship alte
   assert.equal(copy.examples[0].selectedValue, 1.5 * copy.examples[0].alternativeValue);
   input.edits[0].value = 1;
   assert.ok(Model.replay(report, input).alternativeChecks.every((r) => r.disagreements === 0));
+});
+
+test('reported trace validity errors disable replay while preserving interface viewing', () => {
+  const bad = clone();
+  const events = bad.trace.events.slice(0, 2);
+  events[0].seq = 1;
+  events[0].end = 4;
+  events[1].seq = 2;
+  events[1].end = 5;
+  events[1].thread = events[0].thread;
+  bad.trace.events = events;
+  bad.validity.traceErrors = ['crossing region boundaries on one thread'];
+  bad.trace.complete = false;
+  assert.doesNotThrow(() => Model.validate(bad));
+  assert.throws(
+    () =>
+      Model.replay(bad, { edits: [{ region: 'enqueue', state: 'items', op: 'scale', value: 2 }] }),
+    /validity errors/
+  );
 });

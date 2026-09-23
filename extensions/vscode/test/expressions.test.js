@@ -79,3 +79,15 @@ test('a conditional relationship can encode branch-dependent PCVs', () => {
   assert.equal(proposal.check.holds, true);
   assert.equal(proposal.check.calls, 24);
 });
+
+test('editing an already checked expression invalidates its compiled form', () => {
+  const { relation } = M.proposeRelationship(
+    model,
+    { region: 'decode', state: 'tokens' },
+    '2 * last("dequeue", "items")'
+  );
+  relation.expression = '3 * last("dequeue", "items")';
+  const check = M.verifyRelationships({ ...model, relations: [relation] })[0];
+  assert.equal(check.holds, false);
+  assert.equal(check.mismatches, 24);
+});

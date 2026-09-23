@@ -25,6 +25,7 @@ async function run() {
   const line = enqueue.sources[0].line - 1;
   editor.selection = new vscode.Selection(line, 0, line, 0);
   assert.equal(api.currentRegion(editor), 'enqueue');
+  assert.ok((await api.getSourceStatus('enqueue')).every((source) => source.state === 'matches'));
   const hovers = await vscode.commands.executeCommand(
     'vscode.executeHoverProvider',
     document.uri,
@@ -32,6 +33,28 @@ async function run() {
   );
   assert.ok(hovers.length);
   await vscode.commands.executeCommand('drperf.inspectRegion', 'enqueue');
+  const scenarioUri = vscode.Uri.file(path.join(root, 'scenario.json'));
+  await vscode.workspace.fs.writeFile(
+    scenarioUri,
+    Buffer.from(
+      JSON.stringify({
+        schema: 'drperf.scenario.v1',
+        modelId: model.id,
+        scenario: {
+          edits: [{ region: 'enqueue', state: 'items', op: 'scale', value: 2 }],
+          relations: []
+        }
+      })
+    )
+  );
+  await vscode.commands.executeCommand('drperf.openScenario', scenarioUri);
+  for (let i = 0; i < 150 && !api.getAnalysisStatus(); ++i)
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  const analysis = api.getAnalysisStatus();
+  assert.ok(analysis, 'webview completes background analysis');
+  assert.equal(analysis.error, undefined);
+  assert.equal(analysis.backend, 'worker');
+  assert.deepEqual(analysis.changedRegions, ['enqueue']);
   await editor.edit((edit) =>
     edit.insert(new vscode.Position(0, 0), '/* changed after measurement */\n')
   );
@@ -40,6 +63,7 @@ async function run() {
     document.uri
   );
   assert.ok(stale.some((l) => l.command?.title.includes('source changed')));
+  assert.ok((await api.getSourceStatus('enqueue')).some((source) => source.state === 'changed'));
   await vscode.window.showTextDocument(document);
   await vscode.commands.executeCommand('undo');
   for (let i = 0; i < 30 && document.isDirty; ++i)
@@ -67,7 +91,7 @@ async function run() {
   );
   await vscode.commands.executeCommand('workbench.action.closeAllEditors');
   console.log(
-    'EXTENSION HOST PASS: activation, report loading, source CodeLens, hover, cursor mapping, webview command, stale-source detection, JSON schema diagnostics.'
+    'EXTENSION HOST PASS: activation, report loading, source CodeLens, hover, cursor mapping, webview worker, saved-scenario import, stale-source detection, JSON schema diagnostics.'
   );
 }
 module.exports = { run };

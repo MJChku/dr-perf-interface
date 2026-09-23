@@ -15,9 +15,13 @@ const { runTests } = require('@vscode/test-electron');
   );
   try {
     await runTests({
-      extensionDevelopmentPath: path.resolve(__dirname, '..'),
+      extensionDevelopmentPath:
+        process.env.DRPERF_TEST_EXTENSION_ROOT || path.resolve(__dirname, '..'),
       extensionTestsPath: path.join(__dirname, 'extension-host.cjs'),
       cachePath: path.resolve(__dirname, '../.vscode-test'),
+      ...(process.env.DRPERF_TEST_VSCODE_VERSION
+        ? { version: process.env.DRPERF_TEST_VSCODE_VERSION }
+        : {}),
       launchArgs: [
         workspace,
         '--user-data-dir',
