@@ -18,6 +18,7 @@ function usage() {
   --propose REGION STATE EXPR    check and adopt a proposed state relationship (repeatable)
   --scenario FILE                load a previously saved scenario
   --compare MEASURED.drperf.json  compare interfaces at shared states (no intervention needed)
+  --check-relations MEASURED     check state equations on another execution; call structure may differ
   --validate MEASURED.drperf.json compare predictions against a new measured run
   -o FILE                        write JSON results (default: stdout)
 
@@ -37,6 +38,7 @@ try {
     output = null,
     validation = null,
     comparison = null,
+    relationshipCheck = null,
     list = false,
     first = false,
     experiments = false,
@@ -79,6 +81,9 @@ try {
     } else if (option === '--compare') {
       if (!args.length) throw new Error('Missing comparison filename');
       comparison = read(args.shift());
+    } else if (option === '--check-relations') {
+      if (!args.length) throw new Error('Missing measured report filename');
+      relationshipCheck = read(args.shift());
     } else if (option === '--validate') {
       if (!args.length) throw new Error('Missing validation filename');
       validation = read(args.shift());
@@ -112,34 +117,46 @@ try {
     throw new Error(
       '--suggest-experiments starts from baseline; omit --list, --compare, --validate, and interventions.'
     );
-  const result = experiments
-    ? Model.findDistinguishingExperiments(model, scenario, { maxProbes })
-    : comparison
-      ? Model.compareInterfaces(model, comparison, { costBasis: scenario.costBasis })
-      : list
-        ? {
-            schema: 'drperf.inventory.v1',
-            modelId: model.id,
-            regions: model.regions.map((r) => ({
-              region: r.id,
-              states: r.states,
-              formulas: r.regimes.map((f) => Model.formula(r, f)),
-              sources: r.sources,
-              experiments: Model.suggestedExperiments(model, r)
-            })),
-            relations: model.relations.map((r) => ({
-              id: r.id,
-              equation: Model.relationship(r),
-              evidence: r.evidence
-            }))
-          }
-        : {
-            schema: 'drperf.scenario.v1',
-            ...Model.replay(model, scenario),
-            ...(validation
-              ? { validation: Model.validateScenario(model, scenario, validation) }
-              : {})
-          };
+  if (
+    relationshipCheck &&
+    (experiments || comparison || validation || list || scenario.edits.length)
+  )
+    throw new Error(
+      '--check-relations checks measured states; omit interventions and other analysis modes.'
+    );
+  const result = relationshipCheck
+    ? Model.checkRelationships(model, relationshipCheck, {
+        proposals: scenario.proposals,
+        ...(scenario.relations.length ? { relations: scenario.relations } : {})
+      })
+    : experiments
+      ? Model.findDistinguishingExperiments(model, scenario, { maxProbes })
+      : comparison
+        ? Model.compareInterfaces(model, comparison, { costBasis: scenario.costBasis })
+        : list
+          ? {
+              schema: 'drperf.inventory.v1',
+              modelId: model.id,
+              regions: model.regions.map((r) => ({
+                region: r.id,
+                states: r.states,
+                formulas: r.regimes.map((f) => Model.formula(r, f)),
+                sources: r.sources,
+                experiments: Model.suggestedExperiments(model, r)
+              })),
+              relations: model.relations.map((r) => ({
+                id: r.id,
+                equation: Model.relationship(r),
+                evidence: r.evidence
+              }))
+            }
+          : {
+              schema: 'drperf.scenario.v1',
+              ...Model.replay(model, scenario),
+              ...(validation
+                ? { validation: Model.validateScenario(model, scenario, validation) }
+                : {})
+            };
   const text = JSON.stringify(result, null, 2) + '\n';
   if (output) {
     fs.mkdirSync(path.dirname(path.resolve(output)), { recursive: true });

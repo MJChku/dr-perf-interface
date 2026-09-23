@@ -69,6 +69,46 @@ async function run() {
   for (let i = 0; i < 30 && document.isDirty; ++i)
     await new Promise((resolve) => setTimeout(resolve, 50));
   assert.equal(document.isDirty, false);
+  await vscode.commands.executeCommand('drperf.openJointDemo');
+  for (let i = 0; i < 150 && !api.getAnalysisStatus()?.validationMeasuredId; ++i)
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  const joint = api.getAnalysisStatus();
+  assert.equal(
+    joint?.validationStructureMatches,
+    true,
+    'bundled joint demo includes measured validation'
+  );
+  assert.equal(joint.error, undefined);
+  assert.deepEqual([...joint.changedRegions].sort(), [
+    'copy',
+    'decode',
+    'dequeue',
+    'dispatch',
+    'enqueue',
+    'lookup'
+  ]);
+  const variants = structuredClone(model);
+  variants.id = 'source-variant-test';
+  variants.trace = { complete: false, events: [], recordCount: 0 };
+  variants.regions.push({
+    ...structuredClone(enqueue),
+    id: 'enqueue@extra-pcv',
+    name: 'enqueue [items, extra]',
+    states: ['items', 'extra'],
+    calls: 0,
+    regimes: [],
+    points: []
+  });
+  const variantsUri = vscode.Uri.file(path.join(root, 'variants.drperf.json'));
+  await vscode.workspace.fs.writeFile(variantsUri, Buffer.from(JSON.stringify(variants)));
+  await api.load(variantsUri);
+  await vscode.commands.executeCommand('drperf.inspectRegion', 'enqueue@extra-pcv');
+  editor.selection = new vscode.Selection(line, 0, line, 0);
+  assert.equal(
+    api.currentRegion(editor),
+    'enqueue@extra-pcv',
+    'cursor tracking preserves a selected source-overlapping PCV schema'
+  );
   const invalidUri = vscode.Uri.file(path.join(root, 'invalid.drperf.json'));
   await vscode.workspace.fs.writeFile(
     invalidUri,

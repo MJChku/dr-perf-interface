@@ -13,6 +13,7 @@
   let scenarioValidation = null,
     scenarioValidationError = '';
   let experimentCache = null;
+  let relationshipCheckCache = null;
   const host = typeof acquireVsCodeApi === 'function' ? acquireVsCodeApi() : null;
   const saved = host?.getState() || {};
   const sourceStatuses = new Map();
@@ -625,7 +626,7 @@
   }
   function relationshipsView() {
     const main = el('div');
-    append(main, connectionGraph());
+    append(main, relationshipCheckView(), connectionGraph());
     const card = append(
       el('section', 'card'),
       heading(
@@ -760,6 +761,8 @@
         baseModelId: loadedModel.id,
         modelId: result.modelId,
         backend: analysis.backend,
+        validationStructureMatches: scenarioValidation?.structureMatches,
+        validationMeasuredId: scenarioValidation?.measuredModelId,
         changedRegions: result.regions.filter((r) => r.changedCalls).map((r) => r.region)
       });
     } catch (error) {
@@ -1364,7 +1367,7 @@
             const ids = new Set(choices.map((r) => r.id));
             assumptionIds = assumptionIds.filter((id) => !ids.has(id));
             if (value) assumptionIds.push(value);
-            updateScenario();
+            render();
           }
         )
       );
@@ -1511,6 +1514,119 @@
     }
     return card;
   }
+  function relationshipCheckView() {
+    const card = append(
+      el('section', 'card'),
+      heading(
+        'Do the relationships survive another execution?',
+        'Checks equations against actual measured history. Call counts and marker order may differ; no cost prediction is made.'
+      )
+    );
+    card.append(
+      button(
+        validationModel ? 'Choose another execution' : 'Check on another execution',
+        () => send({ type: 'loadValidationReport' }),
+        'secondary'
+      )
+    );
+    if (!validationModel) return card;
+    const key = JSON.stringify(proposals);
+    if (
+      relationshipCheckCache?.model !== loadedModel ||
+      relationshipCheckCache.measured !== validationModel ||
+      relationshipCheckCache.key !== key
+    ) {
+      const cache = (relationshipCheckCache = {
+        model: loadedModel,
+        measured: validationModel,
+        key,
+        pending: true
+      });
+      analysis
+        .request('relationship-check', loadedModel, {
+          measured: validationModel,
+          options: { proposals }
+        })
+        .then((value) => {
+          cache.value = value;
+        })
+        .catch((error) => {
+          cache.error = error.message;
+        })
+        .finally(() => {
+          cache.pending = false;
+          if (relationshipCheckCache === cache && activeTab === 'relations') render();
+        });
+    }
+    const cache = relationshipCheckCache;
+    if (cache.pending) {
+      card.append(el('p', 'analysis-pending', 'Checking state equations…'));
+      return card;
+    }
+    if (cache.error) {
+      card.append(el('p', 'notice warn', cache.error));
+      return card;
+    }
+    const summary = cache.value.summary;
+    card.append(
+      el(
+        'p',
+        'relationship-check-summary',
+        `${validationName}: ${summary.holds} hold, ${summary.fails} fail, ${summary.unavailable + summary['not-exercised']} unavailable or unexercised, ${summary['baseline-failed']} invalid on the baseline.`
+      )
+    );
+    card.append(
+      el(
+        'p',
+        'small muted',
+        'Matching PCV names and schemas must retain their meaning. Agreement on a new run is evidence for that run, not a causal proof.'
+      )
+    );
+    const rank = { fails: 0, 'baseline-failed': 1, unavailable: 2, 'not-exercised': 3, holds: 4 };
+    for (const check of [...cache.value.checks].sort((a, b) => rank[a.status] - rank[b.status])) {
+      const detail = el('details', 'relationship-check');
+      detail.dataset.relationshipStatus = check.status;
+      detail.open = check.status === 'fails' && summary.fails <= 5;
+      detail.append(
+        el(
+          'summary',
+          '',
+          `${check.status}: ${check.equation}${check.changedExpressions.length ? ' · PCV expressions changed' : ''}`
+        )
+      );
+      if (check.measured)
+        detail.append(
+          el(
+            'p',
+            'small',
+            `${check.measured.calls - check.measured.mismatches}/${check.measured.calls} measured target calls match; ${check.baseline.calls} baseline calls checked.`
+          )
+        );
+      if (check.missing.length)
+        detail.append(
+          el('p', 'notice warn', 'No matching PCV schema for: ' + check.missing.join(', '))
+        );
+      if (check.changedExpressions.length)
+        detail.append(
+          el(
+            'p',
+            'notice warn',
+            'Source PCV expressions changed: ' +
+              check.changedExpressions.map((t) => t.region + '.' + t.state).join(', ')
+          )
+        );
+      for (const example of check.measured?.examples || [])
+        detail.append(
+          el(
+            'p',
+            'mono small',
+            `call ${example.seq}: equation ${example.predicted}, measured ${example.expected}`
+          )
+        );
+      card.append(detail);
+    }
+    return card;
+  }
   function comparisonView() {
     const main = el('div');
     const intro = append(
@@ -1589,7 +1705,8 @@
           model.regions.some((r) => r.id === row.region)
             ? button(row.name, () => choose(row.region, 'interface'), 'link-button')
             : el('span', '', row.name),
-          el('small', 'muted', row.status)
+          el('small', 'muted', row.status),
+          row.changedExpressions?.length ? badge('PCV expressions changed', 'warn') : null
         ),
         el(
           'td',
@@ -1814,6 +1931,7 @@
         comparisonCache = null;
         proposalModelCache = null;
         experimentCache = null;
+        relationshipCheckCache = null;
         loadedModel = M.validate(message.model);
         model = rawCosts ? M.recordedCosts(loadedModel) : loadedModel;
         const current = host?.getState() || saved;
@@ -1841,7 +1959,7 @@
       scenarioPending = true;
       result = null;
       analysis
-        .request('scenario', source, { scenario })
+        .request('scenario', source, { scenario, measured: message.measured })
         .then((response) => {
           if (
             generation !== scenarioImportGeneration ||
@@ -1856,7 +1974,8 @@
           proposals = structuredClone(scenario.proposals || []);
           auditAlternatives = !!scenario.auditAlternatives;
           selected = edits[0]?.region || selected;
-          validationModel = null;
+          validationModel = message.measured ? M.validate(message.measured) : null;
+          validationName = message.measuredName || 'Measured report';
           proposalModelCache = null;
           proposalDraft = null;
           proposalResult = null;
@@ -1864,15 +1983,21 @@
           result = response.result;
           scenarioPending = false;
           scenarioError = '';
-          scenarioValidation = null;
-          scenarioValidationError = '';
-          scenarioCache = { model, measured: null, key: JSON.stringify(currentScenario()) };
+          scenarioValidation = response.validation || null;
+          scenarioValidationError = response.validationError || '';
+          scenarioCache = {
+            model,
+            measured: validationModel,
+            key: JSON.stringify(currentScenario())
+          };
           render();
           send({
             type: 'analysisFinished',
             baseModelId: source.id,
             modelId: result.modelId,
             backend: analysis.backend,
+            validationStructureMatches: scenarioValidation?.structureMatches,
+            validationMeasuredId: scenarioValidation?.measuredModelId,
             changedRegions: result.regions.filter((r) => r.changedCalls).map((r) => r.region)
           });
         })
@@ -1900,7 +2025,7 @@
       try {
         validationModel = M.validate(message.model);
         validationName = message.name || 'Measured report';
-        if (activeTab === 'compare') render();
+        if (activeTab === 'compare' || activeTab === 'relations') render();
         else updateScenario();
       } catch (error) {
         scenarioError = error.message;

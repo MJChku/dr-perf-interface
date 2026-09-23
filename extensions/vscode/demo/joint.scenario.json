@@ -1,0 +1,43 @@
+{
+  "schema": "drperf.scenario.v1",
+  "modelId": "083dfb2afcbf494302e6bdf1e2d1af34fe91b761a1c04a713a0b455eb74b894d",
+  "scenario": {
+    "edits": [
+      {
+        "region": "enqueue",
+        "state": "items",
+        "op": "scale",
+        "value": 2
+      },
+      {
+        "region": "decode",
+        "state": "tokens",
+        "op": "scale",
+        "value": 1.5
+      }
+    ],
+    "relations": [
+      "proposed:[\"lookup\",\"pairs\",\"last(\\\"dequeue\\\", \\\"items\\\") ** 2\"]",
+      "proposed:[\"dispatch\",\"items\",\"last(\\\"dequeue\\\", \\\"items\\\")\"]",
+      "9c5eca631bcd6c7a",
+      "f52aa4d02f967f84",
+      "679eb3364f5f64f3"
+    ],
+    "proposals": [
+      {
+        "target": {
+          "region": "lookup",
+          "state": "pairs"
+        },
+        "expression": "last(\"dequeue\", \"items\") ** 2"
+      },
+      {
+        "target": {
+          "region": "dispatch",
+          "state": "items"
+        },
+        "expression": "last(\"dequeue\", \"items\")"
+      }
+    ]
+  }
+}

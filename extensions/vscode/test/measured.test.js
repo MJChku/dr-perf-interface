@@ -97,3 +97,27 @@ test('a realized expansion-factor intervention distinguishes competing state rel
       )
   );
 });
+
+test('a measured joint intervention composes linear and squared PCV effects across regions', () => {
+  const measured = require('../demo/joint-changed.drperf.json');
+  const input = scenario(refined);
+  input.edits.push({ region: 'decode', state: 'tokens', op: 'scale', value: 1.5 });
+  input.proposals = [
+    { target: { region: 'lookup', state: 'pairs' }, expression: 'last("dequeue", "items") ** 2' },
+    { target: { region: 'dispatch', state: 'items' }, expression: 'last("dequeue", "items")' }
+  ];
+  input.relations = input.relations.filter(
+    (id) => !refined.relations.some((r) => r.id === id && r.target.region === 'dispatch')
+  );
+  for (const p of input.proposals)
+    input.relations.push(M.proposeRelationship(refined, p.target, p.expression).relation.id);
+  const checked = M.validateScenario(refined, input, measured);
+  assert.equal(checked.structureMatches, true);
+  assert.ok(checked.regions.every((r) => r.stateMatches === r.calls));
+  for (const region of ['enqueue', 'dequeue', 'decode', 'copy', 'lookup']) {
+    const row = checked.regions.find((r) => r.region === region);
+    assert.equal(row.costChecks, row.calls);
+    assert.ok(row.relativeAbsoluteError < (region === 'enqueue' ? 0.01 : 1e-12));
+  }
+  assert.equal(checked.regions.find((r) => r.region === 'dispatch').costChecks, 17);
+});

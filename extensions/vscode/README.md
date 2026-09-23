@@ -14,6 +14,10 @@ command, or:
 code --install-extension drperf-explorer-0.1.0.vsix
 ```
 
+Start with **drperf: Open Joint-Change Demo** for a ready-to-inspect scenario:
+two changed PCVs, checked relationships, per-region effects, and comparison with
+an independent measured execution. Its assumptions are visible and editable.
+
 Run **drperf: Open Producer/Consumer Demo** from the Command Palette for a
 self-contained example measured by drperf. No profiler or GPU is needed to view
 it. The bundled example has concurrent producer/consumer threads, ordinary
@@ -49,7 +53,8 @@ flag code that has changed since export.
 - **Relationships:** the full list of discovered state equalities and a compact
   dependency diagram. `last`, `cum`, `cumend`, and `count` retain their distinct
   meanings. Search is by region, PCV, or operation. The diagram is a dependency
-  view of equations, not a causal or timing graph.
+  view of equations, not a causal or timing graph. Check these equations on
+  another execution even if its call structure differs.
 - **What-if:** edit one or more PCVs using multiply/add/set, explicitly choose
   observed equations as assumptions, and inspect the affected regions. Results
   show mean explained instructions per call over the same recorded calls,
@@ -175,6 +180,11 @@ Scenario JSON includes each changed region, coverage and support labels,
 representative calls, and the actual history values used by their equations.
 It contains no cross-region total or latency estimate.
 
+The CLI exits nonzero for malformed or unsupported inputs. A completed analysis
+can still contain failed equations or validation mismatches; agents should
+inspect the structured result fields rather than treating exit code zero as a
+claim that every prediction held.
+
 ## Recorded counts and marker estimates
 
 The default view preserves drperf's current calibrated formulas. **View recorded
@@ -252,3 +262,25 @@ measurement settings. Each region remains separate, and the observed
 differences are not a statistical significance test. The portable report
 [schema](schemas/report.schema.json) also enables validation and completion
 when editing `*.drperf.json` in VS Code.
+
+## Recheck relationships on another execution
+
+In **Relationships**, choose **Check on another execution**. Each reference
+equation is first checked on its original trace, then on the new report's actual
+history. This check allows different call counts, nesting, thread interleaving,
+and process/run groups. It predicts no costs. Histories reset for each new
+process/run, and schemas are matched by original region name and PCV names.
+
+Results distinguish equations that still hold, equations with counterexamples,
+unavailable schemas, and targets the new run did not exercise. Changed captured
+PCV expressions are flagged, since matching names alone cannot establish matching
+semantics. Checked proposals from the What-if panel are included.
+
+```sh
+bin/drperf-explore before.drperf.json --check-relations after.drperf.json \
+  -o relationship-check.json
+```
+
+This is separate from fixed-trace scenario validation: it tests a state equation
+against what actually happened, instead of predicting a changed execution from
+the old marker sequence.

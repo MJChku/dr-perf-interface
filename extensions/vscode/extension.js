@@ -123,9 +123,23 @@ function activate(context) {
     candidates.sort(
       (a, b) => a.location.endLine - a.location.line - (b.location.endLine - b.location.line)
     );
+    // Runtime PCV-schema variants can share the same source annotation. Keep
+    // the user's selected variant instead of switching back on cursor events.
+    const first = candidates[0];
+    if (
+      first &&
+      candidates.some(
+        (candidate) =>
+          candidate.region.id === selected &&
+          candidate.location.line === first.location.line &&
+          candidate.location.endLine === first.location.endLine
+      )
+    )
+      return selected;
     return candidates[0]?.region.id || null;
   }
   function sendModel() {
+    if (!panel || !webviewReady) return;
     panel?.webview.postMessage({
       type: 'model',
       model: report,
@@ -135,11 +149,18 @@ function activate(context) {
       reportPath: reportUri?.fsPath || 'Bundled example'
     });
     if (pendingScenario) {
-      panel?.webview.postMessage({
-        type: 'scenario',
-        scenario: pendingScenario,
-        modelId: report.id
-      });
+      if (pendingScenario.modelId === report.id)
+        panel.webview.postMessage({
+          type: 'scenario',
+          scenario: pendingScenario.scenario,
+          modelId: pendingScenario.modelId,
+          measured: pendingScenario.measured,
+          measuredName: pendingScenario.measuredName
+        });
+      else
+        vscode.window.showWarningMessage(
+          'The report changed before the saved scenario opened. Reopen the scenario with its original report.'
+        );
       pendingScenario = null;
     }
     void sendSourceStatus();
@@ -358,7 +379,7 @@ function activate(context) {
         throw new Error(
           'This scenario belongs to a different report. Open its original report first.'
         );
-      pendingScenario = scenario;
+      pendingScenario = { scenario, modelId: report.id };
       analysisStatus = null;
       showExplorer();
       if (webviewReady) sendModel();
@@ -530,6 +551,32 @@ function activate(context) {
     'drperf.showExplorer': showExplorer,
     'drperf.exportReport': exportReport,
     'drperf.refresh': reload,
+    'drperf.openJointDemo': async () => {
+      await load(vscode.Uri.joinPath(context.extensionUri, 'demo', 'refined.drperf.json'), true);
+      const baseline = report;
+      const saved = JSON.parse(
+        Buffer.from(
+          await vscode.workspace.fs.readFile(
+            vscode.Uri.joinPath(context.extensionUri, 'demo', 'joint.scenario.json')
+          )
+        ).toString('utf8')
+      );
+      const measured = await readModel(
+        vscode.Uri.joinPath(context.extensionUri, 'demo', 'joint-changed.drperf.json')
+      );
+      if (report !== baseline) return;
+      if (saved.modelId !== baseline.id)
+        throw new Error('Bundled scenario does not match its report.');
+      pendingScenario = {
+        scenario: saved.scenario,
+        modelId: baseline.id,
+        measured,
+        measuredName: 'Measured joint producer/expansion change'
+      };
+      analysisStatus = null;
+      showExplorer();
+      sendModel();
+    },
     'drperf.openRefinedDemo': async () => {
       await load(vscode.Uri.joinPath(context.extensionUri, 'demo', 'refined.drperf.json'), true);
       selected = 'lookup';

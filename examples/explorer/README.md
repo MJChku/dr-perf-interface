@@ -18,8 +18,8 @@ Install [the VS Code extension](../../extensions/vscode/README.md), then run
 by two and explicitly select relationship assumptions. Inspect an affected
 call to see the history values used to compute its new PCVs.
 
-The extension includes the actual baseline, changed, refined, refined-changed, and
-expansion-changed reports in `extensions/vscode/demo/`. The changed reports were
+The extension includes the actual baseline, changed, refined, refined-changed,
+expansion-changed, and joint-changed reports in `extensions/vscode/demo/`. The changed reports were
 obtained by executing the program again, not generated from the predictions.
 Use **Compare against a new measured report** to open `changed.drperf.json`.
 
@@ -73,7 +73,7 @@ Build drperf with `./build.sh`, then:
 examples/explorer/verify.sh
 ```
 
-This executes the five pipeline workloads and two call-structure controls,
+This executes the six pipeline workloads and two call-structure controls,
 exports their models, validates the scenarios, and writes results under
 `out/explorer-validation/`. The raw sidecars are temporary and removed after
 each export. No GPU is used.
@@ -138,6 +138,47 @@ adding one token makes the selected `dispatch.items = copy.bytes/16` relationshi
 produce a fractional state. The tool records that conflict rather than rounding
 or treating it as evidence that the program cannot run.
 
+## Compose two input changes, keeping every region separate
+
+**drperf: Open Joint-Change Demo** loads this scenario, its explicit assumptions,
+and the changed measured report together in VS Code.
+
+The `joint-changed.drperf.json` measurement doubles producer batch sizes and
+changes decode's expansion factor from two to three. The corresponding scenario
+uses both `enqueue.items *= 2` and `decode.tokens *= 1.5`, with the squared lookup
+and item-based dispatch relationships checked above. Every recorded PCV is
+predicted correctly. Cost predictions match all calls of enqueue, dequeue,
+decode, copy, and lookup to floating-point precision in this saved run. Dispatch
+matches at its 17 supported calls; seven remain in the unknown regime gap.
+
+This also gives a concrete abstract model. Let `s` be the producer multiplier,
+`t` the decode expansion factor, `b` a producer call's original batch size, and
+`q` a consumer round's original dequeued item count. Substitution through the
+selected state equations gives these **conditional** per-call descriptions:
+
+| Region | PCV after the change | Own instructions per call |
+| --- | --- | --- |
+| enqueue | `items = s*b` | `64*s*b + 91` |
+| dequeue | `items = s*q` | `128*s*q + 19` |
+| decode | `tokens = s*t*q` | `256*s*t*q + 23` |
+| copy | `bytes = 8*s*t*q` | `256*s*t*q + 19` |
+| lookup | `pairs = (s*q)^2` | `128*(s*q)^2 + 22` |
+
+Each local cost interface remains affine in its declared PCVs, while their
+composition can describe nonlinear responses to input changes. At `s=2, t=3`,
+the variable-dependent work grows by factors of two, three, and four in different
+regions; the constants remain. These rows are never added together. The algebra
+uses chosen relationships and a fixed call structure, and the measured joint
+case supports that one intervention, not every possible `s,t`.
+
+```sh
+bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+  --edit enqueue items scale 2 --edit decode tokens scale 1.5 --assume-first \
+  --propose lookup pairs 'last("dequeue", "items") ** 2' \
+  --propose dispatch items 'last("dequeue", "items")' \
+  --validate extensions/vscode/demo/joint-changed.drperf.json
+```
+
 ## When the call structure changes
 
 `call_structure.c` is a measured negative control. Doubling `batch.items`
@@ -147,6 +188,11 @@ of aligning unrelated calls. **Compare runs** can still compare the seven shared
 `item.bytes` states; their recorded per-call instruction costs are unchanged.
 The control uses recorded counts to retain marker instructions and avoid the
 legacy average nested-marker subtraction. It is included in `verify.sh`.
+
+State equations can still be rechecked despite that changed structure. The
+proposal `batch.items = count("batch") + 1` holds on all eight original calls
+but fails on all eight changed calls. `--check-relations` reports those actual
+counterexamples without requiring a fixed marker sequence.
 
 This distinguishes two questions: whether an existing region's interface has
 changed, and whether a fixed recorded execution can predict a new run. The
@@ -168,3 +214,12 @@ allocation, and worker regions. For example, changing `sched.after_alloc.ext_tok
 separates candidate explanations for nine downstream PCVs. That is an experiment
 proposal from existing observations, not a validated vLLM intervention. The
 synthetic program above supplies the independently measured validation.
+
+A separate temporal holdout check discovered 102 equations using only the first
+7,396 calls of this real trace. With preceding history retained, 99 held on the
+later calls and three failed. For example,
+`gc.lease_flush.queued = last(gc.launch.queued)` matched all 42 early target calls
+but failed on 19 of 51 later target calls. This is a split of one execution,
+not an independent run, and is evidence that even exact observed equalities can
+be temporary. **Check on another execution** supports the stronger next step
+when a new report is available.

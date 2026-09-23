@@ -111,6 +111,15 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
         .textContent(),
       /copy.bytes/
     );
+    const copyEquation = await page.getByLabel('Relationship for copy.bytes').inputValue();
+    await page.getByLabel('Relationship for copy.bytes').selectOption('');
+    assert.equal(
+      await page.locator('.experiment-suggestion').count(),
+      0,
+      'changed assumptions invalidate displayed experiment suggestions'
+    );
+    await page.getByLabel('Relationship for copy.bytes').selectOption(copyEquation);
+    await page.locator('.scenario-table tr[data-region="copy"]').waitFor();
     const copy = page.locator('.scenario-table tr[data-region="copy"]');
     assert.ok((await copy.textContent()).includes('extrapolated'));
     await page.screenshot({ path: path.join(output, 'scenario.png'), fullPage: true });
@@ -142,6 +151,12 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
       /No paired states/
     );
     await page.screenshot({ path: path.join(output, 'comparison.png'), fullPage: true });
+    await page.getByRole('button', { name: 'Relationships', exact: true }).click();
+    await page.locator('.relationship-check-summary').waitFor();
+    assert.equal(
+      await page.locator('.relationship-check[data-relationship-status="fails"]').count(),
+      0
+    );
     await page.getByRole('button', { name: 'What-if', exact: true }).click();
     await page.getByRole('button', { name: 'Save scenario and per-region results' }).click();
     assert.ok(
@@ -248,6 +263,43 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta n
     await page.getByRole('button', { name: 'Interface', exact: true }).click();
     assert.equal(await page.locator('img').count(), 0);
     assert.equal(await page.evaluate(() => window.exploited), undefined);
+    const refined = JSON.parse(
+      await fs.readFile(path.join(base, 'demo/refined.drperf.json'), 'utf8')
+    );
+    const joint = JSON.parse(
+      await fs.readFile(path.join(base, 'demo/joint-changed.drperf.json'), 'utf8')
+    );
+    const jointScenario = JSON.parse(
+      await fs.readFile(path.join(base, 'demo/joint.scenario.json'), 'utf8')
+    );
+    await page.evaluate(
+      ({ model, measured, saved }) => {
+        window.postMessage({ type: 'model', model }, '*');
+        window.postMessage(
+          {
+            type: 'scenario',
+            modelId: model.id,
+            scenario: saved.scenario,
+            measured,
+            measuredName: 'Measured joint producer/expansion change'
+          },
+          '*'
+        );
+      },
+      { model: refined, measured: joint, saved: jointScenario }
+    );
+    await page.locator('tr[data-validation-region="lookup"]').waitFor();
+    assert.match(await page.locator('tr[data-validation-region="lookup"]').textContent(), /24\/24/);
+    assert.match(
+      await page.locator('tr[data-validation-region="dispatch"]').textContent(),
+      /17\/24/
+    );
+    assert.equal(
+      await page.getByLabel('Intervention value 2', { exact: true }).inputValue(),
+      '1.5'
+    );
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: path.join(output, 'joint.png'), fullPage: false });
     assert.deepEqual(errors, []);
     console.log(
       'UI PASS: formulas, all relations, opt-in propagation, multiple PCVs, measured-run validation, checked proposals, narrow layout, invalid-data guard, safe rendering.'

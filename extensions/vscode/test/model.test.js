@@ -72,6 +72,18 @@ test('invalid and incomplete measurements disable predictions', () => {
   assert.throws(() => Model.replay(m, {}), /validity/);
 });
 
+test('report metadata cannot relabel time or a textual false flag as complete instruction measurements', () => {
+  const time = clone();
+  time.measurement.unit = 'seconds';
+  assert.throws(() => Model.validate(time), /measurement scope/);
+  const incomplete = clone();
+  incomplete.trace.complete = 'false';
+  assert.throws(() => Model.validate(incomplete), /completeness/);
+  const missing = clone();
+  delete missing.validity;
+  assert.throws(() => Model.validate(missing), /validity/);
+});
+
 test('int64 state values remain viewable but never rounded for replay', () => {
   const m = clone();
   m.trace.events[0].values = { once: '9007199254740993' };

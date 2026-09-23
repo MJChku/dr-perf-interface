@@ -46,6 +46,26 @@
         'Not a supported drperf explorer report. Export raw measurements with drperf-export.'
       );
     if (
+      typeof model.id !== 'string' ||
+      !model.id ||
+      model.measurement?.unit !== 'CPU instructions per call' ||
+      model.measurement?.scope !== 'exclusive region work'
+    )
+      throw new Error(
+        'Unsupported report identity or measurement scope. The explorer requires exclusive CPU instructions per call.'
+      );
+    if (
+      typeof model.trace?.complete !== 'boolean' ||
+      !Array.isArray(model.validity?.errors) ||
+      !Array.isArray(model.validity?.traceErrors) ||
+      ![...model.validity.errors, ...model.validity.traceErrors].every(
+        (error) => typeof error === 'string'
+      ) ||
+      (model.trace.recordCount !== undefined &&
+        (!safe(model.trace.recordCount) || model.trace.recordCount < 0))
+    )
+      throw new Error('Invalid trace-completeness or measurement-validity metadata.');
+    if (
       !Array.isArray(model.regions) ||
       !Array.isArray(model.relations) ||
       !Array.isArray(model.trace?.events)
@@ -76,6 +96,7 @@
         !region ||
         typeof region.id !== 'string' ||
         typeof region.name !== 'string' ||
+        (region.originalName !== undefined && typeof region.originalName !== 'string') ||
         names.has(region.id) ||
         !Array.isArray(region.states) ||
         !region.states.every((s) => typeof s === 'string') ||
@@ -1190,6 +1211,131 @@
     };
   }
 
+  function checkRelationships(reference, measured, options = {}) {
+    validate(reference);
+    validate(measured);
+    requireCompleteTrace(reference);
+    requireCompleteTrace(measured);
+    const originalId = reference.id;
+    reference = withProposals(reference, options.proposals || []);
+    if (options.relations !== undefined && !Array.isArray(options.relations))
+      throw new Error('Relationship selection must be an array.');
+    const selected =
+      options.relations === undefined
+        ? reference.relations
+        : options.relations.map((relationId) => {
+            const relation = reference.relations.find((r) => r.id === relationId);
+            if (!relation) throw new Error('Unknown relationship to check.');
+            return relation;
+          });
+    const identity = (region) =>
+      JSON.stringify([region.originalName || region.id, [...region.states].sort()]);
+    const index = new Map();
+    for (const region of measured.regions) {
+      const key = identity(region);
+      if (index.has(key)) throw new Error('Ambiguous measured interface identity.');
+      index.set(key, region);
+    }
+    const correspondence = new Map(),
+      reverse = new Map();
+    for (const region of reference.regions) {
+      const match = index.get(identity(region));
+      if (match) {
+        if (reverse.has(match.id)) throw new Error('Ambiguous reference interface identity.');
+        correspondence.set(region.id, match);
+        reverse.set(match.id, region.id);
+      }
+    }
+    // Preserve measured marker order and per-run history. Unrelated regions can
+    // be omitted because none of these equations refers to their history.
+    const events = measured.trace.events
+      .filter((e) => reverse.has(e.region))
+      .map((e) => ({ ...e, region: reverse.get(e.region) }));
+    const baseline = new Map(
+      verifyRelationships(
+        reference,
+        selected.map((r) => r.id)
+      ).map((check) => [check.id, check])
+    );
+    const available = selected.filter(
+      (r) =>
+        correspondence.has(r.target.region) && r.terms.every((t) => correspondence.has(t.region))
+    );
+    const checked = new Map(
+      verifyRelationships(
+        { relations: available, trace: { events } },
+        available.map((r) => r.id)
+      ).map((check) => [check.id, check])
+    );
+    const referenceRegions = new Map(reference.regions.map((r) => [r.id, r]));
+    const sourceExpressions = (region, state) =>
+      [
+        ...new Set(
+          region.sources.flatMap((source) =>
+            Object.hasOwn(source.expressions || {}, state) ? [source.expressions[state]] : []
+          )
+        )
+      ].sort();
+    const checks = selected.map((relation) => {
+      const original = baseline.get(relation.id),
+        current = checked.get(relation.id);
+      const dependencies = [
+        relation.target,
+        ...relation.terms.map((t) => ({
+          region: t.region,
+          state: t.kind === 'count' ? null : t.state
+        }))
+      ];
+      const missing = [
+        ...new Set(dependencies.filter((t) => !correspondence.has(t.region)).map((t) => t.region))
+      ];
+      const changedExpressions = [];
+      const seen = new Set();
+      for (const dependency of dependencies) {
+        const key = id(dependency.region, dependency.state);
+        if (seen.has(key) || dependency.state === null || !correspondence.has(dependency.region))
+          continue;
+        seen.add(key);
+        const before = sourceExpressions(referenceRegions.get(dependency.region), dependency.state);
+        const after = sourceExpressions(correspondence.get(dependency.region), dependency.state);
+        if (before.length && after.length && JSON.stringify(before) !== JSON.stringify(after))
+          changedExpressions.push(dependency);
+      }
+      return {
+        id: relation.id,
+        target: relation.target,
+        equation: relationship(relation),
+        baseline: original,
+        status: !original.holds
+          ? 'baseline-failed'
+          : missing.length
+            ? 'unavailable'
+            : !current?.calls
+              ? 'not-exercised'
+              : current.holds
+                ? 'holds'
+                : 'fails',
+        measured: current || null,
+        missing,
+        changedExpressions
+      };
+    });
+    return {
+      schema: 'drperf.relationship-check.v1',
+      referenceModelId: originalId,
+      measuredModelId: measured.id,
+      contract:
+        'State equations are checked against actual history in each measured process/run. Call counts, nesting, and ordering may differ. Matching PCV names and schemas must retain their semantic meaning. Agreement is observational, not causal proof; no cost or latency is predicted.',
+      checks,
+      summary: Object.fromEntries(
+        ['holds', 'fails', 'baseline-failed', 'unavailable', 'not-exercised'].map((status) => [
+          status,
+          checks.filter((c) => c.status === status).length
+        ])
+      )
+    };
+  }
+
   function findDistinguishingExperiments(model, assumptions, options = {}) {
     const maxProbes = options.maxProbes ?? 12;
     if (!safe(maxProbes) || maxProbes < 1 || maxProbes > 64)
@@ -1392,6 +1538,7 @@
     withProposals,
     recordedCosts,
     compareInterfaces,
-    findDistinguishingExperiments
+    findDistinguishingExperiments,
+    checkRelationships
   };
 });

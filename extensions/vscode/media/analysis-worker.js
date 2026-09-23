@@ -33,6 +33,8 @@ self.onmessage = function (event) {
         payload.assumptions,
         payload.options
       );
+    else if (kind === 'relationship-check')
+      value = DrperfModel.checkRelationships(currentModel, payload.measured, payload.options);
     else throw new Error('Unknown analysis operation.');
     self.postMessage({ id, value });
   } catch (error) {
