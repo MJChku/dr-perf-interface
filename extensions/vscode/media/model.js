@@ -525,7 +525,15 @@
         ([lo, hi], i) => safe(lo) && safe(hi) && state[i] >= lo && state[i] <= hi
       );
     let support = observed ? 'observed' : 'unobserved';
-    if (!fit) fit = region.regimes.find(inRange);
+    if (!fit) {
+      const candidates = region.regimes.filter(inRange);
+      if (candidates.length > 1)
+        return {
+          ok: false,
+          reason: 'Overlapping fitted regimes; branch choice is ambiguous at this unobserved state'
+        };
+      fit = candidates[0];
+    }
     if (!fit && region.regimes.length === 1) {
       fit = region.regimes[0];
       support = 'extrapolated';

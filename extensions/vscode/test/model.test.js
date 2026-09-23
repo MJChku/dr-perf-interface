@@ -162,6 +162,34 @@ test('negative formula intercept is retained', () => {
   assert.match(Model.formula(r), /- 100/);
 });
 
+test('overlapping regime ranges cannot choose an unobserved branch by array order', () => {
+  const region = {
+    states: ['n'],
+    regimes: [
+      {
+        coefficients: [2],
+        constant: 0,
+        dependent: [],
+        range: [[1, 5]],
+        points: [{ state: [1], unexplained: 0 }],
+        blocks: { unexplained: 0 }
+      },
+      {
+        coefficients: [4],
+        constant: 0,
+        dependent: [],
+        range: [[3, 7]],
+        points: [{ state: [7], unexplained: 0 }],
+        blocks: { unexplained: 0 }
+      }
+    ]
+  };
+  assert.match(Model.evaluate(region, { n: 4 }).reason, /ambiguous/);
+  region.regimes.reverse();
+  assert.match(Model.evaluate(region, { n: 4 }).reason, /ambiguous/);
+  assert.equal(Model.evaluate(region, { n: 1 }).explained, 2);
+});
+
 test('relationship evaluation uses exact fractions, including cancellation', () => {
   const relation = {
     target: { region: 'target', state: 'n' },

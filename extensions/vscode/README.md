@@ -75,6 +75,16 @@ Histories reset at each process/run boundary. Call counts, nesting, and marker
 order stay fixed. The replay makes no assumption about elapsed time or
 concurrency beyond that recorded sequence.
 
+`last` means the latest preceding **entry**, `cum` sums preceding entries, and
+`cumend` sums only calls whose end markers precede the current entry. Two
+overlapping producers can therefore have different begin and completion
+histories. Cycles in the relationship graph are allowed because references
+always read prior history, not simultaneous equations at the current entry.
+When replay's trace and arithmetic checks pass, and selected equations hold on
+the original trace, an identity intervention reproduces its original PCV
+states. This follows by induction over the recorded
+markers; it establishes replay consistency, not realizability of a new input.
+
 A relationship that held in the measurements is **observed evidence**, not proof
 of causality. Choosing it for a scenario is an explicit assumption. Alternative
 equations can coincide in the original trace and disagree after an intervention;
@@ -83,7 +93,10 @@ for that target.
 
 The checker only accepted formulas at observed states within its tolerance.
 Unobserved points and extrapolations are labelled. A gap between fitted regimes
-has no assumed branch boundary. New combinations of correlated PCVs are not
+has no assumed branch boundary; overlapping ranges do not select a branch by
+array order. An extrapolated point lies outside the regime's per-PCV min/max
+ranges; an unobserved point is a new combination inside those ranges. These
+labels do not establish input feasibility or generalization. New combinations of correlated PCVs are not
 identifiable. Unexplained cost at changed states remains unknown, and partial
 predictions show how many calls were modelled. Large int64 PCVs are preserved as
 strings in reports rather than rounded; the current JavaScript replay rejects
