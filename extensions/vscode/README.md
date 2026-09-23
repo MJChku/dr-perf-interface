@@ -200,18 +200,21 @@ claim that every prediction held.
 
 ## Recorded counts and marker estimates
 
-The default view preserves drperf's current calibrated formulas. **View recorded
-counts** reverses the marker-overhead subtraction, retaining the marker API's
+The default view uses drperf's marker-adjusted formulas. **View recorded
+counts** restores the separately fitted raw block counts, retaining the marker API's
 instructions in each region's own cost. The selected basis also applies to
 scenario validation and is saved with the scenario. The terminal equivalent is
 `--recorded`. CUDA/native exclusions and OpenMP-wait exclusions are unchanged.
 
-Marker calibration is an estimate, not an exact removal of instrumentation
-cost. The existing average nested-marker correction can over-subtract on
-exclusive-cost traces; some saved vLLM measurements expose negative calibrated
-costs. Such predictions are rejected and the report shows the issue. Recorded
-counts remain available for inspection without that correction. The explorer
-does not change the underlying checker or silently clamp negative formulas.
+Marker-module blocks are excluded by identity. Measured wrapper block profiles
+are subtracted before fitting: inside once per invocation, outside once per
+direct child call at that state. This corrects slopes as well as constants.
+Wrapper calibration remains an estimate: unavailable or unmatched calibration
+is disclosed, and caller-side preparation can remain. A positive subtraction
+cannot exceed a block's measured count; the unmatched estimate is recorded.
+Older saved reports can still contain the legacy over-subtraction and negative
+calibrated costs. Their recorded-count view retains the old inverse adjustment;
+new reports use `recordedRegimes` because a constant-only inverse is insufficient.
 
 If one region name is used with different sets of PCV names, the exporter creates
 separate interface variants with stable IDs. Reordering the same named PCVs does

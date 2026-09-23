@@ -1,4 +1,4 @@
-"""Portable, source-linked region models. No total-cost or latency composition.
+"""Portable, source-linked region models and symbolic nested-work composition.
 
 The exporter reuses drperf's block-level checker. Relationship discovery reports
 finite-trace equalities, never causal claims. The UI can explicitly adopt these
@@ -15,6 +15,8 @@ from pathlib import Path
 import re
 
 import derive
+import composition
+import markers
 import runner
 
 SCHEMA = "drperf.explorer.v1"
@@ -89,6 +91,8 @@ def cost_lines(model):
                                  for row in functions[:3])))
         for message in region.get("diagnostics", []):
             lines.append("      note: " + message)
+    if "composition" in model:
+        lines.extend(composition.lines(model["composition"]))
     return lines
 
 
@@ -549,7 +553,8 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
     trace_count = len(traces)
     if not complete:
         traces = []  # A prefix would create misleading complete-looking scenarios.
-    inside, outside = runner.marker_cost(runs)
+    raw_keys = keys
+    keys, marker_accounting = markers.adjust(keys, slots, records, trace_errors + runner.validity(runs))
     source_names = {interface_metadata.get(name, {}).get("originalName", name) for name in names}
     locations = source_locations(source_root, source_names, source_paths) if source_root else {}
     regions = []
@@ -557,12 +562,10 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
         own, states, dropped = derive.per_state(keys, name)
         vecs, calls = derive.per_trigger(own)
         nested = nested_by_region.get(name, {})
-        nested_count = sum(nested.values())
-        calibration = inside + nested_count * (inside + outside)
+        calibration = 0
         fitted = derive.derive(vecs, slots)
         regimes = []
         for fit in fitted:
-            fit.c -= calibration
             regimes.append({"coefficients": list(fit.a), "constant": fit.c,
                             "dependent": [states[i] for i in sorted(fit.dependent)],
                             "points": [{"state": list(v), "calls": calls[v],
@@ -578,11 +581,31 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
                                             "unexplained": attributed(fit.by_sym_irr)},
                             "markerCalibration": calibration})
         points = []
+        raw_own, _raw_states, _raw_dropped = derive.per_state(raw_keys, name)
+        raw_vecs, _raw_calls = derive.per_trigger(raw_own)
         for v, vec in sorted(vecs.items()):
-            recorded = sum(c for b, c in vec.items() if not derive.is_runtime(slots.get(b, ("?", "?", None))[:2]))
+            recorded = sum(c for b, c in raw_vecs[v].items() if not derive.is_runtime(slots.get(b, ("?", "?", None))[:2]))
+            observed = sum(c for b, c in vec.items() if not derive.is_runtime(slots.get(b, ("?", "?", None))[:2]))
             points.append({"state": list(v), "calls": calls[v], "recorded": recorded,
-                           "observed": recorded - calibration})
+                           "observed": observed})
+        marker_info = markers.metadata(name, states, marker_accounting)
+        raw_regimes = []
+        for fit in derive.derive(raw_vecs, slots):
+            raw_regimes.append({"coefficients": list(fit.a), "constant": fit.c,
+                               "dependent": [states[i] for i in sorted(fit.dependent)],
+                               "points": [{"state": list(v), "calls": calls[v], "explained": fit.formula(v),
+                                           "unexplained": fit.irr.get(v, 0), "waiting": fit.wait.get(v, 0)} for v in fit.values],
+                               "range": [[min(v[j] for v in fit.values), max(v[j] for v in fit.values)] for j in range(len(states))],
+                               "unexplainedShare": fit.irr_share(),
+                               "blocks": {"affine": fit.n_affine, "constant": fit.n_const, "unexplained": fit.n_irr},
+                               "attribution": {"coefficients": [attributed(m) for m in fit.by_sym_a],
+                                               "constant": attributed(fit.by_sym_c), "unexplained": attributed(fit.by_sym_irr)},
+                               "markerCalibration": 0})
         diagnostics = []
+        if any(p['unmatchedEstimate'] > 1e-6 for p in marker_info['points']):
+            diagnostics.append("Marker wrapper calibration exceeded some observed block counts; only available counts were removed. See markerAdjustment.points for unmatched estimates.")
+        if any(p['calibratedCalls'] < p['calls'] for p in marker_info['points']):
+            diagnostics.append("Marker library blocks excluded; wrapper calibration unavailable for some calls. Caller-side annotation preparation may remain.")
         if any(point["observed"] < 0 for point in points):
             diagnostics.append("Marker-overhead subtraction produces negative observed costs. Inspect recorded counts; calibrated predictions are unavailable at those states.")
         if any(point["explained"] < 0 for fit in regimes for point in fit["points"]):
@@ -592,6 +615,7 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
             diagnostics.append("This region name was used with different PCV schemas. Each schema is displayed and checked as a separate interface.")
         regions.append({"id": name, "name": info["displayName"], "originalName": info["originalName"], "states": list(states),
                         "markerCalibration": calibration, "diagnostics": diagnostics,
+                        "markerAdjustment": marker_info, "recordedRegimes": raw_regimes,
                         "calls": sum(calls.values()), "droppedCalls": dropped,
                         "status": "modelled" if regimes else "insufficient-states",
                         "regimes": regimes, "points": points,
@@ -602,15 +626,18 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
         relations, discovery = [], {"truncated": False, "warnings": [],
                                     "scope": "discovery disabled or complete trace unavailable"}
     invalid = runner.validity(runs)
+    composed = composition.build(regions, traces, invalid + trace_errors +
+                                 ([] if complete else ["trace exceeds export limit"]))
     model = {"schema": SCHEMA, "title": raw.name, "measurement": {
                  "unit": "CPU instructions per call", "scope": "exclusive region work",
-                 "markerAdjustment": "legacy average estimate; retained for compatibility with drperf CLI",
-                 "composition": "none; no aggregate cost, latency, or parallelism model",
+                 "markerAdjustment": "marker blocks excluded; wrapper profiles subtracted before fitting using direct-child counts per state",
+                 "composition": "symbolic direct-child work in composition; no latency or parallelism model",
                  "tolerance": {"absolute": derive.ABS_TOL, "relative": derive.REL_TOL}},
              "provenance": {"rawDirectory": str(raw), "sourceRoot": str(Path(source_root).resolve()) if source_root else None,
                             "runs": [{"file": r["file"], "measurement": r["data"].get("drperf", {})} for r in runs["runs"]]},
              "validity": {"errors": invalid, "traceErrors": trace_errors},
              "regions": regions, "relations": relations, "discovery": discovery,
+             "composition": composed,
              "trace": {"complete": complete and not trace_errors, "recordCount": trace_count,
                        "limit": max_trace, "events": traces},
              "scenarioContract": {"fixed": ["recorded call count", "marker sequence order", "nesting"],

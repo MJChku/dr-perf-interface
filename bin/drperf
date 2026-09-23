@@ -26,6 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, "lib"))
 import derive   # noqa: E402
+import composition   # noqa: E402
 import runner   # noqa: E402
 
 
@@ -45,109 +46,10 @@ def blame(entries, total, top=3, floor=0.05):
 
 
 def cost_lines(rs, keys, slots, recs):
-    """One line per region: name = a*state + ... + constant."""
-    out = []
-    regions = sorted(set(k["region"] for k in keys.values()
-                         if not k["region"].startswith(runner.CALIB) and ":" not in k["region"]
-                         and k["region"] != "_perfmark_capture"))
-    inside, outside = runner.marker_cost(rs)
-    nested_of = {}
-    heads, bodies = [], []
-    for R in regions:
-        vecs, trig, names, nested, dropped = derive.inclusive_vectors(keys, R, recs)
-        nested_of[R] = derive.nested_calls(recs, R)
-        calls = sum(trig.values())
-        if not vecs:
-            continue
-        regimes = derive.derive(vecs, slots)
-        if not regimes:
-            tot, by_sym = 0.0, {}
-            for v, n in trig.items():
-                for b, c in vecs[v].items():
-                    sym = slots.get(b, ("?", "?", None))[:2]
-                    if derive.is_runtime(sym):
-                        continue
-                    tot += c * n
-                    by_sym[sym] = by_sym.get(sym, 0.0) + c * n / max(calls, 1)
-            per_call = tot / max(calls, 1)
-            heads.append(R)
-            b = blame(by_sym, per_call)
-            says = ["observed mean over %d call%s: %s" % (
-                calls, "" if calls == 1 else "s",
-                "one state point, nothing to model" if len(vecs) < 2 else
-                "%d state points, fewer than the %d needed" % (len(vecs), max(derive.MIN_VALUES, len(names) + 2)))]
-            if dropped:
-                says.append("%d of %d calls not modelled: too many distinct states"
-                            % (dropped, dropped + calls))
-            inner = nested_of.get(R) or {}
-            if inner:
-                says.append("excludes %s" % ", ".join(
-                    "%s x%.3g" % (n, c) for n, c in sorted(inner.items(), key=lambda kv: -kv[1])))
-            note = "   (" + "; ".join(says) + ")"
-            bodies.append((derive.fmt(per_call), note, ["      %s" % ", ".join(b)] if b else []))
-            continue
-        for r in regimes:
-            r.c -= inside + nested * (inside + outside)
-            terms, kept, no_effect, tied, fixed = [], [], [], [], []
-            for j, nm in enumerate(names):
-                if len(set(v[j] for v in r.values)) <= 1:
-                    fixed.append(nm)          # never changed: nothing to measure
-                elif j in r.dependent:
-                    tied.append(nm)           # moved in step with another state
-                elif abs(r.a[j]) < 1e-12:
-                    no_effect.append(nm)      # varied, and the cost did not follow
-                else:
-                    terms.append("%s*%s" % (derive.fmt(r.a[j]), nm))
-                    kept.append(nm)
-            head = R
-            if len(regimes) > 1 and names:
-                bound = r.values[-1][0] if r is regimes[0] else r.values[0][0]
-                head = "%s when %s %s %s" % (R, names[0], "<=" if r is regimes[0] else ">=", derive.fmt(bound))
-            # every declared state is accounted for, whether or not it is in the formula
-            says = []
-            if no_effect:
-                says.append("%s: no effect" % ", ".join(no_effect))
-            if tied:
-                says.append("%s: moved in step with %s" % (", ".join(tied), " and ".join(kept) or "the rest"))
-            if fixed:
-                says.append("%s: did not vary" % ", ".join(fixed))
-            if dropped:
-                says.append("%d of %d calls not modelled: too many distinct states"
-                            % (dropped, dropped + calls))
-            inner = nested_of.get(R) or {}
-            if inner:
-                says.append("excludes %s" % ", ".join(
-                    "%s x%.3g" % (n, c) for n, c in sorted(inner.items(), key=lambda kv: -kv[1])))
-            share = r.irr_share()
-            if share > 0.05:
-                says.append("%.0f%% of the cost follows no declared state" % (100 * share))
-            note = ("   (" + "; ".join(says) + ")") if says else ""
-            # which functions the coefficients and the constant come from
-            extra = []
-            for j, nm in enumerate(names):
-                if nm not in kept:
-                    continue
-                b = blame(r.by_sym_a[j], r.a[j])
-                if b:
-                    extra.append("      %s: %s" % (nm, ", ".join(b)))
-            b = blame(r.by_sym_c, r.c)
-            if b:
-                extra.append("      constant: %s" % ", ".join(b))
-            if share > 0.05:
-                mean_irr = sum(r.irr.values()) / len(r.values) if r.values else 0.0
-                b = blame(r.by_sym_irr, mean_irr)
-                if b:
-                    extra.append("      unexplained: %s" % ", ".join(b))
-            heads.append(head)
-            const = max(r.c, 0.0)
-            if not terms or const >= 1:
-                terms = terms + [derive.fmt(const)]
-            bodies.append((" + ".join(terms), note, extra))
-    w = max([len(h) for h in heads] + [1])
-    for h, (b, note, extra) in zip(heads, bodies):
-        out.append("  %-*s = %s%s" % (w, h, b, note))
-        out.extend(extra)
-    return out
+    """Use the same marker-adjusted block fits as the portable report."""
+    import explorer
+    model = explorer.build_model(rs["path"], discover=False)
+    return explorer.cost_lines(model)
 
 
 def strip_aliases(e):

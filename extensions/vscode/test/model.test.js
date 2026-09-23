@@ -321,7 +321,7 @@ test('validation refuses incompatible counting configurations', () => {
   );
 });
 
-test('recorded-count view undoes calibration without changing PCV slopes', () => {
+test('legacy recorded-count view undoes constant calibration without changing PCV slopes', () => {
   const model = clone(),
     region = model.regions.find((r) => r.id === 'enqueue');
   region.markerCalibration = 5000;
@@ -344,6 +344,30 @@ test('recorded-count view undoes calibration without changing PCV slopes', () =>
   };
   const compared = Model.validateScenario(model, scenario, model);
   assert.equal(compared.regions.find((r) => r.region === 'enqueue').stateMatches, 48);
+});
+
+test('recorded-count view restores raw fits after state-dependent marker removal', () => {
+  const model = clone();
+  model.composition = { status: 'observed', regions: [{ id: 'enqueue' }], errors: [] };
+  const region = model.regions.find((r) => r.id === 'enqueue');
+  region.recordedRegimes = structuredClone(region.regimes);
+  const saved = structuredClone(region.recordedRegimes);
+  region.regimes[0].coefficients[0] -= 17;
+  region.regimes[0].constant -= 9;
+  region.regimes[0].points[0].unexplained = 123;
+  region.diagnostics = ['Marker wrapper calibration mismatch', 'source changed'];
+  for (const point of region.points) {
+    point.recorded = point.observed;
+    point.observed -= 17*point.state[0] + 9;
+  }
+  const raw = Model.recordedCosts(model);
+  const restored = raw.regions.find((r) => r.id === 'enqueue');
+  assert.deepEqual(restored.regimes, saved);
+  assert.deepEqual(restored.diagnostics, ['source changed']);
+  assert.ok(restored.points.every((point) => point.observed === point.recorded));
+  assert.equal(Model.recordedCosts(raw), raw);
+  assert.equal(raw.composition.status, 'unavailable', 'do not expose stale adjusted composition in a raw view');
+  assert.notDeepEqual(region.regimes, saved, 'original adjusted model is unchanged');
 });
 
 test('changed calls retain the actual history values used by selected equations', () => {

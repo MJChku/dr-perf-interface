@@ -62,8 +62,17 @@ every other block is *irregular*.
 $$\mathrm{cost}(v) \approx A \cdot v + D,\qquad A_j = \sum_{\text{scaling in } j} a_{\beta j},\quad D = \sum_{\text{affine}} d_\beta' + \sum_{\text{constant}} \operatorname{mean}_v c_\beta(v),$$
 
 with $I(v) = \sum_{\text{irregular}} c_\beta(v)$ tabulated at $V$ only.
-OpenMP runtime blocks are excluded as waiting and the calibrated marker cost
-is subtracted from $D$. Variables collinear over $V$ cannot be separated and
+OpenMP runtime blocks are excluded as waiting. Before fitting, perfmark library
+and native Python binding blocks are excluded by identity. If the run contains
+the Python empty-region calibration, the remaining inside block profile is
+subtracted once per region invocation, and the outside profile is subtracted
+once per **direct** child invocation at that parent state. The outside profile
+is the difference between the calibration outer region's exclusive vector and
+the bare-loop exclusive vector, divided by the child count. It does not include
+the child's inside profile. Run-specific calibration profiles are kept separate.
+The corrected vectors are fitted, so varying marker counts affect slopes as well
+as constants; non-affine marker counts are removed before irregularity testing.
+Variables collinear over $V$ cannot be separated and
 are reported. For $k = 1$ and an irregular share above 5%, $V$ may be split
 once into two regimes of at least 3 points (3 is flagged weak), chosen by
 the mean per-point irregular fraction. Guaranteed: exactly affine counts give exact $A, D$ (P1); at
@@ -91,9 +100,67 @@ through undeclared variables, causality, happens-before (the order is the
 counter's), protection against coincidence when candidates outnumber
 triggers, so a relation counts only if exact in every run.
 
-**Composition.** A region's cost is its *own*: instructions counted while it
-was the innermost open region. Regions nested inside it are excluded and named,
-with their calls per trigger, so the reader can compose. They are not folded in
-automatically: the client aggregates a nested region over every parent that
-called it, so adding its mean to each parent would erase the parent's own
-dependence on its state.
+**Composition.** The basic-block fit remains a region's *own* cost: instructions
+counted while it was the innermost open region. A separate symbolic composition
+uses direct-child calls in the same thread, process, and run. Function boundaries
+do not matter. Child interfaces are frozen; their blocks are never refitted
+against parent PCVs. For each parent invocation, the trace supplies the child
+call count and child arguments. The checker finds an affine call-count relation
+and affine argument substitutions in the parent PCVs, checking every invocation
+in exact rational arithmetic (including parents with zero child calls). When
+both hold, the parent includes `(a*PCVs + d)*F_child(arguments)`. F denotes the
+child's full interface, including its unexplained component and its descendants.
+
+When arguments vary inside a parent, the checker additionally tries affine
+substitutions in parent PCVs and the zero-based child invocation index `j`.
+It retains `sum[j=0..count-1] F_child(arguments_j)` rather than averaging child
+arguments. Unexplained multiplicities remain `calls(child)`; unexplained
+argument relationships remain `pcvs_j`. These are trace-dependent sums, not
+closed expressions in parent entry PCVs. Observed per-parent-state child
+argument histograms are retained in the JSON report. A nonlinear count can be
+made affine by an appropriate declared parent PCV, for example `selected_count`.
+Recursion is reported as a recurrence, not solved or unrolled indefinitely.
+
+The final unexplained report has the same structure: `U_parent = U_own_parent +
+sum U_child`. Thus an irregular child does not prevent a compact parent
+interface, and a parent cannot erase unexplained child work. A product `N*F`
+denotes N applications of that interface, not N times the child's global
+measured mean. The client aggregates block counts by region/state across callers;
+it does not record block counts per invocation or per caller. Raw traces do
+record thread-local per-invocation self/inclusive totals, whose scope differs
+from the runtime-filtered, potentially all-thread block fits. Consequently this
+composition does not claim exact inclusive instruction totals for individual
+parents. Own-fit tolerance, repeated-state averaging, and unexplained-cost
+limitations persist. Numerical inclusive predictions require additional assumptions
+or finer block counters. No cross-thread parentage, parallel latency, or unobserved
+input guarantee is inferred.
+
+Composition uses the already marker-adjusted own fits, without adding marker
+costs back. Raw counts and separately fitted `recordedRegimes` remain available
+for audit and the recorded-count view. Marker-module exclusion is exact;
+wrapper-profile subtraction is an estimate, not an exact counterfactual program
+without annotations. Signed baseline differences are retained, and a requested
+positive subtraction is capped at that block's available count. Unmatched
+estimates are reported per state, not silently turned into negative counts.
+Without a usable calibration/complete nesting trace, only identifiable marker
+blocks are excluded. Caller-side PCV evaluation, argument preparation, and
+wrapper paths not represented by calibration can remain. The guarantees on
+exact collected counts apply to the raw measurements; calibrated costs inherit
+the stated estimation limits.
+Missing/crossing traces, omitted state buckets, and invalid measurements disable
+composition. The exporter also disables it when the trace exceeds its configured
+limit. Nonconstant affine call relations require more distinct parent/index
+points than their design-matrix rank; dependent PCVs are disclosed. Constant
+relations, including single-input cases, describe observations only.
+
+`composition.check` checks a frozen composition against a separate execution's
+trace and per-state counter coverage. It checks each available multiplicity and
+argument relation in exact arithmetic without refitting, preserves unresolved
+sum fallbacks, reports new call-graph edges, distinguishes absent parents from
+zero child calls, and rejects incompatible PCV schemas. PCV name order and JSON
+object-key order do not change argument meaning. This validates structural
+relations at the newly observed calls, not predictions of their instruction
+cost or unknown U values. A context-dependent shared child can have an affine
+global state mean and yet fail badly as a numerical cost prediction for one
+caller; the composition examples include this negative control and its PCV
+refinement.

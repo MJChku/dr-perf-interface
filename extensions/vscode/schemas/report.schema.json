@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "urn:drperf:explorer:v1",
   "title": "drperf portable region report",
-  "description": "Observed region interfaces and finite-trace state relationships. No aggregate cost or latency model.",
+  "description": "Observed region interfaces, state relationships, and optional symbolic nested-work composition. No latency model.",
   "type": "object",
   "required": ["schema", "id", "measurement", "regions", "relations", "trace", "validity"],
   "properties": {
@@ -12,6 +12,34 @@
       "description": "Content identifier tying saved scenarios to this report."
     },
     "title": { "type": "string" },
+    "composition": {
+      "type": "object",
+      "description": "Frozen child interfaces, exact observed call relations, and recursively preserved unexplained work. Uses marker-adjusted instruction counts.",
+      "required": ["status", "scope", "basis", "contract", "regions", "errors"],
+      "properties": {
+        "status": { "enum": ["observed", "unavailable"] },
+        "scope": { "type": "string" },
+        "basis": { "type": "string" },
+        "contract": { "type": "string" },
+        "errors": { "type": "array", "items": { "type": "string" } },
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "states", "own", "ownUnexplained", "children", "observed", "recursive"],
+            "properties": {
+              "id": { "type": "string" },
+              "states": { "type": "array", "items": { "type": "string" } },
+              "own": { "type": "array", "items": { "type": "object" } },
+              "ownUnexplained": { "type": "boolean" },
+              "recursive": { "type": "boolean" },
+              "children": { "type": "array", "items": { "type": "object" } },
+              "observed": { "type": "array", "items": { "type": "object" } }
+            }
+          }
+        }
+      }
+    },
     "measurement": {
       "type": "object",
       "required": ["unit", "scope"],

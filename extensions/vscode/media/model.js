@@ -102,6 +102,7 @@
         !region.states.every((s) => typeof s === 'string') ||
         new Set(region.states).size !== region.states.length ||
         !Array.isArray(region.regimes) ||
+        (region.recordedRegimes !== undefined && !Array.isArray(region.recordedRegimes)) ||
         !Array.isArray(region.sources)
       )
         throw new Error('Invalid or duplicate region schema.');
@@ -128,7 +129,7 @@
               !Object.values(source.expressions).every((value) => typeof value === 'string')))
         )
           throw new Error('Invalid source location.');
-      for (const fit of region.regimes) {
+      for (const fit of [...region.regimes, ...(region.recordedRegimes || [])]) {
         if (
           !fit ||
           !Array.isArray(fit.coefficients) ||
@@ -256,6 +257,13 @@
       markerAdjustment: 'none; marker API instructions retained'
     };
     for (const region of result.regions) {
+      if (region.recordedRegimes) {
+        region.regimes = structuredClone(region.recordedRegimes);
+        region.markerCalibration = 0;
+        for (const point of region.points) point.observed = point.recorded;
+        region.diagnostics = (region.diagnostics || []).filter((message) => !/Marker|marker|calibrated explained/.test(message));
+        continue;
+      }
       const calibration = region.markerCalibration ?? region.regimes[0]?.markerCalibration ?? 0;
       for (const point of region.points)
         point.observed = point.recorded ?? point.observed + calibration;
@@ -271,6 +279,14 @@
       region.diagnostics = (region.diagnostics || []).filter(
         (message) => !/Marker-overhead|calibrated explained/.test(message)
       );
+    }
+    if (result.composition) {
+      result.composition = {
+        ...result.composition,
+        status: 'unavailable',
+        regions: [],
+        errors: ['Composition uses the original own-cost basis; open the original report for its symbolic interfaces.']
+      };
     }
     return result;
   }

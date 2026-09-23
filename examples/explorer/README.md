@@ -186,8 +186,8 @@ increases the number of `item` calls from 36 to 72 while retaining eight batch
 calls. Fixed-trace scenario validation rejects this changed structure instead
 of aligning unrelated calls. **Compare runs** can still compare the seven shared
 `item.bytes` states; their recorded per-call instruction costs are unchanged.
-The control uses recorded counts to retain marker instructions and avoid the
-legacy average nested-marker subtraction. It is included in `verify.sh`.
+The control uses recorded counts to compare the raw instruction measurements
+independently of marker-removal estimates. It is included in `verify.sh`.
 
 State equations can still be rechecked despite that changed structure. The
 proposal `batch.items = count("batch") + 1` holds on all eight original calls

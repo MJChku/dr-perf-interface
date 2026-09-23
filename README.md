@@ -328,10 +328,19 @@ Outside DynamoRIO the markers are empty functions, one call each.
 - `cum(R.s)`, `last(R.s)`, `count(R)` and `cumend(R.s)` are counters over the
   triggers that began (or ended) before the one being explained. A relation is
   reported only if it holds exactly at every trigger, in integer arithmetic.
-- A region's cost is its own. Regions nested inside it are excluded and named
-  with their calls per trigger (`excludes parse x10.5`), so you can compose
-  them yourself; they are not folded in, because the client aggregates a nested
-  region over every parent that called it.
+- The initial region fit is its own cost. The **composed interfaces** section
+  then adds direct-child interfaces across function calls, for example
+  `F_parent(n,m) = own_terms + (2*n+1)*F_child(m)`. Child unexplained work stays
+  inside `F_child` and in the parent's recursive `U` expression. Multiplicities
+  and argument substitutions are checked exactly against every observed call;
+  varying arguments or irregular multiplicities stay as sums. These are
+  symbolic interfaces, not numerical inclusive costs fabricated from global
+  child averages. Marker blocks are excluded before fitting; measured wrapper
+  profiles are subtracted using direct-child counts at each state. Calibration
+  mismatches are reported, and caller-side annotation preparation may remain.
+  See the [20 measured composition examples](examples/composition/README.md),
+  including new-input checks and a shared-callee case where hidden caller
+  context makes multiplying a global child mean fail.
 
 ## Turning the markers off
 
@@ -427,6 +436,7 @@ perfmark/           perfmark.h/.c -> build/libperfmark.so; attach.c -> build/lib
 client/drperf.c     DynamoRIO client -> build/libdrperf.so
 lib/runner.py       running the program and reading back what the client wrote
 lib/derive.py       cost formulas from per-basic-block counts
+lib/composition.py  nested interfaces and child-call relations, preserving unexplained work
 bin/drperf          the tool
 SPEC.md             what is computed, formally, and what is not
 examples/           playground (start here), c/rust/cpp suites, queue, py_delta, py_twovar,
