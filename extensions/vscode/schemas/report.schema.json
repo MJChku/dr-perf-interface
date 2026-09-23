@@ -1,0 +1,255 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "urn:drperf:explorer:v1",
+  "title": "drperf portable region report",
+  "description": "Observed region interfaces and finite-trace state relationships. No aggregate cost or latency model.",
+  "type": "object",
+  "required": ["schema", "id", "measurement", "regions", "relations", "trace", "validity"],
+  "properties": {
+    "schema": { "const": "drperf.explorer.v1" },
+    "id": {
+      "type": "string",
+      "description": "Content identifier tying saved scenarios to this report."
+    },
+    "title": { "type": "string" },
+    "measurement": {
+      "type": "object",
+      "required": ["unit", "scope"],
+      "properties": {
+        "unit": { "const": "CPU instructions per call" },
+        "scope": { "const": "exclusive region work" },
+        "markerAdjustment": { "type": "string" },
+        "composition": { "type": "string" },
+        "tolerance": {
+          "type": "object",
+          "properties": {
+            "absolute": { "type": "number", "minimum": 0 },
+            "relative": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "sourceRoot": { "type": ["string", "null"] },
+        "rawDirectory": { "type": "string" },
+        "command": { "type": "array", "items": { "type": "string" } },
+        "runs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "file": { "type": "string" }, "measurement": { "type": "object" } }
+          }
+        }
+      }
+    },
+    "validity": {
+      "type": "object",
+      "required": ["errors", "traceErrors"],
+      "properties": {
+        "errors": { "$ref": "#/definitions/strings" },
+        "traceErrors": { "$ref": "#/definitions/strings" }
+      }
+    },
+    "regions": { "type": "array", "maxItems": 10000, "items": { "$ref": "#/definitions/region" } },
+    "relations": {
+      "type": "array",
+      "maxItems": 100000,
+      "items": { "$ref": "#/definitions/relation" }
+    },
+    "trace": {
+      "type": "object",
+      "required": ["complete", "events"],
+      "properties": {
+        "complete": { "type": "boolean" },
+        "recordCount": { "type": "integer", "minimum": 0 },
+        "limit": { "type": "integer", "minimum": 0 },
+        "events": {
+          "type": "array",
+          "maxItems": 100000,
+          "items": { "$ref": "#/definitions/event" }
+        }
+      }
+    },
+    "discovery": { "type": "object" },
+    "scenarioContract": { "type": "object" }
+  },
+  "definitions": {
+    "strings": { "type": "array", "items": { "type": "string" } },
+    "integer": {
+      "description": "An exact integer; values beyond JavaScript's safe range are decimal strings.",
+      "oneOf": [
+        { "type": "integer", "minimum": -9007199254740991, "maximum": 9007199254740991 },
+        { "type": "string", "pattern": "^[+-]?[0-9]{1,128}$" }
+      ]
+    },
+    "state": { "type": "array", "items": { "$ref": "#/definitions/integer" } },
+    "point": {
+      "type": "object",
+      "required": ["state", "calls"],
+      "properties": {
+        "state": { "$ref": "#/definitions/state" },
+        "calls": { "type": "integer", "minimum": 0 },
+        "observed": { "type": "number" },
+        "recorded": { "type": "number", "minimum": 0 },
+        "explained": { "type": "number" },
+        "unexplained": { "type": "number", "minimum": 0 },
+        "waiting": { "type": "number", "minimum": 0 }
+      }
+    },
+    "attribution": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["module", "function", "instructions"],
+        "properties": {
+          "module": { "type": "string" },
+          "function": { "type": "string" },
+          "instructions": { "type": "number" }
+        }
+      }
+    },
+    "fit": {
+      "type": "object",
+      "required": [
+        "coefficients",
+        "constant",
+        "dependent",
+        "range",
+        "points",
+        "unexplainedShare",
+        "blocks",
+        "attribution"
+      ],
+      "properties": {
+        "coefficients": { "type": "array", "items": { "type": "number" } },
+        "constant": {
+          "type": "number",
+          "description": "A negative intercept is valid; the origin need not be a valid input."
+        },
+        "dependent": { "$ref": "#/definitions/strings" },
+        "range": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "$ref": "#/definitions/integer" }
+          }
+        },
+        "points": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              { "$ref": "#/definitions/point" },
+              { "required": ["explained", "unexplained"] }
+            ]
+          }
+        },
+        "unexplainedShare": { "type": "number" },
+        "blocks": {
+          "type": "object",
+          "required": ["affine", "constant", "unexplained"],
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "markerCalibration": { "type": "number" },
+        "attribution": {
+          "type": "object",
+          "required": ["coefficients", "constant", "unexplained"],
+          "properties": {
+            "coefficients": { "type": "array", "items": { "$ref": "#/definitions/attribution" } },
+            "constant": { "$ref": "#/definitions/attribution" },
+            "unexplained": { "$ref": "#/definitions/attribution" }
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["path", "line", "endLine", "sha256"],
+      "properties": {
+        "path": { "type": "string", "description": "Path relative to the selected source root." },
+        "line": { "type": "integer", "minimum": 1 },
+        "endLine": { "type": "integer", "minimum": 1 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "Source hash at export time; not proof the source matches the measured binary."
+        },
+        "expressions": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "region": {
+      "type": "object",
+      "required": ["id", "name", "states", "calls", "points", "regimes", "sources"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "originalName": { "type": "string" },
+        "states": { "allOf": [{ "$ref": "#/definitions/strings" }], "uniqueItems": true },
+        "calls": { "type": "integer", "minimum": 0 },
+        "droppedCalls": { "type": "integer", "minimum": 0 },
+        "points": {
+          "type": "array",
+          "items": { "allOf": [{ "$ref": "#/definitions/point" }, { "required": ["observed"] }] }
+        },
+        "regimes": { "type": "array", "items": { "$ref": "#/definitions/fit" } },
+        "sources": { "type": "array", "items": { "$ref": "#/definitions/source" } },
+        "diagnostics": { "$ref": "#/definitions/strings" },
+        "markerCalibration": { "type": "number" },
+        "nested": { "type": "object", "additionalProperties": { "type": "number", "minimum": 0 } },
+        "status": { "type": "string" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["region", "state"],
+      "properties": { "region": { "type": "string" }, "state": { "type": "string" } }
+    },
+    "feature": {
+      "type": "object",
+      "required": ["kind", "region", "state"],
+      "properties": {
+        "kind": { "enum": ["last", "cum", "cumend", "count"] },
+        "region": { "type": "string" },
+        "state": { "type": ["string", "null"] }
+      }
+    },
+    "term": {
+      "allOf": [{ "$ref": "#/definitions/feature" }],
+      "required": ["coefficient"],
+      "properties": {
+        "coefficient": { "type": "number" },
+        "coefficientExact": { "type": "string" },
+        "aliases": { "type": "array", "items": { "$ref": "#/definitions/feature" } }
+      }
+    },
+    "relation": {
+      "type": "object",
+      "required": ["id", "target", "terms", "constant"],
+      "properties": {
+        "id": { "type": "string" },
+        "target": { "$ref": "#/definitions/target" },
+        "terms": { "type": "array", "maxItems": 256, "items": { "$ref": "#/definitions/term" } },
+        "constant": { "type": "number" },
+        "constantExact": { "type": "string" },
+        "expression": { "type": "string", "maxLength": 4096 },
+        "evidence": { "type": "object" },
+        "semantics": { "type": "string" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["group", "seq", "end", "thread", "region", "values"],
+      "properties": {
+        "group": { "type": "string" },
+        "thread": { "type": "string" },
+        "region": { "type": "string" },
+        "seq": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 1 },
+        "values": { "type": "object", "additionalProperties": { "$ref": "#/definitions/integer" } }
+      }
+    }
+  }
+}

@@ -10,6 +10,8 @@ across regions.  Nothing else, and no options.
 
 Set DRPERF_MAX_STATES_PER_REGION to change the default 4096 retained state
 combinations per region (subject to the shared counter-memory budget).
+Set DRPERF_REPORT=path.drperf.json to save a portable report for the VS Code
+region explorer. DRPERF_SOURCE_ROOT selects the source tree (default: cwd).
 
 Cost is instructions per call, counted exactly on every thread that ran while
 the region was open.  A coefficient appears only for a state that varied in
@@ -246,8 +248,23 @@ def main(argv):
         slots = runner.demangle_slots(slots)
         recs = [r for r in runner.load_traces_all(rs) if not r["region"].startswith(runner.CALIB)]
         warn = runner.validity(rs)
-        costs = cost_lines(rs, keys, slots, recs)
-        rels = relation_lines(recs)
+        report_path = os.environ.get("DRPERF_REPORT")
+        if report_path:
+            import explorer
+            try:
+                model = explorer.build_model(out, os.environ.get("DRPERF_SOURCE_ROOT", os.getcwd()))
+                model["provenance"]["command"] = list(argv)
+                explorer.write_model(model, report_path)
+                costs = explorer.cost_lines(model)
+                rels = ["  " + explorer.relation_text(r) +
+                        "   (observed at %d calls)" % r["evidence"]["calls"] for r in model["relations"]]
+                print("drperf: explorer report -> " + report_path, file=sys.stderr)
+            except (OSError, ValueError, KeyError, TypeError) as error:
+                print("drperf: could not export explorer report: " + str(error), file=sys.stderr)
+                return 2
+        else:
+            costs = cost_lines(rs, keys, slots, recs)
+            rels = relation_lines(recs)
         if warn:
             for w in warn:
                 sys.stderr.write("drperf: %s\n" % w)

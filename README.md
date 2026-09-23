@@ -178,7 +178,26 @@ relations
 Each term is broken down into the functions it comes from, largest first, so a
 coefficient that moves points at the code that moved it.
 
-That is the whole interface: `drperf` followed by the command you would have
+The [VS Code Region Explorer](extensions/vscode/README.md) adds source-linked
+formulas, a panel of cross-region state relationships, and what-if changes to
+one or more PCVs. It predicts changes **per region**, without adding them into
+total cost or latency. Relationships are checked on the recorded trace and
+selected explicitly as scenario assumptions. New runs can validate the state
+predictions and cost formulas separately.
+
+```sh
+DRPERF_REPORT=out/app.drperf.json bin/drperf python app.py
+# Or export saved raw measurements:
+bin/drperf-export out/raw --source-root . -o out/app.drperf.json
+```
+
+Install the extension's `.vsix`, then run **drperf: Open Performance Report**.
+The [measured producer/consumer example](examples/explorer/README.md) demonstrates
+propagation across threads, a failed extrapolation, and a semantic PCV refinement
+that fixes it. `bin/drperf-explore` exposes the same scenario checker to agents
+and terminal workflows.
+
+The profiling command remains `drperf` followed by the command you would have
 run anyway. Optional environment controls can narrow the measurement scope:
 
 ```

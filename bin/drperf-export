@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""Export existing drperf measurements for the VS Code region explorer."""
+import argparse
+import json
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "lib"))
+import explorer
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("raw", help="directory containing drperf run JSON and block/trace sidecars")
+    parser.add_argument("-o", "--output", required=True, help="output .drperf.json model")
+    parser.add_argument("--source-root", help="root for relative source locations")
+    parser.add_argument("--source", action="append", help="source path relative to root (repeatable)")
+    parser.add_argument("--no-relations", action="store_true")
+    parser.add_argument("--max-trace", type=int, default=50_000)
+    parser.add_argument("--relation-budget", type=int, default=200_000)
+    args = parser.parse_args()
+    if args.max_trace < 0 or args.relation_budget < 0:
+        parser.error("budgets must be nonnegative")
+    try:
+        model = explorer.build_model(args.raw, args.source_root, args.source,
+                                     not args.no_relations, args.max_trace, args.relation_budget)
+        output = Path(args.output)
+        explorer.write_model(model, output)
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        print("drperf-export: " + str(error), file=sys.stderr)
+        return 1
+    print(f"{output}: {len(model['regions'])} regions, {len(model['relations'])} observed relationships")
+    if model["validity"]["errors"]:
+        print("Measurement errors retained in model; scenario predictions must be disabled.", file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

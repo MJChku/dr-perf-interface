@@ -1,0 +1,123 @@
+# Interactive region models
+
+This measured producer/consumer program demonstrates a use of drperf above an
+individual performance interface: perturb a producer PCV, propagate selected
+state relationships, and inspect each affected region separately. There is no
+sum of region costs and no prediction of elapsed time or parallel speedup.
+
+`pipeline.c` runs two threads. The producer emits one to three batches per
+round; the consumer drains them and runs decode, copy, lookup, and dispatch
+regions. The queue relationship needs cumulative history, while the later
+regions use the latest preceding values. The workload has 24 rounds and 169
+marked calls, including startup.
+
+## Open the measured example
+
+Install [the VS Code extension](../../extensions/vscode/README.md), then run
+**drperf: Open Producer/Consumer Demo**. In **What-if**, multiply `enqueue.items`
+by two and explicitly select relationship assumptions. Inspect an affected
+call to see the history values used to compute its new PCVs.
+
+The extension includes the actual baseline, changed, refined, refined-changed, and
+expansion-changed reports in `extensions/vscode/demo/`. The changed reports were
+obtained by executing the program again, not generated from the predictions.
+Use **Compare against a new measured report** to open `changed.drperf.json`.
+
+## What the experiment finds
+
+Doubling the producer workload correctly predicts every downstream PCV in this
+example. Dequeue, decode, and copy cost predictions match their changed-run
+measurements to floating-point precision. Enqueue includes mutex operations;
+its changed-run instruction cost differs by about 0.02%, illustrating small
+path variation that the checker's tolerance accepts. Startup lacks enough
+varied states for a formula.
+
+The initial lookup annotation declares `entries`, but the body performs work
+proportional to `entries * entries`. Some of its cost remains unexplained; a
+line accepted over a narrow range also gives a **22.26% aggregate absolute
+relative error** on the 16 changed calls whose formulas have no unexplained
+blocks. The other eight calls are explicitly not checked. This is a negative
+control: acceptance on small observed states does not prove extrapolation.
+
+The refined annotation declares the semantic pair count:
+
+```c
+perfmark_begin("lookup", "pairs", items * items);
+consumer_sink += work(items * items * 32);
+perfmark_end("lookup");
+```
+
+The body is unchanged. drperf finds `128*pairs + 22` instructions/call, with no
+unexplained blocks in this build. In **drperf: Open Refined PCV Demo**, propose:
+
+```text
+lookup.pairs = last("dequeue", "items") ** 2
+```
+
+The expression editor takes just the right-hand side. The checker verifies it
+at all 24 recorded target calls; choosing it as an assumption lets the producer
+change reach lookup. Comparing with `refined-changed.drperf.json` matches all
+24 PCVs and all 24 measured lookup costs to floating-point precision.
+
+Dispatch deliberately retains a branch boundary that the observations do not
+locate exactly. Seven changed calls fall in the gap between fitted regimes and
+remain unknown. The explorer does not silently extend one branch into that gap.
+The measured numbers above depend on the checked-in x86-64 build and report;
+regenerating with another compiler can change coefficients and constants.
+
+## Reproduce and use from a terminal
+
+Build drperf with `./build.sh`, then:
+
+```sh
+examples/explorer/verify.sh
+```
+
+This executes all five workloads, exports their models, validates the two
+scenarios, and writes results under `out/explorer-validation/`. The raw sidecars
+are temporary and removed after each export. No GPU is used.
+
+To explore the bundled measurements without running DynamoRIO:
+
+```sh
+bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+  --edit enqueue items scale 2 --assume-first \
+  --propose lookup pairs 'last("dequeue", "items") ** 2' \
+  --validate extensions/vscode/demo/refined-changed.drperf.json \
+  -o out/refined-scenario.json
+```
+
+`--assume-first` is an explicit exploratory choice, not an inference of
+causality. Use `--list` to inspect the available equations and `--relation ID`
+to choose individual assumptions. Multiple `--edit` options change multiple
+PCVs; `--scenario FILE` reloads a saved scenario tied to its source model.
+
+## Distinguish relationships with a real intervention
+
+The baseline supports two equations for copy's PCV:
+
+```text
+copy.bytes = 8 * last(decode.tokens)
+copy.bytes = 16 * last(dequeue.items)
+```
+
+The `expansion-changed.drperf.json` run changes decode's expansion factor from
+2 to 4 while keeping the producer batches unchanged. Enable **Compare
+alternative relationships** after multiplying `decode.tokens` by two. The
+candidate equations disagree, suggesting this small test can distinguish them.
+The actual changed run follows the first copy equation.
+
+The same intervention exposes a less obvious accidental relationship: the
+first discovered equation for dispatch links its item count to copy's bytes.
+That predicts the wrong dispatch PCV on all 24 calls, even though the equation
+held at every original call. Proposing `dispatch.items = last(dequeue.items)`
+passes the original-trace check and correctly predicts all 24 changed calls.
+With that choice and the squared lookup PCV, all non-startup region costs match
+the bundled expansion-changed measurements to floating-point precision. New
+runs can retain the small mutex-path variation described above.
+
+This illustrates an interactive loop above the region interfaces: keep several
+observationally equivalent explanations, find an intervention where they
+predict different states, run that small case, and retain the explanation that
+survives. A successful test supports that intervention; it does not establish a
+universal causal model or predict changed scheduling and call structure.

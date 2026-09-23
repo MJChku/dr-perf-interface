@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+/* Agent/terminal interface to the same region-level scenario engine as VS Code. */
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const Model = require('../extensions/vscode/media/model');
+
+function usage() {
+  return `Usage: drperf-explore MODEL.drperf.json [options]
+  --audit-alternatives           find equations that disagree under this intervention
+  --recorded                     retain marker API instructions instead of subtracting estimates
+  --list                         list regions, PCVs and relationship IDs
+  --edit REGION STATE OP VALUE   intervene on a PCV; OP is scale, add, or set
+  --assume-first                 explicitly adopt the first observed equation per target
+  --relation ID                  adopt one observed equation (repeatable)
+  --propose REGION STATE EXPR    check and adopt a proposed state relationship (repeatable)
+  --scenario FILE                load a previously saved scenario
+  --validate MEASURED.drperf.json compare predictions against a new measured run
+  -o FILE                        write JSON results (default: stdout)
+
+This predicts separate regions' explained instructions/call, never total cost or latency.
+Selected observed relationships are assumptions; the call sequence is held fixed.
+`;
+}
+try {
+  const args = process.argv.slice(2);
+  if (!args.length || args.includes('--help')) {
+    process.stdout.write(usage());
+    process.exit(args.length ? 0 : 2);
+  }
+  const read = (file) => Model.validate(JSON.parse(fs.readFileSync(file, 'utf8')));
+  let model = read(args.shift());
+  let scenario = { edits: [], relations: [], proposals: [] },
+    output = null,
+    validation = null,
+    list = false,
+    first = false;
+  while (args.length) {
+    const option = args.shift();
+    if (option === '--list') list = true;
+    else if (option === '--audit-alternatives') scenario.auditAlternatives = true;
+    else if (option === '--recorded') scenario.costBasis = 'recorded';
+    else if (option === '--assume-first') first = true;
+    else if (option === '--edit') {
+      if (args.length < 4) throw new Error('--edit needs REGION STATE OP VALUE');
+      const [region, state, op, value] = args.splice(0, 4);
+      scenario.edits.push({ region, state, op, value: Number(value) });
+    } else if (option === '--propose') {
+      if (args.length < 3) throw new Error('--propose needs REGION STATE EXPR');
+      const [region, state, expression] = args.splice(0, 3),
+        target = { region, state };
+      const { relation, check } = Model.proposeRelationship(model, target, expression);
+      if (!check.holds) throw new Error(`Proposed relationship failed: ${JSON.stringify(check)}`);
+      (scenario.proposals ||= []).push({ target, expression });
+      scenario.relations.push(relation.id);
+    } else if (option === '--relation') {
+      if (!args.length) throw new Error('Missing relationship ID');
+      scenario.relations.push(args.shift());
+    } else if (option === '--scenario') {
+      if (!args.length) throw new Error('Missing scenario filename');
+      const saved = JSON.parse(fs.readFileSync(args.shift(), 'utf8'));
+      scenario = saved.scenario || saved;
+      const expectedId =
+        scenario.costBasis === 'recorded' ? Model.recordedCosts(model).id : model.id;
+      if (saved.modelId && saved.modelId !== expectedId)
+        throw new Error('Scenario belongs to a different model.');
+      if (!Array.isArray(scenario.edits) || !Array.isArray(scenario.relations))
+        throw new Error('Invalid scenario file');
+    } else if (option === '--validate') {
+      if (!args.length) throw new Error('Missing validation filename');
+      validation = read(args.shift());
+    } else if (option === '-o') {
+      if (!args.length) throw new Error('Missing output filename');
+      output = args.shift();
+    } else throw new Error('Unknown option ' + option);
+  }
+  if (scenario.costBasis === 'recorded') model = Model.recordedCosts(model);
+  if (first) {
+    const available = Model.withProposals(model, scenario.proposals || []).relations;
+    const explicit = [...new Set(scenario.relations)],
+      occupied = new Set();
+    for (const id of explicit) {
+      const relation = available.find((r) => r.id === id);
+      if (!relation) throw new Error('Unknown relationship ' + id);
+      occupied.add(Model.id(relation.target.region, relation.target.state));
+    }
+    const defaults = new Map();
+    for (const relation of available) {
+      const key = Model.id(relation.target.region, relation.target.state);
+      if (!occupied.has(key) && !defaults.has(key)) defaults.set(key, relation.id);
+    }
+    scenario.relations = [...explicit, ...defaults.values()];
+  }
+  const result = list
+    ? {
+        schema: 'drperf.inventory.v1',
+        modelId: model.id,
+        regions: model.regions.map((r) => ({
+          region: r.id,
+          states: r.states,
+          formulas: r.regimes.map((f) => Model.formula(r, f)),
+          sources: r.sources,
+          experiments: Model.suggestedExperiments(model, r)
+        })),
+        relations: model.relations.map((r) => ({
+          id: r.id,
+          equation: Model.relationship(r),
+          evidence: r.evidence
+        }))
+      }
+    : {
+        schema: 'drperf.scenario.v1',
+        ...Model.replay(model, scenario),
+        ...(validation ? { validation: Model.validateScenario(model, scenario, validation) } : {})
+      };
+  const text = JSON.stringify(result, null, 2) + '\n';
+  if (output) {
+    fs.mkdirSync(path.dirname(path.resolve(output)), { recursive: true });
+    fs.writeFileSync(output, text);
+  } else process.stdout.write(text);
+} catch (error) {
+  process.stderr.write('drperf-explore: ' + error.message + '\n');
+  process.exitCode = 1;
+}

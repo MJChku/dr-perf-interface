@@ -1,0 +1,132 @@
+{
+  "name": "drperf-explorer",
+  "displayName": "drperf Region Explorer",
+  "description": "Inspect region performance interfaces, observed state relationships, and conditional PCV scenarios.",
+  "version": "0.1.0",
+  "publisher": "MJChku",
+  "license": "UNLICENSED",
+  "engines": {
+    "vscode": "^1.85.0",
+    "node": ">=22"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "workspaceContains:**/*.drperf.json",
+    "onLanguage:python",
+    "onLanguage:c",
+    "onLanguage:cpp",
+    "onLanguage:rust"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Viewing exported reports is supported. Running the exporter requires a trusted workspace."
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "drperf.openReport",
+        "title": "drperf: Open Performance Report"
+      },
+      {
+        "command": "drperf.inspectRegion",
+        "title": "drperf: Inspect Region at Cursor"
+      },
+      {
+        "command": "drperf.showExplorer",
+        "title": "drperf: Show Region Explorer"
+      },
+      {
+        "command": "drperf.exportReport",
+        "title": "drperf: Export Raw Measurements"
+      },
+      {
+        "command": "drperf.openDemo",
+        "title": "drperf: Open Producer/Consumer Demo"
+      },
+      {
+        "command": "drperf.refresh",
+        "title": "drperf: Reload Report"
+      },
+      {
+        "command": "drperf.openRefinedDemo",
+        "title": "drperf: Open Refined PCV Demo"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "drperf.regions",
+          "name": "drperf Regions",
+          "when": "drperf.reportLoaded"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "drperf.inspectRegion",
+          "group": "navigation@90",
+          "when": "editorLangId =~ /python|c|cpp|rust/"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "drperf",
+      "properties": {
+        "drperf.sourceRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Source root for report locations; defaults to the report's workspace folder."
+        },
+        "drperf.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Python executable for the explicit export command."
+        },
+        "drperf.exporterPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to bin/drperf-export; defaults to the workspace's bin/drperf-export."
+        },
+        "drperf.codeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a performance-interface link above recorded region annotations."
+        },
+        "drperf.followCursor": {
+          "type": "boolean",
+          "default": true,
+          "description": "Update the open explorer when the cursor enters a recorded region."
+        }
+      }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": "*.drperf.json",
+        "url": "./schemas/report.schema.json"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "vsce package --skip-license",
+    "test:ui": "node test/ui.cjs",
+    "test:host": "node test/run-host.cjs"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "4.0.0",
+    "@vscode/test-electron": "2.5.2",
+    "playwright": "1.63.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MJChku/dr-perf-interface.git",
+    "directory": "extensions/vscode"
+  }
+}
