@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "claims": [
+    {
+      "id": "own-read-completion",
+      "region": "lmc.prefetch.small",
+      "event": "9202",
+      "indicator": "True",
+      "producer": "lmc.disk.read.small"
+    },
+    {
+      "id": "peer-admission-dependency",
+      "region": "lmc.prefetch.small",
+      "event": "9201",
+      "indicator": "peer_active == 1 and (serial == 1 or chunks + 1 > concurrent_budget)",
+      "producer": "lmc.disk.read.large"
+    }
+  ]
+}
