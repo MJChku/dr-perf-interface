@@ -1,0 +1,52 @@
+{
+  "drperf": {"version": "0.3", "pid": 3366317, "app": "coverage",
+    "excluded_cuda_module": "", "follow_unmarked_threads": false, "native_gx": false, "native_gx_hooks": 0, "native_gx_calls": 0, "max_states_per_region": 4096, "max_keys": 65536, "counter_budget_bytes": 103079215104, "counter_bytes": 25165824, "excluded_cuda_exports": 0, "excluded_cuda_calls": 0, "excluded_instructions": 75,
+    "rep_expand": true, "symbols": true, "max_slots": 1048576, "slots_used": 256, "slots_overflow": 0, "counter_denied": 0,
+    "marker_seen": true, "unmatched_ends": 0, "depth_overflows": 0, "state_overflows": 0, "threads": 1,
+    "waits_enabled": true, "wait_records": 4, "wait_dropped": 0, "wait_hooks": 27, "wait_delay_ms": 0, "wait_delay_injections": 0, "max_wait_records": 100000,
+    "wait_delay_region": "", "wait_delay_kind": "semaphore",
+    "wait_unattributed": {"pthread_mutex_lock":{"kind":"lock","calls":1},"pthread_mutex_unlock":{"kind":"unlock","calls":1}},
+    "trace_file": "/home/ubuntu/drperf/out/waits/coverage/child_publisher/run.3366317.json.trace", "trace_records": 3, "trace_dropped": 0},
+  "modules": [
+    {"name": "libdynamorio.so", "path": "/home/ubuntu/drperf/third_party/DynamoRIO-gx-7c0717f412f8/lib64/release/libdynamorio.so"},
+    {"name": "libdrperf.so", "path": "/home/ubuntu/drperf/build/libdrperf.so"},
+    {"name": "coverage", "path": "/home/ubuntu/drperf/out/waits/coverage/coverage"},
+    {"name": "libc.so.6", "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"},
+    {"name": "libperfmark.so", "path": "/home/ubuntu/drperf/build/libperfmark.so"},
+    {"name": "libdrperf_attach.so", "path": "/home/ubuntu/drperf/build/libdrperf_attach.so"},
+    {"name": "linux-vdso.so.1", "path": "[vdso]"},
+    {"name": "ld-linux-x86-64.so.2", "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}
+  ],
+  "threads": [
+    {"tid": 3366317, "instrs": 2002, "open_regions": 0}
+  ],
+  "total_instrs": 2002,
+  "regions": [
+    {"region": "capture", "state_name": "n", "state_value": 1, "states": {"n": 1}, "parent": "", "root": "",
+     "count": 1, "incl": {"sum": 4, "min": 4, "max": 4}, "self": 4, "self_min": 4, "self_max": 4,
+     "self_slots": 4, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 4},
+     "symbols": [
+      {"module": "coverage", "symbol": "main", "instrs": 2},
+      {"module": "coverage", "symbol": "_init", "instrs": 2}
+     ]},
+    {"region": "A", "state_name": "n", "state_value": 1, "states": {"n": 1}, "parent": "", "root": "",
+     "count": 1, "incl": {"sum": 93, "min": 93, "max": 93}, "self": 13, "self_min": 13, "self_max": 13,
+     "self_slots": 13, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 13},
+     "symbols": [
+      {"module": "coverage", "symbol": "main", "instrs": 7},
+      {"module": "coverage", "symbol": "_init", "instrs": 6}
+     ]},
+    {"region": "B", "state_name": "n", "state_value": 1, "states": {"n": 1}, "parent": "A", "root": "A",
+     "count": 1, "incl": {"sum": 80, "min": 80, "max": 80}, "self": 80, "self_min": 80, "self_max": 80,
+     "self_slots": 80, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 20, "libc.so.6": 60},
+     "symbols": [
+      {"module": "libc.so.6", "symbol": "___pthread_mutex_lock", "instrs": 37},
+      {"module": "libc.so.6", "symbol": "___pthread_mutex_unlock", "instrs": 23},
+      {"module": "coverage", "symbol": "main", "instrs": 12},
+      {"module": "coverage", "symbol": "_init", "instrs": 8}
+     ]}
+  ]
+}

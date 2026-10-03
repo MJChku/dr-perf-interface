@@ -1,0 +1,4453 @@
+{
+  "schema": "drperf.explorer.v1",
+  "title": "Ditto reclaim control-path regression: forced",
+  "measurement": {
+    "unit": "CPU instructions per call",
+    "scope": "exclusive region work",
+    "markerAdjustment": "marker modules excluded exactly; no wrapper calibration subtraction",
+    "composition": "symbolic direct-child work in composition; no latency or parallelism model",
+    "tolerance": {
+      "absolute": 64.0,
+      "relative": 0.05
+    }
+  },
+  "provenance": {
+    "rawDirectory": "/home/ubuntu/drperf/out/waits/ditto-reclaim/forced",
+    "sourceRoot": "/home/ubuntu/drperf/results/paper/waits/ditto-reclaim",
+    "runs": [
+      {
+        "file": "run.2823059.json",
+        "measurement": {
+          "version": "0.3",
+          "pid": 2823059,
+          "app": "python3.12",
+          "excluded_cuda_module": "",
+          "follow_unmarked_threads": false,
+          "native_gx": false,
+          "native_gx_hooks": 0,
+          "native_gx_calls": 0,
+          "max_states_per_region": 4096,
+          "max_keys": 65536,
+          "counter_budget_bytes": 103079215104,
+          "counter_bytes": 184549376,
+          "excluded_cuda_exports": 0,
+          "excluded_cuda_calls": 0,
+          "excluded_instructions": 31329,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 70732,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 7,
+          "waits_enabled": true,
+          "wait_records": 428,
+          "wait_dropped": 0,
+          "wait_hooks": 41,
+          "wait_delay_ms": 0,
+          "wait_delay_injections": 0,
+          "max_wait_records": 100000,
+          "wait_delay_region": "",
+          "wait_delay_kind": "semaphore",
+          "wait_unattributed": {
+            "pthread_mutex_destroy": {
+              "kind": "mutex_destroy",
+              "calls": 66
+            },
+            "pthread_mutex_lock": {
+              "kind": "lock",
+              "calls": 32404
+            },
+            "pthread_mutex_unlock": {
+              "kind": "unlock",
+              "calls": 32407
+            },
+            "pthread_cond_signal": {
+              "kind": "signal",
+              "calls": 62
+            },
+            "pthread_join": {
+              "kind": "join",
+              "calls": 6
+            }
+          },
+          "trace_file": "/home/ubuntu/drperf/out/waits/ditto-reclaim/forced/run.2823059.json.trace",
+          "trace_records": 168,
+          "trace_dropped": 0
+        }
+      }
+    ],
+    "originalSourceRoot": "/home/ubuntu/drperf/out/waits/ditto-reclaim"
+  },
+  "validity": {
+    "errors": [],
+    "traceErrors": []
+  },
+  "regions": [
+    {
+      "id": "capture",
+      "name": "capture",
+      "originalName": "capture",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 519.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 519.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 90,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 157.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 19.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 519.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 519.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 90,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 157.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 19.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 519.0,
+          "observed": 519.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "source/ditto_reclaim.py",
+          "line": 78,
+          "endLine": 78,
+          "sha256": "d9e2d48ededdb2d4d43491e0252cdf9c8cbb650a2635ec595a42706a6a10ff79",
+          "expressions": {
+            "n": "1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ditto.compression.complete",
+      "name": "ditto.compression.complete",
+      "originalName": "ditto.compression.complete",
+      "states": [
+        "generation"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              2
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              3
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 32.0,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                2
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                3
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              3
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 12,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "__new_sem_post",
+                "instructions": 19.0
+              },
+              {
+                "module": "completion.so",
+                "function": "complete",
+                "instructions": 7.0
+              },
+              {
+                "module": "completion.so",
+                "function": "_init",
+                "instructions": 6.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 32.0,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                2
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                3
+              ],
+              "calls": 1,
+              "explained": 32.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              3
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 12,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "__new_sem_post",
+                "instructions": 19.0
+              },
+              {
+                "module": "completion.so",
+                "function": "complete",
+                "instructions": 7.0
+              },
+              {
+                "module": "completion.so",
+                "function": "_init",
+                "instructions": 6.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 32.0,
+          "observed": 32.0
+        },
+        {
+          "state": [
+            2
+          ],
+          "calls": 1,
+          "recorded": 32.0,
+          "observed": 32.0
+        },
+        {
+          "state": [
+            3
+          ],
+          "calls": 1,
+          "recorded": 32.0,
+          "observed": 32.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "source/ditto_reclaim_completion.c",
+          "line": 17,
+          "endLine": 21,
+          "sha256": "a517b6471833d50e83ae616efe2f893bb16b1505f758ffbbfa276bee97fbae26",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "gc.lease_flush",
+      "name": "gc.lease_flush",
+      "originalName": "gc.lease_flush",
+      "states": [
+        "queued",
+        "tracked",
+        "pending",
+        "owner_keys",
+        "owner_bindings",
+        "members",
+        "bindings",
+        "cold"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              1,
+              2,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            5066.5
+          ],
+          "constant": 30969.5,
+          "dependent": [
+            "queued",
+            "tracked",
+            "pending",
+            "owner_keys",
+            "owner_bindings",
+            "members",
+            "bindings"
+          ],
+          "points": [
+            {
+              "state": [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                0
+              ],
+              "calls": 2,
+              "explained": 30969.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                1
+              ],
+              "calls": 1,
+              "explained": 36036.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 525,
+            "constant": 1655,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 1030.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 792.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": 709.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 644.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": 299.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 251.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyObject_GenericGetAttrWithDict",
+                  "instructions": 244.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDictView_New+?",
+                  "instructions": 228.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 10216.5
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyType_Lookup+?",
+                "instructions": 1314.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyDictView_New+?",
+                "instructions": 1199.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_GenericGetAttrWithDict",
+                "instructions": 1087.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 1068.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 1024.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 808.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 641.5
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            5066.5
+          ],
+          "constant": 30969.5,
+          "dependent": [
+            "queued",
+            "tracked",
+            "pending",
+            "owner_keys",
+            "owner_bindings",
+            "members",
+            "bindings"
+          ],
+          "points": [
+            {
+              "state": [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                0
+              ],
+              "calls": 2,
+              "explained": 30969.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                1
+              ],
+              "calls": 1,
+              "explained": 36036.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 525,
+            "constant": 1655,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 1030.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 792.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": 709.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 644.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": 299.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 251.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyObject_GenericGetAttrWithDict",
+                  "instructions": 244.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDictView_New+?",
+                  "instructions": 228.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 10216.5
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyType_Lookup+?",
+                "instructions": 1314.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyDictView_New+?",
+                "instructions": 1199.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_GenericGetAttrWithDict",
+                "instructions": 1087.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 1068.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 1024.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 808.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 641.5
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            0,
+            2,
+            1,
+            1,
+            2,
+            1,
+            2,
+            0
+          ],
+          "calls": 2,
+          "recorded": 30969.5,
+          "observed": 30969.5
+        },
+        {
+          "state": [
+            0,
+            2,
+            1,
+            1,
+            2,
+            1,
+            2,
+            1
+          ],
+          "calls": 1,
+          "recorded": 36036.0,
+          "observed": 36036.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "source/compaction_forced.py",
+          "line": 794,
+          "endLine": 857,
+          "sha256": "cd1d250905b89f4ccd82451b760536d16790a7e08c686df23aa8fff1a21d2435",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "rt.flush_source_lease",
+      "name": "rt.flush_source_lease",
+      "originalName": "rt.flush_source_lease",
+      "states": [
+        "cold"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 3.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 3.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            64.5
+          ],
+          "constant": 15423.5,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                0
+              ],
+              "calls": 2,
+              "explained": 15423.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 15488.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 103,
+            "constant": 847,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 108.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -103.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 82.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -52.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -24.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_GetItem_KnownHash",
+                  "instructions": 24.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 22.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyErr_Occurred",
+                  "instructions": 14.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2867.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_SetItem",
+                "instructions": 1127.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 1071.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1031.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 977.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_RichCompareBool",
+                "instructions": 812.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 716.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyUnicode_RichCompare",
+                "instructions": 432.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            64.5
+          ],
+          "constant": 15423.5,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                0
+              ],
+              "calls": 2,
+              "explained": 15423.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 15488.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 103,
+            "constant": 847,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 108.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -103.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 82.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -52.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -24.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_GetItem_KnownHash",
+                  "instructions": 24.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 22.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyErr_Occurred",
+                  "instructions": 14.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2867.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_SetItem",
+                "instructions": 1127.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 1071.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1031.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 977.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_RichCompareBool",
+                "instructions": 812.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 716.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyUnicode_RichCompare",
+                "instructions": 432.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            0
+          ],
+          "calls": 2,
+          "recorded": 15423.5,
+          "observed": 15423.5
+        },
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 15488.0,
+          "observed": 15488.0
+        }
+      ],
+      "nested": {
+        "perf.pcv": 2.0,
+        "gc.lease_flush": 1.0
+      },
+      "sources": [
+        {
+          "path": "source/runtime.py",
+          "line": 806,
+          "endLine": 809,
+          "sha256": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "rt.wait",
+      "name": "rt.wait",
+      "originalName": "rt.wait",
+      "states": [
+        "jobs",
+        "cold"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              0,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              0,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0,
+            7.5
+          ],
+          "constant": 1730.5,
+          "dependent": [
+            "jobs"
+          ],
+          "points": [
+            {
+              "state": [
+                0,
+                0
+              ],
+              "calls": 2,
+              "explained": 1730.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                0,
+                1
+              ],
+              "calls": 1,
+              "explained": 1738.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 29,
+            "constant": 257,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "PyList_Size+?",
+                  "instructions": 18.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -8.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -4.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 2.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 606.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 120.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 118.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 111.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyList_Size+?",
+                "instructions": 60.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0,
+            7.5
+          ],
+          "constant": 1730.5,
+          "dependent": [
+            "jobs"
+          ],
+          "points": [
+            {
+              "state": [
+                0,
+                0
+              ],
+              "calls": 2,
+              "explained": 1730.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                0,
+                1
+              ],
+              "calls": 1,
+              "explained": 1738.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 29,
+            "constant": 257,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "PyList_Size+?",
+                  "instructions": 18.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -8.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -4.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 2.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 606.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 120.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 118.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 111.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyList_Size+?",
+                "instructions": 60.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            0,
+            0
+          ],
+          "calls": 2,
+          "recorded": 1730.5,
+          "observed": 1730.5
+        },
+        {
+          "state": [
+            0,
+            1
+          ],
+          "calls": 1,
+          "recorded": 1738.0,
+          "observed": 1738.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "source/runtime.py",
+          "line": 770,
+          "endLine": 778,
+          "sha256": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+          "expressions": {
+            "jobs": "n(job_ids)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "vllm.reclaim_pages",
+      "name": "vllm.reclaim_pages",
+      "originalName": "vllm.reclaim_pages",
+      "states": [
+        "leases",
+        "forced"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 3.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0,
+            0.0
+          ],
+          "constant": 10925.999999999995,
+          "dependent": [
+            "leases",
+            "forced"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                1
+              ],
+              "calls": 3,
+              "explained": 10925.999999999995,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 883,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2853.6666666666665
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 716.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 594.3333333333333
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 594.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 579.6666666666667
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 389.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 369.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 325.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0,
+            0.0
+          ],
+          "constant": 10925.999999999995,
+          "dependent": [
+            "leases",
+            "forced"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                1
+              ],
+              "calls": 3,
+              "explained": 10925.999999999995,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 883,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2853.6666666666665
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 716.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 594.3333333333333
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 594.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 579.6666666666667
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 389.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 369.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 325.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1,
+            1
+          ],
+          "calls": 3,
+          "recorded": 10926.0,
+          "observed": 10926.0
+        }
+      ],
+      "nested": {
+        "perf.pcv": 8.0,
+        "worker.wait": 1.0,
+        "rt.flush_source_lease": 1.0,
+        "gc.lease_flush": 1.0,
+        "rt.wait": 1.0
+      },
+      "sources": [
+        {
+          "path": "source/ditto_reclaim.py",
+          "line": 81,
+          "endLine": 84,
+          "sha256": "d9e2d48ededdb2d4d43491e0252cdf9c8cbb650a2635ec595a42706a6a10ff79",
+          "expressions": {
+            "leases": "1",
+            "forced": "int(forced)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "worker.wait",
+      "name": "worker.wait",
+      "originalName": "worker.wait",
+      "states": [
+        "jobs",
+        "cold"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 6.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              1,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 6.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0,
+            117.5
+          ],
+          "constant": 18355.5,
+          "dependent": [
+            "jobs"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                0
+              ],
+              "calls": 2,
+              "explained": 18355.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1,
+                1
+              ],
+              "calls": 1,
+              "explained": 18473.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 150,
+            "constant": 790,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -185.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 178.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -104.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_RichCompare",
+                  "instructions": 45.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 43.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyLong_AsSsize_t+?",
+                  "instructions": 37.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyMem_Free",
+                  "instructions": 30.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_GetItem_KnownHash",
+                  "instructions": 24.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 5515.5
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 1432.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 1035.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 883.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 803.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 624.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 591.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 507.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 3,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0,
+            117.5
+          ],
+          "constant": 18355.5,
+          "dependent": [
+            "jobs"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                0
+              ],
+              "calls": 2,
+              "explained": 18355.5,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1,
+                1
+              ],
+              "calls": 1,
+              "explained": 18473.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 150,
+            "constant": 790,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -185.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": 178.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -104.5
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_RichCompare",
+                  "instructions": 45.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup+?",
+                  "instructions": 43.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyLong_AsSsize_t+?",
+                  "instructions": 37.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyMem_Free",
+                  "instructions": 30.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_GetItem_KnownHash",
+                  "instructions": 24.0
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 5515.5
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 1432.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Update+?",
+                "instructions": 1035.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 883.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 803.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 624.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 591.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 507.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1,
+            0
+          ],
+          "calls": 2,
+          "recorded": 18355.5,
+          "observed": 18355.5
+        },
+        {
+          "state": [
+            1,
+            1
+          ],
+          "calls": 1,
+          "recorded": 18473.0,
+          "observed": 18473.0
+        }
+      ],
+      "nested": {
+        "perf.pcv": 6.0,
+        "rt.flush_source_lease": 1.0,
+        "gc.lease_flush": 1.0,
+        "rt.wait": 1.0
+      },
+      "sources": [
+        {
+          "path": "source/worker.py",
+          "line": 227,
+          "endLine": 235,
+          "sha256": "482dc4b170ff1139a551d10d8e0256b10511cbb82e9f553ca79e1efa322c6965",
+          "expressions": {
+            "jobs": "n(job_ids)"
+          }
+        }
+      ]
+    }
+  ],
+  "relations": [],
+  "discovery": {
+    "truncated": false,
+    "warnings": [],
+    "scope": "discovery disabled or complete trace unavailable"
+  },
+  "composition": {
+    "status": "observed",
+    "scope": "same-thread direct-child instruction work",
+    "basis": "marker-adjusted own interfaces; runtime waiting excluded; wrapper calibration is an estimate",
+    "contract": "Observed calls only. F includes U. U includes descendant unexplained work. N*F denotes N applications of an atomic child interface, not N times a global measured mean. Argument mappings are metadata, not prerequisites for child multipliers. Own cost fits and U tables are per-state means across callers. No prediction of per-invocation inclusive counts or latency.",
+    "regions": [
+      {
+        "id": "capture",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 519.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "ditto.compression.complete",
+        "states": [
+          "generation"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 32.0,
+            "states": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              2
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              3
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "gc.lease_flush",
+        "states": [
+          "queued",
+          "tracked",
+          "pending",
+          "owner_keys",
+          "owner_bindings",
+          "members",
+          "bindings",
+          "cold"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              5066.5
+            ],
+            "constant": 30969.5,
+            "states": [
+              [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                0
+              ],
+              [
+                0,
+                2,
+                1,
+                1,
+                2,
+                1,
+                2,
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              1,
+              2,
+              0
+            ],
+            "calls": 2,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              0,
+              2,
+              1,
+              1,
+              2,
+              1,
+              2,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "rt.flush_source_lease",
+        "states": [
+          "cold"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              64.5
+            ],
+            "constant": 15423.5,
+            "states": [
+              [
+                0
+              ],
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [
+          {
+            "child": "gc.lease_flush",
+            "multiplicity": {
+              "coefficients": [
+                "0"
+              ],
+              "constant": "1",
+              "kind": "observed-constant",
+              "dependent": [],
+              "samples": 3
+            },
+            "arguments": {
+              "queued": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "0",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "tracked": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "2",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "pending": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "1",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "owner_keys": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "1",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "owner_bindings": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "2",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "members": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "1",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "bindings": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "2",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "cold": {
+                "coefficients": [
+                  "1"
+                ],
+                "constant": "0",
+                "kind": "observed-affine",
+                "dependent": [],
+                "samples": 3
+              }
+            },
+            "argumentStates": [
+              "queued",
+              "tracked",
+              "pending",
+              "owner_keys",
+              "owner_bindings",
+              "members",
+              "bindings",
+              "cold"
+            ],
+            "sequenceArguments": null,
+            "indexVariable": "j",
+            "form": "product",
+            "parentCalls": 3,
+            "childCalls": 3,
+            "includesZeroCallParents": false
+          }
+        ],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              0
+            ],
+            "calls": 2,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "gc.lease_flush": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "gc.lease_flush",
+                "state": [
+                  0,
+                  2,
+                  1,
+                  1,
+                  2,
+                  1,
+                  2,
+                  0
+                ],
+                "calls": 2
+              }
+            ]
+          },
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "gc.lease_flush": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "gc.lease_flush",
+                "state": [
+                  0,
+                  2,
+                  1,
+                  1,
+                  2,
+                  1,
+                  2,
+                  1
+                ],
+                "calls": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rt.wait",
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0,
+              7.5
+            ],
+            "constant": 1730.5,
+            "states": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              0,
+              0
+            ],
+            "calls": 2,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              0,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "worker.wait",
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0,
+              117.5
+            ],
+            "constant": 18355.5,
+            "states": [
+              [
+                1,
+                0
+              ],
+              [
+                1,
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [
+          {
+            "child": "rt.flush_source_lease",
+            "multiplicity": {
+              "coefficients": [
+                "0",
+                "0"
+              ],
+              "constant": "1",
+              "kind": "observed-constant",
+              "dependent": [],
+              "samples": 3
+            },
+            "arguments": {
+              "cold": {
+                "coefficients": [
+                  "0",
+                  "1"
+                ],
+                "constant": "0",
+                "kind": "observed-affine",
+                "dependent": [
+                  "jobs"
+                ],
+                "samples": 3
+              }
+            },
+            "argumentStates": [
+              "cold"
+            ],
+            "sequenceArguments": null,
+            "indexVariable": "j",
+            "form": "product",
+            "parentCalls": 3,
+            "childCalls": 3,
+            "includesZeroCallParents": false
+          },
+          {
+            "child": "rt.wait",
+            "multiplicity": {
+              "coefficients": [
+                "0",
+                "0"
+              ],
+              "constant": "1",
+              "kind": "observed-constant",
+              "dependent": [],
+              "samples": 3
+            },
+            "arguments": {
+              "jobs": {
+                "coefficients": [
+                  "0",
+                  "0"
+                ],
+                "constant": "0",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 3
+              },
+              "cold": {
+                "coefficients": [
+                  "0",
+                  "1"
+                ],
+                "constant": "0",
+                "kind": "observed-affine",
+                "dependent": [
+                  "jobs"
+                ],
+                "samples": 3
+              }
+            },
+            "argumentStates": [
+              "jobs",
+              "cold"
+            ],
+            "sequenceArguments": null,
+            "indexVariable": "j",
+            "form": "product",
+            "parentCalls": 3,
+            "childCalls": 3,
+            "includesZeroCallParents": false
+          }
+        ],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1,
+              0
+            ],
+            "calls": 2,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "rt.flush_source_lease": [
+                1,
+                1
+              ],
+              "rt.wait": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "rt.flush_source_lease",
+                "state": [
+                  0
+                ],
+                "calls": 2
+              },
+              {
+                "region": "rt.wait",
+                "state": [
+                  0,
+                  0
+                ],
+                "calls": 2
+              }
+            ]
+          },
+          {
+            "state": [
+              1,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "rt.flush_source_lease": [
+                1,
+                1
+              ],
+              "rt.wait": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "rt.flush_source_lease",
+                "state": [
+                  1
+                ],
+                "calls": 1
+              },
+              {
+                "region": "rt.wait",
+                "state": [
+                  0,
+                  1
+                ],
+                "calls": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vllm.reclaim_pages",
+        "states": [
+          "leases",
+          "forced"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0,
+              0.0
+            ],
+            "constant": 10925.999999999995,
+            "states": [
+              [
+                1,
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [
+          {
+            "child": "worker.wait",
+            "multiplicity": {
+              "coefficients": [
+                "0",
+                "0"
+              ],
+              "constant": "1",
+              "kind": "observed-constant",
+              "dependent": [],
+              "samples": 3
+            },
+            "arguments": null,
+            "argumentStates": [
+              "jobs",
+              "cold"
+            ],
+            "sequenceArguments": null,
+            "indexVariable": "j",
+            "form": "product",
+            "parentCalls": 3,
+            "childCalls": 3,
+            "includesZeroCallParents": false
+          }
+        ],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1,
+              1
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "worker.wait": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "worker.wait",
+                "state": [
+                  1,
+                  0
+                ],
+                "calls": 2
+              },
+              {
+                "region": "worker.wait",
+                "state": [
+                  1,
+                  1
+                ],
+                "calls": 1
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "trace": {
+    "complete": true,
+    "recordCount": 19,
+    "limit": 50000,
+    "events": [
+      {
+        "group": "0:2823059",
+        "seq": 251,
+        "end": 252,
+        "thread": "2823059",
+        "region": "capture",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 253,
+        "end": 281,
+        "thread": "2823059",
+        "region": "vllm.reclaim_pages",
+        "values": {
+          "leases": 1,
+          "forced": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 258,
+        "end": 280,
+        "thread": "2823059",
+        "region": "worker.wait",
+        "values": {
+          "jobs": 1,
+          "cold": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 263,
+        "end": 273,
+        "thread": "2823059",
+        "region": "rt.flush_source_lease",
+        "values": {
+          "cold": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 268,
+        "end": 272,
+        "thread": "2823059",
+        "region": "gc.lease_flush",
+        "values": {
+          "queued": 0,
+          "tracked": 2,
+          "pending": 1,
+          "owner_keys": 1,
+          "owner_bindings": 2,
+          "members": 1,
+          "bindings": 2,
+          "cold": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 269,
+        "end": 270,
+        "thread": "2823064",
+        "region": "ditto.compression.complete",
+        "values": {
+          "generation": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 278,
+        "end": 279,
+        "thread": "2823059",
+        "region": "rt.wait",
+        "values": {
+          "jobs": 0,
+          "cold": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 282,
+        "end": 310,
+        "thread": "2823059",
+        "region": "vllm.reclaim_pages",
+        "values": {
+          "leases": 1,
+          "forced": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 287,
+        "end": 309,
+        "thread": "2823059",
+        "region": "worker.wait",
+        "values": {
+          "jobs": 1,
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 292,
+        "end": 302,
+        "thread": "2823059",
+        "region": "rt.flush_source_lease",
+        "values": {
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 297,
+        "end": 301,
+        "thread": "2823059",
+        "region": "gc.lease_flush",
+        "values": {
+          "queued": 0,
+          "tracked": 2,
+          "pending": 1,
+          "owner_keys": 1,
+          "owner_bindings": 2,
+          "members": 1,
+          "bindings": 2,
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 298,
+        "end": 299,
+        "thread": "2823121",
+        "region": "ditto.compression.complete",
+        "values": {
+          "generation": 2
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 307,
+        "end": 308,
+        "thread": "2823059",
+        "region": "rt.wait",
+        "values": {
+          "jobs": 0,
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 311,
+        "end": 339,
+        "thread": "2823059",
+        "region": "vllm.reclaim_pages",
+        "values": {
+          "leases": 1,
+          "forced": 1
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 316,
+        "end": 338,
+        "thread": "2823059",
+        "region": "worker.wait",
+        "values": {
+          "jobs": 1,
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 321,
+        "end": 331,
+        "thread": "2823059",
+        "region": "rt.flush_source_lease",
+        "values": {
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 326,
+        "end": 330,
+        "thread": "2823059",
+        "region": "gc.lease_flush",
+        "values": {
+          "queued": 0,
+          "tracked": 2,
+          "pending": 1,
+          "owner_keys": 1,
+          "owner_bindings": 2,
+          "members": 1,
+          "bindings": 2,
+          "cold": 0
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 327,
+        "end": 328,
+        "thread": "2823132",
+        "region": "ditto.compression.complete",
+        "values": {
+          "generation": 3
+        }
+      },
+      {
+        "group": "0:2823059",
+        "seq": 336,
+        "end": 337,
+        "thread": "2823059",
+        "region": "rt.wait",
+        "values": {
+          "jobs": 0,
+          "cold": 0
+        }
+      }
+    ]
+  },
+  "scenarioContract": {
+    "fixed": [
+      "recorded call count",
+      "marker sequence order",
+      "nesting"
+    ],
+    "unknown": [
+      "causality of observed relationships",
+      "unexplained cost at changed states",
+      "new branches or calls",
+      "CPU/GPU latency and overlap"
+    ],
+    "requiresExplicitAssumptions": true
+  },
+  "waits": {
+    "status": "observed",
+    "warnings": [],
+    "pendingCalls": [],
+    "unattributedOperations": {
+      "pthread_mutex_lock": 32404,
+      "pthread_join": 6
+    },
+    "probeRequested": false,
+    "probe": false,
+    "coverage": "Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and native GX internals are not fully observed. Late attach misses earlier operations.",
+    "contract": "Observed operation counts and conservative object-based dependency evidence. API elapsed time and syscall attempts do not establish sleeping or native latency. Matched CUDA producers identify submitted stream work, not CPU completion of the launch region. Stream-prefix matches are partial; unobserved kernels/dependencies can also be required.",
+    "regions": [
+      {
+        "region": "",
+        "api": "sem_wait",
+        "kind": "completion",
+        "calls": 35,
+        "parentCalls": 0,
+        "states": [],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 35,
+        "potentialSyscalls": 0,
+        "elapsedUs": 197
+      },
+      {
+        "region": "gc.lease_flush",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 9,
+        "parentCalls": 3,
+        "states": [
+          "queued",
+          "tracked",
+          "pending",
+          "owner_keys",
+          "owner_bindings",
+          "members",
+          "bindings",
+          "cold"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "constant": "3",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "matched": 0,
+        "unresolved": 9,
+        "potentialSyscalls": 0,
+        "elapsedUs": 15
+      },
+      {
+        "region": "gc.lease_flush",
+        "api": "sem_wait",
+        "kind": "completion",
+        "calls": 3,
+        "parentCalls": 3,
+        "states": [
+          "queued",
+          "tracked",
+          "pending",
+          "owner_keys",
+          "owner_bindings",
+          "members",
+          "bindings",
+          "cold"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "matched": 3,
+        "unresolved": 0,
+        "potentialSyscalls": 3,
+        "elapsedUs": 251424
+      }
+    ],
+    "operations": [
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 268,
+        "start": 9,
+        "end": 14,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 72312,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:9",
+        "dependency": "matched-completion",
+        "producers": [
+          "0:2823059:12"
+        ],
+        "blocking": "unknown",
+        "reason": "Zero-initialized closed semaphore lifetime; unique successful post/wait.",
+        "ordering": "publication-overlapped-wait"
+      },
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 297,
+        "start": 53,
+        "end": 58,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 83381,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:53",
+        "dependency": "matched-completion",
+        "producers": [
+          "0:2823059:56"
+        ],
+        "blocking": "unknown",
+        "reason": "Zero-initialized closed semaphore lifetime; unique successful post/wait.",
+        "ordering": "publication-overlapped-wait"
+      },
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 326,
+        "start": 97,
+        "end": 102,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 95731,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:97",
+        "dependency": "matched-completion",
+        "producers": [
+          "0:2823059:100"
+        ],
+        "blocking": "unknown",
+        "reason": "Zero-initialized closed semaphore lifetime; unique successful post/wait.",
+        "ordering": "publication-overlapped-wait"
+      }
+    ],
+    "events": [
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 268,
+        "start": 9,
+        "end": 14,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 72312,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:9"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823064,
+        "regionSeq": 269,
+        "start": 10,
+        "end": 11,
+        "object": "7001",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 137,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274866016501",
+        "endUs": "13435274866016638",
+        "group": "0:2823059",
+        "id": "0:2823059:10"
+      },
+      {
+        "api": "sem_post",
+        "kind": "sem_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823064,
+        "regionSeq": 269,
+        "start": 12,
+        "end": 13,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 530,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:12"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "vllm.reclaim_pages",
+        "tid": 2823059,
+        "regionSeq": 253,
+        "start": 25,
+        "end": 26,
+        "object": "7001",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 43,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274866036767",
+        "endUs": "13435274866036810",
+        "group": "0:2823059",
+        "id": "0:2823059:25"
+      },
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 297,
+        "start": 53,
+        "end": 58,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 83381,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:53"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823121,
+        "regionSeq": 298,
+        "start": 54,
+        "end": 55,
+        "object": "7001",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274867175419",
+        "endUs": "13435274867175423",
+        "group": "0:2823059",
+        "id": "0:2823059:54"
+      },
+      {
+        "api": "sem_post",
+        "kind": "sem_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823121,
+        "regionSeq": 298,
+        "start": 56,
+        "end": 57,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 11,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:56"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "vllm.reclaim_pages",
+        "tid": 2823059,
+        "regionSeq": 282,
+        "start": 69,
+        "end": 70,
+        "object": "7001",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274867181408",
+        "endUs": "13435274867181409",
+        "group": "0:2823059",
+        "id": "0:2823059:69"
+      },
+      {
+        "api": "sem_wait",
+        "kind": "completion",
+        "region": "gc.lease_flush",
+        "tid": 2823059,
+        "regionSeq": 326,
+        "start": 97,
+        "end": 102,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 95731,
+        "potentialSyscalls": 1,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:97"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823132,
+        "regionSeq": 327,
+        "start": 98,
+        "end": 99,
+        "object": "7001",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274867445691",
+        "endUs": "13435274867445695",
+        "group": "0:2823059",
+        "id": "0:2823059:98"
+      },
+      {
+        "api": "sem_post",
+        "kind": "sem_publish",
+        "region": "ditto.compression.complete",
+        "tid": 2823132,
+        "regionSeq": 327,
+        "start": 100,
+        "end": 101,
+        "object": "140737338810528",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 11,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:2823059",
+        "id": "0:2823059:100"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "vllm.reclaim_pages",
+        "tid": 2823059,
+        "regionSeq": 311,
+        "start": 113,
+        "end": 114,
+        "object": "7001",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435274867447015",
+        "endUs": "13435274867447016",
+        "group": "0:2823059",
+        "id": "0:2823059:113"
+      }
+    ],
+    "evidence": {
+      "format": "drperf.wait-evidence.v1",
+      "path": "forced.drperf.json.waits.4620fe10c82deaa6.jsonl.gz",
+      "sha256": "4620fe10c82deaa6e45b9f7184af9b4f8fcb5356950b9b9b31c635c1355dbed0",
+      "bytes": 8406,
+      "eventCount": 428,
+      "operationCount": 47,
+      "inlineEventCount": 12,
+      "inlineOperationCount": 3,
+      "scope": "Inline records support display only. Load the complete sidecar before checking event order, missing waits, or native provenance."
+    }
+  },
+  "eventModel": {
+    "status": "ordered",
+    "probe": false,
+    "probeRequested": false,
+    "edges": [
+      {
+        "event": "7001",
+        "generation": "1",
+        "group": "0:2823059",
+        "consumer": "vllm.reclaim_pages",
+        "consumerInvocation": 253,
+        "waited": "0:2823059:25",
+        "status": "ordered",
+        "producer": "ditto.compression.complete",
+        "publication": "0:2823059:10",
+        "producerInvocation": 269,
+        "distanceUs": 20129,
+        "nativeContext": [
+          {
+            "region": "gc.lease_flush",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "gc.lease_flush",
+            "api": "sem_wait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "gc.lease_flush",
+          "group": "0:2823059",
+          "thread": "2823059",
+          "invocation": 268
+        }
+      },
+      {
+        "event": "7001",
+        "generation": "2",
+        "group": "0:2823059",
+        "consumer": "vllm.reclaim_pages",
+        "consumerInvocation": 282,
+        "waited": "0:2823059:69",
+        "status": "ordered",
+        "producer": "ditto.compression.complete",
+        "publication": "0:2823059:54",
+        "producerInvocation": 298,
+        "distanceUs": 5985,
+        "nativeContext": [
+          {
+            "region": "gc.lease_flush",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "gc.lease_flush",
+            "api": "sem_wait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "gc.lease_flush",
+          "group": "0:2823059",
+          "thread": "2823059",
+          "invocation": 297
+        }
+      },
+      {
+        "event": "7001",
+        "generation": "3",
+        "group": "0:2823059",
+        "consumer": "vllm.reclaim_pages",
+        "consumerInvocation": 311,
+        "waited": "0:2823059:113",
+        "status": "ordered",
+        "producer": "ditto.compression.complete",
+        "publication": "0:2823059:98",
+        "producerInvocation": 327,
+        "distanceUs": 1320,
+        "nativeContext": [
+          {
+            "region": "gc.lease_flush",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "gc.lease_flush",
+            "api": "sem_wait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "gc.lease_flush",
+          "group": "0:2823059",
+          "thread": "2823059",
+          "invocation": 326
+        }
+      }
+    ],
+    "violations": [],
+    "unverified": [],
+    "unexplained": [],
+    "interfaces": [
+      {
+        "region": "vllm.reclaim_pages",
+        "event": "7001",
+        "states": [
+          "leases",
+          "forced"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "present": 3,
+        "absent": 0
+      }
+    ],
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 3,
+      "covered": 3,
+      "uncovered": 0,
+      "eligibleCredits": 3,
+      "unusedCredits": 0,
+      "nativeCalls": 12,
+      "regions": [
+        {
+          "region": "gc.lease_flush",
+          "obligations": 3,
+          "covered": 3,
+          "uncovered": 0,
+          "nativeCalls": 12,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    },
+    "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+    "eventPairs": [
+      {
+        "group": "0:2823059",
+        "event": "7001",
+        "pairs": [
+          {
+            "producer": "ditto.compression.complete",
+            "consumer": "vllm.reclaim_pages"
+          }
+        ]
+      }
+    ],
+    "nativeResolved": 3
+  },
+  "executionGraph": {
+    "status": "observed",
+    "root": null,
+    "nodes": [
+      {
+        "id": "capture",
+        "name": "capture",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 519.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/ditto_reclaim.py",
+            "line": 78,
+            "endLine": 78,
+            "sha256": "d9e2d48ededdb2d4d43491e0252cdf9c8cbb650a2635ec595a42706a6a10ff79",
+            "expressions": {
+              "n": "1"
+            }
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "ditto.compression.complete",
+        "name": "ditto.compression.complete",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "generation"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 32.0,
+            "range": [
+              [
+                1,
+                3
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/ditto_reclaim_completion.c",
+            "line": 17,
+            "endLine": 21,
+            "sha256": "a517b6471833d50e83ae616efe2f893bb16b1505f758ffbbfa276bee97fbae26",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "gc.lease_flush",
+        "name": "gc.lease_flush",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "queued",
+          "tracked",
+          "pending",
+          "owner_keys",
+          "owner_bindings",
+          "members",
+          "bindings",
+          "cold"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              5066.5
+            ],
+            "constant": 30969.5,
+            "range": [
+              [
+                0,
+                0
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                2
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/compaction_forced.py",
+            "line": 794,
+            "endLine": 857,
+            "sha256": "cd1d250905b89f4ccd82451b760536d16790a7e08c686df23aa8fff1a21d2435",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 9,
+          "<unresolved>": 9,
+          "sem_wait": 3
+        }
+      },
+      {
+        "id": "rt.flush_source_lease",
+        "name": "rt.flush_source_lease",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "cold"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              64.5
+            ],
+            "constant": 15423.5,
+            "range": [
+              [
+                0,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/runtime.py",
+            "line": 806,
+            "endLine": 809,
+            "sha256": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "rt.wait",
+        "name": "rt.wait",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0,
+              7.5
+            ],
+            "constant": 1730.5,
+            "range": [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/runtime.py",
+            "line": 770,
+            "endLine": 778,
+            "sha256": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+            "expressions": {
+              "jobs": "n(job_ids)"
+            }
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "vllm.reclaim_pages",
+        "name": "vllm.reclaim_pages",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "leases",
+          "forced"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0,
+              0.0
+            ],
+            "constant": 10925.999999999995,
+            "range": [
+              [
+                1,
+                1
+              ],
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/ditto_reclaim.py",
+            "line": 81,
+            "endLine": 84,
+            "sha256": "d9e2d48ededdb2d4d43491e0252cdf9c8cbb650a2635ec595a42706a6a10ff79",
+            "expressions": {
+              "leases": "1",
+              "forced": "int(forced)"
+            }
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "worker.wait",
+        "name": "worker.wait",
+        "calls": 3,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0,
+              117.5
+            ],
+            "constant": 18355.5,
+            "range": [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "source/worker.py",
+            "line": 227,
+            "endLine": 235,
+            "sha256": "482dc4b170ff1139a551d10d8e0256b10511cbb82e9f553ca79e1efa322c6965",
+            "expressions": {
+              "jobs": "n(job_ids)"
+            }
+          }
+        ],
+        "waitOperations": {}
+      }
+    ],
+    "edges": [
+      {
+        "kind": "contains",
+        "source": "rt.flush_source_lease",
+        "target": "gc.lease_flush",
+        "context": "rt.flush_source_lease",
+        "observations": 3,
+        "evidence": [],
+        "states": [
+          "cold"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "contains",
+        "source": "vllm.reclaim_pages",
+        "target": "worker.wait",
+        "context": "vllm.reclaim_pages",
+        "observations": 3,
+        "evidence": [],
+        "states": [
+          "leases",
+          "forced"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "contains",
+        "source": "worker.wait",
+        "target": "rt.flush_source_lease",
+        "context": "worker.wait",
+        "observations": 3,
+        "evidence": [],
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "contains",
+        "source": "worker.wait",
+        "target": "rt.wait",
+        "context": "worker.wait",
+        "observations": 3,
+        "evidence": [],
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "sequence",
+        "source": "capture",
+        "target": "vllm.reclaim_pages",
+        "context": null,
+        "observations": 1,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "rt.flush_source_lease",
+        "target": "rt.wait",
+        "context": "worker.wait",
+        "observations": 3,
+        "evidence": [],
+        "states": [
+          "jobs",
+          "cold"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "sequence",
+        "source": "vllm.reclaim_pages",
+        "target": "vllm.reclaim_pages",
+        "context": null,
+        "observations": 2,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "wait",
+        "source": "gc.lease_flush",
+        "target": "ditto.compression.complete",
+        "context": "gc.lease_flush",
+        "observations": 3,
+        "evidence": [
+          {
+            "operation": "0:2823059:9",
+            "producer": "0:2823059:12",
+            "basis": "matched-completion"
+          },
+          {
+            "operation": "0:2823059:53",
+            "producer": "0:2823059:56",
+            "basis": "matched-completion"
+          },
+          {
+            "operation": "0:2823059:97",
+            "producer": "0:2823059:100",
+            "basis": "matched-completion"
+          }
+        ],
+        "states": [
+          "queued",
+          "tracked",
+          "pending",
+          "owner_keys",
+          "owner_bindings",
+          "members",
+          "bindings",
+          "cold"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      },
+      {
+        "kind": "wait",
+        "source": "vllm.reclaim_pages",
+        "target": "ditto.compression.complete",
+        "context": "vllm.reclaim_pages",
+        "observations": 3,
+        "evidence": [
+          {
+            "operation": "0:2823059:25",
+            "producer": "0:2823059:10",
+            "basis": "declared-event",
+            "event": "7001",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:2823059:69",
+            "producer": "0:2823059:54",
+            "basis": "declared-event",
+            "event": "7001",
+            "generation": "2",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:2823059:113",
+            "producer": "0:2823059:98",
+            "basis": "declared-event",
+            "event": "7001",
+            "generation": "3",
+            "status": "ordered"
+          }
+        ],
+        "origin": "declared-event",
+        "eventStatus": "ordered",
+        "states": [
+          "leases",
+          "forced"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 3
+        },
+        "invocationsChecked": 3
+      }
+    ],
+    "warnings": [],
+    "sourceRoot": "/home/ubuntu/drperf/results/paper/waits/ditto-reclaim",
+    "workload": "",
+    "waitCoverage": "observed",
+    "declaredEventsIncluded": true,
+    "eventChecks": {
+      "status": "ordered",
+      "probe": false,
+      "violations": 0,
+      "unverified": 0,
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 3,
+        "covered": 3,
+        "uncovered": 0,
+        "eligibleCredits": 3,
+        "unusedCredits": 0,
+        "nativeCalls": 12,
+        "regions": [
+          {
+            "region": "gc.lease_flush",
+            "obligations": 3,
+            "covered": 3,
+            "uncovered": 0,
+            "nativeCalls": 12,
+            "examples": []
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      }
+    },
+    "contract": "Solid edges are observed next-sibling order, not proof of a required dependency. Nesting is separate. Wait edges target completion inside a consumer, not its entry. Only regions are shown; cycles can summarize repeated invocations. Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. Sync-call counts do not establish time blocked. Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. Unmarked work between siblings is not assumed free. No critical-path latency is inferred."
+  },
+  "experiment": {
+    "scope": "Actual Ditto worker.wait, CacheRuntime and CompactionEngine methods; upstream CPU GC harness and real FTL; controlled completion, no GPU compression or full vLLM run.",
+    "sourceHashes": {
+      "src/cache/compaction.py": "5cb255659f19ef50d47c46dec01bc061dd7ef5c6b7ced8d9c019125ae4f60d7e",
+      "src/cache/runtime.py": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+      "src/integration/vllm/worker.py": "482dc4b170ff1139a551d10d8e0256b10511cbb82e9f553ca79e1efa322c6965"
+    },
+    "case": {
+      "mode": "forced",
+      "cases": [
+        {
+          "generation": 1,
+          "readyAtReclaimReturn": true,
+          "aborted": true,
+          "outputDiscarded": true
+        },
+        {
+          "generation": 2,
+          "readyAtReclaimReturn": true,
+          "aborted": true,
+          "outputDiscarded": true
+        },
+        {
+          "generation": 3,
+          "readyAtReclaimReturn": true,
+          "aborted": true,
+          "outputDiscarded": true
+        }
+      ]
+    },
+    "delayMs": 0
+  },
+  "id": "ee1b5bd13b16a610d5adfa9ceaa365836ec851a351bd59fcb7be252c6eda24cd"
+}

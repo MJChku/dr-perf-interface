@@ -1,0 +1,954 @@
+DRPERF PERFORMANCE REPORT
+Command: not recorded
+Regions: 17; graph: observed
+Declared event ordering: ordered
+Declared dependency channels observed: 0; waited(null) refinements: 0.
+Null refinements do not establish publishers; checking their markers/indicators does not validate their reasons.
+Wait obligations: 0/5184 covered; 5184 unexplained
+WAIT COVERAGE INCOMPLETE: declared event ordering does not mean all synchronization is explained.
+Read the graph below for structure; COST INTERFACES AND BREAKDOWN for formulas and functions.
+Queries: drperf --report REPORT.json --stats | --region NAME | --top costly | --top unexplained | --full
+graph.html: interactive region graph and selected-region performance details.
+profile.drperf.json: machine-readable formulas, checks, state tables and graph.
+Numeric displays are rounded to integers; the JSON retains full precision.
+Evidence sidecars support rechecking; keep them with the JSON.
+Cost evidence: 0/17 regions have one observed PCV state; 17 have nonzero own residual; 17 have nonzero interface residual including unresolved child terms.
+A one-state constant fit explains that state mean only; it does not establish growth or per-call variation.
+
+CODE COVERAGE
+Source lines inside marked regions: 6/63230 (0%); unmarked: 63224; status: measured
+Nonblank, noncomment source lines lexically inside discovered region spans / all such lines in the selected source tree. Nested spans count once; unexecuted regions still count. Includes marker/decorator lines and string literals. Callees outside a marked lexical span are not counted as marked. Supports Python, C/C++, headers and Rust; discovery exclusions and scan limits apply. Python region contexts/decorators support dynamic names; unrecognized wrappers and unmatched manual begin/end spans need explicit source support.
+  source/sqlglot/__init__.py: 0/161 lines marked
+  source/sqlglot/__main__.py: 0/89 lines marked
+  source/sqlglot/_typing.py: 0/54 lines marked
+  source/sqlglot/anonymize.py: 0/246 lines marked
+  source/sqlglot/diff.py: 0/346 lines marked
+  source/sqlglot/errors.py: 0/135 lines marked
+  source/sqlglot/generator.py: 0/4924 lines marked
+  source/sqlglot/helper.py: 0/344 lines marked
+  source/sqlglot/jsonpath.py: 0/186 lines marked
+  source/sqlglot/lineage.py: 0/568 lines marked
+  source/sqlglot/parser.py: 0/8355 lines marked
+  source/sqlglot/planner.py: 0/354 lines marked
+  source/sqlglot/schema.py: 0/655 lines marked
+  source/sqlglot/serde.py: 0/95 lines marked
+  source/sqlglot/time.py: 0/668 lines marked
+  source/sqlglot/tokenizer_core.py: 0/1073 lines marked
+  source/sqlglot/tokens.py: 0/539 lines marked
+  source/sqlglot/transforms.py: 0/858 lines marked
+  source/sqlglot/trie.py: 0/59 lines marked
+  source/sqlglot/dialects/__init__.py: 0/103 lines marked
+  source/sqlglot/dialects/athena.py: 0/86 lines marked
+  source/sqlglot/dialects/bigquery.py: 0/165 lines marked
+  source/sqlglot/dialects/clickhouse.py: 0/106 lines marked
+  source/sqlglot/dialects/databricks.py: 0/33 lines marked
+  source/sqlglot/dialects/dax.py: 0/14 lines marked
+  source/sqlglot/dialects/dialect.py: 0/1991 lines marked
+  source/sqlglot/dialects/doris.py: 0/10 lines marked
+  source/sqlglot/dialects/dremio.py: 0/60 lines marked
+  source/sqlglot/dialects/drill.py: 0/54 lines marked
+  source/sqlglot/dialects/druid.py: 0/6 lines marked
+  source/sqlglot/dialects/duckdb.py: 0/103 lines marked
+  source/sqlglot/dialects/dune.py: 0/9 lines marked
+  source/sqlglot/dialects/exasol.py: 0/57 lines marked
+  source/sqlglot/dialects/fabric.py: 0/31 lines marked
+  source/sqlglot/dialects/hive.py: 0/103 lines marked
+  source/sqlglot/dialects/materialize.py: 0/8 lines marked
+  source/sqlglot/dialects/mysql.py: 0/135 lines marked
+  source/sqlglot/dialects/oracle.py: 0/72 lines marked
+  source/sqlglot/dialects/postgres.py: 0/130 lines marked
+  source/sqlglot/dialects/presto.py: 0/57 lines marked
+  source/sqlglot/dialects/prql.py: 0/24 lines marked
+  source/sqlglot/dialects/redshift.py: 0/47 lines marked
+  source/sqlglot/dialects/risingwave.py: 0/17 lines marked
+  source/sqlglot/dialects/singlestore.py: 0/54 lines marked
+  source/sqlglot/dialects/snowflake.py: 0/158 lines marked
+  source/sqlglot/dialects/solr.py: 0/12 lines marked
+  source/sqlglot/dialects/spark.py: 0/35 lines marked
+  source/sqlglot/dialects/spark2.py: 0/27 lines marked
+  source/sqlglot/dialects/sqlite.py: 0/30 lines marked
+  source/sqlglot/dialects/starrocks.py: 0/20 lines marked
+  source/sqlglot/dialects/tableau.py: 0/12 lines marked
+  source/sqlglot/dialects/teradata.py: 0/68 lines marked
+  source/sqlglot/dialects/trino.py: 0/18 lines marked
+  source/sqlglot/dialects/tsql.py: 0/179 lines marked
+  source/sqlglot/executor/__init__.py: 0/68 lines marked
+  source/sqlglot/executor/context.py: 0/85 lines marked
+  source/sqlglot/executor/env.py: 0/255 lines marked
+  source/sqlglot/executor/python.py: 0/447 lines marked
+  source/sqlglot/executor/table.py: 0/121 lines marked
+  source/sqlglot/expressions/__init__.py: 0/42 lines marked
+  source/sqlglot/expressions/aggregate.py: 0/170 lines marked
+  source/sqlglot/expressions/array.py: 0/205 lines marked
+  source/sqlglot/expressions/builders.py: 0/918 lines marked
+  source/sqlglot/expressions/constraints.py: 0/147 lines marked
+  source/sqlglot/expressions/core.py: 0/2358 lines marked
+  source/sqlglot/expressions/datatypes.py: 0/418 lines marked
+  source/sqlglot/expressions/ddl.py: 0/325 lines marked
+  source/sqlglot/expressions/dml.py: 0/455 lines marked
+  source/sqlglot/expressions/functions.py: 0/318 lines marked
+  source/sqlglot/expressions/json.py: 0/169 lines marked
+  source/sqlglot/expressions/math.py: 0/142 lines marked
+  source/sqlglot/expressions/properties.py: 0/376 lines marked
+  source/sqlglot/expressions/query.py: 0/1766 lines marked
+  source/sqlglot/expressions/string.py: 0/370 lines marked
+  source/sqlglot/expressions/temporal.py: 0/323 lines marked
+  source/sqlglot/generators/__init__.py: 0/0 lines marked
+  source/sqlglot/generators/athena.py: 0/130 lines marked
+  source/sqlglot/generators/bigquery.py: 0/599 lines marked
+  source/sqlglot/generators/clickhouse.py: 0/570 lines marked
+  source/sqlglot/generators/databricks.py: 0/107 lines marked
+  source/sqlglot/generators/dax.py: 0/4 lines marked
+  source/sqlglot/generators/doris.py: 0/594 lines marked
+  source/sqlglot/generators/dremio.py: 0/86 lines marked
+  source/sqlglot/generators/drill.py: 0/108 lines marked
+  source/sqlglot/generators/druid.py: 0/22 lines marked
+  source/sqlglot/generators/duckdb.py: 0/3528 lines marked
+  source/sqlglot/generators/dune.py: 0/10 lines marked
+  source/sqlglot/generators/exasol.py: 0/840 lines marked
+  source/sqlglot/generators/fabric.py: 0/103 lines marked
+  source/sqlglot/generators/hive.py: 0/497 lines marked
+  source/sqlglot/generators/materialize.py: 0/44 lines marked
+  source/sqlglot/generators/mysql.py: 0/735 lines marked
+  source/sqlglot/generators/oracle.py: 0/151 lines marked
+  source/sqlglot/generators/postgres.py: 0/470 lines marked
+  source/sqlglot/generators/presto.py: 0/566 lines marked
+  source/sqlglot/generators/prql.py: 0/4 lines marked
+  source/sqlglot/generators/python.py: 0/99 lines marked
+  source/sqlglot/generators/redshift.py: 0/349 lines marked
+  source/sqlglot/generators/risingwave.py: 0/23 lines marked
+  source/sqlglot/generators/singlestore.py: 0/1553 lines marked
+  source/sqlglot/generators/snowflake.py: 0/931 lines marked
+  source/sqlglot/generators/solr.py: 0/4 lines marked
+  source/sqlglot/generators/spark.py: 0/173 lines marked
+  source/sqlglot/generators/spark2.py: 0/214 lines marked
+  source/sqlglot/generators/sqlite.py: 0/294 lines marked
+  source/sqlglot/generators/starrocks.py: 0/308 lines marked
+  source/sqlglot/generators/tableau.py: 0/39 lines marked
+  source/sqlglot/generators/teradata.py: 0/144 lines marked
+  source/sqlglot/generators/trino.py: 0/115 lines marked
+  source/sqlglot/generators/tsql.py: 0/527 lines marked
+  source/sqlglot/optimizer/__init__.py: 0/47 lines marked
+  source/sqlglot/optimizer/annotate_types.py: 0/850 lines marked
+  source/sqlglot/optimizer/canonicalize.py: 0/188 lines marked
+  source/sqlglot/optimizer/canonicalize_internal_names.py: 0/232 lines marked
+  source/sqlglot/optimizer/eliminate_ctes.py: 0/42 lines marked
+  source/sqlglot/optimizer/eliminate_joins.py: 0/140 lines marked
+  source/sqlglot/optimizer/eliminate_subqueries.py: 0/146 lines marked
+  source/sqlglot/optimizer/isolate_table_selects.py: 0/39 lines marked
+  source/sqlglot/optimizer/journal.py: 0/21 lines marked
+  source/sqlglot/optimizer/merge_subqueries.py: 2/447 lines marked
+  source/sqlglot/optimizer/normalize.py: 0/172 lines marked
+  source/sqlglot/optimizer/normalize_identifiers.py: 0/72 lines marked
+  source/sqlglot/optimizer/optimize_joins.py: 0/102 lines marked
+  source/sqlglot/optimizer/optimizer.py: 2/103 lines marked
+  source/sqlglot/optimizer/pushdown_predicates.py: 0/218 lines marked
+  source/sqlglot/optimizer/pushdown_projections.py: 0/207 lines marked
+  source/sqlglot/optimizer/qualify.py: 0/99 lines marked
+  source/sqlglot/optimizer/qualify_columns.py: 0/986 lines marked
+  source/sqlglot/optimizer/qualify_tables.py: 0/199 lines marked
+  source/sqlglot/optimizer/resolver.py: 0/314 lines marked
+  source/sqlglot/optimizer/scope.py: 2/885 lines marked
+  source/sqlglot/optimizer/simplify.py: 0/1450 lines marked
+  source/sqlglot/optimizer/unnest_subqueries.py: 0/263 lines marked
+  source/sqlglot/parsers/__init__.py: 0/0 lines marked
+  source/sqlglot/parsers/athena.py: 0/60 lines marked
+  source/sqlglot/parsers/base.py: 0/13 lines marked
+  source/sqlglot/parsers/bigquery.py: 0/604 lines marked
+  source/sqlglot/parsers/clickhouse.py: 0/809 lines marked
+  source/sqlglot/parsers/databricks.py: 0/64 lines marked
+  source/sqlglot/parsers/dax.py: 0/34 lines marked
+  source/sqlglot/parsers/doris.py: 0/100 lines marked
+  source/sqlglot/parsers/dremio.py: 0/106 lines marked
+  source/sqlglot/parsers/drill.py: 0/24 lines marked
+  source/sqlglot/parsers/druid.py: 0/7 lines marked
+  source/sqlglot/parsers/duckdb.py: 0/333 lines marked
+  source/sqlglot/parsers/dune.py: 0/4 lines marked
+  source/sqlglot/parsers/exasol.py: 0/134 lines marked
+  source/sqlglot/parsers/fabric.py: 0/18 lines marked
+  source/sqlglot/parsers/hive.py: 0/229 lines marked
+  source/sqlglot/parsers/materialize.py: 0/33 lines marked
+  source/sqlglot/parsers/mysql.py: 0/549 lines marked
+  source/sqlglot/parsers/oracle.py: 0/200 lines marked
+  source/sqlglot/parsers/postgres.py: 0/277 lines marked
+  source/sqlglot/parsers/presto.py: 0/121 lines marked
+  source/sqlglot/parsers/prql.py: 0/160 lines marked
+  source/sqlglot/parsers/redshift.py: 0/135 lines marked
+  source/sqlglot/parsers/risingwave.py: 0/48 lines marked
+  source/sqlglot/parsers/singlestore.py: 0/229 lines marked
+  source/sqlglot/parsers/snowflake.py: 0/1180 lines marked
+  source/sqlglot/parsers/solr.py: 0/12 lines marked
+  source/sqlglot/parsers/spark.py: 0/115 lines marked
+  source/sqlglot/parsers/spark2.py: 0/107 lines marked
+  source/sqlglot/parsers/sqlite.py: 0/146 lines marked
+  source/sqlglot/parsers/starrocks.py: 0/130 lines marked
+  source/sqlglot/parsers/tableau.py: 0/13 lines marked
+  source/sqlglot/parsers/teradata.py: 0/157 lines marked
+  source/sqlglot/parsers/trino.py: 0/193 lines marked
+  source/sqlglot/parsers/tsql.py: 0/646 lines marked
+  source/sqlglot/typing/__init__.py: 0/375 lines marked
+  source/sqlglot/typing/bigquery.py: 0/336 lines marked
+  source/sqlglot/typing/clickhouse.py: 0/22 lines marked
+  source/sqlglot/typing/databricks.py: 0/41 lines marked
+  source/sqlglot/typing/duckdb.py: 0/62 lines marked
+  source/sqlglot/typing/hive.py: 0/80 lines marked
+  source/sqlglot/typing/mysql.py: 0/176 lines marked
+  source/sqlglot/typing/postgres.py: 0/57 lines marked
+  source/sqlglot/typing/presto.py: 0/35 lines marked
+  source/sqlglot/typing/redshift.py: 0/9 lines marked
+  source/sqlglot/typing/snowflake.py: 0/480 lines marked
+  source/sqlglot/typing/spark.py: 0/50 lines marked
+  source/sqlglot/typing/spark2.py: 0/78 lines marked
+  source/sqlglot/typing/tsql.py: 0/35 lines marked
+  workload.py: 0/20 lines marked
+Annotated region names observed: 1/1; not observed: 0; status: observed
+Coverage of literal region names discovered in the selected source tree, not whole-program line or branch coverage. Multiple sites sharing one name cannot be distinguished. Dynamic marker names and excluded/unscanned source files are outside the denominator. Source discovery is bounded to 5000 files and skips files over 2 MB. A not-observed region has unknown cost; a complete fit says nothing about unexecuted code.
+  merge_expressions: observed, annotation source not located
+  mergeable: observed, annotation source not located
+  rule.annotate_types: observed, annotation source not located
+  rule.canonicalize: observed, annotation source not located
+  rule.eliminate_ctes: observed, annotation source not located
+  rule.eliminate_joins: observed, annotation source not located
+  rule.eliminate_subqueries: observed, annotation source not located
+  rule.merge_subqueries: observed, annotation source not located
+  rule.normalize: observed, annotation source not located
+  rule.optimize_joins: observed, annotation source not located
+  rule.pushdown_predicates: observed, annotation source not located
+  rule.pushdown_projections: observed, annotation source not located
+  rule.qualify: observed, annotation source not located
+  rule.quote_identifiers: observed, annotation source not located
+  rule.simplify: observed, annotation source not located
+  rule.unnest_subqueries: observed, annotation source not located
+
+ARCHITECTURE GRAPH
+contains = direct subregion; next = observed sibling order, not a dependency;
+waited -> = declared consumer-to-publisher claim. Check status is shown.
+Wait[?] = uncovered synchronization; waited(null) = event-free refinement with a supplied reason, not a dependency.
+Graph aggregates observed invocations; it is not a latency or critical-path model.
+
+REGION "merge_expressions" (calls=228; PCVs=outer_projections, outer_joins, inner_projections)
+  contains -> "scope.collect" [observations=228; within="merge_expressions"]
+  next -> "mergeable" [observations=222; within="rule.merge_subqueries"]
+  next -> "scope.collect" [observations=6; within="rule.merge_subqueries"]
+
+REGION "mergeable" (calls=228; PCVs=outer_projections, outer_joins, inner_projections)
+  contains -> "scope.collect" [observations=222; within="mergeable"]
+  next -> "merge_expressions" [observations=228; within="rule.merge_subqueries"]
+
+REGION "rule.annotate_types" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=6; within="rule.annotate_types"]
+  next -> "rule.canonicalize" [observations=6]
+
+REGION "rule.canonicalize" (calls=6; PCVs=joins, projections, joins_squared)
+  next -> "rule.simplify" [observations=6]
+
+REGION "rule.eliminate_ctes" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=6; within="rule.eliminate_ctes"]
+  next -> "rule.quote_identifiers" [observations=6]
+
+REGION "rule.eliminate_joins" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=6; within="rule.eliminate_joins"]
+  next -> "rule.eliminate_ctes" [observations=6]
+
+REGION "rule.eliminate_subqueries" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=234; within="rule.eliminate_subqueries"]
+  next -> "rule.merge_subqueries" [observations=6]
+
+REGION "rule.merge_subqueries" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "merge_expressions" [observations=228; within="rule.merge_subqueries"]
+  contains -> "mergeable" [observations=228; within="rule.merge_subqueries"]
+  contains -> "scope.collect" [observations=240; within="rule.merge_subqueries"]
+  next -> "rule.eliminate_joins" [observations=6]
+
+REGION "rule.normalize" (calls=6; PCVs=joins, projections, joins_squared)
+  next -> "rule.unnest_subqueries" [observations=6]
+
+REGION "rule.optimize_joins" (calls=6; PCVs=joins, projections, joins_squared)
+  next -> "rule.eliminate_subqueries" [observations=6]
+
+REGION "rule.pushdown_predicates" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=234; within="rule.pushdown_predicates"]
+  next -> "rule.optimize_joins" [observations=6]
+  unexplained(Wait[?]): 5184 obligations
+
+REGION "rule.pushdown_projections" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=234; within="rule.pushdown_projections"]
+  next -> "rule.normalize" [observations=6]
+
+REGION "rule.qualify" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=480; within="rule.qualify"]
+  next -> "rule.pushdown_projections" [observations=6]
+
+REGION "rule.quote_identifiers" (calls=6; PCVs=joins, projections, joins_squared)
+  next -> "rule.annotate_types" [observations=6]
+
+REGION "rule.simplify" (calls=6; PCVs=joins, projections, joins_squared)
+
+REGION "rule.unnest_subqueries" (calls=6; PCVs=joins, projections, joins_squared)
+  contains -> "scope.collect" [observations=234; within="rule.unnest_subqueries"]
+  next -> "rule.pushdown_predicates" [observations=6]
+
+REGION "scope.collect" (calls=2124; PCVs=nodes, collectible, columns, arg_slots, ctes)
+  source: source/sqlglot/optimizer/scope.py:58
+  next -> "mergeable" [observations=6; within="rule.merge_subqueries"]
+  next -> "scope.collect" [observations=228; within="rule.eliminate_subqueries"]
+  next -> "scope.collect" [observations=228; within="rule.merge_subqueries"]
+  next -> "scope.collect" [observations=228; within="rule.pushdown_predicates"]
+  next -> "scope.collect" [observations=228; within="rule.pushdown_projections"]
+  next -> "scope.collect" [observations=474; within="rule.qualify"]
+  next -> "scope.collect" [observations=228; within="rule.unnest_subqueries"]
+
+COST INTERFACES AND BREAKDOWN
+CPU instructions on observed states; symbolic child costs use F[child].
+Own residual percentages exclude child terms. A single state supports only a constant mean fit.
+Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.
+  merge_expressions = 136,090*outer_projections + 130,213 + unexplained(own) + F[scope.collect]   (8% own unexplained; 6 observed states)
+      outer_projections:
+        53,187 _PyEval_EvalFrameDefault [python3.12]
+        13,125 _PyObject_GenericGetAttrWithDict [python3.12]
+        10,585 PyType_IsSubtype [python3.12]
+        7,420 PyNumber_Long [python3.12]
+        7,060 _PyType_Lookup [python3.12]
+        6,145 PyDescr_IsData [python3.12]
+        5,273 PyObject_IsInstance [python3.12]
+        5,206 _PyObject_LookupAttr [python3.12]
+      constant:
+        33,496 _PyEval_EvalFrameDefault [python3.12]
+        7,154 _PyType_Lookup [python3.12]
+        6,366 _PyObject_GenericGetAttrWithDict [python3.12]
+        4,380 PyDict_Contains+? [python3.12]
+        4,367 _PyErr_ChainStackItem+? [python3.12]
+        3,968 PyObject_Free [python3.12]
+        3,744 PyDict_SetItem [python3.12]
+        3,547 PyObject_SetAttr [python3.12]
+      unexplained:
+        614,183 _PyEval_EvalFrameDefault [python3.12]
+        83,638 PyObject_Malloc [python3.12]
+        41,089 PyObject_GetAttr [python3.12]
+        34,216 PyDescr_IsData [python3.12]
+        26,966 PyMember_GetOne [python3.12]
+        17,990 PyDict_Contains+? [python3.12]
+        17,541 _PyErr_ChainStackItem+? [python3.12]
+        15,946 PyInterpreterState_Get+? [python3.12]
+  mergeable = 88,557*outer_projections + -23,146 + unexplained(own) + unexplained(F[scope.collect])   (28% own unexplained; 6 observed states)
+      outer_projections:
+        22,942 _PyEval_EvalFrameDefault [python3.12]
+        11,330 _PyObject_GenericGetAttrWithDict [python3.12]
+        8,361 PyType_IsSubtype [python3.12]
+        6,350 PyNumber_Long [python3.12]
+        6,105 _PyType_Lookup [python3.12]
+        5,553 PyDescr_IsData [python3.12]
+        4,459 _PyObject_LookupAttr [python3.12]
+        4,405 PyObject_IsInstance [python3.12]
+      constant:
+        -12,941 _PyObject_GenericGetAttrWithDict [python3.12]
+        -10,760 PyType_IsSubtype [python3.12]
+        -8,638 PyNumber_Long [python3.12]
+        -7,006 PyDescr_IsData [python3.12]
+        -6,207 _PyObject_LookupAttr [python3.12]
+        -5,252 _PyType_Lookup [python3.12]
+        4,954 _PyErr_ChainStackItem+? [python3.12]
+        -4,880 PyObject_IsInstance [python3.12]
+      unexplained:
+        2,027,706 _PyEval_EvalFrameDefault [python3.12]
+        142,322 PyObject_Free [python3.12]
+        107,824 _PyObject_GC_New [python3.12]
+        95,589 PyObject_Malloc [python3.12]
+        62,102 PyObject_GC_Del [python3.12]
+        42,206 PyType_IsSubtype [python3.12]
+        40,868 PyBool_FromLong [python3.12]
+        26,540 PyObject_GetAttr [python3.12]
+  rule.annotate_types = 1,016,757*joins + 0*joins_squared + 1,106,427 + unexplained(own) + F[scope.collect]   (18% own unexplained; 6 observed states)
+      joins:
+        486,718 _PyEval_EvalFrameDefault [python3.12]
+        62,261 _PyObject_GenericGetAttrWithDict [python3.12]
+        37,475 _PyType_Lookup [python3.12]
+        36,025 _PyErr_ChainStackItem+? [python3.12]
+        21,804 PyNumber_Long [python3.12]
+        21,720 PyEval_EvalCode+? [python3.12]
+        20,169 PyDescr_IsData [python3.12]
+        18,526 _PyDictView_New+? [python3.12]
+      joins_squared:
+        1 _PyType_Lookup [python3.12]
+        -1 __realloc [libc.so.6]
+        0 _PyObject_GetMethod [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyDict_SetDefault+? [python3.12]
+        0 _int_realloc [libc.so.6]
+        0 PyErr_Occurred [python3.12]
+        0 _PyDict_DelItem_KnownHash+? [python3.12]
+      constant:
+        458,258 _PyEval_EvalFrameDefault [python3.12]
+        71,472 _PyObject_GenericGetAttrWithDict [python3.12]
+        69,442 _PyType_Lookup [python3.12]
+        49,305 PyDict_Contains+? [python3.12]
+        34,782 _PyErr_ChainStackItem+? [python3.12]
+        25,956 PyEval_EvalCode+? [python3.12]
+        23,778 _PyDictView_New+? [python3.12]
+        20,566 PyObject_GetAttr [python3.12]
+      unexplained:
+        1,555,600 _PyEval_EvalFrameDefault [python3.12]
+        990,781 PyObject_Free [python3.12]
+        951,057 PyType_IsSubtype [python3.12]
+        716,671 PyObject_GC_Del [python3.12]
+        545,647 PyType_FromModuleAndSpec+? [python3.12]
+        314,528 _PyTuple_Resize+? [python3.12]
+        312,980 PyObject_SetAttr [python3.12]
+        276,957 PyDescr_IsData [python3.12]
+  rule.canonicalize = 352,712*joins + -3*joins_squared + 273,143 + unexplained(own)   (2% own unexplained; 6 observed states)
+      joins:
+        90,745 _PyEval_EvalFrameDefault [python3.12]
+        46,471 _PyObject_GenericGetAttrWithDict [python3.12]
+        39,801 PyType_IsSubtype [python3.12]
+        27,170 PyNumber_Long [python3.12]
+        25,528 _PyType_Lookup [python3.12]
+        22,162 PyDescr_IsData [python3.12]
+        19,427 _PyObject_LookupAttr [python3.12]
+        13,560 PyObject_IsInstance [python3.12]
+      joins_squared:
+        -1 __realloc [libc.so.6]
+        0 _int_realloc [libc.so.6]
+        0 _PyOS_URandom+? [python3.12]
+        0 _int_free [libc.so.6]
+        0 PyMem_Realloc [python3.12]
+        0 PyList_Append+? [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyDict_Contains+? [python3.12]
+      constant:
+        64,860 _PyEval_EvalFrameDefault [python3.12]
+        27,624 _PyObject_GenericGetAttrWithDict [python3.12]
+        26,791 PyType_IsSubtype [python3.12]
+        19,778 PyNumber_Long [python3.12]
+        15,612 _PyType_Lookup [python3.12]
+        15,605 PyDescr_IsData [python3.12]
+        14,083 _PyObject_LookupAttr [python3.12]
+        9,652 PyObject_IsInstance [python3.12]
+      unexplained:
+        102,478 _PyEval_EvalFrameDefault [python3.12]
+        35,598 _PyDictView_New+? [python3.12]
+        33,624 _PyObject_GetMethod [python3.12]
+        22,694 PyObject_GetAttr [python3.12]
+        16,070 PyDict_Contains+? [python3.12]
+        13,820 PyDescr_IsData [python3.12]
+        11,517 PyMember_GetOne [python3.12]
+        7,528 PyObject_Free [python3.12]
+  rule.eliminate_ctes = 254,601*joins + 2*joins_squared + 354,297 + unexplained(own) + F[scope.collect]   (3% own unexplained; 6 observed states)
+      joins:
+        103,134 _PyEval_EvalFrameDefault [python3.12]
+        22,706 _PyObject_GenericGetAttrWithDict [python3.12]
+        18,006 PyType_IsSubtype [python3.12]
+        12,826 PyNumber_Long [python3.12]
+        12,303 _PyType_Lookup [python3.12]
+        10,910 PyDescr_IsData [python3.12]
+        8,990 _PyObject_LookupAttr [python3.12]
+        8,927 PyObject_IsInstance [python3.12]
+      joins_squared:
+        1 PyMember_GetOne [python3.12]
+        0 PyDescr_IsData [python3.12]
+        0 PyDict_SetItem [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyObject_GetAttr [python3.12]
+        0 PyObject_SetAttr [python3.12]
+        0 __realloc [libc.so.6]
+        0 PyList_Append+? [python3.12]
+      constant:
+        118,177 _PyEval_EvalFrameDefault [python3.12]
+        34,980 _PyObject_GenericGetAttrWithDict [python3.12]
+        18,950 _PyType_Lookup [python3.12]
+        18,648 PyType_IsSubtype [python3.12]
+        11,106 PyDescr_IsData [python3.12]
+        10,054 PyNumber_Long [python3.12]
+        7,321 PyObject_IsInstance [python3.12]
+        7,231 PyObject_Free [python3.12]
+      unexplained:
+        100,585 _PyEval_EvalFrameDefault [python3.12]
+        67,844 PyDict_Contains+? [python3.12]
+        34,242 PyObject_GetAttr [python3.12]
+        24,206 PyDescr_IsData [python3.12]
+        17,921 PyObject_Free [python3.12]
+        12,022 PyMember_GetOne [python3.12]
+        6,589 PyObject_Malloc [python3.12]
+        3,979 PySet_Contains [python3.12]
+  rule.eliminate_joins = 261,205*joins + -3*joins_squared + 284,346 + unexplained(own) + F[scope.collect]   (19% own unexplained; 6 observed states)
+      joins:
+        129,321 _PyEval_EvalFrameDefault [python3.12]
+        20,885 PyType_IsSubtype [python3.12]
+        15,432 PyNumber_Long [python3.12]
+        11,063 PyObject_IsInstance [python3.12]
+        10,817 _PyObject_LookupAttr [python3.12]
+        10,344 PyDescr_IsData [python3.12]
+        4,705 PyException_SetCause+? [python3.12]
+        3,840 PyObject_Free [python3.12]
+      joins_squared:
+        -1 PyEval_EvalCode+? [python3.12]
+        1 _PyEval_EvalFrameDefault [python3.12]
+        0 PyObject_SetAttr [python3.12]
+        0 __realloc [libc.so.6]
+        0 PyList_Append+? [python3.12]
+        0 PyObject_CallOneArg [python3.12]
+        0 PyDescr_IsData [python3.12]
+        0 _PyDictView_New+? [python3.12]
+      constant:
+        119,308 _PyEval_EvalFrameDefault [python3.12]
+        16,174 PyType_IsSubtype [python3.12]
+        10,918 PyNumber_Long [python3.12]
+        8,102 PyObject_IsInstance [python3.12]
+        7,972 PyDescr_IsData [python3.12]
+        7,540 _PyObject_LookupAttr [python3.12]
+        6,379 PyObject_Free [python3.12]
+        5,408 PyObject_Malloc [python3.12]
+      unexplained:
+        1,054,349 _PyObject_GenericGetAttrWithDict [python3.12]
+        578,484 _PyType_Lookup [python3.12]
+        183,565 _PyEval_EvalFrameDefault [python3.12]
+        133,647 PyDescr_IsData [python3.12]
+        122,206 PyDict_Contains+? [python3.12]
+        73,912 _PyType_GetDict [python3.12]
+        49,118 PyObject_GetAttr [python3.12]
+        46,208 PyType_IsSubtype [python3.12]
+  rule.eliminate_subqueries = 751,866*joins + -2*joins_squared + 842,999 + unexplained(own) + (joins + 2)*F[scope.collect]   (9% own unexplained; 6 observed states)
+      joins:
+        294,813 _PyEval_EvalFrameDefault [python3.12]
+        48,610 _PyObject_GenericGetAttrWithDict [python3.12]
+        34,801 PyType_IsSubtype [python3.12]
+        29,778 _PyType_Lookup [python3.12]
+        22,554 PyNumber_Long [python3.12]
+        19,975 PyDescr_IsData [python3.12]
+        16,611 PyObject_IsInstance [python3.12]
+        15,390 PyObject_Free [python3.12]
+      joins_squared:
+        -1 _PyType_Lookup [python3.12]
+        1 PyDict_SetItem [python3.12]
+        -1 PyDict_Contains+? [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyEval_EvalCode+? [python3.12]
+        0 __memcpy_avx_unaligned_erms [libc.so.6]
+        0 PyType_FromModuleAndSpec+? [python3.12]
+        0 _PyErr_CheckSignalsTstate+? [python3.12]
+      constant:
+        317,900 _PyEval_EvalFrameDefault [python3.12]
+        53,824 _PyObject_GenericGetAttrWithDict [python3.12]
+        28,296 PyType_IsSubtype [python3.12]
+        27,879 _PyType_Lookup [python3.12]
+        23,050 PyDict_Contains+? [python3.12]
+        20,281 PyNumber_Long [python3.12]
+        19,690 PyDescr_IsData [python3.12]
+        17,977 _PyObject_GC_New [python3.12]
+      unexplained:
+        633,816 _PyEval_EvalFrameDefault [python3.12]
+        262,005 PyObject_SetAttr [python3.12]
+        239,636 PyObject_GetAttr [python3.12]
+        205,341 PyObject_GC_Del [python3.12]
+        203,536 PyDescr_IsData [python3.12]
+        150,976 PyType_FromModuleAndSpec+? [python3.12]
+        107,655 PyMember_GetOne [python3.12]
+        106,943 PyMember_SetOne [python3.12]
+  rule.merge_subqueries = 798,512*joins + 1,287*joins_squared + 884,601 + unexplained(own) + (joins + 1)*F[merge_expressions] + (joins + 1)*F[mergeable] + (joins + 3)*F[scope.collect]   (35% own unexplained; 6 observed states)
+      joins:
+        372,616 _PyEval_EvalFrameDefault [python3.12]
+        67,624 _PyObject_GenericGetAttrWithDict [python3.12]
+        35,934 PyNumber_Long [python3.12]
+        34,368 PyDescr_IsData [python3.12]
+        25,844 PyObject_IsInstance [python3.12]
+        24,998 _PyObject_LookupAttr [python3.12]
+        18,595 PyType_IsSubtype [python3.12]
+        15,013 _PyObject_GC_New [python3.12]
+      joins_squared:
+        814 _PyEval_EvalFrameDefault [python3.12]
+        83 _PyMem_Strdup+? [python3.12]
+        72 PyDict_Contains+? [python3.12]
+        67 PyDict_SetItem [python3.12]
+        60 PyTuple_GetItem+? [python3.12]
+        49 _PyDict_Next [python3.12]
+        47 PyFrozenSet_New+? [python3.12]
+        27 PySequence_Contains [python3.12]
+      constant:
+        400,232 _PyEval_EvalFrameDefault [python3.12]
+        43,366 _PyObject_GenericGetAttrWithDict [python3.12]
+        31,226 PyNumber_Long [python3.12]
+        31,119 PyDescr_IsData [python3.12]
+        23,531 PyType_IsSubtype [python3.12]
+        23,229 PyObject_IsInstance [python3.12]
+        21,605 _PyObject_LookupAttr [python3.12]
+        16,025 _PyErr_ChainStackItem+? [python3.12]
+      unexplained:
+        2,943,225 PyObject_GC_Del [python3.12]
+        2,014,492 PyObject_Free [python3.12]
+        1,477,971 _PyType_Lookup [python3.12]
+        1,307,427 PyType_IsSubtype [python3.12]
+        1,135,342 PyDict_Contains+? [python3.12]
+        973,528 PySet_Contains [python3.12]
+        964,210 _PyTuple_Resize+? [python3.12]
+        798,113 PyType_FromModuleAndSpec+? [python3.12]
+  rule.normalize = 248,217*joins + 0*joins_squared + 324,650 + unexplained(own)   (6% own unexplained; 6 observed states)
+      joins:
+        135,937 _PyEval_EvalFrameDefault [python3.12]
+        14,533 _PyObject_GenericGetAttrWithDict [python3.12]
+        11,273 PyType_IsSubtype [python3.12]
+        8,680 PyNumber_Long [python3.12]
+        6,641 PyObject_IsInstance [python3.12]
+        6,586 PyException_SetCause+? [python3.12]
+        6,557 _PyErr_ChainStackItem+? [python3.12]
+        6,518 PyDescr_IsData [python3.12]
+      joins_squared:
+        0 _int_malloc [libc.so.6]
+        0 _int_realloc [libc.so.6]
+        0 _PyTuple_Resize+? [python3.12]
+        0 __realloc [libc.so.6]
+        0 PyObject_Realloc [python3.12]
+        0 _PyObject_GC_Resize [python3.12]
+        0 unlink_chunk [libc.so.6]
+        0 _int_free_merge_chunk [libc.so.6]
+      constant:
+        141,760 _PyEval_EvalFrameDefault [python3.12]
+        15,035 _PyObject_GenericGetAttrWithDict [python3.12]
+        10,956 PyType_IsSubtype [python3.12]
+        8,972 PyEval_EvalCode+? [python3.12]
+        8,470 PyObject_Free [python3.12]
+        7,956 _PyErr_ChainStackItem+? [python3.12]
+        7,716 PyNumber_Long [python3.12]
+        6,804 PyObject_Malloc [python3.12]
+      unexplained:
+        323,191 _PyType_Lookup [python3.12]
+        93,240 _PyEval_EvalFrameDefault [python3.12]
+        40,522 _PyObject_GetMethod [python3.12]
+        37,786 _PyType_GetDict [python3.12]
+        32,179 _PyDictView_New+? [python3.12]
+        19,675 PyObject_GetAttr [python3.12]
+        15,207 PyDescr_IsData [python3.12]
+        13,223 PyMember_GetOne [python3.12]
+  rule.optimize_joins = 797,597*joins + 10*joins_squared + 622,888 + unexplained(own)   (7% own unexplained; 6 observed states)
+      joins:
+        424,215 _PyEval_EvalFrameDefault [python3.12]
+        43,384 _PyObject_GenericGetAttrWithDict [python3.12]
+        31,412 PyType_IsSubtype [python3.12]
+        25,231 PyNumber_Long [python3.12]
+        23,964 PyObject_IsInstance [python3.12]
+        21,175 PyObject_Free [python3.12]
+        20,367 _PyErr_ChainStackItem+? [python3.12]
+        18,889 PyException_SetCause+? [python3.12]
+      joins_squared:
+        5 PyList_AsTuple+? [python3.12]
+        4 PyList_GetItem+? [python3.12]
+        -2 PyObject_SetAttr [python3.12]
+        1 _int_malloc [libc.so.6]
+        -1 PyMember_SetOne [python3.12]
+        -1 _PyEval_EvalFrameDefault [python3.12]
+        0 _int_free [libc.so.6]
+        0 __GI___libc_malloc [libc.so.6]
+      constant:
+        318,585 _PyEval_EvalFrameDefault [python3.12]
+        25,152 _PyObject_GenericGetAttrWithDict [python3.12]
+        20,070 PyType_IsSubtype [python3.12]
+        18,928 PyNumber_Long [python3.12]
+        18,093 PyObject_Free [python3.12]
+        17,655 PyObject_IsInstance [python3.12]
+        15,109 PyObject_Malloc [python3.12]
+        14,873 PyException_SetCause+? [python3.12]
+      unexplained:
+        965,760 _PyType_Lookup [python3.12]
+        384,694 _PyEval_EvalFrameDefault [python3.12]
+        171,658 PyObject_Free [python3.12]
+        139,674 _PyObject_GetMethod [python3.12]
+        109,839 _PyDictView_New+? [python3.12]
+        108,470 _PyType_GetDict [python3.12]
+        78,217 PyObject_GetAttr [python3.12]
+        68,394 PyDict_Contains+? [python3.12]
+  rule.pushdown_predicates = 1,334,884*joins + -71*joins_squared + 84,539,921 + unexplained(own) + (joins + 2)*F[scope.collect] + unexplained(Wait[?])   (8% own unexplained; 6 observed states)
+      joins:
+        592,036 _PyEval_EvalFrameDefault [python3.12]
+        76,927 _PyObject_GenericGetAttrWithDict [python3.12]
+        43,387 _PyType_Lookup [python3.12]
+        37,152 _PyErr_ChainStackItem+? [python3.12]
+        33,913 PyNumber_Long [python3.12]
+        30,934 PyObject_Free [python3.12]
+        30,034 PyEval_EvalCode+? [python3.12]
+        29,091 PyDescr_IsData [python3.12]
+      joins_squared:
+        -54 PyObject_Free [python3.12]
+        -17 PyObject_GC_Del [python3.12]
+        9 PyObject_Malloc [python3.12]
+        -4 PyList_AsTuple+? [python3.12]
+        -4 _Py_Dealloc [python3.12]
+        3 PyDict_SetItem [python3.12]
+        -2 _PyObject_GetMethod [python3.12]
+        -2 _PyOS_URandom+? [python3.12]
+      constant:
+        34,752,377 _PyEval_EvalFrameDefault [python3.12]
+        10,054,644 PyUnicode_Contains [python3.12]
+        5,071,392 PyDict_Clear+? [python3.12]
+        4,729,436 PyException_SetCause+? [python3.12]
+        3,281,811 PyDict_Contains+? [python3.12]
+        1,785,502 _PyWideStringList_AsList+? [python3.12]
+        1,600,529 PyObject_Malloc [python3.12]
+        1,428,530 _PyWeakref_ClearRef+? [python3.12]
+      unexplained:
+        2,683,501 PyObject_GC_Del [python3.12]
+        1,378,843 PyType_IsSubtype [python3.12]
+        1,028,466 _PyDict_GetItemWithError+? [python3.12]
+        697,971 PyDict_Update+? [python3.12]
+        603,911 _PyEval_EvalFrameDefault [python3.12]
+        512,802 _PyTrash_end [python3.12]
+        452,472 _PyTrash_begin [python3.12]
+        397,215 _PyTuple_Resize+? [python3.12]
+  rule.pushdown_projections = 780,877*joins + -1*joins_squared + 882,397 + unexplained(own) + (joins + 2)*F[scope.collect]   (12% own unexplained; 6 observed states)
+      joins:
+        350,365 _PyEval_EvalFrameDefault [python3.12]
+        54,754 _PyObject_GenericGetAttrWithDict [python3.12]
+        43,454 PyType_IsSubtype [python3.12]
+        30,393 _PyType_Lookup [python3.12]
+        30,245 PyNumber_Long [python3.12]
+        26,328 PyDescr_IsData [python3.12]
+        23,760 PyObject_IsInstance [python3.12]
+        20,648 _PyObject_LookupAttr [python3.12]
+      joins_squared:
+        -3 PyEval_EvalCode+? [python3.12]
+        -1 PyInterpreterState_Get+? [python3.12]
+        1 _int_malloc [libc.so.6]
+        -1 PyObject_CallOneArg [python3.12]
+        1 _PyType_Lookup [python3.12]
+        0 PyObject_SetAttr [python3.12]
+        0 PyDict_SetItem [python3.12]
+        0 PyDict_Contains+? [python3.12]
+      constant:
+        366,077 _PyEval_EvalFrameDefault [python3.12]
+        53,231 _PyObject_GenericGetAttrWithDict [python3.12]
+        42,673 PyType_IsSubtype [python3.12]
+        35,605 _PyType_Lookup [python3.12]
+        26,429 PyNumber_Long [python3.12]
+        25,511 PyDescr_IsData [python3.12]
+        22,328 PyDict_Contains+? [python3.12]
+        21,411 PyObject_IsInstance [python3.12]
+      unexplained:
+        591,735 PyObject_Free [python3.12]
+        512,959 PyObject_Malloc [python3.12]
+        509,037 _PyObject_GC_New [python3.12]
+        386,966 _PyEval_EvalFrameDefault [python3.12]
+        376,327 PyObject_GC_Del [python3.12]
+        173,145 _PyTrash_end [python3.12]
+        152,775 _PyTrash_begin [python3.12]
+        140,769 PyObject_GC_UnTrack [python3.12]
+  rule.qualify = 2,565,919*joins + -1*joins_squared + 3,075,913 + unexplained(own) + (2*joins + 6)*F[scope.collect]   (14% own unexplained; 6 observed states)
+      joins:
+        1,086,647 _PyEval_EvalFrameDefault [python3.12]
+        108,794 PyType_IsSubtype [python3.12]
+        108,304 _PyObject_GenericGetAttrWithDict [python3.12]
+        91,206 _PyType_Lookup [python3.12]
+        73,448 _PyErr_ChainStackItem+? [python3.12]
+        67,620 PyNumber_Long [python3.12]
+        59,664 PyDict_Contains+? [python3.12]
+        57,032 PyDescr_IsData [python3.12]
+      joins_squared:
+        -2 _PyOS_URandom+? [python3.12]
+        -1 PyDict_Update+? [python3.12]
+        1 _int_malloc [libc.so.6]
+        1 PyDict_SetDefault+? [python3.12]
+        -1 _PyObject_VisitManagedDict [python3.12]
+        1 _int_free_merge_chunk [libc.so.6]
+        0 PyDict_SetItem [python3.12]
+        0 __memcpy_avx_unaligned_erms [libc.so.6]
+      constant:
+        1,146,934 _PyEval_EvalFrameDefault [python3.12]
+        163,693 PyDict_Contains+? [python3.12]
+        110,627 _PyType_Lookup [python3.12]
+        100,289 _PyObject_GenericGetAttrWithDict [python3.12]
+        86,881 _PyErr_ChainStackItem+? [python3.12]
+        83,049 PyType_IsSubtype [python3.12]
+        73,368 _PyOS_URandom+? [python3.12]
+        71,741 _PyDict_DelItem_KnownHash+? [python3.12]
+      unexplained:
+        4,550,850 _PyEval_EvalFrameDefault [python3.12]
+        1,340,126 PyType_FromModuleAndSpec+? [python3.12]
+        1,333,944 _PyObject_GenericGetAttrWithDict [python3.12]
+        1,271,922 PyObject_GC_Del [python3.12]
+        995,575 PyObject_SetAttr [python3.12]
+        809,314 PyEval_EvalCode+? [python3.12]
+        699,929 PyObject_GetAttr [python3.12]
+        615,033 PyDescr_IsData [python3.12]
+  rule.quote_identifiers = 177,176*joins + 0*joins_squared + 158,580 + unexplained(own)   (14% own unexplained; 6 observed states)
+      joins:
+        109,191 _PyEval_EvalFrameDefault [python3.12]
+        7,263 _PyErr_ChainStackItem+? [python3.12]
+        7,182 PyType_IsSubtype [python3.12]
+        5,542 PyNumber_Long [python3.12]
+        4,404 PyObject_IsInstance [python3.12]
+        3,799 _PyObject_LookupAttr [python3.12]
+        3,441 PyDescr_IsData [python3.12]
+        3,421 PyDict_Size+? [python3.12]
+      joins_squared:
+        0 _int_malloc [libc.so.6]
+        0 _PyOS_URandom+? [python3.12]
+        0 PyType_IsSubtype [python3.12]
+        0 _PyEval_EvalFrameDefault [python3.12]
+        0 PyDescr_IsData [python3.12]
+        0 PyMember_GetOne [python3.12]
+        0 _PyDict_DelItem_KnownHash+? [python3.12]
+        0 _int_free_merge_chunk [libc.so.6]
+      constant:
+        84,409 _PyEval_EvalFrameDefault [python3.12]
+        5,562 PyType_IsSubtype [python3.12]
+        5,478 _PyErr_ChainStackItem+? [python3.12]
+        4,186 PyNumber_Long [python3.12]
+        3,226 PyObject_IsInstance [python3.12]
+        3,102 PyDict_Contains+? [python3.12]
+        2,824 PyException_SetCause+? [python3.12]
+        2,813 _PyObject_LookupAttr [python3.12]
+      unexplained:
+        386,163 _PyObject_GenericGetAttrWithDict [python3.12]
+        228,420 _PyType_Lookup [python3.12]
+        190,564 _PyEval_EvalFrameDefault [python3.12]
+        117,136 PyObject_Free [python3.12]
+        57,435 PyDescr_IsData [python3.12]
+        24,937 _PyType_GetDict [python3.12]
+        23,828 PyObject_GetAttr [python3.12]
+        22,480 _PyObject_GetMethod [python3.12]
+  rule.simplify = 399,285*joins + 0*joins_squared + 248,893 + unexplained(own)   (16% own unexplained; 6 observed states)
+      joins:
+        200,856 _PyEval_EvalFrameDefault [python3.12]
+        14,181 _PyErr_ChainStackItem+? [python3.12]
+        9,027 PyObject_Free [python3.12]
+        8,174 PyNumber_Long [python3.12]
+        7,554 PyObject_Malloc [python3.12]
+        6,945 PyDict_Contains+? [python3.12]
+        6,402 _PyObject_GC_New [python3.12]
+        6,314 PyObject_IsInstance [python3.12]
+      joins_squared:
+        0 _PyEval_EvalFrameDefault [python3.12]
+        0 PyMember_SetOne [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyMember_GetOne [python3.12]
+        0 PyDescr_IsData [python3.12]
+        0 PyObject_SetAttr [python3.12]
+        0 _PyOS_URandom+? [python3.12]
+        0 __memcpy_avx_unaligned_erms [libc.so.6]
+      constant:
+        112,491 _PyEval_EvalFrameDefault [python3.12]
+        7,437 _PyErr_ChainStackItem+? [python3.12]
+        7,344 PyObject_Free [python3.12]
+        6,101 PyDict_Contains+? [python3.12]
+        5,487 PyObject_Malloc [python3.12]
+        5,019 _PyObject_GC_New [python3.12]
+        4,715 PyEval_EvalCode+? [python3.12]
+        4,574 PyNumber_Long [python3.12]
+      unexplained:
+        738,408 _PyObject_GenericGetAttrWithDict [python3.12]
+        546,292 _PyEval_EvalFrameDefault [python3.12]
+        450,932 _PyType_Lookup [python3.12]
+        292,427 PyType_IsSubtype [python3.12]
+        157,664 PyEval_EvalCode+? [python3.12]
+        138,580 PyObject_GetAttr [python3.12]
+        130,341 PyDescr_IsData [python3.12]
+        107,707 _PyDictView_New+? [python3.12]
+  rule.unnest_subqueries = 487,997*joins + -1*joins_squared + 548,126 + unexplained(own) + (joins + 2)*F[scope.collect]   (19% own unexplained; 6 observed states)
+      joins:
+        221,352 _PyEval_EvalFrameDefault [python3.12]
+        39,886 _PyObject_GenericGetAttrWithDict [python3.12]
+        21,983 _PyType_Lookup [python3.12]
+        21,530 PyNumber_Long [python3.12]
+        18,868 PyDescr_IsData [python3.12]
+        15,788 PyObject_IsInstance [python3.12]
+        14,943 _PyObject_LookupAttr [python3.12]
+        11,603 PyType_IsSubtype [python3.12]
+      joins_squared:
+        1 _PyType_Lookup [python3.12]
+        -1 _PyObject_GC_NewVar [python3.12]
+        0 _int_malloc [libc.so.6]
+        0 PyDict_SetItem [python3.12]
+        0 PyDict_Contains+? [python3.12]
+        0 __realloc [libc.so.6]
+        0 PyMem_Free [python3.12]
+        0 _PyErr_ChainStackItem+? [python3.12]
+      constant:
+        231,345 _PyEval_EvalFrameDefault [python3.12]
+        44,072 _PyObject_GenericGetAttrWithDict [python3.12]
+        27,178 _PyType_Lookup [python3.12]
+        19,014 PyNumber_Long [python3.12]
+        18,649 PyDescr_IsData [python3.12]
+        14,944 PyDict_Contains+? [python3.12]
+        14,390 PyObject_IsInstance [python3.12]
+        13,240 _PyObject_LookupAttr [python3.12]
+      unexplained:
+        769,890 PyType_IsSubtype [python3.12]
+        541,948 PyObject_GC_Del [python3.12]
+        437,070 PyObject_Free [python3.12]
+        327,876 PyObject_Malloc [python3.12]
+        313,030 _PyObject_GC_New [python3.12]
+        278,474 _PyEval_EvalFrameDefault [python3.12]
+        260,556 _PyTuple_Resize+? [python3.12]
+        129,849 PyType_FromModuleAndSpec+? [python3.12]
+  scope.collect = 3,288*nodes + 362*collectible + -1,180*columns + 342*arg_slots + -188*ctes + -47,407 + unexplained(own)   (59% own unexplained; 489 observed states)
+      nodes:
+        581 PyType_IsSubtype [python3.12]
+        417 _PyEval_EvalFrameDefault [python3.12]
+        362 _PyObject_GenericGetAttrWithDict [python3.12]
+        303 PyNumber_Long [python3.12]
+        214 PyObject_IsInstance [python3.12]
+        194 PyCMethod_New+? [python3.12]
+        169 PyDescr_IsData [python3.12]
+        136 PyObject_Free [python3.12]
+      collectible:
+        246 _PyEval_EvalFrameDefault [python3.12]
+        55 PyBool_FromLong [python3.12]
+        48 PyObject_IsInstance [python3.12]
+        43 PyObject_RichCompareBool [python3.12]
+        -42 PyCMethod_New+? [python3.12]
+        28 _PyOS_URandom+? [python3.12]
+        -25 PyDict_Items+? [python3.12]
+        23 PyTuple_GetItem+? [python3.12]
+      columns:
+        -388 _PyObject_GenericGetAttrWithDict [python3.12]
+        340 _PyEval_EvalFrameDefault [python3.12]
+        -201 PyCMethod_New+? [python3.12]
+        -165 PyDescr_IsData [python3.12]
+        -159 PyType_IsSubtype [python3.12]
+        -127 PyObject_IsInstance [python3.12]
+        -124 PyDict_Items+? [python3.12]
+        -106 PyNumber_Long [python3.12]
+      arg_slots:
+        66 PyType_IsSubtype [python3.12]
+        64 _PyEval_EvalFrameDefault [python3.12]
+        57 _PyObject_GenericGetAttrWithDict [python3.12]
+        38 PyNumber_Long [python3.12]
+        37 PyDict_Items+? [python3.12]
+        24 PyDescr_IsData [python3.12]
+        20 _PyObject_LookupAttr [python3.12]
+        12 PyBool_FromLong [python3.12]
+      ctes:
+        -91 _PyEval_EvalFrameDefault [python3.12]
+        -43 PyObject_RichCompareBool [python3.12]
+        37 PyList_GetItem+? [python3.12]
+        -34 PyObject_Malloc [python3.12]
+        -23 PyTuple_GetItem+? [python3.12]
+        -9 _PyOS_URandom+? [python3.12]
+        -9 PySequence_Contains [python3.12]
+        6 PyType_IsSubtype [python3.12]
+      constant:
+        -6,804 PyNumber_Long [python3.12]
+        -6,422 PyCMethod_New+? [python3.12]
+        -5,082 PyDescr_IsData [python3.12]
+        -4,816 _PyEval_EvalFrameDefault [python3.12]
+        -3,593 _PyDictView_New+? [python3.12]
+        -2,931 _PyObject_LookupAttr [python3.12]
+        -2,610 PyType_GetModuleByDef+? [python3.12]
+        -2,598 PyDictProxy_New+? [python3.12]
+      unexplained:
+        3,980,319 _PyEval_EvalFrameDefault [python3.12]
+        745,058 _PyObject_GenericGetAttrWithDict [python3.12]
+        725,657 _PyType_Lookup [python3.12]
+        412,337 PyDescr_IsData [python3.12]
+        364,330 _PyObject_LookupAttr [python3.12]
+        269,921 PyNumber_Long [python3.12]
+        241,923 PyObject_IsInstance [python3.12]
+        128,140 _PyTuple_Resize+? [python3.12]
+      note: The explained formula is negative at some recorded states. These states cannot support scenario cost predictions.
+native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):
+  <outside regions>: sem_wait [completion] 90 calls; per-region-call = ?; 0 matched, 90 unresolved
+  rule.pushdown_predicates: pthread_mutex_lock [lock] 5184 calls; per-region-call = 864; 0 matched, 5184 unresolved
+  outside application regions (aggregated): pthread_mutex_lock: 30
+declared event order: ordered
+annotation coverage: 0/5184 wait obligations
+  rule.pushdown_predicates: unexplained(Wait[?]) (5184 observations)
+
+OBSERVED PCV RELATIONSHIPS
+These are observed equalities, not causal propagation or latency predictions.
+None fitted.

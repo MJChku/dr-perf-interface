@@ -1,0 +1,3405 @@
+{
+  "system": "ComfyUI-WanVideoWrapper",
+  "pins": {
+    "WanVideoWrapper": "088128b224242e110d3906c6750e9a3a348a659b",
+    "ComfyUI": "3c80da7f87ee359b2d06f107cb3c0797079dfbbb"
+  },
+  "workload": "Real pretrained Wan 1.3B; public model-loading, text-encoding, sampling and VAE-decode nodes, under ComfyUI inference_mode. 17 frames, 256x448, 8 Euler steps, CFG 5, seed 42; CPU offload retained. UI, graph queue, previews and video encoding excluded.",
+  "change": "Opt-in caching of CPU checkpoint dtype conversions before weight uploads. Versioned source and result tensors, identity and dtype invalidate cached entries. CPU checkpoint loading and cached CPU conversions leave inference_mode only to retain version counters; node GPU execution remains in inference_mode.",
+  "flag": "WANWRAPPER_CPU_CAST_CACHE=0 versus 1, read at module import",
+  "gx": {
+    "mode2": {
+      "before": {
+        "run": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423",
+        "result": {
+          "passed": true,
+          "failure": null,
+          "cleanup_errors": [],
+          "applications": {
+            "gx-ww-inference-before-18d6affd304ec9ff-0": {
+              "container": "gx-ww-inference-before-18d6affd304ec9ff-0",
+              "returncode": 0,
+              "host_seconds": 94.956756711
+            }
+          },
+          "containers_retained_stopped": true,
+          "logs": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423"
+        },
+        "summary": {
+          "model": "optimistic-dependency-timeline",
+          "guaranteed_hardware_lower_bound": false,
+          "timing_mode": "partial_sync",
+          "cpu_time_kind": "modeled-instruction-cost",
+          "virtual_ns": 12889936555.172068,
+          "cpu_work_ns": 8095968990.203369,
+          "nodes": 201956,
+          "collective_groups": 0,
+          "p2p_transfers": 0,
+          "prediction_hits": 86302,
+          "prediction_misses": 10,
+          "prediction_errors": 0,
+          "prediction_disabled": 0,
+          "gpu_utilization": {
+            "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/host-0/d0/timeline/rank-unknown-pid-439.jsonl:gpu:0": {
+              "busy_ns": 7263096072.94565,
+              "idle_ns": 5626840482.226418,
+              "busy_fraction": 0.5634702732521475
+            }
+          },
+          "iterations": [
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/host-0/d0/timeline/rank-unknown-pid-439.jsonl",
+              "iteration": 1,
+              "start_ns": 20847.084228515625,
+              "end_ns": 6445889933.206085,
+              "virtual_ns": 6445869086.121857
+            },
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/host-0/d0/timeline/rank-unknown-pid-439.jsonl",
+              "iteration": 2,
+              "start_ns": 6445899370.681183,
+              "end_ns": 12889936555.172068,
+              "virtual_ns": 6444037184.490885
+            }
+          ],
+          "shared_resource_groups": [],
+          "copies": {
+            "nodes": 9432,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 4449954702.154243,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              4544,
+              2590,
+              2298
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              28913324492,
+              28936086636,
+              15744288536
+            ]
+          },
+          "gpu_memory_totals": {
+            "hbm_bytes": 89337988200,
+            "tx_bytes": 0,
+            "rx_bytes": 0
+          },
+          "compute_prediction_coverage": 0.9998841412549819,
+          "gpu_utilization_warning": "Modeled durations only: misses and unmodeled copies/callbacks are zero-cost; Traffic is shared within matched communication launch groups; contention between independent groups is omitted. Not hardware utilization.",
+          "cpu_attribution": {
+            "cpu_ns": 8095968990.203369,
+            "gpu_dependency_wait_ns": 4793967564.9686985,
+            "segments": 100980,
+            "sampled_segments": 0,
+            "sampled_cpu_ns": 0.0,
+            "unattributed_cpu_ns": 8095968990.203369,
+            "samples_used": 0,
+            "segments_with_fewer_than_five_samples": 0,
+            "resolved_samples": 0,
+            "unresolved_symbol_samples": 0,
+            "warning": "Sample-based attribution normalized to unchanged segment costs; short segments may be unsampled. Wait is modeled GPU-dependency wait, not host blocking time. Sums across threads are not makespan."
+          }
+        },
+        "iterations": [
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/host-0/d0/timeline/rank-unknown-pid-439.jsonl",
+            "iteration": 1,
+            "start_ns": 20847.084228515625,
+            "end_ns": 6445889933.206085,
+            "virtual_ns": 6445869086.121857,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.6315480364708166,
+            "outside_gpu_spans_seconds": 2.8143210496510402,
+            "cpu_seconds": 4.049369965516525,
+            "virtual_seconds": 6.445869086121856
+          },
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/host-0/d0/timeline/rank-unknown-pid-439.jsonl",
+            "iteration": 2,
+            "start_ns": 6445899370.681183,
+            "end_ns": 12889936555.172068,
+            "virtual_ns": 6444037184.490885,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.631548036470032,
+            "outside_gpu_spans_seconds": 2.812489148020853,
+            "cpu_seconds": 4.046568740127205,
+            "virtual_seconds": 6.444037184490885
+          }
+        ],
+        "misses": [
+          {
+            "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+            "grid": [
+              1869926656,
+              1,
+              1
+            ],
+            "block": [
+              96,
+              1,
+              1
+            ],
+            "count": 10
+          }
+        ],
+        "gpu_db_sha256": "1912e6005819fe8eb0804c04b37979f35354368853b226f7306dfbe2250c9e5e",
+        "cpu_db_sha256": "26ad003da7edf144601012b883c755511370b34df3ebfafc8bc7badbb586aaa6",
+        "model": {
+          "config": {
+            "wrapper": "/workspace/.gx-cache/70bf13ba72367524150bf55c7907df41dd6374f17d3de6ac4505c6165c1a3661/data",
+            "comfy": "/workspace/.gx-cache/24e6aee4d60d594002bba95b23fca95a3b26f8cc5f2564fff31e2e65c1c957db/data",
+            "model": "/workspace/wan-gx/checkpoint",
+            "output": "/workspace/runs/1789811403898407423/model",
+            "role": "partial_sync",
+            "frames": 17,
+            "height": 256,
+            "width": 448,
+            "steps": 8,
+            "warmup": 1,
+            "repetitions": 2,
+            "imports_only": false
+          },
+          "phase": "completed",
+          "torch": "2.11.0+cu128",
+          "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+          "control_checks": [
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            }
+          ],
+          "node_inference_mode": true,
+          "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+          "load_seconds": 10.42100962495897,
+          "initialized_parameter_counts": {
+            "dit": 1277531200,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "parameter_counts": {
+            "dit": 1418996800,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "iterations": [
+            {
+              "iteration": 1,
+              "application_clock_seconds": 23.813450293964706,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            },
+            {
+              "iteration": 2,
+              "application_clock_seconds": 21.76980452693533,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            }
+          ],
+          "cpu_cast_cache_bytes": 0,
+          "peak_host_rss_bytes": 29020291072,
+          "peak_gpu_bytes": 11636556288,
+          "peak_reserved_gpu_bytes": 11735662592,
+          "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests."
+        },
+        "mean_seconds": 6.4449531353063705
+      },
+      "after": {
+        "run": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238",
+        "result": {
+          "passed": true,
+          "failure": null,
+          "cleanup_errors": [],
+          "applications": {
+            "gx-ww-inference-after-18d6b0257a2020a6-0": {
+              "container": "gx-ww-inference-after-18d6b0257a2020a6-0",
+              "returncode": 0,
+              "host_seconds": 92.477772119
+            }
+          },
+          "containers_retained_stopped": true,
+          "logs": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238"
+        },
+        "summary": {
+          "model": "optimistic-dependency-timeline",
+          "guaranteed_hardware_lower_bound": false,
+          "timing_mode": "partial_sync",
+          "cpu_time_kind": "modeled-instruction-cost",
+          "virtual_ns": 11581843761.471384,
+          "cpu_work_ns": 6787340288.9157715,
+          "nodes": 201956,
+          "collective_groups": 0,
+          "p2p_transfers": 0,
+          "prediction_hits": 86302,
+          "prediction_misses": 10,
+          "prediction_errors": 0,
+          "prediction_disabled": 0,
+          "gpu_utilization": {
+            "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/host-0/d0/timeline/rank-unknown-pid-354.jsonl:gpu:0": {
+              "busy_ns": 7263096072.945746,
+              "idle_ns": 4318747688.525638,
+              "busy_fraction": 0.6271105207883607
+            }
+          },
+          "iterations": [
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/host-0/d0/timeline/rank-unknown-pid-354.jsonl",
+              "iteration": 1,
+              "start_ns": 20852.59033203125,
+              "end_ns": 5793231576.057159,
+              "virtual_ns": 5793210723.466827
+            },
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/host-0/d0/timeline/rank-unknown-pid-354.jsonl",
+              "iteration": 2,
+              "start_ns": 5793241030.105988,
+              "end_ns": 11581843761.471384,
+              "virtual_ns": 5788602731.3653965
+            }
+          ],
+          "shared_resource_groups": [],
+          "copies": {
+            "nodes": 9432,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 4449954702.154243,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              4544,
+              2590,
+              2298
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              28913324492,
+              28936086636,
+              15744288536
+            ]
+          },
+          "gpu_memory_totals": {
+            "hbm_bytes": 89337988200,
+            "tx_bytes": 0,
+            "rx_bytes": 0
+          },
+          "compute_prediction_coverage": 0.9998841412549819,
+          "gpu_utilization_warning": "Modeled durations only: misses and unmodeled copies/callbacks are zero-cost; Traffic is shared within matched communication launch groups; contention between independent groups is omitted. Not hardware utilization.",
+          "cpu_attribution": {
+            "cpu_ns": 6787340288.9157715,
+            "gpu_dependency_wait_ns": 4794503472.555613,
+            "segments": 100980,
+            "sampled_segments": 0,
+            "sampled_cpu_ns": 0.0,
+            "unattributed_cpu_ns": 6787340288.9157715,
+            "samples_used": 0,
+            "segments_with_fewer_than_five_samples": 0,
+            "resolved_samples": 0,
+            "unresolved_symbol_samples": 0,
+            "warning": "Sample-based attribution normalized to unchanged segment costs; short segments may be unsampled. Wait is modeled GPU-dependency wait, not host blocking time. Sums across threads are not makespan."
+          }
+        },
+        "iterations": [
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/host-0/d0/timeline/rank-unknown-pid-354.jsonl",
+            "iteration": 1,
+            "start_ns": 20852.59033203125,
+            "end_ns": 5793231576.057159,
+            "virtual_ns": 5793210723.466827,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.631548036471707,
+            "outside_gpu_spans_seconds": 2.1616626869951205,
+            "cpu_seconds": 3.396396805217191,
+            "virtual_seconds": 5.793210723466827
+          },
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/host-0/d0/timeline/rank-unknown-pid-354.jsonl",
+            "iteration": 2,
+            "start_ns": 5793241030.105988,
+            "end_ns": 11581843761.471384,
+            "virtual_ns": 5788602731.3653965,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.6315480364702655,
+            "outside_gpu_spans_seconds": 2.1570546948951312,
+            "cpu_seconds": 3.390913177059572,
+            "virtual_seconds": 5.788602731365397
+          }
+        ],
+        "misses": [
+          {
+            "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+            "grid": [
+              595102912,
+              1,
+              1
+            ],
+            "block": [
+              928,
+              1,
+              1
+            ],
+            "count": 10
+          }
+        ],
+        "gpu_db_sha256": "1912e6005819fe8eb0804c04b37979f35354368853b226f7306dfbe2250c9e5e",
+        "cpu_db_sha256": "26ad003da7edf144601012b883c755511370b34df3ebfafc8bc7badbb586aaa6",
+        "model": {
+          "config": {
+            "wrapper": "/workspace/.gx-cache/70bf13ba72367524150bf55c7907df41dd6374f17d3de6ac4505c6165c1a3661/data",
+            "comfy": "/workspace/.gx-cache/24e6aee4d60d594002bba95b23fca95a3b26f8cc5f2564fff31e2e65c1c957db/data",
+            "model": "/workspace/wan-gx/checkpoint",
+            "output": "/workspace/runs/1789811576935555238/model",
+            "role": "partial_sync",
+            "frames": 17,
+            "height": 256,
+            "width": 448,
+            "steps": 8,
+            "warmup": 1,
+            "repetitions": 2,
+            "imports_only": false
+          },
+          "phase": "completed",
+          "torch": "2.11.0+cu128",
+          "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+          "control_checks": [
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            }
+          ],
+          "node_inference_mode": true,
+          "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+          "load_seconds": 10.304740826017223,
+          "initialized_parameter_counts": {
+            "dit": 1277531200,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "parameter_counts": {
+            "dit": 1418996800,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "iterations": [
+            {
+              "iteration": 1,
+              "application_clock_seconds": 21.302623955067247,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            },
+            {
+              "iteration": 2,
+              "application_clock_seconds": 18.90308935008943,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            }
+          ],
+          "cpu_cast_cache_bytes": 2836681856,
+          "peak_host_rss_bytes": 34900959232,
+          "peak_gpu_bytes": 11636556288,
+          "peak_reserved_gpu_bytes": 11735662592,
+          "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests."
+        },
+        "mean_seconds": 5.790906727416112
+      },
+      "reduction_percent": 10.148194938878596,
+      "full_compute_inventories_match": false,
+      "predicted_compute_inventories_match": true
+    },
+    "mode3": {
+      "before": {
+        "run": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674",
+        "result": {
+          "passed": true,
+          "failure": null,
+          "cleanup_errors": [],
+          "applications": {
+            "gx-ww-infer-sync-before-18d6b04ed5408052-0": {
+              "container": "gx-ww-infer-sync-before-18d6b04ed5408052-0",
+              "returncode": 0,
+              "host_seconds": 130.14408965
+            }
+          },
+          "containers_retained_stopped": true,
+          "logs": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674"
+        },
+        "summary": {
+          "model": "observed-epoch-timeline",
+          "guaranteed_hardware_lower_bound": false,
+          "timing_mode": "sync",
+          "cpu_time_kind": "elapsed-epoch-time-including-cpu-blocking",
+          "virtual_ns": 14020680000.0,
+          "cpu_work_ns": 9246520000.0,
+          "nodes": 201956,
+          "collective_groups": 0,
+          "p2p_transfers": 0,
+          "prediction_hits": 86302,
+          "prediction_misses": 10,
+          "prediction_errors": 0,
+          "prediction_disabled": 0,
+          "gpu_utilization": {
+            "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674/host-0/d0/timeline/rank-unknown-pid-364.jsonl:gpu:0": {
+              "busy_ns": 7812940000.0,
+              "idle_ns": 6207740000.0,
+              "busy_fraction": 0.55724401384241
+            }
+          },
+          "iterations": [
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+              "iteration": 1,
+              "start_ns": 40000.0,
+              "end_ns": 7007510000.0,
+              "virtual_ns": 7007470000.0
+            },
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+              "iteration": 2,
+              "start_ns": 7007530000.0,
+              "end_ns": 14020680000.0,
+              "virtual_ns": 7013150000.0
+            }
+          ],
+          "shared_resource_groups": [],
+          "copies": {
+            "nodes": 9432,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 4449954702.154243,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              4544,
+              2590,
+              2298
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              28913324492,
+              28936086636,
+              15744288536
+            ]
+          },
+          "gpu_memory_totals": {
+            "hbm_bytes": 89337988200,
+            "tx_bytes": 0,
+            "rx_bytes": 0
+          },
+          "compute_prediction_coverage": 0.9998841412549819,
+          "gpu_utilization_warning": "Observed epoch spans, including stream-worker overhead and waits; epoch-resolution simulation, not hardware utilization.",
+          "cpu_attribution": {
+            "cpu_ns": 9246520000.0,
+            "gpu_dependency_wait_ns": 4774140000.0,
+            "segments": 99600,
+            "sampled_segments": 0,
+            "sampled_cpu_ns": 0.0,
+            "unattributed_cpu_ns": 9246520000.0,
+            "samples_used": 0,
+            "segments_with_fewer_than_five_samples": 0,
+            "resolved_samples": 0,
+            "unresolved_symbol_samples": 0,
+            "observed_epoch_time": true,
+            "warning": "Observed epoch elapsed time, not instruction-cost attribution. CPU intervals include CPU-side blocking; explicit CUDA waits are separate. Sums across threads are not makespan."
+          }
+        },
+        "iterations": [
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+            "iteration": 1,
+            "start_ns": 40000.0,
+            "end_ns": 7007510000.0,
+            "virtual_ns": 7007470000.0,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.90655,
+            "outside_gpu_spans_seconds": 3.10092,
+            "cpu_seconds": 4.62716,
+            "virtual_seconds": 7.00747
+          },
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-before-1789811754558062674/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+            "iteration": 2,
+            "start_ns": 7007530000.0,
+            "end_ns": 14020680000.0,
+            "virtual_ns": 7013150000.0,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.90639,
+            "outside_gpu_spans_seconds": 3.10676,
+            "cpu_seconds": 4.61932,
+            "virtual_seconds": 7.01315
+          }
+        ],
+        "misses": [
+          {
+            "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+            "grid": [
+              2020648896,
+              1,
+              1
+            ],
+            "block": [
+              800,
+              1,
+              1
+            ],
+            "count": 10
+          }
+        ],
+        "gpu_db_sha256": "1912e6005819fe8eb0804c04b37979f35354368853b226f7306dfbe2250c9e5e",
+        "cpu_db_sha256": "26ad003da7edf144601012b883c755511370b34df3ebfafc8bc7badbb586aaa6",
+        "model": {
+          "config": {
+            "wrapper": "/workspace/.gx-cache/70bf13ba72367524150bf55c7907df41dd6374f17d3de6ac4505c6165c1a3661/data",
+            "comfy": "/workspace/.gx-cache/24e6aee4d60d594002bba95b23fca95a3b26f8cc5f2564fff31e2e65c1c957db/data",
+            "model": "/workspace/wan-gx/checkpoint",
+            "output": "/workspace/runs/1789811754558062674/model",
+            "role": "partial_sync",
+            "frames": 17,
+            "height": 256,
+            "width": 448,
+            "steps": 8,
+            "warmup": 1,
+            "repetitions": 2,
+            "imports_only": false
+          },
+          "phase": "completed",
+          "torch": "2.11.0+cu128",
+          "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+          "control_checks": [
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            }
+          ],
+          "node_inference_mode": true,
+          "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+          "load_seconds": 10.3441761250142,
+          "initialized_parameter_counts": {
+            "dit": 1277531200,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "parameter_counts": {
+            "dit": 1418996800,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "iterations": [
+            {
+              "iteration": 1,
+              "application_clock_seconds": 7.0074599999934435,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            },
+            {
+              "iteration": 2,
+              "application_clock_seconds": 7.013140000053681,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            }
+          ],
+          "cpu_cast_cache_bytes": 0,
+          "peak_host_rss_bytes": 28563550208,
+          "peak_gpu_bytes": 11636556288,
+          "peak_reserved_gpu_bytes": 11735662592,
+          "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests."
+        },
+        "mean_seconds": 7.0103100000000005
+      },
+      "after": {
+        "run": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378",
+        "result": {
+          "passed": true,
+          "failure": null,
+          "cleanup_errors": [],
+          "applications": {
+            "gx-ww-infer-sync-after-18d6b07e0762f49a-0": {
+              "container": "gx-ww-infer-sync-after-18d6b07e0762f49a-0",
+              "returncode": 0,
+              "host_seconds": 119.052668928
+            }
+          },
+          "containers_retained_stopped": true,
+          "logs": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378"
+        },
+        "summary": {
+          "model": "observed-epoch-timeline",
+          "guaranteed_hardware_lower_bound": false,
+          "timing_mode": "sync",
+          "cpu_time_kind": "elapsed-epoch-time-including-cpu-blocking",
+          "virtual_ns": 12697440000.0,
+          "cpu_work_ns": 7909140000.0,
+          "nodes": 201956,
+          "collective_groups": 0,
+          "p2p_transfers": 0,
+          "prediction_hits": 86272,
+          "prediction_misses": 40,
+          "prediction_errors": 0,
+          "prediction_disabled": 0,
+          "gpu_utilization": {
+            "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378/host-0/d0/timeline/rank-unknown-pid-364.jsonl:gpu:0": {
+              "busy_ns": 7804580000.0,
+              "idle_ns": 4892860000.0,
+              "busy_fraction": 0.6146577577842463
+            }
+          },
+          "iterations": [
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+              "iteration": 1,
+              "start_ns": 40000.0,
+              "end_ns": 6345130000.0,
+              "virtual_ns": 6345090000.0
+            },
+            {
+              "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+              "iteration": 2,
+              "start_ns": 6345140000.0,
+              "end_ns": 12697440000.0,
+              "virtual_ns": 6352300000.0
+            }
+          ],
+          "shared_resource_groups": [],
+          "copies": {
+            "nodes": 9432,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 4449954702.154243,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              4544,
+              2590,
+              2298
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              28913324492,
+              28936086636,
+              15744288536
+            ]
+          },
+          "gpu_memory_totals": {
+            "hbm_bytes": 89337988200,
+            "tx_bytes": 0,
+            "rx_bytes": 0
+          },
+          "compute_prediction_coverage": 0.9995365650199277,
+          "gpu_utilization_warning": "Observed epoch spans, including stream-worker overhead and waits; epoch-resolution simulation, not hardware utilization.",
+          "cpu_attribution": {
+            "cpu_ns": 7909140000.0,
+            "gpu_dependency_wait_ns": 4788280000.0,
+            "segments": 99574,
+            "sampled_segments": 0,
+            "sampled_cpu_ns": 0.0,
+            "unattributed_cpu_ns": 7909140000.0,
+            "samples_used": 0,
+            "segments_with_fewer_than_five_samples": 0,
+            "resolved_samples": 0,
+            "unresolved_symbol_samples": 0,
+            "observed_epoch_time": true,
+            "warning": "Observed epoch elapsed time, not instruction-cost attribution. CPU intervals include CPU-side blocking; explicit CUDA waits are separate. Sums across threads are not makespan."
+          }
+        },
+        "iterations": [
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+            "iteration": 1,
+            "start_ns": 40000.0,
+            "end_ns": 6345130000.0,
+            "virtual_ns": 6345090000.0,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.90207,
+            "outside_gpu_spans_seconds": 2.44302,
+            "cpu_seconds": 3.95508,
+            "virtual_seconds": 6.34509
+          },
+          {
+            "record": "/home/ubuntu/GX/NEX/build/experiments/ww-infer-sync-after-1789811957262644378/host-0/d0/timeline/rank-unknown-pid-364.jsonl",
+            "iteration": 2,
+            "start_ns": 6345140000.0,
+            "end_ns": 12697440000.0,
+            "virtual_ns": 6352300000.0,
+            "copy_bytes": {
+              "1": 14456662246,
+              "2": 14468043318,
+              "3": 7872144268
+            },
+            "copy_counts": {
+              "1": 2272,
+              "2": 1295,
+              "3": 1149
+            },
+            "gpu_span_seconds": 3.90251,
+            "outside_gpu_spans_seconds": 2.44979,
+            "cpu_seconds": 3.95403,
+            "virtual_seconds": 6.3523
+          }
+        ],
+        "misses": [
+          {
+            "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+            "grid": [
+              1,
+              3,
+              3
+            ],
+            "block": [
+              256,
+              1,
+              1
+            ],
+            "count": 10
+          },
+          {
+            "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+            "grid": [
+              10885,
+              3,
+              1
+            ],
+            "block": [
+              256,
+              1,
+              1
+            ],
+            "count": 2
+          },
+          {
+            "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+            "grid": [
+              21769,
+              3,
+              1
+            ],
+            "block": [
+              256,
+              1,
+              1
+            ],
+            "count": 8
+          },
+          {
+            "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+            "grid": [
+              3584,
+              1,
+              1
+            ],
+            "block": [
+              256,
+              1,
+              1
+            ],
+            "count": 2
+          },
+          {
+            "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+            "grid": [
+              14336,
+              1,
+              1
+            ],
+            "block": [
+              256,
+              1,
+              1
+            ],
+            "count": 8
+          },
+          {
+            "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+            "grid": [
+              1,
+              896,
+              1
+            ],
+            "block": [
+              128,
+              1,
+              1
+            ],
+            "count": 2
+          },
+          {
+            "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+            "grid": [
+              1,
+              3584,
+              1
+            ],
+            "block": [
+              128,
+              1,
+              1
+            ],
+            "count": 8
+          }
+        ],
+        "gpu_db_sha256": "1912e6005819fe8eb0804c04b37979f35354368853b226f7306dfbe2250c9e5e",
+        "cpu_db_sha256": "26ad003da7edf144601012b883c755511370b34df3ebfafc8bc7badbb586aaa6",
+        "model": {
+          "config": {
+            "wrapper": "/workspace/.gx-cache/70bf13ba72367524150bf55c7907df41dd6374f17d3de6ac4505c6165c1a3661/data",
+            "comfy": "/workspace/.gx-cache/24e6aee4d60d594002bba95b23fca95a3b26f8cc5f2564fff31e2e65c1c957db/data",
+            "model": "/workspace/wan-gx/checkpoint",
+            "output": "/workspace/runs/1789811957262644378/model",
+            "role": "partial_sync",
+            "frames": 17,
+            "height": 256,
+            "width": 448,
+            "steps": 8,
+            "warmup": 1,
+            "repetitions": 2,
+            "imports_only": false
+          },
+          "phase": "completed",
+          "torch": "2.11.0+cu128",
+          "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+          "control_checks": [
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                11
+              ],
+              "observed": null
+            },
+            {
+              "kind": "text_lengths",
+              "expected": [
+                1
+              ],
+              "observed": null
+            }
+          ],
+          "node_inference_mode": true,
+          "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+          "load_seconds": 10.311274870997295,
+          "initialized_parameter_counts": {
+            "dit": 1277531200,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "parameter_counts": {
+            "dit": 1418996800,
+            "vae": 126892531,
+            "t5": 5680910336
+          },
+          "iterations": [
+            {
+              "iteration": 1,
+              "application_clock_seconds": 6.345079999999143,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            },
+            {
+              "iteration": 2,
+              "application_clock_seconds": 6.352279999991879,
+              "shape": [
+                17,
+                256,
+                448,
+                3
+              ]
+            }
+          ],
+          "cpu_cast_cache_bytes": 2836681856,
+          "peak_host_rss_bytes": 31656714240,
+          "peak_gpu_bytes": 11636556288,
+          "peak_reserved_gpu_bytes": 11735662592,
+          "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests."
+        },
+        "mean_seconds": 6.348694999999999
+      },
+      "reduction_percent": 9.437742410820649,
+      "full_compute_inventories_match": false,
+      "predicted_compute_inventories_match": false
+    }
+  },
+  "native_A100": {
+    "status": "complete",
+    "process_order": [
+      "before",
+      "after",
+      "after",
+      "before"
+    ],
+    "warmup_per_process": 2,
+    "repetitions_per_process": 5,
+    "reports": [
+      {
+        "config": {
+          "wrapper": "/workspace/causal/wanwrapper/source-cast",
+          "comfy": "/workspace/causal/wanwrapper/comfy",
+          "model": "/workspace/checkpoint",
+          "output": "/workspace/causal/runs/wanwrapper-cast-1-before",
+          "role": "native",
+          "frames": 17,
+          "height": 256,
+          "width": 448,
+          "steps": 8,
+          "warmup": 2,
+          "repetitions": 5,
+          "imports_only": false
+        },
+        "phase": "completed",
+        "torch": "2.11.0+cu128",
+        "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+        "control_checks": [
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          }
+        ],
+        "node_inference_mode": true,
+        "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+        "load_seconds": 7.220049952156842,
+        "initialized_parameter_counts": {
+          "dit": 1277531200,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "parameter_counts": {
+          "dit": 1418996800,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "iterations": [
+          {
+            "iteration": 1,
+            "application_clock_seconds": 9.860923274420202,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 2,
+            "application_clock_seconds": 9.780619378201663,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 3,
+            "application_clock_seconds": 9.658267983235419,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 4,
+            "application_clock_seconds": 9.806108839809895,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 5,
+            "application_clock_seconds": 10.12928300909698,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        ],
+        "cpu_cast_cache_bytes": 0,
+        "peak_host_rss_bytes": 35956203520,
+        "peak_gpu_bytes": 11636556288,
+        "peak_reserved_gpu_bytes": 11735662592,
+        "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests.",
+        "variant": "before"
+      },
+      {
+        "config": {
+          "wrapper": "/workspace/causal/wanwrapper/source-cast",
+          "comfy": "/workspace/causal/wanwrapper/comfy",
+          "model": "/workspace/checkpoint",
+          "output": "/workspace/causal/runs/wanwrapper-cast-2-after",
+          "role": "native",
+          "frames": 17,
+          "height": 256,
+          "width": 448,
+          "steps": 8,
+          "warmup": 2,
+          "repetitions": 5,
+          "imports_only": false
+        },
+        "phase": "completed",
+        "torch": "2.11.0+cu128",
+        "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+        "control_checks": [
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          }
+        ],
+        "node_inference_mode": true,
+        "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+        "load_seconds": 6.73463637009263,
+        "initialized_parameter_counts": {
+          "dit": 1277531200,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "parameter_counts": {
+          "dit": 1418996800,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "iterations": [
+          {
+            "iteration": 1,
+            "application_clock_seconds": 9.364493858069181,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 2,
+            "application_clock_seconds": 9.234272501431406,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 3,
+            "application_clock_seconds": 9.69865895435214,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 4,
+            "application_clock_seconds": 9.368204054422677,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 5,
+            "application_clock_seconds": 9.577643346972764,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        ],
+        "cpu_cast_cache_bytes": 2836681856,
+        "peak_host_rss_bytes": 38352969728,
+        "peak_gpu_bytes": 11636556288,
+        "peak_reserved_gpu_bytes": 11735662592,
+        "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests.",
+        "variant": "after"
+      },
+      {
+        "config": {
+          "wrapper": "/workspace/causal/wanwrapper/source-cast",
+          "comfy": "/workspace/causal/wanwrapper/comfy",
+          "model": "/workspace/checkpoint",
+          "output": "/workspace/causal/runs/wanwrapper-cast-3-after",
+          "role": "native",
+          "frames": 17,
+          "height": 256,
+          "width": 448,
+          "steps": 8,
+          "warmup": 2,
+          "repetitions": 5,
+          "imports_only": false
+        },
+        "phase": "completed",
+        "torch": "2.11.0+cu128",
+        "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+        "control_checks": [
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          }
+        ],
+        "node_inference_mode": true,
+        "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+        "load_seconds": 6.926289906725287,
+        "initialized_parameter_counts": {
+          "dit": 1277531200,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "parameter_counts": {
+          "dit": 1418996800,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "iterations": [
+          {
+            "iteration": 1,
+            "application_clock_seconds": 10.004720466211438,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 2,
+            "application_clock_seconds": 9.59805167466402,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 3,
+            "application_clock_seconds": 10.303229233250022,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 4,
+            "application_clock_seconds": 10.003039475530386,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 5,
+            "application_clock_seconds": 10.186753842048347,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        ],
+        "cpu_cast_cache_bytes": 2836681856,
+        "peak_host_rss_bytes": 38295834624,
+        "peak_gpu_bytes": 11636556288,
+        "peak_reserved_gpu_bytes": 11735662592,
+        "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests.",
+        "variant": "after"
+      },
+      {
+        "config": {
+          "wrapper": "/workspace/causal/wanwrapper/source-cast",
+          "comfy": "/workspace/causal/wanwrapper/comfy",
+          "model": "/workspace/checkpoint",
+          "output": "/workspace/causal/runs/wanwrapper-cast-4-before",
+          "role": "native",
+          "frames": 17,
+          "height": 256,
+          "width": 448,
+          "steps": 8,
+          "warmup": 2,
+          "repetitions": 5,
+          "imports_only": false
+        },
+        "phase": "completed",
+        "torch": "2.11.0+cu128",
+        "runner_sha256": "a9780ad886fd403da294c9057e2c127e3553422de2dd23a38326d432d27f0b94",
+        "control_checks": [
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              11
+            ],
+            "observed": [
+              11
+            ]
+          },
+          {
+            "kind": "text_lengths",
+            "expected": [
+              1
+            ],
+            "observed": [
+              1
+            ]
+          }
+        ],
+        "node_inference_mode": true,
+        "scope": "Public model-loading, text-encoding, sampling and decoding nodes; excludes UI server, graph queue, previews and video encoding. Any UI-server use fails explicitly.",
+        "load_seconds": 6.923361232504249,
+        "initialized_parameter_counts": {
+          "dit": 1277531200,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "parameter_counts": {
+          "dit": 1418996800,
+          "vae": 126892531,
+          "t5": 5680910336
+        },
+        "iterations": [
+          {
+            "iteration": 1,
+            "application_clock_seconds": 10.3341876398772,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 2,
+            "application_clock_seconds": 10.145251529291272,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 3,
+            "application_clock_seconds": 10.266045219264925,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 4,
+            "application_clock_seconds": 10.031190334819257,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          {
+            "iteration": 5,
+            "application_clock_seconds": 10.029688843525946,
+            "shape": [
+              17,
+              256,
+              448,
+              3
+            ],
+            "finite": true,
+            "output_sha256": "6ee229f392789bc4a0063f4a530db751fa3797c96bcb92cff2ee77bf55094211",
+            "minimum": 0.0,
+            "maximum": 1.0
+          }
+        ],
+        "cpu_cast_cache_bytes": 0,
+        "peak_host_rss_bytes": 36033495040,
+        "peak_gpu_bytes": 11636556288,
+        "peak_reserved_gpu_bytes": 11735662592,
+        "peak_scope": "Maximum across framework-internal peak resets; includes loading, warmup and measured requests.",
+        "variant": "before"
+      }
+    ],
+    "hardware": {
+      "gpu_inventory_csv": "index, name, uuid, driver_version, memory.total [MiB]\n0, NVIDIA A100-PCIE-40GB, GPU-4d207671-13cc-7f4b-23a7-ed8b04e32699, 580.105.08, 40960 MiB\n1, NVIDIA A100-PCIE-40GB, GPU-521def15-8599-2c15-65ee-6dac40f31a64, 580.105.08, 40960 MiB\n",
+      "active_compute_processes_before_start_csv": "GPU-4d207671-13cc-7f4b-23a7-ed8b04e32699, 505700\n",
+      "container_device_requests": [
+        {
+          "Driver": "",
+          "Count": 0,
+          "DeviceIDs": [
+            "1"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": {}
+        }
+      ],
+      "note": "Validation uses physical GPU1; GPU0 may have unrelated work sharing host resources."
+    },
+    "all_20_output_hashes_identical": true,
+    "before": {
+      "seconds": [
+        9.860923274420202,
+        9.780619378201663,
+        9.658267983235419,
+        9.806108839809895,
+        10.12928300909698,
+        10.3341876398772,
+        10.145251529291272,
+        10.266045219264925,
+        10.031190334819257,
+        10.029688843525946
+      ],
+      "mean_seconds": 10.004156605154275,
+      "median_seconds": 10.030439589172602,
+      "peak_host_rss_bytes": [
+        35956203520,
+        36033495040
+      ],
+      "peak_gpu_bytes": [
+        11636556288,
+        11636556288
+      ],
+      "cpu_cast_cache_bytes": [
+        0,
+        0
+      ]
+    },
+    "after": {
+      "seconds": [
+        9.364493858069181,
+        9.234272501431406,
+        9.69865895435214,
+        9.368204054422677,
+        9.577643346972764,
+        10.004720466211438,
+        9.59805167466402,
+        10.303229233250022,
+        10.003039475530386,
+        10.186753842048347
+      ],
+      "mean_seconds": 9.733906740695238,
+      "median_seconds": 9.64835531450808,
+      "peak_host_rss_bytes": [
+        38352969728,
+        38295834624
+      ],
+      "peak_gpu_bytes": [
+        11636556288,
+        11636556288
+      ],
+      "cpu_cast_cache_bytes": [
+        2836681856,
+        2836681856
+      ]
+    },
+    "mean_reduction_percent": 2.7013757893374124,
+    "median_reduction_percent": 3.8092475535864256
+  },
+  "traces": {
+    "before": {
+      "file": "wanwrapper-mode2-before.chrome.json.gz",
+      "full_trace": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-before-1789811403898407423/timeline-report/trace.json.gz",
+      "view": "modeled activity overview",
+      "bin_ms": 10,
+      "percent_rounding": 2,
+      "source_sha256": "3f78317fdb7fcd0bfb29123b45b7484d65c72871b3c6601d11237a1d75a13e0b",
+      "source_compressed_bytes": 11353657,
+      "source_events_by_phase": {
+        "M": 3,
+        "X": 204436,
+        "s": 100975,
+        "f": 100975
+      },
+      "source_spans_by_category": {
+        "cpu": 100980,
+        "sync": 5232,
+        "MEMCPY": 9432,
+        "cpu_wait": 2480,
+        "COMPUTE": 75848,
+        "CUBLAS": 10464
+      },
+      "source_max_end_us": 12889936.555172067,
+      "overview_events": 3010,
+      "union_active_us_by_rank_category": {
+        "0:CPU execution": 8095968.99018726,
+        "0:CPU waiting for GPU": 4793967.564968318,
+        "0:D2D copy": 20249.88879153272,
+        "0:D2H copy": 2225852.8181539765,
+        "0:GPU CUBLAS": 949939.8399992094,
+        "0:GPU kernels": 1842951.6419976857,
+        "0:H2D copy": 2224101.884000184
+      },
+      "interpretation": "Each counter is interval-union occupancy per time bin, across a rank's streams within one category. Categories overlap and must not be summed as GPU utilization. No individual kernels or arrows. Counters are rounded to 0.01 percentage points; sub-bin gaps are averaged. Full dependency records remain in the capture archives.",
+      "output_compressed_bytes": 18532,
+      "output_json_bytes": 303119,
+      "output_sha256": "e1d5df16e898abd660f8d4bede5991d5283ac4a70f09889010c3482789085c2d"
+    },
+    "after": {
+      "file": "wanwrapper-mode2-after.chrome.json.gz",
+      "full_trace": "/home/ubuntu/GX/NEX/build/experiments/ww-inference-after-1789811576935555238/timeline-report/trace.json.gz",
+      "view": "modeled activity overview",
+      "bin_ms": 10,
+      "percent_rounding": 2,
+      "source_sha256": "e18ce0a88b1dc44a2fb722088dbf3018774cd8385fb0cd7be9a750560af451e6",
+      "source_compressed_bytes": 11390684,
+      "source_events_by_phase": {
+        "M": 3,
+        "X": 204436,
+        "s": 100975,
+        "f": 100975
+      },
+      "source_spans_by_category": {
+        "cpu": 100980,
+        "sync": 5232,
+        "MEMCPY": 9432,
+        "cpu_wait": 2480,
+        "COMPUTE": 75848,
+        "CUBLAS": 10464
+      },
+      "source_max_end_us": 11581843.761471383,
+      "overview_events": 2625,
+      "union_active_us_by_rank_category": {
+        "0:CPU execution": 6787340.288900474,
+        "0:CPU waiting for GPU": 4794503.472555369,
+        "0:D2D copy": 20249.888791358564,
+        "0:D2H copy": 2225852.818153996,
+        "0:GPU CUBLAS": 949939.8399992147,
+        "0:GPU kernels": 1842951.6419987862,
+        "0:H2D copy": 2224101.8840001095
+      },
+      "interpretation": "Each counter is interval-union occupancy per time bin, across a rank's streams within one category. Categories overlap and must not be summed as GPU utilization. No individual kernels or arrows. Counters are rounded to 0.01 percentage points; sub-bin gaps are averaged. Full dependency records remain in the capture archives.",
+      "output_compressed_bytes": 16485,
+      "output_json_bytes": 264013,
+      "output_sha256": "b69ef125cffdf0459e4cda30dd093f5ecf6a4f54c4def783e6018b48ef9fcb2d"
+    }
+  },
+  "checks": {
+    "passed": true,
+    "checks": [
+      "contiguous: values, hits, source/target version changes, identity, dtype, CPU fallback, ownership",
+      "transposed: values, hits, source/target version changes, identity, dtype, CPU fallback, ownership",
+      "autograd and requires-grad sources fall back",
+      "versionless sources fall back; versioned checkpoint sources cache and invalidate inside inference_mode"
+    ],
+    "scope": "CPU conversion cache only; CUDA scheduling and complete outputs require separate native validation."
+  },
+  "limitations": [
+    "Cache retains 2,836,681,856 bytes of extra CPU tensors. This is a host-memory-for-CPU-time tradeoff, not a free optimization.",
+    "GX host CPU is EPYC 7702P; A100 validation host CPU is EPYC 9554. Calibration is not matched to native CPU hardware.",
+    "GX CPU calibration has 9,339 resolved and 2,594 unresolved samples (21.74% unresolved).",
+    "Mode 2 predicted launch inventories match; ten unpredicted cuDNN transform launches have differing malformed dimensions. Mode 3 also selects different cuDNN plans, with 10 versus 40 misses. Missing launches receive no predicted service; coverage by launch count is not time coverage.",
+    "GX overestimates the native reduction. Native timings drift across ABBA process groups; all samples and both mean and median are retained.",
+    "Single prompt, seed, shape, unquantized checkpoint and ordinary CPU offload. Training, arbitrary streams, direct .data mutation, concurrent weight mutation, and arbitrary ComfyUI graphs are not validated.",
+    "The initial native kernel calibration used no_grad; the selected timing experiment uses inference_mode. Calibration report peak_gpu_bytes covers only the post-reset VAE phase; selected reports preserve peaks across all internal resets.",
+    "Physical GPU1 was idle before validation; unrelated GPU0 work may share host resources."
+  ],
+  "source_sha256": {
+    "ATI/motion.py": "a78c8b77ba0b671e9cca968f52a21dfa8b1e6198d0780e0482a1e2265583f1cd",
+    "ATI/motion_patch.py": "a0ec486ada970eaacaacbbac214b07151e85f1d18a0f2e2e2f51df3011a79236",
+    "ATI/nodes.py": "a65e3a54973fa6f118470ebc88ad78b2125086c49ea1fc4349a12a480ca30f7a",
+    "FlashVSR/LQ_proj_model.py": "c1795cc93f1d2406a29999f4e44c03aeb1ecfaaa0d9d92a9ea21b9888941dd20",
+    "FlashVSR/TCDecoder.py": "f55b879a721fc1cd4e102ec2591722b45a957a88e15e5ef2481a5b7775408bbb",
+    "FlashVSR/flashvsr_nodes.py": "1ab4998aa89a800545508da16256d072df747be371db65c5c32229a2cebbea43",
+    "HuMo/audio_proj.py": "4f324228a3935d74daed0192a72055300e3d39bead36f2c2f3773c0a9d2dbe1e",
+    "HuMo/nodes.py": "119936c8bfbf9c2dfb2a78bb0fb39b45a36581b563405e5a3a307967f2b5a728",
+    "LongCat/layers.py": "3e46cd8bdc8cd977f18daa223852f0e161442ef0263aca05461c6379c01f61cc",
+    "LongCat/nodes.py": "545dcce16c7c811b8011022cfab4c8db6faf9c10fcfb71ccb177570444a0c10e",
+    "LongVie2/modules.py": "030bfb0bd5cb55aa2bfc9988e4ccd7124d6d799192f380fd54c86c7ac94deca8",
+    "LongVie2/nodes.py": "6bdcd9c91a17ce2cdbc054f12f3f74ca9bab377a26df5a1cf4a57d7c9ea1c3cd",
+    "MTV/draw_pose.py": "3ba6396a418a7a36d002694e955a85fbe254d6d4e2d1215ec95f31d86a23c05c",
+    "MTV/motion4d/__init__.py": "cfe2ea86a1199103760956fb8a5a39575fcba0f0f5eee0030315667aebc1ebab",
+    "MTV/motion4d/vqvae.py": "ae4912402d7f06d4be66b7698b6cf5b36c03c5418fefd34b2324cd33dd1e15d7",
+    "MTV/mtv.py": "f9504f912018042bb7401b9e9eafc75421a08c449d73c964ec5d429722def406",
+    "MTV/nodes.py": "c6373e0055fb7f9e1bddcfe377f1f44e35b12c4586de69ba5e8fedbf1a468384",
+    "Ovi/audio_model_layers.py": "86dd6ddeac69c6d8f6d3ae6e6804309f37d730aaea85260a3d0cf2322ebae467",
+    "Ovi/bigvgan/__init__.py": "36d064aaaff4c5654b55991617ae8d0fa6d55493a95da9ba3d02fbc1827eb9b8",
+    "Ovi/bigvgan/activations.py": "3ba94028aebabfc994bcd746bf9cbe92ecace528434c922c480be6ada182cad6",
+    "Ovi/bigvgan/alias_free_torch/__init__.py": "a520b10a7e52fa817b46af9cb0b8d1cf7672d3016e3632b7296cc06c11b76da0",
+    "Ovi/bigvgan/alias_free_torch/act.py": "fb2c0ccfda50344e82227e53cab40ea6c157e9a7c33c0d8191245ba0e3807dac",
+    "Ovi/bigvgan/alias_free_torch/filter.py": "41890f2dc9ad822e679f17db34eb7beb7c0f5f2a3b01229c2d55393cd0538991",
+    "Ovi/bigvgan/alias_free_torch/resample.py": "f9d28fb23311ecfac2b9fc7f3e16be0e6b5e8cc33f60c2e40b435f1078edcfe0",
+    "Ovi/bigvgan/bigvgan.py": "1177933bb1ae6997de88a5f1fd2f1acbe7d3e06285b4718dd5ed175765467e2e",
+    "Ovi/bigvgan/models.py": "a838ab0f1eb7a99064d1c033452c2f364de328842260cd145a273ce33e9bc077",
+    "Ovi/bigvgan/utils.py": "6aa8eac8f4aef66d51e97e6be903ad72910580b61a85c7f665175d5833ce79ca",
+    "Ovi/mel_converter.py": "af0cab31256dc199a6db29703bbd00119f077779dd0a1c96388d1133374ad7db",
+    "Ovi/nodes_ovi.py": "cb0e4eca837af43bb0b86a316b857a3042393e7f41dcdc5330d4a551980bc9b5",
+    "Ovi/vae/autoencoder.py": "84202fd68fbf35efc861cc49cecfc68f664f770503023f101a75a8e64c9b9aba",
+    "Ovi/vae/distributions.py": "7dace69372f0e382c227681994c26ae7002dff05fc07901e843f0a29b6f7de23",
+    "Ovi/vae/edm2_utils.py": "838e77d4252a4771e50b204c60bf44048a5c4d37a6b694b348dc8ab6f7a5f048",
+    "Ovi/vae/vae.py": "14e8b4868871f946383315ac1f67bb3727e1564975cf9d08d48c861335fc9b69",
+    "Ovi/vae/vae_modules.py": "01db93f53c01ba98fa9da1fdb28b7f9c61cc2a2bed052aaa9da9e1d168830c26",
+    "SCAIL/nodes.py": "37a586493666f81e8fca7f017e23c15e2b96332abca3cdc9984718ec676ce430",
+    "WanMove/nodes.py": "4dbd22c897e228782ee7e8ee3d679b1e37e8930020caa53e3bae33c4495b9313",
+    "WanMove/trajectory.py": "e6ca9dad02cc442cfc1b5831ab659a30d27d0d66acd59a6ba585635aeec1c01a",
+    "__init__.py": "dec68a31c105559d8d6bfeae88fae8d49610f32bfd02fb343c94160ec7f126ee",
+    "cache_methods/cache_methods.py": "6d5321b5bd87e99accffe7e17756d078509917481cc103e2b226b2dcb85ffb91",
+    "cache_methods/nodes_cache.py": "9836b48187c60eb55fbc4f61ec1f32196caf7ea531d0f725e291a8be623376db",
+    "context_windows/context.py": "b69f17b8fbda1d6a2eca467fdd8cfbf4e6dfa00107979d17f2eedd9f3711128d",
+    "controlnet/nodes.py": "79b33facedce52dfb293cca4be0edd414457027b334c5da4c6b2756e30106438",
+    "controlnet/wan_controlnet.py": "7d6a752f0900275b6545eba01c089a95fe7a9b2002e94eb257d4f0f6b65b4cab",
+    "custom_linear.py": "6841721813b89869e7dae8488b9fee7b9dd607aa6d6614c79b19079a8bd8ec59",
+    "diffsynth/vram_management/__init__.py": "7a8d6a405c289c7546c6834cb099904f6f8010b8d4ce1a24805628f9b99abeb4",
+    "diffsynth/vram_management/layers.py": "dff4b5b08a46ca39033b40e007c5c41c4a6294b9119dcf033d0985c2f9923419",
+    "diffsynth/vram_management/utils.py": "d0596e3d6864fc3b995d860fdadf93fff0212dd588ca7f6136ee21208b16bdb9",
+    "echoshot/echoshot.py": "d316e4484022679e552da5e7a469316c03313e211af859207a19d66508723bb1",
+    "enhance_a_video/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "enhance_a_video/enhance.py": "73c361837b99d7b654c1df81e8ae8c7d5281a6902080fc003aa48cb5709ae41a",
+    "enhance_a_video/globals.py": "9f7eba1d2685cc41fedd9dd6a6af2f8a211504dd86aa2146d4ed7bd93afae21d",
+    "fantasyportrait/model.py": "a1c08b12caee3881e3e8ddfce395c54c460c1729a0abb49dab8fb3159a0cca66",
+    "fantasyportrait/nodes.py": "2d38640426e61cc90cc3d09b8dadc3cf9b784d7cfb3436aa42b8d5c5dfac9f7f",
+    "fantasyportrait/pd_fgc/camer.py": "ff099b6c0171bf575435a1dc8ce06be46ba4cc5874915f5623502b6d5f291191",
+    "fantasyportrait/pd_fgc/face_align.py": "f60942f04bc86fae6425324ea0169431bcb4faeca645cdebac897fc6b989a5ee",
+    "fantasyportrait/pd_fgc/face_det.py": "bfab6fc66f821c98c7b3dd6ccf25008a968088c996e35649793a1f029e0d0c02",
+    "fantasyportrait/pd_fgc/face_utils.py": "a1ea77bb5ef779530ba46eeba5fd7d7a313cdebeb90c918fe69dfbdedefc995c",
+    "fantasyportrait/pd_fgc/pdf.py": "5c3d0c46be0412cd57281dc9949ddf0809594bb0ac356695ccc1429528a072ec",
+    "fantasytalking/model.py": "0ba912f387f639c35d349cba7f2ecbbfd46e752e2765a4f2f0ded4e620297dbe",
+    "fantasytalking/nodes.py": "1f50583fd95363d94628f1121b0bf3c248848cbe706620046014021db8b73ec5",
+    "fp8_optimization.py": "e87e011a82ab1661a96ba1a0c1b15c8ead1537b8aa48f6c23555b91d8bd84516",
+    "freeinit/freeinit_utils.py": "2f227d146b64fa0492d8524764aa2a2753d1b11466efeb9c247511b16426c72d",
+    "fun_camera/nodes.py": "33555281a12e8f2ef152f9757420bd783432bb530b1c95717fbae50e9020f049",
+    "gguf/gguf.py": "2a4ff6cdef36b93e3f81cbfe87b56a5b4d1f6e220d770c417ab89d2f8875ce35",
+    "gguf/gguf_utils.py": "0299748fef63414ec59fe731c629ab3b5872d293135591fd59d1fc27ad69d9f0",
+    "latent_preview.py": "6bc86b92d8ec42798f8d36038b2660368260510c242d29972f2b92a40907ffb4",
+    "lynx/face/arcface.py": "c1dd379ac9cfb668b9a94465c24045f78cf4bba8b1c75be3d20bc1ba2054ef3b",
+    "lynx/face/face_encoder.py": "bbd72b84c521b7c1cc03c5eee386acf8491e652fd3b10887c2495267fc281aeb",
+    "lynx/face/face_utils.py": "06a6f2179465222305b2ce61de5b66c4ca975b0e2e8a2e0c8a6b296ed44d7ce6",
+    "lynx/modules.py": "b9ca12eb7195ca2bfd83b4655fcfbb23ce9895c977193a2f4d346882c4ea0e31",
+    "lynx/nodes.py": "97c0940a4c974abae0f9d0105772a706355631279cfc7ac8ba618549e2bf5daf",
+    "lynx/resampler.py": "ef15c3643df1de4de53b2d5adc3f6c7c010dbb79ceca013af65568c14237e42a",
+    "mocha/nodes.py": "588dc59c28ed8d550ca5b0b234d31a3e01e3ca16d19e3727e535efc10e57767e",
+    "multitalk/multitalk.py": "e78cfd70a1e0313f6946d1723d897fee643a79e63592abc46bac497d4b86269f",
+    "multitalk/multitalk_loop.py": "6627148f7bb04818ba30dc004e7c9624b20bb9d7bd022e89acd4f2b8fe494872",
+    "multitalk/nodes.py": "5626382e94e091ca324934dbd7419978449bb520ba69ab43e5de74824603db54",
+    "multitalk/wav2vec2.py": "c18d9b74fa8d1ce0b443696ceda895bed866893eba9a53ec8ad23f47c105a45a",
+    "nodes.py": "6b3bb6a619e5a928259e6e8400c73ffe7140f17439c5007dd8596b90055f0666",
+    "nodes_deprecated.py": "7438f1952e6c0ced7fd0e55a8c5f39403caab46026dad027960f251a37097be2",
+    "nodes_model_loading.py": "d0bdd3ac7b9c379ce3964e0646134e47be57648ced4137b75a3837bb8e4b88db",
+    "nodes_sampler.py": "374e552a2f96e10ddfcb37785718be0ea0dfa34a6551a5930e8963e3bc87630b",
+    "nodes_utility.py": "a92ee11c0427f45f0b6f545c7abd6356aca0304152e200f082511db3021679d9",
+    "onetoall/controlnet.py": "96ece098efdc8d053b35d802bcbe0dd7187c4d1553e217e439fb628e0bf10c32",
+    "onetoall/nodes.py": "8551ab91608b2c0fb35289647940113a9cf47281ef938caf8f8aba4a09df1bed",
+    "onetoall/refextractor_2d.py": "db90115b6ccbf6316a3225ff82e8a584bd44623b8ad7d462d32ce5844b7ed843",
+    "onetoall/unet_causal_3d_blocks.py": "fd3c35cf33417efcd2a319568eeb0f98379764930288dc2af420f356c4eaf74e",
+    "qwen/qwen.py": "cb8cb12acc7f3e242723a8e7944ce285126566e5eef6974ef59b97d8c8753cf1",
+    "qwen/system_prompt.py": "514d6c756205727bb1f935388fbcec8685cdeead2068b81f4832b5f2dfbf003f",
+    "recammaster/nodes.py": "85cb8f50cd2db143f51d677e98b343a9225d15bc9d91e08d9bf8db0bfd76e571",
+    "s2v/nodes.py": "4aef02dca605a23f3b6c5fd9c5f12ce48e6e03835672c287ff8aee3ac2497c4e",
+    "skyreels/nodes.py": "ff93033dbc681a0afc95ce47609aec2c5de4dd614f4f0b6212c19dc672ab67a3",
+    "steadydancer/mobilenetv2_dcd.py": "57fc39e121d5f68f077b9c04b186d294b8b473d3fe615b301ee7e97c6eb53378",
+    "steadydancer/nodes.py": "45bf79a8293e9bd5ff41c5cd84a694fb20ba072f6efcae4f92b5ca4708f34f95",
+    "steadydancer/small_archs.py": "3204e1eff544cf1fb8d67f8666fa49a4509b0214abb6007917f116bb85b29a55",
+    "taehv/__init__.py": "a2865fce5b3889ebb4409953d5f69e51af900afe32b7e5561971616981980bab",
+    "taehv/taehv.py": "ec63f6f1867b57175b56cd3145838b31a0d867304e897db3ad4b03cc512e15bd",
+    "ultravico/sageattn/attn_qk_int8_per_block.py": "a76d0d6fb5dc9806eb5d25f43aa616a46c03534bb0fd1d5f06a56fc1b4d3f82c",
+    "ultravico/sageattn/core.py": "ee310d54664476a61127af22acc4c2192c1677e70042ab4098f9131b81ffe2ca",
+    "ultravico/sageattn/quant_per_block.py": "1c41b57c298c4e4eceb5d388cbe20233913ea0a499d336c74e3a0b5e61b9bbf4",
+    "uni3c/camera.py": "15a544e349a523d13fff38763c359b8d647536c09c9acd99f2628de9345fee0b",
+    "uni3c/controlnet.py": "489ac15a09ef92c5f85df353df8fdad7ba34485490e62f83cd168d39857dc564",
+    "uni3c/nodes.py": "4e2fd96d93586d03ccc9e25d6a5c47d1a52ae78695f68a041f6d832c698171a7",
+    "uni3c/utils.py": "b6f78cb392d2e649dbe223ecd9c642ef76a057125d26b9eafbed32bf18181db1",
+    "unianimate/dwpose/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unianimate/dwpose/jit_det.py": "83f96c563acf40997408020f14ce49f8b4d3d30ed86a23a611bd62674f864cb3",
+    "unianimate/dwpose/jit_pose.py": "3598bd18720571871d9ebd205737e9fa3eca8e41231263ef94773418d99e8373",
+    "unianimate/dwpose/util.py": "f343f2e9e227fa0df5c920da12b9fc5312c0068533000b76562c44242cccb634",
+    "unianimate/dwpose/wholebody.py": "7c93e0f6ebad6653f1769df4c10a6da109f909e45a23fbdb09663918e9313d45",
+    "unianimate/nodes.py": "17deb95b8faa2993ccd07a121d56411feabd3e5aadb6d706c8351a4e168fa241",
+    "utils.py": "2318a2585c65ffc54021db6917dd104c3d438cf64f2be9aca11d1ded2caf6d23",
+    "wanvideo/configs/__init__.py": "7d26f97690511cb5be25506cb921641fecd509f5b296e30fc9095b4f985d3701",
+    "wanvideo/configs/shared_config.py": "a942b6f0a1d1a4ec9a7893c17a6218651ce272953b90d012ce5cdd19d15e45f7",
+    "wanvideo/configs/wan_i2v_14B.py": "9631cf7239f6a322c5a6a514efda68d35672655738049fff71bab3ef9b36e71f",
+    "wanvideo/configs/wan_t2v_14B.py": "99aadb67eec94e28c2a02db45c178c07f7488b7e1b3c148aae1e23e908fe580f",
+    "wanvideo/configs/wan_t2v_1_3B.py": "6976ec4c03f737b69ae17afe13339b32905739205d4c19f16c8b329f9f06e986",
+    "wanvideo/modules/__init__.py": "ac021890632d4c6f7378910fafe1f6a01cb2b45f2ab3fccbf4136d6abc7bd8c6",
+    "wanvideo/modules/attention.py": "076e773701a08cbd8ce77756e9d2f17a71677c2893b313d067001b40b4471816",
+    "wanvideo/modules/attention_flash.py": "58fb2e5127003cd02473c2236f6dd0c55736c52d39cd0ff696070fa7d2178c13",
+    "wanvideo/modules/clip.py": "7dd8669e1fbf79e5177da0823ceadc96ca67dff994699814e141f333d3160c08",
+    "wanvideo/modules/model.py": "30db6abe030ca370f650f802ae67433d17d45d4819f31f82f5983ec9c204c543",
+    "wanvideo/modules/s2v/audio_encoder.py": "526575dc86537d9e0cb837b5c21aa23cb37e7723ac5db5c8c1dfb2be8fe3cafe",
+    "wanvideo/modules/s2v/auxi_blocks.py": "e23da484a7f57528dc0372f652c9c81372f591b010bdb4f7a1fbd2dcadb039cd",
+    "wanvideo/modules/t5.py": "0507d69afa354cdfe9b7e465592fb30b0f1ac78b17646b5b4786b47837039b9a",
+    "wanvideo/modules/tokenizers.py": "63fce07053ef21c8296b32b049f552d58c2c8f52fe43148cf939f3393c12a515",
+    "wanvideo/modules/vae.py": "ceb42564f78a3fcc324cd54f175fd892f5aad882f3aa69316d4f294a35f03a64",
+    "wanvideo/modules/wan_camera_adapter.py": "4468cf6fa5da653ea480ec51dfa82d6cc0fe3971220ad23ea6f51ba8b6b1a1d2",
+    "wanvideo/modules/wananimate/config.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wanvideo/modules/wananimate/face_blocks.py": "13448b27e5b9e5b9d7f20ed4751f84be051d58f7538258b4f80b5f7ff26a9512",
+    "wanvideo/modules/wananimate/motion_encoder.py": "075bd3c8215e4e89fd79eb89e960adf13a92f349b04be2ba3cddff7c2ca18039",
+    "wanvideo/radial_attention/attn_mask.py": "b7fbb9bd57146594105468cae75f1a0b95d08675ee164876b4db6dfb7c09d54b",
+    "wanvideo/radial_attention/sparse_sage/core.py": "7ff81cf2e05bdf664e6ed25e299f9c403639904e108d346523cd7bded1303e42",
+    "wanvideo/radial_attention/sparse_sage/quant_per_block.py": "9963025018736fcfd481ef6f324ba1d7c5daf43c1fe32138b78eef3f33e00f0f",
+    "wanvideo/radial_attention/sparse_sage/sparse_int8_attn.py": "6a152559f393854f3865a9e7a0e1bdd54fc9e9001f502b3696b81e32a8598ddd",
+    "wanvideo/schedulers/__init__.py": "13123969728f443cca5c68ac28e917039c637d624eb7c682079e23d929373caf",
+    "wanvideo/schedulers/basic_flowmatch.py": "80928bd9b904eaa55f7ec3037422d8aa15c6d34cf4bea522ccd5820745642068",
+    "wanvideo/schedulers/ersde_scheduler.py": "95fee67c469c0086d0981b43e434965a2d002c041e3b06d2c140757464c927ae",
+    "wanvideo/schedulers/flowmatch_pusa.py": "fe00b098f9121ba09bb1c2d5131b017ad6416ff3756dfbfb083bc8f80baec7e5",
+    "wanvideo/schedulers/flowmatch_res_multistep.py": "89175751bd1c1391a1bc80ddee4773747318c1392d4032fa3a461cc8518741dd",
+    "wanvideo/schedulers/fm_rcm.py": "7d7130697163af220278623c723b24f8bec0178e486291a9da96e907be6aedbb",
+    "wanvideo/schedulers/fm_sa_ode.py": "fd54de30f01bcb1d242f81f2aef50797a24c2a3101190f16e2e61f639793077f",
+    "wanvideo/schedulers/fm_solvers.py": "ced273b80abb3e55f5f64d698294ed187434c1413e5f9d318aedf2d5aff0ee9b",
+    "wanvideo/schedulers/fm_solvers_unipc.py": "7d09f74c95d02e3146cc80cb8d336543f99ec5554816914f3f840ac726ede54e",
+    "wanvideo/schedulers/scheduling_flow_match_lcm.py": "fc575229910f7aed4a9b0cf8d0022ea2cb08d435862004419ec8b009a84f84fe",
+    "wanvideo/schedulers/vitb_unipc.py": "cf78b516da611c47ba87bfa3fd2f66713e2e5f42a8fd42f24cfb7dab4fc65af4",
+    "wanvideo/wan_video_vae.py": "c77d37a585439ab0a9337acfe8d672139fcf8bdc79475523ed1e4253de40648f"
+  },
+  "comfy_source_sha256": {
+    ".ci/update_windows/update.py": "95af41facaec54aee4db35127c1d3070cd860f90f07f063997ba57b7cc436468",
+    "alembic_db/env.py": "6f38981bb1f1297d46e0623f5c15f695c9fa706c3c56244a6cb97265088b3000",
+    "alembic_db/versions/0001_assets.py": "20a28b85ebc495a5899b6c9c3684490bfd58f3ededeba1f374ba02987146746b",
+    "alembic_db/versions/0002_merge_to_asset_references.py": "bbaaeebf066cd28d181f8f1711e489f2db2c8d9f9dc197f65addbdeaf39f0f0f",
+    "alembic_db/versions/0003_add_metadata_job_id.py": "51a1d712a9c2f5ae48c7ad8ebdfd43920a8a44503c5923e713bfdb0379e27dc8",
+    "alembic_db/versions/0004_drop_tag_type.py": "d216c454b7ab85bf6f152a7b618f03501e8265d572831fb5784d531889553bbd",
+    "alembic_db/versions/0005_allow_case_sensitive_tags.py": "95286cdb6e72c222929ab2989637faccade3eef891a21654d37f34eea2ded8a1",
+    "alembic_db/versions/0006_add_loader_path.py": "38e0bac5fd69fa5046c8d5e0e27b69b6c4916c3512c63fd2102e309e4c5b9e8f",
+    "alembic_db/versions/0007_record_content_split.py": "4fe35e7ac97b4cc737bcf271fdac116a87069dfffb85e949b8f3df267e3e4a79",
+    "api_server/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "api_server/routes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "api_server/routes/internal/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "api_server/routes/internal/internal_routes.py": "8d0b9ba02791c61ecbd8bbc8fcd2188faacca5f6077f108297e79e30d34790e1",
+    "api_server/services/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "api_server/services/terminal_service.py": "1c0d2f19846f028368b48f97e4d8dfc5bfe55e97b9870c82e5975dfcd978c541",
+    "api_server/utils/file_operations.py": "eb30b1276eb3e95c9e412a4738ba6b518838793064ae2c26b2dbbdae100404de",
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/app_settings.py": "81b82d52c16ebe37368984c49cfbefc232173f013bbe2a65c012d2b147ab8d24",
+    "app/assets/api/routes.py": "e4599862f3e07a7a24ea69f2d9dc394340cf59d17edec10161e417ac565c25c9",
+    "app/assets/api/schemas_in.py": "21250c513475e6ee726839e9a0711026363cd6b7261e3e88482426c0b62aa8d2",
+    "app/assets/api/schemas_out.py": "8bd46c757cbfd9cf1e0af93c6fb201ebe33e31f0dfb21974c29b91b106ff6800",
+    "app/assets/api/upload.py": "0a26adcf9aedc046524667dcaa4e7537466929262a3e6e823caf6387397c4cb4",
+    "app/assets/database/models.py": "7e700458f2374f00cfd5bd3499c53c3b6eda1da4d9a2a8a8cde224178e86c73c",
+    "app/assets/database/queries/__init__.py": "eaa6ae590ede81afb451a385c7d8729aa2224e5ddafa9e5d4841d38ccbf9c2f1",
+    "app/assets/database/queries/records.py": "96b66e3cd7a1fcfbe03111fd6f9c9e5b4ace4ccd511c94dcdb4ec400e50fec13",
+    "app/assets/database/queries/tags.py": "c4525786a9be2a2d061c008b6ce902a130a0f759dfb97c1da793c3556f3fa171",
+    "app/assets/event_log.py": "146a8fc30d2b9308fe39c65dc26fe6f0f65a5adcde74ff0b86ccdbdfe0ea224f",
+    "app/assets/helpers.py": "24c3860064d1e0f615a8457d63e63fbaa3a122ab33679917a88368eaca4e02fb",
+    "app/assets/lifecycle.py": "c1adfc9e598d41fe11eb3c73762926a6c276d67e32da77f5f42d39e0deac224b",
+    "app/assets/manager.py": "861d730aaa9d3e1171728e396ef2032dcf499ae8b0587ab7a3d20f1901fe34a8",
+    "app/assets/mode.py": "e65bcd10dc3da7d8675857b506fadfe6dc1b1420ae8dfb3580517a3a1563d551",
+    "app/assets/scanner.py": "3af0a0ffad087cebeae4edace05d22b9bd7f402358aacd8f41c46066e2d8c4e4",
+    "app/assets/scanner_admission.py": "bfebcfe791b5fd087950a540507468d7fcae5e140e1c641b0266f72ae4dc0efa",
+    "app/assets/scanner_changes.py": "1455097a9c99fddd1d6475648c1b1ff9d80100fece4f31d6c9df911c53311147",
+    "app/assets/seeder.py": "50284e8e43f4ecc2c294b32e5c306a0a98c47f9d119a0a09b135f9913743b0b2",
+    "app/assets/services/__init__.py": "769d527a9e1c62053203141157d9a1fabe6b13580e5283616deacfafc9ca394a",
+    "app/assets/services/asset_management.py": "b46f66bef17826cab220cabab5c952c25d9da78a0c3c15b42bf88f99ee208eb3",
+    "app/assets/services/cursor.py": "1300feb76e9a5d3b70e8c2e10d05d7fd89a549f32095b93058542b2af6765930",
+    "app/assets/services/file_utils.py": "133bb463c1ca610735bf98918fb124706a0eb5938299986d806ab16243067f76",
+    "app/assets/services/hash_mode_state.py": "3cb070fe8a3bf3e1ce914abba157e28f89045b2a17c678b9450741cb063a7a6c",
+    "app/assets/services/hashing.py": "7fdebbd4f8628444a27152de7435f95b632308f255c7f50bbac33e139d900671",
+    "app/assets/services/image_dimensions.py": "0b2594753349b7ade9b77cfc6a71c4f8d5e6f9a57b2cbb4e3e77a7f88a719413",
+    "app/assets/services/ingest.py": "92abe3995d5c4972bace2517582e53ec704f21e2167de0814d335cf8279cb8a6",
+    "app/assets/services/lookup.py": "5b1c60c025bdb5ee61afc785a4ef063f6c000b4d454cec91cb7ee9339a681081",
+    "app/assets/services/metadata_extract.py": "9c3d46a99c31bc70482a9f81cbed351b09f76b44c58b18e93b000c11f6593fb9",
+    "app/assets/services/path_utils.py": "b693dcdcee97a8de2196792ff8f162a9445ffe58154dbf139ae0782948531841",
+    "app/assets/services/schemas.py": "a6ff0147838d15de70b1305664886ec5ccf2172f25f41a42cf51b0f0847b2d3e",
+    "app/assets/services/snapshot_hash.py": "e2354ec81c2c32f1818fa216398dbb23c579d85c0e08f73f9cce7dfde1695fd8",
+    "app/assets/services/tagging.py": "6927b435a54b01929e7cb5fc315d23038d1cb33b994af00396dcfad4d3c438e8",
+    "app/custom_node_manager.py": "330582e8d5ea4f9cdb2e51b6925c9ded91dbe0b93d14cbf5609e1764d023087e",
+    "app/database/db.py": "3fd0ee8ae7d6d6f67eff117168f52e90c95825c4ef5319c4dd53a6bde16c4035",
+    "app/database/models.py": "304e2b81e3ceb568a46930f1018582c758447f1a767060a32e0da5d0def01604",
+    "app/frontend_management.py": "866887a7b389afce3ec427937fff01d4686cddf15d37807aa9482db92d46f6e2",
+    "app/logger.py": "abd65bb7467150363539f425baa8af63d086a28154df826f375c06b7d4244bbf",
+    "app/model_manager.py": "5e3874177662167a2cf4c1edcaba4c7d961b9763167bbeac0fde492c8d191c14",
+    "app/node_replace_manager.py": "df7725774be20937168cf7fcbc5c0290d12cd386546b2b8671d9ec7a848c3463",
+    "app/subgraph_manager.py": "2f35e747b0112d397d66c52b466e2d649d62175a5414ea8a6810783db040ecf0",
+    "app/user_manager.py": "28c89ca744702721839c586e9851a5abf9ff6057234be779dc1b72a2be9ef308",
+    "blueprints/.glsl/update_blueprints.py": "295ee85281d09daddc6189a2eab5d884fc8208845f9eff2576d87e6a55c1605e",
+    "comfy/audio_encoders/audio_encoders.py": "29b450565a9cdfe68cb6e00fb8c0dc6f887768cd47fe53fadd65e2072df24f59",
+    "comfy/audio_encoders/mert2.py": "b0143b5a8bc7424273ff784f5080725ad8646a67f0583c4cdedec8d2a9fe559f",
+    "comfy/audio_encoders/sheetsage2.py": "9d8bea5c32b3cad9ac354eeb634325c91dc54b142b9f18e629f51962725561fc",
+    "comfy/audio_encoders/sheetsage2_abc.py": "90095322d88665303487e97e58e3a4356d65ecf32dfc40a5b314cf113da40309",
+    "comfy/audio_encoders/wav2vec2.py": "32494297021e54e42845276255a026ce8ab62be5d54f6d40cecfb042c8b238e7",
+    "comfy/audio_encoders/whisper.py": "f0e214e79fdfa9926fbc863038fe3e0455caa61f486a1b37a3039ca7253dea22",
+    "comfy/background_removal/birefnet.py": "2daee3294b76672e416dfe39f3742493757516e7599b780c54435aab473db08d",
+    "comfy/bg_removal_model.py": "c4f6f7beea512c759849efa07f03f09044ea76fe5c71fb7afff31e4886e4daa7",
+    "comfy/cldm/cldm.py": "8d189e4d12a40fa13b9355804cc5091c71f2493f71d2deefcd108b6c49ad8e5d",
+    "comfy/cldm/control_types.py": "5f36dc8bbfae9fbde48e822c210a9fe2bd571b547b7e33f8d15ce6892abc40c8",
+    "comfy/cldm/dit_embedder.py": "b369b4ac62b85378554ffd985ccd537af08b1c5de2aa0243c081d4545f561160",
+    "comfy/cldm/mmdit.py": "5c2b2165f0e69e81a7d2c0556b12f43fd87bbe86157eb19142badc621afe6415",
+    "comfy/cli_args.py": "13cafedf0b724c3b04918a18a06507b86287fb66af8147d49b343d67c5c85c0a",
+    "comfy/clip_model.py": "de877f05881345974bcda584696537a5a425215043f88ce9b97864cecee8343d",
+    "comfy/clip_vision.py": "ec91f633e5170056d78c5f49936e4967fd8f5c66b866fa811e47aae78ae7886f",
+    "comfy/comfy_api_env.py": "586f81d1a97d514baa8fac90e6ef9edf3a2a81e76fe0c7a1998f4e7d944eba1b",
+    "comfy/comfy_types/__init__.py": "da3601f9bf71f36070985bd835df311a06e1c40dbcc86afd13e63cd84ed3054b",
+    "comfy/comfy_types/examples/example_nodes.py": "5192aa34ed909eb0d50a57c0fb47e7af011524962d09443172970fc1974d568b",
+    "comfy/comfy_types/node_typing.py": "6bc7906a84333a767e137e89efea041b45966cd589f344a28c14116a2484a7f5",
+    "comfy/conds.py": "72058e9a22c972a9c875819e59d432d30d367fd2f7092ee6c6c45e5a60c959b0",
+    "comfy/context_windows.py": "c7ef6a53784d34ba4f7335d009e8fc54ade9fa22f5a9b33da77d42fda01062ef",
+    "comfy/controlnet.py": "734f63f3c581a2e54a9ca74a4bd591914fad516989b7c3bdf59eb2a4c4d3a3de",
+    "comfy/deploy_environment.py": "93ed599051b046b2c8dec5f650c8a161abff041943cdea770eddf48ce66120e6",
+    "comfy/diffusers_convert.py": "8dc4e2b4de8dce831de48d766460e9b98c178b25b0737154f135253046a22c54",
+    "comfy/diffusers_load.py": "25af9c4032d11ed63fc974f83e937e562736a358b7eaf176c88edfbfea4c8a3d",
+    "comfy/extra_samplers/uni_pc.py": "62a3bc207d60d10fc2700459c2090961ffa9f1199f1f1213ade0e4b97be6b04c",
+    "comfy/float.py": "3a6e6c6fb306b5827378f8b2a551984d89b2b9719c24cff39abc423fc1f37c01",
+    "comfy/gligen.py": "87c4297809a1a0a7727e3623cef0930463080dfedc068eb97c5e19bc6e155d0c",
+    "comfy/hooks.py": "af4d31e1f70f4e66e145f92d71807649444acdc4bc92bc10e58ba7626a2c38a2",
+    "comfy/image_encoders/dino2.py": "1dec8c1d6104c268e593cea20302d925f637266edce2a6e4dfa142af8a00d579",
+    "comfy/image_encoders/dino3.py": "43b9e1fae3824c2ebaeacf3ded64c6dd3216ca41bbcefb061b4c2f7182bf80ef",
+    "comfy/image_encoders/naf.py": "c0a4241271d52e51e19f511a12c4f2d58a782851a1e889be3ded097d6b517d38",
+    "comfy/internal_logging.py": "06f99b31f11285a23842e11b9af3e47ce71b1e53c107b44587dcd027cbd84d6d",
+    "comfy/k_diffusion/deis.py": "8d4e5057a062b77ef2e33af8208a2d6a3c3fbb431315a4c37689a307d66bc807",
+    "comfy/k_diffusion/sa_solver.py": "84f54b743f6491ea8e0a8ff21db88579016e374c9b7a05b3d84c3ac4454af461",
+    "comfy/k_diffusion/sampling.py": "cfc4221ed0bc1f84a6f5689d3ec440cad3008c2541ab8f5e2599d1a73fac74ce",
+    "comfy/k_diffusion/utils.py": "fc30630d8a0e4520b2e864c8f84deea3231c9b04d3f1404fec93fc425f629272",
+    "comfy/latent_formats.py": "44622396b0d737b62fed441eeb6cf88ced5f8a330a62219f9900a04da9ad8a2a",
+    "comfy/ldm/ace/ace_step15.py": "2230ec1f84aa9f4a38cca534ec79e5ad96baecb687e3d4c67b1b83d47cf3f87b",
+    "comfy/ldm/ace/attention.py": "7d50970bd668e25b8d09f9fb8e70d0b0b2b852d3ad236af89832efd9ced25d8f",
+    "comfy/ldm/ace/lyric_encoder.py": "f6506034c513af1fc0790b62dce1769583d464a4be8f0ef8eabfbd1e0e86a103",
+    "comfy/ldm/ace/model.py": "4a4487c566fa5118d16ee8d91bd0ffff523f89513fe2ff2968c5dd18b55a3708",
+    "comfy/ldm/ace/vae/autoencoder_dc.py": "6a3f8fde53ff086b38fcf39ed2cc6cd6b5ccac04d253793a7df1d0110e69fb47",
+    "comfy/ldm/ace/vae/music_dcae_pipeline.py": "21c2740c2c06544a7cb91ce526e248a2b4d9a85068612dee80a12f79b66ea608",
+    "comfy/ldm/ace/vae/music_log_mel.py": "81f34c4e5b69ce0f5c2cc338840b1a0bc45c76505c0c84a332c9691778565fe1",
+    "comfy/ldm/ace/vae/music_vocoder.py": "8e36c57b90456110756264cd9a81898dbec98992f4c5a3e6487682f234626f37",
+    "comfy/ldm/anima/lllite.py": "bdeaf81f631998378cb480cfb5f49360e4ea474280e93bd40d4ee8780337069d",
+    "comfy/ldm/anima/model.py": "af8cf8bca4709b69f82e59fb24b3a893065c677951fe568f0fbf3306c6053a7f",
+    "comfy/ldm/audio/autoencoder.py": "46bfc280226102b0824419a6f6aff5383e093cf85cde31cbdc81fb479e012ae7",
+    "comfy/ldm/audio/dit.py": "859a56b1aea677b48fed590a68c52b7f2ae19c9d007e14a78dcc28396da611d7",
+    "comfy/ldm/audio/embedders.py": "91c50b361f0e7dbefc6ffd63896e3005399301db6f8f5ad41e7d5e82734061bd",
+    "comfy/ldm/audio/vae_sa3.py": "1dd0c011f42b889398c2ef35d2c96d8b0e927db6328cecfee8ea3dc8ec75eb75",
+    "comfy/ldm/aura/mmdit.py": "0104396eda01a9f78e8aa5b9d15470fc551aa8b0e05137d264f3515fd1739db1",
+    "comfy/ldm/boogu/model.py": "3a7ca8c6187842227dc99974c435fac993fc2595a481849904ab59eb8a9e6d07",
+    "comfy/ldm/cascade/common.py": "a89d6aff5ae6fc5362bb2c312a41d673c931ee992a874b3d7a76b3d496038d49",
+    "comfy/ldm/cascade/controlnet.py": "d3e73da50ea4abee4d25aec6b015b3390235fad507c336db336e16ce041047b6",
+    "comfy/ldm/cascade/stage_a.py": "8c1399846647a3376738daa90578ad8f6af224640e74dfdd23250c36676dc546",
+    "comfy/ldm/cascade/stage_b.py": "b37db6fb8022a1af93b919afbf3728189ab00c519ed67771ed07ee06b89ce292",
+    "comfy/ldm/cascade/stage_c.py": "be52f2650be0643c8358cf29c4d20ba8432c84147bc3d5d46526007f1de11e68",
+    "comfy/ldm/cascade/stage_c_coder.py": "158834cc63866e3d39364b62c92c12897f1f1692df61b07e9cf44fd14a210cb8",
+    "comfy/ldm/chroma/layers.py": "1d08fdde7b1a9ea98b6ce9a79bcd4394e5df9a0bb3872a458f79cb11bcfec25f",
+    "comfy/ldm/chroma/model.py": "e8bdf9b0f080c71a5d215a11d5a1344af8ef220b6251466c124e261ccddbfb0e",
+    "comfy/ldm/chroma_radiance/layers.py": "5fb5db77eb257e40ba4f1a02674bcee96a864dd3779abdf061c66b00f4ef7684",
+    "comfy/ldm/chroma_radiance/model.py": "c8a356f24b99e4351917fba91d062b819330c89edfa999cf2e7d530b7e473251",
+    "comfy/ldm/cogvideo/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/cogvideo/model.py": "388cbf61894498232695f3eaf5faba18a02d118b72091ada98d262516d4be7b0",
+    "comfy/ldm/cogvideo/vae.py": "b0e89fdabf91ea0a6deeb27fd32bf3e9a3f2789ce0ef5b9d7e26bb8ddc53c7f7",
+    "comfy/ldm/colormap.py": "502137c8cc6280c6641fac7199f4c6a25e16162bb2038452a2b470e3f7b60394",
+    "comfy/ldm/common_dit.py": "5e2459be4a47073a17e6b806f2b93962b4df1cdcaa2ac1890c9573bf942edf82",
+    "comfy/ldm/cosmos/blocks.py": "085f29f34564c6f6d7063e131ac71adf9a826dbad5f27ca71d4430d9de8db46b",
+    "comfy/ldm/cosmos/cosmos_tokenizer/layers3d.py": "c4829d538352aa750518f8c1a08e636925cf15067f02aa28eae5aa87d5c26805",
+    "comfy/ldm/cosmos/cosmos_tokenizer/patching.py": "fc616c155fcf610a8436ca567f971d1bbe57e84a6eba7dfc5146a8b5c624802d",
+    "comfy/ldm/cosmos/cosmos_tokenizer/utils.py": "1ad10120d40c9bf16a0377c14ae69827fc803f449f67add26fa799adcaa723e4",
+    "comfy/ldm/cosmos/model.py": "70e1cf6ddc1e47a370cd86dcdd6e9e4f5ad078cbe352cad4457ba5407bdc66c2",
+    "comfy/ldm/cosmos/position_embedding.py": "ab27e03b9af1ecafba7062ef9e63d6092f71fa12c872e43ad8107df7b27b7fa0",
+    "comfy/ldm/cosmos/predict2.py": "a5b16c16a1de832fb56b091305f8d9c8f487a04288775a09417dfcaa78453ed8",
+    "comfy/ldm/cosmos/vae.py": "3a61205726e35fb1d7235d75a470ae118f32e564d49f1c38b7575884f74f6734",
+    "comfy/ldm/depth_anything_3/camera.py": "b9c1bc79862c8f2b59a6058da1bf47c1aaef84ca75ec5131805fbdf2f81dca9a",
+    "comfy/ldm/depth_anything_3/dpt.py": "756fa18408e161cb2ddf8adde82902d9fe3aa555be8252b60d045cbc76513ee5",
+    "comfy/ldm/depth_anything_3/model.py": "6f05ba0c22a34304f6bd6cde7e6dd26ceef474a99ad51d6632940f8d2decf6b0",
+    "comfy/ldm/depth_anything_3/preprocess.py": "6bf00e9929451c39763a0661aa1430dbc78917bc028517a4c8dc290897601845",
+    "comfy/ldm/depth_anything_3/ray_pose.py": "a5ed28c0acc2daaeea57754dec4020fe91af60fd2af6548dfa68134713b36694",
+    "comfy/ldm/depth_anything_3/reference_view_selector.py": "24e9428a820b5287d622bc865d4fd6520486294c4337a28de71fca6ec62e0c29",
+    "comfy/ldm/depth_anything_3/transform.py": "30291a7f8d3d83cc6a911daf603342444ed30e7141abb3ba8ccc7f41273ac763",
+    "comfy/ldm/ernie/model.py": "187a359779f0408f49e68e68157fd767f44ef6bd8e94fedefd3bc0e850995e10",
+    "comfy/ldm/flux/controlnet.py": "a96fb5494200b424cfb3f26d754b58f5e0f6d9bd126c3fd4ca9499934aab1742",
+    "comfy/ldm/flux/layers.py": "35f2dfbadb8b59de79c306f365f26c2baa0a7d54836414737cd781fc24e6a2bc",
+    "comfy/ldm/flux/math.py": "ee3473e262894884b12eb3af4caa22d069273eb87db3549fb46c42c37f910ece",
+    "comfy/ldm/flux/model.py": "b24635f2d8087844766f9583e3b9bbeba0938223018a20e6649da2e0f7d54368",
+    "comfy/ldm/flux/redux.py": "3b7abf43e15fc7b9613a64e701635f943351fa47f5036d87427ea672f93c7952",
+    "comfy/ldm/genmo/joint_model/asymm_models_joint.py": "59137d17f39231ca7b3db318d863a49f8d47857ba73e7db6993e1f1f62609dbe",
+    "comfy/ldm/genmo/joint_model/layers.py": "bb0ae6cc4dee093547688f667e307bc37d83697d7342dc944f20499682321c95",
+    "comfy/ldm/genmo/joint_model/rope_mixed.py": "c5289a2c591f34180fbef7dd709f9a83d5f40a34437250ac2d873883c6925de8",
+    "comfy/ldm/genmo/joint_model/temporal_rope.py": "1217d5d66c5ab329a0cead747ddd6362e579391b89dda599ce3b789f0e6752f9",
+    "comfy/ldm/genmo/joint_model/utils.py": "1aaa9f12fcdb6b0889d20bcb28a5447dc9a2639d39f3c217fb210d4584be76cd",
+    "comfy/ldm/genmo/vae/model.py": "31969951bb82ca2a074dbcfd4f68a71699b973c7233b55908fb209b939b950ce",
+    "comfy/ldm/hidream/model.py": "8b8f8a2b776a7f6bae998f9bd4d024eebf9aaa975a9aee34eaa9e68ed874f20e",
+    "comfy/ldm/hidream_o1/attention.py": "308ee252f4b6c125a6b9c0fcdaa43d858b345a2112cad04307f5979b71c6ad9c",
+    "comfy/ldm/hidream_o1/conditioning.py": "b7ce164db416cc22dcaa8466815fd62d52e3ad60e7b177be24d65e020d74fdc4",
+    "comfy/ldm/hidream_o1/model.py": "e588d2b9906d22d9b2f5aa6f90124bc1d087c7f79dcfdec4422d00602f03382d",
+    "comfy/ldm/hidream_o1/utils.py": "5382588a09d04988c1894fbcf9b5f5d29f8bfa2db24d0b8a8933162709b472ae",
+    "comfy/ldm/hunyuan3d/model.py": "a3772417ab78adf948b748f12c3fc056aab708ce8987c5ace0acb2e38c3822f2",
+    "comfy/ldm/hunyuan3d/vae.py": "a7105097141ea8ca7bee4f5f0ae0b2386c9b55794421df325986a08789baa0b9",
+    "comfy/ldm/hunyuan3dv2_1/hunyuandit.py": "183c09de7cadde60417916836a9be5bb8512553ea804d9cfdacac0ab2cdf0e45",
+    "comfy/ldm/hunyuan_video/model.py": "08d7d536baf000f6bd3f4e9426ab92911249293af6535f65865aabc05a73ec27",
+    "comfy/ldm/hunyuan_video/upsampler.py": "f667649504185a70023cd6f51033d904d08da6455bc198d613a7e1faa802ce75",
+    "comfy/ldm/hunyuan_video/vae.py": "1798354ab2c572a5496ab599eb42ca6db53c21ec497ac5cd76c77c902d589a78",
+    "comfy/ldm/hunyuan_video/vae_refiner.py": "8fd6c7dc5878e68037192d824fa2185e4e95be89772fb95a309f87ff3a591302",
+    "comfy/ldm/hydit/attn_layers.py": "667b14aff9a834392e424845c0002c5c24d62d6a89cf29f26ea0cf0fd2a2d8ea",
+    "comfy/ldm/hydit/controlnet.py": "9032da47faac4f9c6720a038ee253bac29037d53918e0ce51e8b8e90269e5402",
+    "comfy/ldm/hydit/models.py": "6eae0dc6cfd470f6780aea14a5937d64fc4c79f42695ad5a1a27d04878631ee2",
+    "comfy/ldm/hydit/poolers.py": "6cdc7f171c65a9676fcdccc24598feda7fc991e3eef2c3fe8d183965f9c0d4ae",
+    "comfy/ldm/hydit/posemb_layers.py": "3a3bc020e6f54cee869ff453d1c7650257093e775486d2559c7e6c8d3a7879f5",
+    "comfy/ldm/ideogram4/model.py": "607edb99d0dced4b9bea702777e5ebda3e9381e1a3dc99d6f604e2a1385188b3",
+    "comfy/ldm/joyimage/model.py": "d52affe323a71236decaf6e7acee0256c7beec57a2f64b5fcc0a96f58f4b65c8",
+    "comfy/ldm/kandinsky5/model.py": "b15df50678b81907069126d4a8112e4a966122447c11766658e380845ee77efc",
+    "comfy/ldm/krea2/model.py": "5b85cb1882fc29bb0700d10b419df771ea9e7d76271a47974add4d44a1e0d149",
+    "comfy/ldm/lens/model.py": "f10bd24dd6d1ead8768ff24e39803a454dd05afd73cf217cbae1efb171387002",
+    "comfy/ldm/lightricks/av_model.py": "6582ee5c9fe1119b0dfa85a7c5e4f6d94a899f3b551b1886546fd787c3799e7d",
+    "comfy/ldm/lightricks/duration_head.py": "1a7e640d9c32aae41594366326917a7618eeb4af3b033fcc4da3791fe2bda125",
+    "comfy/ldm/lightricks/embeddings_connector.py": "5f162a3a94185943b66c38917752cb44a8d897062b759ff03eb1f1bae74af3af",
+    "comfy/ldm/lightricks/latent_upsampler.py": "4118bff65e1eb99d9b6a4d85f2b7ddaa3085550c2329a4a805d3f3160d20a2aa",
+    "comfy/ldm/lightricks/model.py": "f0292be2a39491d411ad3cf4b58cebd87e62bf2568aafa35814b954828733718",
+    "comfy/ldm/lightricks/symmetric_patchifier.py": "e2d9b8de7a5cc003e74eaba6d0b8303b596df80e59a431eda2d3593ec06c2633",
+    "comfy/ldm/lightricks/vae/audio_vae.py": "f8a5818599859a93b8cb69240e4276fdc9e0eccc4c3e5fe64ca7608a480aa4c7",
+    "comfy/ldm/lightricks/vae/causal_audio_autoencoder.py": "661ce071dc1b557e2c30017b02103d43d88bb2e7e0dede7610df21e43e5c5964",
+    "comfy/ldm/lightricks/vae/causal_conv3d.py": "d8285db6cb9f40a8d42f794a102251ccd0c987cc549c7b6ef5b88b9e7777a0b5",
+    "comfy/ldm/lightricks/vae/causal_video_autoencoder.py": "42010d800e6e49bdc69ae24587910b55b2418e26a1140bec7159a873276c45c2",
+    "comfy/ldm/lightricks/vae/conv_nd_factory.py": "8433bd731dd379223d58a4fd84518ae9a618e1b067771878c8f2d51339c9a99a",
+    "comfy/ldm/lightricks/vae/dual_conv3d.py": "2683701b800960aac74766f03cb4bc7a3cb10b80e881422e63cf5d6f5896b2c9",
+    "comfy/ldm/lightricks/vae/na_diffusion_decoder.py": "7356bfcaedc545e8af1f4820e7466bbde0a56ccd2e8b2941902af83f16657f21",
+    "comfy/ldm/lightricks/vae/pixel_norm.py": "37163441070d3ea85bcccf9a603bc1f19a4ee8e9da2afadfa8bba7a1db6e96da",
+    "comfy/ldm/lightricks/vocoders/vocoder.py": "d2ff3ea7c40fc11705d1114d936afd1d466d36b05d95aa338f159ae14547494d",
+    "comfy/ldm/lumina/controlnet.py": "8330e0f92d70b23b4f6d4fa0661e240fac2cf211ff70d897f99ffebfd9f1d541",
+    "comfy/ldm/lumina/model.py": "2256c57e64c2c4b559526cb7ba719623a0a9364458a72852d07e2f72d4aabbf0",
+    "comfy/ldm/mage_flow/model.py": "dd7cca5d7597d68ffb2259294c5cd9b27b0fa6837f85550b01d6be0347968b0f",
+    "comfy/ldm/mage_flow/vae.py": "37dd5f73a87d64be99767beaf302762e8f01397db83ecd7fa19958417a132f33",
+    "comfy/ldm/minimax/audio_vae.py": "470f7f07be8c38634b85e719bbf5d0f04ce12d2a2c9253791db61930d15e8121",
+    "comfy/ldm/minimax/controlnet.py": "be358996ae780b6b82fdba0b8faab884f1e192473cc2ca9f14366f281d5f4d83",
+    "comfy/ldm/minimax/model.py": "0d5edcf32b4b98d704eaa51de60ed71f507d0c7d9845947f566647dc76fb8dfe",
+    "comfy/ldm/minimax/vae.py": "aae581a7da3a1fba6ed35c8d11912af139246830764c525c14900f1bfd07225f",
+    "comfy/ldm/minimax_music/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/minimax_music/ar.py": "663f12cece7135c8dcdc67b750d29788a8bb8bbba877523f6393aee5e7f0d966",
+    "comfy/ldm/minimax_music/dav.py": "8ba939f8f76a864584923cdc3a1b4995a6f936c3eaf0a395099be95f5fc896a8",
+    "comfy/ldm/minimax_music/dit.py": "089fc9a4b36e7c6626da9411fe60471f4e1bcfcb00339ceed746a123725b1b34",
+    "comfy/ldm/minimax_music/prompt.py": "4d3d6607d6efb24117c7efc09124b344c5d7b949b7e8f2d5a86eb7efa7dd77a3",
+    "comfy/ldm/mmaudio/vae/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/mmaudio/vae/activations.py": "59994f9372c5dd2996a9617d648c7684a89075aedd1d093c0281538e40e38faf",
+    "comfy/ldm/mmaudio/vae/alias_free_torch.py": "c9f316a443b00bed4c2d50fbd23a4d7b2f7d16656a2a7642744f216f12e2ae8d",
+    "comfy/ldm/mmaudio/vae/autoencoder.py": "4d4409dadcaac71f34a7eb3199543b4f6029efe09344dbd3b99a8c07a3f814a5",
+    "comfy/ldm/mmaudio/vae/bigvgan.py": "cc5b4947bde63cc9bedb8689003dce11f9f82ed682bc4a23fb90235a2208eb9e",
+    "comfy/ldm/mmaudio/vae/distributions.py": "3ae3040d1e43ecfff4ea9daa7807fa345e28cf93ae5e34d29436d49bb11df772",
+    "comfy/ldm/mmaudio/vae/vae.py": "44b6f466317bf8a566642a4bbf6a30af4943aa52a343cdff66ce802207eea554",
+    "comfy/ldm/mmaudio/vae/vae_modules.py": "7b2453fefae854da384c70f780c6cb3290f607f0d45eb3a6f191faeba2704b78",
+    "comfy/ldm/models/autoencoder.py": "24b5a9126539733ef15f36e0d723abde8a8fb3319184083970b385ab918404f0",
+    "comfy/ldm/modules/attention.py": "9cafaafaf93ff53e8cbefb5e4a204014019985df2da8c1996bf40f1235fc2960",
+    "comfy/ldm/modules/diffusionmodules/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/modules/diffusionmodules/mmdit.py": "ef210feb9939670ea148f977e4bc4d5f90dee56e2c131428ffd991beaf92d6b5",
+    "comfy/ldm/modules/diffusionmodules/model.py": "a8e10d29e778007f5133bd870ed74fac478629727c08b81ec39390db3870d867",
+    "comfy/ldm/modules/diffusionmodules/openaimodel.py": "9d27fb036cab8a262ef3d866a643f7fdc40994022616f1b8be14b7d919f57f96",
+    "comfy/ldm/modules/diffusionmodules/upscaling.py": "396721fe4d6c8b825f06264aa8b62ec52b399908e8c51d519d67a4d072699084",
+    "comfy/ldm/modules/diffusionmodules/util.py": "fb58652a35521fc23bdcb75d91adace8e4cc79e2d5b13af1617a38d0c0f7142e",
+    "comfy/ldm/modules/distributions/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/modules/distributions/distributions.py": "3ae3040d1e43ecfff4ea9daa7807fa345e28cf93ae5e34d29436d49bb11df772",
+    "comfy/ldm/modules/ema.py": "6185e8296e3ed8adf6fe857b09761cc469240e400a3f0f291917b5ffb8169e4c",
+    "comfy/ldm/modules/encoders/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/modules/encoders/noise_aug_modules.py": "1827ecc2b14052bc17ebe233259e4fb1389c842bbf356018c7a36d57b3985ebf",
+    "comfy/ldm/modules/sdpose.py": "19a55d1ecf16796226ed204241852b9b237a563addf636ff738167d9273cf97a",
+    "comfy/ldm/modules/sub_quadratic_attention.py": "c804fbbda0fbc6404999be734d3c33b868375959736f8e21ad417782ab0638a0",
+    "comfy/ldm/modules/temporal_ae.py": "f39314a670256eeed4a6b558eb29f1340569a0b0e4d42b2fe887271839ab822d",
+    "comfy/ldm/moge/geometry.py": "db8e2da75f13028a98067c517d6495fd9818b2878b44599beaa281ff7fde397c",
+    "comfy/ldm/moge/model.py": "88b7bdf531ced4d12297462be24881b90c8b45f7f5da3aa263a47293946a1495",
+    "comfy/ldm/moge/modules.py": "26ff3bebfbcd6885ee650ba10f5a42084c9c0082dc11834dfa043d07fe0ccc7f",
+    "comfy/ldm/moge/panorama.py": "d278c70946c82356e786f00af5967cc597b0fdab9720f1a54539af781c2e7881",
+    "comfy/ldm/omnigen/omnigen2.py": "1c9bc2efd5c61f0d959d3f6a7f88861ffd1ad95e28561d097d1f5c31df249d0c",
+    "comfy/ldm/pixart/blocks.py": "82d610edcde7a7a52bccdbeb5b2312e9ff20ff530eacf91e29592be1a02cc281",
+    "comfy/ldm/pixart/pixartms.py": "a3b24e4e3c3c4d6a31ec9835d8ea269c0742551afe3b16cef2a8c44390c82661",
+    "comfy/ldm/pixeldit/model.py": "7b2288e87e3d8c75b5dd6a0ec8a82fecd64bb6693ef4d81c36cc44916cfae449",
+    "comfy/ldm/pixeldit/modules.py": "6b28c1da83f899dc352f017f4b097568b07bd2eaee1a2a27ba17bd7e7237bd9a",
+    "comfy/ldm/pixeldit/pid.py": "23f3f118bd8a72dafc917a0bde4ef556c3c0051300fb8dbf3a53bb5af5cd1544",
+    "comfy/ldm/qwen_image/controlnet.py": "807f9932af334410e8491f79bbb7d327dba654f28f4d01e5cedf0435218c7afd",
+    "comfy/ldm/qwen_image/model.py": "14c805af8da13d31094c2c704e413cc282ef43f4afe17f77de9070bdca301f28",
+    "comfy/ldm/rt_detr/rtdetr_v4.py": "bf6a444e5ef3fd492dbf98ff596139e9c4c89e9c0b0cbbab0a52a2ac4b7ce593",
+    "comfy/ldm/sam3/detector.py": "0c3aff9d5053f514c183887e38dc811d0841c7533ffa3fe02489550d9b9c5306",
+    "comfy/ldm/sam3/sam.py": "53ed995e1130d10361f989549695ef2d06498b0b3588a952753b0c6633613a40",
+    "comfy/ldm/sam3/tracker.py": "33c0dbbe3e7a21d0cc487d3bb390d649698e0a89e09730b7405a83bbdd66595e",
+    "comfy/ldm/sam3d_body/mhr/mhr_head.py": "d556456d7a60553e30ca3596bb2c9279738448dc54dcf697eb0a2e0092eda3b0",
+    "comfy/ldm/sam3d_body/mhr/mhr_rig.py": "e331e72aad6d7aa52d99e0e22d75fd27e40845eef521459915ea538489bdc34b",
+    "comfy/ldm/sam3d_body/mhr/mhr_utils.py": "1e28a71a3e77151bd9395042e4a0b37330c3e1114038190a62bdf3d75da76ad9",
+    "comfy/ldm/sam3d_body/model/camera_modules.py": "5caa2af489521ab7a85cb851cfc43a90eb735076706c3bc1ee6bf90b89208c0e",
+    "comfy/ldm/sam3d_body/model/model.py": "44908c31431cf826fc328479c116ca410bf22c838651e03fe009a7946d50ecff",
+    "comfy/ldm/sam3d_body/model/prompt.py": "db863f4d3a1cb966ef8cb10be63fb9acd2c0cd678e676c48b3cebbeb21b12a76",
+    "comfy/ldm/sam3d_body/model/transformer.py": "74a5423c4ff4fedcc22a21d0d405d1627e4603d34a9aa32048dad34c29f2f162",
+    "comfy/ldm/sam3d_body/utils.py": "286f89eeeae4e4a042c43b8d65ab506a0aa0ba2a584db9a668efa6f2b86e7945",
+    "comfy/ldm/seedvr/attention.py": "c92c86744a50fad4f892772139bebec19f97c90cf4c77e20eed68e320ed1c645",
+    "comfy/ldm/seedvr/color_fix.py": "83b4d3f033839341c8a7688bb986989417e884f1ab1747ccd1c86ddc5d595b55",
+    "comfy/ldm/seedvr/constants.py": "035605ef5f4c784c13556e6afbb124bfd00b055b1a09f36cefe48088fad14663",
+    "comfy/ldm/seedvr/model.py": "8d9d65abd933cc5b3fabf9a4f04af2323152b89c85b23d32be02ace2d93630cb",
+    "comfy/ldm/seedvr/vae.py": "e59b8dee4264ce40b67b3f17f247b0a97aa8fc95ee4cbaf5fb92ae74e829d0e1",
+    "comfy/ldm/sensenova/__init__.py": "9a2b81963a228d9d65e3de80edf0a27432651f7115739d7924bcc4329992e106",
+    "comfy/ldm/sensenova/conditioning.py": "3bf062d60961344e40237fdd33c037a3576e9ed6476412b4a243122770df50ad",
+    "comfy/ldm/sensenova/model.py": "f03d2562963e17e081d1351e6416109aeb09180f0a26ba668471151c52849012",
+    "comfy/ldm/sensenova/sampling.py": "b2375273134a786c5a65a4dfa9329adab1e9dcc89c28df3016d49f9f0fef0313",
+    "comfy/ldm/supir/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy/ldm/supir/supir_modules.py": "d91113036b86f05796ec56297c4533271f8cc67555c0f8abe371f81a7365c8cf",
+    "comfy/ldm/supir/supir_patch.py": "3fd71c0049f9d0f8ea8951fda1a81044ca8db320fce66c2bc899bcc3c6ccb82b",
+    "comfy/ldm/trellis2/flexgemm.py": "457e6a06149ca440fb56cd29f1194a6d4ba1ede92991d7e438836a631525811b",
+    "comfy/ldm/trellis2/model.py": "122a68a5344f3982b693817241c90015178fc6487b5f3dffd3cfeec3537f8a1f",
+    "comfy/ldm/trellis2/vae.py": "77d55274133aeb103a97979bb89e16b90f87ecf4018b8a8c0e89c87f45555124",
+    "comfy/ldm/triposplat/gaussian.py": "a9776ecfc5ec286dd140da3b24fd7ad9f8ff2d85d1ccd125a1c2a62c40c4ba0e",
+    "comfy/ldm/triposplat/model.py": "dfe102c452e2eae16c1d66f24ae5da6ba49ea5f1698a0598808dcae5ca7003c0",
+    "comfy/ldm/triposplat/preview.py": "1cc6a5b11900ded9722a999b523a1f8c4f778fe796456289c5343970b1aa31ff",
+    "comfy/ldm/triposplat/vae.py": "73c2bbb0733086c906e6882bef823d17a97cd61788465b0bde83a9916d09aac3",
+    "comfy/ldm/util.py": "17a2619515f23ee1ed29ce86552abaf03cb0ab819cf6a629d396524ef3da69bd",
+    "comfy/ldm/wan/ar_model.py": "823806b0b8b02a780ab3f8e2a6816dfb31b9598aef4e6d8fb3039319a14984a3",
+    "comfy/ldm/wan/model.py": "6cec4b24e433bde7f224ca49e42b4e5e1a93a72afe72aede56ef541b0cfd9784",
+    "comfy/ldm/wan/model_animate.py": "d09fc2c6b039d4299509352166b09904bfa300a3c458e034447d69593632e10e",
+    "comfy/ldm/wan/model_animate2.py": "0249deb27442d3e9b6178b00960a6ab4fd374f4a99603ab66cc76c618e5b20b2",
+    "comfy/ldm/wan/model_multitalk.py": "a467f5e4b3d8b88bd996ef95dae7074453a4dead2d17671c15cc457757cd2ee8",
+    "comfy/ldm/wan/model_wandancer.py": "4e6240ae1cc166b5e63b018b8a6907f868eb447e15009b1e0b99fe5b1b01a016",
+    "comfy/ldm/wan/uni3c.py": "4107d7eea2597570e45e24bd60beca9786a78d5124ccaea3af83fd9d4dea1141",
+    "comfy/ldm/wan/vae.py": "b18fdd6d95d9c7093fbc8f2c831dfb36322aa1951c2dd17d32733dac53d689e4",
+    "comfy/ldm/wan/vae2_2.py": "951acd5ef15de85a923ca471659acf02adb281a13ce754bdf7ff0d4c547214a5",
+    "comfy/ldm/yue2/model.py": "bc619d93694239412a58767c3f626a18a12db89f095c077a1758631c34cfbc63",
+    "comfy/lora.py": "502b0118ff179d9c167a8fb5b05b72a7736eb69d948750c0137f57461686d6ff",
+    "comfy/lora_convert.py": "0790e993706b6e5c255fd4000f8f48abed80e318274da5264681eb799df25d0b",
+    "comfy/memory_management.py": "f624823cbee835506377134cd0e576fdf5c22fa474afab3de6c5ae165f835df5",
+    "comfy/model_base.py": "6280712f8315f00f19a1ada53e48bf243c818b017fa751b3412092fa0f381e68",
+    "comfy/model_detection.py": "bb3995fe6f977fbac4f0d424d6a773b9b81d35f5f0f92c841db9cf250d088a32",
+    "comfy/model_management.py": "67670a45dec7776b67c6cf68dada57ff82694e874ed7f9be4310de2719465609",
+    "comfy/model_patcher.py": "20818f501b3ff2b9261b2eef63e2e8d4a1cfd07a39a75bbb73463ca2256c1d9a",
+    "comfy/model_prefetch.py": "96aa7a6946fa3383dd6d17037bdc2b910c9c1364cc335100e351ddac0ea97748",
+    "comfy/model_sampling.py": "8afdc665272589a567792bb652389df7d4a83f69574c2b7e5b3d533d55592990",
+    "comfy/multigpu.py": "276df9432912c4d815813c6417c854d232f5d15033513d5fa9ff25ed7cef56cf",
+    "comfy/nested_tensor.py": "d4d1f56e90bbf1b758de069a0949d6c26c0329cd3894188124a65235aa704aeb",
+    "comfy/ops.py": "e13f918c6a64f1dc2b9ce836868734396849db3eeb80313579afbfa90dd6ae89",
+    "comfy/options.py": "a9d0bb41f5b8d393efc264e83e5f3003ce52c87aca585c0e8ab97bbaea87c8bb",
+    "comfy/patcher_extension.py": "1c7b3b855278d0b95d1c1a705fa0b3c91a265f320e2f97bdeb9d15469d6d4ac7",
+    "comfy/pinned_memory.py": "1af57f9c6f2e5ea1227a93048172fe913f728f43def6f2a7da99971c39c549c8",
+    "comfy/pixel_space_convert.py": "60cc5e4ea109da1e384ca3121121098b0f295e012dec6ca1c73779c2ed9d8cbf",
+    "comfy/quant_ops.py": "196e45349f46e5ca69f6b2251bbe01d4f8eb5d26f8ad38d62b1c002d80fb2089",
+    "comfy/rmsnorm.py": "e8dfbebe9272587038f504538f72fe7e82261307f2c7fbd6f0b05cce28172fdd",
+    "comfy/sample.py": "d274ed5b6abf83707b52b87d25d1716f072d5444954cf23ac0ed31a3b803ee1c",
+    "comfy/sampler_helpers.py": "53c82235bfea0c4edf3cd5219f080c44c45ac1c9a6c3171f2aae151e18b56b91",
+    "comfy/samplers.py": "f2c264ca9d394612f828e3ffe167c856a278a10e1711b269f0ba65dccb66393f",
+    "comfy/sd.py": "7e3984383f5d706b21a02daa1b49fab793dc8d91958a488395a4871c0e0d02b2",
+    "comfy/sd1_clip.py": "0ef5a50c43999aee97a65d0b38f0a7e070ec3559745fc8bcb2eaeae74a34decf",
+    "comfy/sdxl_clip.py": "dd3c01e1c302876612897c0051baa6e108751e36abcba7327490b25a571f97fd",
+    "comfy/storage.py": "6d99d08a5deec77effd0488deb63a23302516ef5d9f8742c658255f6700d0ab1",
+    "comfy/supported_models.py": "007f8d1cc2e0d11c0b16c538f79c8f9a9d4e7513c79df405a7457435d14ee0b5",
+    "comfy/supported_models_base.py": "0b234d6f6ceacd04ff96e4126c388cd7c763e21a7d1aed672ba3a235d7a914a5",
+    "comfy/system_memory.py": "bcf52ba6b425be3bdd79a93d2978dbce0dff9edda3e93f86664a50174e7c7325",
+    "comfy/t2i_adapter/adapter.py": "efc52cc85f941e11b509c0339e8950a6680d031b09bec36736d8834b9ccfa1af",
+    "comfy/taesd/taehv.py": "cb701bd5156c3445b467f03ecfd23042d1c8950ffa4325e8230773a579821448",
+    "comfy/taesd/taesd.py": "8036c118d29d2e0265a209bd3ca88c1ba5157ce61debf78fec2b8ccf4f8ff3bc",
+    "comfy/text_encoders/ace.py": "f200d0a8579b43e4e9994bdba7298063c5fc8aa5f06fe0c377f704341a5f4bb4",
+    "comfy/text_encoders/ace15.py": "3e2a9ab95d6b3497739cca268ebc60bb45c65449b20369a64224ca5ce27f703a",
+    "comfy/text_encoders/ace_text_cleaners.py": "798e1d7d2e29a0a98a1d0bac53a058d5c0c90346f660b3d1aee0622ade85a9c3",
+    "comfy/text_encoders/anima.py": "7eef5186d57c7f6d4b23ecdebb454ae9b64def8117d0e7a57b0b537de64c69c5",
+    "comfy/text_encoders/aura_t5.py": "d20edaa3fea38bb65359941882546c42ba1142ba70fe9933d766aeddac9c4ab3",
+    "comfy/text_encoders/bert.py": "3f1f32353da95790285a10f452959a871aa949aab15a89b646a95abc6165955c",
+    "comfy/text_encoders/boogu.py": "b8ca823a27240a676c896a8116e1c6a5f2238e478e41fdbf2d0a6807bb5d3cd4",
+    "comfy/text_encoders/bpe_tokenizer.py": "1d6c0103b24d96dd2fba3da5016af449bfa3adafff9a447a4ca316197443ec1d",
+    "comfy/text_encoders/cogvideo.py": "60240724679701a21ad5756a2509bcc0e76436d6f9a7647b67f38ab6ed02fd35",
+    "comfy/text_encoders/cosmos.py": "98c09ef00e0b0953bfae891ca2df97c3d70fdbfbacb1165168fe74eaff230524",
+    "comfy/text_encoders/ernie.py": "6a9ead74fcd909b503013e3df76405b10843ddf074edaeabfad20aeb2399efdf",
+    "comfy/text_encoders/flux.py": "784de5fbf0aee15cab0182fda937adf9fc6aa1978f33ce6cb7baff7466be8f41",
+    "comfy/text_encoders/gemma4.py": "f5aa07475724bb7445d5eb66db7635b1968be75f43a774f340815d4a6d79143b",
+    "comfy/text_encoders/genmo.py": "dfbf5c44111595ecfcb531a7b6e6d8e32a6c629d176fa90a932865a57dbbd84b",
+    "comfy/text_encoders/gpt_oss.py": "fa1406cac0eb79271b320c924d59d890747d527229c187b90134290b6d239f09",
+    "comfy/text_encoders/hidream.py": "fa4c0e7c438254a12fe877d9e1db1b13723b473ddab8f43bf5e2cf2b56ad6d75",
+    "comfy/text_encoders/hidream_o1.py": "d49e31c803d12133c54229788bb9775fb32a6046aea2724fd1d835a6188c5bae",
+    "comfy/text_encoders/hunyuan_image.py": "ab462b226963fc4aa56ef8956195227a8f7e07622353353ef7e5a8ee20a84b9f",
+    "comfy/text_encoders/hunyuan_video.py": "658c8e5e1a2da73f27b515037e95d18d4fa8edcc0a9b7894b42b5bc20a7a0314",
+    "comfy/text_encoders/hydit.py": "3a56925c2ef403e888b2bd2187aaa5c0fdbf16ad16c88c282da095603873e748",
+    "comfy/text_encoders/ideogram4.py": "dfe31ad9c3204bf2f98c81cbc498284f661f4162f35486baed38a9a847c52343",
+    "comfy/text_encoders/jina_clip_2.py": "d5f8f32dc9ebcdc55956bc6249f115c78483555bdd895b82814376d06a6fb3d1",
+    "comfy/text_encoders/joyimage.py": "e7a144656c9f409792f704d79e98d145500af78a30fb53a5d7dbe03d57ea6597",
+    "comfy/text_encoders/kandinsky5.py": "1de8b4f8744946ce52914c03b8e10da1b897a720672401b91f8ddb5897e201f8",
+    "comfy/text_encoders/krea2.py": "be316682d4787ff0eb2bda9f2396b3769efa8f1f28bd1a688069f414de04c5e4",
+    "comfy/text_encoders/llama.py": "3e8cbb319e0c727d1a75525cbe29863463aa8263485fac22303c58fa0316ab4a",
+    "comfy/text_encoders/long_clipl.py": "ec23dfced81defe857d88d3cb4536c07ffe8f9c7ab03e9506589e87b73b81508",
+    "comfy/text_encoders/longcat_image.py": "8c9a061f054948ae6be006677876d621bee6d5e370f18af6b7aa6b61049f11dd",
+    "comfy/text_encoders/lt.py": "6794327260d3eb8c93494105fdf24216e36b6dc44a8dd0b2cd08ad7c469a2104",
+    "comfy/text_encoders/lumina2.py": "9964c61b8060d18fcef25712c7e101a67b8706f6f9d6cef7b183c08471d46e0e",
+    "comfy/text_encoders/mage_flow.py": "ba7340eac29982e0a404ba181afacd9588d581ab780c810f4039d5c6585f8b8f",
+    "comfy/text_encoders/minimax.py": "0e16e44100d6db2bdfd1292eafd1b2f8d71147c546f49afe292fe4d2cdcefe8a",
+    "comfy/text_encoders/minimax_music.py": "2ae0f72bc064e65aa6cde9fdd8cdbf5179397b167667ff930a720b5d85d285d5",
+    "comfy/text_encoders/newbie.py": "444a1bed8e47d27a1b5672e488689f8adb92879198326b99fc1ca03180d52ac4",
+    "comfy/text_encoders/omnigen2.py": "ef76972277b8b2141172ea2e53685bdeb26f2ff383c679946f10ff3396067c92",
+    "comfy/text_encoders/ovis.py": "80749123bfa24b2947fef548101a17cd73085e6743b07dd1cb3f30490f45b65f",
+    "comfy/text_encoders/pixart_t5.py": "9645107e3fcaafb8adf74b74f7444bc7cf4c9e8b05cdcb7651d65b1798d3d8ac",
+    "comfy/text_encoders/pixeldit.py": "316ea00a65f2a4df3bcb57dac1ffe51cb83024a04d9e43ca6aba4a8d8119e409",
+    "comfy/text_encoders/qwen35.py": "d0f2678b001726ac5996839006cabfc863188f424cd8198e3e42b808a884b7eb",
+    "comfy/text_encoders/qwen3vl.py": "4bab956f40046949a144dcde13c7c578f071bf333407cabf2b130d3751b2dd45",
+    "comfy/text_encoders/qwen_image.py": "9eab4371988f5b5e55260aba00e3984996d8efd4851569cc7e54b0e39811c1a9",
+    "comfy/text_encoders/qwen_vl.py": "3ac8d517b5adf33bd7c3c87c505cee79537dc5a3981a577f8d43bfe5eba80c16",
+    "comfy/text_encoders/sa3.py": "e6603d11cf57923518b1393d0fe915d590f23b348072f61c11aa2e83a770f994",
+    "comfy/text_encoders/sa_t5.py": "ec3913c5fd9a5d209d8f21ee031a61f30c30f9b1c9d6e7c96124429a699a7421",
+    "comfy/text_encoders/sam3_clip.py": "86f1f28b88cc364adc585efdfc6b72947c09c16c1fe52c81ac543f9717fa60df",
+    "comfy/text_encoders/sd2_clip.py": "f271a816164925da14895a742a323cd3149d651a8600c916d6ee71080fde4f6e",
+    "comfy/text_encoders/sd3_clip.py": "61bde2b4a428779469a01f342a9195d115f2a207c7a3d2c0d6c0a5715fdc03ed",
+    "comfy/text_encoders/sensenova.py": "0f3746765b5ee97ad26b4c465aa3f47d4dd4957da8f760f3e70ef8a393d65c31",
+    "comfy/text_encoders/spiece_tokenizer.py": "300de9904c109171b2270524a35c372e6b8c145b88b3f9d242613d45c2bb559f",
+    "comfy/text_encoders/t5.py": "797f11b69256dffa8d9a6d236fe1e05d0c250c84d231a5993accde0ff44238bc",
+    "comfy/text_encoders/wan.py": "e9a6ca356790c76f7a36550842fc8a93c8c584cd175d69615eaddb7b4cd276bc",
+    "comfy/text_encoders/yue2.py": "6c1e883f1357d292c1790abe4307f7910a6aeba0f055b9df3d415d9fb8099391",
+    "comfy/text_encoders/z_image.py": "c6d1d15054ec8f6b1b5cddb759f5e637aa64dd9ffeaa937e266f03e035550aed",
+    "comfy/utils.py": "9320cf5c624e96acc1d9ec92ff120ed6387a2142707f3194cb21dd0d11ac2500",
+    "comfy/weight_adapter/__init__.py": "d9fe388a6bd3b93212a5e04b8921759841e2cf88939cfcc3a7bf59e16505edd0",
+    "comfy/weight_adapter/base.py": "484f0d83a96e700f80c793e4bcc6a897d633233e51a59191d91da5e59da345c7",
+    "comfy/weight_adapter/boft.py": "2850e0b4c2295cd87445415e287061fa3bfd69e88bd0aeb3eb16064864bd078d",
+    "comfy/weight_adapter/bypass.py": "618c286c5f74e823318f41774e02cfcfa02d74ee9d51320ec0aa2694cd74aa8e",
+    "comfy/weight_adapter/glora.py": "31cdd03f5b0beaa0df055512560128930f4f26b219ba57602d21abb086425b09",
+    "comfy/weight_adapter/loha.py": "579ca1e33e0d244e0d7eedd30fb727913341f8e7bfbd74b51221f567612286d5",
+    "comfy/weight_adapter/lokr.py": "b4763cc32215a47e4d906cfa6cbad9cf893f6a1329ada2225fda81fd99fcfeb4",
+    "comfy/weight_adapter/lora.py": "e506062b4eb189be4c36f88270e0fd4dcce038c79a98f7163604ed6b44efe4b5",
+    "comfy/weight_adapter/oft.py": "88be3c32f610478bc6900a10009eaadf6fe2af973ed4861731e4f21e1afacf89",
+    "comfy_api/feature_flags.py": "6105e4f732972b4ff41429420bdb4d5364c3e4ebd4f3a7f46eead1974c538c73",
+    "comfy_api/generate_api_stubs.py": "dedd55dd7d8aa54c65e98130e2bf763bf28e5245dc958cc4aa84d5f09c356fb0",
+    "comfy_api/input/__init__.py": "13a35aed9b7d410ad6b3971ba3177ec103aedb02158fa5e8d9e1062015f0a9a6",
+    "comfy_api/input/basic_types.py": "c91648aa1bde3cc53be02edd4e941ee3695f9c0323df37aba8d8b80b1db59feb",
+    "comfy_api/input/video_types.py": "76ef537120fdab8077412ff1cb3c5739f3748dd818fa6bbc07829af5001b20d7",
+    "comfy_api/input_impl/__init__.py": "6cfebda2a205d94112f9a1105b07bafaf2038d83ffd630ab7875f6bfa5896209",
+    "comfy_api/input_impl/video_types.py": "27c2f86c4c5407f93d7dfe3b38c78eab968c0c38fb6617c21c7e531912c9ee6d",
+    "comfy_api/internal/__init__.py": "50786f7e2ebc910ed9becddf066e92d7924b7f6080189651067bbcd839e8a410",
+    "comfy_api/internal/api_registry.py": "af85d1a93c400e21a43aa7b9ce71968e373e36f5e1560c07d1b7493b8b96e898",
+    "comfy_api/internal/async_to_sync.py": "3507b0fbe2b9dea365d4f8b4a891e791714f7b27b17c6d055a3116f2d965aa4c",
+    "comfy_api/internal/singleton.py": "b3cac979c6c4c8f58a49658b25ebb91b347e0c5ecb74b3f4f4f2ab606da227b5",
+    "comfy_api/latest/__init__.py": "777d180cc6a07b22425d579c5cf03c2ebfe30d4ea78799339471af0ff2691d69",
+    "comfy_api/latest/_caching.py": "c08f3ae0bf382f58fb40818d9f3992ccdc693dd60ebcddbf3c60bce0a806ff81",
+    "comfy_api/latest/_input/__init__.py": "0fdc5ca2370a4357a640215eb35a6a865579e3b00efd9b798fa4a28a44fc0523",
+    "comfy_api/latest/_input/basic_types.py": "99251ecb404c881f28a413d4c0829fdf5345a1897dfac76ed6199863601098b1",
+    "comfy_api/latest/_input/curve_types.py": "0d7476b1c461ce1481075ae952e7acf53b7362c9142b668b07fe88a62f0acedf",
+    "comfy_api/latest/_input/range_types.py": "ffd99fa9c40736026a934724f3c930cffc9771ebb6ab80f67417051c803417b0",
+    "comfy_api/latest/_input/video_types.py": "5481238fb37f52919f22be1d62abaf10a90130544ee60b96738deb114c74f3c6",
+    "comfy_api/latest/_input_impl/__init__.py": "2c0c2f6a8e9ca4c04444057d879c7b0f2d3e59b83db5e28ca1d5b1311622d1d2",
+    "comfy_api/latest/_input_impl/video_types.py": "ca3ab830c3e71706762b03a7b239ce7a198a15abbf78d75de47fb3fb108449b9",
+    "comfy_api/latest/_io.py": "e697ed00732deffb46d7a017d82dae48ee2504a8d356f911a1447ec6146294f7",
+    "comfy_api/latest/_io_public.py": "c805d754d61aba1ea72ed2d9d5c371de35be9affa5305d35426fb298fcb7c046",
+    "comfy_api/latest/_ui.py": "0b6579a8649129cf0c4cf221ca2680fc78394b4ee332966204908feb4f09335f",
+    "comfy_api/latest/_ui_public.py": "7104ffcac91481c1d05e9417904c93afe6a126590e06e587c140e2f3d4039431",
+    "comfy_api/latest/_util/__init__.py": "3602c7e27bbb9291a05a8324e31881bf2e59b779d039fe6091aaf481c00d7131",
+    "comfy_api/latest/_util/geometry_types.py": "3a4dd3d39cbb25f1c33b3ee7b4fb6221df69278621889bbf2f992964df22314d",
+    "comfy_api/latest/_util/image_types.py": "1704789d3bbb5570eb7dae16537a20aa88b63cd551dd54b5ee91781732efc606",
+    "comfy_api/latest/_util/video_types.py": "20808cc2d1caff9b73bb686cbb3de04df36c82da96bba524d7cac5ac37231d56",
+    "comfy_api/torch_helpers/__init__.py": "41f6e44e920c989823e5b073bc283267ed12ca8eebad2bd1f18e4c9deb551d95",
+    "comfy_api/torch_helpers/torch_compile.py": "e370434c6eeae612e50fec47207faad6c2a181d5a1b836fe7e41bfb10eb11452",
+    "comfy_api/util/__init__.py": "9bc0e255f67dd12b90505435f13ea20d75b8f6a632a0acd7a378524e17dccc28",
+    "comfy_api/util/video_types.py": "24257c6644e1a1ff2b0607c9bfb2d9d6def185ebd4052f24058f872fa5c01cd5",
+    "comfy_api/util.py": "453521345c5667dcec73af1428a7ea6bfde2da465037c5c196447cada20a6df7",
+    "comfy_api/v0_0_1/__init__.py": "453b9e1201848282aed093055234670b5a873f282389affc4ca5aceeff3b5e97",
+    "comfy_api/v0_0_2/__init__.py": "2f2037752244ce0ae0629b2380da528bfe9b7896c785be2c37bc586cebab4e4b",
+    "comfy_api/version_list.py": "e2f89c64de13af56fb33a7aa20710174e84236fe017cdc8da7f40fa76093e73e",
+    "comfy_api_nodes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "comfy_api_nodes/apis/__init__.py": "a285c125490761d44772d4dcfd55a35d001cbdea4b6ec13c4ef717ca6e91836e",
+    "comfy_api_nodes/apis/anthropic.py": "de637ad85e802578154fc817074209eaa25cb0892bc4460970a304992ff32cf8",
+    "comfy_api_nodes/apis/beeble.py": "19a0a82f85ee6bc1f514a0af5174029ee868c4650d0e5f35343a8bca1188e356",
+    "comfy_api_nodes/apis/bfl.py": "a09c2b08716db707d16c1144b7fb5fe3eeda6f838ebf4f99f7b059505a100354",
+    "comfy_api_nodes/apis/bria.py": "b70b1c57670c80d90fa2b95c5b601fa17c5cca4077464ac6503f90e85b3eb014",
+    "comfy_api_nodes/apis/bytedance.py": "546e2a62157dfd00ac5015771e3e02951a24ccc2c92f297cad4d16c5ebe10b6d",
+    "comfy_api_nodes/apis/bytedance_llm.py": "3c8ce2f2cfd181f7d0da420cd39c4f932120d3a64ba5af9b3ca6b5698f93587e",
+    "comfy_api_nodes/apis/comfy_cloud.py": "6cd42ee06ed8a3644fc74005987d7a7cc73614dbf956bebeb96e67346343f717",
+    "comfy_api_nodes/apis/elevenlabs.py": "46a4376cadf34f8d192c9b23cd8261e61adca31961ca98ae4b2a9d5912552545",
+    "comfy_api_nodes/apis/fishaudio.py": "8d9b32c3c5858d2fdf2767da51fc4a833a1ef8b6f48f2223c5b2a8576d06ffa3",
+    "comfy_api_nodes/apis/gemini.py": "cb679edd21d09b3cbf29229357d82cd15debb1ba2883eaf2f5c9fb8eda2ba666",
+    "comfy_api_nodes/apis/grok.py": "09df68815fd7bef7db1b58e20ba926786d4ddd05e05e0dd5a11d3ba4b8105615",
+    "comfy_api_nodes/apis/heygen.py": "9aa49a0f02e7f0eb0ff365b2d00a2043348b953cd52dd0f39083b6ced8406293",
+    "comfy_api_nodes/apis/hitpaw.py": "df2e5bc200512990cdac52fe7ef947cbb9d9a1be322b27e2a84c6d7ff6fceb60",
+    "comfy_api_nodes/apis/hunyuan3d.py": "15ac71aa4f9352ad8510a475259b25af05a68721c9760c588439f4c0b55f60e8",
+    "comfy_api_nodes/apis/ideogram.py": "6b4a0b3c62e62a5045d5522f3b1688330cca2cf194deebd34798c0ad25ed5e3e",
+    "comfy_api_nodes/apis/kling.py": "a1a94b595f72ca924ecba9737b4b75c03e5d1f2c6b7a7a2287a07f14a94b55ea",
+    "comfy_api_nodes/apis/krea.py": "455369661ed1a0ee385c08cd86b13a331db505fe5b16cd9b2755806c5d571cdd",
+    "comfy_api_nodes/apis/luma.py": "a4d55eb2690194b9f32fdbff69f5b2f0ac4dbc8cea22958da684888ba85d71ff",
+    "comfy_api_nodes/apis/magnific.py": "ba86587c4590507ee80324eeffe5e3bba7b354c1c8cb72d3a141d3c8b3647dec",
+    "comfy_api_nodes/apis/meshy.py": "eb892d48ae06f1b310f8f208d0041cd212b54d9f5200d3ff77bdd33a1132a100",
+    "comfy_api_nodes/apis/meta.py": "cd40785ec98aa0fc892e5093184056c1962b5956726f26c50e37dbfad747b4ce",
+    "comfy_api_nodes/apis/minimax.py": "ebe432fbe09ced993183d4de64ee54becd35ee6bb3038dd726e8382f1caa7ecd",
+    "comfy_api_nodes/apis/openai.py": "7c947a1785b92151074c82bc9499842d728cebe851cd3ce65689fc5808775cb1",
+    "comfy_api_nodes/apis/openrouter.py": "d7761356d1832a11d87ceb3e4615a36b50455eec50c1d764634f54e95c4c048c",
+    "comfy_api_nodes/apis/pixverse.py": "69d0ea4d3ec18b5bff5df2522a06d28d83fbe1648cc369077957fc0d2c611361",
+    "comfy_api_nodes/apis/pruna.py": "87d69802d90df843b520d09857aa389b3d25da9f7f614f7fbd1051181fd9a529",
+    "comfy_api_nodes/apis/quiver.py": "af2492f72b24a6ea4d4860b3dcf553ea180df395abd1357f1d2a445f93e0f219",
+    "comfy_api_nodes/apis/qwen.py": "3d3bd7c52756661866c63756e4e72dc98e76e3e5068d91a7a9b21ae3e101c4a2",
+    "comfy_api_nodes/apis/recraft.py": "931e77f4eea02671d85463acca4b15a316abe805a606dd048cb8533b2f5dec2e",
+    "comfy_api_nodes/apis/reve.py": "3645e5de313eb50769c196f79279eb28c97074051c120bcfaca8573f68ed4ddb",
+    "comfy_api_nodes/apis/rodin.py": "4bf1fc63db9d74ea9f0cb126f350950fee1d79fb9d452675a0b6dc3c113e4344",
+    "comfy_api_nodes/apis/runway.py": "487c9b3519e39c50fba60ad27dafd000bf38eacf54715896c636e02610075190",
+    "comfy_api_nodes/apis/sync_so.py": "3d677c13c9fc992b8ee1dfd9c1d76de03d00bbede7deccd31815abf125c93c66",
+    "comfy_api_nodes/apis/topaz.py": "d8c291de9ccb6ea5bcb001e4b96131e1a985c9975c37ec01093d19fca6e79bba",
+    "comfy_api_nodes/apis/tripo.py": "99181f55f514ac778ffc2c8a78ba8803e0cf01bedd84fc0387509b8a1a632bff",
+    "comfy_api_nodes/apis/veo.py": "5f6fdbf413254f290dd0b08e73624fced09818c1646a09132d0d87ac945dbe30",
+    "comfy_api_nodes/apis/vidu.py": "d7e5441a01a76765c6cd8d664fdeb889a56b912b8f31c0d0524ed7fbd49f46da",
+    "comfy_api_nodes/apis/wan.py": "615df04fb6ec2900e363db582b82e690e5a2e32055e9a52d774633eb7851c350",
+    "comfy_api_nodes/apis/wavespeed.py": "0df5d2558af088b8ff76d2ec877e3a004416b6ae29077729c272cfa64dd8216a",
+    "comfy_api_nodes/nodes_anthropic.py": "dd1df1540505cea7cfc38e082aadc2095748ca6e3e85f0295e8dfabfd30dfe0e",
+    "comfy_api_nodes/nodes_beeble.py": "a7d98292ba01564a4a8519ba3c8caa30d9e0aaf42bf16ca55e29944222896812",
+    "comfy_api_nodes/nodes_bfl.py": "3c8ba657502524358020b44adece1b29893afbcf979b4eee936720d7784d12b4",
+    "comfy_api_nodes/nodes_bria.py": "9d3002fedf67a043a7e16356b166d4c0511699436b32e65dde3cc2efc194aafc",
+    "comfy_api_nodes/nodes_bytedance.py": "039f34af69ae4e5fd6dc592bcb1f98e906d0d38d3b56268b8a32b4ec9398bebd",
+    "comfy_api_nodes/nodes_bytedance_llm.py": "1b744044d1a6c9d81d1868223921cdedb6fa95b7677decf0fa65641ce4b822c9",
+    "comfy_api_nodes/nodes_comfy_cloud.py": "d6ae68df0070dc85d2547b9b93713200e75c4ae1a127643912f564fc225194ed",
+    "comfy_api_nodes/nodes_elevenlabs.py": "3fd9f45638dd751e5db9dc6f03919e82d84df6d80b7aa39795e283504d5ebe59",
+    "comfy_api_nodes/nodes_fishaudio.py": "20adf60349215d96f602ba21df19d535ce264653b07eb41511076cd9e3b24db4",
+    "comfy_api_nodes/nodes_gemini.py": "917284eea88f75d5ea816cabe3e0fc302bcbbc944dfa055494647fcebb7bae0c",
+    "comfy_api_nodes/nodes_grok.py": "794dd1a59721831374d3e638f083438a983fedd444e2c530ee55e1b7d21f952a",
+    "comfy_api_nodes/nodes_heygen.py": "43e73f79bd69f4098b23c79b805b6a1380143380383eff7c38ef790e42ee9d09",
+    "comfy_api_nodes/nodes_hitpaw.py": "d4b39b72248ea48ca96c5ade73c5dcf716cf1b06208af4c8ea4631d14885e5aa",
+    "comfy_api_nodes/nodes_hunyuan3d.py": "887df909b17fc6ebc21b3a8ec2a64fb597a6919952b64b8f447f0f35fdaa9169",
+    "comfy_api_nodes/nodes_ideogram.py": "4f841aba28d9a306c0c8efbf2298e6c29f53cf7acc7c252297e5d7de39d894cc",
+    "comfy_api_nodes/nodes_kling.py": "dc99f45b3c7ecf471195e10372cad67548e86d0bab5c15dcabb3a99c46233f78",
+    "comfy_api_nodes/nodes_krea.py": "f204a1b6fc070bcccd45e79472566936936d6fa9f39500391b120a845ef81f94",
+    "comfy_api_nodes/nodes_ltxv.py": "3c7944cf2e366cb7539cd086768de3e7bae470788a1a5d03fedd3bc324e42d64",
+    "comfy_api_nodes/nodes_luma.py": "6faf168ba42691705caef3e03f4894cc8e4b95dfac63ac9fedbe5f08fe083a36",
+    "comfy_api_nodes/nodes_magnific.py": "db80f47f8b23bd5b97b51ea3ab3210f9607833e1a02b5da589f86ae3d94574c5",
+    "comfy_api_nodes/nodes_meshy.py": "43445fdedd286f25b884b98fb3d20bc1ce4913e9fe198e118e7b3550b445116b",
+    "comfy_api_nodes/nodes_meta.py": "70e0f7c84b89d493c23655aa782a5ec3e8eb244085a0e82f55b7f3d62e7cb810",
+    "comfy_api_nodes/nodes_minimax.py": "fe3284470e33764c32f278a96f7dbf5d9faa985b1e35e076129e04a4d1cccc8c",
+    "comfy_api_nodes/nodes_openai.py": "b2f5138274c93e2e6827a4e3a26cb7a4b9e9d1be216ece3cc4a850d5f3524dc2",
+    "comfy_api_nodes/nodes_openrouter.py": "d4bad970b6243f4a741a24aade1f6f479d4da67901d34fd389b650d06ac4e525",
+    "comfy_api_nodes/nodes_pixverse.py": "7cf4ff90ffb1c1e0cb8f654c060c0a60043ca3682d9b8cbf74e438b7f92fad5c",
+    "comfy_api_nodes/nodes_pruna.py": "79ad29f2420058905540b2b84a65771907a3ca1b2fe1ea4b2ad954818efd3ede",
+    "comfy_api_nodes/nodes_quiver.py": "5ab37aba355046eb66dc2f36c5edec4ff5e42fec17cbb0195fd90f4ee3115e0d",
+    "comfy_api_nodes/nodes_qwen.py": "5402a4828d33401271153f0caf30181bb40c94c903da675ebd3bbe3119aea43a",
+    "comfy_api_nodes/nodes_recraft.py": "0672ff1169fb4578b1c65ef84f3e89bdced5ddefb4d43f4e7a11edc1d379fc38",
+    "comfy_api_nodes/nodes_reve.py": "f16f5a10efd6878eaec4b5f98fe3a27bf59a9450a7289110f95fd0341bed071a",
+    "comfy_api_nodes/nodes_rodin.py": "e833ab2c68c6c619b4666b269e04e2f3c36a076f6a9e2b44f1bc845ba3614555",
+    "comfy_api_nodes/nodes_runway.py": "3ea2a5658dbc08c9f39deac06e0d28136f908d11a469c52872062a2988ceb295",
+    "comfy_api_nodes/nodes_sonilo.py": "0fedcb4659918bc385f511e1b04b202d1f50f578b95f7e5df93d2700836be727",
+    "comfy_api_nodes/nodes_sora.py": "1baccbb05e3291dcec8417229ad092089ff7c080511795b3af7af94d42c7fc91",
+    "comfy_api_nodes/nodes_sync_so.py": "4c6da22846789e00d26b570f5f5be79c851197cbeb9e3b98982c159ebdc99375",
+    "comfy_api_nodes/nodes_topaz.py": "27a0e0784028007fad792ced12de7a6c4d6c8eacd0038afe1c80da9fb424cea7",
+    "comfy_api_nodes/nodes_tripo.py": "7ab72a5b8e7fa742c515820a7219682dac04c4c628757c9c28dba5e5f3f6bdf9",
+    "comfy_api_nodes/nodes_veo2.py": "c1215dd9c038b6f193456300dd5fc07aa0a223fa714e14e8df83bf880a14cee2",
+    "comfy_api_nodes/nodes_vidu.py": "d88d82cad6e7da3d1205fc6523d5ee40b7d6df37b3541fa8e75d541b188343be",
+    "comfy_api_nodes/nodes_wan.py": "fed7a818b2bdb90f7d1aa5b8334d9abe078886e74b9f54b254d71b990ed415ea",
+    "comfy_api_nodes/nodes_wavespeed.py": "f7c7fec19d8ddfd1bc885498911de9a3555c2c19aa08c6c982a0a45e2a9cf699",
+    "comfy_api_nodes/util/__init__.py": "6ca2ccd5f9617d7aa2169491341ae4ae251c6a636458ee7aaf5f2ba944df0603",
+    "comfy_api_nodes/util/_helpers.py": "461f0be15129f4edf3c1d0650a9de17c853986095799e14941665d65e79a1fba",
+    "comfy_api_nodes/util/client.py": "8e1ea5b54244267d4bffdb83b4a56ba20b02a4e8bbee50cffb72be1b448061cc",
+    "comfy_api_nodes/util/common_exceptions.py": "110910ae364e25d95cd3885d1433703cca3d574dc388a16863173372caa16a0b",
+    "comfy_api_nodes/util/conversions.py": "31168edf2d5c2b8f9bf7e067922a4dff277a40658c78df1c74bfa080bad20516",
+    "comfy_api_nodes/util/download_helpers.py": "abf2a6b0bf98f6a99d047f2c385dd4f8eaa17bfbb0baa7f36da5c165536ac310",
+    "comfy_api_nodes/util/request_logger.py": "e4096a81b072ad24d58af0286f895751c03522b73b4ac38c6017ce2ef7888115",
+    "comfy_api_nodes/util/upload_helpers.py": "ad1f6767ecb8cf1f6548e0fbc6d5f086cb910ee040599bae11b3a9aad381eeac",
+    "comfy_api_nodes/util/validation_utils.py": "9a3f12c17fd86fbee737c03360b8b59205fdd1fbc0e296ea7d0c5dcaa558f7fd",
+    "comfy_config/config_parser.py": "83029c05dd6dc960a07db4012bbb0d16aa170ee02090e1f68457c651511f0db6",
+    "comfy_config/types.py": "54af7087783882b4eafded50f92ba89aa2cce177befa026ff90d93d630907665",
+    "comfy_execution/asset_enrichment.py": "4ce01f8c15c5362f5ac7e7508de35eb80790d26a06473c45a9a56d631c47070b",
+    "comfy_execution/cache_provider.py": "3261e204d3153b19f0e6b65b638acbd4a1fb40dd935d56c48d3f6fecda65f4c8",
+    "comfy_execution/caching.py": "edc554b1348f4c5dae50c022b061399ab5be5e06872d73c5c1fedca9bba45ce2",
+    "comfy_execution/graph.py": "3c2f8f7c5a543f432b63e9e27e480a8fd58098d8b254e25d91781b99a3dfbde1",
+    "comfy_execution/graph_utils.py": "dabb3f75952a1398891ed87ad853d4ea9c929f322ce6997d4ea916adbc2f209d",
+    "comfy_execution/jobs.py": "cee1191aa6ed913fde8b0556db9afa4f95135bdd910956b8d4bf921a81452085",
+    "comfy_execution/progress.py": "ff4739f884a5793e6be833ade06a44f3c8d6b183a2fe170137da7a5b7a205438",
+    "comfy_execution/server_protocol.py": "ba98252defc9147dc89e9b9e32d442ff4f24b416a0909b3eb90a709ace1e058f",
+    "comfy_execution/utils.py": "f80e6020f8f60754ebf15f194670c12ba57a46458b0c185694d8198e428f7be4",
+    "comfy_execution/validation.py": "0f8d37760f3c0e05836e7ade85f9b12fa1d3ecdfe710dfe88b4682f8fdb7ba75",
+    "comfy_extras/chainner_models/model_loading.py": "77a335bd0a09350d313d814c46bd030fa22c4766244a93fb659be39e7fc9c4a2",
+    "comfy_extras/color_util.py": "37d0395fad834def499b97e17ced4301ba21c6c7bed7192210d088634ecc4109",
+    "comfy_extras/compositor_blend.py": "423f606f72c4374dda887a5a5f0c53d3d87cf17b65fc80cc4a1e7fb60ce98fc3",
+    "comfy_extras/frame_interpolation_models/film_net.py": "e4efa6666846cecb5dc83cb4668410b37b6c4ffae6b08e48b74184bc037c4ab1",
+    "comfy_extras/frame_interpolation_models/ifnet.py": "854b808a425d01a82df2395cb925d7a5dab86669c62485f95fb790736ced11a3",
+    "comfy_extras/mediapipe/face_geometry.py": "40cacaa7e70596ab318adacc86676e10665ab81c239c3a89eed264a51a464259",
+    "comfy_extras/mediapipe/face_landmarker.py": "23c59c6d2e9a5fa52133c228c2fc25cf3ce2aac3747e22756560a362dbbf60fd",
+    "comfy_extras/mesh3d/fileio/gltf_read.py": "298915d308ba14bc519cce8a9dd01bba36d414a95f61f9ba79a261ddb07bdb5b",
+    "comfy_extras/mesh3d/fileio/mesh_file_read.py": "afa9394ccbeb40a90da3abce97c294ea413b7ecac8f1ad6bb41291225cd4de18",
+    "comfy_extras/mesh3d/postprocess/qem_decimate.py": "0b890667d6195b731da4bdffabbc126620fd3f2baf1a01b9340fcbb00610da1c",
+    "comfy_extras/mesh3d/postprocess/remesh.py": "7c67190df434abd6a32de6fe5c987ef7755387f552311e0a088b9c674fcff3c7",
+    "comfy_extras/mesh3d/uv_unwrap/mesh.py": "b73b1509db7a9a5b5f2d0f3316de292a768616707dab355766aa9a428732d051",
+    "comfy_extras/mesh3d/uv_unwrap/pack.py": "fc39f8f583a14c516d1c3be4acd79b04ce661cce89dc56c70bb4e5ed13e614ad",
+    "comfy_extras/mesh3d/uv_unwrap/parameterize.py": "1594225fc3740fc72d91dc536c3a3957cb141fce90e308a108bb7859d1cfa778",
+    "comfy_extras/mesh3d/uv_unwrap/segment.py": "c53a3a2b7af31a3eb6034eb7e910bad1c67464613900c260d8b714d0d5e5d685",
+    "comfy_extras/nodes_ace.py": "02a5013fe817c66e8ee2b229ecedd413dcc0a6439ffdf18fa3331e40d824de66",
+    "comfy_extras/nodes_advanced_samplers.py": "7db38b52a07d3d7a65a5f6b5f78aae8f8b72c134a3710e6c4f35f644a9f17114",
+    "comfy_extras/nodes_align_your_steps.py": "437b65c241fdae19202650b4208d4068ef146048558e49dd21a8398d352f0576",
+    "comfy_extras/nodes_apg.py": "ffb765422049047aff8d803ef4aefcf1c38eaa6effbd43491d5d7c7e52d4d977",
+    "comfy_extras/nodes_ar_video.py": "49d2a69231a07bc76b91e765580a40a6d10b619c84dce3da0893b25a7637471e",
+    "comfy_extras/nodes_attention_multiply.py": "40b6aefb001bfef1a1f3ce4a256be0209fd538750a32f792cf522106c302e52b",
+    "comfy_extras/nodes_audio.py": "f3b386680319b45115f42af565f1e6006c758f5a9efc8d0bf22a7fe4995d00b6",
+    "comfy_extras/nodes_audio_encoder.py": "6d0dfba67b78dc4a45a51eb840a3bd13d75823e1d3db248462ea59b1a11c93b6",
+    "comfy_extras/nodes_bernini.py": "9a4d0cc1f60bd7e29413c610cd300bd86c2f7426431d81a3546275b3804d8d48",
+    "comfy_extras/nodes_bg_removal.py": "c2cf4b42f10cfb1bb057b60a8745fb96a2462e1f1a2bd275e00795bb3f758cce",
+    "comfy_extras/nodes_boogu.py": "49910bbaf570b2427b3d624fc13a99c33069130100866d23936c64b8c4a1a25f",
+    "comfy_extras/nodes_bounding_boxes.py": "8f22633d094e8b2b5635669b730ead087f5c55079e658e18e0e1324df911c0d7",
+    "comfy_extras/nodes_camera_trajectory.py": "1c01df65d129013d2a7868134f22097a0f3c1317f73073824b166cfc5026dc77",
+    "comfy_extras/nodes_canny.py": "a08dbf4b1690042adfadf4b6ea0b183064c2a7bb4982d6576aa5f23a16d762ce",
+    "comfy_extras/nodes_cfg.py": "688a73094509efcc81bf22bf0e77b2cd8c9f1726f455ed55f6f9747dec656e99",
+    "comfy_extras/nodes_chroma_radiance.py": "a16d2f4d5953020da038d30594ffe93ee2ba50508ab8f412784e57e9f571a5e5",
+    "comfy_extras/nodes_clip_sdxl.py": "df7f361867ab02a8dd1c1e58e6a12ef3c1211d3db64760cbf138dade08102f57",
+    "comfy_extras/nodes_color.py": "983c802c3bfa8d96ecb1b46613d275c079048da7838ac968e88654d35bad5e2a",
+    "comfy_extras/nodes_compositing.py": "ef1712ca69ebb1dbd2141bff866674ec73b2ebea757aadf02f7aec59644d9257",
+    "comfy_extras/nodes_compositor.py": "7041ab3b35d96bc37467ed89eb6b1f36bd4f28edebd846c7eb02f07b4c2b3c90",
+    "comfy_extras/nodes_cond.py": "7edfe171af0d540b7dcdaab67817d04d4adf20a62827b1d897a24342790a3d1d",
+    "comfy_extras/nodes_context_windows.py": "b58c6680e079578fbcc624e4668d6fd8f55d50482043ac38b54e4f5dc34b223c",
+    "comfy_extras/nodes_controlnet.py": "197972863ab797c8b1e1137db99fbbbdf2c9d6668d57cb6fa4413ed993b6ae59",
+    "comfy_extras/nodes_cosmos.py": "42b841adf8a415de3a0e648082cc347ff97876fca9b35949c1f2b03402c6007d",
+    "comfy_extras/nodes_curve.py": "5ccd1fc1c124968b2f739ca840ac3a2d8820fe1248f3d34eb5f6d86bee3799e7",
+    "comfy_extras/nodes_custom_sampler.py": "b0ba1521c72475e06fed15db004274ed7c8bb2bf73f1d58849faf6f9f9d264fe",
+    "comfy_extras/nodes_dataset.py": "be8baf67d8872953fa1896a23686ee9fc7258a31b66bd5b8851fdd998ab626a5",
+    "comfy_extras/nodes_depth_anything_3.py": "adfce28637b6904a08596aa23e22502d20089bc28fff6bcdaabe0b3c35fb7f02",
+    "comfy_extras/nodes_differential_diffusion.py": "13e29fc85f24aaa79b68a0e1901c83705609f2871ae9506d3aa3c96bcd364c58",
+    "comfy_extras/nodes_easycache.py": "746fd299918efff7f2abe919fb8a0c20abd384be1e28a0f122c0d321a69ce174",
+    "comfy_extras/nodes_edit_model.py": "8fe4edaa13707df052ddf883fade1190f7b68416d54c7026cefefd489a13ee7e",
+    "comfy_extras/nodes_eps.py": "4758eced2775ec4659eadfd00d9e9da60364b583e2bdcdf51a7e15bb164fe6cf",
+    "comfy_extras/nodes_flux.py": "71c9d804a9acfb7a828fecb8fcc4b93e28f4417f0c4259a68910f4027059741f",
+    "comfy_extras/nodes_frame_interpolation.py": "038762ff4e248c91e168685796f590a2e5aa0dc3b3c2922aa5f9d936b1fff369",
+    "comfy_extras/nodes_freelunch.py": "f65d2f896e38a5a3baf17deeec0941b418e76ceb5d611147558c211a209ec6e5",
+    "comfy_extras/nodes_fresca.py": "595e4cd6e4c8b169d534c741c3a3a4c6faaed5af23125eb7b4aa3e22b1b97bff",
+    "comfy_extras/nodes_gaussian_splat.py": "6408a822acd77405a10f2edf009e3c61889f6914d608352903e39807d18bb3dc",
+    "comfy_extras/nodes_gits.py": "41667051c97b10d9ecbe0c9aac7991e1abce69382c6406a8444e7b500a559ae6",
+    "comfy_extras/nodes_glsl.py": "fd4725172fe84e5ea3b9274ceddb44fefedaa27815fb6c9bc2689862760bda9c",
+    "comfy_extras/nodes_hidream.py": "727fe71d9afa086a0d2613639f9546019c650449cfa04d1b98d8abf8de611a89",
+    "comfy_extras/nodes_hidream_o1.py": "da11010caa5ab9905004d5a234a2127ef3387f60767be700174171900152a080",
+    "comfy_extras/nodes_hooks.py": "3719fd29474d17141f69286314a1fd29ebae73bb0ff551b48756e3423f1cc925",
+    "comfy_extras/nodes_hunyuan.py": "faa8687efa4c5071d22d33c597a9aa5c5258f4dc9aa0c26a41b2b9a3b0c9ffc7",
+    "comfy_extras/nodes_hunyuan3d.py": "c6268e3e2f087516bc840f96ee785a84c81c2090146cc26639e72663d841244d",
+    "comfy_extras/nodes_hypernetwork.py": "d31c3a9f00a45abdb064cefcdd98753412ea46e44aea35258c1f607889ccfd6b",
+    "comfy_extras/nodes_hypertile.py": "3434d382ce7de83c1bea181022357f065a0a54a5e78ca2abe6a26c3becd79a93",
+    "comfy_extras/nodes_ideogram4.py": "2ef584e244ecb5614b7284eacfaaab7bbdfa398f0595c32c1562d99150ebe301",
+    "comfy_extras/nodes_image_compare.py": "09183d1fb7e0841d93a3fd416d7eb8b47cd215b442a236474993c7c088b000a1",
+    "comfy_extras/nodes_images.py": "5bc0a44ee22469506d5c86fccde5f4973d156b2356e0ced6a779d1299b0f1acf",
+    "comfy_extras/nodes_ip2p.py": "e829e8eee472ba33b1443a50004c7be156d0df15e213c8b36d705b315edb9ac7",
+    "comfy_extras/nodes_joyimage.py": "c3705bb4740d258b90c8d8959b7a68c94d70107c79e790bc0fb22edc6d930a64",
+    "comfy_extras/nodes_json_prompt.py": "4808ede6ef04967dcc287fdaacfdb269a86561c15ef633842b73a37263e3503f",
+    "comfy_extras/nodes_kandinsky5.py": "21a5b3fbc8a639293d970867c14cbcfba718577ee9dfc6a223fd4653d82f1d05",
+    "comfy_extras/nodes_latent.py": "cda1a84ae9e0f33db7395b05e813dc3ec592fbe61ab1af44dda72af1486ff961",
+    "comfy_extras/nodes_load_3d.py": "455a1b25e743edf3b8802a8b217a4b51ba88fbaa204b48fb4c477c7c7074d07b",
+    "comfy_extras/nodes_logic.py": "6a146d3a814e37c65c9e749c2fde6d8f0ea8c1fc3f215cb249009e87303908bf",
+    "comfy_extras/nodes_loop.py": "302b3e469e136c85fa5f3a7f5536bb518dca59c7f4a99480926964f9da2b4cc0",
+    "comfy_extras/nodes_lora_debug.py": "c6d4fcd992248435066be075662a94984223b9ed9b7b53e9c66e1db047c8d080",
+    "comfy_extras/nodes_lora_extract.py": "24a26ddb59678e345e0b21ea7db18db587801939f56aac68f6616988967fda08",
+    "comfy_extras/nodes_lotus.py": "a1db3c22c71719b11d470655ddd408daa06b8e13f24e25556f77ce0ba825ee08",
+    "comfy_extras/nodes_lt.py": "da4e2ae359f80bdd9f7967a9a1eb7ffec5cc8a44d15e2e79ea6931491b3d3b2b",
+    "comfy_extras/nodes_lt_audio.py": "19e958412230602ae5499f6fc4f9a50b18a42ddefa5fbcf565e4e39a5b9795f6",
+    "comfy_extras/nodes_lt_keyframes.py": "803ff1004698b6090d10026aa8e784151af4dee51c032f63255c5dae47229417",
+    "comfy_extras/nodes_lt_upsampler.py": "c9f225e4c54f19f31452016fd4e546119d69e9dec37b60a9dc4ddf133848a892",
+    "comfy_extras/nodes_lumina2.py": "e426bb9d8049de24e3a3add80eae1cf19b10949b94927e9cbc78690ce5b54f71",
+    "comfy_extras/nodes_mage.py": "7b119d33dfb7891249cf28be5e2daaad9eefed8feef9479004e3eec23e68b17e",
+    "comfy_extras/nodes_mahiro.py": "40fb0d738eb373a835837235dc28b4c3855cc3bc81946d24a033a005ae9c91ca",
+    "comfy_extras/nodes_marigold.py": "c86b1b684526817e11cb8794b732e73819baebb9e06721b50d33817cb2feb086",
+    "comfy_extras/nodes_mask.py": "08171f430ddd9a327cec92293ac25fd1bc39d5c9079187a51463fb42d2a9d65b",
+    "comfy_extras/nodes_math.py": "073b822a7c39f2320e9de91a4bc941d2078c79024bd65e9dd9e05e3a3ffaa153",
+    "comfy_extras/nodes_mediapipe.py": "e9323609e33c698eb1e60211f216e00504b9a5d42d779c3c3619494a46902477",
+    "comfy_extras/nodes_mesh_io.py": "85bf019c98bc9b1fd913e180368bebd7ab6ab381cb3d235c866de6ef96c9f567",
+    "comfy_extras/nodes_mesh_postprocess.py": "215ed682a2a4554de99d6d676236723e9cfc7e037b0cde77747ca802f8ddd005",
+    "comfy_extras/nodes_minimax_h3.py": "62ec72d4f3b879640dbd41b959a6c1112a82b77478509323094f49dae17fffdb",
+    "comfy_extras/nodes_minimax_music.py": "ff0c9d6dfcd63b76fea0bf52026ee408272dc7a1ffc43fa6ced2097608e25af5",
+    "comfy_extras/nodes_mochi.py": "75f3dc515fde4ba4f9e76a16282b050d2c648736aa41d6615fdf4b968c75cfea",
+    "comfy_extras/nodes_model_advanced.py": "59bcf2c72de0f931383b74c9be5b6fc2ced06a315277d34631ae5ac9ac90fa91",
+    "comfy_extras/nodes_model_downscale.py": "8350e383200a75eed161be2b9bd79b8a8abff8d230cc6902fe5183b044177a1c",
+    "comfy_extras/nodes_model_merging.py": "8bd93638e30dc8ac005f16130ca9c4ba62228fe1721aad406db962cac1f2e77d",
+    "comfy_extras/nodes_model_merging_model_specific.py": "e752638a2433c0f051ade06bc5ced082fdc25a36203d927dee6d406e1a3cc1cb",
+    "comfy_extras/nodes_model_patch.py": "dafdf97b4dbe7b592949f033dd18d8afaad07225babe75e6c4f98c071ff16e3f",
+    "comfy_extras/nodes_moge.py": "dcc0d9219d5780bb5d8ffca283210dd49528ea92f9cb79542c19b7376000b760",
+    "comfy_extras/nodes_morphology.py": "35c4ee2fc44b736e3fd484b4a8165ff22e46875e330fa365c7ff1d0aacc13a78",
+    "comfy_extras/nodes_multigpu.py": "5998b300ce3985a91bd216b7746632b4e7661379aee38d4fe430784377896dda",
+    "comfy_extras/nodes_nag.py": "239608d6afa81adad93c0c670216c44217a875df7119e42db6645fb03c8dd25c",
+    "comfy_extras/nodes_nop.py": "4f9130b7db711de4aae861dbe47790a5a105203ffcdd98ccf5a8286a09adca62",
+    "comfy_extras/nodes_number_convert.py": "3249f74c2687a27f65c65f8cc3c30af23c25a01d4678ca607c246ed0ed620a19",
+    "comfy_extras/nodes_optimalsteps.py": "c96661b40cd28e52b4d0bf939835b794217d91a9c3a61f744347e4337281132e",
+    "comfy_extras/nodes_pag.py": "bde617e2b75fa6123567fcba900fcbfc91e1fd65e31ded078f29893bbfd9d8b3",
+    "comfy_extras/nodes_painter.py": "e48cbe2b98baf74f5b95b710036a1d14f3acb01d313699829e74c2fbf7a8cd16",
+    "comfy_extras/nodes_perpneg.py": "730fe887016232b50b5e12c22654248594d9a0ace2b7c84d11e41e1c5b014bfd",
+    "comfy_extras/nodes_photomaker.py": "c7e86d4684d2884eda20250bd7122e31a8aaf7bfa003245ad0e0431a9ef1957e",
+    "comfy_extras/nodes_pid.py": "846df00d2752a8cd5410b16c77880b0280c98fb46a04a853bbdd52fb5b64f8ea",
+    "comfy_extras/nodes_pixart.py": "ae8049569416689913a93f7ef5679da796501cff51a8a97acbba5e7498666b6b",
+    "comfy_extras/nodes_post_processing.py": "4ee06e8e5911c844ba49d97e54c90081c539d57e6dc53f1185900e3a79ce4c98",
+    "comfy_extras/nodes_preview_any.py": "48cffa3b2ddd08c311af609642da8703abc9bac9e624c400c3dc41f6edcea930",
+    "comfy_extras/nodes_primitive.py": "329963dd20fbf8985539b7b990780291f4b82ee9cfd42b96b571288b77eaa47a",
+    "comfy_extras/nodes_qwen.py": "eb0242ee0e217a792d33ef4b18f038a87322f1e79fe2a3dd23aee9866e59d3d5",
+    "comfy_extras/nodes_rebatch.py": "2ebbc41c60057a5efd38ac4b62b7d3a280bfe6f61846ccc53d1f36066ee8d70e",
+    "comfy_extras/nodes_replacements.py": "f9f79a62cc770ed7cb802d454e99306c94342e546281f36b46d6e7da8ccc6543",
+    "comfy_extras/nodes_resolution.py": "3fe5c3f9aeceed343725a91c6feaa13377b5ebad2c95fd633e3806d69d10bcc8",
+    "comfy_extras/nodes_rope.py": "56cae80ae9d6d73d89562f51455e9221b7184cd5707be8bed0398904f717813b",
+    "comfy_extras/nodes_rtdetr.py": "d7aa0fcf5aa244b00fc85dfa66d281db3d3aa15bc3fe1babe8d46a064cb32918",
+    "comfy_extras/nodes_sag.py": "e600938bc4fc7e868bf705fc0c7eb2ddb11d9989a357c88da6c0cc6d6e0be1a0",
+    "comfy_extras/nodes_sam3.py": "170e7e156be328617343298e902e733f52e4598c2129f8cbd59b6eda9a80cc5f",
+    "comfy_extras/nodes_sam3d_body.py": "655b17af397a50f4ada7abaa76a04d4284d0bb188c364d78999a8b76263b1e0a",
+    "comfy_extras/nodes_save_3d.py": "b67519d34648d9d61f9663188b5b11d0727693c0e89e527724310b99de847d47",
+    "comfy_extras/nodes_scail.py": "4f0de5c18bd40db615d837b2ab0ddea30ed4ac17231c251fd65f770bbec3cd0e",
+    "comfy_extras/nodes_sd3.py": "90a79847332fed7cc97379abbc7092116e6b1b883a7c9e933ac88167a521f693",
+    "comfy_extras/nodes_sdpose.py": "82f898e2c7e289eff9d228698d1a1344d959eab4a2dbab69d2a065b3233d382a",
+    "comfy_extras/nodes_sdupscale.py": "11af4dff95d40f79c0e4d2f9b22eed5218d304b74af3dc23620856b8955cde45",
+    "comfy_extras/nodes_seed.py": "f1566b448ca9e4b4a1cbd15767301635905cf36a44a17f586c18b848e23e5932",
+    "comfy_extras/nodes_seedvr.py": "70c27b735456a9b3140cb9ca315c13716abe7f2158a68ced4fb338c91fa991aa",
+    "comfy_extras/nodes_sensenova.py": "7be990997bf056b628881cae770bb814a954765043ca1be1e773527606c3aa89",
+    "comfy_extras/nodes_slg.py": "3042fb89646636eea114df5fa0090bdd8de26231bcd30bbfec304041e9ee1213",
+    "comfy_extras/nodes_sparse_attention.py": "f205faa57e3d348ead3f60e59caed24c31ebf2976d8d50e9eaaa2e55b36ef067",
+    "comfy_extras/nodes_stable3d.py": "a96f5e52bcbe0a7f08729f640b0a33216d80dbb28964e1a2ac5a97cefe028b54",
+    "comfy_extras/nodes_stable_cascade.py": "4e708a3c59f6a941ca7cd48c12b015345f444c60311060159347fa4aba3068db",
+    "comfy_extras/nodes_string.py": "bb01963178f28efc6e3a9578aecb89f53f8265e89c0518da92ec21c4955e85f1",
+    "comfy_extras/nodes_tcfg.py": "d5ff403cc129654eaeef0c7f90e5128e423b370323ad739b3f1f0d7f54242c12",
+    "comfy_extras/nodes_text.py": "d7de11f4528efa02e3fe8806fe76480876ed81bdf5d47898456a2a733b043395",
+    "comfy_extras/nodes_text_overlay.py": "bb5063a3192238c0b75d310f08b5af0121abd9fa54a041cf161754de30baf74b",
+    "comfy_extras/nodes_textgen.py": "4c10c6a3daaaa210286c1abd46e4638df02d86677008da02e01abdaada493676",
+    "comfy_extras/nodes_tomesd.py": "af0e1461ae6ad220dc7c8e5fe8e53508293329e2bdf3272acd96bfce6774c884",
+    "comfy_extras/nodes_toolkit.py": "7bda3e16f9405905afb1f41d9672aef5859bae25fa19caede623bbdbecb75386",
+    "comfy_extras/nodes_torch_compile.py": "51a36311466f5f040a784b6b075f48faee28f66889fc2169837230f98dd5a155",
+    "comfy_extras/nodes_train.py": "e6df99f2772af9ad949db6d3d478811cf3e4583ef9f65c525ada56b9cb4cacea",
+    "comfy_extras/nodes_trellis2.py": "5d99f8fd2d1a1cc252b860d941717fc4e53cfbc48b623730c9fdd9139dd7f98c",
+    "comfy_extras/nodes_triposplat.py": "11fdabc2d220aaf6fa2c6642c7698ae66f6a1f5e2077e7acacc0c32f99b7a628",
+    "comfy_extras/nodes_upscale_model.py": "5b88372065c516b318c9134f59972f0efb651886c3d08937258d0e1490d4ab19",
+    "comfy_extras/nodes_video.py": "5879633287808ba2dac6753bcbc90acf8d73c72e8df1d0a9755a4ab70e712a0d",
+    "comfy_extras/nodes_video_model.py": "b3d355bc0878fd5d3068ee54edb94fd08ac0f657dafe448654d530a289838947",
+    "comfy_extras/nodes_void.py": "b80cd0b5831335087fd29f959be2659820b7927c8b7622cb4b3e9c9fde2c6d4f",
+    "comfy_extras/nodes_wan.py": "dcd8b81d1225d84e8b0c6743675d59772449899018e9f50bb27267dbb8962002",
+    "comfy_extras/nodes_wandancer.py": "5375a5c55e1ad1b85532d8b1a22a4844ed1322948623d603616acf22fa3be1ed",
+    "comfy_extras/nodes_wanmove.py": "b0a7bdaa04d0aa2e4eac1d9d666d05ad93ee95e406a630ee9a7907c4a81c7dff",
+    "comfy_extras/nodes_webcam.py": "2ae1486e5820ba791cfcbc8839e90a3cf18b93a74f343fde3af7fc9a1b53816d",
+    "comfy_extras/nodes_yue2.py": "0fa3dcb32704dd6680d54baad1bbd9b9989130dc8e243d5fe09e8775d50814b6",
+    "comfy_extras/nodes_zimage.py": "0e941cd30df35e9504611b7f416175568124bba4dc64328fe2dc7bdcd3c589b9",
+    "comfy_extras/pose/keypoint_draw.py": "24bb8c6371df9449b31b9c1ce0b57617631b4083a8cf5366130d9f2df9d07d20",
+    "comfy_extras/sam3d_body/export/bvh.py": "6ebe21e4113595fcd920f7121e7038da7ea9c03dc9e74f86ba8d78292ea3df14",
+    "comfy_extras/sam3d_body/export/capsules.py": "ec7e544bc7fc76e22ed169bf9dd16a61039a4947c893ddc2ab4d34500bf0abec",
+    "comfy_extras/sam3d_body/export/glb_openpose.py": "e757191b472446ca797d6db0ea40e4ce2bfa83d431e499e6bae0ffb6524e402b",
+    "comfy_extras/sam3d_body/export/glb_shared.py": "3c19f8d1a828bba674913190834a6bfb6d8a76a028c9d05568adfb8d2bf1fae3",
+    "comfy_extras/sam3d_body/export/glb_skeletal.py": "d0ac61b46c1ca62f26e468a127c96f630288efb158cfb90f9aa9cd8480204fd8",
+    "comfy_extras/sam3d_body/export/openpose_2d.py": "9691698a63f6030153ee73e5d9b1bc563a71bd2b24668d671c2ab398a8f0f923",
+    "comfy_extras/sam3d_body/face_expression.py": "79e760376502fb291de4d0ae6e99d3e44c87dd23a4b9f08c66e9e7e47e4e55e7",
+    "comfy_extras/sam3d_body/rasterizer.py": "7e869653379f42c772a6c61bc025c65619191f91a906887ec65c2dca2106f049",
+    "comfy_extras/sam3d_body/utils.py": "4ea9c9a4bfffefad06e7514645af8726c656923d3f6a3daf26cdac1fc65851be",
+    "comfy_extras/void_noise_warp.py": "4b923f26b69d76b1e17e166fc2671006a16b3a1f09dc0d480e9c8122ab103dbf",
+    "comfyui_version.py": "d17a9d16cbc0c7a1cfd8101608db43b4038f224d9e36c0cddb1d238f5c8bfdf3",
+    "cuda_malloc.py": "4fee152b4c9043cdf5f56a9ce46e1ecb58a26c3759aaad949c59b8ef001766fd",
+    "custom_nodes/websocket_image_save.py": "3727e903705dba69924c390775a0d6aedfeb717400800e08793fcb77a8c331da",
+    "execution.py": "c9ef8ea11b8cb7aa80d05f670ca457211869d27623991b66d0014fb9b33fb246",
+    "folder_paths.py": "b748be5d1e068ad673f6c4de069fb6b7b723405c40ae3c3c44465d416f7df2db",
+    "hook_breaker_ac10a0.py": "c8e343fd04e0bbe09c01ba758bf4225eef25976b8832b0d620491ab68357d563",
+    "latent_preview.py": "d65c5240e0b6fbf2ebe85e8ae69a1e3820e6b22c8a2e430fc0de62a81fa582be",
+    "main.py": "8fc2cafc8e19e6e4b9134a2f6eba70b0e93d9d341dde01a40534dca89ca11727",
+    "middleware/__init__.py": "ed114348e2e135931a60478dc65c56aad2af8e7046b3de86274538ed3a964d70",
+    "middleware/cache_middleware.py": "72eeaa41a234e9d8b70f6316e4ad64718c016426f0b78612e4ef9842bbaa27af",
+    "node_helpers.py": "22317a033cce556331bfedc5f4ab6c2833184fd2bbdf9496c9182a4973a7098a",
+    "nodes.py": "1af4a41e1d844550a836cf1d1b00fad85d3d0aefaf435743431a8f1598643e22",
+    "protocol.py": "169848a2606aa7623db97df4a25c68c81f180801c80abbc343d2a5bc23ef99ed",
+    "script_examples/basic_api_example.py": "8bf77cd877f989445ca317efab08ae72c36071a2839bf1f0fc992e5907b005ec",
+    "script_examples/websockets_api_example.py": "4a72a56f184092ee828b120e7920162f0499bfe11510d881d8df7fc2506e3532",
+    "script_examples/websockets_api_example_ws_images.py": "dbe13a8da988d3dc6a85502e6e2be9ea1dff6b7c62c5378213bd17d6a4358213",
+    "server.py": "2118a18b95583869491fbf1ae33b3a279d92d64af23a244ec254ee5f2150957c",
+    "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/compare/conftest.py": "332aabadec90c6f1ad0cd0767251c7eb155fe600966c1019b6a8205b069f2964",
+    "tests/compare/test_quality.py": "6798c6ec373fb636a728b0d1a1351de795336370804104789d4988321a5d413c",
+    "tests/conftest.py": "86e9a6a6c37b59cb7ed4e3726c172ff940df61813b14ffd6e13c5df09db958ed",
+    "tests/execution/test_async_nodes.py": "bd9bf53cb3cceec15dbb3e8c23cdeb9fe027bb13ddca69164bbdf217dc7356d5",
+    "tests/execution/test_execution.py": "edd3c33d61baff06b9ff0cdf9c21dc4c4049cfa8033bfbf58bed3fc8dbee1ead",
+    "tests/execution/test_jobs.py": "94caf0eaedca861dc6ca212ad161e1d385f4ae4a689abf973ddaa115f10e1c77",
+    "tests/execution/test_preview_method.py": "48856870ca35c638a09fbac60d57a8dd09db076e25207534735de1105dca8185",
+    "tests/execution/test_progress_isolation.py": "e4d118a925ce2fffdb7600bffbd6cb3b3e9386112e4687615cdc7d2a685bde32",
+    "tests/execution/test_public_api.py": "851fc8f8b1d2bbac625c183a0063b0a490e489a87f4dc27c409df4bcc7c608f5",
+    "tests/execution/testing_nodes/testing-pack/__init__.py": "a98f3b4e78e0a2e11473b9119c40c7d9b2bcbf9f25daba36d405377ca55a4208",
+    "tests/execution/testing_nodes/testing-pack/api_test_nodes.py": "55dd52c3bbac01e0923d6f0bbb415cf19ad8dc28ab4927c91b8d784a3f090c30",
+    "tests/execution/testing_nodes/testing-pack/async_test_nodes.py": "5e1d1737caf683f7a2c3b06df4a70c074287a29f6cb0dae2e53f4f31b43d1e43",
+    "tests/execution/testing_nodes/testing-pack/conditions.py": "b350b905fe2fcda0044645018aded95eb1531775513d19b860c04ed6a49146b3",
+    "tests/execution/testing_nodes/testing-pack/flow_control.py": "72b840c06716ee4b18603e6ee4575657368c4480e8514fd136a1711b5da3c20d",
+    "tests/execution/testing_nodes/testing-pack/specific_tests.py": "ed6dbc7f5bd9f1f270083da1a41a9e830ad7c6c8eae942817446bfb8ab00a757",
+    "tests/execution/testing_nodes/testing-pack/stubs.py": "c1ad69dbb15e23e2647a1fb29eebcc97c00272c2d0c12e915a212781e080bcfe",
+    "tests/execution/testing_nodes/testing-pack/tools.py": "ba8eb98fcecd9ea88ddb5428e0cbd74c7b3be59ed74c116fc2f42f04b0c0498e",
+    "tests/execution/testing_nodes/testing-pack/util.py": "961ccd3ae62660008956fe743599a471a3525e16086cf3bcb7fbd2a2b1a2807b",
+    "tests/inference/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/inference/test_inference.py": "f8d80d9e6dc4ea416c010c3a892aa12cfd9ec4508732e74e0a472df2776fcd6f",
+    "tests/test_asset_seeder.py": "1fdef14c2b1782767ad0987201b067310d4b24cb799c3219253da29b28944fee",
+    "tests-unit/app_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/app_test/custom_node_manager_test.py": "52f71463d3d2215b862248a259a5ff47b4bbecf18f2efff53ce7824325bf36be",
+    "tests-unit/app_test/database_path_test.py": "c357e61f4561a29073fcef495eb0c9add43738751be509ac85f144b622a8bde7",
+    "tests-unit/app_test/frontend_manager_test.py": "870dae2f68e8ef90f2180fe5df9e21a69677f6fd615a7056b1a13dac9cf508ac",
+    "tests-unit/app_test/model_manager_test.py": "a373b109a0af0f5e39bb7c20c7dc820451c3ba8908727c19722e457bc2dac3f3",
+    "tests-unit/app_test/node_replace_manager_test.py": "8a4d23bdc6c44cf3b083c95ab1c4e44d7fc789e9127996f1bd76c8561cb15163",
+    "tests-unit/app_test/test_db_init_locking.py": "9c6119939aa0309b29f160fb701978b1afffb9576852ce7f8932d2fa9f37cb81",
+    "tests-unit/app_test/test_migration_0007.py": "88e75cbf0a9ef4f1065aa78c48ffff86559618552bb558734de1b747263b2fd1",
+    "tests-unit/app_test/test_migration_roundtrip.py": "cd9f3480e5030436e8f219f6a68d2247f86dbcf751ec8002da22ea248c51a349",
+    "tests-unit/app_test/test_migration_warning.py": "03c3f2df04c166225b342771905c1ef0abca1fa1758717d491e48e9ea9eaefe8",
+    "tests-unit/app_test/test_migrations.py": "4e87c9667464e5e036e93ae4003645808f9d4f5be2cc36b44c1048ce01e2228e",
+    "tests-unit/app_test/user_manager_system_user_test.py": "97418da1aac848b2881d86d9d4906cd02d710e9c410dd16fc84bdceb0b02255a",
+    "tests-unit/assets_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/assets_test/conftest.py": "b7ce4ceee05bc90e712edc0c537b53b06c10292005c10a0c729f60a959435682",
+    "tests-unit/assets_test/helpers.py": "a62061f0cbcb4d3c3e4044984a1dc51fbbe8f6f326371c885e1bf038360e3293",
+    "tests-unit/assets_test/queries/conftest.py": "59bbedd2cf89093beee88c47f76df726625acaec3317c650c4c16bc5a0f865df",
+    "tests-unit/assets_test/queries/test_asset.py": "0838b48e3b6fd0f0aa4de419d2a23fd0fcdba731a6ad5b28e8112e138a75dd4a",
+    "tests-unit/assets_test/queries/test_asset_info.py": "cca179510d2d8203d1fe06f6374274d4f159949fe71aac12581ffa5b6fcd172e",
+    "tests-unit/assets_test/queries/test_asset_reference_keyset.py": "e8ee9881a012cd14ea6d8904c396ca1bc93c7210d0ba45cdeecc06fa90985a8e",
+    "tests-unit/assets_test/queries/test_cache_state.py": "cb40aea2fa6baec356b5a64c4ad490ee6085497fb52e3a748b3cda361cbe28a3",
+    "tests-unit/assets_test/queries/test_lookup.py": "b33c1626799121c4c2872b47f29c4d62e6fcc301bbb887f3bab49a52f9aeebb9",
+    "tests-unit/assets_test/queries/test_metadata.py": "e68c8d7b0c03ff1619bf1b813ffca63fcea97d2d0c61a4e2e4fc5e93acb5057f",
+    "tests-unit/assets_test/queries/test_records.py": "01750a178bc3109596bc89d663445c98568113512a4a2a696734e440741335d5",
+    "tests-unit/assets_test/queries/test_tags.py": "e123056e91456ee7fac3be77b823dc0b8b8f239d6383f5c658ac1c89353ffcdb",
+    "tests-unit/assets_test/queries/test_tags_query.py": "aadcffe5b492f916eddbf7bb0ba92a6ed81641298c813fcc0d82698be1e531d7",
+    "tests-unit/assets_test/services/__init__.py": "7906fcb56299f60ced3aea7de18971e453c7d6e2eeeff83f25648547f2095826",
+    "tests-unit/assets_test/services/conftest.py": "3066009ee28c2d23f933e160c2fec28a98d19dea37e05b367e511a49411b492f",
+    "tests-unit/assets_test/services/path_prefix_cases.py": "9a8bed502ef44f339d470e73341f1e71fe697ba3c871a5244f79a02f877c52e6",
+    "tests-unit/assets_test/services/test_admission_gate.py": "e0b399799453251313075013201fb82bb1951ee650d5e4e9bb1ce8f9ea4af075",
+    "tests-unit/assets_test/services/test_admission_integration.py": "89b5623060e30686cad78f0cb2d4fa6c938900acd03114bfb30e7b6c952168d3",
+    "tests-unit/assets_test/services/test_api_routes_b.py": "93d0b89088ed93c6de7b321012dfb0cbddf9d454295d33aa82b1eb399eeb22a1",
+    "tests-unit/assets_test/services/test_asset_management.py": "8c072ce577a3cdd534548f9737c90da365380a91daa3440cc1fb69fb6dbd6773",
+    "tests-unit/assets_test/services/test_asset_response_loader_path.py": "3a3e6674d1c4474b4f0b9a6d3cafbbefbb13f774588895e5b2e2ab5dcefa6d2e",
+    "tests-unit/assets_test/services/test_asset_response_preview_url.py": "b0acd97e94968ceae872a4d1f13b8fc26c39a8dda8043b9bc53761fd234a7707",
+    "tests-unit/assets_test/services/test_bulk_ingest.py": "c7cfdeeb95bcdb2b1484e443f28d37b1fedd06c92e07fb4505c8f8e5fe45ee1d",
+    "tests-unit/assets_test/services/test_cached_execution_path.py": "9a3bc42adcb3e8a2ae6ef6d832337e75dba219e7b99040ef9be1a4975a7610a7",
+    "tests-unit/assets_test/services/test_cached_save.py": "8b069fbf3acc8c94bc531c4c92c6f1843a5f97334149468d38baaad56c3f8e65",
+    "tests-unit/assets_test/services/test_cursor.py": "c24ce1214cfa7c2e3c948f66630d6ec1b1642ca892941aaff21571ccf28d0fc1",
+    "tests-unit/assets_test/services/test_delete_b.py": "97e277f4f917c0956c4d060823d45a44451c2a97a4c3ec4a658d0a7ac7f3039c",
+    "tests-unit/assets_test/services/test_detection_gate.py": "de110ac1c1ad50d785a3f9b0d243a6d081b09ac34fd8ea896c2dd72f55f4a80f",
+    "tests-unit/assets_test/services/test_enrich.py": "4f03d9b1ed10178e1e0f8ceb4ae1d4a803f28095ea277d8b5a37449cf86a3b07",
+    "tests-unit/assets_test/services/test_enrichment_predicate.py": "75ae5cf55e50894efb019efad0deb556b7021f0cebc9513f9042af34e0b77be6",
+    "tests-unit/assets_test/services/test_enrichment_snapshot.py": "5b4dd89b36e086a409fdcfb39ab93838c29800dafc25b8964e10dc2a953c8505",
+    "tests-unit/assets_test/services/test_from_hash.py": "696f006ff1209a675f501a06b7c39aecfc3dd5a2deeab8d0665a113e41621386",
+    "tests-unit/assets_test/services/test_hash_mode_state.py": "ab8fadddfb22468b6655aeb49d1a88bf082efa4612972609689cdcbee09c0a7d",
+    "tests-unit/assets_test/services/test_image_dimensions.py": "36adc0cad2759a9bde629054586e2e3415a078141311761c62fb3b6d6889b36c",
+    "tests-unit/assets_test/services/test_ingest.py": "606d6903625c333ff29439ba2f93f453e5e94314d8ef08b0188ea8b3ad07077a",
+    "tests-unit/assets_test/services/test_ingest_b.py": "c60cde6334cb3e4a9662687c094e807800d4c5ac7a17ade52849bbaff08c91da",
+    "tests-unit/assets_test/services/test_ingest_orphan_content.py": "42e75e98eae5f6c3bea0bf53919dae9cd06e54a29b6c55ea29228e22d3d1f728",
+    "tests-unit/assets_test/services/test_lifecycle.py": "6a834da5f19fe1f7d8ea63bc38654759853f642963cf61030f021666497bed48",
+    "tests-unit/assets_test/services/test_manager_isolated.py": "fb9ebebfbfac15e9db55288d6d57b2b875a05f154cead3b0ae036cfcda479a49",
+    "tests-unit/assets_test/services/test_metadata_update_b.py": "d6fca0bf20693af6841172506fb34a9b2d0006977b87230a0b5844ea6e712470",
+    "tests-unit/assets_test/services/test_noassets_parity.py": "81b2c02930cf43f76f517d165e4de4c11da9ae49bb3db546efee78e1623aa8c7",
+    "tests-unit/assets_test/services/test_null_hash_recovery.py": "c3af84bc642e1ffd26d9454a24919c32bd1f440713a29bea4b96b393a5d51417",
+    "tests-unit/assets_test/services/test_output_registration.py": "3bfda34d5e93406abb1aa39a847021e51870d6f3d7e9b5b03c99a4a435f9cc21",
+    "tests-unit/assets_test/services/test_owner_purge.py": "d89ee2a3aa26047d7f60bbf49518bb0cda2a827548afddf1f6cde2d72bdb29a0",
+    "tests-unit/assets_test/services/test_path_utils.py": "0b7097dc109ed45398145a3f2f865de332fd7aec43e0811df25242c64eb96e9a",
+    "tests-unit/assets_test/services/test_preview_path_resolution.py": "fe9ef5f3177bac8606f5d319afeb0df61f087b576e2fc67aedacc8fdc01a3902",
+    "tests-unit/assets_test/services/test_recovery_gate.py": "edb79054a3a00cef8934cfcbda5d8549203e898efe11d47cc12d8c650189c9e6",
+    "tests-unit/assets_test/services/test_registration_primitives.py": "87e49bb81cdbc8839829e76856d3ab921601fd1ed8da0bc235813469d8e5f93e",
+    "tests-unit/assets_test/services/test_scan_lifecycle.py": "21fbe9a553e0d19d310f9ae2b79aa244de23e7c99017e3d01031957e3c9a702c",
+    "tests-unit/assets_test/services/test_scanner_b.py": "de1594bc32814d037f80738d470e6d9299d67bb3f637f90922d555fc47f70135",
+    "tests-unit/assets_test/services/test_scanner_seed_resilience.py": "4232b6e26ad1e29dc5facde6640a73f5843650e2d4898bb3ef0429fc6b289e3d",
+    "tests-unit/assets_test/services/test_serving_b.py": "ab08992319b06c0d23190badb58b843297ac59bd7a74f40a5cd482b2a7f05dbe",
+    "tests-unit/assets_test/services/test_snapshot_hash.py": "5190c4269322fa22810bcebf926f77791654ad6f88f2a8500c78b760aec6fcd2",
+    "tests-unit/assets_test/services/test_split_policy.py": "9e7c15c4936cf037bc7d2985dd2ef7aeccef9078376f9bb9f0220837d6a4b9f9",
+    "tests-unit/assets_test/services/test_stored_hash_prefix.py": "6ae64fbf57ec2288eea6761f0d3c18e8420972d237252268ce51d435114a5657",
+    "tests-unit/assets_test/services/test_tag_histogram.py": "a5279f7c0ae6a7823e80151fe5b133d71b7fcceba4c5dce20c93bae4fd4d99df",
+    "tests-unit/assets_test/services/test_tag_protection.py": "51c2fe9078a1762a7e4512571b1f43956e585f98d21001c91377812431169ae4",
+    "tests-unit/assets_test/services/test_tag_write_conflicts.py": "d93116295af11c8cdf6a2071ca55f723ed0269ed5e2f5f1f1f4796abc598bcd4",
+    "tests-unit/assets_test/services/test_tagging.py": "c3b65c6521b29bfd1c2391a004c517ca746193ade1902065092bc6ddb49d95d7",
+    "tests-unit/assets_test/services/test_transition_drain.py": "c39b2f002a6b7d39b14865b9209e353ab313991652de6f472d8906622f41ed13",
+    "tests-unit/assets_test/services/test_transition_settle.py": "655ec0314a413691033b10c8eec22b1164165b12ee528939530a402e14873773",
+    "tests-unit/assets_test/services/test_updated_at_semantics.py": "a8654b55dbbf30e9e4573373ecc42d5ff7b2e9b1f206d0525888a17c4e804b65",
+    "tests-unit/assets_test/services/test_upload_b.py": "22b87b138b1851e56034574cb41b7acef4a2020f5d34d3dd6b24602aea3dd96b",
+    "tests-unit/assets_test/test_api_surface.py": "e2640709ecd912a31cbdebda49aeb933afed16788ba50413bc9ce1e86b0cd825",
+    "tests-unit/assets_test/test_assets_missing_sync.py": "9c2cee3287f00a0ffdced3d901332383fc2ad5700d15e175aded3ee8e779b5a0",
+    "tests-unit/assets_test/test_crud.py": "2fa308d1293493613710798b4b41f1a048d311404ef04bed9e88a4be189aee9b",
+    "tests-unit/assets_test/test_downloads.py": "dc2330d4a6f950bf08413581b4a31b9bf96ab1d41f451f544007e62ae679659f",
+    "tests-unit/assets_test/test_event_log.py": "7a67d7b41f1275316a9563eaf1b246f917321000106f37c2c2ca6893f9b8e76d",
+    "tests-unit/assets_test/test_event_log_sites.py": "82b0758b12596a34b3d7551f4b644612ff7ad6534f7849c151aceb0d64568485",
+    "tests-unit/assets_test/test_file_utils.py": "3c795f4de744bacddd821b8c6e00d0e6d98109630ec1f789b7f3541f079f7a7f",
+    "tests-unit/assets_test/test_intended_behaviour.py": "80952ae476678bb6cd499a1fa41116ae86e707bda609474b0e11f7c20794a8e0",
+    "tests-unit/assets_test/test_list_cursor.py": "b3a33fcb82981310f589e08d7f5eab4e00184fd18e68251d284eac5e896b8d22",
+    "tests-unit/assets_test/test_list_filter.py": "2e79a4562a4e9d8f15993e8a0ddab04a9e4e17df4759a260f3557b70e3aae43c",
+    "tests-unit/assets_test/test_metadata_filters.py": "d966721ebd8e176624f570d3b83e06b151993bcc47b6ae6659aa524226649579",
+    "tests-unit/assets_test/test_no_assets_regression.py": "caab351e82a2dd8fae089dbe245e8b5d32b8f520d28f6e5c7201b11d88021ec4",
+    "tests-unit/assets_test/test_preview_url.py": "fd1c15d00f24a213f2bbeef30e3e8d35086717cbfc2a6c9a6d133256806e37a2",
+    "tests-unit/assets_test/test_prompt_id_enforcement.py": "3d2016ef3dc23b2e50ef308cc2d6fc08b6e6e0c8b3f0f72edd262d2dc77fad1a",
+    "tests-unit/assets_test/test_prune_orphaned_assets.py": "5270bbc0a75ed1b071d5c27ec94f8f7bb2334d08020d8bfad8e7211af8523a78",
+    "tests-unit/assets_test/test_recovery_same_path.py": "abc87007fb462654d27b236eea5aaf203b61ee45145437c6525cea829e7b0f18",
+    "tests-unit/assets_test/test_scanner_ingest_event_log.py": "5cab192bd364b219002b4f44acfcc5f9085165225e0032fa1447b5706e6572d0",
+    "tests-unit/assets_test/test_sync_references.py": "7195acb888ab73921b6f9f28503b335a988fb24d2fc5392b42441f62241a60fa",
+    "tests-unit/assets_test/test_tags_api.py": "8861c35713d7dfc5d96673376a94b66baaf50b6f479235b13aae3dd7ae97b1b2",
+    "tests-unit/assets_test/test_temp_assets.py": "0877c4a42c7b4ccbd7c371bc99374952478be2b70edb0309597cc672e44645f5",
+    "tests-unit/assets_test/test_upload_hashing_modes.py": "2d2bd014da57f9a2e350b39dd0db30ef0a7e974284c4adda8ab3f57990a8874f",
+    "tests-unit/assets_test/test_uploads.py": "94c6e75fea6b95d5ed25aba85839e6dd4614de436ef662d06520711fcbab3647",
+    "tests-unit/comfy_api_nodes_test/audio_conversions_test.py": "8a6ef11b4613fd007681c8994c4e54e09663165bf3161a9c5b32bbf121defe1a",
+    "tests-unit/comfy_api_nodes_test/comfy_cloud_test.py": "4f94320cf7f87a0dc12ede227038fae075a4568b4ef0ea3d2be45e56406f1d63",
+    "tests-unit/comfy_api_nodes_test/gemini_response_images_test.py": "967eecefb29a02e7bdcd2ab2711cf353ba58bc0dcdcc0286329a706c9f29d135",
+    "tests-unit/comfy_api_nodes_test/image_conversions_test.py": "8a73336d9535a5aea063e55ee02a8449eec87b5669b7185518f3518a75f52571",
+    "tests-unit/comfy_api_test/input_impl_test.py": "1f2df633eba4660ca38be2ebfe2240fa4990166879a12284a836c77a65414b01",
+    "tests-unit/comfy_api_test/multicombo_serialization_test.py": "9084837dd27f972c566aefc342cbeccab1213dee5bf41516f8d0fe1bab6d5dfd",
+    "tests-unit/comfy_api_test/preview_ui_3d_test.py": "43fc5d576f8b05bd8e0a2a7bda6e614f8ec913664e98b7cbccf03711a9a11cb6",
+    "tests-unit/comfy_api_test/resolution_preview_serialization_test.py": "c46ab02ed42cfaee9342c603a4867355d640b2d8256cd32564595936f8a0b3a8",
+    "tests-unit/comfy_api_test/video_accumulation_test.py": "28d78869e5646d75148971ed787764a1d3c26ccd7a44f3a97474961a82e9cc84",
+    "tests-unit/comfy_api_test/video_bit_depth_test.py": "78b6102e1c430451e99f46d93fba4fb7edd47838927becf254e0d3fe8a4d9894",
+    "tests-unit/comfy_api_test/video_types_test.py": "ab738b4c05b4bc8886b31de5028b9b944cb7b100fcf4fe046581b11dbb8b20fb",
+    "tests-unit/comfy_extras_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/comfy_extras_test/canny_alpha_test.py": "25626cc7802337925820935e97f1a81832d14381df9f934cf3461a6589273f8c",
+    "tests-unit/comfy_extras_test/compositor_blend_fixture_gen.py": "25c147aea43261b82449ffa99180e1592850dfbde4e2eef3d1ad444000b15a4f",
+    "tests-unit/comfy_extras_test/compositor_blend_test.py": "b617a2ab348bd128ec42fd4caefbcad16b1a4c5e55690c63a4680a4888309f93",
+    "tests-unit/comfy_extras_test/compositor_node_test.py": "512f9b4f63617f5bb74737b78cd46d1a6190909255a307652879a58e31cdeca9",
+    "tests-unit/comfy_extras_test/dataset_color_nodes_alpha_test.py": "c9d29243b08b6319eb1baa6917221f974f8449da83108cdd1cec7ab4aeb96d7d",
+    "tests-unit/comfy_extras_test/image_add_noise_alpha_test.py": "7bd9b0247324d7397b59f3aee6a9db87ed27f67e60baaeb1ccd9030aadea40dc",
+    "tests-unit/comfy_extras_test/image_blend_alpha_test.py": "4fad7b3aaa70f56dc78535548cc0fe1ee8f864576c0e61cff767cb2683c691e2",
+    "tests-unit/comfy_extras_test/image_quantize_alpha_test.py": "b1622849b1d682147b331caff8916af15a1ea7d95a70eb6ff033302e1d92840f",
+    "tests-unit/comfy_extras_test/image_stitch_test.py": "5c21ea49dc62c16b5176ce808dee5f67ae274a47b2235363030a34ed7829202c",
+    "tests-unit/comfy_extras_test/nodes_compositing_test.py": "698afd682e41cd66a4acefc7ed0d14840c379b1fda668cfb703c079388a25fdd",
+    "tests-unit/comfy_extras_test/nodes_dataset_test.py": "eee05b64242c68240bdd1851dd69e74fd118f9d536587a2d9adea5d22fb3ccfa",
+    "tests-unit/comfy_extras_test/nodes_loop_test.py": "03e6658921e768ae6a414bea7fc755f6a5d8f40d55f1a3d1b84c999b15e45b92",
+    "tests-unit/comfy_extras_test/nodes_lt_keyframes_test.py": "5b5d52c9d4c8ecfdd5b1a24ccba6dcb5e6108234737fa08c48a5804fb2de53cf",
+    "tests-unit/comfy_extras_test/nodes_lt_test.py": "b58d92ed97c5458b7f196aafcbd1a8f3d54394f6e5eeaa90f497bdb3d10bb42b",
+    "tests-unit/comfy_extras_test/nodes_math_test.py": "e458c143179f3c8a2a68e18a88c61fb2b2f5a1be89ad23692336c4a9b4a265dc",
+    "tests-unit/comfy_extras_test/nodes_number_convert_test.py": "37d3382202a2ec6db391d4362907da39258775a1501eae34f2b63eac2a07822b",
+    "tests-unit/comfy_extras_test/nodes_preview_any_test.py": "82da2593ee6521b1f9e6ca4408cea229d3dae12e100ac9c015e52934c1a01ef6",
+    "tests-unit/comfy_extras_test/nodes_toolkit_test.py": "6636c98af33bfc36f94cfb5bc9ffd99406852a1088f0de88983839cececd8b50",
+    "tests-unit/comfy_extras_test/rgb_yuv_alpha_test.py": "d6081e905f1a8c3c3bad55e1c6e7c5d8af2585de8beea6d0db5d4d3398fd973c",
+    "tests-unit/comfy_extras_test/test_seedvr2_conditioning.py": "376b0e9a701bb742aec4ff516e426317529d4363ad074761ed0747b51d022384",
+    "tests-unit/comfy_extras_test/test_seedvr2_nodes.py": "82aad23da15ca45a1a07d6560215d64f42fc5326117cb0d99c1e9a3fd73d63e5",
+    "tests-unit/comfy_extras_test/test_seedvr2_post_processing.py": "9baffa12c21310f1f2a9c1b2652f8da141aa8e2317bb237966234d2d49dde07a",
+    "tests-unit/comfy_extras_test/test_seedvr2_temporal_chunk.py": "ed452b8c88607905ecf00dcf0f5debd7664ea0df74a0e255c4b3d4980859c023",
+    "tests-unit/comfy_extras_test/test_video_preview_nodes.py": "05c6b71779a1fbd8614f103943c9de822c979c79910179c3befe55f5b56c94cc",
+    "tests-unit/comfy_extras_test/text_overlay_alpha_test.py": "de566d0cbf39f2fa211ca80787df8853f42676bc1dfe3615da6cd9d03d27c0d1",
+    "tests-unit/comfy_quant/test_mixed_precision.py": "496c963083487dc965a652b98421e121b1598e7468ad057122155af8bc046021",
+    "tests-unit/comfy_test/folder_path_test.py": "07395a395363af31327c74eccb3de61901216922d6b91c8a8e0b00e2b4765059",
+    "tests-unit/comfy_test/gemma4_template_test.py": "db5b75d2fb5f53708f1c339484580861908a81d39b6682384a1e8093a4d77943",
+    "tests-unit/comfy_test/image_invert_test.py": "d4f8ec77246f21f9bef76a8299c15d8d606e2419be75b7c5860ecd065c7b061a",
+    "tests-unit/comfy_test/model_detection_test.py": "50e3b146b1de7de2875f4c2a7ac6510366e6a072c5091984867811a260730a62",
+    "tests-unit/comfy_test/seedvr_vae_forward_test.py": "43fdcfb0cb54af7dd9b5493fef80a42621364f4ccaf1c712267a8774ca4dce55",
+    "tests-unit/comfy_test/storage_test.py": "d5b81158cb586967d56b3c2bf7325e4f14f6565cce7c3ce9332e76c35db9542d",
+    "tests-unit/comfy_test/system_memory_test.py": "5b2380a45ff92b047dec3f9e48edf76037c9d45a8924122ed86801a6d8eef73d",
+    "tests-unit/comfy_test/test_minimax_h3_model.py": "f53d6522e85aeeabd2489021c6062c8966955f8f530668788c8ac3e85d2a9229",
+    "tests-unit/comfy_test/test_seedvr2_dtype.py": "1310b2b662f1c5a49be7286319047b3f35750ad30363d7b53710d092b66a4e8d",
+    "tests-unit/comfy_test/test_seedvr2_internals.py": "18e7ce074e6b5da3d4c9e1ef6456c0e24ef3bfa9f51b633dfcd6c8b4ab0d9aa1",
+    "tests-unit/comfy_test/test_seedvr2_model.py": "bcdf4f249ad47ad1e3acf346c8cb3eb10360f260eed319461876ee8fdfb34823",
+    "tests-unit/comfy_test/test_seedvr2_vae_decode.py": "0f5aafdeb1c7ce7e1cf14fdb6bd96fbd8b36ab581f8cf172e6a60506c28bf5ed",
+    "tests-unit/comfy_test/test_seedvr2_vae_tiled.py": "63f3ed30c98a4ff94134fd2f947b8aa30a1ed59cee545842377b4169631269e7",
+    "tests-unit/comfy_test/test_sensenova.py": "4d64b7bb3b4f93d9fa27d4ab86aca9dad81f9698a8d6ae60386f51901875e81b",
+    "tests-unit/comfy_test/test_vae_decode_tiled_nested.py": "0cae30e56a8be36731c4b28437975ba9ebbd2b02a6b59f5a893de085114b3f9c",
+    "tests-unit/deploy_environment_test.py": "ad9e87a7783bf778c648b06d82e1466bc3228f66092fc61cce93d4ebb5bf388b",
+    "tests-unit/execution_test/loop_validation_test.py": "db31e3f4e816660a3aa424e6c1842f672a0b168e62d830455475d0d11200c053",
+    "tests-unit/execution_test/preview_compiler_test.py": "55734590091241478e259d2bfbd505579810bbc60effe6139715596ec5bd8dde",
+    "tests-unit/execution_test/preview_method_override_test.py": "3f32b2423c1b6039c4467c8282502f53413734362d43c8b653d13a5f592c2189",
+    "tests-unit/execution_test/test_cache_provider.py": "27092abe4e3cf9e02c74e5a55c330534cf723d5b0066f8d5ddc31d653619be7e",
+    "tests-unit/execution_test/test_enrich_output.py": "ab755b441cf691e4808f302e646b2a3e0e46032f98464fd7d1756c8172e4303a",
+    "tests-unit/execution_test/test_execute_reentry.py": "608823a7211d6ddba82e3a0ffb69bd44351371370149eba8ee95bc7d612a7a86",
+    "tests-unit/execution_test/test_execution_list.py": "779dd203ffb63879d67fe3f2ca40a3c043c6a66167a79948e240fdde9c285038",
+    "tests-unit/execution_test/test_inmemory_assets.py": "3bb4417b647d6e7a138c5972ddd546a39a5437d4945f1fc6838006ee58b61ac8",
+    "tests-unit/execution_test/test_nested_loop_execution.py": "6140b7477498f4e4d22a7e05b51e9210a0cd8210335673b735021cdf7f66e205",
+    "tests-unit/execution_test/validate_node_input_test.py": "20ebb9ac03e6764fdf56ea9c767e9b2612b047934498d8e7a77b434d77ae36f2",
+    "tests-unit/feature_flags_test.py": "a159b79f78abd63cac62e9d0043cdc7125b0d2f6c6e3faa97a03a185b9375592",
+    "tests-unit/folder_paths_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/folder_paths_test/filter_by_content_types_test.py": "05a942cd7987320e74059123fcc4d13142d9fbb8ee4472100b17022554236ad7",
+    "tests-unit/folder_paths_test/misc_test.py": "15dfb4de4da88001abd590e575ab030447a353b8563642a50bf138e0c16a7b79",
+    "tests-unit/folder_paths_test/system_user_test.py": "332b498f03cbe92899a15cb984429147e96be8b377921e0da94f07892d4d38be",
+    "tests-unit/jobs_cancel_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/jobs_cancel_test/jobs_cancel_test.py": "b196c9891c7e0000bcbafa53a1ba508848e89e11d1faf801d1a318129a61f933",
+    "tests-unit/main_prestartup_test.py": "14a8e9f895d0d976804ca6034c9eaad758ec4fcc6fd090b90d27c2a780debe15",
+    "tests-unit/nodes_test/test_ignore_display_name.py": "03db32a9d3a01be96d7f1bfaf0616b4fe6e5e725d181c296506c44d410cfd29f",
+    "tests-unit/prompt_server_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/prompt_server_test/system_user_endpoint_test.py": "473a8eaa6b3ac38de370397c2fe89a83af32567f99967aea6775de7b11d926d7",
+    "tests-unit/prompt_server_test/user_manager_test.py": "f83b46d415cc38bf2b288b53647e13b9add5e5e1b108ab9cf354df08db0685fb",
+    "tests-unit/security_test/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests-unit/security_test/test_ghsa_779p_02_preview_traversal.py": "75aac989fa89f7163eb97b72531362e19a8cf9812556b6b287da876f36409ec0",
+    "tests-unit/security_test/test_ghsa_779p_03_annotated_traversal.py": "2fa7d4f9bab4bebc5c3c6f0222dbe8b4c6161bc98e095509e1900a8c7faed8ad",
+    "tests-unit/security_test/test_ghsa_779p_04_userdata_xss.py": "759610a4e12e6c570c093b7911f24637e2f1da35cb2b686804440d43da7918f0",
+    "tests-unit/security_test/test_ghsa_779p_05_dangerous_content_types.py": "48d13d4add15ad4b6357728b46e77948ca273f74f34464b74116a5180aa4b500",
+    "tests-unit/security_test/test_ghsa_779p_06_inline_svg_image_dest.py": "16bdcb3822363a2adf0b6ed4b69ff721e2857727eb114e0df5aadc46f8badab9",
+    "tests-unit/seeder_test/test_seeder.py": "34670650abba225e31fad3cf85175e4d94e87cccf2fe38dd6759e7d6a616f9b7",
+    "tests-unit/server/utils/file_operations_test.py": "bb72acd56711584ea4662ad6a731e664e5d0c5083f39cba905775959b50d2f15",
+    "tests-unit/server_test/test_cache_control.py": "d8ad8e282ffb7ebea7d6dd02f4c1d0b99cf7efb35a0558777865a9e668311210",
+    "tests-unit/test_assets_event_log_static.py": "73a84cf502828288ae908f8e84c4bb15dff2ad0799b42109d69e12caec7b3451",
+    "tests-unit/utils/extra_config_test.py": "fcaefb3a97947c0d9714a277f4163b48fe730f5ea8a951c5326ed91153d0fa39",
+    "tests-unit/utils/json_util_test.py": "a186a15d30482c61824be48d99680d9c0d7d3dfc9600c105510e91573b858b76",
+    "tests-unit/websocket_feature_flags_test.py": "1e204ef1e5a683e59394d34f62bd8f0a3605ce521827157f6cd23ed3e8df7bf3",
+    "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "utils/extra_config.py": "ebb923e58956587acf5196e3a76ae3c576196f2f498e5933ce9416fca1ddaf9e",
+    "utils/install_util.py": "8d16575c24489b0cf36ac511eb821436ddee05dd9a487c79e4c634940e7c9f11",
+    "utils/json_util.py": "3aea39b1998b534bbbea434f243e447995f755a40020c4a62efd6e8960fb53ba",
+    "utils/mime_types.py": "23f184334ee3668f9627e6beb1ddfea202ecc7585647f88b9d585fe4d7a7d7a0"
+  },
+  "patch": {
+    "file": "../cpu_patches/wanwrapper_cpu_cast_cache.patch",
+    "sha256": "05c73d745f8dceacfd5e5d1a6f383391457d1154d85231d80a58790d0b1fa725"
+  },
+  "reproduction": {
+    "file": "wanwrapper-reproduce.tar.gz",
+    "sha256": "d557ce2b8e1a1204a49a622f6ab103266890c18faebdbb5620fc9faca794ae0f",
+    "files": [
+      "runner_inference.py",
+      "runner-calibration.py",
+      "cpu-cast-cache-inference.patch",
+      "check_cast_inference.py",
+      "utils-inference.py",
+      "cast-cache-inference-check.json",
+      "run_inference_pair.py",
+      "run_infer_sync_pair.py",
+      "run_native_cast.py",
+      "validate-cast-native.sh",
+      "inference-before.json",
+      "inference-after.json",
+      "infer-sync-before.json",
+      "infer-sync-after.json",
+      "pins.json",
+      "cpu-inference-calibration.json",
+      "native-cast-hardware.json",
+      "audit.py",
+      "package_inference.py"
+    ],
+    "note": "Adjust host and asset paths; apply patch to pinned Wrapper source. Reuses the existing native kernel database. Shared GX worker launcher and audit helpers live in this repository."
+  },
+  "calibration": {
+    "database": {
+      "file": "wanwrapper-wan.sqlite.gz",
+      "source": "/home/ubuntu/drperf/out/causal-video/wanwrapper/gpu.sqlite",
+      "uncompressed_bytes": 880640,
+      "uncompressed_sha256": "1912e6005819fe8eb0804c04b37979f35354368853b226f7306dfbe2250c9e5e",
+      "gzip_sha256": "7bee2d6b3bbc6985465cfc96a47fff8d14a2b82eb0cda1ac70d5978b1b349314"
+    },
+    "native_report": {
+      "file": "wanwrapper-wan.report.json.gz",
+      "source": "/home/ubuntu/drperf/out/causal-video/wanwrapper/kernel-profile.json",
+      "uncompressed_bytes": 117312,
+      "uncompressed_sha256": "cb297af21f6dd901b50f586571738e500691d0bed50eed381772b44ac4d44254",
+      "gzip_sha256": "b64cb649933804557b470b79ca0491f6f4f1fee6e484a9e9baabe98c39915ed9"
+    },
+    "cpu_instruction_calibration": {
+      "file": "wanwrapper-wan.cpu.db.gz",
+      "source": "/home/ubuntu/drperf/out/causal-video/wanwrapper/cpu-inference.db",
+      "uncompressed_bytes": 21067,
+      "uncompressed_sha256": "26ad003da7edf144601012b883c755511370b34df3ebfafc8bc7badbb586aaa6",
+      "gzip_sha256": "32b87fef100d2de2f030ed899888b8135233751908f16d7aaa5c8d3a43369400"
+    },
+    "scope": "Real pretrained Wan 1.3B; public model-loading, text-encoding, sampling and VAE-decode nodes, under ComfyUI inference_mode. 17 frames, 256x448, 8 Euler steps, CFG 5, seed 42; CPU offload retained. UI, graph queue, previews and video encoding excluded."
+  }
+}

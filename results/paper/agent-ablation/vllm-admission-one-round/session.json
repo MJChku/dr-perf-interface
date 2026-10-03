@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "case": "vllm_b",
+  "condition": "drperf",
+  "track": "discovery",
+  "python": "/home/ubuntu/drperf/third_party/vllm-cpu/.venv/bin/python",
+  "workload": "workload.py",
+  "env": {
+    "PYTHONPATH": "/tmp/drperf-vllm-blind-20261003/source",
+    "BENCH_SOURCE": "/tmp/drperf-vllm-blind-20261003/source/vllm",
+    "HF_HOME": "/home/ubuntu/drperf/third_party/hf",
+    "HF_HUB_OFFLINE": "1",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "PYTHONHASHSEED": "0",
+    "TOKENIZERS_PARALLELISM": "false",
+    "VLLM_CPU_OMP_THREADS_BIND": "all"
+  },
+  "source_revision": "2cf0a6915ce544dc493a0990f2ea38d81601128a",
+  "round_budget": 1,
+  "points_per_round": 3,
+  "native_binary_sha256": {
+    "fs_io_C.abi3.so": "3d01c5e2596972f3b2dc7f018efb739057a2ab866e73ac6a0c042bbc65f238f9",
+    "_C_AVX2.abi3.so": "493057583b7e699624d281e68ae526d95cdd0578c5cdc72617d0caba3056fbb2",
+    "spinloop.abi3.so": "6ce39219a81422be8b8e4bf3420d24129307588c17aed5033af81378807a4006",
+    "_C.abi3.so": "42b57b3f98f1c526d0afbadfd2123e619983c57e1d29a3cddd4313bfb3cd60bd",
+    "_C_AVX512.abi3.so": "410c20f094c9d27f22b562b4013fa6f2a74fe03c31ee038b821efdc85c7e2bea",
+    "_rust_tool_parser.abi3.so": "60473f79642acbce9dcce3135a16e532d71244272c6c4bfb392cd2fe2007bd4d"
+  },
+  "process_timeout_seconds": 300,
+  "note": "Supervisor configuration, not a filesystem security boundary.",
+  "model": "gpt-6.1-sol",
+  "seed": 0
+}

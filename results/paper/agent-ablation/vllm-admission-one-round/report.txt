@@ -1,0 +1,2470 @@
+DRPERF PERFORMANCE REPORT
+Command: not recorded
+Regions: 6; graph: observed
+Declared event ordering: ordered
+Declared dependency channels observed: 0; waited(null) refinements: 0.
+Null refinements do not establish publishers; checking their markers/indicators does not validate their reasons.
+Wait obligations: 0/5654 covered; 5654 unexplained
+WAIT COVERAGE INCOMPLETE: declared event ordering does not mean all synchronization is explained.
+Read the graph below for structure; COST INTERFACES AND BREAKDOWN for formulas and functions.
+Queries: drperf --report REPORT.json --stats | --region NAME | --top costly | --top unexplained | --full
+graph.html: interactive region graph and selected-region performance details.
+profile.drperf.json: machine-readable formulas, checks, state tables and graph.
+Numeric displays are rounded to integers; the JSON retains full precision.
+Evidence sidecars support rechecking; keep them with the JSON.
+Cost evidence: 0/6 regions have one observed PCV state; 6 have nonzero own residual; 6 have nonzero interface residual including unresolved child terms.
+A one-state constant fit explains that state mean only; it does not establish growth or per-call variation.
+
+CODE COVERAGE
+Source lines inside marked regions: 0/671428 (0%); unmarked: 671428; status: measured
+Nonblank, noncomment source lines lexically inside discovered region spans / all such lines in the selected source tree. Nested spans count once; unexecuted regions still count. Includes marker/decorator lines and string literals. Callees outside a marked lexical span are not counted as marked. Supports Python, C/C++, headers and Rust; discovery exclusions and scan limits apply. Python region contexts/decorators support dynamic names; unrecognized wrappers and unmatched manual begin/end spans need explicit source support.
+  source/vllm/__init__.py: 0/85 lines marked
+  source/vllm/_aiter_ops.py: 0/2931 lines marked
+  source/vllm/_custom_ops.py: 0/3625 lines marked
+  source/vllm/_xpu_ops.py: 0/1088 lines marked
+  source/vllm/collect_env.py: 0/791 lines marked
+  source/vllm/connections.py: 0/316 lines marked
+  source/vllm/env_override.py: 0/535 lines marked
+  source/vllm/envs.py: 0/1491 lines marked
+  source/vllm/exceptions.py: 0/86 lines marked
+  source/vllm/forward_context.py: 0/279 lines marked
+  source/vllm/logger.py: 0/240 lines marked
+  source/vllm/logits_process.py: 0/83 lines marked
+  source/vllm/logprobs.py: 0/155 lines marked
+  source/vllm/model_inspection.py: 0/96 lines marked
+  source/vllm/outputs.py: 0/307 lines marked
+  source/vllm/pooling_params.py: 0/180 lines marked
+  source/vllm/sampling_params.py: 0/997 lines marked
+  source/vllm/scalar_type.py: 0/264 lines marked
+  source/vllm/scripts.py: 0/9 lines marked
+  source/vllm/sequence.py: 0/42 lines marked
+  source/vllm/tasks.py: 0/31 lines marked
+  source/vllm/version.py: 0/23 lines marked
+  source/vllm/assets/__init__.py: 0/0 lines marked
+  source/vllm/assets/audio.py: 0/24 lines marked
+  source/vllm/assets/base.py: 0/28 lines marked
+  source/vllm/assets/image.py: 0/48 lines marked
+  source/vllm/assets/video.py: 0/108 lines marked
+  source/vllm/benchmarks/__init__.py: 0/0 lines marked
+  source/vllm/benchmarks/latency.py: 0/150 lines marked
+  source/vllm/benchmarks/mm_processor.py: 0/439 lines marked
+  source/vllm/benchmarks/plot.py: 0/248 lines marked
+  source/vllm/benchmarks/serve.py: 0/2058 lines marked
+  source/vllm/benchmarks/startup.py: 0/239 lines marked
+  source/vllm/benchmarks/throughput.py: 0/988 lines marked
+  source/vllm/benchmarks/datasets/__init__.py: 0/86 lines marked
+  source/vllm/benchmarks/datasets/create_txt_slices_dataset.py: 0/171 lines marked
+  source/vllm/benchmarks/datasets/datasets.py: 0/3975 lines marked
+  source/vllm/benchmarks/datasets/utils.py: 0/78 lines marked
+  source/vllm/benchmarks/lib/__init__.py: 0/1 lines marked
+  source/vllm/benchmarks/lib/endpoint_request_func.py: 0/713 lines marked
+  source/vllm/benchmarks/lib/ready_checker.py: 0/60 lines marked
+  source/vllm/benchmarks/lib/utils.py: 0/105 lines marked
+  source/vllm/benchmarks/sweep/__init__.py: 0/0 lines marked
+  source/vllm/benchmarks/sweep/cli.py: 0/35 lines marked
+  source/vllm/benchmarks/sweep/param_sweep.py: 0/112 lines marked
+  source/vllm/benchmarks/sweep/plot.py: 0/582 lines marked
+  source/vllm/benchmarks/sweep/plot_pareto.py: 0/329 lines marked
+  source/vllm/benchmarks/sweep/serve.py: 0/450 lines marked
+  source/vllm/benchmarks/sweep/serve_workload.py: 0/273 lines marked
+  source/vllm/benchmarks/sweep/server.py: 0/112 lines marked
+  source/vllm/benchmarks/sweep/startup.py: 0/370 lines marked
+  source/vllm/benchmarks/sweep/utils.py: 0/2 lines marked
+  source/vllm/compilation/__init__.py: 0/0 lines marked
+  source/vllm/compilation/backends.py: 0/980 lines marked
+  source/vllm/compilation/base_static_graph.py: 0/45 lines marked
+  source/vllm/compilation/breakable_cudagraph.py: 0/293 lines marked
+  source/vllm/compilation/caching.py: 0/492 lines marked
+  source/vllm/compilation/codegen.py: 0/192 lines marked
+  source/vllm/compilation/compiler_interface.py: 0/574 lines marked
+  source/vllm/compilation/counter.py: 0/36 lines marked
+  source/vllm/compilation/cuda_graph.py: 0/245 lines marked
+  source/vllm/compilation/decorators.py: 0/600 lines marked
+  source/vllm/compilation/monitor.py: 0/78 lines marked
+  source/vllm/compilation/partition_rules.py: 0/48 lines marked
+  source/vllm/compilation/piecewise_backend.py: 0/311 lines marked
+  source/vllm/compilation/wrapper.py: 0/271 lines marked
+  source/vllm/compilation/passes/__init__.py: 0/0 lines marked
+  source/vllm/compilation/passes/fx_utils.py: 0/35 lines marked
+  source/vllm/compilation/passes/inductor_pass.py: 0/109 lines marked
+  source/vllm/compilation/passes/pass_manager.py: 0/197 lines marked
+  source/vllm/compilation/passes/vllm_inductor_pass.py: 0/258 lines marked
+  source/vllm/compilation/passes/fusion/__init__.py: 0/0 lines marked
+  source/vllm/compilation/passes/fusion/act_quant_fusion.py: 0/272 lines marked
+  source/vllm/compilation/passes/fusion/add_rms_fusion.py: 0/125 lines marked
+  source/vllm/compilation/passes/fusion/allreduce_rms_fusion.py: 0/1413 lines marked
+  source/vllm/compilation/passes/fusion/attn_quant_fusion.py: 0/341 lines marked
+  source/vllm/compilation/passes/fusion/collective_fusion.py: 0/864 lines marked
+  source/vllm/compilation/passes/fusion/matcher_utils.py: 0/416 lines marked
+  source/vllm/compilation/passes/fusion/mla_attn_quant_fusion.py: 0/553 lines marked
+  source/vllm/compilation/passes/fusion/mla_rope_kvcache_cat_fusion.py: 0/237 lines marked
+  source/vllm/compilation/passes/fusion/qk_norm_rope_fusion.py: 0/222 lines marked
+  source/vllm/compilation/passes/fusion/qk_norm_rope_kvcache_fusion.py: 0/398 lines marked
+  source/vllm/compilation/passes/fusion/rms_quant_fusion.py: 0/560 lines marked
+  source/vllm/compilation/passes/fusion/rocm_aiter_fusion.py: 0/882 lines marked
+  source/vllm/compilation/passes/fusion/rope_kvcache_fusion.py: 0/398 lines marked
+  source/vllm/compilation/passes/fusion/sequence_parallelism.py: 0/472 lines marked
+  source/vllm/compilation/passes/ir/__init__.py: 0/0 lines marked
+  source/vllm/compilation/passes/ir/clone_elimination.py: 0/112 lines marked
+  source/vllm/compilation/passes/ir/inplace_functionalization.py: 0/74 lines marked
+  source/vllm/compilation/passes/ir/lowering_pass.py: 0/90 lines marked
+  source/vllm/compilation/passes/ir/utils.py: 0/28 lines marked
+  source/vllm/compilation/passes/utility/__init__.py: 0/0 lines marked
+  source/vllm/compilation/passes/utility/fix_functionalization.py: 0/280 lines marked
+  source/vllm/compilation/passes/utility/noop_elimination.py: 0/100 lines marked
+  source/vllm/compilation/passes/utility/post_cleanup.py: 0/14 lines marked
+  source/vllm/compilation/passes/utility/scatter_split_replace.py: 0/103 lines marked
+  source/vllm/compilation/passes/utility/split_coalescing.py: 0/50 lines marked
+  source/vllm/config/__init__.py: 0/112 lines marked
+  source/vllm/config/attention.py: 0/161 lines marked
+  source/vllm/config/cache.py: 0/249 lines marked
+  source/vllm/config/compilation.py: 0/1269 lines marked
+  source/vllm/config/device.py: 0/56 lines marked
+  source/vllm/config/diffusion.py: 0/17 lines marked
+  source/vllm/config/ec_manager_config.py: 0/27 lines marked
+  source/vllm/config/ec_transfer.py: 0/87 lines marked
+  source/vllm/config/fault_tolerance.py: 0/11 lines marked
+  source/vllm/config/kernel.py: 0/257 lines marked
+  source/vllm/config/kv_events.py: 0/36 lines marked
+  source/vllm/config/kv_transfer.py: 0/87 lines marked
+  source/vllm/config/load.py: 0/128 lines marked
+  source/vllm/config/lora.py: 0/131 lines marked
+  source/vllm/config/mamba.py: 0/82 lines marked
+  source/vllm/config/model.py: 0/2003 lines marked
+  source/vllm/config/model_arch.py: 0/103 lines marked
+  source/vllm/config/multimodal.py: 0/443 lines marked
+  source/vllm/config/observability.py: 0/125 lines marked
+  source/vllm/config/offload.py: 0/124 lines marked
+  source/vllm/config/parallel.py: 0/869 lines marked
+  source/vllm/config/pooler.py: 0/159 lines marked
+  source/vllm/config/profiler.py: 0/186 lines marked
+  source/vllm/config/quantization.py: 0/149 lines marked
+  source/vllm/config/reasoning.py: 0/103 lines marked
+  source/vllm/config/scheduler.py: 0/210 lines marked
+  source/vllm/config/speculative.py: 0/1279 lines marked
+  source/vllm/config/speech_to_text.py: 0/61 lines marked
+  source/vllm/config/structured_outputs.py: 0/60 lines marked
+  source/vllm/config/utils.py: 0/367 lines marked
+  source/vllm/config/vllm.py: 0/2153 lines marked
+  source/vllm/config/weight_transfer.py: 0/9 lines marked
+  source/vllm/cute_utils/__init__.py: 0/159 lines marked
+  source/vllm/cute_utils/_tcgen05.py: 0/183 lines marked
+  source/vllm/cute_utils/cvt.py: 0/166 lines marked
+  source/vllm/cute_utils/mbarrier.py: 0/38 lines marked
+  source/vllm/device_allocator/__init__.py: 0/30 lines marked
+  source/vllm/device_allocator/cumem.py: 0/321 lines marked
+  source/vllm/device_allocator/sleep_mode_backend.py: 0/144 lines marked
+  source/vllm/device_allocator/xpumem.py: 0/272 lines marked
+  source/vllm/distributed/__init__.py: 0/3 lines marked
+  source/vllm/distributed/communication_op.py: 0/28 lines marked
+  source/vllm/distributed/kv_events.py: 0/433 lines marked
+  source/vllm/distributed/nixl_utils.py: 0/73 lines marked
+  source/vllm/distributed/parallel_state.py: 0/1902 lines marked
+  source/vllm/distributed/stateless_coordinator.py: 0/325 lines marked
+  source/vllm/distributed/utils.py: 0/576 lines marked
+  source/vllm/distributed/device_communicators/__init__.py: 0/0 lines marked
+  source/vllm/distributed/device_communicators/aiter_custom_all_reduce.py: 0/69 lines marked
+  source/vllm/distributed/device_communicators/all2all.py: 0/900 lines marked
+  source/vllm/distributed/device_communicators/all_reduce_utils.py: 0/321 lines marked
+  source/vllm/distributed/device_communicators/base_device_communicator.py: 0/305 lines marked
+  source/vllm/distributed/device_communicators/cpu_communicator.py: 0/288 lines marked
+  source/vllm/distributed/device_communicators/cuda_communicator.py: 0/627 lines marked
+  source/vllm/distributed/device_communicators/cuda_wrapper.py: 0/138 lines marked
+  source/vllm/distributed/device_communicators/custom_all_reduce.py: 0/473 lines marked
+  source/vllm/distributed/device_communicators/flashinfer_all_reduce.py: 0/342 lines marked
+  source/vllm/distributed/device_communicators/mnnvl_compat.py: 0/24 lines marked
+  source/vllm/distributed/device_communicators/pynccl.py: 0/359 lines marked
+  source/vllm/distributed/device_communicators/pynccl_allocator.py: 0/166 lines marked
+  source/vllm/distributed/device_communicators/pynccl_wrapper.py: 0/448 lines marked
+  source/vllm/distributed/device_communicators/quick_all_reduce.py: 0/298 lines marked
+  source/vllm/distributed/device_communicators/ray_communicator.py: 0/195 lines marked
+  source/vllm/distributed/device_communicators/shm_broadcast.py: 0/785 lines marked
+  source/vllm/distributed/device_communicators/shm_object_storage.py: 0/555 lines marked
+  source/vllm/distributed/device_communicators/symm_mem.py: 0/135 lines marked
+  source/vllm/distributed/device_communicators/xpu_communicator.py: 0/201 lines marked
+  source/vllm/distributed/ec_transfer/__init__.py: 0/12 lines marked
+  source/vllm/distributed/ec_transfer/ec_transfer_state.py: 0/33 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/__init__.py: 0/0 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/base.py: 0/247 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/example_connector.py: 0/210 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/factory.py: 0/65 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/utils.py: 0/37 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/__init__.py: 0/0 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/common.py: 0/62 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/connector.py: 0/90 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/ec_shared_region.py: 0/129 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/scheduler/__init__.py: 0/90 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/scheduler/embedding_cache.py: 0/102 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/scheduler/step_tracker.py: 0/83 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/worker/__init__.py: 0/153 lines marked
+  source/vllm/distributed/ec_transfer/ec_connector/cpu/worker/descriptor_buffers.py: 0/32 lines marked
+  source/vllm/distributed/elastic_ep/__init__.py: 0/0 lines marked
+  source/vllm/distributed/elastic_ep/elastic_execute.py: 0/584 lines marked
+  source/vllm/distributed/elastic_ep/elastic_state.py: 0/394 lines marked
+  source/vllm/distributed/elastic_ep/standby_state.py: 0/99 lines marked
+  source/vllm/distributed/eplb/__init__.py: 0/1 lines marked
+  source/vllm/distributed/eplb/async_worker.py: 0/115 lines marked
+  source/vllm/distributed/eplb/eplb_communicator.py: 0/673 lines marked
+  source/vllm/distributed/eplb/eplb_state.py: 0/1129 lines marked
+  source/vllm/distributed/eplb/eplb_utils.py: 0/80 lines marked
+  source/vllm/distributed/eplb/rebalance_execute.py: 0/560 lines marked
+  source/vllm/distributed/eplb/policy/__init__.py: 0/11 lines marked
+  source/vllm/distributed/eplb/policy/abstract.py: 0/32 lines marked
+  source/vllm/distributed/eplb/policy/default.py: 0/259 lines marked
+  source/vllm/distributed/kv_transfer/__init__.py: 0/16 lines marked
+  source/vllm/distributed/kv_transfer/kv_transfer_state.py: 0/74 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/base.py: 0/5 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/factory.py: 0/192 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/utils.py: 0/473 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/__init__.py: 0/16 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/base.py: 0/591 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/decode_bench_connector.py: 0/332 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/example_connector.py: 0/352 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/example_hidden_states_connector.py: 0/458 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/flexkv_connector.py: 0/200 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_connector.py: 0/284 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_mp_connector.py: 0/918 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/metrics.py: 0/136 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/multi_connector.py: 0/539 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading_connector.py: 0/187 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/simple_cpu_offload_connector.py: 0/251 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/ssm_conv_transfer_utils.py: 0/177 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/hf3fs_client.py: 0/238 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/hf3fs_connector.py: 0/969 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/hf3fs_metadata_server.py: 0/412 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/utils/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/utils/common.py: 0/101 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/utils/gather_scatter_helper.py: 0/228 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/utils/hf3fs_mock_client.py: 0/103 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/hf3fs/utils/hf3fs_utils.cpp: 0/44 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_integration/__init__.py: 0/15 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_integration/multi_process_adapter.py: 0/605 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_integration/utils.py: 0/164 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/lmcache_integration/vllm_v1_adapter.py: 0/1084 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/mooncake_connector.py: 0/1833 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/mooncake_utils.py: 0/98 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/rdma_utils.py: 0/34 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/stats.py: 0/112 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/connector.py: 0/294 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/coordinator.py: 0/351 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/data.py: 0/377 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/metrics.py: 0/168 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/protocol.py: 0/27 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/scheduler.py: 0/407 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/mooncake/store/worker.py: 0/1779 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/moriio/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/moriio/moriio_common.py: 0/443 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/moriio/moriio_connector.py: 0/2068 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/moriio/moriio_engine.py: 0/730 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/moriio/moriio_layout.py: 0/309 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/__init__.py: 0/57 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/base_scheduler.py: 0/394 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/base_worker.py: 0/2045 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/connector.py: 0/324 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/metadata.py: 0/202 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/pull_scheduler.py: 0/210 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/pull_worker.py: 0/290 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/push_scheduler.py: 0/243 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/push_worker.py: 0/592 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/scheduler.py: 0/6 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/stats.py: 0/229 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/tp_mapping.py: 0/83 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/utils.py: 0/45 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/nixl/worker.py: 0/6 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/__init__.py: 0/0 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/canonical_mapping.py: 0/396 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/common.py: 0/76 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/config.py: 0/182 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/events.py: 0/354 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/metrics.py: 0/437 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/scheduler.py: 0/1362 lines marked
+  source/vllm/distributed/kv_transfer/kv_connector/v1/offloading/worker.py: 0/328 lines marked
+  source/vllm/distributed/weight_transfer/__init__.py: 0/32 lines marked
+  source/vllm/distributed/weight_transfer/base.py: 0/343 lines marked
+  source/vllm/distributed/weight_transfer/clients.py: 0/86 lines marked
+  source/vllm/distributed/weight_transfer/factory.py: 0/201 lines marked
+  source/vllm/distributed/weight_transfer/ipc_engine.py: 0/364 lines marked
+  source/vllm/distributed/weight_transfer/nccl_common.py: 0/109 lines marked
+  source/vllm/distributed/weight_transfer/nccl_engine.py: 0/359 lines marked
+  source/vllm/distributed/weight_transfer/packed_tensor.py: 0/380 lines marked
+  source/vllm/distributed/weight_transfer/sparse_nccl_engine.py: 0/315 lines marked
+  source/vllm/engine/__init__.py: 0/0 lines marked
+  source/vllm/engine/arg_utils.py: 0/2516 lines marked
+  source/vllm/engine/async_llm_engine.py: 0/3 lines marked
+  source/vllm/engine/llm_engine.py: 0/3 lines marked
+  source/vllm/engine/protocol.py: 0/231 lines marked
+  source/vllm/entrypoints/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/chat_utils.py: 0/1605 lines marked
+  source/vllm/entrypoints/grpc_server.py: 0/143 lines marked
+  source/vllm/entrypoints/launcher.py: 0/149 lines marked
+  source/vllm/entrypoints/llm.py: 0/800 lines marked
+  source/vllm/entrypoints/offline_utils.py: 0/538 lines marked
+  source/vllm/entrypoints/anthropic/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/anthropic/api_router.py: 0/98 lines marked
+  source/vllm/entrypoints/anthropic/protocol.py: 0/217 lines marked
+  source/vllm/entrypoints/anthropic/serving.py: 0/900 lines marked
+  source/vllm/entrypoints/cli/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/cli/collect_env.py: 0/26 lines marked
+  source/vllm/entrypoints/cli/launch.py: 0/109 lines marked
+  source/vllm/entrypoints/cli/main.py: 0/79 lines marked
+  source/vllm/entrypoints/cli/openai.py: 0/262 lines marked
+  source/vllm/entrypoints/cli/run_batch.py: 0/47 lines marked
+  source/vllm/entrypoints/cli/serve.py: 0/308 lines marked
+  source/vllm/entrypoints/cli/types.py: 0/18 lines marked
+  source/vllm/entrypoints/cli/benchmark/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/cli/benchmark/base.py: 0/17 lines marked
+  source/vllm/entrypoints/cli/benchmark/latency.py: 0/14 lines marked
+  source/vllm/entrypoints/cli/benchmark/main.py: 0/71 lines marked
+  source/vllm/entrypoints/cli/benchmark/mm_processor.py: 0/53 lines marked
+  source/vllm/entrypoints/cli/benchmark/serve.py: 0/14 lines marked
+  source/vllm/entrypoints/cli/benchmark/startup.py: 0/14 lines marked
+  source/vllm/entrypoints/cli/benchmark/sweep.py: 0/14 lines marked
+  source/vllm/entrypoints/cli/benchmark/throughput.py: 0/14 lines marked
+  source/vllm/entrypoints/cohere/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/cohere/api_router.py: 0/211 lines marked
+  source/vllm/entrypoints/cohere/cohere_chat_message.py: 0/108 lines marked
+  source/vllm/entrypoints/cohere/protocol.py: 0/228 lines marked
+  source/vllm/entrypoints/cohere/serving.py: 0/1331 lines marked
+  source/vllm/entrypoints/generate/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/generate/api_router.py: 0/190 lines marked
+  source/vllm/entrypoints/generate/factories.py: 0/32 lines marked
+  source/vllm/entrypoints/generate/base/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/generate/base/serving.py: 0/300 lines marked
+  source/vllm/entrypoints/generate/beam_search/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/generate/beam_search/offline.py: 0/370 lines marked
+  source/vllm/entrypoints/generate/beam_search/online.py: 0/189 lines marked
+  source/vllm/entrypoints/generate/beam_search/utils.py: 0/127 lines marked
+  source/vllm/entrypoints/generate/generative_scoring/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/generate/generative_scoring/api_router.py: 0/47 lines marked
+  source/vllm/entrypoints/generate/generative_scoring/serving.py: 0/370 lines marked
+  source/vllm/entrypoints/mcp/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/mcp/tool.py: 0/150 lines marked
+  source/vllm/entrypoints/mcp/tool_server.py: 0/187 lines marked
+  source/vllm/entrypoints/openai/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/api_server.py: 0/594 lines marked
+  source/vllm/entrypoints/openai/cli_args.py: 0/391 lines marked
+  source/vllm/entrypoints/openai/dp_supervisor.py: 0/451 lines marked
+  source/vllm/entrypoints/openai/run_batch.py: 0/686 lines marked
+  source/vllm/entrypoints/openai/chat_completion/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/chat_completion/api_router.py: 0/81 lines marked
+  source/vllm/entrypoints/openai/chat_completion/batch_serving.py: 0/288 lines marked
+  source/vllm/entrypoints/openai/chat_completion/protocol.py: 0/976 lines marked
+  source/vllm/entrypoints/openai/chat_completion/serving.py: 0/1053 lines marked
+  source/vllm/entrypoints/openai/completion/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/completion/api_router.py: 0/53 lines marked
+  source/vllm/entrypoints/openai/completion/protocol.py: 0/589 lines marked
+  source/vllm/entrypoints/openai/completion/serving.py: 0/598 lines marked
+  source/vllm/entrypoints/openai/engine/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/engine/protocol.py: 0/309 lines marked
+  source/vllm/entrypoints/openai/models/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/models/api_router.py: 0/15 lines marked
+  source/vllm/entrypoints/openai/models/protocol.py: 0/11 lines marked
+  source/vllm/entrypoints/openai/models/serving.py: 0/281 lines marked
+  source/vllm/entrypoints/openai/parser/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/parser/harmony_utils.py: 0/368 lines marked
+  source/vllm/entrypoints/openai/responses/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/openai/responses/api_router.py: 0/100 lines marked
+  source/vllm/entrypoints/openai/responses/context.py: 0/802 lines marked
+  source/vllm/entrypoints/openai/responses/harmony.py: 0/373 lines marked
+  source/vllm/entrypoints/openai/responses/protocol.py: 0/726 lines marked
+  source/vllm/entrypoints/openai/responses/serving.py: 0/1313 lines marked
+  source/vllm/entrypoints/openai/responses/streaming_events.py: 0/1144 lines marked
+  source/vllm/entrypoints/openai/responses/utils.py: 0/335 lines marked
+  source/vllm/entrypoints/pooling/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/factories.py: 0/201 lines marked
+  source/vllm/entrypoints/pooling/offline.py: 0/405 lines marked
+  source/vllm/entrypoints/pooling/typing.py: 0/147 lines marked
+  source/vllm/entrypoints/pooling/utils.py: 0/206 lines marked
+  source/vllm/entrypoints/pooling/base/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/base/io_processor.py: 0/291 lines marked
+  source/vllm/entrypoints/pooling/base/protocol.py: 0/261 lines marked
+  source/vllm/entrypoints/pooling/base/serving.py: 0/235 lines marked
+  source/vllm/entrypoints/pooling/classify/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/classify/api_router.py: 0/23 lines marked
+  source/vllm/entrypoints/pooling/classify/io_processor.py: 0/5 lines marked
+  source/vllm/entrypoints/pooling/classify/protocol.py: 0/54 lines marked
+  source/vllm/entrypoints/pooling/classify/serving.py: 0/53 lines marked
+  source/vllm/entrypoints/pooling/embed/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/embed/api_router.py: 0/48 lines marked
+  source/vllm/entrypoints/pooling/embed/io_processor.py: 0/557 lines marked
+  source/vllm/entrypoints/pooling/embed/protocol.py: 0/255 lines marked
+  source/vllm/entrypoints/pooling/embed/serving.py: 0/187 lines marked
+  source/vllm/entrypoints/pooling/pooling/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/pooling/api_router.py: 0/29 lines marked
+  source/vllm/entrypoints/pooling/pooling/io_processor.py: 0/150 lines marked
+  source/vllm/entrypoints/pooling/pooling/protocol.py: 0/92 lines marked
+  source/vllm/entrypoints/pooling/pooling/serving.py: 0/155 lines marked
+  source/vllm/entrypoints/pooling/scoring/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/pooling/scoring/api_router.py: 0/92 lines marked
+  source/vllm/entrypoints/pooling/scoring/io_processor.py: 0/734 lines marked
+  source/vllm/entrypoints/pooling/scoring/protocol.py: 0/136 lines marked
+  source/vllm/entrypoints/pooling/scoring/serving.py: 0/224 lines marked
+  source/vllm/entrypoints/pooling/scoring/typing.py: 0/31 lines marked
+  source/vllm/entrypoints/pooling/scoring/utils.py: 0/215 lines marked
+  source/vllm/entrypoints/scale_out/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/scale_out/factories.py: 0/57 lines marked
+  source/vllm/entrypoints/scale_out/derender/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/scale_out/derender/api_router.py: 0/103 lines marked
+  source/vllm/entrypoints/scale_out/derender/serving.py: 0/328 lines marked
+  source/vllm/entrypoints/scale_out/render/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/scale_out/render/api_router.py: 0/53 lines marked
+  source/vllm/entrypoints/scale_out/render/serving.py: 0/214 lines marked
+  source/vllm/entrypoints/scale_out/token_in_token_out/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/scale_out/token_in_token_out/api_router.py: 0/75 lines marked
+  source/vllm/entrypoints/scale_out/token_in_token_out/mm_serde.py: 0/17 lines marked
+  source/vllm/entrypoints/scale_out/token_in_token_out/protocol.py: 0/358 lines marked
+  source/vllm/entrypoints/scale_out/token_in_token_out/serving.py: 0/441 lines marked
+  source/vllm/entrypoints/serve/__init__.py: 0/41 lines marked
+  source/vllm/entrypoints/serve/dev/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/cache/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/cache/api_router.py: 0/49 lines marked
+  source/vllm/entrypoints/serve/dev/rlhf/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/rlhf/api_router.py: 0/194 lines marked
+  source/vllm/entrypoints/serve/dev/rpc/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/rpc/api_router.py: 0/43 lines marked
+  source/vllm/entrypoints/serve/dev/server_info/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/server_info/api_router.py: 0/44 lines marked
+  source/vllm/entrypoints/serve/dev/sleep/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/dev/sleep/api_router.py: 0/28 lines marked
+  source/vllm/entrypoints/serve/elastic_ep/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/elastic_ep/api_router.py: 0/67 lines marked
+  source/vllm/entrypoints/serve/elastic_ep/middleware.py: 0/30 lines marked
+  source/vllm/entrypoints/serve/engine/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/engine/serving.py: 0/154 lines marked
+  source/vllm/entrypoints/serve/engine/typing.py: 0/72 lines marked
+  source/vllm/entrypoints/serve/exception_handling/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/exception_handling/error_response.py: 0/77 lines marked
+  source/vllm/entrypoints/serve/exception_handling/register.py: 0/27 lines marked
+  source/vllm/entrypoints/serve/exception_handling/utils.py: 0/10 lines marked
+  source/vllm/entrypoints/serve/exception_handling/handlers/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/exception_handling/handlers/exception.py: 0/15 lines marked
+  source/vllm/entrypoints/serve/exception_handling/handlers/http.py: 0/23 lines marked
+  source/vllm/entrypoints/serve/exception_handling/handlers/validation.py: 0/100 lines marked
+  source/vllm/entrypoints/serve/exception_handling/handlers/vllm_error.py: 0/61 lines marked
+  source/vllm/entrypoints/serve/fault_tolerance/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/fault_tolerance/api_router.py: 0/77 lines marked
+  source/vllm/entrypoints/serve/instrumentator/__init__.py: 0/10 lines marked
+  source/vllm/entrypoints/serve/instrumentator/basic.py: 0/21 lines marked
+  source/vllm/entrypoints/serve/instrumentator/health.py: 0/20 lines marked
+  source/vllm/entrypoints/serve/instrumentator/metrics.py: 0/56 lines marked
+  source/vllm/entrypoints/serve/instrumentator/offline_docs.py: 0/36 lines marked
+  source/vllm/entrypoints/serve/lora/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/lora/api_router.py: 0/61 lines marked
+  source/vllm/entrypoints/serve/lora/protocol.py: 0/9 lines marked
+  source/vllm/entrypoints/serve/profile/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/profile/api_router.py: 0/31 lines marked
+  source/vllm/entrypoints/serve/sagemaker/__init__.py: 0/1 lines marked
+  source/vllm/entrypoints/serve/sagemaker/api_router.py: 0/81 lines marked
+  source/vllm/entrypoints/serve/tokenize/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/tokenize/api_router.py: 0/84 lines marked
+  source/vllm/entrypoints/serve/tokenize/protocol.py: 0/163 lines marked
+  source/vllm/entrypoints/serve/tokenize/serving.py: 0/163 lines marked
+  source/vllm/entrypoints/serve/utils/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/serve/utils/api_utils.py: 0/256 lines marked
+  source/vllm/entrypoints/serve/utils/constants.py: 0/6 lines marked
+  source/vllm/entrypoints/serve/utils/fingerprint.py: 0/64 lines marked
+  source/vllm/entrypoints/serve/utils/orca_metrics.py: 0/89 lines marked
+  source/vllm/entrypoints/serve/utils/request_logger.py: 0/86 lines marked
+  source/vllm/entrypoints/serve/utils/server_utils.py: 0/263 lines marked
+  source/vllm/entrypoints/serve/utils/ssl.py: 0/61 lines marked
+  source/vllm/entrypoints/serve/utils/tool_calls_utils.py: 0/27 lines marked
+  source/vllm/entrypoints/speech_to_text/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/speech_to_text/factories.py: 0/54 lines marked
+  source/vllm/entrypoints/speech_to_text/base/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/speech_to_text/base/protocol.py: 0/5 lines marked
+  source/vllm/entrypoints/speech_to_text/base/serving.py: 0/716 lines marked
+  source/vllm/entrypoints/speech_to_text/base/utils.py: 0/49 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/api_router.py: 0/25 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/connection.py: 0/221 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/metrics.py: 0/56 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/protocol.py: 0/39 lines marked
+  source/vllm/entrypoints/speech_to_text/realtime/serving.py: 0/66 lines marked
+  source/vllm/entrypoints/speech_to_text/transcription/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/speech_to_text/transcription/api_router.py: 0/43 lines marked
+  source/vllm/entrypoints/speech_to_text/transcription/protocol.py: 0/319 lines marked
+  source/vllm/entrypoints/speech_to_text/transcription/serving.py: 0/91 lines marked
+  source/vllm/entrypoints/speech_to_text/translation/__init__.py: 0/0 lines marked
+  source/vllm/entrypoints/speech_to_text/translation/api_router.py: 0/43 lines marked
+  source/vllm/entrypoints/speech_to_text/translation/protocol.py: 0/285 lines marked
+  source/vllm/entrypoints/speech_to_text/translation/serving.py: 0/87 lines marked
+  source/vllm/inputs/__init__.py: 0/60 lines marked
+  source/vllm/inputs/engine.py: 0/290 lines marked
+  source/vllm/inputs/llm.py: 0/168 lines marked
+  source/vllm/inputs/preprocess.py: 0/244 lines marked
+  source/vllm/ir/__init__.py: 0/3 lines marked
+  source/vllm/ir/op.py: 0/515 lines marked
+  source/vllm/ir/tolerances.py: 0/12 lines marked
+  source/vllm/ir/util.py: 0/47 lines marked
+  source/vllm/ir/ops/__init__.py: 0/2 lines marked
+  source/vllm/ir/ops/layernorm.py: 0/60 lines marked
+  source/vllm/kernels/__init__.py: 0/3 lines marked
+  source/vllm/kernels/aiter_ops.py: 0/115 lines marked
+  source/vllm/kernels/oink_ops.py: 0/102 lines marked
+  source/vllm/kernels/vllm_c.py: 0/64 lines marked
+  source/vllm/kernels/helion/__init__.py: 0/30 lines marked
+  source/vllm/kernels/helion/case_key.py: 0/55 lines marked
+  source/vllm/kernels/helion/config_manager.py: 0/261 lines marked
+  source/vllm/kernels/helion/register.py: 0/385 lines marked
+  source/vllm/kernels/helion/utils.py: 0/56 lines marked
+  source/vllm/kernels/helion/ops/__init__.py: 0/23 lines marked
+  source/vllm/kernels/helion/ops/dynamic_per_token_scaled_fp8_quant.py: 0/133 lines marked
+  source/vllm/kernels/helion/ops/fused_qk_norm_rope.py: 0/253 lines marked
+  source/vllm/kernels/helion/ops/per_token_group_fp8_quant.py: 0/183 lines marked
+  source/vllm/kernels/helion/ops/rms_norm_dynamic_per_token_quant.py: 0/208 lines marked
+  source/vllm/kernels/helion/ops/rms_norm_per_block_quant.py: 0/265 lines marked
+  source/vllm/kernels/helion/ops/silu_and_mul_per_block_quant.py: 0/225 lines marked
+  source/vllm/kernels/helion/ops/silu_mul_fp8.py: 0/95 lines marked
+  source/vllm/kernels/triton/__init__.py: 0/1 lines marked
+  source/vllm/kernels/triton/qkv_padded_fp8_quant.py: 0/150 lines marked
+  source/vllm/logging_utils/__init__.py: 0/17 lines marked
+  source/vllm/logging_utils/access_log_filter.py: 0/117 lines marked
+  source/vllm/logging_utils/dump_input.py: 0/65 lines marked
+  source/vllm/logging_utils/formatter.py: 0/93 lines marked
+  source/vllm/logging_utils/lazy.py: 0/11 lines marked
+  source/vllm/logging_utils/log_time.py: 0/25 lines marked
+  source/vllm/logging_utils/torch_tensor.py: 0/5 lines marked
+  source/vllm/lora/__init__.py: 0/0 lines marked
+  source/vllm/lora/lora_model.py: 0/253 lines marked
+  source/vllm/lora/lora_weights.py: 0/236 lines marked
+  source/vllm/lora/model_manager.py: 0/1019 lines marked
+  source/vllm/lora/peft_helper.py: 0/100 lines marked
+  source/vllm/lora/request.py: 0/56 lines marked
+  source/vllm/lora/resolver.py: 0/68 lines marked
+  source/vllm/lora/utils.py: 0/297 lines marked
+  source/vllm/lora/worker_manager.py: 0/243 lines marked
+  source/vllm/lora/layers/__init__.py: 0/42 lines marked
+  source/vllm/lora/layers/base.py: 0/74 lines marked
+  source/vllm/lora/layers/base_linear.py: 0/257 lines marked
+  source/vllm/lora/layers/column_parallel_linear.py: 0/582 lines marked
+  source/vllm/lora/layers/fused_moe.py: 0/510 lines marked
+  source/vllm/lora/layers/logits_processor.py: 0/164 lines marked
+  source/vllm/lora/layers/replicated_linear.py: 0/51 lines marked
+  source/vllm/lora/layers/row_parallel_linear.py: 0/130 lines marked
+  source/vllm/lora/layers/utils.py: 0/102 lines marked
+  source/vllm/lora/layers/vocal_parallel_embedding.py: 0/125 lines marked
+  source/vllm/lora/ops/__init__.py: 0/0 lines marked
+  source/vllm/lora/ops/torch_ops/__init__.py: 0/16 lines marked
+  source/vllm/lora/ops/torch_ops/lora_ops.py: 0/104 lines marked
+  source/vllm/lora/ops/triton_ops/__init__.py: 0/28 lines marked
+  source/vllm/lora/ops/triton_ops/fp8_kernel_utils.py: 0/487 lines marked
+  source/vllm/lora/ops/triton_ops/fused_moe_lora_fp8_op.py: 0/919 lines marked
+  source/vllm/lora/ops/triton_ops/fused_moe_lora_op.py: 0/1467 lines marked
+  source/vllm/lora/ops/triton_ops/kernel_utils.py: 0/276 lines marked
+  source/vllm/lora/ops/triton_ops/lora_expand_fp8_op.py: 0/353 lines marked
+  source/vllm/lora/ops/triton_ops/lora_expand_op.py: 0/259 lines marked
+  source/vllm/lora/ops/triton_ops/lora_kernel_metadata.py: 0/135 lines marked
+  source/vllm/lora/ops/triton_ops/lora_shrink_fp8_op.py: 0/362 lines marked
+  source/vllm/lora/ops/triton_ops/lora_shrink_op.py: 0/245 lines marked
+  source/vllm/lora/ops/triton_ops/utils.py: 0/293 lines marked
+  source/vllm/lora/ops/xpu_ops/__init__.py: 0/2 lines marked
+  source/vllm/lora/ops/xpu_ops/lora_ops.py: 0/152 lines marked
+  source/vllm/lora/punica_wrapper/__init__.py: 0/6 lines marked
+  source/vllm/lora/punica_wrapper/punica_base.py: 0/494 lines marked
+  source/vllm/lora/punica_wrapper/punica_cpu.py: 0/302 lines marked
+  source/vllm/lora/punica_wrapper/punica_gpu.py: 0/651 lines marked
+  source/vllm/lora/punica_wrapper/punica_selector.py: 0/14 lines marked
+  source/vllm/lora/punica_wrapper/punica_xpu.py: 0/659 lines marked
+  source/vllm/lora/punica_wrapper/utils.py: 0/132 lines marked
+  source/vllm/model_executor/__init__.py: 0/5 lines marked
+  source/vllm/model_executor/custom_op.py: 0/250 lines marked
+  source/vllm/model_executor/parameter.py: 0/457 lines marked
+  source/vllm/model_executor/utils.py: 0/111 lines marked
+  source/vllm/model_executor/hw_agnostic/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/hw_agnostic/custom_op.py: 0/221 lines marked
+  source/vllm/model_executor/hw_agnostic/layers/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/hw_agnostic/layers/activation.py: 0/16 lines marked
+  source/vllm/model_executor/hw_agnostic/layers/layernorm.py: 0/78 lines marked
+  source/vllm/model_executor/kernels/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/kernels/attention/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/kernels/attention/dsa/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/kernels/attention/dsa/dcp_indexer_cutedsl.py: 0/368 lines marked
+  source/vllm/model_executor/kernels/linear/__init__.py: 0/1090 lines marked
+  source/vllm/model_executor/kernels/linear/base.py: 0/240 lines marked
+  source/vllm/model_executor/kernels/linear/zentorch_utils.py: 0/67 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/_ll_bf16_dotprod.py: 0/268 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/_ll_bf16_splitk.py: 0/500 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/_skinny_gemm.py: 0/224 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/ll_bf16.py: 0/271 lines marked
+  source/vllm/model_executor/kernels/linear/cute_dsl/skinny_gemm.py: 0/215 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/MPLinearKernel.py: 0/77 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/__init__.py: 0/66 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/allspark.py: 0/83 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/conch.py: 0/109 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/cpu.py: 0/169 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/cutlass.py: 0/96 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/dynamic_4bit.py: 0/112 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/exllama.py: 0/127 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/humming.py: 0/58 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/machete.py: 0/123 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/marlin.py: 0/205 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/rdna3_w4a16.py: 0/133 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/rdna_hybrid_w4a16.py: 0/420 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/triton_w4a16.py: 0/322 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/xpu.py: 0/179 lines marked
+  source/vllm/model_executor/kernels/linear/mixed_precision/zentorch.py: 0/167 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/__init__.py: 0/8 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/aiter.py: 0/169 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/b12x.py: 0/145 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/base.py: 0/54 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/emulation.py: 0/90 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/flashinfer.py: 0/64 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/humming.py: 0/64 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/marlin.py: 0/51 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp4/xpu.py: 0/46 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp6/__init__.py: 0/8 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp6/base.py: 0/57 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp6/emulation.py: 0/76 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/Mxfp8LinearKernel.py: 0/40 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/__init__.py: 0/8 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/b12x.py: 0/164 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/emulation.py: 0/53 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/flashinfer.py: 0/140 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/humming.py: 0/53 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/marlin.py: 0/40 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/rocm_native.py: 0/193 lines marked
+  source/vllm/model_executor/kernels/linear/mxfp8/xpu.py: 0/60 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/__init__.py: 0/8 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/b12x.py: 0/152 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/base.py: 0/57 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/cutlass.py: 0/62 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/emulation.py: 0/35 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/fbgemm.py: 0/53 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/flashinfer.py: 0/309 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/humming.py: 0/58 lines marked
+  source/vllm/model_executor/kernels/linear/nvfp4/marlin.py: 0/45 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/BlockScaledMMLinearKernel.py: 0/169 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/ScaledMMLinearKernel.py: 0/165 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/__init__.py: 0/67 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/aiter.py: 0/365 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/b12x_block.py: 0/187 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/b12x_tensor.py: 0/207 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/cpu.py: 0/259 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/cutlass.py: 0/275 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/deep_gemm.py: 0/136 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/flashinfer.py: 0/269 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/humming.py: 0/133 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/marlin.py: 0/100 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/pytorch.py: 0/240 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/rocm.py: 0/97 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/triton.py: 0/161 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/xpu.py: 0/219 lines marked
+  source/vllm/model_executor/kernels/linear/scaled_mm/zentorch.py: 0/83 lines marked
+  source/vllm/model_executor/kernels/mhc/__init__.py: 0/26 lines marked
+  source/vllm/model_executor/kernels/mhc/aiter.py: 0/116 lines marked
+  source/vllm/model_executor/kernels/mhc/tilelang.py: 0/710 lines marked
+  source/vllm/model_executor/kernels/mhc/tilelang_kernels.py: 0/760 lines marked
+  source/vllm/model_executor/kernels/mhc/torch.py: 0/87 lines marked
+  source/vllm/model_executor/kernels/mhc/triton.py: 0/149 lines marked
+  source/vllm/model_executor/layers/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/activation.py: 0/661 lines marked
+  source/vllm/model_executor/layers/attention_layer_base.py: 0/32 lines marked
+  source/vllm/model_executor/layers/batch_invariant.py: 0/737 lines marked
+  source/vllm/model_executor/layers/conv.py: 0/165 lines marked
+  source/vllm/model_executor/layers/fused_allreduce_gemma_rms_norm.py: 0/110 lines marked
+  source/vllm/model_executor/layers/fused_qk_norm_rope.py: 0/169 lines marked
+  source/vllm/model_executor/layers/layernorm.py: 0/263 lines marked
+  source/vllm/model_executor/layers/lightning_attn.py: 0/532 lines marked
+  source/vllm/model_executor/layers/linear.py: 0/1378 lines marked
+  source/vllm/model_executor/layers/logits_processor.py: 0/217 lines marked
+  source/vllm/model_executor/layers/mhc.py: 0/496 lines marked
+  source/vllm/model_executor/layers/mla.py: 0/183 lines marked
+  source/vllm/model_executor/layers/resampler.py: 0/215 lines marked
+  source/vllm/model_executor/layers/sparse_attn_indexer.py: 0/759 lines marked
+  source/vllm/model_executor/layers/utils.py: 0/278 lines marked
+  source/vllm/model_executor/layers/vocab_parallel_embedding.py: 0/485 lines marked
+  source/vllm/model_executor/layers/attention/__init__.py: 0/36 lines marked
+  source/vllm/model_executor/layers/attention/attention.py: 0/609 lines marked
+  source/vllm/model_executor/layers/attention/chunked_local_attention.py: 0/109 lines marked
+  source/vllm/model_executor/layers/attention/cross_attention.py: 0/188 lines marked
+  source/vllm/model_executor/layers/attention/encoder_only_attention.py: 0/79 lines marked
+  source/vllm/model_executor/layers/attention/kv_transfer_utils.py: 0/38 lines marked
+  source/vllm/model_executor/layers/attention/mla_attention.py: 0/2512 lines marked
+  source/vllm/model_executor/layers/attention/mm_encoder_attention.py: 0/704 lines marked
+  source/vllm/model_executor/layers/attention/pcp.py: 0/78 lines marked
+  source/vllm/model_executor/layers/attention/prefill_prefix_lm_attention.py: 0/70 lines marked
+  source/vllm/model_executor/layers/attention/rswa_attention.py: 0/29 lines marked
+  source/vllm/model_executor/layers/attention/sparse_mla_attention.py: 0/829 lines marked
+  source/vllm/model_executor/layers/attention/sparse_mla_mask.py: 0/44 lines marked
+  source/vllm/model_executor/layers/attention/static_sink_attention.py: 0/221 lines marked
+  source/vllm/model_executor/layers/fused_moe/__init__.py: 0/145 lines marked
+  source/vllm/model_executor/layers/fused_moe/activation.py: 0/223 lines marked
+  source/vllm/model_executor/layers/fused_moe/all2all_utils.py: 0/303 lines marked
+  source/vllm/model_executor/layers/fused_moe/config.py: 0/1201 lines marked
+  source/vllm/model_executor/layers/fused_moe/deep_gemm_utils.py: 0/472 lines marked
+  source/vllm/model_executor/layers/fused_moe/eep_reconfigure.py: 0/103 lines marked
+  source/vllm/model_executor/layers/fused_moe/expert_map_manager.py: 0/419 lines marked
+  source/vllm/model_executor/layers/fused_moe/fused_flydsl_moe.py: 0/371 lines marked
+  source/vllm/model_executor/layers/fused_moe/fused_moe.py: 0/1501 lines marked
+  source/vllm/model_executor/layers/fused_moe/fused_moe_method_base.py: 0/151 lines marked
+  source/vllm/model_executor/layers/fused_moe/fused_moe_modular_method.py: 0/83 lines marked
+  source/vllm/model_executor/layers/fused_moe/hpc_moe.py: 0/170 lines marked
+  source/vllm/model_executor/layers/fused_moe/layer.py: 0/371 lines marked
+  source/vllm/model_executor/layers/fused_moe/modular_kernel.py: 0/1399 lines marked
+  source/vllm/model_executor/layers/fused_moe/moe_align_block_size.py: 0/164 lines marked
+  source/vllm/model_executor/layers/fused_moe/moe_fused_mul_sum.py: 0/175 lines marked
+  source/vllm/model_executor/layers/fused_moe/moe_output.py: 0/36 lines marked
+  source/vllm/model_executor/layers/fused_moe/moe_permute_unpermute.py: 0/259 lines marked
+  source/vllm/model_executor/layers/fused_moe/routed_experts.py: 0/996 lines marked
+  source/vllm/model_executor/layers/fused_moe/routed_experts_capturer.py: 0/337 lines marked
+  source/vllm/model_executor/layers/fused_moe/topk_weight_and_reduce.py: 0/143 lines marked
+  source/vllm/model_executor/layers/fused_moe/unquantized_fused_moe_method.py: 0/250 lines marked
+  source/vllm/model_executor/layers/fused_moe/utils.py: 0/530 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/aiter_mxfp4_w4a8_moe.py: 0/615 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/aiter_mxfp8_moe.py: 0/141 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/batched_deep_gemm_moe.py: 0/356 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/cpu_int4_moe.py: 0/229 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/cpu_moe.py: 0/1183 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/cutlass_moe.py: 0/1224 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/deep_gemm_moe.py: 0/515 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/fallback.py: 0/148 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/flashinfer_b12x_moe.py: 0/223 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/flashinfer_cutedsl_batched_moe.py: 0/305 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/flashinfer_cutedsl_moe.py: 0/169 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/flashinfer_cutlass_moe.py: 0/335 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/fused_batched_moe.py: 0/844 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/fused_humming_moe.py: 0/795 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/gpt_oss_triton_kernels_moe.py: 0/1148 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/int4_emulation_moe.py: 0/109 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/lora_context.py: 0/31 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/lora_experts_mixin.py: 0/120 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/marlin_moe.py: 0/918 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/mxfp8_emulation_moe.py: 0/139 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/mxfp8_native_moe.py: 0/306 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/nvfp4_emulation_moe.py: 0/425 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/ocp_mx_emulation_moe.py: 0/170 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/rocm_aiter_moe.py: 0/465 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/triton_cutlass_moe.py: 0/72 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/triton_deep_gemm_moe.py: 0/73 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/triton_moe.py: 0/620 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_bf16_moe.py: 0/275 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_fp8_moe.py: 0/516 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_lora_moe.py: 0/459 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_mxfp4_moe.py: 0/384 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_mxint4_moe.py: 0/147 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/trtllm_nvfp4_moe.py: 0/485 lines marked
+  source/vllm/model_executor/layers/fused_moe/experts/xpu_moe.py: 0/306 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/__init__.py: 0/8 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/base.py: 0/116 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/fp8.py: 0/602 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/int8.py: 0/267 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/int_wna16.py: 0/1443 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/mxfp4.py: 0/1561 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/mxfp8.py: 0/114 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/nvfp4.py: 0/491 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/unquantized.py: 0/374 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/w4a8.py: 0/160 lines marked
+  source/vllm/model_executor/layers/fused_moe/oracle/w4a8_int8.py: 0/280 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/__init__.py: 0/22 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/batched.py: 0/149 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/deepep_ht.py: 0/345 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/deepep_ll.py: 0/369 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/deepep_v2.py: 0/390 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/flashinfer_nvlink_one_sided.py: 0/143 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/flashinfer_nvlink_two_sided.py: 0/202 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/mori.py: 0/102 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/naive_dp_ep.py: 0/234 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/nixl_ep.py: 0/329 lines marked
+  source/vllm/model_executor/layers/fused_moe/prepare_finalize/no_dp_ep.py: 0/111 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/aiter_shared_routed_fused_moe_router.py: 0/116 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/base_router.py: 0/247 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/bf16x3_router_gemm_cutedsl.py: 0/361 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/custom_routing_router.py: 0/51 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/dsv4_topk.py: 0/100 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/fused_moe_router.py: 0/63 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/fused_topk_bias_router.py: 0/340 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/fused_topk_router.py: 0/145 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/gate_linear.py: 0/203 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/grouped_topk_router.py: 0/301 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/router_factory.py: 0/198 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/routing_simulator_router.py: 0/266 lines marked
+  source/vllm/model_executor/layers/fused_moe/router/zero_expert_router.py: 0/92 lines marked
+  source/vllm/model_executor/layers/fused_moe/runner/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/fused_moe/runner/moe_runner.py: 0/732 lines marked
+  source/vllm/model_executor/layers/fused_moe/runner/moe_runner_interface.py: 0/97 lines marked
+  source/vllm/model_executor/layers/fused_moe/runner/shared_experts.py: 0/118 lines marked
+  source/vllm/model_executor/layers/fusion/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/fusion/quant_activation.py: 0/54 lines marked
+  source/vllm/model_executor/layers/hpc/__init__.py: 0/7 lines marked
+  source/vllm/model_executor/layers/hpc/hpc_module.py: 0/11 lines marked
+  source/vllm/model_executor/layers/hpc/rope_norm.py: 0/325 lines marked
+  source/vllm/model_executor/layers/mamba/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/mamba/abstract.py: 0/67 lines marked
+  source/vllm/model_executor/layers/mamba/mamba_mixer.py: 0/453 lines marked
+  source/vllm/model_executor/layers/mamba/mamba_mixer2.py: 0/881 lines marked
+  source/vllm/model_executor/layers/mamba/mamba_utils.py: 0/321 lines marked
+  source/vllm/model_executor/layers/mamba/short_conv.py: 0/295 lines marked
+  source/vllm/model_executor/layers/mamba/gdn/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/mamba/gdn/base.py: 0/50 lines marked
+  source/vllm/model_executor/layers/mamba/gdn/kimi_gdn_linear_attn.py: 0/554 lines marked
+  source/vllm/model_executor/layers/mamba/gdn/olmo_gdn_linear_attn.py: 0/522 lines marked
+  source/vllm/model_executor/layers/mamba/gdn/qwen_gdn_linear_attn.py: 0/1758 lines marked
+  source/vllm/model_executor/layers/mamba/linear/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/mamba/linear/bailing_linear_attn.py: 0/608 lines marked
+  source/vllm/model_executor/layers/mamba/linear/base.py: 0/55 lines marked
+  source/vllm/model_executor/layers/mamba/linear/minimax_linear_attn.py: 0/312 lines marked
+  source/vllm/model_executor/layers/mamba/ops/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/mamba/ops/causal_conv1d.py: 0/1052 lines marked
+  source/vllm/model_executor/layers/mamba/ops/gather_initial_states.py: 0/71 lines marked
+  source/vllm/model_executor/layers/mamba/ops/layernorm_gated.py: 0/151 lines marked
+  source/vllm/model_executor/layers/mamba/ops/mamba_ssm.py: 0/751 lines marked
+  source/vllm/model_executor/layers/mamba/ops/replayssm_config.py: 0/45 lines marked
+  source/vllm/model_executor/layers/mamba/ops/selective_state_update_replayssm_output_only.py: 0/635 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssd_bmm.py: 0/183 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssd_chunk_scan.py: 0/469 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssd_chunk_state.py: 0/363 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssd_combined.py: 0/176 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssd_state_passing.py: 0/117 lines marked
+  source/vllm/model_executor/layers/mamba/ops/ssu_dispatch.py: 0/309 lines marked
+  source/vllm/model_executor/layers/mamba/ops/triton_helpers.py: 0/10 lines marked
+  source/vllm/model_executor/layers/mamba/ops/cpu/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/mamba/ops/cpu/causal_conv1d.py: 0/120 lines marked
+  source/vllm/model_executor/layers/mamba/ops/cpu/gdn_attention.py: 0/616 lines marked
+  source/vllm/model_executor/layers/mamba/ops/cpu/mamba_ssm.py: 0/125 lines marked
+  source/vllm/model_executor/layers/mamba/ops/gdn_chunk_cutedsl/__init__.py: 0/202 lines marked
+  source/vllm/model_executor/layers/mamba/ops/gdn_chunk_cutedsl/kernel_h.py: 0/594 lines marked
+  source/vllm/model_executor/layers/mamba/ops/gdn_chunk_cutedsl/kernel_kkt_inv_uw.py: 0/702 lines marked
+  source/vllm/model_executor/layers/mamba/ops/gdn_chunk_cutedsl/kernel_o.py: 0/531 lines marked
+  source/vllm/model_executor/layers/minimax_rms_norm/__init__.py: 0/6 lines marked
+  source/vllm/model_executor/layers/minimax_rms_norm/lamport_workspace.py: 0/210 lines marked
+  source/vllm/model_executor/layers/minimax_rms_norm/rms_norm_tp.py: 0/358 lines marked
+  source/vllm/model_executor/layers/pooler/__init__.py: 0/3 lines marked
+  source/vllm/model_executor/layers/pooler/abstract.py: 0/27 lines marked
+  source/vllm/model_executor/layers/pooler/activations.py: 0/110 lines marked
+  source/vllm/model_executor/layers/pooler/common.py: 0/20 lines marked
+  source/vllm/model_executor/layers/pooler/special.py: 0/191 lines marked
+  source/vllm/model_executor/layers/pooler/seqwise/__init__.py: 0/41 lines marked
+  source/vllm/model_executor/layers/pooler/seqwise/heads.py: 0/151 lines marked
+  source/vllm/model_executor/layers/pooler/seqwise/methods.py: 0/89 lines marked
+  source/vllm/model_executor/layers/pooler/seqwise/poolers.py: 0/110 lines marked
+  source/vllm/model_executor/layers/pooler/tokwise/__init__.py: 0/39 lines marked
+  source/vllm/model_executor/layers/pooler/tokwise/heads.py: 0/124 lines marked
+  source/vllm/model_executor/layers/pooler/tokwise/methods.py: 0/105 lines marked
+  source/vllm/model_executor/layers/pooler/tokwise/poolers.py: 0/117 lines marked
+  source/vllm/model_executor/layers/quantization/__init__.py: 0/149 lines marked
+  source/vllm/model_executor/layers/quantization/auto_awq.py: 0/776 lines marked
+  source/vllm/model_executor/layers/quantization/auto_gptq.py: 0/717 lines marked
+  source/vllm/model_executor/layers/quantization/awq_triton.py: 0/230 lines marked
+  source/vllm/model_executor/layers/quantization/base_config.py: 0/202 lines marked
+  source/vllm/model_executor/layers/quantization/experts_int8.py: 0/45 lines marked
+  source/vllm/model_executor/layers/quantization/fbgemm_fp8.py: 0/148 lines marked
+  source/vllm/model_executor/layers/quantization/fp8.py: 0/689 lines marked
+  source/vllm/model_executor/layers/quantization/fp_quant.py: 0/335 lines marked
+  source/vllm/model_executor/layers/quantization/humming.py: 0/687 lines marked
+  source/vllm/model_executor/layers/quantization/input_quant_fp8.py: 0/216 lines marked
+  source/vllm/model_executor/layers/quantization/kv_cache.py: 0/148 lines marked
+  source/vllm/model_executor/layers/quantization/modelopt.py: 0/1968 lines marked
+  source/vllm/model_executor/layers/quantization/moe_wna16.py: 0/533 lines marked
+  source/vllm/model_executor/layers/quantization/mxfp4.py: 0/747 lines marked
+  source/vllm/model_executor/layers/quantization/qutlass_utils.py: 0/127 lines marked
+  source/vllm/model_executor/layers/quantization/torchao.py: 0/309 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors.py: 0/1000 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_embedding.py: 0/145 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/triton_scaled_mm.py: 0/211 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/utils.py: 0/175 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/__init__.py: 0/6 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe.py: 0/159 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w4a16_flydsl.py: 0/281 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w4a4_mxfp4.py: 0/203 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w4a4_nvfp4.py: 0/272 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w4a8_fp8.py: 0/205 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w4a8_int8.py: 0/253 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w8a8_fp8.py: 0/351 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w8a8_int8.py: 0/197 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_w8a8_mxfp8.py: 0/185 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_wna16.py: 0/559 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/compressed_tensors_moe_wna16_rdna3.py: 0/214 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/compressed_tensors_moe/rocm_moe_rdna.py: 0/31 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/__init__.py: 0/28 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_scheme.py: 0/42 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_mxfp4.py: 0/82 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a4_nvfp4.py: 0/116 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a8_fp8.py: 0/138 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a8_int.py: 0/123 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w8a16_fp8.py: 0/125 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w8a8_fp8.py: 0/170 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w8a8_int8.py: 0/85 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w8a8_mxfp8.py: 0/76 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_wNa16.py: 0/215 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_wNa4.py: 0/201 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_wNa8.py: 0/201 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_wNa8o8.py: 0/226 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/linear.py: 0/203 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/module.py: 0/119 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/utils.py: 0/7 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/schemes/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/quantization/compressed_tensors/transform/schemes/linear_qutlass_nvfp4.py: 0/125 lines marked
+  source/vllm/model_executor/layers/quantization/inc/__init__.py: 0/2 lines marked
+  source/vllm/model_executor/layers/quantization/inc/config_parser.py: 0/156 lines marked
+  source/vllm/model_executor/layers/quantization/inc/inc.py: 0/221 lines marked
+  source/vllm/model_executor/layers/quantization/inc/inc_linear.py: 0/36 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/__init__.py: 0/13 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/factory.py: 0/17 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_ark_ops.py: 0/99 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_mxfp4_linear.py: 0/75 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_mxfp4_moe.py: 0/206 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_mxfp4_scheme.py: 0/38 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_mxfp8_linear.py: 0/71 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_mxfp8_scheme.py: 0/21 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_scheme.py: 0/85 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_wna16_linear.py: 0/390 lines marked
+  source/vllm/model_executor/layers/quantization/inc/schemes/inc_wna16_scheme.py: 0/160 lines marked
+  source/vllm/model_executor/layers/quantization/online/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/quantization/online/base.py: 0/155 lines marked
+  source/vllm/model_executor/layers/quantization/online/fp8.py: 0/622 lines marked
+  source/vllm/model_executor/layers/quantization/online/int8.py: 0/110 lines marked
+  source/vllm/model_executor/layers/quantization/online/moe_base.py: 0/156 lines marked
+  source/vllm/model_executor/layers/quantization/online/mxfp4.py: 0/248 lines marked
+  source/vllm/model_executor/layers/quantization/online/mxfp8.py: 0/212 lines marked
+  source/vllm/model_executor/layers/quantization/online/nvfp4.py: 0/162 lines marked
+  source/vllm/model_executor/layers/quantization/quark/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/layers/quantization/quark/quark.py: 0/649 lines marked
+  source/vllm/model_executor/layers/quantization/quark/quark_moe.py: 0/1439 lines marked
+  source/vllm/model_executor/layers/quantization/quark/utils.py: 0/89 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/__init__.py: 0/15 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_nvfp4.py: 0/121 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_ocp_mx.py: 0/193 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_scheme.py: 0/42 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_w4a8_mxfp4_fp8.py: 0/168 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_w8a8_fp8.py: 0/253 lines marked
+  source/vllm/model_executor/layers/quantization/quark/schemes/quark_w8a8_int8.py: 0/110 lines marked
+  source/vllm/model_executor/layers/quantization/turboquant/__init__.py: 0/19 lines marked
+  source/vllm/model_executor/layers/quantization/turboquant/centroids.py: 0/65 lines marked
+  source/vllm/model_executor/layers/quantization/turboquant/config.py: 0/211 lines marked
+  source/vllm/model_executor/layers/quantization/utils/__init__.py: 0/2 lines marked
+  source/vllm/model_executor/layers/quantization/utils/allspark_utils.py: 0/54 lines marked
+  source/vllm/model_executor/layers/quantization/utils/flashinfer_fp4_moe.py: 0/360 lines marked
+  source/vllm/model_executor/layers/quantization/utils/flashinfer_mxint4_moe.py: 0/230 lines marked
+  source/vllm/model_executor/layers/quantization/utils/flashinfer_utils.py: 0/404 lines marked
+  source/vllm/model_executor/layers/quantization/utils/fp8_utils.py: 0/1159 lines marked
+  source/vllm/model_executor/layers/quantization/utils/gptq_utils.py: 0/118 lines marked
+  source/vllm/model_executor/layers/quantization/utils/humming_utils.py: 0/861 lines marked
+  source/vllm/model_executor/layers/quantization/utils/int8_utils.py: 0/170 lines marked
+  source/vllm/model_executor/layers/quantization/utils/layer_utils.py: 0/21 lines marked
+  source/vllm/model_executor/layers/quantization/utils/machete_utils.py: 0/38 lines marked
+  source/vllm/model_executor/layers/quantization/utils/marlin_utils.py: 0/595 lines marked
+  source/vllm/model_executor/layers/quantization/utils/marlin_utils_fp4.py: 0/616 lines marked
+  source/vllm/model_executor/layers/quantization/utils/marlin_utils_fp8.py: 0/496 lines marked
+  source/vllm/model_executor/layers/quantization/utils/marlin_utils_test.py: 0/159 lines marked
+  source/vllm/model_executor/layers/quantization/utils/mxfp4_utils.py: 0/370 lines marked
+  source/vllm/model_executor/layers/quantization/utils/mxfp6_utils.py: 0/102 lines marked
+  source/vllm/model_executor/layers/quantization/utils/mxfp8_utils.py: 0/221 lines marked
+  source/vllm/model_executor/layers/quantization/utils/nvfp4_emulation_utils.py: 0/360 lines marked
+  source/vllm/model_executor/layers/quantization/utils/nvfp4_utils.py: 0/90 lines marked
+  source/vllm/model_executor/layers/quantization/utils/ocp_mx_utils.py: 0/59 lines marked
+  source/vllm/model_executor/layers/quantization/utils/quant_utils.py: 0/710 lines marked
+  source/vllm/model_executor/layers/quantization/utils/w8a8_utils.py: 0/76 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/__init__.py: 0/368 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/base.py: 0/258 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/common.py: 0/252 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/deepseek_scaling_rope.py: 0/299 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/dual_chunk_rope.py: 0/178 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/dynamic_ntk_alpha_rope.py: 0/32 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/dynamic_ntk_scaling_rope.py: 0/38 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/ernie45_vl_rope.py: 0/65 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/fope.py: 0/157 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/gemma4_rope.py: 0/61 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/linear_scaling_rope.py: 0/69 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/llama3_rope.py: 0/45 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/llama4_vision_rope.py: 0/64 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/mrope.py: 0/372 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/mrope_interleaved.py: 0/135 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/ntk_scaling_rope.py: 0/36 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/phi3_long_rope_scaled_rope.py: 0/130 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/telechat3_scaling_rope.py: 0/45 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/xdrope.py: 0/140 lines marked
+  source/vllm/model_executor/layers/rotary_embedding/yarn_scaling_rope.py: 0/71 lines marked
+  source/vllm/model_executor/model_loader/__init__.py: 0/134 lines marked
+  source/vllm/model_executor/model_loader/base_loader.py: 0/73 lines marked
+  source/vllm/model_executor/model_loader/default_loader.py: 0/389 lines marked
+  source/vllm/model_executor/model_loader/dummy_loader.py: 0/49 lines marked
+  source/vllm/model_executor/model_loader/ep_weight_filter.py: 0/57 lines marked
+  source/vllm/model_executor/model_loader/modelexpress_loader.py: 0/53 lines marked
+  source/vllm/model_executor/model_loader/mtp_validation.py: 0/18 lines marked
+  source/vllm/model_executor/model_loader/runai_streamer_loader.py: 0/115 lines marked
+  source/vllm/model_executor/model_loader/sharded_state_loader.py: 0/184 lines marked
+  source/vllm/model_executor/model_loader/tensorizer.py: 0/694 lines marked
+  source/vllm/model_executor/model_loader/tensorizer_loader.py: 0/126 lines marked
+  source/vllm/model_executor/model_loader/utils.py: 0/200 lines marked
+  source/vllm/model_executor/model_loader/weight_utils.py: 0/1221 lines marked
+  source/vllm/model_executor/model_loader/reload/__init__.py: 0/32 lines marked
+  source/vllm/model_executor/model_loader/reload/layerwise.py: 0/274 lines marked
+  source/vllm/model_executor/model_loader/reload/meta.py: 0/152 lines marked
+  source/vllm/model_executor/model_loader/reload/sanitize.py: 0/37 lines marked
+  source/vllm/model_executor/model_loader/reload/torchao_decorator.py: 0/40 lines marked
+  source/vllm/model_executor/model_loader/reload/types.py: 0/20 lines marked
+  source/vllm/model_executor/model_loader/reload/utils.py: 0/57 lines marked
+  source/vllm/model_executor/models/AXK1.py: 0/930 lines marked
+  source/vllm/model_executor/models/__init__.py: 0/44 lines marked
+  source/vllm/model_executor/models/adapters.py: 0/504 lines marked
+  source/vllm/model_executor/models/afmoe.py: 0/489 lines marked
+  source/vllm/model_executor/models/aimv2.py: 0/198 lines marked
+  source/vllm/model_executor/models/apertus.py: 0/408 lines marked
+  source/vllm/model_executor/models/arcee.py: 0/291 lines marked
+  source/vllm/model_executor/models/arctic.py: 0/538 lines marked
+  source/vllm/model_executor/models/aria.py: 0/431 lines marked
+  source/vllm/model_executor/models/audioflamingo3.py: 0/558 lines marked
+  source/vllm/model_executor/models/bagel.py: 0/447 lines marked
+  source/vllm/model_executor/models/bailing_moe.py: 0/469 lines marked
+  source/vllm/model_executor/models/bailing_moe_linear.py: 0/689 lines marked
+  source/vllm/model_executor/models/bailing_moe_mtp.py: 0/347 lines marked
+  source/vllm/model_executor/models/bailing_moe_v3.py: 0/1395 lines marked
+  source/vllm/model_executor/models/bailing_moe_v3_mtp.py: 0/373 lines marked
+  source/vllm/model_executor/models/bee.py: 0/124 lines marked
+  source/vllm/model_executor/models/bert.py: 0/773 lines marked
+  source/vllm/model_executor/models/bert_with_rope.py: 0/612 lines marked
+  source/vllm/model_executor/models/blip.py: 0/270 lines marked
+  source/vllm/model_executor/models/blip2.py: 0/591 lines marked
+  source/vllm/model_executor/models/bloom.py: 0/299 lines marked
+  source/vllm/model_executor/models/chameleon.py: 0/884 lines marked
+  source/vllm/model_executor/models/chatglm.py: 0/360 lines marked
+  source/vllm/model_executor/models/cheers.py: 0/629 lines marked
+  source/vllm/model_executor/models/clip.py: 0/794 lines marked
+  source/vllm/model_executor/models/cohere2_moe.py: 0/458 lines marked
+  source/vllm/model_executor/models/cohere2_vision.py: 0/375 lines marked
+  source/vllm/model_executor/models/cohere_asr.py: 0/1891 lines marked
+  source/vllm/model_executor/models/cohere_eagle.py: 0/158 lines marked
+  source/vllm/model_executor/models/colbert.py: 0/320 lines marked
+  source/vllm/model_executor/models/colmodernvbert.py: 0/292 lines marked
+  source/vllm/model_executor/models/colpali.py: 0/188 lines marked
+  source/vllm/model_executor/models/colqwen3.py: 0/226 lines marked
+  source/vllm/model_executor/models/colqwen3_5.py: 0/197 lines marked
+  source/vllm/model_executor/models/commandr.py: 0/339 lines marked
+  source/vllm/model_executor/models/config.py: 0/727 lines marked
+  source/vllm/model_executor/models/conformer_encoder.py: 0/294 lines marked
+  source/vllm/model_executor/models/cosmos3.py: 0/45 lines marked
+  source/vllm/model_executor/models/cosmos3_edge.py: 0/647 lines marked
+  source/vllm/model_executor/models/dbrx.py: 0/418 lines marked
+  source/vllm/model_executor/models/deepencoder.py: 0/551 lines marked
+  source/vllm/model_executor/models/deepencoder2.py: 0/223 lines marked
+  source/vllm/model_executor/models/deepseek_eagle.py: 0/208 lines marked
+  source/vllm/model_executor/models/deepseek_eagle3.py: 0/325 lines marked
+  source/vllm/model_executor/models/deepseek_mtp.py: 0/437 lines marked
+  source/vllm/model_executor/models/deepseek_ocr.py: 0/838 lines marked
+  source/vllm/model_executor/models/deepseek_ocr2.py: 0/372 lines marked
+  source/vllm/model_executor/models/deepseek_v2.py: 0/1566 lines marked
+  source/vllm/model_executor/models/deepseek_vl2.py: 0/494 lines marked
+  source/vllm/model_executor/models/diffusion_gemma.py: 0/1032 lines marked
+  source/vllm/model_executor/models/dots_ocr.py: 0/660 lines marked
+  source/vllm/model_executor/models/eagle2_5_vl.py: 0/323 lines marked
+  source/vllm/model_executor/models/ernie45.py: 0/21 lines marked
+  source/vllm/model_executor/models/ernie45_moe.py: 0/522 lines marked
+  source/vllm/model_executor/models/ernie45_vl.py: 0/1528 lines marked
+  source/vllm/model_executor/models/ernie45_vl_moe.py: 0/628 lines marked
+  source/vllm/model_executor/models/ernie_mtp.py: 0/163 lines marked
+  source/vllm/model_executor/models/exaone.py: 0/373 lines marked
+  source/vllm/model_executor/models/exaone4.py: 0/367 lines marked
+  source/vllm/model_executor/models/exaone4_5.py: 0/303 lines marked
+  source/vllm/model_executor/models/exaone4_5_mtp.py: 0/176 lines marked
+  source/vllm/model_executor/models/exaone_moe.py: 0/485 lines marked
+  source/vllm/model_executor/models/exaone_moe_mtp.py: 0/175 lines marked
+  source/vllm/model_executor/models/extract_hidden_states.py: 0/287 lines marked
+  source/vllm/model_executor/models/fairseq2_llama.py: 0/96 lines marked
+  source/vllm/model_executor/models/falcon.py: 0/446 lines marked
+  source/vllm/model_executor/models/falcon_h1.py: 0/548 lines marked
+  source/vllm/model_executor/models/fireredasr2.py: 0/407 lines marked
+  source/vllm/model_executor/models/fireredlid.py: 0/665 lines marked
+  source/vllm/model_executor/models/flex_olmo.py: 0/107 lines marked
+  source/vllm/model_executor/models/funasr.py: 0/848 lines marked
+  source/vllm/model_executor/models/funaudiochat.py: 0/817 lines marked
+  source/vllm/model_executor/models/gemma.py: 0/323 lines marked
+  source/vllm/model_executor/models/gemma2.py: 0/319 lines marked
+  source/vllm/model_executor/models/gemma3.py: 0/374 lines marked
+  source/vllm/model_executor/models/gemma3_mm.py: 0/670 lines marked
+  source/vllm/model_executor/models/gemma3n.py: 0/909 lines marked
+  source/vllm/model_executor/models/gemma3n_audio_utils.py: 0/42 lines marked
+  source/vllm/model_executor/models/gemma3n_mm.py: 0/701 lines marked
+  source/vllm/model_executor/models/gemma4.py: 0/1329 lines marked
+  source/vllm/model_executor/models/gemma4_dspark.py: 0/278 lines marked
+  source/vllm/model_executor/models/gemma4_mm.py: 0/1773 lines marked
+  source/vllm/model_executor/models/gemma4_mtp.py: 0/498 lines marked
+  source/vllm/model_executor/models/gemma4_unified.py: 0/367 lines marked
+  source/vllm/model_executor/models/glm.py: 0/14 lines marked
+  source/vllm/model_executor/models/glm4.py: 0/239 lines marked
+  source/vllm/model_executor/models/glm4_1v.py: 0/1944 lines marked
+  source/vllm/model_executor/models/glm4_moe.py: 0/503 lines marked
+  source/vllm/model_executor/models/glm4_moe_lite.py: 0/471 lines marked
+  source/vllm/model_executor/models/glm4_moe_lite_mtp.py: 0/351 lines marked
+  source/vllm/model_executor/models/glm4_moe_mtp.py: 0/348 lines marked
+  source/vllm/model_executor/models/glm4v.py: 0/558 lines marked
+  source/vllm/model_executor/models/glm_ocr.py: 0/303 lines marked
+  source/vllm/model_executor/models/glm_ocr_mtp.py: 0/209 lines marked
+  source/vllm/model_executor/models/glmasr.py: 0/898 lines marked
+  source/vllm/model_executor/models/glmasr_utils.py: 0/101 lines marked
+  source/vllm/model_executor/models/gpt2.py: 0/308 lines marked
+  source/vllm/model_executor/models/gpt_j.py: 0/246 lines marked
+  source/vllm/model_executor/models/gpt_neox.py: 0/261 lines marked
+  source/vllm/model_executor/models/gpt_oss.py: 0/1009 lines marked
+  source/vllm/model_executor/models/granite.py: 0/340 lines marked
+  source/vllm/model_executor/models/granite4_vision.py: 0/723 lines marked
+  source/vllm/model_executor/models/granite_speech.py: 0/722 lines marked
+  source/vllm/model_executor/models/granite_speech_plus.py: 0/57 lines marked
+  source/vllm/model_executor/models/granitemoe.py: 0/452 lines marked
+  source/vllm/model_executor/models/granitemoehybrid.py: 0/591 lines marked
+  source/vllm/model_executor/models/granitemoeshared.py: 0/282 lines marked
+  source/vllm/model_executor/models/gritlm.py: 0/186 lines marked
+  source/vllm/model_executor/models/h2ovl.py: 0/145 lines marked
+  source/vllm/model_executor/models/hrm_text.py: 0/432 lines marked
+  source/vllm/model_executor/models/hunyuan_v1.py: 0/864 lines marked
+  source/vllm/model_executor/models/hunyuan_vision.py: 0/848 lines marked
+  source/vllm/model_executor/models/hy_v3.py: 0/602 lines marked
+  source/vllm/model_executor/models/hy_v3_mtp.py: 0/377 lines marked
+  source/vllm/model_executor/models/hyperclovax.py: 0/386 lines marked
+  source/vllm/model_executor/models/hyperclovax_vision.py: 0/922 lines marked
+  source/vllm/model_executor/models/hyperclovax_vision_v2.py: 0/527 lines marked
+  source/vllm/model_executor/models/idefics2_vision_model.py: 0/404 lines marked
+  source/vllm/model_executor/models/idefics3.py: 0/527 lines marked
+  source/vllm/model_executor/models/interfaces.py: 0/1420 lines marked
+  source/vllm/model_executor/models/interfaces_base.py: 0/198 lines marked
+  source/vllm/model_executor/models/intern_vit.py: 0/370 lines marked
+  source/vllm/model_executor/models/internlm2.py: 0/390 lines marked
+  source/vllm/model_executor/models/interns1.py: 0/663 lines marked
+  source/vllm/model_executor/models/interns1_pro.py: 0/514 lines marked
+  source/vllm/model_executor/models/interns1_vit.py: 0/348 lines marked
+  source/vllm/model_executor/models/interns2_mobius.py: 0/465 lines marked
+  source/vllm/model_executor/models/interns2_preview.py: 0/28 lines marked
+  source/vllm/model_executor/models/internvl.py: 0/847 lines marked
+  source/vllm/model_executor/models/iquest_loopcoder.py: 0/484 lines marked
+  source/vllm/model_executor/models/isaac.py: 0/832 lines marked
+  source/vllm/model_executor/models/jais2.py: 0/365 lines marked
+  source/vllm/model_executor/models/jamba.py: 0/450 lines marked
+  source/vllm/model_executor/models/jina.py: 0/261 lines marked
+  source/vllm/model_executor/models/jina_vl.py: 0/117 lines marked
+  source/vllm/model_executor/models/kanana_v.py: 0/614 lines marked
+  source/vllm/model_executor/models/keye.py: 0/1449 lines marked
+  source/vllm/model_executor/models/keye_vl1_5.py: 0/608 lines marked
+  source/vllm/model_executor/models/kimi_audio.py: 0/480 lines marked
+  source/vllm/model_executor/models/kimi_k25.py: 0/571 lines marked
+  source/vllm/model_executor/models/kimi_k25_vit.py: 0/831 lines marked
+  source/vllm/model_executor/models/kimi_vl.py: 0/460 lines marked
+  source/vllm/model_executor/models/laguna.py: 0/614 lines marked
+  source/vllm/model_executor/models/laguna_dflash.py: 0/307 lines marked
+  source/vllm/model_executor/models/lfm2.py: 0/448 lines marked
+  source/vllm/model_executor/models/lfm2_moe.py: 0/588 lines marked
+  source/vllm/model_executor/models/lfm2_siglip2.py: 0/456 lines marked
+  source/vllm/model_executor/models/lfm2_vl.py: 0/1084 lines marked
+  source/vllm/model_executor/models/lightonocr.py: 0/153 lines marked
+  source/vllm/model_executor/models/llama.py: 0/443 lines marked
+  source/vllm/model_executor/models/llama4.py: 0/624 lines marked
+  source/vllm/model_executor/models/llama4_eagle.py: 0/164 lines marked
+  source/vllm/model_executor/models/llama_eagle.py: 0/149 lines marked
+  source/vllm/model_executor/models/llama_eagle3.py: 0/355 lines marked
+  source/vllm/model_executor/models/llava.py: 0/601 lines marked
+  source/vllm/model_executor/models/llava_next.py: 0/472 lines marked
+  source/vllm/model_executor/models/llava_next_video.py: 0/417 lines marked
+  source/vllm/model_executor/models/llava_onevision.py: 0/747 lines marked
+  source/vllm/model_executor/models/llava_onevision2.py: 0/1778 lines marked
+  source/vllm/model_executor/models/longcat_flash.py: 0/651 lines marked
+  source/vllm/model_executor/models/longcat_flash_mtp.py: 0/307 lines marked
+  source/vllm/model_executor/models/longcat_flash_ngram.py: 0/318 lines marked
+  source/vllm/model_executor/models/mamba.py: 0/221 lines marked
+  source/vllm/model_executor/models/mamba2.py: 0/230 lines marked
+  source/vllm/model_executor/models/medusa.py: 0/157 lines marked
+  source/vllm/model_executor/models/mellum.py: 0/218 lines marked
+  source/vllm/model_executor/models/midashenglm.py: 0/678 lines marked
+  source/vllm/model_executor/models/mimo.py: 0/90 lines marked
+  source/vllm/model_executor/models/mimo_audio.py: 0/1158 lines marked
+  source/vllm/model_executor/models/mimo_mtp.py: 0/171 lines marked
+  source/vllm/model_executor/models/mimo_v2.py: 0/749 lines marked
+  source/vllm/model_executor/models/mimo_v2_mtp.py: 0/292 lines marked
+  source/vllm/model_executor/models/mimo_v2_omni.py: 0/1237 lines marked
+  source/vllm/model_executor/models/minicpm.py: 0/549 lines marked
+  source/vllm/model_executor/models/minicpm3.py: 0/181 lines marked
+  source/vllm/model_executor/models/minicpm_eagle.py: 0/320 lines marked
+  source/vllm/model_executor/models/minicpmo.py: 0/771 lines marked
+  source/vllm/model_executor/models/minicpmv.py: 0/1545 lines marked
+  source/vllm/model_executor/models/minicpmv4_6.py: 0/1097 lines marked
+  source/vllm/model_executor/models/minimax_m2.py: 0/402 lines marked
+  source/vllm/model_executor/models/mistral.py: 0/293 lines marked
+  source/vllm/model_executor/models/mistral3.py: 0/460 lines marked
+  source/vllm/model_executor/models/mistral_eagle.py: 0/140 lines marked
+  source/vllm/model_executor/models/mistral_large_3.py: 0/77 lines marked
+  source/vllm/model_executor/models/mistral_large_3_eagle.py: 0/129 lines marked
+  source/vllm/model_executor/models/mixtral.py: 0/389 lines marked
+  source/vllm/model_executor/models/mllama4.py: 0/1052 lines marked
+  source/vllm/model_executor/models/mlp_speculator.py: 0/155 lines marked
+  source/vllm/model_executor/models/modernbert.py: 0/406 lines marked
+  source/vllm/model_executor/models/module_mapping.py: 0/26 lines marked
+  source/vllm/model_executor/models/molmo.py: 0/1209 lines marked
+  source/vllm/model_executor/models/molmo2.py: 0/2201 lines marked
+  source/vllm/model_executor/models/moondream3.py: 0/1072 lines marked
+  source/vllm/model_executor/models/moonvit.py: 0/677 lines marked
+  source/vllm/model_executor/models/moss_audio.py: 0/1666 lines marked
+  source/vllm/model_executor/models/moss_transcribe_diarize.py: 0/745 lines marked
+  source/vllm/model_executor/models/mpt.py: 0/274 lines marked
+  source/vllm/model_executor/models/muse_glimmer.py: 0/1433 lines marked
+  source/vllm/model_executor/models/nano_nemotron_vl.py: 0/1329 lines marked
+  source/vllm/model_executor/models/nemotron.py: 0/358 lines marked
+  source/vllm/model_executor/models/nemotron_h.py: 0/736 lines marked
+  source/vllm/model_executor/models/nemotron_h_mtp.py: 0/392 lines marked
+  source/vllm/model_executor/models/nemotron_nas.py: 0/333 lines marked
+  source/vllm/model_executor/models/nemotron_parse.py: 0/569 lines marked
+  source/vllm/model_executor/models/nemotron_vl.py: 0/455 lines marked
+  source/vllm/model_executor/models/nvlm_d.py: 0/153 lines marked
+  source/vllm/model_executor/models/olmo3.py: 0/324 lines marked
+  source/vllm/model_executor/models/olmo_hybrid.py: 0/399 lines marked
+  source/vllm/model_executor/models/olmoe.py: 0/333 lines marked
+  source/vllm/model_executor/models/openai_privacy_filter.py: 0/98 lines marked
+  source/vllm/model_executor/models/opencua.py: 0/214 lines marked
+  source/vllm/model_executor/models/openpangu.py: 0/1049 lines marked
+  source/vllm/model_executor/models/openpangu_mtp.py: 0/204 lines marked
+  source/vllm/model_executor/models/openpangu_vl.py: 0/1159 lines marked
+  source/vllm/model_executor/models/openvla.py: 0/449 lines marked
+  source/vllm/model_executor/models/opt.py: 0/317 lines marked
+  source/vllm/model_executor/models/orion.py: 0/293 lines marked
+  source/vllm/model_executor/models/ovis.py: 0/442 lines marked
+  source/vllm/model_executor/models/ovis2_5.py: 0/544 lines marked
+  source/vllm/model_executor/models/paddleocr_vl.py: 0/988 lines marked
+  source/vllm/model_executor/models/paligemma.py: 0/339 lines marked
+  source/vllm/model_executor/models/parakeet.py: 0/281 lines marked
+  source/vllm/model_executor/models/param2moe.py: 0/566 lines marked
+  source/vllm/model_executor/models/phi.py: 0/244 lines marked
+  source/vllm/model_executor/models/phi3.py: 0/11 lines marked
+  source/vllm/model_executor/models/phi3v.py: 0/558 lines marked
+  source/vllm/model_executor/models/phi4mm.py: 0/1027 lines marked
+  source/vllm/model_executor/models/phi4mm_audio.py: 0/1154 lines marked
+  source/vllm/model_executor/models/phi4mm_utils.py: 0/1585 lines marked
+  source/vllm/model_executor/models/phi4siglip.py: 0/330 lines marked
+  source/vllm/model_executor/models/phimoe.py: 0/468 lines marked
+  source/vllm/model_executor/models/pixtral.py: 0/1241 lines marked
+  source/vllm/model_executor/models/plamo3.py: 0/370 lines marked
+  source/vllm/model_executor/models/qianfan_ocr.py: 0/72 lines marked
+  source/vllm/model_executor/models/qwen2.py: 0/408 lines marked
+  source/vllm/model_executor/models/qwen2_5_omni_thinker.py: 0/1308 lines marked
+  source/vllm/model_executor/models/qwen2_5_vl.py: 0/1696 lines marked
+  source/vllm/model_executor/models/qwen2_audio.py: 0/373 lines marked
+  source/vllm/model_executor/models/qwen2_moe.py: 0/419 lines marked
+  source/vllm/model_executor/models/qwen2_rm.py: 0/85 lines marked
+  source/vllm/model_executor/models/qwen2_vl.py: 0/1437 lines marked
+  source/vllm/model_executor/models/qwen3.py: 0/274 lines marked
+  source/vllm/model_executor/models/qwen3_5.py: 0/582 lines marked
+  source/vllm/model_executor/models/qwen3_5_mtp.py: 0/266 lines marked
+  source/vllm/model_executor/models/qwen3_asr.py: 0/562 lines marked
+  source/vllm/model_executor/models/qwen3_asr_forced_aligner.py: 0/89 lines marked
+  source/vllm/model_executor/models/qwen3_asr_realtime.py: 0/179 lines marked
+  source/vllm/model_executor/models/qwen3_dflash.py: 0/753 lines marked
+  source/vllm/model_executor/models/qwen3_dflash2.py: 0/256 lines marked
+  source/vllm/model_executor/models/qwen3_dspark.py: 0/243 lines marked
+  source/vllm/model_executor/models/qwen3_eagle3.py: 0/366 lines marked
+  source/vllm/model_executor/models/qwen3_moe.py: 0/544 lines marked
+  source/vllm/model_executor/models/qwen3_next.py: 0/724 lines marked
+  source/vllm/model_executor/models/qwen3_next_mtp.py: 0/196 lines marked
+  source/vllm/model_executor/models/qwen3_omni_moe_thinker.py: 0/1900 lines marked
+  source/vllm/model_executor/models/qwen3_vl.py: 0/2486 lines marked
+  source/vllm/model_executor/models/qwen3_vl_moe.py: 0/237 lines marked
+  source/vllm/model_executor/models/radio.py: 0/612 lines marked
+  source/vllm/model_executor/models/registry.py: 0/1325 lines marked
+  source/vllm/model_executor/models/rnj1.py: 0/355 lines marked
+  source/vllm/model_executor/models/roberta.py: 0/320 lines marked
+  source/vllm/model_executor/models/rvl.py: 0/82 lines marked
+  source/vllm/model_executor/models/sarvam.py: 0/582 lines marked
+  source/vllm/model_executor/models/seed_oss.py: 0/358 lines marked
+  source/vllm/model_executor/models/siglip.py: 0/924 lines marked
+  source/vllm/model_executor/models/siglip2navit.py: 0/541 lines marked
+  source/vllm/model_executor/models/skyworkr1v.py: 0/320 lines marked
+  source/vllm/model_executor/models/smolvlm.py: 0/25 lines marked
+  source/vllm/model_executor/models/solar.py: 0/348 lines marked
+  source/vllm/model_executor/models/stablelm.py: 0/269 lines marked
+  source/vllm/model_executor/models/step1.py: 0/343 lines marked
+  source/vllm/model_executor/models/step3_text.py: 0/507 lines marked
+  source/vllm/model_executor/models/step3_vl.py: 0/828 lines marked
+  source/vllm/model_executor/models/step3p5.py: 0/865 lines marked
+  source/vllm/model_executor/models/step3p5_mtp.py: 0/281 lines marked
+  source/vllm/model_executor/models/step3p7.py: 0/74 lines marked
+  source/vllm/model_executor/models/step_vl.py: 0/470 lines marked
+  source/vllm/model_executor/models/telechat2.py: 0/85 lines marked
+  source/vllm/model_executor/models/teleflm.py: 0/46 lines marked
+  source/vllm/model_executor/models/terratorch.py: 0/247 lines marked
+  source/vllm/model_executor/models/ultravox.py: 0/733 lines marked
+  source/vllm/model_executor/models/unlimited_ocr.py: 0/190 lines marked
+  source/vllm/model_executor/models/utils.py: 0/828 lines marked
+  source/vllm/model_executor/models/vision.py: 0/542 lines marked
+  source/vllm/model_executor/models/voxtral.py: 0/739 lines marked
+  source/vllm/model_executor/models/voxtral_realtime.py: 0/373 lines marked
+  source/vllm/model_executor/models/voyage.py: 0/50 lines marked
+  source/vllm/model_executor/models/whisper.py: 0/891 lines marked
+  source/vllm/model_executor/models/whisper_causal.py: 0/480 lines marked
+  source/vllm/model_executor/models/whisper_utils.py: 0/59 lines marked
+  source/vllm/model_executor/models/zamba2.py: 0/766 lines marked
+  source/vllm/model_executor/models/transformers/__init__.py: 0/120 lines marked
+  source/vllm/model_executor/models/transformers/base.py: 0/605 lines marked
+  source/vllm/model_executor/models/transformers/causal.py: 0/55 lines marked
+  source/vllm/model_executor/models/transformers/fuser.py: 0/68 lines marked
+  source/vllm/model_executor/models/transformers/fx_utils.py: 0/385 lines marked
+  source/vllm/model_executor/models/transformers/layers.py: 0/48 lines marked
+  source/vllm/model_executor/models/transformers/legacy.py: 0/37 lines marked
+  source/vllm/model_executor/models/transformers/moe.py: 0/302 lines marked
+  source/vllm/model_executor/models/transformers/multimodal.py: 0/663 lines marked
+  source/vllm/model_executor/models/transformers/pooling.py: 0/58 lines marked
+  source/vllm/model_executor/models/transformers/utils.py: 0/263 lines marked
+  source/vllm/model_executor/models/transformers/fusers/__init__.py: 0/23 lines marked
+  source/vllm/model_executor/models/transformers/fusers/base.py: 0/116 lines marked
+  source/vllm/model_executor/models/transformers/fusers/glu.py: 0/183 lines marked
+  source/vllm/model_executor/models/transformers/fusers/mla.py: 0/264 lines marked
+  source/vllm/model_executor/models/transformers/fusers/moe.py: 0/256 lines marked
+  source/vllm/model_executor/models/transformers/fusers/packed_qkv.py: 0/143 lines marked
+  source/vllm/model_executor/models/transformers/fusers/qkv.py: 0/187 lines marked
+  source/vllm/model_executor/models/transformers/fusers/rms_norm.py: 0/175 lines marked
+  source/vllm/model_executor/offloader/__init__.py: 0/21 lines marked
+  source/vllm/model_executor/offloader/base.py: 0/119 lines marked
+  source/vllm/model_executor/offloader/prefetch.py: 0/534 lines marked
+  source/vllm/model_executor/offloader/prefetch_ops.py: 0/64 lines marked
+  source/vllm/model_executor/offloader/uva.py: 0/96 lines marked
+  source/vllm/model_executor/warmup/__init__.py: 0/0 lines marked
+  source/vllm/model_executor/warmup/b12x_warmup.py: 0/50 lines marked
+  source/vllm/model_executor/warmup/cutedsl_warmup.py: 0/76 lines marked
+  source/vllm/model_executor/warmup/deep_gemm_warmup.py: 0/341 lines marked
+  source/vllm/model_executor/warmup/deepseek_v4_mhc_warmup.py: 0/170 lines marked
+  source/vllm/model_executor/warmup/fa4_cutedsl_warmup.py: 0/34 lines marked
+  source/vllm/model_executor/warmup/flashinfer_autotune_cache.py: 0/43 lines marked
+  source/vllm/model_executor/warmup/flashinfer_sparse_mla_warmup.py: 0/211 lines marked
+  source/vllm/model_executor/warmup/jit_warmup.py: 0/474 lines marked
+  source/vllm/model_executor/warmup/jit_warmup_triton_helper.py: 0/150 lines marked
+  source/vllm/model_executor/warmup/kernel_warmup.py: 0/222 lines marked
+  source/vllm/model_executor/warmup/kimi_k3_triton_warmup.py: 0/155 lines marked
+  source/vllm/model_executor/warmup/minimax_m3_msa_warmup.py: 0/32 lines marked
+  source/vllm/model_executor/warmup/qwen_triton_warmup.py: 0/232 lines marked
+  source/vllm/model_executor/warmup/sparse_mla_triton_warmup.py: 0/85 lines marked
+  source/vllm/model_executor/warmup/v1_block_table_warmup.py: 0/19 lines marked
+  source/vllm/models/__init__.py: 0/0 lines marked
+  source/vllm/models/common/__init__.py: 0/0 lines marked
+  source/vllm/models/common/ops/__init__.py: 0/5 lines marked
+  source/vllm/models/common/ops/fused_allreduce_rms_norm.py: 0/50 lines marked
+  source/vllm/models/common/ops/fused_qk_rmsnorm.py: 0/83 lines marked
+  source/vllm/models/common/ops/sequence_parallel.py: 0/53 lines marked
+  source/vllm/models/deepseek_v32/__init__.py: 0/19 lines marked
+  source/vllm/models/deepseek_v32/attention.py: 0/465 lines marked
+  source/vllm/models/deepseek_v32/amd/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v32/amd/model.py: 0/293 lines marked
+  source/vllm/models/deepseek_v32/amd/mtp.py: 0/360 lines marked
+  source/vllm/models/deepseek_v32/amd/rocm.py: 0/248 lines marked
+  source/vllm/models/deepseek_v32/common/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v32/common/kernels.py: 0/812 lines marked
+  source/vllm/models/deepseek_v32/nvidia/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v32/nvidia/glm52_low_latency_gemm.py: 0/161 lines marked
+  source/vllm/models/deepseek_v32/nvidia/model.py: 0/363 lines marked
+  source/vllm/models/deepseek_v32/nvidia/mtp.py: 0/426 lines marked
+  source/vllm/models/deepseek_v32/nvidia/ops/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v32/nvidia/ops/fused_q_cutedsl.py: 0/467 lines marked
+  source/vllm/models/deepseek_v4/__init__.py: 0/29 lines marked
+  source/vllm/models/deepseek_v4/attention.py: 0/783 lines marked
+  source/vllm/models/deepseek_v4/compressor.py: 0/373 lines marked
+  source/vllm/models/deepseek_v4/eager_scratch.py: 0/117 lines marked
+  source/vllm/models/deepseek_v4/quant_config.py: 0/155 lines marked
+  source/vllm/models/deepseek_v4/sparse_mla.py: 0/328 lines marked
+  source/vllm/models/deepseek_v4/amd/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v4/amd/dspark.py: 0/403 lines marked
+  source/vllm/models/deepseek_v4/amd/model.py: 0/848 lines marked
+  source/vllm/models/deepseek_v4/amd/mtp.py: 0/432 lines marked
+  source/vllm/models/deepseek_v4/amd/rocm.py: 0/726 lines marked
+  source/vllm/models/deepseek_v4/common/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v4/common/rope.py: 0/31 lines marked
+  source/vllm/models/deepseek_v4/common/ops/__init__.py: 0/24 lines marked
+  source/vllm/models/deepseek_v4/common/ops/cache_utils.py: 0/937 lines marked
+  source/vllm/models/deepseek_v4/common/ops/fused_compress_quant_cache.py: 0/841 lines marked
+  source/vllm/models/deepseek_v4/common/ops/fused_indexer_q.py: 0/399 lines marked
+  source/vllm/models/deepseek_v4/common/ops/fused_inv_rope_fp8_quant.py: 0/291 lines marked
+  source/vllm/models/deepseek_v4/common/ops/fused_mtp_input_rmsnorm.py: 0/174 lines marked
+  source/vllm/models/deepseek_v4/common/ops/save_partial_states.py: 0/81 lines marked
+  source/vllm/models/deepseek_v4/nvidia/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v4/nvidia/dspark.py: 0/456 lines marked
+  source/vllm/models/deepseek_v4/nvidia/flashinfer_sparse.py: 0/803 lines marked
+  source/vllm/models/deepseek_v4/nvidia/flashmla.py: 0/316 lines marked
+  source/vllm/models/deepseek_v4/nvidia/model.py: 0/1338 lines marked
+  source/vllm/models/deepseek_v4/nvidia/mtp.py: 0/458 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/__init__.py: 0/9 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/dequant_gather_k_cutedsl.py: 0/259 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/fused_indexer_q_cutedsl.py: 0/487 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/o_proj.py: 0/63 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/prepare_megamoe.py: 0/166 lines marked
+  source/vllm/models/deepseek_v4/nvidia/ops/sparse_attn_compress_cutedsl.py: 0/2034 lines marked
+  source/vllm/models/deepseek_v4/xpu/__init__.py: 0/0 lines marked
+  source/vllm/models/deepseek_v4/xpu/dspark.py: 0/367 lines marked
+  source/vllm/models/deepseek_v4/xpu/model.py: 0/1194 lines marked
+  source/vllm/models/deepseek_v4/xpu/mtp.py: 0/435 lines marked
+  source/vllm/models/deepseek_v4/xpu/xpu_qnorm_rope_kv_fp8_insert.py: 0/110 lines marked
+  source/vllm/models/deepseek_v4/xpu/xpu_sparse.py: 0/305 lines marked
+  source/vllm/models/deepseek_v4/xpu/xpu_sparse_decode_fp8.py: 0/205 lines marked
+  source/vllm/models/dots3_note/__init__.py: 0/4 lines marked
+  source/vllm/models/dots3_note/common/__init__.py: 0/1 lines marked
+  source/vllm/models/dots3_note/common/processor.py: 0/744 lines marked
+  source/vllm/models/dots3_note/common/video.py: 0/444 lines marked
+  source/vllm/models/dots3_note/nvidia/__init__.py: 0/1 lines marked
+  source/vllm/models/dots3_note/nvidia/attention.py: 0/733 lines marked
+  source/vllm/models/dots3_note/nvidia/audio.py: 0/256 lines marked
+  source/vllm/models/dots3_note/nvidia/audio_encoder.py: 0/645 lines marked
+  source/vllm/models/dots3_note/nvidia/model.py: 0/638 lines marked
+  source/vllm/models/dots3_note/nvidia/mtp.py: 0/169 lines marked
+  source/vllm/models/dots3_note/nvidia/multimodal.py: 0/276 lines marked
+  source/vllm/models/dots3_note/nvidia/vision.py: 0/551 lines marked
+  source/vllm/models/dots3_note/nvidia/vision_attention.py: 0/394 lines marked
+  source/vllm/models/dots3_note/nvidia/vision_moe.py: 0/136 lines marked
+  source/vllm/models/inkling/__init__.py: 0/34 lines marked
+  source/vllm/models/inkling/configs.py: 0/338 lines marked
+  source/vllm/models/inkling/amd/__init__.py: 0/0 lines marked
+  source/vllm/models/inkling/amd/attention.py: 0/282 lines marked
+  source/vllm/models/inkling/amd/layernorm.py: 0/18 lines marked
+  source/vllm/models/inkling/amd/logits_processor.py: 0/101 lines marked
+  source/vllm/models/inkling/amd/mlp.py: 0/52 lines marked
+  source/vllm/models/inkling/amd/model.py: 0/536 lines marked
+  source/vllm/models/inkling/amd/moe.py: 0/564 lines marked
+  source/vllm/models/inkling/amd/mtp.py: 0/336 lines marked
+  source/vllm/models/inkling/amd/sconv_swa_attn.py: 0/166 lines marked
+  source/vllm/models/inkling/amd/short_conv.py: 0/74 lines marked
+  source/vllm/models/inkling/amd/ops/__init__.py: 0/33 lines marked
+  source/vllm/models/inkling/amd/ops/fa4_rel_attention.py: 0/391 lines marked
+  source/vllm/models/inkling/amd/ops/fa4_warmup.py: 0/25 lines marked
+  source/vllm/models/inkling/amd/ops/lamport.py: 0/687 lines marked
+  source/vllm/models/inkling/amd/ops/mm_towers.py: 0/163 lines marked
+  source/vllm/models/inkling/amd/ops/norm.py: 0/365 lines marked
+  source/vllm/models/inkling/amd/ops/qkvr_prep.py: 0/876 lines marked
+  source/vllm/models/inkling/amd/ops/rel_attention_decode.py: 0/351 lines marked
+  source/vllm/models/inkling/amd/ops/sconv.py: 0/248 lines marked
+  source/vllm/models/inkling/amd/ops/silu_and_mul.py: 0/163 lines marked
+  source/vllm/models/inkling/amd/ops/gluon/__init__.py: 0/1 lines marked
+  source/vllm/models/inkling/amd/ops/gluon/rel_mha_decode_gfx950.py: 0/804 lines marked
+  source/vllm/models/inkling/amd/ops/gluon/rel_mha_extend_gfx950.py: 0/648 lines marked
+  source/vllm/models/inkling/amd/ops/gluon/utils.py: 0/47 lines marked
+  source/vllm/models/inkling/common/__init__.py: 0/0 lines marked
+  source/vllm/models/inkling/common/mm_preprocess.py: 0/280 lines marked
+  source/vllm/models/inkling/common/towers.py: 0/261 lines marked
+  source/vllm/models/inkling/nvidia/__init__.py: 0/0 lines marked
+  source/vllm/models/inkling/nvidia/attention.py: 0/262 lines marked
+  source/vllm/models/inkling/nvidia/layernorm.py: 0/18 lines marked
+  source/vllm/models/inkling/nvidia/logits_processor.py: 0/101 lines marked
+  source/vllm/models/inkling/nvidia/mlp.py: 0/52 lines marked
+  source/vllm/models/inkling/nvidia/model.py: 0/583 lines marked
+  source/vllm/models/inkling/nvidia/moe.py: 0/523 lines marked
+  source/vllm/models/inkling/nvidia/mtp.py: 0/336 lines marked
+  source/vllm/models/inkling/nvidia/sconv_swa_attn.py: 0/160 lines marked
+  source/vllm/models/inkling/nvidia/short_conv.py: 0/74 lines marked
+  source/vllm/models/inkling/nvidia/ops/__init__.py: 0/34 lines marked
+  source/vllm/models/inkling/nvidia/ops/fa4_rel_attention.py: 0/387 lines marked
+  source/vllm/models/inkling/nvidia/ops/lamport.py: 0/712 lines marked
+  source/vllm/models/inkling/nvidia/ops/mm_towers.py: 0/163 lines marked
+  source/vllm/models/inkling/nvidia/ops/norm.py: 0/365 lines marked
+  source/vllm/models/inkling/nvidia/ops/qkvr_prep.py: 0/876 lines marked
+  source/vllm/models/inkling/nvidia/ops/sconv.py: 0/248 lines marked
+  source/vllm/models/inkling/nvidia/ops/silu_and_mul.py: 0/163 lines marked
+  source/vllm/models/kimi_k3/__init__.py: 0/24 lines marked
+  source/vllm/models/kimi_k3/amd/__init__.py: 0/0 lines marked
+  source/vllm/models/kimi_k3/amd/kda.py: 0/529 lines marked
+  source/vllm/models/kimi_k3/amd/kda_metadata.py: 0/89 lines marked
+  source/vllm/models/kimi_k3/amd/latent_moe_runner.py: 0/121 lines marked
+  source/vllm/models/kimi_k3/amd/linear.py: 0/973 lines marked
+  source/vllm/models/kimi_k3/amd/model.py: 0/217 lines marked
+  source/vllm/models/kimi_k3/amd/mtp.py: 0/334 lines marked
+  source/vllm/models/kimi_k3/amd/ops/__init__.py: 0/0 lines marked
+  source/vllm/models/kimi_k3/amd/ops/attn_res.py: 0/168 lines marked
+  source/vllm/models/kimi_k3/amd/ops/kda_decode.py: 0/75 lines marked
+  source/vllm/models/kimi_k3/common/__init__.py: 0/0 lines marked
+  source/vllm/models/kimi_k3/common/mm_preprocess.py: 0/263 lines marked
+  source/vllm/models/kimi_k3/common/mtp.py: 0/83 lines marked
+  source/vllm/models/kimi_k3/nvidia/__init__.py: 0/0 lines marked
+  source/vllm/models/kimi_k3/nvidia/dspark_mla.py: 0/418 lines marked
+  source/vllm/models/kimi_k3/nvidia/kda.py: 0/725 lines marked
+  source/vllm/models/kimi_k3/nvidia/kda_metadata.py: 0/419 lines marked
+  source/vllm/models/kimi_k3/nvidia/latent_moe_runner.py: 0/288 lines marked
+  source/vllm/models/kimi_k3/nvidia/low_latency_gemm.py: 0/437 lines marked
+  source/vllm/models/kimi_k3/nvidia/mla.py: 0/876 lines marked
+  source/vllm/models/kimi_k3/nvidia/model.py: 0/1838 lines marked
+  source/vllm/models/kimi_k3/nvidia/mtp.py: 0/378 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/__init__.py: 0/2 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/attn_res.py: 0/213 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/fused_mla_key_concat_kv_cache.py: 0/270 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/latent_moe_tail.py: 0/245 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/vision_fa4_warmup.py: 0/156 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/__init__.py: 0/0 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/gemm_rs.py: 0/644 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/__init__.py: 0/9 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/allreduce_rmsnorm_reduce_scatter_early_exit.py: 0/927 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/fused_add_multicast_gemm.py: 0/1099 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/fused_add_multicast_skinny_gemm.py: 0/396 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/lamport_copy.py: 0/196 lines marked
+  source/vllm/models/kimi_k3/nvidia/ops/cute_dsl/latent_moe_tail/primitives.py: 0/370 lines marked
+  source/vllm/models/minimax_m3/__init__.py: 0/24 lines marked
+  source/vllm/models/minimax_m3/amd/__init__.py: 0/0 lines marked
+  source/vllm/models/minimax_m3/amd/model.py: 0/1259 lines marked
+  source/vllm/models/minimax_m3/amd/mtp.py: 0/276 lines marked
+  source/vllm/models/minimax_m3/amd/sparse_attention_msa.py: 0/80 lines marked
+  source/vllm/models/minimax_m3/amd/ops/__init__.py: 0/19 lines marked
+  source/vllm/models/minimax_m3/amd/ops/gemma_rmsnorm.py: 0/137 lines marked
+  source/vllm/models/minimax_m3/amd/ops/index_topk.py: 0/795 lines marked
+  source/vllm/models/minimax_m3/amd/ops/sparse_attn.py: 0/298 lines marked
+  source/vllm/models/minimax_m3/amd/ops/sparse_pa.py: 0/442 lines marked
+  source/vllm/models/minimax_m3/amd/ops/swiglu_oai.py: 0/195 lines marked
+  source/vllm/models/minimax_m3/common/__init__.py: 0/0 lines marked
+  source/vllm/models/minimax_m3/common/indexer.py: 0/489 lines marked
+  source/vllm/models/minimax_m3/common/mm_preprocess.py: 0/427 lines marked
+  source/vllm/models/minimax_m3/common/sparse_attention.py: 0/415 lines marked
+  source/vllm/models/minimax_m3/common/vision_tower.py: 0/619 lines marked
+  source/vllm/models/minimax_m3/common/ops/__init__.py: 0/16 lines marked
+  source/vllm/models/minimax_m3/common/ops/index_topk.py: 0/840 lines marked
+  source/vllm/models/minimax_m3/common/ops/sparse_attn.py: 0/656 lines marked
+  source/vllm/models/minimax_m3/nvidia/__init__.py: 0/0 lines marked
+  source/vllm/models/minimax_m3/nvidia/indexer_msa.py: 0/252 lines marked
+  source/vllm/models/minimax_m3/nvidia/model.py: 0/1040 lines marked
+  source/vllm/models/minimax_m3/nvidia/msa_cutlass_sparse_decode.py: 0/281 lines marked
+  source/vllm/models/minimax_m3/nvidia/mtp.py: 0/260 lines marked
+  source/vllm/models/minimax_m3/nvidia/sparse_attention_msa.py: 0/269 lines marked
+  source/vllm/models/minimax_m3/nvidia/ops/__init__.py: 0/2 lines marked
+  source/vllm/models/minimax_m3/nvidia/ops/index_decode_score.py: 0/399 lines marked
+  source/vllm/multimodal/__init__.py: 0/19 lines marked
+  source/vllm/multimodal/audio.py: 0/328 lines marked
+  source/vllm/multimodal/cache.py: 0/604 lines marked
+  source/vllm/multimodal/encoder_budget.py: 0/162 lines marked
+  source/vllm/multimodal/gpu_ipc_memory.py: 0/209 lines marked
+  source/vllm/multimodal/hasher.py: 0/138 lines marked
+  source/vllm/multimodal/image.py: 0/44 lines marked
+  source/vllm/multimodal/inputs.py: 0/845 lines marked
+  source/vllm/multimodal/parse.py: 0/645 lines marked
+  source/vllm/multimodal/registry.py: 0/308 lines marked
+  source/vllm/multimodal/utils.py: 0/337 lines marked
+  source/vllm/multimodal/video.py: 0/1820 lines marked
+  source/vllm/multimodal/media/__init__.py: 0/17 lines marked
+  source/vllm/multimodal/media/audio.py: 0/269 lines marked
+  source/vllm/multimodal/media/base.py: 0/72 lines marked
+  source/vllm/multimodal/media/connector.py: 0/543 lines marked
+  source/vllm/multimodal/media/image.py: 0/117 lines marked
+  source/vllm/multimodal/media/video.py: 0/148 lines marked
+  source/vllm/multimodal/processing/__init__.py: 0/26 lines marked
+  source/vllm/multimodal/processing/context.py: 0/397 lines marked
+  source/vllm/multimodal/processing/dummy_inputs.py: 0/167 lines marked
+  source/vllm/multimodal/processing/inputs.py: 0/57 lines marked
+  source/vllm/multimodal/processing/processor.py: 0/1559 lines marked
+  source/vllm/multimodal/video_prune/__init__.py: 0/0 lines marked
+  source/vllm/multimodal/video_prune/evs.py: 0/250 lines marked
+  source/vllm/multimodal/video_prune/vidcom2.py: 0/90 lines marked
+  source/vllm/parser/__init__.py: 0/12 lines marked
+  source/vllm/parser/abstract_parser.py: 0/839 lines marked
+  source/vllm/parser/deepseek_v32.py: 0/114 lines marked
+  source/vllm/parser/deepseek_v4.py: 0/211 lines marked
+  source/vllm/parser/gemma4.py: 0/488 lines marked
+  source/vllm/parser/glm47_moe.py: 0/197 lines marked
+  source/vllm/parser/harmony.py: 0/496 lines marked
+  source/vllm/parser/inkling.py: 0/352 lines marked
+  source/vllm/parser/kimi_k2.py: 0/248 lines marked
+  source/vllm/parser/kimi_k3.py: 0/117 lines marked
+  source/vllm/parser/ling3.py: 0/67 lines marked
+  source/vllm/parser/metrics.py: 0/86 lines marked
+  source/vllm/parser/minimax_m2.py: 0/190 lines marked
+  source/vllm/parser/mistral.py: 0/839 lines marked
+  source/vllm/parser/nemotron_v3.py: 0/93 lines marked
+  source/vllm/parser/parser_manager.py: 0/131 lines marked
+  source/vllm/parser/qwen3.py: 0/237 lines marked
+  source/vllm/parser/seed_oss.py: 0/19 lines marked
+  source/vllm/parser/utils.py: 0/48 lines marked
+  source/vllm/parser/engine/__init__.py: 0/12 lines marked
+  source/vllm/parser/engine/adapters.py: 0/187 lines marked
+  source/vllm/parser/engine/events.py: 0/19 lines marked
+  source/vllm/parser/engine/incremental_lexer.py: 0/253 lines marked
+  source/vllm/parser/engine/parser_engine.py: 0/920 lines marked
+  source/vllm/parser/engine/parser_engine_config.py: 0/71 lines marked
+  source/vllm/parser/engine/registered_adapters.py: 0/61 lines marked
+  source/vllm/parser/engine/streaming_parser_engine.py: 0/505 lines marked
+  source/vllm/parser/engine/token_id_scanner.py: 0/326 lines marked
+  source/vllm/platforms/__init__.py: 0/236 lines marked
+  source/vllm/platforms/cpu.py: 0/416 lines marked
+  source/vllm/platforms/cuda.py: 0/830 lines marked
+  source/vllm/platforms/interface.py: 0/1021 lines marked
+  source/vllm/platforms/rocm.py: 0/898 lines marked
+  source/vllm/platforms/tpu.py: 0/13 lines marked
+  source/vllm/platforms/xpu.py: 0/426 lines marked
+  source/vllm/platforms/zen_cpu.py: 0/18 lines marked
+  source/vllm/plugins/__init__.py: 0/111 lines marked
+  source/vllm/plugins/endpoint_plugins/__init__.py: 0/0 lines marked
+  source/vllm/plugins/endpoint_plugins/interface.py: 0/67 lines marked
+  source/vllm/plugins/io_processors/__init__.py: 0/58 lines marked
+  source/vllm/plugins/io_processors/interface.py: 0/100 lines marked
+  source/vllm/plugins/lora_resolvers/__init__.py: 0/0 lines marked
+  source/vllm/plugins/lora_resolvers/filesystem_resolver.py: 0/50 lines marked
+  source/vllm/plugins/lora_resolvers/hf_hub_resolver.py: 0/116 lines marked
+  source/vllm/profiler/__init__.py: 0/0 lines marked
+  source/vllm/profiler/layerwise_profile.py: 0/331 lines marked
+  source/vllm/profiler/utils.py: 0/103 lines marked
+  source/vllm/profiler/wrapper.py: 0/391 lines marked
+  source/vllm/ray/__init__.py: 0/0 lines marked
+  source/vllm/ray/lazy_utils.py: 0/21 lines marked
+  source/vllm/ray/ray_env.py: 0/82 lines marked
+  source/vllm/reasoning/__init__.py: 0/145 lines marked
+  source/vllm/reasoning/abs_reasoning_parsers.py: 0/299 lines marked
+  source/vllm/reasoning/basic_parsers.py: 0/154 lines marked
+  source/vllm/reasoning/cohere_command_reasoning_parser.py: 0/566 lines marked
+  source/vllm/reasoning/deepseek_r1_reasoning_parser.py: 0/52 lines marked
+  source/vllm/reasoning/deepseek_v3_reasoning_parser.py: 0/74 lines marked
+  source/vllm/reasoning/deepseek_v4_engine_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/ernie45_reasoning_parser.py: 0/129 lines marked
+  source/vllm/reasoning/gemma4_engine_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/gemma4_utils.py: 0/84 lines marked
+  source/vllm/reasoning/glm47_moe_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/gptoss_reasoning_parser.py: 0/49 lines marked
+  source/vllm/reasoning/granite_reasoning_parser.py: 0/273 lines marked
+  source/vllm/reasoning/hunyuan_a13b_reasoning_parser.py: 0/163 lines marked
+  source/vllm/reasoning/hy_v3_reasoning_parser.py: 0/108 lines marked
+  source/vllm/reasoning/identity_reasoning_parser.py: 0/51 lines marked
+  source/vllm/reasoning/inkling_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/kimi_k2_reasoning_parser.py: 0/3 lines marked
+  source/vllm/reasoning/kimi_k3_reasoning_parser.py: 0/328 lines marked
+  source/vllm/reasoning/ling3_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/minimax_m2_reasoning_parser.py: 0/51 lines marked
+  source/vllm/reasoning/minimax_m3_reasoning_parser.py: 0/274 lines marked
+  source/vllm/reasoning/mistral_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/muse_glimmer_reasoning_parser.py: 0/261 lines marked
+  source/vllm/reasoning/nemotron_v3_engine_reasoning_parser.py: 0/4 lines marked
+  source/vllm/reasoning/olmo3_reasoning_parser.py: 0/209 lines marked
+  source/vllm/reasoning/poolside_v1_reasoning_parser.py: 0/50 lines marked
+  source/vllm/reasoning/qwen3_engine_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/seed_oss_engine_reasoning_parser.py: 0/2 lines marked
+  source/vllm/reasoning/step3_reasoning_parser.py: 0/94 lines marked
+  source/vllm/reasoning/step3p5_reasoning_parser.py: 0/130 lines marked
+  source/vllm/renderers/__init__.py: 0/11 lines marked
+  source/vllm/renderers/base.py: 0/886 lines marked
+  source/vllm/renderers/cohere.py: 0/519 lines marked
+  source/vllm/renderers/deepseek_v32.py: 0/71 lines marked
+  source/vllm/renderers/deepseek_v4.py: 0/71 lines marked
+  source/vllm/renderers/embed_utils.py: 0/59 lines marked
+  source/vllm/renderers/hf.py: 0/1088 lines marked
+  source/vllm/renderers/inkling.py: 0/141 lines marked
+  source/vllm/renderers/inkling_encoding.py: 0/313 lines marked
+  source/vllm/renderers/kimi_k3.py: 0/171 lines marked
+  source/vllm/renderers/mistral.py: 0/88 lines marked
+  source/vllm/renderers/online_derenderer.py: 0/529 lines marked
+  source/vllm/renderers/online_renderer.py: 0/392 lines marked
+  source/vllm/renderers/params.py: 0/395 lines marked
+  source/vllm/renderers/registry.py: 0/64 lines marked
+  source/vllm/renderers/terratorch.py: 0/51 lines marked
+  source/vllm/renderers/inputs/__init__.py: 0/30 lines marked
+  source/vllm/renderers/inputs/preprocess.py: 0/199 lines marked
+  source/vllm/renderers/inputs/tokenize.py: 0/40 lines marked
+  source/vllm/tilelang_utils/__init__.py: 0/70 lines marked
+  source/vllm/tokenizers/__init__.py: 0/16 lines marked
+  source/vllm/tokenizers/deepseek_v32.py: 0/60 lines marked
+  source/vllm/tokenizers/deepseek_v32_encoding.py: 0/249 lines marked
+  source/vllm/tokenizers/deepseek_v4.py: 0/73 lines marked
+  source/vllm/tokenizers/deepseek_v4_encoding.py: 0/451 lines marked
+  source/vllm/tokenizers/detokenizer_utils.py: 0/196 lines marked
+  source/vllm/tokenizers/fastokens.py: 0/29 lines marked
+  source/vllm/tokenizers/hf.py: 0/185 lines marked
+  source/vllm/tokenizers/kimi_audio.py: 0/336 lines marked
+  source/vllm/tokenizers/mistral.py: 0/431 lines marked
+  source/vllm/tokenizers/protocol.py: 0/100 lines marked
+  source/vllm/tokenizers/registry.py: 0/192 lines marked
+  source/vllm/tool_parsers/__init__.py: 0/213 lines marked
+  source/vllm/tool_parsers/abstract_tool_parser.py: 0/297 lines marked
+  source/vllm/tool_parsers/apertus_tool_parser.py: 0/433 lines marked
+  source/vllm/tool_parsers/cohere_command_tool_parser.py: 0/128 lines marked
+  source/vllm/tool_parsers/deepseekv31_tool_parser.py: 0/308 lines marked
+  source/vllm/tool_parsers/deepseekv32_engine_tool_parser.py: 0/3 lines marked
+  source/vllm/tool_parsers/deepseekv3_tool_parser.py: 0/311 lines marked
+  source/vllm/tool_parsers/deepseekv4_engine_tool_parser.py: 0/3 lines marked
+  source/vllm/tool_parsers/dots_tool_parser.py: 0/383 lines marked
+  source/vllm/tool_parsers/ernie45_tool_parser.py: 0/183 lines marked
+  source/vllm/tool_parsers/functiongemma_tool_parser.py: 0/257 lines marked
+  source/vllm/tool_parsers/gemma4_engine_tool_parser.py: 0/28 lines marked
+  source/vllm/tool_parsers/gemma4_utils.py: 0/111 lines marked
+  source/vllm/tool_parsers/gigachat3_tool_parser.py: 0/199 lines marked
+  source/vllm/tool_parsers/glm47_moe_tool_parser.py: 0/5 lines marked
+  source/vllm/tool_parsers/gptoss_tool_parser.py: 0/37 lines marked
+  source/vllm/tool_parsers/granite4_tool_parser.py: 0/208 lines marked
+  source/vllm/tool_parsers/granite_20b_fc_tool_parser.py: 0/220 lines marked
+  source/vllm/tool_parsers/granite_tool_parser.py: 0/208 lines marked
+  source/vllm/tool_parsers/hermes_tool_parser.py: 0/220 lines marked
+  source/vllm/tool_parsers/hunyuan_a13b_tool_parser.py: 0/361 lines marked
+  source/vllm/tool_parsers/hy_v3_tool_parser.py: 0/517 lines marked
+  source/vllm/tool_parsers/inkling_tool_parser.py: 0/4 lines marked
+  source/vllm/tool_parsers/internlm2_tool_parser.py: 0/189 lines marked
+  source/vllm/tool_parsers/jamba_tool_parser.py: 0/251 lines marked
+  source/vllm/tool_parsers/kimi_k2_tool_parser.py: 0/14 lines marked
+  source/vllm/tool_parsers/kimi_k3_tool_parser.py: 0/297 lines marked
+  source/vllm/tool_parsers/lfm2_tool_parser.py: 0/320 lines marked
+  source/vllm/tool_parsers/ling3_tool_parser.py: 0/5 lines marked
+  source/vllm/tool_parsers/llama4_pythonic_tool_parser.py: 0/165 lines marked
+  source/vllm/tool_parsers/llama_tool_parser.py: 0/267 lines marked
+  source/vllm/tool_parsers/longcat_tool_parser.py: 0/14 lines marked
+  source/vllm/tool_parsers/minicpm5xml_tool_parser.py: 0/709 lines marked
+  source/vllm/tool_parsers/minimax_m2_tool_parser.py: 0/3 lines marked
+  source/vllm/tool_parsers/minimax_m3_tool_parser.py: 0/11 lines marked
+  source/vllm/tool_parsers/mistral_tool_parser.py: 0/22 lines marked
+  source/vllm/tool_parsers/muse_glimmer_tool_parser.py: 0/394 lines marked
+  source/vllm/tool_parsers/olmo3_tool_parser.py: 0/178 lines marked
+  source/vllm/tool_parsers/phi4mini_tool_parser.py: 0/102 lines marked
+  source/vllm/tool_parsers/poolside_v1_tool_parser.py: 0/509 lines marked
+  source/vllm/tool_parsers/pythonic_tool_parser.py: 0/157 lines marked
+  source/vllm/tool_parsers/qwen3_engine_tool_parser.py: 0/3 lines marked
+  source/vllm/tool_parsers/rust_tool_parser.py: 0/267 lines marked
+  source/vllm/tool_parsers/seed_oss_engine_tool_parser.py: 0/3 lines marked
+  source/vllm/tool_parsers/step3_tool_parser.py: 0/254 lines marked
+  source/vllm/tool_parsers/step3p5_tool_parser.py: 0/1147 lines marked
+  source/vllm/tool_parsers/streaming.py: 0/187 lines marked
+  source/vllm/tool_parsers/structural_tag_registry.py: 0/487 lines marked
+  source/vllm/tool_parsers/utils.py: 0/999 lines marked
+  source/vllm/tool_parsers/xlam_tool_parser.py: 0/415 lines marked
+  source/vllm/tracing/__init__.py: 0/137 lines marked
+  source/vllm/tracing/otel.py: 0/209 lines marked
+  source/vllm/tracing/utils.py: 0/47 lines marked
+  source/vllm/transformers_utils/__init__.py: 0/17 lines marked
+  source/vllm/transformers_utils/config.py: 0/1006 lines marked
+  source/vllm/transformers_utils/config_parser_base.py: 0/14 lines marked
+  source/vllm/transformers_utils/dynamic_module.py: 0/60 lines marked
+  source/vllm/transformers_utils/model_arch_config_convertor.py: 0/610 lines marked
+  source/vllm/transformers_utils/processor.py: 0/457 lines marked
+  source/vllm/transformers_utils/repo_utils.py: 0/316 lines marked
+  source/vllm/transformers_utils/runai_utils.py: 0/75 lines marked
+  source/vllm/transformers_utils/s3_utils.py: 0/73 lines marked
+  source/vllm/transformers_utils/utils.py: 0/87 lines marked
+  source/vllm/transformers_utils/chat_templates/__init__.py: 0/2 lines marked
+  source/vllm/transformers_utils/chat_templates/registry.py: 0/48 lines marked
+  source/vllm/transformers_utils/configs/AXK1.py: 0/205 lines marked
+  source/vllm/transformers_utils/configs/__init__.py: 0/198 lines marked
+  source/vllm/transformers_utils/configs/afmoe.py: 0/75 lines marked
+  source/vllm/transformers_utils/configs/arctic.py: 0/182 lines marked
+  source/vllm/transformers_utils/configs/bagel.py: 0/42 lines marked
+  source/vllm/transformers_utils/configs/chatglm.py: 0/66 lines marked
+  source/vllm/transformers_utils/configs/cheers.py: 0/93 lines marked
+  source/vllm/transformers_utils/configs/colmodernvbert.py: 0/48 lines marked
+  source/vllm/transformers_utils/configs/colpali.py: 0/39 lines marked
+  source/vllm/transformers_utils/configs/colqwen3.py: 0/40 lines marked
+  source/vllm/transformers_utils/configs/cosmos3.py: 0/3 lines marked
+  source/vllm/transformers_utils/configs/cosmos3_edge.py: 0/117 lines marked
+  source/vllm/transformers_utils/configs/deepseek_v4.py: 0/17 lines marked
+  source/vllm/transformers_utils/configs/deepseek_vl2.py: 0/102 lines marked
+  source/vllm/transformers_utils/configs/diffusion_gemma.py: 0/31 lines marked
+  source/vllm/transformers_utils/configs/dots3_note.py: 0/10 lines marked
+  source/vllm/transformers_utils/configs/dotsocr.py: 0/61 lines marked
+  source/vllm/transformers_utils/configs/eagle.py: 0/80 lines marked
+  source/vllm/transformers_utils/configs/extract_hidden_states.py: 0/43 lines marked
+  source/vllm/transformers_utils/configs/falcon.py: 0/58 lines marked
+  source/vllm/transformers_utils/configs/fireredlid.py: 0/61 lines marked
+  source/vllm/transformers_utils/configs/flex_olmo.py: 0/69 lines marked
+  source/vllm/transformers_utils/configs/funaudiochat.py: 0/94 lines marked
+  source/vllm/transformers_utils/configs/gemma4.py: 0/26 lines marked
+  source/vllm/transformers_utils/configs/granite4_vision.py: 0/80 lines marked
+  source/vllm/transformers_utils/configs/hunyuan_vl.py: 0/243 lines marked
+  source/vllm/transformers_utils/configs/hy_v3.py: 0/166 lines marked
+  source/vllm/transformers_utils/configs/hyperclovax.py: 0/301 lines marked
+  source/vllm/transformers_utils/configs/isaac.py: 0/72 lines marked
+  source/vllm/transformers_utils/configs/k3_dspark.py: 0/63 lines marked
+  source/vllm/transformers_utils/configs/kimi_k25.py: 0/102 lines marked
+  source/vllm/transformers_utils/configs/kimi_k3.py: 0/114 lines marked
+  source/vllm/transformers_utils/configs/kimi_linear.py: 0/142 lines marked
+  source/vllm/transformers_utils/configs/kimi_vl.py: 0/27 lines marked
+  source/vllm/transformers_utils/configs/laguna.py: 0/107 lines marked
+  source/vllm/transformers_utils/configs/lfm2_moe.py: 0/140 lines marked
+  source/vllm/transformers_utils/configs/medusa.py: 0/54 lines marked
+  source/vllm/transformers_utils/configs/mellum.py: 0/3 lines marked
+  source/vllm/transformers_utils/configs/midashenglm.py: 0/73 lines marked
+  source/vllm/transformers_utils/configs/mimo_v2_omni.py: 0/55 lines marked
+  source/vllm/transformers_utils/configs/minimax_m3.py: 0/125 lines marked
+  source/vllm/transformers_utils/configs/mistral.py: 0/259 lines marked
+  source/vllm/transformers_utils/configs/mlp_speculator.py: 0/59 lines marked
+  source/vllm/transformers_utils/configs/moondream3.py: 0/108 lines marked
+  source/vllm/transformers_utils/configs/moonvit.py: 0/24 lines marked
+  source/vllm/transformers_utils/configs/moss_transcribe_diarize.py: 0/95 lines marked
+  source/vllm/transformers_utils/configs/muse_glimmer.py: 0/314 lines marked
+  source/vllm/transformers_utils/configs/nemotron.py: 0/184 lines marked
+  source/vllm/transformers_utils/configs/nemotron_h.py: 0/255 lines marked
+  source/vllm/transformers_utils/configs/olmo_hybrid.py: 0/262 lines marked
+  source/vllm/transformers_utils/configs/openvla.py: 0/39 lines marked
+  source/vllm/transformers_utils/configs/ovis.py: 0/147 lines marked
+  source/vllm/transformers_utils/configs/parakeet.py: 0/61 lines marked
+  source/vllm/transformers_utils/configs/qianfan_ocr.py: 0/92 lines marked
+  source/vllm/transformers_utils/configs/qwen3_5.py: 0/154 lines marked
+  source/vllm/transformers_utils/configs/qwen3_5_moe.py: 0/166 lines marked
+  source/vllm/transformers_utils/configs/qwen3_asr.py: 0/371 lines marked
+  source/vllm/transformers_utils/configs/qwen3_next.py: 0/239 lines marked
+  source/vllm/transformers_utils/configs/radio.py: 0/98 lines marked
+  source/vllm/transformers_utils/configs/step3_vl.py: 0/161 lines marked
+  source/vllm/transformers_utils/configs/step3p5.py: 0/91 lines marked
+  source/vllm/transformers_utils/configs/ultravox.py: 0/88 lines marked
+  source/vllm/transformers_utils/configs/unlimited_ocr.py: 0/18 lines marked
+  source/vllm/transformers_utils/configs/speculators/__init__.py: 0/2 lines marked
+  source/vllm/transformers_utils/configs/speculators/algos.py: 0/151 lines marked
+  source/vllm/transformers_utils/configs/speculators/base.py: 0/104 lines marked
+  source/vllm/transformers_utils/processors/__init__.py: 0/93 lines marked
+  source/vllm/transformers_utils/processors/bagel.py: 0/63 lines marked
+  source/vllm/transformers_utils/processors/cheers.py: 0/71 lines marked
+  source/vllm/transformers_utils/processors/cohere_asr.py: 0/462 lines marked
+  source/vllm/transformers_utils/processors/cosmos3_edge.py: 0/297 lines marked
+  source/vllm/transformers_utils/processors/deepseek_ocr.py: 0/361 lines marked
+  source/vllm/transformers_utils/processors/deepseek_vl2.py: 0/311 lines marked
+  source/vllm/transformers_utils/processors/fireredasr2.py: 0/293 lines marked
+  source/vllm/transformers_utils/processors/fireredlid.py: 0/206 lines marked
+  source/vllm/transformers_utils/processors/funasr.py: 0/417 lines marked
+  source/vllm/transformers_utils/processors/glm4v.py: 0/25 lines marked
+  source/vllm/transformers_utils/processors/granite4_vision.py: 0/64 lines marked
+  source/vllm/transformers_utils/processors/h2ovl.py: 0/312 lines marked
+  source/vllm/transformers_utils/processors/inkling.py: 0/395 lines marked
+  source/vllm/transformers_utils/processors/internvl.py: 0/460 lines marked
+  source/vllm/transformers_utils/processors/isaac.py: 0/407 lines marked
+  source/vllm/transformers_utils/processors/kimi_audio.py: 0/69 lines marked
+  source/vllm/transformers_utils/processors/kimi_k25.py: 0/71 lines marked
+  source/vllm/transformers_utils/processors/kimi_k25_vision_fused.py: 0/303 lines marked
+  source/vllm/transformers_utils/processors/kimi_k3.py: 0/49 lines marked
+  source/vllm/transformers_utils/processors/mimo_v2_omni.py: 0/1066 lines marked
+  source/vllm/transformers_utils/processors/minicpmo.py: 0/489 lines marked
+  source/vllm/transformers_utils/processors/minicpmv.py: 0/264 lines marked
+  source/vllm/transformers_utils/processors/minimax_m3.py: 0/559 lines marked
+  source/vllm/transformers_utils/processors/moondream3.py: 0/413 lines marked
+  source/vllm/transformers_utils/processors/muse_glimmer.py: 0/495 lines marked
+  source/vllm/transformers_utils/processors/nano_nemotron_vl.py: 0/994 lines marked
+  source/vllm/transformers_utils/processors/nemotron_vl.py: 0/272 lines marked
+  source/vllm/transformers_utils/processors/nvlm_d.py: 0/40 lines marked
+  source/vllm/transformers_utils/processors/openvla.py: 0/80 lines marked
+  source/vllm/transformers_utils/processors/ovis.py: 0/363 lines marked
+  source/vllm/transformers_utils/processors/ovis2_5.py: 0/414 lines marked
+  source/vllm/transformers_utils/processors/pixtral.py: 0/60 lines marked
+  source/vllm/transformers_utils/processors/qwen3_asr.py: 0/177 lines marked
+  source/vllm/transformers_utils/processors/step3_vl.py: 0/443 lines marked
+  source/vllm/transformers_utils/processors/unlimited_ocr.py: 0/35 lines marked
+  source/vllm/transformers_utils/processors/voxtral.py: 0/94 lines marked
+  source/vllm/triton_utils/__init__.py: 0/35 lines marked
+  source/vllm/triton_utils/allocation.py: 0/6 lines marked
+  source/vllm/triton_utils/force_first_config.py: 0/69 lines marked
+  source/vllm/triton_utils/importing.py: 0/94 lines marked
+  source/vllm/triton_utils/tensor_descriptor.py: 0/9 lines marked
+  source/vllm/usage/__init__.py: 0/0 lines marked
+  source/vllm/usage/usage_lib.py: 0/219 lines marked
+  source/vllm/utils/__init__.py: 0/34 lines marked
+  source/vllm/utils/argparse_utils.py: 0/459 lines marked
+  source/vllm/utils/async_utils.py: 0/108 lines marked
+  source/vllm/utils/b12x.py: 0/74 lines marked
+  source/vllm/utils/cache.py: 0/153 lines marked
+  source/vllm/utils/collection_utils.py: 0/94 lines marked
+  source/vllm/utils/counter.py: 0/31 lines marked
+  source/vllm/utils/cpu_resource_utils.py: 0/212 lines marked
+  source/vllm/utils/cpu_triton_utils.py: 0/412 lines marked
+  source/vllm/utils/deep_gemm.py: 0/648 lines marked
+  source/vllm/utils/flashinfer.py: 0/872 lines marked
+  source/vllm/utils/func_utils.py: 0/137 lines marked
+  source/vllm/utils/gc_utils.py: 0/115 lines marked
+  source/vllm/utils/gpu_sync_debug.py: 0/164 lines marked
+  source/vllm/utils/hashing.py: 0/82 lines marked
+  source/vllm/utils/hpc.py: 0/173 lines marked
+  source/vllm/utils/humming.py: 0/50 lines marked
+  source/vllm/utils/import_utils.py: 0/421 lines marked
+  source/vllm/utils/jit_monitor.py: 0/427 lines marked
+  source/vllm/utils/jsontree.py: 0/121 lines marked
+  source/vllm/utils/math_utils.py: 0/17 lines marked
+  source/vllm/utils/mem_constants.py: 0/12 lines marked
+  source/vllm/utils/mem_utils.py: 0/227 lines marked
+  source/vllm/utils/mistral.py: 0/23 lines marked
+  source/vllm/utils/multi_stream_utils.py: 0/106 lines marked
+  source/vllm/utils/nccl.py: 0/100 lines marked
+  source/vllm/utils/network_utils.py: 0/293 lines marked
+  source/vllm/utils/numa_utils.py: 0/461 lines marked
+  source/vllm/utils/nvtx_pytorch_hooks.py: 0/238 lines marked
+  source/vllm/utils/ompmultiprocessing.py: 0/224 lines marked
+  source/vllm/utils/platform_utils.py: 0/48 lines marked
+  source/vllm/utils/print_utils.py: 0/3 lines marked
+  source/vllm/utils/registry.py: 0/37 lines marked
+  source/vllm/utils/serial_utils.py: 0/82 lines marked
+  source/vllm/utils/sparse_utils.py: 0/18 lines marked
+  source/vllm/utils/system_utils.py: 0/235 lines marked
+  source/vllm/utils/tensor_schema.py: 0/201 lines marked
+  source/vllm/utils/torch_utils.py: 0/803 lines marked
+  source/vllm/utils/tqdm_utils.py: 0/28 lines marked
+  source/vllm/v1/__init__.py: 0/0 lines marked
+  source/vllm/v1/cudagraph_dispatcher.py: 0/278 lines marked
+  source/vllm/v1/kv_cache_interface.py: 0/814 lines marked
+  source/vllm/v1/kv_cache_spec_registry.py: 0/161 lines marked
+  source/vllm/v1/outputs.py: 0/310 lines marked
+  source/vllm/v1/request.py: 0/287 lines marked
+  source/vllm/v1/serial_utils.py: 0/474 lines marked
+  source/vllm/v1/utils.py: 0/655 lines marked
+  source/vllm/v1/attention/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/backend.py: 0/942 lines marked
+  source/vllm/v1/attention/selector.py: 0/200 lines marked
+  source/vllm/v1/attention/backends/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/backends/cpu_attn.py: 0/454 lines marked
+  source/vllm/v1/attention/backends/fa_utils.py: 0/219 lines marked
+  source/vllm/v1/attention/backends/flash_attn.py: 0/1440 lines marked
+  source/vllm/v1/attention/backends/flash_attn_diffkv.py: 0/263 lines marked
+  source/vllm/v1/attention/backends/flashinfer.py: 0/2189 lines marked
+  source/vllm/v1/attention/backends/flex_attention.py: 0/1170 lines marked
+  source/vllm/v1/attention/backends/gdn_attn.py: 0/465 lines marked
+  source/vllm/v1/attention/backends/hpc_attn.py: 0/468 lines marked
+  source/vllm/v1/attention/backends/linear_attn.py: 0/266 lines marked
+  source/vllm/v1/attention/backends/mamba1_attn.py: 0/49 lines marked
+  source/vllm/v1/attention/backends/mamba2_attn.py: 0/140 lines marked
+  source/vllm/v1/attention/backends/mamba_attn.py: 0/689 lines marked
+  source/vllm/v1/attention/backends/registry.py: 0/234 lines marked
+  source/vllm/v1/attention/backends/rocm_aiter_fa.py: 0/1330 lines marked
+  source/vllm/v1/attention/backends/rocm_aiter_unified_attn.py: 0/323 lines marked
+  source/vllm/v1/attention/backends/rocm_attn.py: 0/438 lines marked
+  source/vllm/v1/attention/backends/short_conv_attn.py: 0/23 lines marked
+  source/vllm/v1/attention/backends/triton_attn.py: 0/716 lines marked
+  source/vllm/v1/attention/backends/triton_attn_diffkv.py: 0/208 lines marked
+  source/vllm/v1/attention/backends/turboquant_attn.py: 0/1013 lines marked
+  source/vllm/v1/attention/backends/utils.py: 0/733 lines marked
+  source/vllm/v1/attention/backends/mla/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/backends/mla/aiter_triton_mla.py: 0/54 lines marked
+  source/vllm/v1/attention/backends/mla/compressor_utils.py: 0/72 lines marked
+  source/vllm/v1/attention/backends/mla/cpu_mla.py: 0/161 lines marked
+  source/vllm/v1/attention/backends/mla/cutlass_mla.py: 0/231 lines marked
+  source/vllm/v1/attention/backends/mla/flashattn_mla.py: 0/303 lines marked
+  source/vllm/v1/attention/backends/mla/flashattn_mla_sparse.py: 0/224 lines marked
+  source/vllm/v1/attention/backends/mla/flashinfer_mla.py: 0/278 lines marked
+  source/vllm/v1/attention/backends/mla/flashinfer_mla_sparse.py: 0/399 lines marked
+  source/vllm/v1/attention/backends/mla/flashinfer_mla_sparse_sm120.py: 0/131 lines marked
+  source/vllm/v1/attention/backends/mla/flashmla.py: 0/279 lines marked
+  source/vllm/v1/attention/backends/mla/flashmla_sparse.py: 0/661 lines marked
+  source/vllm/v1/attention/backends/mla/indexer.py: 0/925 lines marked
+  source/vllm/v1/attention/backends/mla/rocm_aiter_mla.py: 0/1044 lines marked
+  source/vllm/v1/attention/backends/mla/rocm_aiter_mla_sparse.py: 0/646 lines marked
+  source/vllm/v1/attention/backends/mla/sparse_swa.py: 0/750 lines marked
+  source/vllm/v1/attention/backends/mla/sparse_utils.py: 0/290 lines marked
+  source/vllm/v1/attention/backends/mla/tokenspeed_mla.py: 0/245 lines marked
+  source/vllm/v1/attention/backends/mla/triton_mla.py: 0/242 lines marked
+  source/vllm/v1/attention/backends/mla/xpu_mla_sparse.py: 0/211 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/__init__.py: 0/12 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/aiter_flash_attn.py: 0/105 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/base.py: 0/156 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/flash_attn.py: 0/427 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/flashinfer.py: 0/202 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/registry.py: 0/108 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/selector.py: 0/175 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/tokenspeed_mla.py: 0/144 lines marked
+  source/vllm/v1/attention/backends/mla/prefill/trtllm_ragged.py: 0/158 lines marked
+  source/vllm/v1/attention/ops/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/ops/chunked_prefill_paged_decode.py: 0/393 lines marked
+  source/vllm/v1/attention/ops/common.py: 0/419 lines marked
+  source/vllm/v1/attention/ops/dcp_alltoall.py: 0/397 lines marked
+  source/vllm/v1/attention/ops/dcp_utils.py: 0/668 lines marked
+  source/vllm/v1/attention/ops/flashmla.py: 0/126 lines marked
+  source/vllm/v1/attention/ops/flydsl_turboquant_decode.py: 0/636 lines marked
+  source/vllm/v1/attention/ops/int4_per_token_head.py: 0/957 lines marked
+  source/vllm/v1/attention/ops/merge_attn_states.py: 0/85 lines marked
+  source/vllm/v1/attention/ops/paged_attn.py: 0/41 lines marked
+  source/vllm/v1/attention/ops/prefix_prefill.py: 0/809 lines marked
+  source/vllm/v1/attention/ops/rocm_aiter_mla_sparse.py: 0/2751 lines marked
+  source/vllm/v1/attention/ops/triton_attention_helpers.py: 0/343 lines marked
+  source/vllm/v1/attention/ops/triton_decode_attention.py: 0/681 lines marked
+  source/vllm/v1/attention/ops/triton_fp8_mqa_logits.py: 0/181 lines marked
+  source/vllm/v1/attention/ops/triton_merge_attn_states.py: 0/171 lines marked
+  source/vllm/v1/attention/ops/triton_prefill_attention.py: 0/208 lines marked
+  source/vllm/v1/attention/ops/triton_reshape_and_cache_flash.py: 0/493 lines marked
+  source/vllm/v1/attention/ops/triton_turboquant_decode.py: 0/495 lines marked
+  source/vllm/v1/attention/ops/triton_turboquant_store.py: 0/350 lines marked
+  source/vllm/v1/attention/ops/triton_unified_attention.py: 0/934 lines marked
+  source/vllm/v1/attention/ops/triton_unified_attention_diffkv.py: 0/446 lines marked
+  source/vllm/v1/attention/ops/vit_attn_wrappers.py: 0/366 lines marked
+  source/vllm/v1/attention/ops/xpu_mla_sparse.py: 0/222 lines marked
+  source/vllm/v1/attention/ops/flydsl_kernels/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/ops/flydsl_kernels/tq_decode.py: 0/552 lines marked
+  source/vllm/v1/attention/ops/flydsl_kernels/tq_decode_gqa6.py: 0/543 lines marked
+  source/vllm/v1/attention/ops/turboquant_soa/__init__.py: 0/0 lines marked
+  source/vllm/v1/attention/ops/turboquant_soa/triton_turboquant_decode.py: 0/490 lines marked
+  source/vllm/v1/attention/ops/turboquant_soa/triton_turboquant_decode_v2.py: 0/485 lines marked
+  source/vllm/v1/attention/ops/turboquant_soa/triton_turboquant_store.py: 0/387 lines marked
+  source/vllm/v1/attention/ops/turboquant_soa/triton_turboquant_unified_attention.py: 0/996 lines marked
+  source/vllm/v1/core/__init__.py: 0/0 lines marked
+  source/vllm/v1/core/block_pool.py: 0/683 lines marked
+  source/vllm/v1/core/encoder_cache_manager.py: 0/290 lines marked
+  source/vllm/v1/core/kv_cache_coordinator.py: 0/799 lines marked
+  source/vllm/v1/core/kv_cache_manager.py: 0/706 lines marked
+  source/vllm/v1/core/kv_cache_metrics.py: 0/70 lines marked
+  source/vllm/v1/core/kv_cache_utils.py: 0/1750 lines marked
+  source/vllm/v1/core/single_type_kv_cache_manager.py: 0/1513 lines marked
+  source/vllm/v1/core/sched/__init__.py: 0/0 lines marked
+  source/vllm/v1/core/sched/async_scheduler.py: 0/45 lines marked
+  source/vllm/v1/core/sched/interface.py: 0/211 lines marked
+  source/vllm/v1/core/sched/output.py: 0/195 lines marked
+  source/vllm/v1/core/sched/request_queue.py: 0/156 lines marked
+  source/vllm/v1/core/sched/scheduler.py: 0/2129 lines marked
+  source/vllm/v1/core/sched/utils.py: 0/100 lines marked
+  source/vllm/v1/engine/__init__.py: 0/200 lines marked
+  source/vllm/v1/engine/async_llm.py: 0/917 lines marked
+  source/vllm/v1/engine/coordinator.py: 0/364 lines marked
+  source/vllm/v1/engine/core.py: 0/1952 lines marked
+  source/vllm/v1/engine/core_client.py: 0/1453 lines marked
+  source/vllm/v1/engine/detokenizer.py: 0/255 lines marked
+  source/vllm/v1/engine/exceptions.py: 0/10 lines marked
+  source/vllm/v1/engine/input_processor.py: 0/435 lines marked
+  source/vllm/v1/engine/llm_engine.py: 0/352 lines marked
+  source/vllm/v1/engine/logprobs.py: 0/262 lines marked
+  source/vllm/v1/engine/output_processor.py: 0/698 lines marked
+  source/vllm/v1/engine/parallel_sampling.py: 0/105 lines marked
+  source/vllm/v1/engine/tensor_ipc.py: 0/131 lines marked
+  source/vllm/v1/engine/utils.py: 0/1100 lines marked
+  source/vllm/v1/executor/__init__.py: 0/3 lines marked
+  source/vllm/v1/executor/abstract.py: 0/323 lines marked
+  source/vllm/v1/executor/multiproc_executor.py: 0/852 lines marked
+  source/vllm/v1/executor/ray_env_utils.py: 0/11 lines marked
+  source/vllm/v1/executor/ray_executor.py: 0/463 lines marked
+  source/vllm/v1/executor/ray_executor_v2.py: 0/462 lines marked
+  source/vllm/v1/executor/ray_utils.py: 0/543 lines marked
+  source/vllm/v1/executor/uniproc_executor.py: 0/161 lines marked
+  source/vllm/v1/executor/vllm_net_devices.py: 0/204 lines marked
+  source/vllm/v1/fault_tolerance/__init__.py: 0/5 lines marked
+  source/vllm/v1/fault_tolerance/engine_core_sentinel.py: 0/168 lines marked
+  source/vllm/v1/fault_tolerance/utils.py: 0/10 lines marked
+  source/vllm/v1/kv_offload/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/base.py: 0/445 lines marked
+  source/vllm/v1/kv_offload/config.py: 0/40 lines marked
+  source/vllm/v1/kv_offload/factory.py: 0/55 lines marked
+  source/vllm/v1/kv_offload/file_mapper.py: 0/127 lines marked
+  source/vllm/v1/kv_offload/cpu/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/cpu/common.py: 0/11 lines marked
+  source/vllm/v1/kv_offload/cpu/gpu_worker.py: 0/701 lines marked
+  source/vllm/v1/kv_offload/cpu/manager.py: 0/259 lines marked
+  source/vllm/v1/kv_offload/cpu/shared_offload_region.py: 0/250 lines marked
+  source/vllm/v1/kv_offload/cpu/spec.py: 0/151 lines marked
+  source/vllm/v1/kv_offload/cpu/swap_blocks_triton.py: 0/56 lines marked
+  source/vllm/v1/kv_offload/cpu/policies/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/cpu/policies/arc.py: 0/128 lines marked
+  source/vllm/v1/kv_offload/cpu/policies/base.py: 0/73 lines marked
+  source/vllm/v1/kv_offload/cpu/policies/factory.py: 0/72 lines marked
+  source/vllm/v1/kv_offload/cpu/policies/lru.py: 0/65 lines marked
+  source/vllm/v1/kv_offload/tiering/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/tiering/async_lookup.py: 0/183 lines marked
+  source/vllm/v1/kv_offload/tiering/base.py: 0/260 lines marked
+  source/vllm/v1/kv_offload/tiering/factory.py: 0/103 lines marked
+  source/vllm/v1/kv_offload/tiering/manager.py: 0/694 lines marked
+  source/vllm/v1/kv_offload/tiering/metrics.py: 0/237 lines marked
+  source/vllm/v1/kv_offload/tiering/spec.py: 0/392 lines marked
+  source/vllm/v1/kv_offload/tiering/example/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/tiering/example/manager.py: 0/139 lines marked
+  source/vllm/v1/kv_offload/tiering/fs/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/tiering/fs/io.py: 0/180 lines marked
+  source/vllm/v1/kv_offload/tiering/fs/manager.py: 0/271 lines marked
+  source/vllm/v1/kv_offload/tiering/fs/thread_pool.py: 0/166 lines marked
+  source/vllm/v1/kv_offload/tiering/obj/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/tiering/obj/config.py: 0/33 lines marked
+  source/vllm/v1/kv_offload/tiering/obj/manager.py: 0/369 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/__init__.py: 0/0 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/manager.py: 0/631 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/control/__init__.py: 0/14 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/control/base.py: 0/132 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/control/zmq.py: 0/262 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/data/__init__.py: 0/7 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/data/base.py: 0/214 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/data/nixl.py: 0/259 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/session/__init__.py: 0/14 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/session/client.py: 0/416 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/session/protocol.py: 0/260 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/session/server.py: 0/894 lines marked
+  source/vllm/v1/kv_offload/tiering/p2p/session/session.py: 0/420 lines marked
+  source/vllm/v1/metrics/__init__.py: 0/0 lines marked
+  source/vllm/v1/metrics/loggers.py: 0/1198 lines marked
+  source/vllm/v1/metrics/perf.py: 0/1213 lines marked
+  source/vllm/v1/metrics/prometheus.py: 0/56 lines marked
+  source/vllm/v1/metrics/ray_wrappers.py: 0/164 lines marked
+  source/vllm/v1/metrics/reader.py: 0/157 lines marked
+  source/vllm/v1/metrics/stats.py: 0/414 lines marked
+  source/vllm/v1/metrics/utils.py: 0/12 lines marked
+  source/vllm/v1/pool/__init__.py: 0/0 lines marked
+  source/vllm/v1/pool/late_interaction.py: 0/103 lines marked
+  source/vllm/v1/pool/late_interaction_runner.py: 0/134 lines marked
+  source/vllm/v1/pool/metadata.py: 0/130 lines marked
+  source/vllm/v1/sample/__init__.py: 0/0 lines marked
+  source/vllm/v1/sample/metadata.py: 0/26 lines marked
+  source/vllm/v1/sample/rejection_sampler.py: 0/778 lines marked
+  source/vllm/v1/sample/sampler.py: 0/325 lines marked
+  source/vllm/v1/sample/thinking_budget_state.py: 0/484 lines marked
+  source/vllm/v1/sample/logits_processor/__init__.py: 0/274 lines marked
+  source/vllm/v1/sample/logits_processor/builtin.py: 0/248 lines marked
+  source/vllm/v1/sample/logits_processor/interface.py: 0/64 lines marked
+  source/vllm/v1/sample/logits_processor/state.py: 0/135 lines marked
+  source/vllm/v1/sample/ops/__init__.py: 0/0 lines marked
+  source/vllm/v1/sample/ops/bad_words.py: 0/44 lines marked
+  source/vllm/v1/sample/ops/logprobs.py: 0/19 lines marked
+  source/vllm/v1/sample/ops/penalties.py: 0/39 lines marked
+  source/vllm/v1/sample/ops/topk_topp_sampler.py: 0/407 lines marked
+  source/vllm/v1/sample/ops/topk_topp_triton.py: 0/772 lines marked
+  source/vllm/v1/simple_kv_offload/__init__.py: 0/0 lines marked
+  source/vllm/v1/simple_kv_offload/copy_backend.py: 0/112 lines marked
+  source/vllm/v1/simple_kv_offload/cuda_mem_ops.py: 0/154 lines marked
+  source/vllm/v1/simple_kv_offload/disk_backend.py: 0/280 lines marked
+  source/vllm/v1/simple_kv_offload/manager.py: 0/704 lines marked
+  source/vllm/v1/simple_kv_offload/metadata.py: 0/40 lines marked
+  source/vllm/v1/simple_kv_offload/worker.py: 0/281 lines marked
+  source/vllm/v1/spec_decode/__init__.py: 0/0 lines marked
+  source/vllm/v1/spec_decode/custom_class_proposer.py: 0/56 lines marked
+  source/vllm/v1/spec_decode/dflash.py: 0/259 lines marked
+  source/vllm/v1/spec_decode/draft_model.py: 0/87 lines marked
+  source/vllm/v1/spec_decode/eagle.py: 0/16 lines marked
+  source/vllm/v1/spec_decode/extract_hidden_states.py: 0/320 lines marked
+  source/vllm/v1/spec_decode/gemma4.py: 0/305 lines marked
+  source/vllm/v1/spec_decode/llm_base_proposer.py: 0/1458 lines marked
+  source/vllm/v1/spec_decode/medusa.py: 0/62 lines marked
+  source/vllm/v1/spec_decode/metadata.py: 0/50 lines marked
+  source/vllm/v1/spec_decode/metrics.py: 0/229 lines marked
+  source/vllm/v1/spec_decode/ngram_proposer.py: 0/188 lines marked
+  source/vllm/v1/spec_decode/ngram_proposer_gpu.py: 0/512 lines marked
+  source/vllm/v1/spec_decode/step3p5.py: 0/405 lines marked
+  source/vllm/v1/spec_decode/suffix_decoding.py: 0/74 lines marked
+  source/vllm/v1/spec_decode/utils.py: 0/438 lines marked
+  source/vllm/v1/spec_decode/vocab_mapping.py: 0/125 lines marked
+  source/vllm/v1/spec_decode/dynamic/__init__.py: 0/0 lines marked
+  source/vllm/v1/spec_decode/dynamic/utils.py: 0/113 lines marked
+  source/vllm/v1/structured_output/__init__.py: 0/352 lines marked
+  source/vllm/v1/structured_output/backend_guidance.py: 0/246 lines marked
+  source/vllm/v1/structured_output/backend_lm_format_enforcer.py: 0/165 lines marked
+  source/vllm/v1/structured_output/backend_outlines.py: 0/262 lines marked
+  source/vllm/v1/structured_output/backend_types.py: 0/109 lines marked
+  source/vllm/v1/structured_output/backend_xgrammar.py: 0/297 lines marked
+  source/vllm/v1/structured_output/request.py: 0/81 lines marked
+  source/vllm/v1/structured_output/utils.py: 0/400 lines marked
+  source/vllm/v1/worker/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/block_table.py: 0/368 lines marked
+  source/vllm/v1/worker/cp_utils.py: 0/253 lines marked
+  source/vllm/v1/worker/cpu_model_runner.py: 0/192 lines marked
+  source/vllm/v1/worker/cpu_worker.py: 0/225 lines marked
+  source/vllm/v1/worker/dp_utils.py: 0/163 lines marked
+  source/vllm/v1/worker/ec_connector_model_runner_mixin.py: 0/59 lines marked
+  source/vllm/v1/worker/encoder_cudagraph.py: 0/537 lines marked
+  source/vllm/v1/worker/encoder_cudagraph_defs.py: 0/84 lines marked
+  source/vllm/v1/worker/gpu_input_batch.py: 0/890 lines marked
+  source/vllm/v1/worker/gpu_model_runner.py: 0/6173 lines marked
+  source/vllm/v1/worker/gpu_ubatch_wrapper.py: 0/438 lines marked
+  source/vllm/v1/worker/gpu_worker.py: 0/1093 lines marked
+  source/vllm/v1/worker/kv_connector_model_runner_mixin.py: 0/201 lines marked
+  source/vllm/v1/worker/lora_model_runner_mixin.py: 0/226 lines marked
+  source/vllm/v1/worker/mamba_utils.py: 0/1152 lines marked
+  source/vllm/v1/worker/startup_plan.py: 0/163 lines marked
+  source/vllm/v1/worker/tpu_input_batch.py: 0/438 lines marked
+  source/vllm/v1/worker/ubatch_utils.py: 0/182 lines marked
+  source/vllm/v1/worker/ubatching.py: 0/186 lines marked
+  source/vllm/v1/worker/utils.py: 0/523 lines marked
+  source/vllm/v1/worker/worker_base.py: 0/286 lines marked
+  source/vllm/v1/worker/workspace.py: 0/235 lines marked
+  source/vllm/v1/worker/xpu_model_runner.py: 0/44 lines marked
+  source/vllm/v1/worker/xpu_worker.py: 0/143 lines marked
+  source/vllm/v1/worker/cpu/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/cpu/buffer_utils.py: 0/10 lines marked
+  source/vllm/v1/worker/cpu/model_runner.py: 0/8 lines marked
+  source/vllm/v1/worker/cpu/shm.py: 0/59 lines marked
+  source/vllm/v1/worker/gpu/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/async_utils.py: 0/215 lines marked
+  source/vllm/v1/worker/gpu/attn_utils.py: 0/574 lines marked
+  source/vllm/v1/worker/gpu/block_table.py: 0/249 lines marked
+  source/vllm/v1/worker/gpu/buffer_utils.py: 0/245 lines marked
+  source/vllm/v1/worker/gpu/cp_utils.py: 0/47 lines marked
+  source/vllm/v1/worker/gpu/cudagraph_utils.py: 0/518 lines marked
+  source/vllm/v1/worker/gpu/dp_utils.py: 0/114 lines marked
+  source/vllm/v1/worker/gpu/ec_connector.py: 0/83 lines marked
+  source/vllm/v1/worker/gpu/eplb_utils.py: 0/132 lines marked
+  source/vllm/v1/worker/gpu/input_batch.py: 0/559 lines marked
+  source/vllm/v1/worker/gpu/kv_connector.py: 0/90 lines marked
+  source/vllm/v1/worker/gpu/lora_utils.py: 0/88 lines marked
+  source/vllm/v1/worker/gpu/model_runner.py: 0/1612 lines marked
+  source/vllm/v1/worker/gpu/pcp_manager.py: 0/615 lines marked
+  source/vllm/v1/worker/gpu/pp_utils.py: 0/145 lines marked
+  source/vllm/v1/worker/gpu/shutdown.py: 0/12 lines marked
+  source/vllm/v1/worker/gpu/states.py: 0/97 lines marked
+  source/vllm/v1/worker/gpu/structured_outputs.py: 0/129 lines marked
+  source/vllm/v1/worker/gpu/warmup.py: 0/329 lines marked
+  source/vllm/v1/worker/gpu/metrics/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/metrics/logits.py: 0/35 lines marked
+  source/vllm/v1/worker/gpu/mm/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/mm/encoder_cache.py: 0/28 lines marked
+  source/vllm/v1/worker/gpu/mm/encoder_runner.py: 0/241 lines marked
+  source/vllm/v1/worker/gpu/mm/lora.py: 0/77 lines marked
+  source/vllm/v1/worker/gpu/mm/rope.py: 0/183 lines marked
+  source/vllm/v1/worker/gpu/model_states/__init__.py: 0/31 lines marked
+  source/vllm/v1/worker/gpu/model_states/default.py: 0/159 lines marked
+  source/vllm/v1/worker/gpu/model_states/encoder_decoder.py: 0/163 lines marked
+  source/vllm/v1/worker/gpu/model_states/encoder_only.py: 0/192 lines marked
+  source/vllm/v1/worker/gpu/model_states/interface.py: 0/201 lines marked
+  source/vllm/v1/worker/gpu/model_states/mamba_hybrid.py: 0/291 lines marked
+  source/vllm/v1/worker/gpu/model_states/mm_pruning.py: 0/126 lines marked
+  source/vllm/v1/worker/gpu/pool/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/pool/pooling_runner.py: 0/192 lines marked
+  source/vllm/v1/worker/gpu/sample/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/sample/bad_words.py: 0/161 lines marked
+  source/vllm/v1/worker/gpu/sample/gumbel.py: 0/231 lines marked
+  source/vllm/v1/worker/gpu/sample/logit_bias.py: 0/235 lines marked
+  source/vllm/v1/worker/gpu/sample/logprob.py: 0/213 lines marked
+  source/vllm/v1/worker/gpu/sample/min_p.py: 0/51 lines marked
+  source/vllm/v1/worker/gpu/sample/output.py: 0/109 lines marked
+  source/vllm/v1/worker/gpu/sample/penalties.py: 0/252 lines marked
+  source/vllm/v1/worker/gpu/sample/prompt_logprob.py: 0/189 lines marked
+  source/vllm/v1/worker/gpu/sample/sampler.py: 0/244 lines marked
+  source/vllm/v1/worker/gpu/sample/states.py: 0/94 lines marked
+  source/vllm/v1/worker/gpu/sample/thinking_budget.py: 0/374 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/__init__.py: 0/40 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/adaptive_verification.py: 0/398 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/rejection_sampler.py: 0/246 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/rejection_sampler_utils.py: 0/963 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/speculator.py: 0/302 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/utils.py: 0/56 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/autoregressive/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/autoregressive/cudagraph_utils.py: 0/61 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/autoregressive/speculator.py: 0/767 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash/cudagraph.py: 0/98 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash/speculator.py: 0/581 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash/utils.py: 0/67 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash2/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dflash2/speculator.py: 0/193 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dspark/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dspark/speculator.py: 0/203 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/dspark/utils.py: 0/65 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/eagle/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/eagle/eagle3_utils.py: 0/51 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/eagle/speculator.py: 0/12 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/eagle/utils.py: 0/82 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/gemma4/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/gemma4/speculator.py: 0/128 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/mtp/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/mtp/speculator.py: 0/37 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/multi_module_mtp/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/gpu/spec_decode/multi_module_mtp/speculator.py: 0/883 lines marked
+  source/vllm/v1/worker/sentinel/__init__.py: 0/0 lines marked
+  source/vllm/v1/worker/sentinel/gpu_worker_sentinel.py: 0/71 lines marked
+  source/vllm/vllm_flash_attn/__init__.py: 0/35 lines marked
+  source/vllm/vllm_flash_attn/flash_attn_interface.py: 0/584 lines marked
+  workload.py: 0/38 lines marked
+Annotated region names observed: 0/0; not observed: 0; status: observed
+Coverage of literal region names discovered in the selected source tree, not whole-program line or branch coverage. Multiple sites sharing one name cannot be distinguished. Dynamic marker names and excluded/unscanned source files are outside the denominator. Source discovery is bounded to 5000 files and skips files over 2 MB. A not-observed region has unknown cost; a complete fit says nothing about unexecuted code.
+  admission.core_init: observed, annotation source not located
+  admission.hash_blocks: observed, annotation source not located
+  admission.output_init: observed, annotation source not located
+  admission.request: observed, annotation source not located
+  admission.tokenize: observed, annotation source not located
+  admission.validate: observed, annotation source not located
+
+ARCHITECTURE GRAPH
+contains = direct subregion; next = observed sibling order, not a dependency;
+waited -> = declared consumer-to-publisher claim. Check status is shown.
+Wait[?] = uncovered synchronization; waited(null) = event-free refinement with a supplied reason, not a dependency.
+Graph aggregates observed invocations; it is not a latency or critical-path model.
+
+REGION "admission.core_init" (calls=72; PCVs=tokens)
+  contains -> "admission.hash_blocks" [observations=72; within="admission.core_init"]
+
+REGION "admission.hash_blocks" (calls=240; PCVs=new_blocks, hashed_tokens)
+  next -> "admission.hash_blocks" [observations=162]
+  next -> "admission.tokenize" [observations=3]
+
+REGION "admission.output_init" (calls=72; PCVs=tokens)
+  next -> "admission.core_init" [observations=72; within="admission.request"]
+
+REGION "admission.request" (calls=72; PCVs=tokens, outputs, max_tokens, resident)
+  contains -> "admission.core_init" [observations=72; within="admission.request"]
+  contains -> "admission.output_init" [observations=72; within="admission.request"]
+  contains -> "admission.validate" [observations=72; within="admission.request"]
+  next -> "admission.hash_blocks" [observations=6]
+  next -> "admission.tokenize" [observations=66]
+  unexplained(Wait[?]): 5418 obligations
+
+REGION "admission.tokenize" (calls=72; PCVs=chars)
+  next -> "admission.request" [observations=72]
+  unexplained(Wait[?]): 236 obligations
+
+REGION "admission.validate" (calls=72; PCVs=tokens)
+  next -> "admission.output_init" [observations=72; within="admission.request"]
+
+COST INTERFACES AND BREAKDOWN
+CPU instructions on observed states; symbolic child costs use F[child].
+Own residual percentages exclude child terms. A single state supports only a constant mean fit.
+Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.
+  admission.core_init = 9*tokens + 60,436 + unexplained(own) + F[admission.hash_blocks]   (24% own unexplained; 16 observed states)
+      tokens:
+        9 PyList_GetItem+? [python3.12]
+      constant:
+        17,463 _PyEval_EvalFrameDefault [python3.12]
+        6,472 PyDict_SetItem [python3.12]
+        3,263 PyEval_EvalCode+? [python3.12]
+        1,868 PyType_GenericNew+? [python3.12]
+        1,717 _PyTuple_Resize+? [python3.12]
+        1,676 PyObject_SetAttr [python3.12]
+        1,539 _PyErr_ChainStackItem+? [python3.12]
+        1,245 _PyObject_Call_Prepend [python3.12]
+      unexplained:
+        3,502 PyDict_Contains+? [python3.12]
+        3,091 _int_malloc [libc.so.6]
+        3,000 malloc_consolidate [libc.so.6]
+        2,796 _PyEval_EvalFrameDefault [python3.12]
+        2,155 _PyType_Lookup [python3.12]
+        820 PyList_AsTuple+? [python3.12]
+        750 PyObject_Free [python3.12]
+        574 PyObject_SetAttr [python3.12]
+  admission.hash_blocks = 41,170*new_blocks + 6,600 + unexplained(own)   (2% own unexplained; 6 observed states)
+      new_blocks:
+        19,526 _PyObject_GC_Resize+? [python3.12]
+        4,168 _PyEval_EvalFrameDefault [python3.12]
+        2,688 PyLong_AsLongAndOverflow+? [python3.12]
+        1,598 _PyTuple_Resize+? [python3.12]
+        1,321 PyList_GetItem+? [python3.12]
+        1,240 SHA1_Init+? [libcrypto.so.3]
+        1,188 PyTuple_New [python3.12]
+        588 _PyErr_ChainStackItem+? [python3.12]
+      constant:
+        2,916 _PyEval_EvalFrameDefault [python3.12]
+        488 _int_malloc [libc.so.6]
+        262 PyEval_EvalCode+? [python3.12]
+        162 _PyLong_FromByteArray+? [python3.12]
+        139 PyObject_IsTrue [python3.12]
+        128 _PyObject_GenericGetAttrWithDict [python3.12]
+        126 PyCMethod_New+? [python3.12]
+        119 _PyObject_GC_New+? [python3.12]
+      unexplained:
+        2,090 PyList_AsTuple+? [python3.12]
+        54 ___pthread_cond_broadcast [libc.so.6]
+        24 PyDict_Contains+? [python3.12]
+  admission.output_init = 124*tokens + 32,185 + unexplained(own)   (25% own unexplained; 16 observed states)
+      tokens:
+        27 <u32 as pyo3::conversion::FromPyObject>::extract [tokenizers.abi3.so]
+        24 pyo3::conversions::std::vec::extract_sequence::<u32> [tokenizers.abi3.so]
+        22 PyLong_AsLong [python3.12]
+        17 PyList_Size+? [python3.12]
+        15 PyIter_Next [python3.12]
+        13 <pyo3::instance::Bound<pyo3::types::iterator::PyIterator> as core::iter::traits::iterator::Iterator>::next [tokenizers.abi3.so]
+        7 _Py_DecRef [python3.12]
+      constant:
+        9,631 _PyEval_EvalFrameDefault [python3.12]
+        3,798 PyEval_EvalCode+? [python3.12]
+        3,757 PyDict_SetItem [python3.12]
+        1,282 _PyObject_Call_Prepend [python3.12]
+        1,177 PyDict_Next [python3.12]
+        1,102 _PyErr_ChainStackItem+? [python3.12]
+        862 PyDict_Update+? [python3.12]
+        856 PyType_GenericNew+? [python3.12]
+      unexplained:
+        6,713 malloc_consolidate [libc.so.6]
+        6,615 _int_malloc [libc.so.6]
+        2,819 _PyEval_EvalFrameDefault [python3.12]
+        2,485 PyDict_Contains+? [python3.12]
+        1,417 unlink_chunk [libc.so.6]
+        549 _PyType_Lookup [python3.12]
+        342 PyObject_Free [python3.12]
+        187 PyDict_SetItem [python3.12]
+  admission.request = 339*tokens + -17,935*resident + 93,199 + unexplained(own) + F[admission.core_init] + F[admission.output_init] + F[admission.validate] + unexplained(Wait[?])   (97% own unexplained; 32 observed states)
+      tokens:
+        69 _PyErr_CheckSignalsTstate+? [python3.12]
+        39 PyInit__io+? [python3.12]
+        12 _PyOS_URandom+? [python3.12]
+        11 PyUnicode_Partition+? [python3.12]
+        9 PyUnicode_Append+? [python3.12]
+        8 _PyEval_EvalFrameDefault [python3.12]
+        8 PyLong_FromLongLong [python3.12]
+        7 Py_BuildValue [python3.12]
+      resident:
+        -3,658 _PyErr_CheckSignalsTstate+? [python3.12]
+        -2,066 PyInit__io+? [python3.12]
+        -658 _PyOS_URandom+? [python3.12]
+        -585 PyUnicode_Partition+? [python3.12]
+        -492 PyUnicode_Append+? [python3.12]
+        -445 _PyEval_EvalFrameDefault [python3.12]
+        -393 PyLong_FromLongLong [python3.12]
+        -335 Py_BuildValue [python3.12]
+      constant:
+        11,185 _PyErr_CheckSignalsTstate+? [python3.12]
+        6,559 _PyEval_EvalFrameDefault [python3.12]
+        5,651 PyInit__io+? [python3.12]
+        4,564 _PyDict_MergeEx [python3.12]
+        4,263 PyTuple_Pack [python3.12]
+        2,388 _PyOS_URandom+? [python3.12]
+        2,300 PyLong_FromVoidPtr [python3.12]
+        1,832 _PyWeakref_ClearRef+? [python3.12]
+      unexplained:
+        582,323 _PyEval_EvalFrameDefault [python3.12]
+        66,436 PyObject_Free [python3.12]
+        53,306 PyDict_Contains+? [python3.12]
+        50,306 PyObject_Malloc [python3.12]
+        48,253 PyEval_EvalCode+? [python3.12]
+        47,118 _PyTuple_Resize+? [python3.12]
+        44,640 _PyObject_GenericGetAttrWithDict [python3.12]
+        42,212 _PyErr_ChainStackItem+? [python3.12]
+  admission.tokenize = 1,950*chars + 221,622 + unexplained(own) + unexplained(Wait[?])   (33% own unexplained; 3 observed states; 45 <= chars <= 180)
+      chars:
+        231 <std::hash::random::RandomState as core::hash::BuildHasher>::hash_one::<&usize> [tokenizers.abi3.so]
+        189 match_at [tokenizers.abi3.so]
+        151 <core::hash::sip::Hasher<core::hash::sip::Sip13Rounds> as core::hash::Hasher>::write [tokenizers.abi3.so]
+        128 <alloc::vec::into_iter::IntoIter<(char, isize)> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::adapters::map::map_fold<(char, isize), char, (), <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}, core::iter::traits::iterator::Iterator::for_each::call<char, <alloc::string::String as core::iter::traits::collect::Extend<char>>::extend<core::iter::adapters::map::Map<alloc::vec::into_iter::IntoIter<(char, isize)>, <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}>>::{closure#0}>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        87 <core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::traits::iterator::Iterator::for_each::call<(char, isize), <alloc::vec::Vec<(char, isize)>>::extend_trusted<core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}>>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        85 _int_malloc [libc.so.6]
+        73 <hashbrown::map::HashMap<usize, usize, std::hash::random::RandomState>>::insert [tokenizers.abi3.so]
+        69 <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range::<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>> [tokenizers.abi3.so]
+      constant:
+        47,557 _PyEval_EvalFrameDefault [python3.12]
+        10,192 PyEval_EvalCode+? [python3.12]
+        8,663 PyDict_SetItem [python3.12]
+        5,347 PyDict_Update+? [python3.12]
+        5,141 _int_malloc [libc.so.6]
+        4,938 PyObject_Free [python3.12]
+        4,782 _PyErr_ChainStackItem+? [python3.12]
+        4,069 PyObject_Malloc [python3.12]
+      unexplained:
+        49,821 add_code_range_to_buf [tokenizers.abi3.so]
+        28,106 _int_malloc [libc.so.6]
+        20,792 _int_free [libc.so.6]
+        18,970 __memcpy_avx_unaligned_erms [libc.so.6]
+        15,364 __GI___libc_malloc [libc.so.6]
+        11,920 PyDict_Contains+? [python3.12]
+        10,969 __free [libc.so.6]
+        8,519 core::slice::memchr::memchr_aligned [tokenizers.abi3.so]
+  admission.tokenize = 2,102*chars + 212,554 + unexplained(own) + unexplained(Wait[?])   (28% own unexplained; 13 observed states; 270 <= chars <= 2,970)
+      chars:
+        199 _int_free [libc.so.6]
+        189 match_at [tokenizers.abi3.so]
+        128 <alloc::vec::into_iter::IntoIter<(char, isize)> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::adapters::map::map_fold<(char, isize), char, (), <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}, core::iter::traits::iterator::Iterator::for_each::call<char, <alloc::string::String as core::iter::traits::collect::Extend<char>>::extend<core::iter::adapters::map::Map<alloc::vec::into_iter::IntoIter<(char, isize)>, <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}>>::{closure#0}>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        127 __memcpy_avx_unaligned_erms [libc.so.6]
+        87 <core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::traits::iterator::Iterator::for_each::call<(char, isize), <alloc::vec::Vec<(char, isize)>>::extend_trusted<core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}>>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        79 _int_malloc [libc.so.6]
+        76 __free [libc.so.6]
+        73 <hashbrown::map::HashMap<usize, usize, std::hash::random::RandomState>>::insert [tokenizers.abi3.so]
+      constant:
+        44,923 _PyEval_EvalFrameDefault [python3.12]
+        9,550 PyEval_EvalCode+? [python3.12]
+        9,232 PyDict_Contains+? [python3.12]
+        8,777 PyDict_SetItem [python3.12]
+        7,130 _int_free [libc.so.6]
+        5,315 PyDict_Update+? [python3.12]
+        4,813 __realloc [libc.so.6]
+        4,783 _PyErr_ChainStackItem+? [python3.12]
+      unexplained:
+        441,128 _int_malloc [libc.so.6]
+        365,983 <std::hash::random::RandomState as core::hash::BuildHasher>::hash_one::<&usize> [tokenizers.abi3.so]
+        238,314 <core::hash::sip::Hasher<core::hash::sip::Sip13Rounds> as core::hash::Hasher>::write [tokenizers.abi3.so]
+        97,976 __GI___libc_malloc [libc.so.6]
+        88,577 <hashbrown::raw::RawTable<(usize, usize)>>::reserve_rehash::<hashbrown::map::make_hasher<usize, usize, std::hash::random::RandomState>::{closure#0}> [tokenizers.abi3.so]
+        26,613 malloc_consolidate [libc.so.6]
+        15,237 __memcpy_avx_unaligned_erms [libc.so.6]
+        10,369 _int_free_merge_chunk [libc.so.6]
+  admission.validate = 316*tokens + 13,042 + unexplained(own)   (<1% own unexplained; 16 observed states)
+      tokens:
+        116 PyObject_RichCompareBool [python3.12]
+        74 PyLong_AsSsize_t+? [python3.12]
+        62 _PyWeakref_ClearRef+? [python3.12]
+        33 PyList_Size+? [python3.12]
+        30 PyIter_Next [python3.12]
+      constant:
+        4,251 _PyEval_EvalFrameDefault [python3.12]
+        603 _PyArg_ParseTupleAndKeywords_SizeT+? [python3.12]
+        533 PyObject_Free [python3.12]
+        502 PyUnicode_FromString+? [python3.12]
+        430 _Py_HashBytes [python3.12]
+        360 PyDict_Contains+? [python3.12]
+        338 PyObject_Malloc [python3.12]
+        332 _PyWeakref_ClearRef+? [python3.12]
+      unexplained:
+        474 PyDict_Contains+? [python3.12]
+        124 _PyType_Lookup [python3.12]
+        5 _PyDict_DelItem_KnownHash+? [python3.12]
+native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):
+  <outside regions>: sem_clockwait [completion] 32 calls; per-region-call = ?; 0 matched, 32 unresolved
+  <outside regions>: sem_wait [completion] 174 calls; per-region-call = ?; 0 matched, 174 unresolved
+  admission.request: pthread_mutex_lock [lock] 5418 calls; per-region-call = ?; 0 matched, 5418 unresolved
+  admission.tokenize: pthread_cond_timedwait [condition] 2 calls; per-region-call = ?; 0 matched, 2 unresolved
+  admission.tokenize: pthread_cond_wait [condition] 3 calls; per-region-call = ?; 0 matched, 3 unresolved
+  admission.tokenize: pthread_mutex_lock [lock] 231 calls; per-region-call = ?; 0 matched, 231 unresolved
+  outside application regions (aggregated): pthread_cond_timedwait: 31, pthread_cond_wait: 4, pthread_join: 27, pthread_mutex_lock: 124983
+declared event order: ordered
+annotation coverage: 0/5654 wait obligations
+  admission.request: unexplained(Wait[?]) (5418 observations)
+  admission.tokenize: unexplained(Wait[?]) (236 observations)
+
+OBSERVED PCV RELATIONSHIPS
+These are observed equalities, not causal propagation or latency predictions.
+None fitted.

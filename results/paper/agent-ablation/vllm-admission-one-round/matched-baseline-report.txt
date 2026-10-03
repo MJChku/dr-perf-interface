@@ -1,0 +1,229 @@
+DRPERF PERFORMANCE REPORT
+Command: not recorded
+Regions: 6; graph: observed
+Declared event ordering: ordered
+Declared dependency channels observed: 0; waited(null) refinements: 0.
+Null refinements do not establish publishers; checking their markers/indicators does not validate their reasons.
+Wait obligations: 0/1788 covered; 1788 unexplained
+WAIT COVERAGE INCOMPLETE: declared event ordering does not mean all synchronization is explained.
+Read the graph below for structure; COST INTERFACES AND BREAKDOWN for formulas and functions.
+Queries: drperf --report REPORT.json --stats | --region NAME | --top costly | --top unexplained | --full
+graph.html: interactive region graph and selected-region performance details.
+profile.drperf.json: machine-readable formulas, checks, state tables and graph.
+Numeric displays are rounded to integers; the JSON retains full precision.
+Evidence sidecars support rechecking; keep them with the JSON.
+Cost evidence: 1/6 regions have one observed PCV state; 5 have nonzero own residual; 5 have nonzero interface residual including unresolved child terms.
+A one-state constant fit explains that state mean only; it does not establish growth or per-call variation.
+
+CODE COVERAGE
+Marked source-line coverage unavailable: No accessible source root.
+Annotated region names observed: 0/0; not observed: 0; status: observed
+Coverage of literal region names discovered in the selected source tree, not whole-program line or branch coverage. Multiple sites sharing one name cannot be distinguished. Dynamic marker names and excluded/unscanned source files are outside the denominator. Source discovery is bounded to 5000 files and skips files over 2 MB. A not-observed region has unknown cost; a complete fit says nothing about unexecuted code.
+  admission.core_init: observed, annotation source not located
+  admission.hash_blocks: observed, annotation source not located
+  admission.output_init: observed, annotation source not located
+  admission.request: observed, annotation source not located
+  admission.tokenize: observed, annotation source not located
+  admission.validate: observed, annotation source not located
+
+ARCHITECTURE GRAPH
+contains = direct subregion; next = observed sibling order, not a dependency;
+waited -> = declared consumer-to-publisher claim. Check status is shown.
+Wait[?] = uncovered synchronization; waited(null) = event-free refinement with a supplied reason, not a dependency.
+Graph aggregates observed invocations; it is not a latency or critical-path model.
+
+REGION "admission.core_init" (calls=8; PCVs=tokens)
+  contains -> "admission.hash_blocks" [observations=8; within="admission.core_init"]
+
+REGION "admission.hash_blocks" (calls=16; PCVs=new_blocks, hashed_tokens)
+  next -> "admission.hash_blocks" [observations=6]
+  next -> "admission.tokenize" [observations=1]
+
+REGION "admission.output_init" (calls=8; PCVs=tokens)
+  next -> "admission.core_init" [observations=8; within="admission.request"]
+
+REGION "admission.request" (calls=8; PCVs=tokens, outputs, max_tokens, resident)
+  contains -> "admission.core_init" [observations=8; within="admission.request"]
+  contains -> "admission.output_init" [observations=8; within="admission.request"]
+  contains -> "admission.validate" [observations=8; within="admission.request"]
+  next -> "admission.hash_blocks" [observations=2]
+  next -> "admission.tokenize" [observations=6]
+  unexplained(Wait[?]): 1758 obligations
+
+REGION "admission.tokenize" (calls=8; PCVs=chars)
+  next -> "admission.request" [observations=8]
+  unexplained(Wait[?]): 30 obligations
+
+REGION "admission.validate" (calls=8; PCVs=tokens)
+  next -> "admission.output_init" [observations=8; within="admission.request"]
+
+COST INTERFACES AND BREAKDOWN
+CPU instructions on observed states; symbolic child costs use F[child].
+Own residual percentages exclude child terms. A single state supports only a constant mean fit.
+Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.
+  admission.core_init = -53*tokens + 68,972 + unexplained(own) + F[admission.hash_blocks]   (21% own unexplained; 4 observed states)
+      tokens:
+        -22 _PyType_Lookup [python3.12]
+        -11 PyDict_Contains+? [python3.12]
+        9 PyList_GetItem+? [python3.12]
+        -8 _PyDictView_New+? [python3.12]
+        6 malloc_consolidate [libc.so.6]
+        -6 _PyType_GetDict [python3.12]
+        -4 PyObject_GetAttr [python3.12]
+        -3 _PyEval_EvalFrameDefault [python3.12]
+      constant:
+        18,675 _PyEval_EvalFrameDefault [python3.12]
+        6,472 PyDict_SetItem [python3.12]
+        3,613 PyEval_EvalCode+? [python3.12]
+        2,174 PyObject_SetAttr [python3.12]
+        1,909 PyType_GenericNew+? [python3.12]
+        1,714 _PyTuple_Resize+? [python3.12]
+        1,526 _PyType_Lookup [python3.12]
+        1,509 _PyErr_ChainStackItem+? [python3.12]
+      unexplained:
+        4,265 PyDict_Contains+? [python3.12]
+        3,064 _int_malloc [libc.so.6]
+        2,816 _PyType_Lookup [python3.12]
+        2,406 malloc_consolidate [libc.so.6]
+        2,209 _PyEval_EvalFrameDefault [python3.12]
+        499 _PyOS_URandom+? [python3.12]
+        474 _PyDictView_New+? [python3.12]
+        388 PyObject_SetAttr [python3.12]
+  admission.hash_blocks = 1,781   (0% own unexplained; 1 observed states)
+      constant:
+        1,037 _PyEval_EvalFrameDefault [python3.12]
+        70 PyTuple_New [python3.12]
+        68 PyCMethod_New+? [python3.12]
+        64 PyObject_Free [python3.12]
+        52 PyLong_FromSsize_t [python3.12]
+        45 PyList_SetItem+? [python3.12]
+        44 _PyErr_ChainStackItem+? [python3.12]
+        41 _PyLong_FromByteArray+? [python3.12]
+  admission.output_init = 45*tokens + 39,856 + unexplained(own)   (18% own unexplained; 4 observed states)
+      tokens:
+        27 <u32 as pyo3::conversion::FromPyObject>::extract [tokenizers.abi3.so]
+        -27 _PyType_Lookup [python3.12]
+        24 pyo3::conversions::std::vec::extract_sequence::<u32> [tokenizers.abi3.so]
+        22 PyLong_AsLong [python3.12]
+        17 PyList_Size+? [python3.12]
+        15 PyIter_Next [python3.12]
+        13 <pyo3::instance::Bound<pyo3::types::iterator::PyIterator> as core::iter::traits::iterator::Iterator>::next [tokenizers.abi3.so]
+        -9 PyDict_Contains+? [python3.12]
+      constant:
+        10,785 _PyEval_EvalFrameDefault [python3.12]
+        3,912 PyDict_SetItem [python3.12]
+        3,844 PyEval_EvalCode+? [python3.12]
+        1,798 _PyType_Lookup [python3.12]
+        1,282 _PyObject_Call_Prepend [python3.12]
+        1,177 PyDict_Next [python3.12]
+        1,101 _PyErr_ChainStackItem+? [python3.12]
+        947 PyObject_Free [python3.12]
+      unexplained:
+        3,346 PyDict_Contains+? [python3.12]
+        2,362 _PyEval_EvalFrameDefault [python3.12]
+        1,314 _PyType_Lookup [python3.12]
+        481 _PyDict_DelItem_KnownHash+? [python3.12]
+        382 _PyDictView_New+? [python3.12]
+        338 _PyOS_URandom+? [python3.12]
+        274 _PyDict_GetItem_KnownHash [python3.12]
+        176 _PyObject_GenericGetAttrWithDict [python3.12]
+  admission.request = 2,340,723*tokens + -46,818,895*resident + -4,196,567 + unexplained(own) + F[admission.core_init] + F[admission.output_init] + F[admission.validate] + unexplained(Wait[?])   (3% own unexplained; 4 observed states)
+      tokens:
+        663,405 _PyEval_EvalFrameDefault [python3.12]
+        73,017 PyObject_Free [python3.12]
+        59,115 _PyTuple_Resize+? [python3.12]
+        57,948 PyObject_Malloc [python3.12]
+        57,583 PyType_GenericNew+? [python3.12]
+        57,402 _PyObject_GenericGetAttrWithDict [python3.12]
+        48,242 PyEval_EvalCode+? [python3.12]
+        44,310 PyDict_Contains+? [python3.12]
+      resident:
+        -13,268,493 _PyEval_EvalFrameDefault [python3.12]
+        -1,460,352 PyObject_Free [python3.12]
+        -1,182,291 _PyTuple_Resize+? [python3.12]
+        -1,158,967 PyObject_Malloc [python3.12]
+        -1,151,653 PyType_GenericNew+? [python3.12]
+        -1,148,043 _PyObject_GenericGetAttrWithDict [python3.12]
+        -964,848 PyEval_EvalCode+? [python3.12]
+        -886,855 PyDict_Contains+? [python3.12]
+      constant:
+        -1,161,658 _PyEval_EvalFrameDefault [python3.12]
+        -129,663 PyObject_Free [python3.12]
+        -111,793 PyType_GenericNew+? [python3.12]
+        -107,889 _PyTuple_Resize+? [python3.12]
+        -105,922 _PyObject_GenericGetAttrWithDict [python3.12]
+        -103,473 PyObject_Malloc [python3.12]
+        -79,398 PyUnicode_FromFormatV [python3.12]
+        -78,449 PyEval_EvalCode+? [python3.12]
+      unexplained:
+        104,338 _PyType_Lookup [python3.12]
+        30,392 _PyEval_EvalFrameDefault [python3.12]
+        15,865 PyObject_Free [python3.12]
+        9,699 _PyType_GetDict [python3.12]
+        5,653 PyObject_Malloc [python3.12]
+        1,533 _PyOS_URandom+? [python3.12]
+        770 _PyDict_DelItem_KnownHash+? [python3.12]
+  admission.tokenize = 1,574*chars + 211,304 + unexplained(own) + unexplained(Wait[?])   (40% own unexplained; 4 observed states)
+      chars:
+        189 match_at [tokenizers.abi3.so]
+        128 <alloc::vec::into_iter::IntoIter<(char, isize)> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::adapters::map::map_fold<(char, isize), char, (), <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}, core::iter::traits::iterator::Iterator::for_each::call<char, <alloc::string::String as core::iter::traits::collect::Extend<char>>::extend<core::iter::adapters::map::Map<alloc::vec::into_iter::IntoIter<(char, isize)>, <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>>::{closure#1}>>::{closure#0}>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        87 <core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}> as core::iter::traits::iterator::Iterator>::fold::<(), core::iter::traits::iterator::Iterator::for_each::call<(char, isize), <alloc::vec::Vec<(char, isize)>>::extend_trusted<core::iter::adapters::map::Map<core::iter::adapters::enumerate::Enumerate<core::slice::iter::Iter<u8>>, <tokenizers::pre_tokenizers::byte_level::ByteLevel as tokenizers::tokenizer::PreTokenizer>::pre_tokenize::{closure#1}::{closure#0}>>::{closure#0}>::{closure#0}> [tokenizers.abi3.so]
+        76 _int_malloc [libc.so.6]
+        74 <hashbrown::map::HashMap<usize, usize, std::hash::random::RandomState>>::insert [tokenizers.abi3.so]
+        69 <tokenizers::tokenizer::normalizer::NormalizedString>::transform_range::<core::ops::range::RangeFull, alloc::vec::Vec<(char, isize)>> [tokenizers.abi3.so]
+        62 <tokenizers::tokenizer::normalizer::NormalizedString>::slice::<core::ops::range::Range<usize>> [tokenizers.abi3.so]
+        60 _int_free [libc.so.6]
+      constant:
+        46,123 _PyEval_EvalFrameDefault [python3.12]
+        9,990 PyEval_EvalCode+? [python3.12]
+        8,691 PyDict_SetItem [python3.12]
+        5,339 PyDict_Update+? [python3.12]
+        4,782 _PyErr_ChainStackItem+? [python3.12]
+        4,642 PyObject_Free [python3.12]
+        4,188 PyObject_Malloc [python3.12]
+        3,953 _int_malloc [libc.so.6]
+      unexplained:
+        42,910 _int_malloc [libc.so.6]
+        37,366 add_code_range_to_buf [tokenizers.abi3.so]
+        36,142 <std::hash::random::RandomState as core::hash::BuildHasher>::hash_one::<&usize> [tokenizers.abi3.so]
+        26,182 _int_free [libc.so.6]
+        23,730 __memcpy_avx_unaligned_erms [libc.so.6]
+        23,534 <core::hash::sip::Hasher<core::hash::sip::Sip13Rounds> as core::hash::Hasher>::write [tokenizers.abi3.so]
+        19,079 __GI___libc_malloc [libc.so.6]
+        13,946 __free [libc.so.6]
+  admission.validate = 304*tokens + 14,668 + unexplained(own)   (2% own unexplained; 4 observed states)
+      tokens:
+        116 PyObject_RichCompareBool [python3.12]
+        73 PyLong_AsSsize_t+? [python3.12]
+        62 _PyWeakref_ClearRef+? [python3.12]
+        33 PyList_Size+? [python3.12]
+        30 PyIter_Next [python3.12]
+        -4 _PyEval_EvalFrameDefault [python3.12]
+        -4 _PyType_Lookup [python3.12]
+        -2 PyDict_Contains+? [python3.12]
+      constant:
+        4,490 _PyEval_EvalFrameDefault [python3.12]
+        658 PyDict_Contains+? [python3.12]
+        603 _PyArg_ParseTupleAndKeywords_SizeT+? [python3.12]
+        581 PyObject_Free [python3.12]
+        502 PyUnicode_FromString+? [python3.12]
+        500 _PyType_Lookup [python3.12]
+        430 _Py_HashBytes [python3.12]
+        343 PyObject_Malloc [python3.12]
+      unexplained:
+        406 PyDict_Contains+? [python3.12]
+native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):
+  <outside regions>: sem_clockwait [completion] 4 calls; per-region-call = ?; 0 matched, 4 unresolved
+  <outside regions>: sem_wait [completion] 58 calls; per-region-call = ?; 0 matched, 58 unresolved
+  admission.request: pthread_mutex_lock [lock] 1758 calls; per-region-call = ?; 0 matched, 1758 unresolved
+  admission.tokenize: pthread_cond_wait [condition] 1 calls; per-region-call = ?; 0 matched, 1 unresolved
+  admission.tokenize: pthread_mutex_lock [lock] 29 calls; per-region-call = ?; 0 matched, 29 unresolved
+  outside application regions (aggregated): pthread_cond_timedwait: 12, pthread_cond_wait: 2, pthread_join: 9, pthread_mutex_lock: 32690
+declared event order: ordered
+annotation coverage: 0/1788 wait obligations
+  admission.request: unexplained(Wait[?]) (1758 observations)
+  admission.tokenize: unexplained(Wait[?]) (30 observations)
+
+OBSERVED PCV RELATIONSHIPS
+These are observed equalities, not causal propagation or latency predictions.
+None fitted.

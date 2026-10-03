@@ -1,0 +1,182 @@
+--- a/lmcache/_drperf.py
++++ b/lmcache/_drperf.py
+@@ -26,3 +26,74 @@
+                 return len(x)
+             except Exception:
+                 return -1
++
++
++# Passive checkpoints: preserve the real future and its original result wait.
++# No region spans an await: concurrent coroutines share an execution thread.
++import asyncio as _asyncio
++import itertools as _itertools
++import src.perf as _perf
++_wait_generations = _itertools.count(1)
++
++
++def submit_waitable(coro, loop, kind):
++    if not (_perf.available and _perf._enabled):
++        return _asyncio.run_coroutine_threadsafe(coro, loop)
++    import perfmark
++    identity = ({'exists': 2001, 'get': 2002, 'put': 2003}[kind], next(_wait_generations))
++    async def publish_result():
++        # Each active coroutine step is a real operation region. Close it
++        # before suspension so unrelated tasks never become its children.
++        return await _OperationSteps(coro, 'lmc.remote.' + kind + '_operation', identity)
++    future = _asyncio.run_coroutine_threadsafe(publish_result(), loop)
++    future._drperf_identity = identity
++    future._drperf_kind = kind
++    return future
++
++
++class _OperationSteps:
++    """Preserve await semantics while marking only active coroutine execution."""
++    def __init__(self, coro, name, identity):
++        self.iterator = coro.__await__()
++        self.name, self.identity = name, identity
++
++    def __await__(self):
++        return self
++
++    def __iter__(self):
++        return self
++
++    def __next__(self):
++        return self.send(None)
++
++    def _step(self, method, *args):
++        import perfmark
++        with region(self.name):
++            try:
++                return method(*args)
++            except StopIteration:
++                # Original coroutine returned successfully. Its Task/Future
++                # is released only after this publication and region exit.
++                perfmark.event_publish(*self.identity)
++                raise
++
++    def send(self, value):
++        return self._step(self.iterator.send, value)
++
++    def throw(self, *args):
++        return self._step(self.iterator.throw, *args)
++
++    def close(self):
++        with region(self.name):
++            return self.iterator.close()
++
++
++def wait_result(future, timeout=None):
++    identity = getattr(future, '_drperf_identity', None)
++    if identity is None:
++        return future.result(timeout)
++    import perfmark
++    # No primitive/helper region: this checkpoint belongs to the caller.
++    result = future.result(timeout)
++    perfmark.event_waited(*identity)
++    return result
+--- a/lmcache/v1/storage_backend/remote_backend.py
++++ b/lmcache/v1/storage_backend/remote_backend.py
+@@ -20,7 +20,7 @@
+ from lmcache.v1.storage_backend.connector.base_connector import RemoteConnector
+ from lmcache.v1.storage_backend.local_cpu_backend import LocalCPUBackend
+ from lmcache.v1.storage_backend.naive_serde import CreateSerde
+-from lmcache._drperf import _nb, marked, n, pcv, region  # noqa: F401  (drperf overlay)
++from lmcache._drperf import _nb, marked, n, pcv, region, submit_waitable, wait_result  # noqa: F401  (drperf overlay)
+ 
+ logger = init_logger(__name__)
+ 
+@@ -161,7 +161,9 @@
+             logger.warning("Failed to initialize/re-establish remote connection: %s", e)
+             self.connection = None
+ 
+-    @marked("lmc.remote.contains")
++    @marked("lmc.remote.contains", lambda self, *a, **k: dict(
++        connected=int(self.connection is not None),
++        async_exists=int(not (self.config.extra_config or {}).get("use_exists_sync", False))))
+     def contains(self, key: CacheEngineKey, pin: bool = False) -> bool:
+         if self.connection is None:
+             logger.warning("Connection is None in contains, returning False")
+@@ -177,10 +179,8 @@
+             ):
+                 return self.connection.exists_sync(key)
+             else:
+-                future = asyncio.run_coroutine_threadsafe(
+-                    self.connection.exists(key), self.loop
+-                )
+-                res = future.result()
++                future = submit_waitable(self.connection.exists(key), self.loop, 'exists')
++                res = wait_result(future)
+                 return res
+         except Exception as e:
+             logger.warning("Remote connection failed in contains: %s", e)
+@@ -213,11 +213,12 @@
+         with self.lock:
+             return key in self.put_tasks
+ 
++    @marked("lmc.remote.put_callback")
+     def put_callback(self, future: Future, key: CacheEngineKey):
+         with self.lock:
+             self.put_tasks.discard(key)
+         try:
+-            future.result()
++            wait_result(future)
+         except Exception as e:
+             self._put_failed_count += 1
+             logger.error("Put task failed for key %s: %s", key, e)
+@@ -270,8 +271,8 @@
+ 
+         # NOTE: No need to do error handling here
+         # since the `future` is never waited
+-        future = asyncio.run_coroutine_threadsafe(
+-            self.connection.put(key, compressed_memory_obj), self.loop
++        future = submit_waitable(
++            self.connection.put(key, compressed_memory_obj), self.loop, 'put'
+         )
+         future.add_done_callback(put_done_callback)
+         return future
+@@ -367,10 +368,10 @@
+         if self._mla_worker_id_as0_mode:
+             key = key.with_new_worker_id(0)
+         t1 = time.perf_counter()
+-        future = asyncio.run_coroutine_threadsafe(self.connection.get(key), self.loop)
+-
+-        try:
+-            memory_obj = future.result(self.config.blocking_timeout_secs)
++        future = submit_waitable(self.connection.get(key), self.loop, 'get')
++
++        try:
++            memory_obj = wait_result(future, self.config.blocking_timeout_secs)
+         except Exception as e:
+             if isinstance(e, TimeoutError):
+                 logger.warning("get blocking timeout, trigger cancel the future task")
+@@ -400,7 +401,10 @@
+     def put_failed_count(self):
+         return self._put_failed_count
+ 
+-    @marked("lmc.remote.get", lambda self, keys, *a, **k: dict(chunks=n(keys)))
++    @marked("lmc.remote.get", lambda self, keys, *a, **k: dict(
++        chunks=n(keys),
++        ready=int(self.local_cpu_backend is not None and self.connection is not None),
++        individual=int(self.connection is not None and not self.connection.support_batched_get())))
+     def batched_get_blocking(
+         self,
+         keys: List[CacheEngineKey],
+@@ -453,7 +457,7 @@
+                 ] = remote_backend_individual_get_stats
+ 
+             futures = [
+-                asyncio.run_coroutine_threadsafe(self.connection.get(key), self.loop)
++                submit_waitable(self.connection.get(key), self.loop, 'get')
+                 for key in keys
+             ]
+             memory_objs = []
+@@ -461,7 +465,7 @@
+             for fut in futures:
+                 if not failed:
+                     try:
+-                        memory_obj = fut.result(self.config.blocking_timeout_secs)
++                        memory_obj = wait_result(fut, self.config.blocking_timeout_secs)
+                     except Exception as e:
+                         failed = True
+                         if isinstance(e, TimeoutError):

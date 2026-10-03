@@ -1,0 +1,579 @@
+{
+  "scope": "Actual Ditto worker.wait, CacheRuntime and CompactionEngine methods; upstream CPU GC harness and real FTL; controlled completion, no GPU compression or full vLLM run.",
+  "sourceHashes": {
+    "src/cache/compaction.py": "5cb255659f19ef50d47c46dec01bc061dd7ef5c6b7ced8d9c019125ae4f60d7e",
+    "src/cache/runtime.py": "d765ff9361b45d2cc2ff4be29c49036fad152afcebc16f6f68122ebac97c39e9",
+    "src/integration/vllm/worker.py": "482dc4b170ff1139a551d10d8e0256b10511cbb82e9f553ca79e1efa322c6965"
+  },
+  "runs": {
+    "fixed": {
+      "case": {
+        "mode": "fixed",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [],
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 0,
+        "covered": 0,
+        "uncovered": 0,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 0,
+        "regions": [],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": []
+    },
+    "forced": {
+      "case": {
+        "mode": "forced",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [
+        {
+          "event": "7001",
+          "generation": "1",
+          "group": "0:2823059",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 253,
+          "waited": "0:2823059:25",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823059:10",
+          "producerInvocation": 269,
+          "distanceUs": 20129,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823059",
+            "thread": "2823059",
+            "invocation": 268
+          }
+        },
+        {
+          "event": "7001",
+          "generation": "2",
+          "group": "0:2823059",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 282,
+          "waited": "0:2823059:69",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823059:54",
+          "producerInvocation": 298,
+          "distanceUs": 5985,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823059",
+            "thread": "2823059",
+            "invocation": 297
+          }
+        },
+        {
+          "event": "7001",
+          "generation": "3",
+          "group": "0:2823059",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 311,
+          "waited": "0:2823059:113",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823059:98",
+          "producerInvocation": 327,
+          "distanceUs": 1320,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823059",
+            "thread": "2823059",
+            "invocation": 326
+          }
+        }
+      ],
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 3,
+        "covered": 3,
+        "uncovered": 0,
+        "eligibleCredits": 3,
+        "unusedCredits": 0,
+        "nativeCalls": 12,
+        "regions": [
+          {
+            "region": "gc.lease_flush",
+            "obligations": 3,
+            "covered": 3,
+            "uncovered": 0,
+            "nativeCalls": 12,
+            "examples": []
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": []
+    },
+    "omitted": {
+      "case": {
+        "mode": "omitted",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [],
+      "coverage": {
+        "status": "uncovered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 3,
+        "covered": 0,
+        "uncovered": 3,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 12,
+        "regions": [
+          {
+            "region": "gc.lease_flush",
+            "obligations": 3,
+            "covered": 0,
+            "uncovered": 3,
+            "nativeCalls": 12,
+            "examples": [
+              {
+                "region": "gc.lease_flush",
+                "group": "0:2823183",
+                "thread": "2823183",
+                "invocation": 268,
+                "nativeCalls": 4,
+                "apis": {
+                  "pthread_mutex_lock": 3,
+                  "sem_wait": 1
+                },
+                "ready": 18,
+                "complete": true
+              },
+              {
+                "region": "gc.lease_flush",
+                "group": "0:2823183",
+                "thread": "2823183",
+                "invocation": 297,
+                "nativeCalls": 4,
+                "apis": {
+                  "pthread_mutex_lock": 3,
+                  "sem_wait": 1
+                },
+                "ready": 60,
+                "complete": true
+              },
+              {
+                "region": "gc.lease_flush",
+                "group": "0:2823183",
+                "thread": "2823183",
+                "invocation": 326,
+                "nativeCalls": 4,
+                "apis": {
+                  "pthread_mutex_lock": 3,
+                  "sem_wait": 1
+                },
+                "ready": 102,
+                "complete": true
+              }
+            ]
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": []
+    },
+    "fixed-probe": {
+      "case": {
+        "mode": "fixed",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [],
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 0,
+        "covered": 0,
+        "uncovered": 0,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 0,
+        "regions": [],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": []
+    },
+    "forced-probe": {
+      "case": {
+        "mode": "forced",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": true,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [
+        {
+          "event": "7001",
+          "generation": "1",
+          "group": "0:2823407",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 253,
+          "waited": "0:2823407:25",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823407:10",
+          "producerInvocation": 269,
+          "distanceUs": 20618,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823407",
+            "thread": "2823407",
+            "invocation": 268
+          }
+        },
+        {
+          "event": "7001",
+          "generation": "2",
+          "group": "0:2823407",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 282,
+          "waited": "0:2823407:69",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823407:54",
+          "producerInvocation": 298,
+          "distanceUs": 6321,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823407",
+            "thread": "2823407",
+            "invocation": 297
+          }
+        },
+        {
+          "event": "7001",
+          "generation": "3",
+          "group": "0:2823407",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 311,
+          "waited": "0:2823407:113",
+          "status": "ordered",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823407:98",
+          "producerInvocation": 327,
+          "distanceUs": 1833,
+          "nativeContext": [
+            {
+              "region": "gc.lease_flush",
+              "api": "pthread_mutex_lock",
+              "count": 3
+            },
+            {
+              "region": "gc.lease_flush",
+              "api": "sem_wait",
+              "count": 1
+            }
+          ],
+          "coverageCredit": {
+            "region": "gc.lease_flush",
+            "group": "0:2823407",
+            "thread": "2823407",
+            "invocation": 326
+          }
+        }
+      ],
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 3,
+        "covered": 3,
+        "uncovered": 0,
+        "eligibleCredits": 3,
+        "unusedCredits": 0,
+        "nativeCalls": 12,
+        "regions": [
+          {
+            "region": "gc.lease_flush",
+            "obligations": 3,
+            "covered": 3,
+            "uncovered": 0,
+            "nativeCalls": 12,
+            "examples": []
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": []
+    },
+    "false-claim-probe": {
+      "case": {
+        "mode": "false-claim",
+        "cases": [
+          {
+            "generation": 1,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 2,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          },
+          {
+            "generation": 3,
+            "readyAtReclaimReturn": false,
+            "aborted": true,
+            "outputDiscarded": true
+          }
+        ]
+      },
+      "edges": [
+        {
+          "event": "7001",
+          "generation": "1",
+          "group": "0:2823499",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 253,
+          "waited": "0:2823499:4",
+          "status": "violation",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823499:3",
+          "producerInvocation": 278,
+          "nativeContext": [],
+          "coverageCredit": null
+        },
+        {
+          "event": "7001",
+          "generation": "2",
+          "group": "0:2823499",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 282,
+          "waited": "0:2823499:13",
+          "status": "violation",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823499:15",
+          "producerInvocation": 308,
+          "nativeContext": [],
+          "coverageCredit": null
+        },
+        {
+          "event": "7001",
+          "generation": "3",
+          "group": "0:2823499",
+          "consumer": "vllm.reclaim_pages",
+          "consumerInvocation": 311,
+          "waited": "0:2823499:23",
+          "status": "violation",
+          "producer": "ditto.compression.complete",
+          "publication": "0:2823499:25",
+          "producerInvocation": 337,
+          "nativeContext": [],
+          "coverageCredit": null
+        }
+      ],
+      "coverage": {
+        "status": "covered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 0,
+        "covered": 0,
+        "uncovered": 0,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 0,
+        "regions": [],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "violations": [
+        {
+          "event": [
+            "0:2823499",
+            "7001",
+            "1"
+          ],
+          "consumer": "vllm.reclaim_pages",
+          "producer": "ditto.compression.complete",
+          "waited": "0:2823499:4",
+          "publication": "0:2823499:3",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:2823499",
+            "7001",
+            "2"
+          ],
+          "consumer": "vllm.reclaim_pages",
+          "producer": "ditto.compression.complete",
+          "waited": "0:2823499:13",
+          "publication": "0:2823499:15",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:2823499",
+            "7001",
+            "3"
+          ],
+          "consumer": "vllm.reclaim_pages",
+          "producer": "ditto.compression.complete",
+          "waited": "0:2823499:23",
+          "publication": "0:2823499:25",
+          "reason": "Consumer passed waited before declared publication completed"
+        }
+      ]
+    }
+  }
+}

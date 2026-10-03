@@ -1,0 +1,153 @@
+{
+  "schema": "inferix-cudnn-time-coverage-estimate-v1",
+  "native_db": "out/causal-video/inferix-gpu-fresh/inferix-gpu-baseline-fresh-20260917.pid4371.sqlite",
+  "inventory_audit": "out/causal-video/inferix-cpu21/inventory-audit.json",
+  "method": "For each native signature with native_count > GX_count, multiply that count difference by the median of usable (non-warmup, non-timeout, positive) isolated-gate GPU duration samples. Denominator applies the same estimator to all native GPU kernel signatures, excluding cublasLtMatmul/cublasGemmEx API wrapper records to avoid duplicate launch accounting.",
+  "native_nonwrapper_launches": 97779,
+  "unmatched_native_launches": 168,
+  "unmatched_native_signatures": [
+    {
+      "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+      "api": "cuLaunch",
+      "grid": [
+        216,
+        1,
+        1
+      ],
+      "block": [
+        1024,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "unmatched_native_count": 42,
+      "usable_native_samples": 3,
+      "median_duration_ns": 20479,
+      "weighted_duration_ns": 860118
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "api": "cuLaunch",
+      "grid": [
+        37687,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "unmatched_native_count": 8,
+      "usable_native_samples": 3,
+      "median_duration_ns": 463871,
+      "weighted_duration_ns": 3710968
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "api": "cuLaunch",
+      "grid": [
+        75373,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "unmatched_native_count": 34,
+      "usable_native_samples": 3,
+      "median_duration_ns": 931840,
+      "weighted_duration_ns": 31682560
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "api": "cuLaunch",
+      "grid": [
+        12480,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "unmatched_native_count": 8,
+      "usable_native_samples": 3,
+      "median_duration_ns": 33792,
+      "weighted_duration_ns": 270336
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "api": "cuLaunch",
+      "grid": [
+        49920,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 0,
+      "unmatched_native_count": 34,
+      "usable_native_samples": 3,
+      "median_duration_ns": 124927,
+      "weighted_duration_ns": 4247518
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+      "api": "cuLaunchEx",
+      "grid": [
+        1,
+        1560,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 77824,
+      "unmatched_native_count": 8,
+      "usable_native_samples": 3,
+      "median_duration_ns": 466944,
+      "weighted_duration_ns": 3735552
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+      "api": "cuLaunchEx",
+      "grid": [
+        1,
+        6240,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "dynamic_shared_bytes": 77824,
+      "unmatched_native_count": 34,
+      "usable_native_samples": 3,
+      "median_duration_ns": 1932288,
+      "weighted_duration_ns": 65697792
+    }
+  ],
+  "unmatched_weighted_duration_ns": 110204844,
+  "all_native_nonwrapper_weighted_duration_ns": 10359623849,
+  "all_native_cudnn_named_weighted_duration_ns": 3565298428,
+  "unmatched_fraction_of_nonwrapper_kernel_duration": 0.010637919446335681,
+  "unmatched_fraction_of_cudnn_named_kernel_duration": 0.03091041219284996,
+  "limitations": [
+    "Each unmatched signature has three usable isolated-gate samples; median-times-count estimates total kernel duration, not measured request latency or a confidence interval.",
+    "Summed kernel durations can overlap on streams and omit copies, synchronization, host work, and plan-selection overhead.",
+    "GX selects different kernels for these calls; the native durations do not estimate GX duration or prediction error."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "claims": [
+    {
+      "id": "merge_scan",
+      "region": "source/sqlglot/optimizer/merge_subqueries.py:merge_ctes, _mergeable, _merge_expressions; source/sqlglot/optimizer/scope.py:_collect, columns",
+      "expression": "For each outer scope at merge_ctes entry, M*N_scope, M*C, M*S, M*(M-1)/2, and total inner projection AST size. M is the count of single-use CTE sources having a simple SELECT of qualified columns from one base table; N_scope is sum(1 for node in walk_in_scope(outer_scope.expression)); C is the count of qualified outer-scope Column occurrences; S is the number of selected sources. Sum these expressions over outer scopes.",
+      "evidence": "Round 1 cProfile: actual merging is merge_ctes (eliminate_subqueries first converts isolated table selects to CTEs), not merge_derived_tables. At n=16/32/64/128 merge_subqueries cumulative seconds are .0695/.2626/1.0104/3.9177; _merge_expressions .0348/.1377/.5429/2.1317. _collect is 156/300/588/1164 calls with cumulative .0761/.2569/.9291/3.4760. Each merge invalidates outer scope collection; _mergeable reads pivots and _merge_expressions reads columns, triggering repeated traversals. M*C and M*N_scope describe that work, while disappearing CTE shells give a triangular correction. M=n,C=4*n-2 here. Round 2 additional n=24/48/72/96/112/128 gave merge_subqueries .1509/.5677/1.2701/2.2353/2.9974/3.9247 seconds; repeated n=128 differs by 0.18%. Source remove_source/add_source clear caches inside _merge_from, then merge_ctes clears again after each successful merge. Thus both _mergeable and _merge_expressions repeatedly recollect the outer AST. Profiling generator resume counts for walk_in_scope are exactly 44*n*n+368*n-67 across all 12 points; _collect calls are 9*n+12. These are supporting observations, not cost expressions.",
+      "scope": "Validated only for workload family: all M CTEs are single-use, simple column projections, aliases distinct, fixed 2-column schema, no WHERE/GROUP/ORDER/window/aggregates; C and S remain fixed during merging, while CTE shells decrease. Factors are experimentally confounded because n_joins is the only allowed input. No universal SQL optimizer law claimed."
+    },
+    {
+      "id": "star_expansion",
+      "region": "source/sqlglot/optimizer/qualify_columns.py:_expand_stars",
+      "expression": "len(scope.expression.selects) + sum(W[t] for each t targeted by each star), where W[t] is number of visible schema columns (base source) or visible named output columns (derived/CTE source) at region entry.",
+      "evidence": "Source-only: outer loop enumerates selections, expands an unqualified star across selected sources and emits one column per visible schema column. Here width is two per source. Round 1: _expand_stars calls n+1 and cumulative .00298/.00484/.00998/.01912 at n=16/32/64/128 support a linear visible-column term. Round 2 repeated n=128 gave .01911 seconds, essentially identical to round 1 .01912.",
+      "scope": "No EXCEPT/REPLACE/USING/pivots/struct stars in workload."
+    },
+    {
+      "id": "join_dependencies",
+      "region": "source/sqlglot/optimizer/optimize_joins.py:optimize_joins / reorder_joins; source/sqlglot/helper.py:tsort",
+      "expression": "sum(len(other_table_names(join)) for join in joins) + len(joins) + sum(len(references[t])*(len(references[t])-1)/2 for t in references)",
+      "evidence": "Source-only: reference accumulation uses references.get(table, []) + [join], repeatedly copying the list for common dependency t0. All n-1 joins reference t0, hence a triangular list-copy term. Dependency graph itself is a star; tsort has only two layers, so its scan work is linear here. Round 1: optimize_joins cumulatives .00855/.01714/.03442/.06924 at n=16/32/64/128 are effectively linear; self time is tiny. List-copy expression remains source-supported but is not a leading timing term in this envelope. tsort .00004/.00007/.00012/.00026 likewise linear for this star.",
+      "scope": "Fixed star join topology with no cross joins, fixed-size equality predicates, and all nonempty dependency sets={t0}. Source-supported triangular reference-list copies are not individually resolved in timing; graph depth cannot be varied within the authorized envelope. Two-layer tsort scan work is linear, unlike a chain DAG."
+    },
+    {
+      "id": "scope_cache",
+      "region": "source/sqlglot/optimizer/scope.py:Scope._ensure_collected / Scope._collect; Scope.columns",
+      "expression": "For _ensure_collected: int(not self._collected)*N_scope. For columns: int(self._columns is None)*(int(not self._collected)*N_scope + C + P), where N_scope counts nodes in the scope-pruned AST, C counts qualified column occurrences, and P is the number of output projections.",
+      "evidence": "_ensure_collected skips collection when cache is valid. _collect walks each in-scope AST node, and columns additionally builds named_selects and filters raw columns. remove_source/add_source invalidate caches while CTE merges continue; this explains why a linear local region becomes quadratic in its caller. Round 1 _collect cumulatives n=32/64/128 were .2569/.9291/3.4760 seconds; round 2 n=128 3.4803 seconds.",
+      "scope": "No correlated child scopes, bounded column ancestor depth, qualified columns and simple projection names as in this workload; otherwise add external-column and ancestor-path terms."
+    }
+  ],
+  "experiment": "Completed two rounds (12 points). No source or workload edits. Upper endpoint reproducible; third round unnecessary. Only n_joins is an authorized independent input."
+}

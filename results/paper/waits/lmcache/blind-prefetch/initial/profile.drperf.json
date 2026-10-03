@@ -1,0 +1,3800 @@
+{
+  "schema": "drperf.explorer.v1",
+  "title": "raw",
+  "measurement": {
+    "unit": "CPU instructions per call",
+    "scope": "exclusive region work",
+    "markerAdjustment": "marker modules excluded exactly; no wrapper calibration subtraction",
+    "composition": "symbolic direct-child work in composition; no latency or parallelism model",
+    "tolerance": {
+      "absolute": 64.0,
+      "relative": 0.05
+    }
+  },
+  "provenance": {
+    "rawDirectory": "/w/lmc-waits/blind-prefetch/initial/raw",
+    "sourceRoot": null,
+    "runs": [
+      {
+        "file": "run.13.json",
+        "measurement": {
+          "version": "0.3",
+          "pid": 13,
+          "app": "python3.12",
+          "excluded_cuda_module": "",
+          "follow_unmarked_threads": false,
+          "native_gx": false,
+          "native_gx_hooks": 0,
+          "native_gx_calls": 0,
+          "max_states_per_region": 4096,
+          "max_keys": 65536,
+          "counter_budget_bytes": 103079215104,
+          "counter_bytes": 67108864,
+          "excluded_cuda_exports": 0,
+          "excluded_cuda_calls": 0,
+          "excluded_instructions": 6857,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 66138,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 7,
+          "waits_enabled": true,
+          "wait_records": 7371,
+          "wait_dropped": 0,
+          "wait_hooks": 42,
+          "wait_delay_ms": 0,
+          "wait_delay_injections": 0,
+          "max_wait_records": 200000,
+          "wait_delay_region": "",
+          "wait_delay_kind": "semaphore",
+          "wait_unattributed": {
+            "pthread_mutex_destroy": {
+              "kind": "mutex_destroy",
+              "calls": 52
+            },
+            "pthread_mutex_lock": {
+              "kind": "lock",
+              "calls": 33849
+            },
+            "pthread_mutex_unlock": {
+              "kind": "unlock",
+              "calls": 33853
+            },
+            "pthread_cond_wait": {
+              "kind": "condition",
+              "calls": 15
+            },
+            "pthread_cond_timedwait": {
+              "kind": "condition",
+              "calls": 95
+            },
+            "pthread_cond_signal": {
+              "kind": "signal",
+              "calls": 890
+            },
+            "pthread_join": {
+              "kind": "join",
+              "calls": 3
+            },
+            "recv": {
+              "kind": "receive",
+              "calls": 42
+            }
+          },
+          "trace_file": "/w/lmc-waits/blind-prefetch/initial/raw/run.13.json.trace",
+          "trace_records": 25,
+          "trace_dropped": 0
+        }
+      }
+    ]
+  },
+  "validity": {
+    "errors": [],
+    "traceErrors": []
+  },
+  "regions": [
+    {
+      "id": "capture",
+      "name": "capture",
+      "originalName": "capture",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 529.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 529.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 91,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 166.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 20.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 529.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 529.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 91,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 166.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 20.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 529.0,
+          "observed": 529.0
+        }
+      ],
+      "nested": {},
+      "sources": []
+    },
+    {
+      "id": "lmc.disk.read_a",
+      "name": "lmc.disk.read_a",
+      "originalName": "lmc.disk.read_a",
+      "states": [
+        "chunks"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              4
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            55723.19444444518
+          ],
+          "constant": 27772.555555556057,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                4
+              ],
+              "calls": 3,
+              "explained": 250665.33333333678,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 919343.666666679,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 6330,
+            "constant": 245,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 8302.583333333332
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_GC_Del",
+                  "instructions": 4827.194444444447
+                },
+                {
+                  "module": "_ctypes.cpython-312-x86_64-linux-gnu.so",
+                  "function": "<no symbol>",
+                  "instructions": 2149.361111111112
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 2002.3611111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyErr_CheckSignalsTstate+?",
+                  "instructions": 1835.6111111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyCMethod_New+?",
+                  "instructions": 1582.8333333333337
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 1389.3611111111113
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyTuple_Resize+?",
+                  "instructions": 1270.75
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": -17052.77777777778
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 14657.111111111115
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_IsSubtype",
+                "instructions": 14415.111111111113
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_VisitManagedDict",
+                "instructions": -4468.000000000002
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_FromModuleAndSpec+?",
+                "instructions": -3848.888888888889
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 3388.999999999999
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyDict_GetItem_KnownHash",
+                "instructions": 2122.666666666667
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 2077.3333333333344
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            55723.19444444518
+          ],
+          "constant": 27772.555555556057,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                4
+              ],
+              "calls": 3,
+              "explained": 250665.33333333678,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 919343.666666679,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 6330,
+            "constant": 245,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 8302.583333333332
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_GC_Del",
+                  "instructions": 4827.194444444447
+                },
+                {
+                  "module": "_ctypes.cpython-312-x86_64-linux-gnu.so",
+                  "function": "<no symbol>",
+                  "instructions": 2149.361111111112
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 2002.3611111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyErr_CheckSignalsTstate+?",
+                  "instructions": 1835.6111111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyCMethod_New+?",
+                  "instructions": 1582.8333333333337
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 1389.3611111111113
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyTuple_Resize+?",
+                  "instructions": 1270.75
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": -17052.77777777778
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 14657.111111111115
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_IsSubtype",
+                "instructions": 14415.111111111113
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_VisitManagedDict",
+                "instructions": -4468.000000000002
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_FromModuleAndSpec+?",
+                "instructions": -3848.888888888889
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 3388.999999999999
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyDict_GetItem_KnownHash",
+                "instructions": 2122.666666666667
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 2077.3333333333344
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            4
+          ],
+          "calls": 3,
+          "recorded": 250665.33333333334,
+          "observed": 250665.33333333334
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 919343.6666666666,
+          "observed": 919343.6666666666
+        }
+      ],
+      "nested": {},
+      "sources": []
+    },
+    {
+      "id": "lmc.disk.read_b",
+      "name": "lmc.disk.read_b",
+      "originalName": "lmc.disk.read_b",
+      "states": [
+        "chunks"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 6.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 58645.83333333335,
+          "dependent": [
+            "chunks"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 6,
+              "explained": 58645.83333333335,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 3730,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 10280.833333333332
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 2360.3333333333335
+              },
+              {
+                "module": "_ctypes.cpython-312-x86_64-linux-gnu.so",
+                "function": "<no symbol>",
+                "instructions": 2163.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_CheckSignalsTstate+?",
+                "instructions": 1758.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 1690.5
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 1489.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 1446.1666666666665
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1411.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 58645.83333333335,
+          "dependent": [
+            "chunks"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 6,
+              "explained": 58645.83333333335,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 3730,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 10280.833333333332
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 2360.3333333333335
+              },
+              {
+                "module": "_ctypes.cpython-312-x86_64-linux-gnu.so",
+                "function": "<no symbol>",
+                "instructions": 2163.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_CheckSignalsTstate+?",
+                "instructions": 1758.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 1690.5
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 1489.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 1446.1666666666665
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1411.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 6,
+          "recorded": 58645.833333333336,
+          "observed": 58645.833333333336
+        }
+      ],
+      "nested": {},
+      "sources": []
+    },
+    {
+      "id": "lmc.prefetch.consume_a",
+      "name": "lmc.prefetch.consume_a",
+      "originalName": "lmc.prefetch.consume_a",
+      "states": [
+        "chunks"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              4
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            -20.194444444444454
+          ],
+          "constant": 6427.777777777775,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                4
+              ],
+              "calls": 3,
+              "explained": 6346.999999999997,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 6104.666666666663,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 156,
+            "constant": 569,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -4.499999999999999
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyEval_EvalCode+?",
+                  "instructions": -3.3611111111111107
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyObject_GetMethod",
+                  "instructions": -3.25
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -3.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -2.3611111111111107
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -1.4722222222222223
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDictView_New+?",
+                  "instructions": -1.3333333333333333
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyInterpreterState_Get+?",
+                  "instructions": -0.7777777777777777
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2335.1111111111118
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 374.7777777777778
+              },
+              {
+                "module": "python3.12",
+                "function": "PyMethod_New",
+                "instructions": 262.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 232.44444444444446
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 215.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 194.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 158.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_GetItem+?",
+                "instructions": 156.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            -20.194444444444454
+          ],
+          "constant": 6427.777777777775,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                4
+              ],
+              "calls": 3,
+              "explained": 6346.999999999997,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 6104.666666666663,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 156,
+            "constant": 569,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -4.499999999999999
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyEval_EvalCode+?",
+                  "instructions": -3.3611111111111107
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyObject_GetMethod",
+                  "instructions": -3.25
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -3.0
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -2.3611111111111107
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -1.4722222222222223
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDictView_New+?",
+                  "instructions": -1.3333333333333333
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyInterpreterState_Get+?",
+                  "instructions": -0.7777777777777777
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2335.1111111111118
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 374.7777777777778
+              },
+              {
+                "module": "python3.12",
+                "function": "PyMethod_New",
+                "instructions": 262.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 232.44444444444446
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 215.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 194.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 158.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_GetItem+?",
+                "instructions": 156.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            4
+          ],
+          "calls": 3,
+          "recorded": 6347.0,
+          "observed": 6347.0
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 6104.666666666667,
+          "observed": 6104.666666666667
+        }
+      ],
+      "nested": {},
+      "sources": []
+    },
+    {
+      "id": "lmc.prefetch.consume_b",
+      "name": "lmc.prefetch.consume_b",
+      "originalName": "lmc.prefetch.consume_b",
+      "states": [
+        "chunks",
+        "peer_chunks"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1,
+              4
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              1,
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0,
+            -169.88888888888877
+          ],
+          "constant": 18205.55555555555,
+          "dependent": [
+            "chunks"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                4
+              ],
+              "calls": 3,
+              "explained": 17525.999999999996,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1,
+                16
+              ],
+              "calls": 3,
+              "explained": 15487.33333333333,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 519,
+            "constant": 1056,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_signal+?",
+                  "instructions": -19.333333333333332
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -15.33333333333333
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_timedwait",
+                  "instructions": -12.722222222222223
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -9.861111111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseStack+?",
+                  "instructions": -9.499999999999996
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_mutex_lock",
+                  "instructions": -9.222222222222221
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -8.916666666666666
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -8.388888888888884
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 4722.444444444444
+              },
+              {
+                "module": "linux-vdso.so.1",
+                "function": "<no symbol>",
+                "instructions": 544.2222222222223
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 456.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 448.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                "instructions": 438.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_signal+?",
+                "instructions": 423.3333333333333
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 386.3333333333334
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 374.7777777777778
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0,
+            -169.88888888888877
+          ],
+          "constant": 18205.55555555555,
+          "dependent": [
+            "chunks"
+          ],
+          "points": [
+            {
+              "state": [
+                1,
+                4
+              ],
+              "calls": 3,
+              "explained": 17525.999999999996,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1,
+                16
+              ],
+              "calls": 3,
+              "explained": 15487.33333333333,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ],
+            [
+              4,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 519,
+            "constant": 1056,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [],
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_signal+?",
+                  "instructions": -19.333333333333332
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -15.33333333333333
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_timedwait",
+                  "instructions": -12.722222222222223
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -9.861111111111109
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseStack+?",
+                  "instructions": -9.499999999999996
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_mutex_lock",
+                  "instructions": -9.222222222222221
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -8.916666666666666
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -8.388888888888884
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 4722.444444444444
+              },
+              {
+                "module": "linux-vdso.so.1",
+                "function": "<no symbol>",
+                "instructions": 544.2222222222223
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 456.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple+?",
+                "instructions": 448.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                "instructions": 438.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_signal+?",
+                "instructions": 423.3333333333333
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 386.3333333333334
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 374.7777777777778
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1,
+            4
+          ],
+          "calls": 3,
+          "recorded": 17526.0,
+          "observed": 17526.0
+        },
+        {
+          "state": [
+            1,
+            16
+          ],
+          "calls": 3,
+          "recorded": 15487.333333333334,
+          "observed": 15487.333333333334
+        }
+      ],
+      "nested": {},
+      "sources": []
+    }
+  ],
+  "relations": [],
+  "discovery": {
+    "truncated": false,
+    "warnings": [],
+    "scope": "discovery disabled or complete trace unavailable"
+  },
+  "composition": {
+    "status": "observed",
+    "scope": "same-thread direct-child instruction work",
+    "basis": "marker-adjusted own interfaces; runtime waiting excluded; wrapper calibration is an estimate",
+    "contract": "Observed calls only. F includes U. U includes descendant unexplained work. N*F denotes N applications of an atomic child interface, not N times a global measured mean. Argument mappings are metadata, not prerequisites for child multipliers. Own cost fits and U tables are per-state means across callers. No prediction of per-invocation inclusive counts or latency.",
+    "regions": [
+      {
+        "id": "capture",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 529.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.disk.read_a",
+        "states": [
+          "chunks"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              55723.19444444518
+            ],
+            "constant": 27772.555555556057,
+            "states": [
+              [
+                4
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              4
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.disk.read_b",
+        "states": [
+          "chunks"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 58645.83333333335,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 6,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.prefetch.consume_a",
+        "states": [
+          "chunks"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              -20.194444444444454
+            ],
+            "constant": 6427.777777777775,
+            "states": [
+              [
+                4
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              4
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.prefetch.consume_b",
+        "states": [
+          "chunks",
+          "peer_chunks"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0,
+              -169.88888888888877
+            ],
+            "constant": 18205.55555555555,
+            "states": [
+              [
+                1,
+                4
+              ],
+              [
+                1,
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1,
+              4
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              1,
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "trace": {
+    "complete": true,
+    "recordCount": 25,
+    "limit": 50000,
+    "events": [
+      {
+        "group": "0:13",
+        "seq": 1,
+        "end": 2,
+        "thread": "13",
+        "region": "capture",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 3,
+        "end": 8,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 4,
+        "end": 5,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 6,
+        "end": 7,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 9,
+        "end": 10,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 11,
+        "end": 16,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 12,
+        "end": 13,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 14,
+        "end": 15,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 17,
+        "end": 18,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 19,
+        "end": 24,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 20,
+        "end": 21,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 22,
+        "end": 23,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 25,
+        "end": 26,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 4
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 27,
+        "end": 32,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 28,
+        "end": 29,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 30,
+        "end": 31,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 33,
+        "end": 34,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 35,
+        "end": 40,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 36,
+        "end": 37,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 38,
+        "end": 39,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 41,
+        "end": 42,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 43,
+        "end": 48,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_b",
+        "values": {
+          "chunks": 1,
+          "peer_chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 44,
+        "end": 45,
+        "thread": "24",
+        "region": "lmc.disk.read_a",
+        "values": {
+          "chunks": 16
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 46,
+        "end": 47,
+        "thread": "24",
+        "region": "lmc.disk.read_b",
+        "values": {
+          "chunks": 1
+        }
+      },
+      {
+        "group": "0:13",
+        "seq": 49,
+        "end": 50,
+        "thread": "13",
+        "region": "lmc.prefetch.consume_a",
+        "values": {
+          "chunks": 16
+        }
+      }
+    ]
+  },
+  "scenarioContract": {
+    "fixed": [
+      "recorded call count",
+      "marker sequence order",
+      "nesting"
+    ],
+    "unknown": [
+      "causality of observed relationships",
+      "unexplained cost at changed states",
+      "new branches or calls",
+      "CPU/GPU latency and overlap"
+    ],
+    "requiresExplicitAssumptions": true
+  },
+  "waits": {
+    "status": "observed",
+    "warnings": [],
+    "pendingCalls": [],
+    "unattributedOperations": {
+      "pthread_mutex_lock": 33849,
+      "pthread_cond_wait": 15,
+      "pthread_cond_timedwait": 95,
+      "pthread_join": 3,
+      "recv": 42
+    },
+    "implementationSynchronization": {
+      "calls": 0,
+      "regions": [],
+      "contract": "CPU synchronization called directly by the explicitly excluded native-GX module is emulator implementation evidence, not an application wait obligation. Raw records are retained. CUDA synchronization and all other callers remain in scope."
+    },
+    "probeRequested": false,
+    "probe": false,
+    "coverage": "Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and native GX internals are not fully observed. Late attach misses earlier operations.",
+    "contract": "Observed operation counts and conservative object-based dependency evidence. API elapsed time and syscall attempts do not establish sleeping or native latency. Matched CUDA producers identify submitted stream work, not CPU completion of the launch region. Stream-prefix matches are partial; unobserved kernels/dependencies can also be required.",
+    "regions": [
+      {
+        "region": "",
+        "api": "sem_clockwait",
+        "kind": "completion",
+        "calls": 3,
+        "parentCalls": 0,
+        "states": [],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 3,
+        "potentialSyscalls": 3,
+        "elapsedUs": 2543923
+      },
+      {
+        "region": "",
+        "api": "sem_wait",
+        "kind": "completion",
+        "calls": 73,
+        "parentCalls": 0,
+        "states": [],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 73,
+        "potentialSyscalls": 14,
+        "elapsedUs": 830603
+      },
+      {
+        "region": "lmc.disk.read_a",
+        "api": "pthread_cond_timedwait",
+        "kind": "condition",
+        "calls": 3,
+        "parentCalls": 6,
+        "states": [
+          "chunks"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 3,
+        "potentialSyscalls": 3,
+        "elapsedUs": 5684
+      },
+      {
+        "region": "lmc.disk.read_a",
+        "api": "pthread_cond_wait",
+        "kind": "condition",
+        "calls": 2,
+        "parentCalls": 6,
+        "states": [
+          "chunks"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 2,
+        "potentialSyscalls": 2,
+        "elapsedUs": 73
+      },
+      {
+        "region": "lmc.disk.read_a",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 1089,
+        "parentCalls": 6,
+        "states": [
+          "chunks"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 1089,
+        "potentialSyscalls": 1,
+        "elapsedUs": 1473
+      },
+      {
+        "region": "lmc.disk.read_b",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 108,
+        "parentCalls": 6,
+        "states": [
+          "chunks"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "18",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "matched": 0,
+        "unresolved": 108,
+        "potentialSyscalls": 0,
+        "elapsedUs": 389
+      },
+      {
+        "region": "lmc.prefetch.consume_b",
+        "api": "pthread_cond_timedwait",
+        "kind": "condition",
+        "calls": 10,
+        "parentCalls": 6,
+        "states": [
+          "chunks",
+          "peer_chunks"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 10,
+        "potentialSyscalls": 10,
+        "elapsedUs": 15411
+      },
+      {
+        "region": "lmc.prefetch.consume_b",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 27,
+        "parentCalls": 6,
+        "states": [
+          "chunks",
+          "peer_chunks"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 27,
+        "potentialSyscalls": 1,
+        "elapsedUs": 216
+      },
+      {
+        "region": "lmc.prefetch.consume_b",
+        "api": "sem_clockwait",
+        "kind": "completion",
+        "calls": 6,
+        "parentCalls": 6,
+        "states": [
+          "chunks",
+          "peer_chunks"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "matched": 0,
+        "unresolved": 6,
+        "potentialSyscalls": 6,
+        "elapsedUs": 1093631
+      }
+    ],
+    "operations": [],
+    "events": [],
+    "evidence": {
+      "format": "drperf.wait-evidence.v1",
+      "path": "profile.drperf.json.waits.90dfa0f903fac17d.jsonl.gz",
+      "sha256": "90dfa0f903fac17dc1ed75a403607c6d9c3f5f343e3e993a0bc9058ce840f7c7",
+      "bytes": 147143,
+      "eventCount": 7371,
+      "operationCount": 1321,
+      "inlineEventCount": 0,
+      "inlineOperationCount": 0,
+      "scope": "Inline records support display only. Load the complete sidecar before checking event order, missing waits, or native provenance."
+    }
+  },
+  "eventModel": {
+    "status": "ordered",
+    "probe": false,
+    "probeRequested": false,
+    "edges": [],
+    "violations": [],
+    "unverified": [],
+    "unexplained": [
+      {
+        "region": "lmc.disk.read_a",
+        "count": 6,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "lmc.disk.read_a",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 4,
+            "nativeCalls": 86,
+            "apis": {
+              "pthread_mutex_lock": 81,
+              "pthread_cond_wait": 2,
+              "pthread_cond_timedwait": 3
+            },
+            "ready": 780,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 26
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 24
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 24
+              }
+            ],
+            "otherCallerCalls": 12
+          },
+          {
+            "region": "lmc.disk.read_a",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 12,
+            "nativeCalls": 72,
+            "apis": {
+              "pthread_mutex_lock": 72
+            },
+            "ready": 1786,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 24
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 24
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 24
+              }
+            ],
+            "otherCallerCalls": 0
+          },
+          {
+            "region": "lmc.disk.read_a",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 20,
+            "nativeCalls": 72,
+            "apis": {
+              "pthread_mutex_lock": 72
+            },
+            "ready": 2796,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 24
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 24
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 24
+              }
+            ],
+            "otherCallerCalls": 0
+          }
+        ]
+      },
+      {
+        "region": "lmc.disk.read_b",
+        "count": 6,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "lmc.disk.read_b",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 6,
+            "nativeCalls": 18,
+            "apis": {
+              "pthread_mutex_lock": 18
+            },
+            "ready": 996,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 6
+              }
+            ],
+            "otherCallerCalls": 0
+          },
+          {
+            "region": "lmc.disk.read_b",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 14,
+            "nativeCalls": 18,
+            "apis": {
+              "pthread_mutex_lock": 18
+            },
+            "ready": 2006,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 6
+              }
+            ],
+            "otherCallerCalls": 0
+          },
+          {
+            "region": "lmc.disk.read_b",
+            "group": "0:13",
+            "thread": "24",
+            "invocation": 22,
+            "nativeCalls": 18,
+            "apis": {
+              "pthread_mutex_lock": 18
+            },
+            "ready": 3024,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 6
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080305",
+                "calls": 6
+              }
+            ],
+            "otherCallerCalls": 0
+          }
+        ]
+      },
+      {
+        "region": "lmc.prefetch.consume_b",
+        "count": 6,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "lmc.prefetch.consume_b",
+            "group": "0:13",
+            "thread": "13",
+            "invocation": 3,
+            "nativeCalls": 18,
+            "apis": {
+              "pthread_mutex_lock": 12,
+              "pthread_cond_timedwait": 5,
+              "sem_clockwait": 1
+            },
+            "ready": 1074,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_cond_timedwait",
+                "module": "python3.12",
+                "offset": "2080722",
+                "calls": 5
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 3
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081041",
+                "calls": 3
+              }
+            ],
+            "otherCallerCalls": 7
+          },
+          {
+            "region": "lmc.prefetch.consume_b",
+            "group": "0:13",
+            "thread": "13",
+            "invocation": 11,
+            "nativeCalls": 5,
+            "apis": {
+              "pthread_mutex_lock": 3,
+              "sem_clockwait": 1,
+              "pthread_cond_timedwait": 1
+            },
+            "ready": 2084,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 1
+              },
+              {
+                "api": "sem_clockwait",
+                "module": "python3.12",
+                "offset": "2163662",
+                "calls": 1
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 1
+              }
+            ],
+            "otherCallerCalls": 2
+          },
+          {
+            "region": "lmc.prefetch.consume_b",
+            "group": "0:13",
+            "thread": "13",
+            "invocation": 19,
+            "nativeCalls": 5,
+            "apis": {
+              "pthread_mutex_lock": 3,
+              "sem_clockwait": 1,
+              "pthread_cond_timedwait": 1
+            },
+            "ready": 3104,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2081387",
+                "calls": 1
+              },
+              {
+                "api": "sem_clockwait",
+                "module": "python3.12",
+                "offset": "2163662",
+                "calls": 1
+              },
+              {
+                "api": "pthread_mutex_lock",
+                "module": "python3.12",
+                "offset": "2080259",
+                "calls": 1
+              }
+            ],
+            "otherCallerCalls": 2
+          }
+        ]
+      }
+    ],
+    "interfaces": [],
+    "nullWaits": [],
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 18,
+      "covered": 0,
+      "uncovered": 18,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 1245,
+      "regions": [
+        {
+          "region": "lmc.disk.read_a",
+          "obligations": 6,
+          "covered": 0,
+          "uncovered": 6,
+          "nativeCalls": 1094,
+          "examples": [
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 4,
+              "nativeCalls": 86,
+              "apis": {
+                "pthread_mutex_lock": 81,
+                "pthread_cond_wait": 2,
+                "pthread_cond_timedwait": 3
+              },
+              "ready": 780,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 26
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 12
+            },
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 12,
+              "nativeCalls": 72,
+              "apis": {
+                "pthread_mutex_lock": 72
+              },
+              "ready": 1786,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 20,
+              "nativeCalls": 72,
+              "apis": {
+                "pthread_mutex_lock": 72
+              },
+              "ready": 2796,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        },
+        {
+          "region": "lmc.disk.read_b",
+          "obligations": 6,
+          "covered": 0,
+          "uncovered": 6,
+          "nativeCalls": 108,
+          "examples": [
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 6,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 996,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 14,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 2006,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 22,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 3024,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        },
+        {
+          "region": "lmc.prefetch.consume_b",
+          "obligations": 6,
+          "covered": 0,
+          "uncovered": 6,
+          "nativeCalls": 43,
+          "examples": [
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 3,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 12,
+                "pthread_cond_timedwait": 5,
+                "sem_clockwait": 1
+              },
+              "ready": 1074,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_cond_timedwait",
+                  "module": "python3.12",
+                  "offset": "2080722",
+                  "calls": 5
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 3
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081041",
+                  "calls": 3
+                }
+              ],
+              "otherCallerCalls": 7
+            },
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 11,
+              "nativeCalls": 5,
+              "apis": {
+                "pthread_mutex_lock": 3,
+                "sem_clockwait": 1,
+                "pthread_cond_timedwait": 1
+              },
+              "ready": 2084,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 1
+                },
+                {
+                  "api": "sem_clockwait",
+                  "module": "python3.12",
+                  "offset": "2163662",
+                  "calls": 1
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 2
+            },
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 19,
+              "nativeCalls": 5,
+              "apis": {
+                "pthread_mutex_lock": 3,
+                "sem_clockwait": 1,
+                "pthread_cond_timedwait": 1
+              },
+              "ready": 3104,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 1
+                },
+                {
+                  "api": "sem_clockwait",
+                  "module": "python3.12",
+                  "offset": "2163662",
+                  "calls": 1
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 2
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    },
+    "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+    "eventPairs": [],
+    "implementationSynchronization": {
+      "calls": 0,
+      "regions": [],
+      "contract": "CPU synchronization called directly by the explicitly excluded native-GX module is emulator implementation evidence, not an application wait obligation. Raw records are retained. CUDA synchronization and all other callers remain in scope."
+    },
+    "nativeResolved": 0,
+    "interfaceChecks": {
+      "status": "unexplained",
+      "claims": [],
+      "unexplained": [
+        {
+          "region": "lmc.disk.read_a",
+          "count": 6,
+          "unit": "region invocations",
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 4,
+              "nativeCalls": 86,
+              "apis": {
+                "pthread_mutex_lock": 81,
+                "pthread_cond_wait": 2,
+                "pthread_cond_timedwait": 3
+              },
+              "ready": 780,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 26
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 12
+            },
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 12,
+              "nativeCalls": 72,
+              "apis": {
+                "pthread_mutex_lock": 72
+              },
+              "ready": 1786,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_a",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 20,
+              "nativeCalls": 72,
+              "apis": {
+                "pthread_mutex_lock": 72
+              },
+              "ready": 2796,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 24
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 24
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ],
+          "producer": "?",
+          "kind": "native-coverage",
+          "reason": "Observed synchronization has no covering checkpoint"
+        },
+        {
+          "region": "lmc.disk.read_b",
+          "count": 6,
+          "unit": "region invocations",
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 6,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 996,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 14,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 2006,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "lmc.disk.read_b",
+              "group": "0:13",
+              "thread": "24",
+              "invocation": 22,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 18
+              },
+              "ready": 3024,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 6
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080305",
+                  "calls": 6
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ],
+          "producer": "?",
+          "kind": "native-coverage",
+          "reason": "Observed synchronization has no covering checkpoint"
+        },
+        {
+          "region": "lmc.prefetch.consume_b",
+          "count": 6,
+          "unit": "region invocations",
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 3,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 12,
+                "pthread_cond_timedwait": 5,
+                "sem_clockwait": 1
+              },
+              "ready": 1074,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_cond_timedwait",
+                  "module": "python3.12",
+                  "offset": "2080722",
+                  "calls": 5
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 3
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081041",
+                  "calls": 3
+                }
+              ],
+              "otherCallerCalls": 7
+            },
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 11,
+              "nativeCalls": 5,
+              "apis": {
+                "pthread_mutex_lock": 3,
+                "sem_clockwait": 1,
+                "pthread_cond_timedwait": 1
+              },
+              "ready": 2084,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 1
+                },
+                {
+                  "api": "sem_clockwait",
+                  "module": "python3.12",
+                  "offset": "2163662",
+                  "calls": 1
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 2
+            },
+            {
+              "region": "lmc.prefetch.consume_b",
+              "group": "0:13",
+              "thread": "13",
+              "invocation": 19,
+              "nativeCalls": 5,
+              "apis": {
+                "pthread_mutex_lock": 3,
+                "sem_clockwait": 1,
+                "pthread_cond_timedwait": 1
+              },
+              "ready": 3104,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2081387",
+                  "calls": 1
+                },
+                {
+                  "api": "sem_clockwait",
+                  "module": "python3.12",
+                  "offset": "2163662",
+                  "calls": 1
+                },
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "python3.12",
+                  "offset": "2080259",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 2
+            }
+          ],
+          "producer": "?",
+          "kind": "native-coverage",
+          "reason": "Observed synchronization has no covering checkpoint"
+        }
+      ],
+      "contract": "Explicit indicators predict completed-wait occurrence per invocation, including zero occurrences; not blocked duration. Markers have no condition argument. Multiplicity is fitted separately on active invocations. Native coverage uses invocation budgets, not inferred object pairing. Only captured executions are checked."
+    }
+  },
+  "executionGraph": {
+    "status": "observed",
+    "root": null,
+    "nodes": [
+      {
+        "id": "capture",
+        "name": "capture",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 529.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {}
+      },
+      {
+        "id": "lmc.disk.read_a",
+        "name": "lmc.disk.read_a",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "chunks"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              55723.19444444518
+            ],
+            "constant": 27772.555555556057,
+            "range": [
+              [
+                4,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {
+          "pthread_mutex_lock": 1089,
+          "<unresolved>": 1094,
+          "pthread_cond_wait": 2,
+          "pthread_cond_timedwait": 3
+        }
+      },
+      {
+        "id": "lmc.disk.read_b",
+        "name": "lmc.disk.read_b",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "chunks"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 58645.83333333335,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {
+          "pthread_mutex_lock": 108,
+          "<unresolved>": 108
+        }
+      },
+      {
+        "id": "lmc.prefetch.consume_a",
+        "name": "lmc.prefetch.consume_a",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "chunks"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              -20.194444444444454
+            ],
+            "constant": 6427.777777777775,
+            "range": [
+              [
+                4,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {}
+      },
+      {
+        "id": "lmc.prefetch.consume_b",
+        "name": "lmc.prefetch.consume_b",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "chunks",
+          "peer_chunks"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0,
+              -169.88888888888877
+            ],
+            "constant": 18205.55555555555,
+            "range": [
+              [
+                1,
+                1
+              ],
+              [
+                4,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {
+          "pthread_mutex_lock": 27,
+          "<unresolved>": 43,
+          "pthread_cond_timedwait": 10,
+          "sem_clockwait": 6
+        }
+      }
+    ],
+    "edges": [
+      {
+        "kind": "sequence",
+        "source": "capture",
+        "target": "lmc.prefetch.consume_b",
+        "context": null,
+        "observations": 1,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.disk.read_a",
+        "target": "lmc.disk.read_b",
+        "context": null,
+        "observations": 6,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.disk.read_b",
+        "target": "lmc.disk.read_a",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.prefetch.consume_a",
+        "target": "lmc.prefetch.consume_b",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.prefetch.consume_b",
+        "target": "lmc.prefetch.consume_a",
+        "context": null,
+        "observations": 6,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      }
+    ],
+    "warnings": [],
+    "sourceRoot": null,
+    "workload": "",
+    "waitCoverage": "observed",
+    "declaredEventsIncluded": true,
+    "eventChecks": {
+      "status": "ordered",
+      "probe": false,
+      "violations": 0,
+      "unverified": 0,
+      "coverage": {
+        "status": "uncovered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 18,
+        "covered": 0,
+        "uncovered": 18,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 1245,
+        "regions": [
+          {
+            "region": "lmc.disk.read_a",
+            "obligations": 6,
+            "covered": 0,
+            "uncovered": 6,
+            "nativeCalls": 1094,
+            "examples": [
+              {
+                "region": "lmc.disk.read_a",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 4,
+                "nativeCalls": 86,
+                "apis": {
+                  "pthread_mutex_lock": 81,
+                  "pthread_cond_wait": 2,
+                  "pthread_cond_timedwait": 3
+                },
+                "ready": 780,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 26
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 24
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 24
+                  }
+                ],
+                "otherCallerCalls": 12
+              },
+              {
+                "region": "lmc.disk.read_a",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 12,
+                "nativeCalls": 72,
+                "apis": {
+                  "pthread_mutex_lock": 72
+                },
+                "ready": 1786,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 24
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 24
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 24
+                  }
+                ],
+                "otherCallerCalls": 0
+              },
+              {
+                "region": "lmc.disk.read_a",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 20,
+                "nativeCalls": 72,
+                "apis": {
+                  "pthread_mutex_lock": 72
+                },
+                "ready": 2796,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 24
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 24
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 24
+                  }
+                ],
+                "otherCallerCalls": 0
+              }
+            ]
+          },
+          {
+            "region": "lmc.disk.read_b",
+            "obligations": 6,
+            "covered": 0,
+            "uncovered": 6,
+            "nativeCalls": 108,
+            "examples": [
+              {
+                "region": "lmc.disk.read_b",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 6,
+                "nativeCalls": 18,
+                "apis": {
+                  "pthread_mutex_lock": 18
+                },
+                "ready": 996,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 6
+                  }
+                ],
+                "otherCallerCalls": 0
+              },
+              {
+                "region": "lmc.disk.read_b",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 14,
+                "nativeCalls": 18,
+                "apis": {
+                  "pthread_mutex_lock": 18
+                },
+                "ready": 2006,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 6
+                  }
+                ],
+                "otherCallerCalls": 0
+              },
+              {
+                "region": "lmc.disk.read_b",
+                "group": "0:13",
+                "thread": "24",
+                "invocation": 22,
+                "nativeCalls": 18,
+                "apis": {
+                  "pthread_mutex_lock": 18
+                },
+                "ready": 3024,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 6
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080305",
+                    "calls": 6
+                  }
+                ],
+                "otherCallerCalls": 0
+              }
+            ]
+          },
+          {
+            "region": "lmc.prefetch.consume_b",
+            "obligations": 6,
+            "covered": 0,
+            "uncovered": 6,
+            "nativeCalls": 43,
+            "examples": [
+              {
+                "region": "lmc.prefetch.consume_b",
+                "group": "0:13",
+                "thread": "13",
+                "invocation": 3,
+                "nativeCalls": 18,
+                "apis": {
+                  "pthread_mutex_lock": 12,
+                  "pthread_cond_timedwait": 5,
+                  "sem_clockwait": 1
+                },
+                "ready": 1074,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_cond_timedwait",
+                    "module": "python3.12",
+                    "offset": "2080722",
+                    "calls": 5
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 3
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081041",
+                    "calls": 3
+                  }
+                ],
+                "otherCallerCalls": 7
+              },
+              {
+                "region": "lmc.prefetch.consume_b",
+                "group": "0:13",
+                "thread": "13",
+                "invocation": 11,
+                "nativeCalls": 5,
+                "apis": {
+                  "pthread_mutex_lock": 3,
+                  "sem_clockwait": 1,
+                  "pthread_cond_timedwait": 1
+                },
+                "ready": 2084,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 1
+                  },
+                  {
+                    "api": "sem_clockwait",
+                    "module": "python3.12",
+                    "offset": "2163662",
+                    "calls": 1
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 1
+                  }
+                ],
+                "otherCallerCalls": 2
+              },
+              {
+                "region": "lmc.prefetch.consume_b",
+                "group": "0:13",
+                "thread": "13",
+                "invocation": 19,
+                "nativeCalls": 5,
+                "apis": {
+                  "pthread_mutex_lock": 3,
+                  "sem_clockwait": 1,
+                  "pthread_cond_timedwait": 1
+                },
+                "ready": 3104,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2081387",
+                    "calls": 1
+                  },
+                  {
+                    "api": "sem_clockwait",
+                    "module": "python3.12",
+                    "offset": "2163662",
+                    "calls": 1
+                  },
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "python3.12",
+                    "offset": "2080259",
+                    "calls": 1
+                  }
+                ],
+                "otherCallerCalls": 2
+              }
+            ]
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "interfaceStatus": "unexplained"
+    },
+    "contract": "Solid edges are observed next-sibling order, not proof of a required dependency. Nesting is separate. Wait edges target completion inside a consumer, not its entry. Only regions are shown; cycles can summarize repeated invocations. Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. Sync-call counts do not establish time blocked. Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. Unmarked work between siblings is not assumed free. No critical-path latency is inferred."
+  },
+  "id": "b1807d53f1b6aeb59d8dd79715a9026cd5005a570174bf2cbb39f39eaa3573db"
+}

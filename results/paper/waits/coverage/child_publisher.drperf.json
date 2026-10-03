@@ -1,0 +1,1441 @@
+{
+  "schema": "drperf.explorer.v1",
+  "title": "child_publisher",
+  "measurement": {
+    "unit": "CPU instructions per call",
+    "scope": "exclusive region work",
+    "markerAdjustment": "marker modules excluded exactly; no wrapper calibration subtraction",
+    "composition": "symbolic direct-child work in composition; no latency or parallelism model",
+    "tolerance": {
+      "absolute": 64.0,
+      "relative": 0.05
+    }
+  },
+  "provenance": {
+    "rawDirectory": "/home/ubuntu/drperf/out/waits/coverage/child_publisher",
+    "sourceRoot": "/home/ubuntu/drperf",
+    "runs": [
+      {
+        "file": "run.3366317.json",
+        "measurement": {
+          "version": "0.3",
+          "pid": 3366317,
+          "app": "coverage",
+          "excluded_cuda_module": "",
+          "follow_unmarked_threads": false,
+          "native_gx": false,
+          "native_gx_hooks": 0,
+          "native_gx_calls": 0,
+          "max_states_per_region": 4096,
+          "max_keys": 65536,
+          "counter_budget_bytes": 103079215104,
+          "counter_bytes": 25165824,
+          "excluded_cuda_exports": 0,
+          "excluded_cuda_calls": 0,
+          "excluded_instructions": 75,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 256,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 1,
+          "waits_enabled": true,
+          "wait_records": 4,
+          "wait_dropped": 0,
+          "wait_hooks": 27,
+          "wait_delay_ms": 0,
+          "wait_delay_injections": 0,
+          "max_wait_records": 100000,
+          "wait_delay_region": "",
+          "wait_delay_kind": "semaphore",
+          "wait_unattributed": {
+            "pthread_mutex_lock": {
+              "kind": "lock",
+              "calls": 1
+            },
+            "pthread_mutex_unlock": {
+              "kind": "unlock",
+              "calls": 1
+            }
+          },
+          "trace_file": "/home/ubuntu/drperf/out/waits/coverage/child_publisher/run.3366317.json.trace",
+          "trace_records": 3,
+          "trace_dropped": 0
+        }
+      }
+    ]
+  },
+  "validity": {
+    "errors": [],
+    "traceErrors": []
+  },
+  "regions": [
+    {
+      "id": "A",
+      "name": "A",
+      "originalName": "A",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 1.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 13.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 13.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 5,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 7.0
+              },
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 6.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 13.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 13.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 5,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 7.0
+              },
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 6.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 13.0,
+          "observed": 13.0
+        }
+      ],
+      "nested": {
+        "B": 1.0
+      },
+      "sources": [
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 52,
+          "endLine": 59,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 91,
+          "endLine": 94,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 124,
+          "endLine": 126,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 129,
+          "endLine": 144,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "B",
+      "originalName": "B",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 80.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 80.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 23,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "___pthread_mutex_lock",
+                "instructions": 37.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "___pthread_mutex_unlock",
+                "instructions": 23.0
+              },
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 12.0
+              },
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 8.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 80.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 80.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 23,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "___pthread_mutex_lock",
+                "instructions": 37.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "___pthread_mutex_unlock",
+                "instructions": 23.0
+              },
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 12.0
+              },
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 8.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 80.0,
+          "observed": 80.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 15,
+          "endLine": 25,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 53,
+          "endLine": 57,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 69,
+          "endLine": 76,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        },
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 113,
+          "endLine": 116,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "capture",
+      "name": "capture",
+      "originalName": "capture",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 4.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 4.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 2,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 2.0
+              },
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 2.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 4.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 4.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 2,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "coverage",
+                "function": "_init",
+                "instructions": 2.0
+              },
+              {
+                "module": "coverage",
+                "function": "main",
+                "instructions": 2.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 4.0,
+          "observed": 4.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "examples/waits/coverage.c",
+          "line": 50,
+          "endLine": 50,
+          "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+          "expressions": {}
+        }
+      ]
+    }
+  ],
+  "relations": [],
+  "discovery": {
+    "truncated": false,
+    "warnings": [],
+    "scope": "discovery disabled or complete trace unavailable"
+  },
+  "composition": {
+    "status": "observed",
+    "scope": "same-thread direct-child instruction work",
+    "basis": "marker-adjusted own interfaces; runtime waiting excluded; wrapper calibration is an estimate",
+    "contract": "Observed calls only. F includes U. U includes descendant unexplained work. N*F denotes N applications of an atomic child interface, not N times a global measured mean. Argument mappings are metadata, not prerequisites for child multipliers. Own cost fits and U tables are per-state means across callers. No prediction of per-invocation inclusive counts or latency.",
+    "regions": [
+      {
+        "id": "B",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 80.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "A",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 13.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [
+          {
+            "child": "B",
+            "multiplicity": {
+              "coefficients": [
+                "0"
+              ],
+              "constant": "1",
+              "kind": "observed-constant",
+              "dependent": [],
+              "samples": 1
+            },
+            "arguments": {
+              "n": {
+                "coefficients": [
+                  "0"
+                ],
+                "constant": "1",
+                "kind": "observed-constant",
+                "dependent": [],
+                "samples": 1
+              }
+            },
+            "argumentStates": [
+              "n"
+            ],
+            "sequenceArguments": null,
+            "indexVariable": "j",
+            "form": "product",
+            "parentCalls": 1,
+            "childCalls": 1,
+            "includesZeroCallParents": false
+          }
+        ],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {
+              "B": [
+                1,
+                1
+              ]
+            },
+            "children": [
+              {
+                "region": "B",
+                "state": [
+                  1
+                ],
+                "calls": 1
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "capture",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 4.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "trace": {
+    "complete": true,
+    "recordCount": 3,
+    "limit": 50000,
+    "events": [
+      {
+        "group": "0:3366317",
+        "seq": 1,
+        "end": 2,
+        "thread": "3366317",
+        "region": "capture",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:3366317",
+        "seq": 3,
+        "end": 6,
+        "thread": "3366317",
+        "region": "A",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:3366317",
+        "seq": 4,
+        "end": 5,
+        "thread": "3366317",
+        "region": "B",
+        "values": {
+          "n": 1
+        }
+      }
+    ]
+  },
+  "scenarioContract": {
+    "fixed": [
+      "recorded call count",
+      "marker sequence order",
+      "nesting"
+    ],
+    "unknown": [
+      "causality of observed relationships",
+      "unexplained cost at changed states",
+      "new branches or calls",
+      "CPU/GPU latency and overlap"
+    ],
+    "requiresExplicitAssumptions": true
+  },
+  "waits": {
+    "status": "observed",
+    "warnings": [],
+    "pendingCalls": [],
+    "unattributedOperations": {
+      "pthread_mutex_lock": 1
+    },
+    "implementationSynchronization": {
+      "calls": 0,
+      "regions": [],
+      "contract": "CPU synchronization called directly by the explicitly excluded native-GX module is emulator implementation evidence, not an application wait obligation. Raw records are retained. CUDA synchronization and all other callers remain in scope."
+    },
+    "probeRequested": false,
+    "probe": false,
+    "coverage": "Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and native GX internals are not fully observed. Late attach misses earlier operations.",
+    "contract": "Observed operation counts and conservative object-based dependency evidence. API elapsed time and syscall attempts do not establish sleeping or native latency. Matched CUDA producers identify submitted stream work, not CPU completion of the launch region. Stream-prefix matches are partial; unobserved kernels/dependencies can also be required.",
+    "regions": [
+      {
+        "region": "B",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 1,
+        "parentCalls": 1,
+        "states": [
+          "n"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 1
+        },
+        "matched": 0,
+        "unresolved": 1,
+        "potentialSyscalls": 0,
+        "elapsedUs": 508
+      }
+    ],
+    "operations": [],
+    "events": [
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "B",
+        "callerModule": "coverage",
+        "callerOffset": "4943",
+        "tid": 3366317,
+        "regionSeq": 4,
+        "start": 1,
+        "end": 2,
+        "object": "1",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 107,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435318242958888",
+        "endUs": "13435318242958995",
+        "group": "0:3366317",
+        "id": "0:3366317:1"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "A",
+        "callerModule": "coverage",
+        "callerOffset": "4998",
+        "tid": 3366317,
+        "regionSeq": 3,
+        "start": 7,
+        "end": 8,
+        "object": "1",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 49,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435318242960185",
+        "endUs": "13435318242960234",
+        "group": "0:3366317",
+        "id": "0:3366317:7"
+      }
+    ],
+    "evidence": {
+      "format": "drperf.wait-evidence.v1",
+      "path": "child_publisher.drperf.json.waits.7fe9a6589e03a03b.jsonl.gz",
+      "sha256": "7fe9a6589e03a03bc8b21f42422b3194e5f087c0c66456ca16fa287efd377fb5",
+      "bytes": 559,
+      "eventCount": 4,
+      "operationCount": 1,
+      "inlineEventCount": 2,
+      "inlineOperationCount": 0,
+      "scope": "Inline records support display only. Load the complete sidecar before checking event order, missing waits, or native provenance."
+    }
+  },
+  "waitDeclarations": {
+    "version": 1,
+    "claims": [
+      {
+        "id": "wait-0",
+        "region": "A",
+        "event": "1",
+        "producer": "B",
+        "indicator": "True"
+      }
+    ]
+  },
+  "eventModel": {
+    "status": "violation",
+    "probe": false,
+    "probeRequested": false,
+    "edges": [
+      {
+        "event": "1",
+        "generation": "1",
+        "group": "0:3366317",
+        "consumer": "A",
+        "consumerInvocation": 3,
+        "waited": "0:3366317:7",
+        "status": "violation",
+        "producer": "B",
+        "publication": "0:3366317:1",
+        "producerInvocation": 4,
+        "nativeContext": [
+          {
+            "region": "B",
+            "api": "pthread_mutex_lock",
+            "count": 1
+          }
+        ],
+        "coverageCredit": null
+      }
+    ],
+    "violations": [
+      {
+        "event": [
+          "0:3366317",
+          "1",
+          "1"
+        ],
+        "consumer": "A",
+        "producer": "B",
+        "waited": "0:3366317:7",
+        "publication": "0:3366317:1",
+        "reason": "Publisher is the waiter itself or its synchronous descendant; call/return order is not a waited dependency. Use waited(null) with a reason for an event-free refinement."
+      }
+    ],
+    "unverified": [],
+    "unexplained": [
+      {
+        "region": "B",
+        "count": 1,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "B",
+            "group": "0:3366317",
+            "thread": "3366317",
+            "invocation": 4,
+            "nativeCalls": 1,
+            "apis": {
+              "pthread_mutex_lock": 1
+            },
+            "ready": 4,
+            "complete": true,
+            "callers": [
+              {
+                "api": "pthread_mutex_lock",
+                "module": "coverage",
+                "offset": "4951",
+                "calls": 1
+              }
+            ],
+            "otherCallerCalls": 0
+          }
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "region": "A",
+        "event": "1",
+        "states": [
+          "n"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 1
+        },
+        "present": 1,
+        "absent": 0
+      }
+    ],
+    "nullWaits": [],
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 1,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 0,
+          "uncovered": 1,
+          "nativeCalls": 1,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366317",
+              "thread": "3366317",
+              "invocation": 4,
+              "nativeCalls": 1,
+              "apis": {
+                "pthread_mutex_lock": 1
+              },
+              "ready": 4,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "coverage",
+                  "offset": "4951",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    },
+    "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+    "eventPairs": [
+      {
+        "group": "0:3366317",
+        "event": "1",
+        "pairs": [
+          {
+            "producer": "B",
+            "consumer": "A"
+          }
+        ]
+      }
+    ],
+    "implementationSynchronization": {
+      "calls": 0,
+      "regions": [],
+      "contract": "CPU synchronization called directly by the explicitly excluded native-GX module is emulator implementation evidence, not an application wait obligation. Raw records are retained. CUDA synchronization and all other callers remain in scope."
+    },
+    "nativeResolved": 0,
+    "interfaceChecks": {
+      "status": "invalid",
+      "claims": [
+        {
+          "id": "wait-0",
+          "region": "A",
+          "event": "1",
+          "producer": "B",
+          "indicator": "True",
+          "status": "invalid",
+          "present": 1,
+          "absent": 0,
+          "unexpectedPresence": 0,
+          "unexpectedAbsence": 0,
+          "producerMismatches": 0,
+          "invalidDependencies": 1,
+          "unverifiedDependencies": 0,
+          "counterexamples": [],
+          "multiplicity": {
+            "coefficients": [
+              "0"
+            ],
+            "constant": "1",
+            "kind": "observed-constant",
+            "dependent": [],
+            "samples": 1
+          },
+          "multiplicityStates": [
+            "n"
+          ],
+          "prefix": "I[True] * ",
+          "reference": "Wait[B]",
+          "term": "I[True] * Wait[B]"
+        }
+      ],
+      "unexplained": [
+        {
+          "region": "B",
+          "count": 1,
+          "unit": "region invocations",
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366317",
+              "thread": "3366317",
+              "invocation": 4,
+              "nativeCalls": 1,
+              "apis": {
+                "pthread_mutex_lock": 1
+              },
+              "ready": 4,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "coverage",
+                  "offset": "4951",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ],
+          "producer": "?",
+          "kind": "native-coverage",
+          "reason": "Observed synchronization has no covering checkpoint"
+        }
+      ],
+      "contract": "Explicit indicators predict completed-wait occurrence per invocation, including zero occurrences; not blocked duration. Markers have no condition argument. Multiplicity is fitted separately on active invocations. Native coverage uses invocation budgets, not inferred object pairing. Only captured executions are checked."
+    }
+  },
+  "executionGraph": {
+    "status": "observed",
+    "root": null,
+    "nodes": [
+      {
+        "id": "A",
+        "name": "A",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 13.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 52,
+            "endLine": 59,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 91,
+            "endLine": 94,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 124,
+            "endLine": 126,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 129,
+            "endLine": 144,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "B",
+        "name": "B",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 80.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 15,
+            "endLine": 25,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 53,
+            "endLine": 57,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 69,
+            "endLine": 76,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          },
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 113,
+            "endLine": 116,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 1,
+          "<unresolved>": 1
+        }
+      },
+      {
+        "id": "capture",
+        "name": "capture",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 4.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/coverage.c",
+            "line": 50,
+            "endLine": 50,
+            "sha256": "81bc28316070c6990f287dc5d47fa2e047256022aac1351bb0e79063aca3d79a",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      }
+    ],
+    "edges": [
+      {
+        "kind": "contains",
+        "source": "A",
+        "target": "B",
+        "context": "A",
+        "observations": 1,
+        "evidence": [],
+        "states": [
+          "n"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 1
+        },
+        "invocationsChecked": 1
+      },
+      {
+        "kind": "sequence",
+        "source": "capture",
+        "target": "A",
+        "context": null,
+        "observations": 1,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "wait",
+        "source": "A",
+        "target": "B",
+        "context": "A",
+        "observations": 1,
+        "evidence": [
+          {
+            "operation": "0:3366317:7",
+            "producer": "0:3366317:1",
+            "basis": "declared-event",
+            "event": "1",
+            "generation": "1",
+            "status": "violation"
+          }
+        ],
+        "origin": "declared-event",
+        "eventStatus": "violation",
+        "states": [
+          "n"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 1
+        },
+        "invocationsChecked": 1
+      }
+    ],
+    "warnings": [],
+    "sourceRoot": "/home/ubuntu/drperf",
+    "workload": "",
+    "waitCoverage": "observed",
+    "declaredEventsIncluded": true,
+    "eventChecks": {
+      "status": "violation",
+      "probe": false,
+      "violations": 1,
+      "unverified": 0,
+      "coverage": {
+        "status": "uncovered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 1,
+        "covered": 0,
+        "uncovered": 1,
+        "eligibleCredits": 0,
+        "unusedCredits": 0,
+        "nativeCalls": 1,
+        "regions": [
+          {
+            "region": "B",
+            "obligations": 1,
+            "covered": 0,
+            "uncovered": 1,
+            "nativeCalls": 1,
+            "examples": [
+              {
+                "region": "B",
+                "group": "0:3366317",
+                "thread": "3366317",
+                "invocation": 4,
+                "nativeCalls": 1,
+                "apis": {
+                  "pthread_mutex_lock": 1
+                },
+                "ready": 4,
+                "complete": true,
+                "callers": [
+                  {
+                    "api": "pthread_mutex_lock",
+                    "module": "coverage",
+                    "offset": "4951",
+                    "calls": 1
+                  }
+                ],
+                "otherCallerCalls": 0
+              }
+            ]
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      },
+      "interfaceStatus": "invalid"
+    },
+    "contract": "Solid edges are observed next-sibling order, not proof of a required dependency. Nesting is separate. Wait edges target completion inside a consumer, not its entry. Only regions are shown; cycles can summarize repeated invocations. Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. Sync-call counts do not establish time blocked. Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. Unmarked work between siblings is not assumed free. No critical-path latency is inferred."
+  },
+  "id": "1b4a912348d32d5af035013e52d4cd1ee0670a7bc0c6fbb6212111f5edd277cd"
+}

@@ -1,0 +1,489 @@
+{
+  "schema": "causal-video-observable-kernel-audit-v1",
+  "framework": "fastvideo",
+  "observable_inventory_matches": false,
+  "inputs": {
+    "native_db": "out/causal-video/fastvideo-gpu/fastvideo-cpuout-interop1-gpu-final.rank0.pid6105.sqlite",
+    "native_report": "out/causal-video/fastvideo-gpu/cpuout-interop1-gpu-final-report.json",
+    "gx_report": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial-final-1789611575199136097/host-0/model/report.json",
+    "trace": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial-final-1789611575199136097/host-0/kernel_profile_gx/chrome_trace_382.json"
+  },
+  "native_profile_run": {
+    "pid": 6105,
+    "measurement_mode": "isolated_gate"
+  },
+  "native_interval": {
+    "start_host_ns": 5373722056125281,
+    "end_host_ns": 5373738289637230,
+    "pid": 6105
+  },
+  "gx_interval": {
+    "start_host_ns": 9412597755457635,
+    "end_host_ns": 9412627175186701,
+    "pid": 382
+  },
+  "trace_selection": "host create_ts_us within GX measured worker interval; trace task start is not used",
+  "trace_clock": "host_before_adoption_logical_after_adoption",
+  "config_differences": [],
+  "fastvideo_library_identity": {
+    "native_ld_library_path": "/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+    "gx_ld_library_path": "/opt/gx/nccl-payload/lib:/workspace/.gx-cache/57578eede72a11a280159a758842ae354becd8ae8f9ca893acd12f388a531f58/data/dynamorio/lib64/release:/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+    "gx_prefix": "/opt/gx/nccl-payload/lib:/workspace/.gx-cache/57578eede72a11a280159a758842ae354becd8ae8f9ca893acd12f388a531f58/data/dynamorio/lib64/release:",
+    "gx_prefix_removed": true,
+    "normalized_gx_ld_library_path": "/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+    "matching_nonempty_cudnn_dso_hashes": true,
+    "native_cudnn_dso_sha256": {
+      "libcudnn.so.9": "94f44e2e8fb2d4bca8c534b14f03ef84e095376dad72a257fd854377ef0b3427",
+      "libcudnn_adv.so.9": "a0b81bcbf08d179bae332c62218ed907f51f311b5fbd2156f0c0b13a6c1bcf63",
+      "libcudnn_cnn.so.9": "94341125830e58eaa50b908f73f356802c5f66a60a1940efa5f6b427cc6058aa",
+      "libcudnn_engines_precompiled.so.9": "5192b64e6a1c59165716bbe4517b37f0dfdfa349dfbb1772a4ba38a1e83b0b41",
+      "libcudnn_engines_runtime_compiled.so.9": "d6184fc49c8e93c47440de8d63b77f7e7d5ad1e5e223b82608789fe599035d2f",
+      "libcudnn_graph.so.9": "74d0007de32dd07a5a1e7a0e9d2c53cb101ac9bd7b0d5d88b63cc6e7a3691129",
+      "libcudnn_heuristic.so.9": "b7051f52dea857d0c0c612865b058e538d703d35cb4fbfa066e81cbca785fda5",
+      "libcudnn_ops.so.9": "282e3829ea9dd547ab02bd880e68bc96fcf06e5ac50da48b571288502467f372",
+      "libcudnn.so.9.8.0": "72f74476dcdc074b9d56f8c5cf576ceff6a595989832b9b0798478dc48a4ffcd"
+    },
+    "gx_cudnn_dso_sha256": {
+      "libcudnn.so.9": "94f44e2e8fb2d4bca8c534b14f03ef84e095376dad72a257fd854377ef0b3427",
+      "libcudnn_adv.so.9": "a0b81bcbf08d179bae332c62218ed907f51f311b5fbd2156f0c0b13a6c1bcf63",
+      "libcudnn_cnn.so.9": "94341125830e58eaa50b908f73f356802c5f66a60a1940efa5f6b427cc6058aa",
+      "libcudnn_engines_precompiled.so.9": "5192b64e6a1c59165716bbe4517b37f0dfdfa349dfbb1772a4ba38a1e83b0b41",
+      "libcudnn_engines_runtime_compiled.so.9": "d6184fc49c8e93c47440de8d63b77f7e7d5ad1e5e223b82608789fe599035d2f",
+      "libcudnn_graph.so.9": "74d0007de32dd07a5a1e7a0e9d2c53cb101ac9bd7b0d5d88b63cc6e7a3691129",
+      "libcudnn_heuristic.so.9": "b7051f52dea857d0c0c612865b058e538d703d35cb4fbfa066e81cbca785fda5",
+      "libcudnn_ops.so.9": "282e3829ea9dd547ab02bd880e68bc96fcf06e5ac50da48b571288502467f372",
+      "libcudnn.so.9.8.0": "72f74476dcdc074b9d56f8c5cf576ceff6a595989832b9b0798478dc48a4ffcd"
+    }
+  },
+  "source_changes": {},
+  "allowed_source_changes": [],
+  "skipped_native_launches": [],
+  "native_launches": 106333,
+  "gx_launches": 106333,
+  "missing": [
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        1,
+        3,
+        3
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 21
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        37687,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        75373,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        12480,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        49920,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        3120,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        12480,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 20
+    }
+  ],
+  "ambiguous": [],
+  "mismatched_metadata": [],
+  "without_usable_native_samples": [],
+  "prediction_misses_or_errors": [
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        1,
+        3,
+        3
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 21
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        37687,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        75373,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        12480,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        49920,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        3120,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 1
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        12480,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 20
+    }
+  ],
+  "count_differences": [
+    {
+      "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+      "grid": [
+        216,
+        1,
+        1
+      ],
+      "block": [
+        1024,
+        1,
+        1
+      ],
+      "count": 0,
+      "native_count": 21
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        37687,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 6,
+      "native_count": 7
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        75373,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 120,
+      "native_count": 140
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        1,
+        3,
+        3
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 21,
+      "native_count": 0
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        37687,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1,
+      "native_count": 0
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        75373,
+        3,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20,
+      "native_count": 0
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        12480,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 0,
+      "native_count": 1
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        49920,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 0,
+      "native_count": 20
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        12480,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 1,
+      "native_count": 0
+    },
+    {
+      "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+      "grid": [
+        49920,
+        1,
+        1
+      ],
+      "block": [
+        256,
+        1,
+        1
+      ],
+      "count": 20,
+      "native_count": 0
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        1560,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 0,
+      "native_count": 1
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        6240,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 0,
+      "native_count": 20
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        3120,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 1,
+      "native_count": 0
+    },
+    {
+      "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+      "grid": [
+        1,
+        12480,
+        1
+      ],
+      "block": [
+        128,
+        1,
+        1
+      ],
+      "count": 20,
+      "native_count": 0
+    }
+  ],
+  "malformed_trace_events": [],
+  "gx_stream_sequence_sha256": {
+    "0": "4e31d15f65a27d6990113d8f457e1fe3f35b1c5689513cb25b2690628a8b6d26"
+  },
+  "limitations": [
+    "Observable launch metadata only; tensor values and arbitrary kernel arguments are not compared.",
+    "GX regular-kernel trace omits parameter hashes and cluster dimensions.",
+    "Native profile gate and GX measured interval must encompass the same workload; no time scaling is inferred.",
+    "Prediction database samples establish modeled latency availability, not numerical correctness.",
+    "partial_sync uses host enqueue timestamps for this inventory; its reconstructed virtual timeline is a separate clock."
+  ]
+}

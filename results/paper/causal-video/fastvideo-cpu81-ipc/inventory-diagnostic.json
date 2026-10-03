@@ -1,0 +1,58 @@
+{
+  "schema": "fastvideo-cpu-profile-vs-native-inventory-diagnostic-v1",
+  "not_partial_acceptance": true,
+  "native_db": "/home/ubuntu/drperf/out/causal-video/fastvideo-gpu/fastvideo-metadata-cpuout-gpu-01.rank0.pid5793.sqlite",
+  "native_report": "out/causal-video/fastvideo-gpu/metadata-cpuout-gpu-report.json",
+  "gx_cpu_profile_trace": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-cpu81-ipc-1789610640997916465/host-0/kernel_profile_gx/chrome_trace_339.json",
+  "native_launches": 106333,
+  "gx_cpu_profile_launches": 106333,
+  "projected_native_signatures": 396,
+  "projected_gx_signatures": 396,
+  "gx_prediction_status": {
+    "disabled": 106333
+  },
+  "config_differences": [
+    "worker.torch_interop_threads",
+    "environment.LD_LIBRARY_PATH"
+  ],
+  "source_changes": {},
+  "native_skipped_launches": 0,
+  "missing_gx_signatures": 21,
+  "ambiguous_launches": 0,
+  "metadata_mismatches": 0,
+  "without_usable_native_samples": 0,
+  "count_difference_signatures": 2,
+  "count_difference_abs_launches": 42,
+  "count_difference_examples": [
+    {
+      "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+      "grid": [
+        216,
+        1,
+        1
+      ],
+      "block": [
+        1024,
+        1,
+        1
+      ],
+      "native": 21,
+      "gx": 0
+    },
+    {
+      "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+      "grid": [
+        2045507584,
+        1,
+        1
+      ],
+      "block": [
+        448,
+        1,
+        1
+      ],
+      "native": 0,
+      "gx": 21
+    }
+  ]
+}

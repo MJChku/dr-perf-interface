@@ -1,0 +1,395 @@
+{
+  "rounds": [
+    {
+      "round": 1,
+      "mode": "timing",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "case": "comfyui",
+      "status": "ok",
+      "points": [
+        {
+          "input": {
+            "n": 32,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.1654618750326335,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 32,
+            "shape": 1
+          },
+          "returncode": 0,
+          "wall_seconds": 2.12754180515185,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 32,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.15925865015015,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.5770740509033203,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 1
+          },
+          "returncode": 0,
+          "wall_seconds": 2.136994090862572,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.838151028379798,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "mode": "timing",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "case": "comfyui",
+      "status": "ok",
+      "points": [
+        {
+          "input": {
+            "n": 16,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.13608246576041,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 16,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.136243854649365,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 64,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.2269701110199094,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 64,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.2531253839842975,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 96,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.3551596379838884,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 96,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.505280769895762,
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "mode": "timing",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "case": "comfyui",
+      "status": "ok",
+      "points": [
+        {
+          "input": {
+            "n": 128,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.590826630126685,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 1
+          },
+          "returncode": 0,
+          "wall_seconds": 2.136924286838621,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.834002704359591,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 0
+          },
+          "returncode": 0,
+          "wall_seconds": 2.5769410710781813,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 1
+          },
+          "returncode": 0,
+          "wall_seconds": 2.1283601401373744,
+          "warnings": []
+        },
+        {
+          "input": {
+            "n": 128,
+            "shape": 2
+          },
+          "returncode": 0,
+          "wall_seconds": 2.8340710708871484,
+          "warnings": []
+        }
+      ]
+    }
+  ],
+  "submissions": [
+    {
+      "case": "comfyui",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "round": 0,
+      "claims": [
+        {
+          "id": "closure_volume",
+          "region": "source/comfy_execution/caching.py:CacheKeySetInputSignature.add_keys/get_node_signature/get_ordered_ancestry_internal",
+          "expression": "N=len(node_ids); T = 2*N-1 if shape==1 else N*(N+1)/2; per node r=int(node_id), closure size C(r)=1 if r==0 else (2 if shape==1 else r+1)",
+          "evidence": "Source-only: each new root builds its own ancestry with a fresh order_mapping, then signs root plus every distinct ancestor. Star roots have only source 0; chain and two-link DAG root r have all nodes 0..r. No reuse of ancestor signatures across root keys.",
+          "scope": "Prepared generated prompt, all keys initially absent; shape is workload entry state."
+        },
+        {
+          "id": "weighted_inputs_links",
+          "region": "source/comfy_execution/caching.py:get_ordered_ancestry_internal and get_immediate_node_signature",
+          "expression": "U=sum input counts over all root closures: (3*N-2 if shape==1 else (2*T-N if shape==0 else 3*T-3*N+1)); E=sum linked input counts over root closures: (N-1 if shape==1 else (T-N if shape==0 else 2*T-3*N+1))",
+          "evidence": "Source-only: both ancestry traversal and immediate signatures inspect each closure node input; links incur distinct membership/index operations. Shape 2 shares nodes and must not count exponentially many paths. Each node has one scalar input, plus zero, one or two links.",
+          "scope": "Input dictionaries have 1..3 keys and scalar literals; sorting cost is bounded per node."
+        },
+        {
+          "id": "hashable_structure",
+          "region": "source/comfy_execution/caching.py:to_hashable called from get_node_signature",
+          "expression": "H=N+3*T+3*U+3*E recursive objects; S=N+T+U+E sequence objects; equivalently H=(19*N-12 if shape==1 else (6*N*N+N if shape==0 else 9*N*N-8*N+6))",
+          "evidence": "Source-only: each key contains one outer sequence; each immediate signature contains class and changed flag plus input pairs; scalar input pair contributes three objects, link pair six. Sequence conversion recursively constructs frozensets. H and S distinguish primitive leaves from more expensive sequence processing.",
+          "scope": "No unique IDs, changed=False, scalar numeric values, generated workload only."
+        }
+      ],
+      "source_hashes": {
+        "workload.py": "1c37876d511d102ddd5e07400c223c8c12182700209cfe18be1546cabbb55c19",
+        "bench_support.py": "890512a5e8e6faebce6795d7a4e531b0d1120e47b909b29131b27bda0ff7bed6",
+        "source/comfy_execution/asset_enrichment.py": "1a686107edf687e9d21f35c8652bdb2a29c2b43dcc876250abf47665420bcde2",
+        "source/comfy_execution/validation.py": "1c4ad72a2edd3655c18c65adf7a8785031f84adeef084d6086c5f3785e45e64b",
+        "source/comfy_execution/progress.py": "b77f7821bc6439bca9bcc244a6f67778eeda99698f77ff097912594e990fd6c8",
+        "source/comfy_execution/jobs.py": "cee1191aa6ed913fde8b0556db9afa4f95135bdd910956b8d4bf921a81452085",
+        "source/comfy_execution/utils.py": "f80e6020f8f60754ebf15f194670c12ba57a46458b0c185694d8198e428f7be4",
+        "source/comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+        "source/comfy_execution/graph_utils.py": "dabb3f75952a1398891ed87ad853d4ea9c929f322ce6997d4ea916adbc2f209d",
+        "source/comfy_execution/cache_provider.py": "3261e204d3153b19f0e6b65b638acbd4a1fb40dd935d56c48d3f6fecda65f4c8",
+        "source/comfy_execution/caching.py": "2d322be2f5355726ba3a70a43a516182f92bb072980b4855f2b25d422f17ca28",
+        "source/comfy/comfy_types/__init__.py": "da3601f9bf71f36070985bd835df311a06e1c40dbcc86afd13e63cd84ed3054b",
+        "source/comfy/comfy_types/node_typing.py": "6bc7906a84333a767e137e89efea041b45966cd589f344a28c14116a2484a7f5",
+        "source/comfy/comfy_types/examples/example_nodes.py": "5192aa34ed909eb0d50a57c0fb47e7af011524962d09443172970fc1974d568b"
+      }
+    },
+    {
+      "case": "comfyui",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "round": 1,
+      "claims": [
+        {
+          "id": "closure_volume",
+          "region": "source/comfy_execution/caching.py:CacheKeySetInputSignature.add_keys/get_node_signature/get_ordered_ancestry_internal",
+          "expression": "N=len(node_ids); T = 2*N-1 if shape==1 else N*(N+1)/2; per node r=int(node_id), closure size C(r)=1 if r==0 else (2 if shape==1 else r+1)",
+          "evidence": "Source-only: each new root builds its own ancestry with a fresh order_mapping, then signs root plus every distinct ancestor. Star roots have only source 0; chain and two-link DAG root r have all nodes 0..r. No reuse of ancestor signatures across root keys. Round 1 cProfile exactly matches T: 528/8256 immediate signatures and ancestry calls for n=32/128 in shapes 0 and 2; 63/255 for star.",
+          "scope": "Prepared generated prompt, all keys initially absent; shape is workload entry state."
+        },
+        {
+          "id": "weighted_inputs_links",
+          "region": "source/comfy_execution/caching.py:get_ordered_ancestry_internal and get_immediate_node_signature",
+          "expression": "U=sum input counts over all root closures: (3*N-2 if shape==1 else (2*T-N if shape==0 else 3*T-3*N+1)); E=sum linked input counts over root closures: (N-1 if shape==1 else (T-N if shape==0 else 2*T-3*N+1))",
+          "evidence": "Source-only: both ancestry traversal and immediate signatures inspect each closure node input; links incur distinct membership/index operations. Shape 2 shares nodes and must not count exponentially many paths. Each node has one scalar input, plus zero, one or two links. At matched n=128 the two-link graph keeps T=8256 but increases immediate-signature cumulative time from 0.0539s to 0.0663s and ancestry time from 0.0441s to 0.0527s.",
+          "scope": "Input dictionaries have 1..3 keys and scalar literals; sorting cost is bounded per node."
+        },
+        {
+          "id": "hashable_structure",
+          "region": "source/comfy_execution/caching.py:to_hashable called from get_node_signature",
+          "expression": "H=N+3*T+3*U+3*E recursive objects; S=N+T+U+E sequence objects; equivalently H=(19*N-12 if shape==1 else (6*N*N+N if shape==0 else 9*N*N-8*N+6))",
+          "evidence": "Source-only: each key contains one outer sequence; each immediate signature contains class and changed flag plus input pairs; scalar input pair contributes three objects, link pair six. Sequence conversion recursively constructs frozensets. H and S distinguish primitive leaves from more expensive sequence processing. Round 1 recursive calls exactly match H: n=32 gives chain 6176, star 596, DAG 8966; n=128 gives 98432, 2420, 146438. Hash conversion dominates region cumulative time (0.414/0.566s chain/DAG at n=128).",
+          "scope": "No unique IDs, changed=False, scalar numeric values, generated workload only.",
+          "uncertainty": "Call counts are exact structural predictions; timing coefficients vary with allocation/GC/runtime effects, so not an exact wall-time law."
+        }
+      ],
+      "source_hashes": {
+        "workload.py": "1c37876d511d102ddd5e07400c223c8c12182700209cfe18be1546cabbb55c19",
+        "bench_support.py": "890512a5e8e6faebce6795d7a4e531b0d1120e47b909b29131b27bda0ff7bed6",
+        "source/comfy_execution/asset_enrichment.py": "1a686107edf687e9d21f35c8652bdb2a29c2b43dcc876250abf47665420bcde2",
+        "source/comfy_execution/validation.py": "1c4ad72a2edd3655c18c65adf7a8785031f84adeef084d6086c5f3785e45e64b",
+        "source/comfy_execution/progress.py": "b77f7821bc6439bca9bcc244a6f67778eeda99698f77ff097912594e990fd6c8",
+        "source/comfy_execution/jobs.py": "cee1191aa6ed913fde8b0556db9afa4f95135bdd910956b8d4bf921a81452085",
+        "source/comfy_execution/utils.py": "f80e6020f8f60754ebf15f194670c12ba57a46458b0c185694d8198e428f7be4",
+        "source/comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+        "source/comfy_execution/graph_utils.py": "dabb3f75952a1398891ed87ad853d4ea9c929f322ce6997d4ea916adbc2f209d",
+        "source/comfy_execution/cache_provider.py": "3261e204d3153b19f0e6b65b638acbd4a1fb40dd935d56c48d3f6fecda65f4c8",
+        "source/comfy_execution/caching.py": "2d322be2f5355726ba3a70a43a516182f92bb072980b4855f2b25d422f17ca28",
+        "source/comfy/comfy_types/__init__.py": "da3601f9bf71f36070985bd835df311a06e1c40dbcc86afd13e63cd84ed3054b",
+        "source/comfy/comfy_types/node_typing.py": "6bc7906a84333a767e137e89efea041b45966cd589f344a28c14116a2484a7f5",
+        "source/comfy/comfy_types/examples/example_nodes.py": "5192aa34ed909eb0d50a57c0fb47e7af011524962d09443172970fc1974d568b"
+      }
+    },
+    {
+      "case": "comfyui",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "round": 2,
+      "claims": [
+        {
+          "id": "closure_volume",
+          "region": "source/comfy_execution/caching.py:CacheKeySetInputSignature.add_keys/get_node_signature/get_ordered_ancestry_internal",
+          "expression": "N=len(node_ids); T = 2*N-1 if shape==1 else N*(N+1)/2; per node r=int(node_id), closure size C(r)=1 if r==0 else (2 if shape==1 else r+1)",
+          "evidence": "Source-only: each new root builds its own ancestry with a fresh order_mapping, then signs root plus every distinct ancestor. Star roots have only source 0; chain and two-link DAG root r have all nodes 0..r. No reuse of ancestor signatures across root keys. Round 1 cProfile exactly matches T: 528/8256 immediate signatures and ancestry calls for n=32/128 in shapes 0 and 2; 63/255 for star. Round 2 n=16/64/96 matches T=136/2080/4656 for both chain and DAG.",
+          "scope": "Prepared generated prompt, all keys initially absent; shape is workload entry state."
+        },
+        {
+          "id": "weighted_inputs_links",
+          "region": "source/comfy_execution/caching.py:get_ordered_ancestry_internal and get_immediate_node_signature",
+          "expression": "U=sum input counts over all root closures: (3*N-2 if shape==1 else (2*T-N if shape==0 else 3*T-3*N+1)); E=sum linked input counts over root closures: (N-1 if shape==1 else (T-N if shape==0 else 2*T-3*N+1))",
+          "evidence": "Source-only: both ancestry traversal and immediate signatures inspect each closure node input; links incur distinct membership/index operations. Shape 2 shares nodes and must not count exponentially many paths. Each node has one scalar input, plus zero, one or two links. At matched n=128 the two-link graph keeps T=8256 but increases immediate-signature cumulative time from 0.0539s to 0.0663s and ancestry time from 0.0441s to 0.0527s.",
+          "scope": "Input dictionaries have 1..3 keys and scalar literals; sorting cost is bounded per node."
+        },
+        {
+          "id": "hashable_structure",
+          "region": "source/comfy_execution/caching.py:to_hashable called from get_node_signature",
+          "expression": "H=N+3*T+3*U+3*E recursive objects; S=N+T+U+E sequence objects; equivalently H=(19*N-12 if shape==1 else (6*N*N+N if shape==0 else 9*N*N-8*N+6)) At the outer to_hashable entry, q_v=len(signature_v)-2 and e_v=count of input pairs whose value is an ANCESTOR tuple: H_key=1+sum_v(3+3*q_v+3*e_v), S_key=1+sum_v(1+q_v+e_v). These count entry structure without executing conversion.",
+          "evidence": "Source-only: each key contains one outer sequence; each immediate signature contains class and changed flag plus input pairs; scalar input pair contributes three objects, link pair six. Sequence conversion recursively constructs frozensets. H and S distinguish primitive leaves from more expensive sequence processing. Round 1 recursive calls exactly match H: n=32 gives chain 6176, star 596, DAG 8966; n=128 gives 98432, 2420, 146438. Hash conversion dominates region cumulative time (0.414/0.566s chain/DAG at n=128). Round 2 matches H at n=16/64/96: chain 1552/24640/55392 and DAG 2182/36358/82182. Conversion cumulative times were 0.00495/0.12744/0.21764s chain and 0.00675/0.16381/0.29994s DAG.",
+          "scope": "No unique IDs, changed=False, scalar numeric values, generated workload only.",
+          "uncertainty": "Call counts are exact structural predictions; timing coefficients vary with allocation/GC/runtime effects, so not an exact wall-time law."
+        }
+      ],
+      "source_hashes": {
+        "workload.py": "1c37876d511d102ddd5e07400c223c8c12182700209cfe18be1546cabbb55c19",
+        "bench_support.py": "890512a5e8e6faebce6795d7a4e531b0d1120e47b909b29131b27bda0ff7bed6",
+        "source/comfy_execution/asset_enrichment.py": "1a686107edf687e9d21f35c8652bdb2a29c2b43dcc876250abf47665420bcde2",
+        "source/comfy_execution/validation.py": "1c4ad72a2edd3655c18c65adf7a8785031f84adeef084d6086c5f3785e45e64b",
+        "source/comfy_execution/progress.py": "b77f7821bc6439bca9bcc244a6f67778eeda99698f77ff097912594e990fd6c8",
+        "source/comfy_execution/jobs.py": "cee1191aa6ed913fde8b0556db9afa4f95135bdd910956b8d4bf921a81452085",
+        "source/comfy_execution/utils.py": "f80e6020f8f60754ebf15f194670c12ba57a46458b0c185694d8198e428f7be4",
+        "source/comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+        "source/comfy_execution/graph_utils.py": "dabb3f75952a1398891ed87ad853d4ea9c929f322ce6997d4ea916adbc2f209d",
+        "source/comfy_execution/cache_provider.py": "3261e204d3153b19f0e6b65b638acbd4a1fb40dd935d56c48d3f6fecda65f4c8",
+        "source/comfy_execution/caching.py": "2d322be2f5355726ba3a70a43a516182f92bb072980b4855f2b25d422f17ca28",
+        "source/comfy/comfy_types/__init__.py": "da3601f9bf71f36070985bd835df311a06e1c40dbcc86afd13e63cd84ed3054b",
+        "source/comfy/comfy_types/node_typing.py": "6bc7906a84333a767e137e89efea041b45966cd589f344a28c14116a2484a7f5",
+        "source/comfy/comfy_types/examples/example_nodes.py": "5192aa34ed909eb0d50a57c0fb47e7af011524962d09443172970fc1974d568b"
+      }
+    },
+    {
+      "case": "comfyui",
+      "condition": "timing",
+      "model": "gpt-6.1-sol",
+      "seed": 0,
+      "track": "discovery",
+      "round": 3,
+      "claims": [
+        {
+          "id": "closure_volume",
+          "region": "source/comfy_execution/caching.py:CacheKeySetInputSignature.add_keys/get_node_signature/get_ordered_ancestry_internal",
+          "expression": "N=len(node_ids); T = 2*N-1 if shape==1 else N*(N+1)/2; per node r=int(node_id), closure size C(r)=1 if r==0 else (2 if shape==1 else r+1)",
+          "evidence": "Source-only: each new root builds its own ancestry with a fresh order_mapping, then signs root plus every distinct ancestor. Star roots have only source 0; chain and two-link DAG root r have all nodes 0..r. No reuse of ancestor signatures across root keys. Round 1 cProfile exactly matches T: 528/8256 immediate signatures and ancestry calls for n=32/128 in shapes 0 and 2; 63/255 for star. Round 2 n=16/64/96 matches T=136/2080/4656 for both chain and DAG. Round 3 repeats preserve exact counts at n=128; cache-key cumulative time over three runs is 0.51698..0.51930s chain, 0.01127..0.01141s star, and 0.69163..0.69612s DAG.",
+          "scope": "Prepared generated prompt, all keys initially absent; shape is workload entry state."
+        },
+        {
+          "id": "weighted_inputs_links",
+          "region": "source/comfy_execution/caching.py:get_ordered_ancestry_internal and get_immediate_node_signature",
+          "expression": "U=sum input counts over all root closures: (3*N-2 if shape==1 else (2*T-N if shape==0 else 3*T-3*N+1)); E=sum linked input counts over root closures: (N-1 if shape==1 else (T-N if shape==0 else 2*T-3*N+1)) At immediate-signature entry: q=len(dynprompt.get_node(node_id)[\"inputs\"]), e=count of linked input values. For each root r, U_r=(1 if r==0 else (3 if shape==1 else (2*r+1 if shape==0 else 3*r))); E_r=(0 if r==0 else (1 if shape==1 else (r if shape==0 else 2*r-1))).",
+          "evidence": "Source-only: both ancestry traversal and immediate signatures inspect each closure node input; links incur distinct membership/index operations. Shape 2 shares nodes and must not count exponentially many paths. Each node has one scalar input, plus zero, one or two links. At matched n=128 the two-link graph keeps T=8256 but increases immediate-signature cumulative time from 0.0539s to 0.0663s and ancestry time from 0.0441s to 0.0527s.",
+          "scope": "Input dictionaries have 1..3 keys and scalar literals; sorting cost is bounded per node."
+        },
+        {
+          "id": "hashable_structure",
+          "region": "source/comfy_execution/caching.py:to_hashable called from get_node_signature",
+          "expression": "H=N+3*T+3*U+3*E recursive objects; S=N+T+U+E sequence objects; equivalently H=(19*N-12 if shape==1 else (6*N*N+N if shape==0 else 9*N*N-8*N+6)) At the outer to_hashable entry, q_v=len(signature_v)-2 and e_v=count of input pairs whose value is an ANCESTOR tuple: H_key=1+sum_v(3+3*q_v+3*e_v), S_key=1+sum_v(1+q_v+e_v). These count entry structure without executing conversion.",
+          "evidence": "Source-only: each key contains one outer sequence; each immediate signature contains class and changed flag plus input pairs; scalar input pair contributes three objects, link pair six. Sequence conversion recursively constructs frozensets. H and S distinguish primitive leaves from more expensive sequence processing. Round 1 recursive calls exactly match H: n=32 gives chain 6176, star 596, DAG 8966; n=128 gives 98432, 2420, 146438. Hash conversion dominates region cumulative time (0.414/0.566s chain/DAG at n=128). Round 2 matches H at n=16/64/96: chain 1552/24640/55392 and DAG 2182/36358/82182. Conversion cumulative times were 0.00495/0.12744/0.21764s chain and 0.00675/0.16381/0.29994s DAG. Round 3 repeats preserve exact H; to_hashable cumulative time at n=128 is 0.41238..0.41413s chain, 0.00789..0.00798s star, and 0.56482..0.56786s DAG.",
+          "scope": "No unique IDs, changed=False, scalar numeric values, generated workload only.",
+          "uncertainty": "Call counts are exact structural predictions; timing coefficients vary with allocation/GC/runtime effects, so not an exact wall-time law."
+        }
+      ],
+      "source_hashes": {
+        "workload.py": "1c37876d511d102ddd5e07400c223c8c12182700209cfe18be1546cabbb55c19",
+        "bench_support.py": "890512a5e8e6faebce6795d7a4e531b0d1120e47b909b29131b27bda0ff7bed6",
+        "source/comfy_execution/asset_enrichment.py": "1a686107edf687e9d21f35c8652bdb2a29c2b43dcc876250abf47665420bcde2",
+        "source/comfy_execution/validation.py": "1c4ad72a2edd3655c18c65adf7a8785031f84adeef084d6086c5f3785e45e64b",
+        "source/comfy_execution/progress.py": "b77f7821bc6439bca9bcc244a6f67778eeda99698f77ff097912594e990fd6c8",
+        "source/comfy_execution/jobs.py": "cee1191aa6ed913fde8b0556db9afa4f95135bdd910956b8d4bf921a81452085",
+        "source/comfy_execution/utils.py": "f80e6020f8f60754ebf15f194670c12ba57a46458b0c185694d8198e428f7be4",
+        "source/comfy_execution/graph.py": "bb602b45f396a3ca666d2e50af4d4cf542819c427b39ee93f2b4c816cc74d3fa",
+        "source/comfy_execution/graph_utils.py": "dabb3f75952a1398891ed87ad853d4ea9c929f322ce6997d4ea916adbc2f209d",
+        "source/comfy_execution/cache_provider.py": "3261e204d3153b19f0e6b65b638acbd4a1fb40dd935d56c48d3f6fecda65f4c8",
+        "source/comfy_execution/caching.py": "2d322be2f5355726ba3a70a43a516182f92bb072980b4855f2b25d422f17ca28",
+        "source/comfy/comfy_types/__init__.py": "da3601f9bf71f36070985bd835df311a06e1c40dbcc86afd13e63cd84ed3054b",
+        "source/comfy/comfy_types/node_typing.py": "6bc7906a84333a767e137e89efea041b45966cd589f344a28c14116a2484a7f5",
+        "source/comfy/comfy_types/examples/example_nodes.py": "5192aa34ed909eb0d50a57c0fb47e7af011524962d09443172970fc1974d568b"
+      }
+    }
+  ]
+}

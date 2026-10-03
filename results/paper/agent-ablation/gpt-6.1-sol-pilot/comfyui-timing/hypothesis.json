@@ -1,0 +1,28 @@
+{
+  "claims": [
+    {
+      "id": "closure_volume",
+      "region": "source/comfy_execution/caching.py:CacheKeySetInputSignature.add_keys/get_node_signature/get_ordered_ancestry_internal",
+      "expression": "N=len(node_ids); T = 2*N-1 if shape==1 else N*(N+1)/2; per node r=int(node_id), closure size C(r)=1 if r==0 else (2 if shape==1 else r+1)",
+      "evidence": "Source-only: each new root builds its own ancestry with a fresh order_mapping, then signs root plus every distinct ancestor. Star roots have only source 0; chain and two-link DAG root r have all nodes 0..r. No reuse of ancestor signatures across root keys. Round 1 cProfile exactly matches T: 528/8256 immediate signatures and ancestry calls for n=32/128 in shapes 0 and 2; 63/255 for star. Round 2 n=16/64/96 matches T=136/2080/4656 for both chain and DAG. Round 3 repeats preserve exact counts at n=128; cache-key cumulative time over three runs is 0.51698..0.51930s chain, 0.01127..0.01141s star, and 0.69163..0.69612s DAG.",
+      "scope": "Prepared generated prompt, all keys initially absent; shape is workload entry state."
+    },
+    {
+      "id": "weighted_inputs_links",
+      "region": "source/comfy_execution/caching.py:get_ordered_ancestry_internal and get_immediate_node_signature",
+      "expression": "U=sum input counts over all root closures: (3*N-2 if shape==1 else (2*T-N if shape==0 else 3*T-3*N+1)); E=sum linked input counts over root closures: (N-1 if shape==1 else (T-N if shape==0 else 2*T-3*N+1)) At immediate-signature entry: q=len(dynprompt.get_node(node_id)[\"inputs\"]), e=count of linked input values. For each root r, U_r=(1 if r==0 else (3 if shape==1 else (2*r+1 if shape==0 else 3*r))); E_r=(0 if r==0 else (1 if shape==1 else (r if shape==0 else 2*r-1))).",
+      "evidence": "Source-only: both ancestry traversal and immediate signatures inspect each closure node input; links incur distinct membership/index operations. Shape 2 shares nodes and must not count exponentially many paths. Each node has one scalar input, plus zero, one or two links. At matched n=128 the two-link graph keeps T=8256 but increases immediate-signature cumulative time from 0.0539s to 0.0663s and ancestry time from 0.0441s to 0.0527s.",
+      "scope": "Input dictionaries have 1..3 keys and scalar literals; sorting cost is bounded per node."
+    },
+    {
+      "id": "hashable_structure",
+      "region": "source/comfy_execution/caching.py:to_hashable called from get_node_signature",
+      "expression": "H=N+3*T+3*U+3*E recursive objects; S=N+T+U+E sequence objects; equivalently H=(19*N-12 if shape==1 else (6*N*N+N if shape==0 else 9*N*N-8*N+6)) At the outer to_hashable entry, q_v=len(signature_v)-2 and e_v=count of input pairs whose value is an ANCESTOR tuple: H_key=1+sum_v(3+3*q_v+3*e_v), S_key=1+sum_v(1+q_v+e_v). These count entry structure without executing conversion.",
+      "evidence": "Source-only: each key contains one outer sequence; each immediate signature contains class and changed flag plus input pairs; scalar input pair contributes three objects, link pair six. Sequence conversion recursively constructs frozensets. H and S distinguish primitive leaves from more expensive sequence processing. Round 1 recursive calls exactly match H: n=32 gives chain 6176, star 596, DAG 8966; n=128 gives 98432, 2420, 146438. Hash conversion dominates region cumulative time (0.414/0.566s chain/DAG at n=128). Round 2 matches H at n=16/64/96: chain 1552/24640/55392 and DAG 2182/36358/82182. Conversion cumulative times were 0.00495/0.12744/0.21764s chain and 0.00675/0.16381/0.29994s DAG. Round 3 repeats preserve exact H; to_hashable cumulative time at n=128 is 0.41238..0.41413s chain, 0.00789..0.00798s star, and 0.56482..0.56786s DAG.",
+      "scope": "No unique IDs, changed=False, scalar numeric values, generated workload only.",
+      "uncertainty": "Call counts are exact structural predictions; timing coefficients vary with allocation/GC/runtime effects, so not an exact wall-time law."
+    }
+  ],
+  "experiment": "Complete: source-only round-0 submission and three timing rounds, six processes each; all 18 processes succeeded.",
+  "entry_state_note": "At add_keys, N=len(node_ids), and shape is recoverable from self.dynprompt.original_prompt: any y link identifies shape 2; otherwise, for N>2, node 2 x links to 0 for star and 1 for chain. At N=2 the formulas coincide. At get_node_signature, r=int(node_id) and the same prompt identify local closure sizes. All formulas are scoped to this prepared prompt family, not arbitrary workflows."
+}

@@ -1,0 +1,100 @@
+{
+  "claims": [
+    {
+      "id": "text-length",
+      "region": "admission.tokenize",
+      "expression": "chars = len(prompt['prompt'])",
+      "evidence": "BaseRenderer._tokenize_prompt passes the text to the tokenizer and copies resulting input IDs; with fixed repeated ASCII sentence, encoding and output size grow with characters.",
+      "scope": "Fixed OPT tokenizer and repeated ASCII sentence. Predict affine growth in characters plus fixed overhead.",
+      "uncertainty": "General text can have different UTF-8 size, BPE segmentation, cache state and token count at equal character length; character count alone need not explain those.",
+      "outcome": "partially_supported",
+      "measurement_evidence": "Within fixed ASCII workload tokenization grows with chars (90 chars ~0.481M, 2970 ~8.956M mean own instructions in point-01); first 45-char call ~0.991M vs repeated ~0.340M exposes missing cold state."
+    },
+    {
+      "id": "token-validation",
+      "region": "admission.validate",
+      "expression": "tokens = len(prompt_input.get('prompt_token_ids') or [])",
+      "evidence": "InputProcessor._validate_model_input performs both max(prompt_ids) and min(prompt_ids). Other successful decoder-only checks are fixed work.",
+      "scope": "Nonempty text-token input, fixed tokenizer/model, valid IDs. Predict affine instructions in token count.",
+      "uncertainty": "Embeddings, multimodal loops, exceptions and tokenizer vocabulary initialization are outside the expression's scope.",
+      "outcome": "supported_in_scope",
+      "measurement_evidence": "point-01 tokens42,252,662 have mean own instructions26370,92630,222109; point-02 agrees closely. Rough slope314 own instructions/token with fixed overhead. This dependency was predicted before measurement."
+    },
+    {
+      "id": "output-init",
+      "region": "admission.output_init",
+      "expression": "tokens = len(request.prompt_token_ids or [])",
+      "evidence": "OutputProcessor.add_request creates RequestState and an incremental detokenizer; FastIncrementalDetokenizer constructs DecodeStream(ids=request.prompt_token_ids), slow variant converts prompt IDs and extends a list.",
+      "scope": "New ordinary sampling requests, fixed detokenizer implementation and sampling options. Predict fixed plus token-length work; no growth with requested max_tokens value.",
+      "uncertainty": "Native DecodeStream implementation may only retain or partially process IDs; exact slope is uncertain. Existing request/streaming updates use a different branch.",
+      "outcome": "partially_supported",
+      "measurement_evidence": "Own work grows in substantial part with prompt tokens, e.g. tokens42 ~41.8K and252 ~67.8K, but302 ~102.4K and662 ~129.8K with equal-state variation; affine sufficiency unestablished. Token dependency was predicted."
+    },
+    {
+      "id": "core-init",
+      "region": "admission.core_init",
+      "expression": "tokens = len(request.prompt_token_ids or [])",
+      "evidence": "EngineCore.preprocess_add_request builds Request; Request copies prompt_token_ids to _all_token_ids and calls block hashing.",
+      "scope": "Text-only sampling requests, no structured output or LoRA. Predict token-copy work plus symbolic admission.hash_blocks cost.",
+      "uncertainty": "Allocator variation and native initialization are not independently modeled.",
+      "outcome": "partially_supported",
+      "measurement_evidence": "Source token-copy dependency remains; own means are nonmonotonic (252tokens96.6K,302tokens74.4K), so token count plus constant does not fully explain own work. Child hashing explains additional inclusive growth."
+    },
+    {
+      "id": "block-hash",
+      "region": "admission.hash_blocks",
+      "expression": "new_blocks = max(0, request.num_tokens // hash_block_size - len(request.block_hashes)); hashed_tokens = new_blocks * hash_block_size",
+      "evidence": "request_block_hasher iterates only newly complete hash blocks, slicing hash_block_size token IDs and hashing each block chained to the preceding hash.",
+      "scope": "Fixed hash algorithm, no multimodal/LoRA/embeddings. Predict fixed plus per-new-block and per-hashed-token CPU work; tail tokens below a complete block should not add hashing work.",
+      "uncertainty": "With fixed hash block size new_blocks and hashed_tokens are collinear, so their individual coefficients cannot be identified. Hash algorithm/content, salt and extra keys can change work. Function may also execute after admission for generated tokens; those invocations will be identified as out of admission scope.",
+      "outcome": "supported_in_scope",
+      "measurement_evidence": "Admission child observations new_blocks0..5 and hashed_tokens0..640 have point-01 mean own instructions1.827K,46.819K,88.906K,132.769K,176.645K,221.097K. Growth with complete blocks was already predicted. Two variables remain collinear."
+    },
+    {
+      "id": "admit-total",
+      "region": "admission.request",
+      "expression": "tokens = len(prompt.get('prompt_token_ids') or []); outputs = params.n; max_tokens = params.max_tokens or 0; resident = len(self.output_processor.request_states)",
+      "evidence": "LLMEngine.add_request validates and clones parameters, initializes output state and core request; fanout loops over params.n. Requested max_tokens is copied rather than iterated over; state maps use keyed operations.",
+      "scope": "Prepared decoder-only EngineInput, n=1 in workload. Predict fixed own overhead plus symbolic validation/output/core children; max_tokens and resident should not cause linear bulk scanning at admission.",
+      "uncertainty": "n fanout is untested by supported workload; dictionary resizing can cause discontinuities. Child work can depend on token count. Repeated passes may change caches or allocator states without changing these PCVs.",
+      "outcome": "partially_supported",
+      "measurement_evidence": "Warm own cost stays near0.48M across resident0..15 and max_tokens1 vs4. First entry has48.7M versus0.492M repeated at exactly same declared state: completeness of original own interface contradicted. Fanout untested; no independently established resident coefficient."
+    }
+  ],
+  "experiment": "One round with configurations reqs=4 passes=4,4 max_tokens=1; reqs=16 passes=16,16 max_tokens=1; reqs=16 passes=16,16 max_tokens=4. Prompt length varies within each config; request count and output budget change independently between configs. Repeated passes expose cold/warm variation. No inference region is marked.",
+  "cost_metric": "CPU instructions, not elapsed time",
+  "revised_candidates": [
+    {
+      "id": "plugin-loader-cold",
+      "region": "admission.request",
+      "expression": "int(cached_load_custom_logitsprocs.cache_info().currsize == 0)",
+      "evidence": "SamplingParams.verify -> _validate_logits_processors -> validate_logits_processors_parameters calls cached_load_custom_logitsprocs(None). The lru_cache loader calls importlib.metadata.entry_points(group=LOGITSPROCS_GROUP), which scans installed plugin metadata. Engine initialization calls uncached _load_custom_logitsprocs, leaving this request validation cache unfilled.",
+      "scope": "Fixed model_config.logits_processors=None, single process, cache not otherwise populated or cleared. currsize is an existing cache-state query at region entry; no region is replayed.",
+      "uncertainty": "Unverified causal attribution: this cache PCV was not recorded in round01. A second experiment recording cache state or separating validation/plugin discovery would be needed to establish how much first-call work it explains. With arbitrary cache keys currsize==0 does not detect all misses."
+    }
+  ],
+  "limitations": [
+    "No additional rounds performed. No optimization. CPU instruction work only; elapsed workload times include inference and instrumentation.",
+    "Character/token size and request index are coupled by fixed prompt ordering; resident size and token length are not independently varied. Hash block size fixed128, n fixed1, no model/Unicode/LoRA/multimodal changes.",
+    "Hash helper is additionally invoked during generation; raw rows with empty parent are outside admission and excluded from admission conclusions.",
+    "Reported slopes and means from saved raw counters are descriptive, not final fitted coefficients; equal-state min/max variation is retained in evidence.csv."
+  ],
+  "consolidated_feedback": {
+    "status": "ok",
+    "regions": 6,
+    "admission_calls": 72,
+    "formulas": {
+      "admission.validate": "316*tokens + 13042; <1% own residual",
+      "admission.hash_blocks": "41170*new_blocks + 6600; 2% own residual",
+      "admission.output_init": "124*tokens + 32185; 25% own residual",
+      "admission.core_init": "9*tokens + 60436 + F[admission.hash_blocks]; 24% own residual",
+      "admission.request": "97% own residual; fixed-state cold/warm difference directly observed",
+      "admission.tokenize": "two character-size regimes; 28-33% own residual"
+    },
+    "wait_status": "unexplained; no wait claims",
+    "coverage_note": "Alias _admission_region unrecognized by lexical scanner; six regions recorded at runtime",
+    "report": "measurements/round-01/report.txt",
+    "profile": "measurements/round-01/profile.drperf.json",
+    "evidence": "evidence.csv"
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "status": "completed-development-pilot",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "medium",
+  "trial_id": 0,
+  "sessions": [
+    {
+      "case": "sqlglot",
+      "arm": "drperf",
+      "agent": "pilot61_sqlglot_drperf",
+      "started_at": "2026-10-02T09:14:12.644606+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:24:44.366676+00:00",
+      "artifacts": {
+        "path": "sqlglot-drperf",
+        "archive_sha256": "88af05b38efd908dba4a1ecdc1e6aab50169dc6f79c5a0ebff9463bbda08ae59",
+        "archive_bytes": 9352417,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 3,
+      "launches": 18,
+      "measurement_process_wall_seconds": 56.78488773945719,
+      "successful_launches": 18
+    },
+    {
+      "case": "sqlglot",
+      "arm": "timing",
+      "agent": "pilot61_sqlglot_timing",
+      "started_at": "2026-10-02T09:24:44.366676+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:31:58.738178+00:00",
+      "artifacts": {
+        "path": "sqlglot-timing",
+        "archive_sha256": "cd6e58b529523a1cba3d684fc9735548503f008d2792290ef612ae8f317dc48d",
+        "archive_bytes": 2007851,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 2,
+      "launches": 12,
+      "measurement_process_wall_seconds": 24.671726493164897,
+      "successful_launches": 12
+    },
+    {
+      "case": "libcst",
+      "arm": "drperf",
+      "agent": "pilot61_libcst_drperf",
+      "started_at": "2026-10-02T09:31:58.738178+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:38:04.946765+00:00",
+      "artifacts": {
+        "path": "libcst-drperf",
+        "archive_sha256": "2d549f70a6809edbfa5937443eeb0190607527812bb086f1a2090d1884edd606",
+        "archive_bytes": 3468590,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 3,
+      "launches": 18,
+      "measurement_process_wall_seconds": 51.316812166944146,
+      "successful_launches": 18
+    },
+    {
+      "case": "libcst",
+      "arm": "timing",
+      "agent": "pilot61_libcst_timing",
+      "started_at": "2026-10-02T09:38:04.946765+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:44:12.363819+00:00",
+      "artifacts": {
+        "path": "libcst-timing",
+        "archive_sha256": "34871ea73254a6586abc92d052541c0805aea794c628ede24078f7fb170a22e9",
+        "archive_bytes": 1728749,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 3,
+      "launches": 18,
+      "measurement_process_wall_seconds": 5.726699135266244,
+      "successful_launches": 18
+    },
+    {
+      "case": "comfyui",
+      "arm": "timing",
+      "agent": "pilot61_comfyui_timing",
+      "started_at": "2026-10-02T09:44:12.363819+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:49:10.534684+00:00",
+      "artifacts": {
+        "path": "comfyui-timing",
+        "archive_sha256": "cd8f16dce4f893ecf8e21ac5de3cd560fa7bc817627e6078dbb71c5e4ad8fd1c",
+        "archive_bytes": 5368076,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 3,
+      "launches": 18,
+      "measurement_process_wall_seconds": 42.71846962720156,
+      "successful_launches": 18
+    },
+    {
+      "case": "comfyui",
+      "arm": "drperf",
+      "agent": "pilot61_comfyui_drperf",
+      "started_at": "2026-10-02T09:49:10.534684+00:00",
+      "status": "completed",
+      "finished_at": "2026-10-02T09:58:37.791255+00:00",
+      "artifacts": {
+        "path": "comfyui-drperf",
+        "archive_sha256": "c46a3b2911e04502fb099ee06ba295fca80d980d6723c7c8caa424fe278f431d",
+        "archive_bytes": 11375238,
+        "scope": "Full source and capture evidence except pycache/native binaries/reproducible graphs; native binary hashes are in session.json. Original absolute paths retained as provenance."
+      },
+      "rounds_used": 3,
+      "launches": 18,
+      "measurement_process_wall_seconds": 94.5980737186037,
+      "successful_launches": 18
+    }
+  ],
+  "round_limit": 3,
+  "configurations_per_round": 6,
+  "process_timeout_seconds": 300,
+  "agent_wall_budget_seconds": 900,
+  "wall_limit_enforcement": "Supervisor monitors elapsed time and interrupts at budget; tool calls may finish later.",
+  "agent_token_limit": null,
+  "token_accounting": "Unavailable from collaboration tool; do not claim equal consumed tokens or a token-capped comparison.",
+  "isolation": "Fresh agents with no inherited conversation; filesystem access constrained by instructions, not an OS sandbox. Exploratory development pilot, not a blinded controlled evaluation.",
+  "grading": "Supervisor source-grounded semantic review; not blinded. No held-out execution oracle or optimization phase.",
+  "sessions_completed": 6,
+  "input_envelopes": {
+    "sqlglot": {
+      "n_joins": {
+        "min": 2,
+        "max": 128
+      }
+    },
+    "libcst": {
+      "n_terms": {
+        "min": 2,
+        "max": 256
+      },
+      "shape": {
+        "min": 0,
+        "max": 2
+      }
+    },
+    "comfyui": {
+      "n": {
+        "min": 2,
+        "max": 128
+      },
+      "shape": {
+        "min": 0,
+        "max": 2
+      }
+    }
+  },
+  "tool_snapshot": {
+    "recorded_at": "2026-10-02T09:39:59.986603+00:00",
+    "git_head": "2d3a57732a74c47c4483151780617fa436b71b85",
+    "sha256": {
+      "benchmarks/bench.py": "d271b9f31deadd6899fd9a94df291c8144687dcdd1caa22fdce53309e95c8416",
+      "bin/drperf": "cc4452deaa20e8a6dc75a521bab26b1f28d39da6a1b10678b3f9445e3a2fd12f",
+      "build/libperfmark.so": "5af11fd224a0f8f00c203ff7a0530cae11a1ccbd9864695ca0e2aff2f77c318e",
+      "build/_perfmark.so": "f5ac5592f00d65551d600fad2957c0fe2a97ea2f32d6c1e57514d98be1da9e37",
+      "build/libdrperf.so": "f93c7ac2ac9f3c67654ada3e91d08bb7ab0ca2bbaf957aafe9134c0bb9cba5a6",
+      "lib/event_interfaces.py": "723191722beded4680f0321d9b3660cccd5830e9ef802ab388b16b5fb9441b5a",
+      "lib/runner.py": "f8d4e2a3523ab54952220337993e5039ac8d693bcceaccc655ef3e127844ebff",
+      "lib/report_bundle.py": "7543d60f2b3f325a90a1903a903ff6075b164fe46ac4237c5bb6eb25164a78d8",
+      "lib/waits.py": "1579051d1f6f9b5227382e5685fa24c66053677803d7e70ffcc714da24202107",
+      "lib/derive.py": "e90469f39caa601baf061965422c3935949c4f02c508863a6367678a350ce394",
+      "lib/composition.py": "10200faeec153f7b994fb20f0cd55ecd5ba107d7a65c4fa9e76a0d82dbab7b1e",
+      "lib/report_storage.py": "43a54eb9bf39302fc17aced4953d0fe7cc73d57d092609f9be703877852aef13",
+      "lib/explorer.py": "453578395171563146db05f47f339291e3563712e0a46cdca6409f3f8325fc76",
+      "lib/source_coverage.py": "703c4b37a4380cfb8b5906466895eb5e211be376211967cec8e1ab87e499c411",
+      "lib/markers.py": "5444b3429faa8df50dadf63dcae075e0091a251ce36b7ba331e5992ab8bcb79a",
+      "lib/symcost.py": "be7dd5bdd22ed233dd05b331af33db99933304aaf051253771728bdcdb7f224b",
+      "lib/wait_contracts.py": "26566b3e6973af3bd1d6093b230af70f20047846303e5c9d90bb00272a157f96",
+      "lib/report_query.py": "e02017ff01354d5dd6fbf4da8449ac62eae1bb9f23ad237dc07469f5b0fd0035",
+      "lib/wait_coverage.py": "fc0d3a09e1226a565744ccc8eb93707af8592c8d1fce5dae6eeb26b45ffd5732",
+      "lib/execution.py": "c0de809e7ee28053cd7016404bb677817d7ada1e01fe24525bd35e09e40ee785",
+      "lib/event_model.py": "5c67cc4f2300d9229683d19878bd69c14078463fd195d567793a0d295e7ee4c1",
+      "client/waits.h": "76e7fbf38520d4d1f017310c78f094983e5d3f92b9607ab51d4ebf6ae1f3babb",
+      "client/drperf.c": "f60668413f7c09754738f3b32599618801738c1a876bdccb4b1b661297361c5d",
+      "client/build/CMakeFiles/3.31.9/CompilerIdC/CMakeCCompilerId.c": "60d0dc2f177f0317302cef41d454988d9d49759ad3e011365bd6f6c544dfd126",
+      "perfmark/perfmark.c": "1d475effab4a2561dc258aeb69517001eac599718766b9ae0cf1a990a2a1272e",
+      "perfmark/perfmark.h": "2a51d9abb40c349f0d691342d52303461f5d301a76634441b609de143892c815",
+      "perfmark/attach.c": "23363ae161f120c9f82ffc440877b07ac01f0f21730ec9862e35f4997d778917",
+      "perfmark/python/perfmark.py": "6e016ae24cc44a1e1a71e1a0de9e777a495a5dcd0d8d273ad500138b4793f5a7",
+      "perfmark/python/_perfmark.c": "eeb8f3bd038d5b5641d32f7d34dc4f6d3fef7a8092b6727119acf774480dec13",
+      "perfmark/python/perfmark_asyncio.py": "9dd0883ff46a96d5dc0771e496b62dc77bb4d87a1e161820f87a0eb03621ecd3",
+      "perfmark/python/perfmark_boot.py": "57aeaa5b13cc838a71ebc3bb316cbfce60528584d9495b81b5fb4454acebe6d3"
+    },
+    "note": "Working-tree source hashes, not a claim that the checkout is clean. Recorded during the pilot; no tool implementation was changed during these sessions."
+  },
+  "model_resolution": "Requested gpt-6.1-sol accepted by collaboration.spawn_agent; no more specific serving build or token-usage counter is exposed.",
+  "replay_limits": "Final source and each round source hashes are retained; intermediate edited source contents were not snapshotted by the harness. Raw captures/reports remain available for checking observed fits.",
+  "artifact_sha256": {
+    "prompt.txt": "f91ebc4919e46fb43c56a0f55b19467d05899aca2b55708afb5cfea3a878a740",
+    "README.md": "8c6c5e762e0750fc8d6cdbff13f0206f0cc77f2e28027855555cb2237ddcb8b3",
+    "review.json": "9480b23d52a852b60a1f32d85851dd066e150d18c4dbd4071fe046ba2da7d778",
+    "grading-reference.json": "1d46b7883704cf777b1a3614c4b774a71296dd0423663897b3814e75e9fb9f8a",
+    "comfyui-timing/hypothesis.json": "13d00ab93d5e0166a44391743d98f09d08b0ccaafb11bb90a3eb2819bd920922",
+    "comfyui-timing/evidence.tar.gz": "cd8f16dce4f893ecf8e21ac5de3cd560fa7bc817627e6078dbb71c5e4ad8fd1c",
+    "comfyui-timing/RESULTS.md": "5e8ede51320d9d33fdc65c60cdfb943cb4361a53ddc10fd87bbb935314a1809e",
+    "comfyui-timing/pair.json": "14fd5db6b44ff2f79f10322412c25f237349a06754cb9c2d1ec799f79edc5f4b",
+    "comfyui-timing/history.json": "b76ebc208ca7d3614ef340b5ec1b7fbd10bb86036032f41d7af689a0175b51d8",
+    "comfyui-timing/dependencies.json": "f285f779b55340240648bf673a51fad52c5a64e6a056eda212dcfb2bac0ea02f",
+    "comfyui-timing/session.json": "a86a9ec8a7cb23281c9783bf14278affd10ddcf1de7b6b73a7dd0007fbf07a66",
+    "libcst-drperf/hypothesis.json": "e95894fa8dbc7135596e65b8355a0f962f93d1327a9b7e02e3962c589dd07962",
+    "libcst-drperf/evidence.tar.gz": "2d549f70a6809edbfa5937443eeb0190607527812bb086f1a2090d1884edd606",
+    "libcst-drperf/RESULTS.md": "e266771eb404ec0083d467e6f4e2a212ac3cce7423312aa39784b1d1a342ad23",
+    "libcst-drperf/pair.json": "cf8f908866d25692d41a0aa77d54157791611cea2cbe6dabb57d09e6c234eaeb",
+    "libcst-drperf/history.json": "9d31a9b6e2ffd85296c94e001cf63e047bd3d66861a28f64df430e9c1c0accda",
+    "libcst-drperf/dependencies.json": "d32a74bed14fd3bdc62d068932a62a37a7536da82c215a35835daca6953831fd",
+    "libcst-drperf/session.json": "b0a0e45fa48602d9c13920817c0b88597e2b974153e0fa18ef97fbb2042bb11e",
+    "libcst-drperf/report.txt": "dd591a3b39eab92f7d64c551a7e333c5c751f9db4fd1527039a6f89cc5dc3683",
+    "libcst-drperf/profile.drperf.json": "0f66a1a23a455d067ef269a8f97c77c28154bd5204e71ccfda54a13a008f8d27",
+    "libcst-drperf/profile.drperf.json.waits.e4466a2019c300d6.jsonl.gz": "e4466a2019c300d60a9e6aa4edc821922e6e90468a08087cae0335e5cf5f289e",
+    "sqlglot-timing/hypothesis.json": "0e55b01b8a820316a9a67184f97cb3440a37e1cc2f461714e68d9557157aeaa7",
+    "sqlglot-timing/evidence.tar.gz": "cd6e58b529523a1cba3d684fc9735548503f008d2792290ef612ae8f317dc48d",
+    "sqlglot-timing/RESULTS.md": "8644c7f95a921e83234dfe05e478eab3477c32c21b8bedfdfbd99197ef112421",
+    "sqlglot-timing/pair.json": "ede313e3d0048a6f20721d8e3d34efa7ebf7b72ac015eedc0b39c4e82028fc98",
+    "sqlglot-timing/history.json": "45dc4ee5237a94fd39d1ced9f880902da50b79c8833bf459c357e764f10233c5",
+    "sqlglot-timing/dependencies.json": "d32a74bed14fd3bdc62d068932a62a37a7536da82c215a35835daca6953831fd",
+    "sqlglot-timing/session.json": "71f09bb238a224fb63a442e3eb985136440e752474f239e4c9ac5d80f1f9f0da",
+    "libcst-timing/hypothesis.json": "2204fe87eb6f653f3994ef64af89f16495687e34de47bc41c524420634e276ce",
+    "libcst-timing/evidence.tar.gz": "34871ea73254a6586abc92d052541c0805aea794c628ede24078f7fb170a22e9",
+    "libcst-timing/RESULTS.md": "7c9d69ceb845ead6d48f09913ac87bdcea0672d56dc02a5c61a5fbff2287af3d",
+    "libcst-timing/pair.json": "cf8f908866d25692d41a0aa77d54157791611cea2cbe6dabb57d09e6c234eaeb",
+    "libcst-timing/history.json": "6c4a1c187dbd4e82a8d7930040d898a126fa3f8d483e59e57e8b350f064c4ffd",
+    "libcst-timing/dependencies.json": "d32a74bed14fd3bdc62d068932a62a37a7536da82c215a35835daca6953831fd",
+    "libcst-timing/session.json": "8c811b32c33cc18eecaba9780b75628c39a9a1a1649ac4504f176d68df904f5a",
+    "sqlglot-drperf/hypothesis.json": "b9be137cfc3b0918b89bfb72a66ca0402a40a3335659a35dea7eb20e7cf7bd2b",
+    "sqlglot-drperf/evidence.tar.gz": "88af05b38efd908dba4a1ecdc1e6aab50169dc6f79c5a0ebff9463bbda08ae59",
+    "sqlglot-drperf/RESULTS.md": "ec7af35b31b2baa9cf5a77d8144beb89dffb6899fd4a849f173879e3d4dca33d",
+    "sqlglot-drperf/pair.json": "ede313e3d0048a6f20721d8e3d34efa7ebf7b72ac015eedc0b39c4e82028fc98",
+    "sqlglot-drperf/history.json": "21d5704264a0d301a445f609a22f8bc382efbdd127377f603aa7b3de586baf64",
+    "sqlglot-drperf/dependencies.json": "d32a74bed14fd3bdc62d068932a62a37a7536da82c215a35835daca6953831fd",
+    "sqlglot-drperf/session.json": "5b4ff8edf7203d25c5e082ae8ecb85d14fa450499e50125e747f52968e5f58a0",
+    "sqlglot-drperf/profile.drperf.json.waits.8f5a40c309d949a2.jsonl.gz": "8f5a40c309d949a2786100ce103950e9ca25c84f6d3c16163d7eb173f52e72fa",
+    "sqlglot-drperf/report.txt": "e9c35fb9aa67d0291a98b90e020d25683479118c4d660d786fd8b473b5ab28d6",
+    "sqlglot-drperf/profile.drperf.json": "a99fd798b11f82851cd030e2fc41c4bfac6d31b4d3af0bf5b101c4a5dcf0557f",
+    "comfyui-drperf/hypothesis.json": "36163865df3fa5aee990fad550df098ffb719687b27aa20098ff14dc5e16741c",
+    "comfyui-drperf/evidence.tar.gz": "c46a3b2911e04502fb099ee06ba295fca80d980d6723c7c8caa424fe278f431d",
+    "comfyui-drperf/RESULTS.md": "47584ac3f95e64661164854a0f819cd91f0aa868a5363e836bfd0b1c7f457bf7",
+    "comfyui-drperf/pair.json": "14fd5db6b44ff2f79f10322412c25f237349a06754cb9c2d1ec799f79edc5f4b",
+    "comfyui-drperf/history.json": "0570c2cafaccf1a250fd21798b96d0a3f15fa074258c60630fa9c813a0998607",
+    "comfyui-drperf/dependencies.json": "f285f779b55340240648bf673a51fad52c5a64e6a056eda212dcfb2bac0ea02f",
+    "comfyui-drperf/session.json": "622db321e7e07f1d4efcc208db9e771c52a256e4d9ba900746e74126e857b589",
+    "comfyui-drperf/profile.drperf.json.waits.96528fa781d58321.jsonl.gz": "96528fa781d5832109f27d18bff1ffeb62247a4e4eac1a20f9fff4a3443c45b1",
+    "comfyui-drperf/report.txt": "4ba9a3613b7d2abe6250d09e63d4a0d8904c7802ac7afba9d103248cab19b24a",
+    "comfyui-drperf/profile.drperf.json": "3f12deccc0e591f52163b7d18b96749b61894d19aa758de57a18e7aad77778d1"
+  },
+  "cleanup": "Completed temporary workspaces removed after archive hash/member verification; final sources, captures, submissions and profiles retained in per-session evidence archives."
+}

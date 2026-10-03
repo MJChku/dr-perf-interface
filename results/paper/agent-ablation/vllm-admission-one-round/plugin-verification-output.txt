@@ -1,0 +1,103 @@
+INFO 10-03 03:08:48 [importing.py:53] Triton is installed but 0 active driver(s) found (expected 1). Disabling Triton to prevent runtime errors.
+WARNING 10-03 03:08:48 [importing.py:65] Triton is installed, but doesn't include CPU backend. Disabling Triton.
+INFO 10-03 03:08:48 [importing.py:88] Triton not installed or not compatible; certain GPU-related functions will not be available.
+{
+  "passed": true,
+  "rows": [
+    {
+      "label": "cold_none",
+      "scans": 1,
+      "cache_before": {
+        "hits": 0,
+        "misses": 0,
+        "maxsize": 128,
+        "currsize": 0
+      },
+      "cache_after": {
+        "hits": 0,
+        "misses": 1,
+        "maxsize": 128,
+        "currsize": 1
+      }
+    },
+    {
+      "label": "warm_none",
+      "scans": 0,
+      "cache_before": {
+        "hits": 0,
+        "misses": 1,
+        "maxsize": 128,
+        "currsize": 1
+      },
+      "cache_after": {
+        "hits": 1,
+        "misses": 1,
+        "maxsize": 128,
+        "currsize": 1
+      }
+    },
+    {
+      "label": "cold_empty_tuple",
+      "scans": 1,
+      "cache_before": {
+        "hits": 1,
+        "misses": 1,
+        "maxsize": 128,
+        "currsize": 1
+      },
+      "cache_after": {
+        "hits": 1,
+        "misses": 2,
+        "maxsize": 128,
+        "currsize": 2
+      }
+    },
+    {
+      "label": "warm_empty_tuple",
+      "scans": 0,
+      "cache_before": {
+        "hits": 1,
+        "misses": 2,
+        "maxsize": 128,
+        "currsize": 2
+      },
+      "cache_after": {
+        "hits": 2,
+        "misses": 2,
+        "maxsize": 128,
+        "currsize": 2
+      }
+    },
+    {
+      "label": "warm_none_again",
+      "scans": 0,
+      "cache_before": {
+        "hits": 2,
+        "misses": 2,
+        "maxsize": 128,
+        "currsize": 2
+      },
+      "cache_after": {
+        "hits": 3,
+        "misses": 2,
+        "maxsize": 128,
+        "currsize": 2
+      }
+    },
+    {
+      "label": "after_cache_clear",
+      "scans": 1
+    }
+  ],
+  "entry_point_queries": [
+    {
+      "group": "vllm.logits_processors"
+    },
+    {
+      "group": "vllm.logits_processors"
+    },
+    {
+      "group": "vllm.logits_processors"
+    }
+  ]
+}

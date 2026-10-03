@@ -1,0 +1,31 @@
+baseline declared event order: ordered
+annotation coverage: 24/72 synchronization-bearing region invocations
+  lmc.prefetch.small: I[True] * Wait[lmc.disk.read.small] [checked]
+  lmc.prefetch.small: I[peer_active == 1 and (serial == 1 or chunks + 1 > concurrent_budget)] * Wait[lmc.disk.read.large] [checked]
+  lmc.disk.read.large: unexplained(Wait[?]) (24 observations)
+  lmc.disk.read.small: unexplained(Wait[?]) (24 observations)
+probe declared event order: ordered
+annotation coverage: 24/72 synchronization-bearing region invocations
+  lmc.prefetch.small: I[True] * Wait[lmc.disk.read.small] [checked]
+  lmc.prefetch.small: I[peer_active == 1 and (serial == 1 or chunks + 1 > concurrent_budget)] * Wait[lmc.disk.read.large] [checked]
+  lmc.disk.read.large: unexplained(Wait[?]) (24 observations)
+  lmc.disk.read.small: unexplained(Wait[?]) (24 observations)
+false-peer declared event order: violation
+  ERROR: Consumer passed waited before declared publication completed
+  ERROR: Consumer passed waited before declared publication completed
+  ERROR: Consumer passed waited before declared publication completed
+  ERROR: Consumer passed waited before declared publication completed
+  ERROR: Consumer passed waited before declared publication completed
+  ERROR: Consumer passed waited before declared publication completed
+annotation coverage: 24/72 synchronization-bearing region invocations
+  lmc.prefetch.small: I[True] * Wait[lmc.disk.read.small] [checked]
+  lmc.prefetch.small: I[True] * Wait[lmc.disk.read.large] [invalid]
+  lmc.disk.read.large: unexplained(Wait[?]) (24 observations)
+  lmc.disk.read.small: unexplained(Wait[?]) (24 observations)
+omit-peer declared event order: ordered
+annotation coverage: 24/72 synchronization-bearing region invocations
+  lmc.prefetch.small: I[True] * Wait[lmc.disk.read.small] [checked]
+  lmc.prefetch.small: I[peer_active == 1 and (serial == 1 or chunks + 1 > concurrent_budget)] * Wait[lmc.disk.read.large] [invalid]
+  lmc.disk.read.large: unexplained(Wait[?]) (24 observations)
+  lmc.disk.read.small: unexplained(Wait[?]) (24 observations)
+All dependency checks and negative controls passed: /w/lmc-waits/prefetch-admission

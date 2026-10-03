@@ -1,0 +1,291 @@
+{
+  "schema": "causal-video-partial-screening-v1",
+  "sources": {
+    "summary": {
+      "path": "/home/ubuntu/drperf/out/causal-video/fastvideo-partial81-ipc-report-full/summary.json",
+      "sha256": "95578d969f68ded4051b679dc08951dc3780e3530ccbef6a25e75cf7956d291e"
+    },
+    "cpu_attribution": {
+      "path": "/home/ubuntu/drperf/out/causal-video/fastvideo-partial81-ipc-report-full/cpu-attribution.json",
+      "sha256": "85e3281c4bdd1d0939081b82243fef64b0320cefa5d2052963b9236921826611"
+    },
+    "trace": {
+      "path": "/home/ubuntu/drperf/out/causal-video/fastvideo-partial81-ipc-report-full/trace.json.gz",
+      "size_bytes": 16726919
+    },
+    "result": {
+      "path": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/result.json",
+      "sha256": "1c51f8b7001cff9b24dca97c0fa00afd9177c83697f3a8de954e9c0039c40fee"
+    }
+  },
+  "run_passed": true,
+  "model": "optimistic-dependency-timeline",
+  "guaranteed_hardware_lower_bound": false,
+  "interval_evidence_available": true,
+  "capture": {
+    "virtual_ns": 12310525569.122314,
+    "cpu_work_ns_sum_threads": 2762447780.6452637,
+    "gpu_busy_by_device": {
+      "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:gpu:0": {
+        "busy_ns": 11738945680.0,
+        "idle_ns": 571579889.1223145,
+        "busy_fraction": 0.953569822351373
+      }
+    },
+    "prediction": {
+      "hits": 106249,
+      "misses": 84,
+      "errors": 0,
+      "disabled": 0,
+      "coverage_hits_over_hits_plus_misses": 0.9992100288715638
+    },
+    "cpu_sampling": {
+      "segments": 155594,
+      "sampled_segments": 0,
+      "sampled_cpu_ns": 0.0,
+      "unattributed_cpu_ns": 2762447780.6452637,
+      "sampled_cpu_fraction": 0.0,
+      "samples_used": 0,
+      "resolved_samples": 0,
+      "unresolved_symbol_samples": 0,
+      "low_sample_segments": 0,
+      "native_ipc_profile_coverage_logs": [
+        {
+          "log": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/gx-fastvideo-partial81-ipc-18d5f9b1f77da5f9-0.log",
+          "instruction_samples": "3330",
+          "unresolved_instruction_samples": "64",
+          "task_samples": "1025",
+          "unresolved_task_samples": "6",
+          "covered": "3250",
+          "coverage": "97.598%",
+          "page_min": "4",
+          "module_min": "32",
+          "fallback_ns_per_instruction": "0.303771361",
+          "cost_scale_ppm": "1000000"
+        },
+        {
+          "log": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/gx-fastvideo-partial81-ipc-18d5f9b1f77da5f9-0.log",
+          "instruction_samples": "3330",
+          "unresolved_instruction_samples": "64",
+          "task_samples": "1025",
+          "unresolved_task_samples": "6",
+          "covered": "3250",
+          "coverage": "97.598%",
+          "page_min": "4",
+          "module_min": "32",
+          "fallback_ns_per_instruction": "0.303771361",
+          "cost_scale_ppm": "1000000"
+        }
+      ]
+    }
+  },
+  "iterations": [
+    {
+      "record": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl",
+      "iteration": 1,
+      "start_ns": 20161.858642578125,
+      "end_ns": 12009363754.675293,
+      "virtual_ns": 12009343592.81665,
+      "cpu_work_ns": 2461265804.3395996,
+      "gpu_work_ns": 11738945680.0,
+      "gpu_devices": {
+        "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:gpu:0": {
+          "busy_ns": 11738945679.999498,
+          "idle_ns": 270397912.817152,
+          "busy_fraction": 0.9774843720035715
+        }
+      },
+      "largest_cpu_segments_before_gpu_submission": [
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 1791530387.6496582,
+          "duration_ns": 10597307.443115234,
+          "within_iteration_ns": 10597307.443115234,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10597307.443115234,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 5556524431.329834,
+          "duration_ns": 10597253.841552734,
+          "within_iteration_ns": 10597253.841552734,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10597253.841552734,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 4934351933.371338,
+          "duration_ns": 10597171.120361328,
+          "within_iteration_ns": 10597171.120361328,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10597171.120361328,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 3674024590.828369,
+          "duration_ns": 10597129.32055664,
+          "within_iteration_ns": 10597129.32055664,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10597129.32055664,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 3886739948.5664062,
+          "duration_ns": 10596985.292236328,
+          "within_iteration_ns": 10596985.292236328,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596985.292236328,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 4508912024.583252,
+          "duration_ns": 10596892.104003906,
+          "within_iteration_ns": 10596892.104003906,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596892.104003906,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 2626422788.677246,
+          "duration_ns": 10596493.880615234,
+          "within_iteration_ns": 10596493.880615234,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596493.880615234,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 531212178.060791,
+          "duration_ns": 10596340.627685547,
+          "within_iteration_ns": 10596340.627685547,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596340.627685547,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 2413706334.679199,
+          "duration_ns": 10596270.616699219,
+          "within_iteration_ns": 10596270.616699219,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596270.616699219,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/fastvideo-partial81-ipc-1789610969706374649/host-0/d0/timeline/rank-0-pid-382.jsonl:cpu:382",
+          "boundary": "MEMCPY",
+          "start_ns": 3461309127.9436035,
+          "duration_ns": 10596256.317626953,
+          "within_iteration_ns": 10596256.317626953,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 10596256.317626953,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Modeled interval CPU work sums overlapping threads; it is not critical-path CPU time.",
+    "Modeled GPU idle is not evidence by itself of a CPU bottleneck.",
+    "Partial synchronization omits arbitrary CPU mutex, shared-memory and thread-creation dependencies.",
+    "Prediction misses and unmodeled copies, memsets and callbacks have zero modeled service cost.",
+    "NCCL rendezvous is launch-granular; independent communication contention is omitted.",
+    "CPU segment labels name the following interaction, not the exclusive cost of that API.",
+    "Prediction and CPU sampling counts are for the whole capture, not individual iterations."
+  ]
+}

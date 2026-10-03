@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "case": "libcst",
+  "condition": "timing",
+  "track": "discovery",
+  "python": "/home/ubuntu/drperf-cases/oss-venv/bin/python",
+  "workload": "workload.py",
+  "env": {
+    "PYTHONPATH": "/tmp/drperf-agent-pilot-61/libcst/timing/source",
+    "BENCH_SOURCE": "/tmp/drperf-agent-pilot-61/libcst/timing/source",
+    "HF_HOME": "/home/ubuntu/drperf/third_party/hf",
+    "HF_HUB_OFFLINE": "1",
+    "OMP_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "PYTHONHASHSEED": "0",
+    "TOKENIZERS_PARALLELISM": "false",
+    "VLLM_CPU_OMP_THREADS_BIND": "all"
+  },
+  "source_revision": "c029c17bf45a3737fc8d1347001ab2422f42ae58",
+  "round_budget": 3,
+  "points_per_round": 6,
+  "native_binary_sha256": {
+    "native.cpython-312-x86_64-linux-gnu.so": "844906d015addbba21c6b5a38ef6dcd7d531ac1f201e4ce49773182885b79f89"
+  },
+  "process_timeout_seconds": 300,
+  "note": "Supervisor configuration, not a filesystem security boundary.",
+  "model": "gpt-6.1-sol",
+  "seed": 0,
+  "input_envelope": {
+    "n_terms": {
+      "min": 2,
+      "max": 256
+    },
+    "shape": {
+      "min": 0,
+      "max": 2
+    }
+  }
+}

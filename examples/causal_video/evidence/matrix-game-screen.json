@@ -1,0 +1,2029 @@
+{
+  "status": "Completed GX partial_sync and valid drperf screen; deprioritized for further CPU-only optimization. No candidate or native speedup claim.",
+  "source": "out/causal-video/Matrix-Game/Matrix-Game-3",
+  "source_revision": "71c3cd7f741311f8100f6cf9cde942b6c1378d11",
+  "compat_run": "mg3-compat-1789707698654467395",
+  "compat": {
+    "torch": "2.11.0+cu128",
+    "transformers": "5.8.1",
+    "diffusers": "0.38.0",
+    "pipeline": "MatrixGame3Pipeline",
+    "cuda_device": "NVIDIA A100-PCIE-40GB",
+    "gx_present": true,
+    "triton_kernels_available": true,
+    "int8_dispatch_shape": [
+      256,
+      128
+    ]
+  },
+  "added_dependency": "trimesh 5.1.0, installed with --no-deps into case-local pure Python package directory; Torch unchanged.",
+  "download_log": "/home/ubuntu/drperf/out/causal-video/matrix-game/download.log",
+  "remote_assets": "/home/ubuntu/drperf-wan-timing/causal/models/matrix-game-3",
+  "assets_manifest": "/home/ubuntu/drperf/out/causal-video/matrix-game/assets.json",
+  "source_leads_unmeasured": [
+    "Pipeline concatenates every previous latent block before gathering five memory indices each iteration.",
+    "Camera FOV memory selection scans prior frames; use_gpu=True still uses the input tensor device, so CPU camera inputs stay on CPU.",
+    "INT8 forward clones reshaped activations before a quantization function; inspect mutation contract before considering removal.",
+    "Output code concatenates all video chunks a second time immediately before exit; distinguish export costs from model inference."
+  ],
+  "native_container": "Stopped after successful kernel calibration; only GPU1 used.",
+  "prepare_run": "mg3-prepare-1789708476512763080",
+  "emu_run": "mg3-emu-1789708801964519528",
+  "derived_checkpoint_sha256": "b6eb5c9dceaaae4ee5f0172d297917c52bbd2ee3e11e182024ca2e23e49010a9",
+  "cleanup": {
+    "native_duplicate_checkpoint_bytes_removed": 17545513908,
+    "backup_verification": "SHA256 identical for all seven files, retained on GX host.",
+    "manifest": "out/causal-video/matrix-game/reclaimed-native-weights.json",
+    "gx_original_fp32_download_bytes_removed": 25879807104
+  },
+  "kernel_calibration": {
+    "signatures": 810,
+    "samples": 1909,
+    "observed_launches": 50264,
+    "skipped_launches": 0,
+    "report": "out/causal-video/matrix-game/profile.json"
+  },
+  "invalid_runs": {
+    "mg3-emu-1789708801964519528": "Functional pass with partial compiler fallback due to cache permissions; not a timing baseline.",
+    "mg3-drperf-1789709012751538609": "Compiler-cache permissions and uninitialized GPU solver status; no valid measured region.",
+    "mg3-drperf-1789709311500608980": "Both warmups pass without compiler error after fixes; DynamoRIO late attachment fails with exit40.",
+    "mg3-drperf-1789709687205198446": "Stock DynamoRIO late attachment still fails after compiler helper shutdown; no valid measurement.",
+    "mg3-time-before-1789710247533422081": "Aborted during staging, no model measurement; final managed cleanup recorded FAIL."
+  },
+  "removed_failed_setup_directories": [
+    {
+      "path": "/home/ubuntu/GX/NEX/build/experiments/mg3-drperf-1789709661224778401",
+      "reason": "Launcher failed at local Bazel setup due to wrong working directory; no container launched."
+    },
+    {
+      "path": "/home/ubuntu/GX/NEX/build/experiments/mg3-prepare-1789708423728728581",
+      "reason": "Launcher failed at local Bazel setup due to wrong working directory; no container launched."
+    }
+  ],
+  "workload": {
+    "timing_frames": 97,
+    "drperf_frames": 177,
+    "height": 704,
+    "width": 1280,
+    "denoising_steps": 3,
+    "int8": true,
+    "attention": "FA2",
+    "decoder": "MG-LightVAE_v2, pruning 0.75, compiled",
+    "offload": false,
+    "weights": "Actual pretrained model; DiT streamed to BF16 and every saved tensor checked against the original cast.",
+    "boundary": "Public generate(), including CPU video conversion and final concatenation; capture uint8 output instead of file encoder/overlay; suppress public exit()."
+  },
+  "runs": {
+    "partial": "mg3-time-before-1789710443942737881",
+    "cpu": "mg3-cpu-1789709941968424026",
+    "drperf": "mg3-drperf-1789710650082671873"
+  },
+  "timing": {
+    "run": "/home/ubuntu/GX/NEX/build/experiments/mg3-time-before-1789710443942737881",
+    "virtual_seconds": 23.38303550255215,
+    "gpu_busy_seconds_in_iteration": 21.26440293656248,
+    "gpu_idle_seconds_in_iteration": 2.1186325659896696,
+    "gpu_idle_fraction_in_iteration": 0.09060554031825474,
+    "cpu_work_seconds_in_iteration": 3.3414834547034205,
+    "gpu_categories": {
+      "MEMCPY": 4113,
+      "COMPUTE": 47308,
+      "CUBLAS": 2370
+    },
+    "top_cpu_spans": [
+      {
+        "seconds": 1.855878070331543,
+        "start_seconds": 21.413851773251913,
+        "boundary": "CPU work before compute submission"
+      },
+      {
+        "seconds": 0.11325735753637314,
+        "start_seconds": 23.2697740648334,
+        "boundary": "CPU work before CPU-side CUDA synchronization"
+      },
+      {
+        "seconds": 0.07353146654467774,
+        "start_seconds": 0.0,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.024173116924072265,
+        "start_seconds": 10.775828169087026,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.001462859956298828,
+        "start_seconds": 0.1800342785492426,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0012667503249511867,
+        "start_seconds": 0.07400602483421082,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0009116426569824219,
+        "start_seconds": 0.32841837211921626,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0009035232595233918,
+        "start_seconds": 10.774073981791128,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0008913548742675782,
+        "start_seconds": 10.800421542114371,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0008909461667480469,
+        "start_seconds": 10.80435953668273,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0008909164951152801,
+        "start_seconds": 10.803047079394888,
+        "boundary": "CPU work before memory-copy submission"
+      },
+      {
+        "seconds": 0.0008904515366210937,
+        "start_seconds": 10.801734871953238,
+        "boundary": "CPU work before memory-copy submission"
+      }
+    ],
+    "prediction_hits": 49678,
+    "prediction_misses": 561,
+    "prediction_coverage": 0.9888333764605187,
+    "copies": {
+      "nodes": 4113,
+      "missing_metadata": 0,
+      "unmodeled_host_link": 0,
+      "host_service_ns_sum": 40766946.615303844,
+      "counts_h2h_h2d_d2h_d2d": [
+        0,
+        1318,
+        22,
+        2773
+      ],
+      "bytes_h2h_h2d_d2h_d2d": [
+        0,
+        5500800,
+        524469506,
+        356595577016
+      ]
+    },
+    "trace": "/home/ubuntu/GX/NEX/build/experiments/mg3-time-before-1789710443942737881/timeline-report/trace.json.gz",
+    "trace_bytes": 6577892,
+    "miss_signatures": [
+      {
+        "name": "_Z20nhwcAddPaddingKernelI13__nv_bfloat16S0_fLb1EL21cudnnKernelDataType_t0EEviiiiiiiiPKT_PT0_iiiiT1_S7_N5cudnn15reduced_divisorES9_S9_",
+        "grid": [
+          3538836,
+          1,
+          1
+        ],
+        "block": [
+          1024,
+          1,
+          1
+        ],
+        "count": 16
+      },
+      {
+        "name": "int8_gemm_kernel",
+        "grid": [
+          48,
+          1,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "count": 360
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          450560,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          675840,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          901120,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 8
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          1802240,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          2703360,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_3",
+        "grid": [
+          3604480,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 12
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          450560,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          675840,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          901120,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_per_fused_add_convolution_div_mean_mul_pow_silu_sqrt_2",
+        "grid": [
+          732160,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_per_fused_add_convolution_div_mean_mul_pow_silu_sqrt_2",
+        "grid": [
+          2928640,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          1802240,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          2703360,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          2928640,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          3604480,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_sqrt_0",
+        "grid": [
+          1802240,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_sqrt_0",
+        "grid": [
+          2703360,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_sqrt_0",
+        "grid": [
+          2928640,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_per_fused_add_div_mean_mul_pow_sqrt_0",
+        "grid": [
+          3604480,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          675840,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          732160,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          901120,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 8
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          1802240,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          2703360,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          2928640,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_per_fused_mean_pow_0",
+        "grid": [
+          3604480,
+          1,
+          1
+        ],
+        "block": [
+          64,
+          1,
+          1
+        ],
+        "count": 8
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          660,
+          8,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 20
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          2640,
+          8,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          4400,
+          8,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 12
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          70400,
+          2,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          98560,
+          2,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 3
+      },
+      {
+        "name": "triton_poi_fused_add_cat_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          126720,
+          2,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 12
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          2640,
+          8,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          3520,
+          8,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          17600,
+          4,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          24640,
+          4,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          98560,
+          4,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_poi_fused_add_cat_div_mean_mul_pow_silu_sqrt_1",
+        "grid": [
+          126720,
+          4,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_7",
+        "grid": [
+          84480,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_5",
+        "grid": [
+          2,
+          21120,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_5",
+        "grid": [
+          2,
+          28160,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "count": 10
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_5",
+        "grid": [
+          8,
+          1760,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_5",
+        "grid": [
+          8,
+          2640,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_poi_fused_add_constant_pad_nd_convolution_div_mean_mul_pow_silu_sqrt_5",
+        "grid": [
+          8,
+          3520,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_poi_fused_add_convolution_div_mean_mul_pow_silu_sqrt_4",
+        "grid": [
+          2,
+          22880,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "count": 2
+      },
+      {
+        "name": "triton_poi_fused_cat_constant_pad_nd_convolution_1",
+        "grid": [
+          42240,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_red_fused_add_convolution_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          225280,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_red_fused_add_convolution_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          337920,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_red_fused_add_convolution_div_mean_mul_pow_silu_sqrt_0",
+        "grid": [
+          450560,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 4
+      },
+      {
+        "name": "triton_red_fused_mean_pow_0",
+        "grid": [
+          28160,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_red_fused_mean_pow_0",
+        "grid": [
+          42240,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 1
+      },
+      {
+        "name": "triton_red_fused_mean_pow_0",
+        "grid": [
+          56320,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "count": 4
+      }
+    ],
+    "generation_wall_seconds": [
+      25.926400819793344
+    ],
+    "warmup_wall_seconds": [
+      21.729050628840923,
+      19.493180956691504
+    ],
+    "load_wall_seconds": 51.510089347139,
+    "harness_sha256": "490370545042b0ad6f125ee1208f3558d612a88285d9df27c17b72fde2e8d31b",
+    "source_sha256": {
+      "pipeline/inference_interactive_pipeline.py": "2dfefea986da6e7dc6e2a9630d9d893548655968e4c21fe05a19880bcacabe28",
+      "pipeline/inference_pipeline.py": "ab61fc1597cf8b1700a9ab5b9ecda80a468b70dd01798996bd49c871509e5c07",
+      "pipeline/vae_config.py": "0f760f809519a05e512244d98a0bb1121bf986279d7634b3b603ce4dcc46bfeb",
+      "pipeline/vae_worker.py": "3a32501c57ee2f6196bc117d7b7139165fffbc9134dcaed169b354e92a565f00",
+      "utils/cam_utils.py": "b1a3ccc7073717bed6454333c2b457b54a5c6cfec66e1d0dc044b56481f5ccb1",
+      "utils/conditions.py": "8674d0f9aacebe803dad463ff65bb9536a5945830fe0dad44ec48db6be48693d",
+      "utils/misc.py": "2796fa2f875556a5ad46f90d557328cd7ec10d867f7cf4c61343d21eca0a13c3",
+      "utils/transform.py": "1de76ad67e2ad3a717ffe38555e849c2eb07fbb9adc41561b0f3d070c0819e3c",
+      "utils/utils.py": "0d2f2ff74829cd9fecc4602ba95a24305d248a71b20701613618cbcb66e2e9f5",
+      "utils/visualize.py": "dae90782b6607849d99af7d3794cdd2a1d37f23fdb6e0699d17dfed7b3a6aaac",
+      "wan/__init__.py": "b3bc3d00ffb6a72ae227b17b3a996e3110bb4878bbf400eb14dc350df0e20fea",
+      "wan/configs/__init__.py": "126c17c5f11eca16c3903b4496e6781bbf41700ae962f5f29e1a5dd9f7aa6082",
+      "wan/configs/config.py": "0f15f32dee00e8141d2363799e3e12207babafa82cc1a5bd7dec31cbe95124f2",
+      "wan/configs/shared_config.py": "3cb64d32bd92aa4f007c7d4d2cf157b8e89a3a5a65cd1650e9a9ac40edb5a4b2",
+      "wan/distributed/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "wan/distributed/fsdp.py": "a4cadc12569c147d8df2576a529d81ca7e11a981d497db2506293d4e53314483",
+      "wan/distributed/sequence_parallel.py": "ee147db6affa4c2a0c0fb5fd668ce55d7e00524ad25a309db3a200e37fd94089",
+      "wan/distributed/ulysses.py": "3631f4be9941917d374a2f58300579794a0e1b9c7e85ee2a51a4393db729aed2",
+      "wan/distributed/util.py": "b94fa229a5e7735098db1826735407f3a7dfb2e1e832d714ae3d0315e86118f7",
+      "wan/modules/__init__.py": "0d72e1248c34fee9a72ceb615de0343a8376b587d949d3e8d21a3b21c50f7f7a",
+      "wan/modules/action_module.py": "848903aa06eb29d9ecc495c8c7b2285284bf9a17959fdf698e394639322440ce",
+      "wan/modules/attention.py": "539f439081eb95fcaabd3b10cb74d0077ffc206bb852721688e8d6dcac017c7d",
+      "wan/modules/model.py": "67420be697d5a6737ddf164d283635241376479cbebd400f14aff5e76bb9fa6f",
+      "wan/modules/posemb_layers.py": "d535374f47d55c21dac5b1b0015197c4aa2cc24ab14f3ff486ad3083b88623bf",
+      "wan/modules/t5.py": "dfc9e00a7ed3f574bd4fffa2c6387989526aac2f88a93ba09ec2744ef052bea0",
+      "wan/modules/tokenizers.py": "c6f8eb124058a26182bd22fc48484384aba67d299a07241cb2ef2bb3065f953a",
+      "wan/modules/vae2_2.py": "3b305f58d5a99afc285339f5dd736d050441e188162e8479afdf37921ff71b40",
+      "wan/triton_kernels.py": "802be6937ed498ddbf807ca7d2832e7ec2ac48621dcc7a480eba3d4947455d5f",
+      "wan/utils/__init__.py": "1e925c5581e982497a07a8687cfdbc64857626136d755a492c18a930246f96e8",
+      "wan/utils/fm_solvers.py": "37350e31d43ab391520944354e0130a7637f603ec80948f5acd38d21ff7bc1d3",
+      "wan/utils/fm_solvers_unipc.py": "02875335c988bb2d7d985ad3034176909d1ba03d428a5a3b61f2d101dac3e0aa",
+      "wan/utils/qwen_vl_utils.py": "e4ad56af72c42e0da445891565d66b25836881acc7f21d1e63bb2cf1f346f6af",
+      "wan/utils/system_prompt.py": "3fe103dc2db1967bc59f511e1ec1880b915ba4b59599f8378ee67be77f7616a4",
+      "wan/utils/utils.py": "7b31ee431132749df3a65cd0448b20a7d18a9eb9d9758041dbe7a36cbc1d66e4"
+    },
+    "control_audit": {
+      "text_reads": 6,
+      "text_mismatches": 6,
+      "scheduler_reads": 6,
+      "scheduler_mismatches": 5,
+      "solve_info_reads": 6,
+      "solve_info_mismatches": 2
+    },
+    "model": "GX partial_sync, HBM and host-link calibrated, waveform clipped to measured iteration. FA2 input aliasing limits timing accuracy.",
+    "gpu_db_sha256": "8378430e21c9c222c6f4229c256c8b05bc17fd6863b3dd9fa4e5ae663849fb8f",
+    "cpu_db_sha256": "acc062ba3c69c523ebd8dc7a1e860edfcc11bc5f93dc75c67b6e7b5b3da43a20",
+    "cpu_profile_header": "GXVM_NATIVE_IPS_V1 instruction_period=5000000 task_period_ns=5000000 instruction_samples=2801 task_samples=671 unresolved_instruction_samples=264 unresolved_task_samples=2",
+    "raw_prediction_trace_compression": [
+      {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/mg3-time-before-1789710443942737881/host-0/model/kernel_profile_gx/chrome_trace_299.json.gz",
+        "original_bytes": 137096797,
+        "compressed_bytes": 11032143,
+        "uncompressed_sha256": "f5bd09b4fe2d4432d74513c9c5515f1a448090c27b5edc42cee25171d7098b6c"
+      }
+    ]
+  },
+  "drperf": {
+    "schema": "causal-video-drperf-summary-v1",
+    "input_raw": "/home/ubuntu/GX/NEX/build/experiments/mg3-drperf-1789710650082671873/host-0/drperf/raw",
+    "validity": [],
+    "counters": [
+      {
+        "version": "0.3",
+        "pid": 396,
+        "app": "python3.12",
+        "excluded_cuda_module": "gx_cuda.so",
+        "follow_unmarked_threads": false,
+        "excluded_cuda_exports": 1555,
+        "excluded_cuda_calls": 2134858,
+        "excluded_instructions": 2139781546,
+        "rep_expand": true,
+        "symbols": true,
+        "max_slots": 1048576,
+        "slots_used": 161719,
+        "slots_overflow": 0,
+        "counter_denied": 0,
+        "marker_seen": true,
+        "unmatched_ends": 0,
+        "depth_overflows": 0,
+        "state_overflows": 0,
+        "threads": 24,
+        "trace_file": "/workspace/runs/1789710650082671873/drperf/raw/run.396.json.trace",
+        "trace_records": 3286,
+        "trace_dropped": 0
+      }
+    ],
+    "regions": {
+      "mg_block": {
+        "calls": 360,
+        "exclusive_instructions": 3568604997,
+        "mean_exclusive_instructions": 9912791.658333333,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "tokens"
+        ],
+        "distinct_states": 1,
+        "state_values": [
+          [
+            17600
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "tokens"
+        ],
+        "fixed_pcv_observations": {
+          "tokens": 17600
+        },
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 250028264
+          },
+          {
+            "module": "ld-linux-x86-64.so.2",
+            "symbol": "__tls_get_addr",
+            "instructions": 88833420
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 82617564
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyObject_GenericGetAttrWithDict",
+            "instructions": 73111645
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 60602352
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "pthread_mutex_lock",
+            "instructions": 55814528
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "malloc",
+            "instructions": 53746464
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_Free",
+            "instructions": 51719579
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "one observed state; a constant cost is not a discovered relation",
+          "rank-deficient PCVs: tokens"
+        ]
+      },
+      "mg_decode": {
+        "calls": 4,
+        "exclusive_instructions": 290267716,
+        "mean_exclusive_instructions": 72566929.0,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "frames"
+        ],
+        "distinct_states": 2,
+        "state_values": [
+          [
+            10
+          ],
+          [
+            15
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [],
+        "fixed_pcv_observations": {},
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 52572938
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyEval_EvalCode+?",
+            "instructions": 11999742
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 10896503
+          },
+          {
+            "module": "ld-linux-x86-64.so.2",
+            "symbol": "__tls_get_addr",
+            "instructions": 9474024
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyObject_GenericGetAttrWithDict",
+            "instructions": 6876511
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyErr_ChainStackItem+?",
+            "instructions": 5833963
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 4778733
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyType_Lookup",
+            "instructions": 4638892
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "too few distinct states for an affine relation"
+        ]
+      },
+      "mg_encode": {
+        "calls": 1,
+        "exclusive_instructions": 14858306,
+        "mean_exclusive_instructions": 14858306.0,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "pixels"
+        ],
+        "distinct_states": 1,
+        "state_values": [
+          [
+            2703360
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "pixels"
+        ],
+        "fixed_pcv_observations": {
+          "pixels": 2703360
+        },
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 2530654
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_Free",
+            "instructions": 399996
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyObject_GenericGetAttrWithDict",
+            "instructions": 383681
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 363810
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyType_GetSlot+?",
+            "instructions": 299151
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyUnicode_Concat+?",
+            "instructions": 279298
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_Malloc",
+            "instructions": 273215
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 266749
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "one observed state; a constant cost is not a discovered relation",
+          "rank-deficient PCVs: pixels"
+        ]
+      },
+      "mg_generate": {
+        "calls": 1,
+        "exclusive_instructions": 14131977380,
+        "mean_exclusive_instructions": 14131977380.0,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "frames"
+        ],
+        "distinct_states": 1,
+        "state_values": [
+          [
+            177
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "frames"
+        ],
+        "fixed_pcv_observations": {
+          "frames": 177
+        },
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+            "symbol": "raw_array_assign_array",
+            "instructions": 5901509489
+          },
+          {
+            "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+            "symbol": "_aligned_strided_to_contig_size1",
+            "instructions": 5582438400
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "at::native::AVX2::reduced_float_copy_kernel",
+            "instructions": 747649726
+          },
+          {
+            "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+            "symbol": "_aligned_contig_cast_float_to_ubyte",
+            "instructions": 657930284
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_124clamp_scalar_kernel_implERNS8_18TensorIteratorBaseERKNS_6ScalarESH_ENKUlvE_clEvENKUlvE5_clEvEUlfE_ZZZNSC_24clamp_scalar_kernel_implESE_SH_SH_ENKSI_clEvENKSJ_clEvEUlNS8_3vec4AVX210VectorizedIfEEE_EEEEvlS2_S4_ll",
+            "instructions": 328965169
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "at::native::(anonymous namespace)::cat_serial_kernel",
+            "instructions": 299060178
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_110add_kernelERNS8_18TensorIteratorBaseERKNS_6ScalarEENKUlvE_clEvENKUlvE5_clEvEUlffE_ZZZNSC_10add_kernelESE_SH_ENKSI_clEvENKSJ_clEvEUlNS8_3vec4AVX210VectorizedIfEESO_E_EEEEvlS2_S4_ll",
+            "instructions": 269176558
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_110mul_kernelERNS8_18TensorIteratorBaseEENKUlvE0_clEvENKUlvE12_clEvEUlffE_ZZZNSC_10mul_kernelESE_ENKSF_clEvENKSG_clEvEUlNS8_3vec4AVX210VectorizedIfEESL_E_EEEEvlS2_S4_ll",
+            "instructions": 209353286
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "one observed state; a constant cost is not a discovered relation",
+          "rank-deficient PCVs: frames"
+        ]
+      },
+      "mg_input": {
+        "calls": 1,
+        "exclusive_instructions": 127906537,
+        "mean_exclusive_instructions": 127906537.0,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "frames"
+        ],
+        "distinct_states": 1,
+        "state_values": [
+          [
+            177
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "frames"
+        ],
+        "fixed_pcv_observations": {
+          "frames": 177
+        },
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNSA_18direct_copy_kernelERNS8_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE1_clEvEUlNS_8BFloat16EE_ZZZNSA_18direct_copy_kernelESD_ENKSE_clEvENKSF_clEvEUlNS8_3vec4AVX210VectorizedISG_EEE_EEEEvlS2_S4_ll",
+            "instructions": 18923579
+          },
+          {
+            "module": "_imaging.cpython-312-x86_64-linux-gnu.so",
+            "symbol": "ImagingPackRGB",
+            "instructions": 6467040
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "at::native::AVX2::reduced_float_copy_kernel",
+            "instructions": 5579325
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 3101332
+          },
+          {
+            "module": "ld-linux-x86-64.so.2",
+            "symbol": "__tls_get_addr",
+            "instructions": 2167008
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 2100634
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZZZZZNS8_6native4AVX211copy_kernelERNS8_14TensorIteratorEbENKUlvE_clEvENKUlvE14_clEvENKUlvE_clEvENKUlvE8_clEvEUlS2_S4_lE_EEDaRKT_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 1900884
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyType_IsSubtype",
+            "instructions": 1827421
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "one observed state; a constant cost is not a discovered relation",
+          "rank-deficient PCVs: frames"
+        ]
+      },
+      "mg_int8": {
+        "calls": 2880,
+        "exclusive_instructions": 1944407324,
+        "mean_exclusive_instructions": 675141.4319444444,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "elements",
+          "out_features"
+        ],
+        "distinct_states": 2,
+        "state_values": [
+          [
+            1572864,
+            3072
+          ],
+          [
+            54067200,
+            3072
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "out_features"
+        ],
+        "fixed_pcv_observations": {
+          "out_features": 3072
+        },
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 266380331
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_RichCompareBool",
+            "instructions": 82679040
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 69904327
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_SetItem+?",
+            "instructions": 57297600
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_Free",
+            "instructions": 51763221
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyObject_GenericGetAttrWithDict",
+            "instructions": 50420160
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyTuple_Resize+?",
+            "instructions": 48494228
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyUnicode_RichCompare",
+            "instructions": 41443200
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "too few distinct states for an affine relation",
+          "rank-deficient PCVs: out_features"
+        ]
+      },
+      "mg_memory_select": {
+        "calls": 3,
+        "exclusive_instructions": 105319407,
+        "mean_exclusive_instructions": 35106469.0,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "candidate_reference_pairs"
+        ],
+        "distinct_states": 3,
+        "state_values": [
+          [
+            200
+          ],
+          [
+            400
+          ],
+          [
+            600
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": true,
+        "rank_deficient_pcvs": [],
+        "fixed_pcv_observations": {},
+        "conditional_fit": null,
+        "coefficients": {
+          "candidate_reference_pairs": 80058.60749999997
+        },
+        "constant": 3057821.000000001,
+        "max_unexplained_fraction": 0.0011973813058202044,
+        "max_reconstruction_error_fraction": 6.0491016091703735e-05,
+        "top_exclusive_functions": [
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX210cpu_kernelIZZZNSB_12_GLOBAL__N_19ge_kernelERS9_ENKUlvE_clEvENKUlvE5_clEvEUlffE_EEvSF_OT_lEUlS2_S4_lE_EEDaRKSJ_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 19201890
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX210cpu_kernelIZZZNSB_12_GLOBAL__N_19le_kernelERS9_ENKUlvE_clEvENKUlvE5_clEvEUlffE_EEvSF_OT_lEUlS2_S4_lE_EEDaRKSJ_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 19201890
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "mkl_blas_def_sgemm_pst",
+            "instructions": 13484445
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZZZZZNS8_6native4AVX211copy_kernelERNS8_14TensorIteratorEbENKUlvE_clEvENKUlvE14_clEvENKUlvE_clEvENKUlvE1_clEvEUlS2_S4_lE_EEDaRKT_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 10800825
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX210cpu_kernelIZZZNSB_12_GLOBAL__N_19gt_kernelERS9_ENKUlvE_clEvENKUlvE5_clEvEUlffE_EEvSF_OT_lEUlS2_S4_lE_EEDaRKSJ_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 9647160
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX210cpu_kernelIZZZNSB_12_GLOBAL__N_19lt_kernelERS9_ENKUlvE_clEvENKUlvE5_clEvEUlffE_EEvSF_OT_lEUlS2_S4_lE_EEDaRKSJ_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 9647160
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "mkl_blas_def_sgemm_mscale",
+            "instructions": 3765285
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_110add_kernelERNS8_18TensorIteratorBaseERKNS_6ScalarEENKUlvE_clEvENKUlvE5_clEvEUlffE_ZZZNSC_10add_kernelESE_SH_ENKSI_clEvENKSJ_clEvEUlNS8_3vec4AVX210VectorizedIfEESO_E_EEEEvlS2_S4_ll",
+            "instructions": 3729780
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 21387
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX228binary_kernel_reduce_lastdimIZZZNSB_12_GLOBAL__N_118argmax_kernel_implERNS8_14TensorIteratorEENKUlvE_clEvENKUlvE5_clEvEUlS1_S1_lE_EEvRS9_T_EUlS2_S4_lE_EEDaRKSL_EUlS2_S4_llE_EEvlS2_S4_ll",
+            "instructions": 1367
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__nss_database_lookup+?",
+            "instructions": 1044
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "malloc",
+            "instructions": 317
+          },
+          {
+            "module": "libtorch_cpu.so",
+            "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNSA_18direct_copy_kernelERNS8_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE13_clEvEUlfE_ZZZNSA_18direct_copy_kernelESD_ENKSE_clEvENKSF_clEvEUlNS8_3vec4AVX210VectorizedIfEEE_EEEEvlS2_S4_ll",
+            "instructions": 100
+          }
+        ],
+        "warnings": []
+      },
+      "mg_model": {
+        "calls": 12,
+        "exclusive_instructions": 86834562,
+        "mean_exclusive_instructions": 7236213.5,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "frames",
+          "memory_frames"
+        ],
+        "distinct_states": 2,
+        "state_values": [
+          [
+            14,
+            5
+          ],
+          [
+            15,
+            0
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [
+          "memory_frames"
+        ],
+        "fixed_pcv_observations": {},
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 20087830
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 6788820
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_SetItem+?",
+            "instructions": 5526012
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyEval_EvalCode+?",
+            "instructions": 2429803
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Update+?",
+            "instructions": 2286060
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyErr_ChainStackItem+?",
+            "instructions": 1920966
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyTuple_Resize+?",
+            "instructions": 1832778
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyObject_Free",
+            "instructions": 1789734
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "too few distinct states for an affine relation",
+          "rank-deficient PCVs: memory_frames"
+        ]
+      },
+      "mg_text": {
+        "calls": 2,
+        "exclusive_instructions": 92511687,
+        "mean_exclusive_instructions": 46255843.5,
+        "gx_module_instructions": 0,
+        "declared_pcvs": [
+          "chars"
+        ],
+        "distinct_states": 2,
+        "state_values": [
+          [
+            72
+          ],
+          [
+            387
+          ]
+        ],
+        "dropped_calls": 0,
+        "affine_identifiable": false,
+        "rank_deficient_pcvs": [],
+        "fixed_pcv_observations": {},
+        "conditional_fit": null,
+        "coefficients": null,
+        "constant": null,
+        "max_unexplained_fraction": null,
+        "max_reconstruction_error_fraction": null,
+        "top_exclusive_functions": [
+          {
+            "module": "python3.12",
+            "symbol": "_PyEval_EvalFrameDefault",
+            "instructions": 6597406
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyObject_GenericGetAttrWithDict",
+            "instructions": 2756616
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "__default_morecore+?",
+            "instructions": 2363733
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyDict_Contains+?",
+            "instructions": 2198877
+          },
+          {
+            "module": "ld-linux-x86-64.so.2",
+            "symbol": "__tls_get_addr",
+            "instructions": 2134860
+          },
+          {
+            "module": "python3.12",
+            "symbol": "PyType_GetSlot+?",
+            "instructions": 1598736
+          },
+          {
+            "module": "python3.12",
+            "symbol": "_PyType_Lookup",
+            "instructions": 1576335
+          },
+          {
+            "module": "libc.so.6",
+            "symbol": "malloc",
+            "instructions": 1480671
+          }
+        ],
+        "top_irregular_functions_mean_per_state": [],
+        "warnings": [
+          "too few distinct states for an affine relation"
+        ]
+      }
+    },
+    "excluded_setup_regions": [
+      "fastvideo_attach_setup"
+    ],
+    "total_marked_exclusive_instructions": 20362687916,
+    "top_exclusive_functions": [
+      {
+        "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+        "symbol": "raw_array_assign_array",
+        "instructions": 5901620821
+      },
+      {
+        "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+        "symbol": "_aligned_strided_to_contig_size1",
+        "instructions": 5582438400
+      },
+      {
+        "module": "libtorch_cpu.so",
+        "symbol": "at::native::AVX2::reduced_float_copy_kernel",
+        "instructions": 753229051
+      },
+      {
+        "module": "_multiarray_umath.cpython-312-x86_64-linux-gnu.so",
+        "symbol": "_aligned_contig_cast_float_to_ubyte",
+        "instructions": 657930284
+      },
+      {
+        "module": "python3.12",
+        "symbol": "_PyEval_EvalFrameDefault",
+        "instructions": 611834166
+      },
+      {
+        "module": "libtorch_cpu.so",
+        "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_124clamp_scalar_kernel_implERNS8_18TensorIteratorBaseERKNS_6ScalarESH_ENKUlvE_clEvENKUlvE5_clEvEUlfE_ZZZNSC_24clamp_scalar_kernel_implESE_SH_SH_ENKSI_clEvENKSJ_clEvEUlNS8_3vec4AVX210VectorizedIfEEE_EEEEvlS2_S4_ll",
+        "instructions": 328965169
+      },
+      {
+        "module": "libtorch_cpu.so",
+        "symbol": "at::native::(anonymous namespace)::cat_serial_kernel",
+        "instructions": 299060178
+      },
+      {
+        "module": "libtorch_cpu.so",
+        "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_110add_kernelERNS8_18TensorIteratorBaseERKNS_6ScalarEENKUlvE_clEvENKUlvE5_clEvEUlffE_ZZZNSC_10add_kernelESE_SH_ENKSI_clEvENKSJ_clEvEUlNS8_3vec4AVX210VectorizedIfEESO_E_EEEEvlS2_S4_ll",
+        "instructions": 274451016
+      },
+      {
+        "module": "libtorch_cpu.so",
+        "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIN2at6native4AVX216VectorizedLoop2dIZZZNS9_12_GLOBAL__N_110mul_kernelERNS8_18TensorIteratorBaseEENKUlvE0_clEvENKUlvE12_clEvEUlffE_ZZZNSC_10mul_kernelESE_ENKSF_clEvENKSG_clEvEUlNS8_3vec4AVX210VectorizedIfEESL_E_EEEEvlS2_S4_ll",
+        "instructions": 211787868
+      },
+      {
+        "module": "python3.12",
+        "symbol": "PyDict_Contains+?",
+        "instructions": 154378506
+      },
+      {
+        "module": "python3.12",
+        "symbol": "_PyObject_GenericGetAttrWithDict",
+        "instructions": 137711769
+      },
+      {
+        "module": "ld-linux-x86-64.so.2",
+        "symbol": "__tls_get_addr",
+        "instructions": 133848228
+      },
+      {
+        "module": "libc.so.6",
+        "symbol": "__nss_database_lookup+?",
+        "instructions": 117957234
+      },
+      {
+        "module": "python3.12",
+        "symbol": "PyObject_Free",
+        "instructions": 113681913
+      },
+      {
+        "module": "libc.so.6",
+        "symbol": "__default_morecore+?",
+        "instructions": 107814239
+      },
+      {
+        "module": "python3.12",
+        "symbol": "_PyTuple_Resize+?",
+        "instructions": 93692096
+      },
+      {
+        "module": "python3.12",
+        "symbol": "_PyType_Lookup",
+        "instructions": 93096379
+      },
+      {
+        "module": "python3.12",
+        "symbol": "PyObject_RichCompareBool",
+        "instructions": 88564299
+      },
+      {
+        "module": "python3.12",
+        "symbol": "PyObject_Malloc",
+        "instructions": 83834157
+      },
+      {
+        "module": "python3.12",
+        "symbol": "PyEval_EvalCode+?",
+        "instructions": 81180496
+      }
+    ],
+    "limitations": [
+      "Exclusive basic-block instructions are summed across marked regions without nested double counting.",
+      "A fitted affine relation describes observed states only; it is not evidence of causation or GPU time.",
+      "Irregular function ranking is mean instructions per observed state, not total weighted cost."
+    ]
+  },
+  "assets": {
+    "repository": "Skywork/Matrix-Game-3.0",
+    "revision": "382aa382a03cec057360755aa72c7735025770bb",
+    "files": {
+      "MG-LightVAE_v2.pth": {
+        "rfilename": "MG-LightVAE_v2.pth",
+        "blobId": "f32dbe557eb2ae29fe299a0689deb248fd614de8",
+        "size": 841275442,
+        "lfs": {
+          "sha256": "d47a9e7899af41f1a2c762f902d48c2b3221121473d0367bc0d9356b536810d1",
+          "size": 841275442,
+          "pointerSize": 134
+        }
+      },
+      "Wan2.2_VAE.pth": {
+        "rfilename": "Wan2.2_VAE.pth",
+        "blobId": "2264ad59a1f3be73cf56ff0dcf7d0a8e06efe8ed",
+        "size": 2818839170,
+        "lfs": {
+          "sha256": "20eb789667fa5e60e7516bf509512f6cb61f01b0aa0695eadaea930c13892b36",
+          "size": 2818839170,
+          "pointerSize": 135
+        }
+      },
+      "base_distilled_model/config.json": {
+        "rfilename": "base_distilled_model/config.json",
+        "blobId": "9091d0f609c1170bf275b4e99cc749771523e289",
+        "size": 1057
+      },
+      "base_distilled_model/diffusion_pytorch_model.safetensors": {
+        "rfilename": "base_distilled_model/diffusion_pytorch_model.safetensors",
+        "blobId": "287a87fcbc4e8eab1477167268ee4dee3156079c",
+        "size": 25879807104,
+        "lfs": {
+          "sha256": "437acb9b90304907ccdf8a173471e58858f925ee817e21c03a4220658a05c1e4",
+          "size": 25879807104,
+          "pointerSize": 136
+        }
+      }
+    }
+  },
+  "shared_assets": [
+    {
+      "rfilename": "google/umt5-xxl/special_tokens_map.json",
+      "blobId": "14855e7052ffbb595057dfd791d293c1c940db2c",
+      "size": 6623
+    },
+    {
+      "rfilename": "google/umt5-xxl/spiece.model",
+      "blobId": "2fe5f347e9f9367585589ae89e997dfbd5cf802c",
+      "size": 4548313,
+      "lfs": {
+        "sha256": "e3909a67b780650b35cf529ac782ad2b6b26e6d1f849d3fbb6a872905f452458",
+        "size": 4548313,
+        "pointerSize": 132
+      }
+    },
+    {
+      "rfilename": "google/umt5-xxl/tokenizer.json",
+      "blobId": "7bd4ee3cf5633e49c0e06a3aac2a621559e6222a",
+      "size": 16837417,
+      "lfs": {
+        "sha256": "6e197b4d3dbd71da14b4eb255f4fa91c9c1f2068b20a2de2472967ca3d22602b",
+        "size": 16837417,
+        "pointerSize": 133
+      }
+    },
+    {
+      "rfilename": "google/umt5-xxl/tokenizer_config.json",
+      "blobId": "4e1cc1cd85599ce0b47fd0a746af188fe4043ff2",
+      "size": 61728
+    },
+    {
+      "rfilename": "models_t5_umt5-xxl-enc-bf16.pth",
+      "blobId": "d5dad910304ab4b909a2c8a225a71840606e6de4",
+      "size": 11361920418,
+      "lfs": {
+        "sha256": "7cace0da2b446bbbbc57d031ab6cf163a3d59b366da94e5afe36745b746fd81d",
+        "size": 11361920418,
+        "pointerSize": 136
+      }
+    }
+  ],
+  "late_attach": {
+    "description": "Isolated bundle using GX patched DynamoRIO; no global runtime replacement. Compiler pools shut down after warmup. New runtime flags unblock suspension signals in existing threads.",
+    "builder": "examples/causal_video/prepare_drperf_gx.py",
+    "regression": {
+      "stock": {
+        "returncode": -1,
+        "log": "\n[drperf: timeout]",
+        "files": []
+      },
+      "gx": {
+        "returncode": 0,
+        "log": "",
+        "files": [
+          "run.988669.json",
+          "run.989838.json"
+        ],
+        "validity": [],
+        "regions": [
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 10
+            },
+            "instructions": 54
+          },
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 100
+            },
+            "instructions": 414
+          },
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 1000
+            },
+            "instructions": 4014
+          },
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 10
+            },
+            "instructions": 54
+          },
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 100
+            },
+            "instructions": 414
+          },
+          {
+            "region": "blocked_signal_loop",
+            "states": {
+              "n": 1000
+            },
+            "instructions": 4014
+          }
+        ]
+      }
+    },
+    "builder_regression": {
+      "passed": true,
+      "rows": [
+        {
+          "n": 10,
+          "instructions": 54
+        },
+        {
+          "n": 100,
+          "instructions": 414
+        },
+        {
+          "n": 1000,
+          "instructions": 4014
+        }
+      ],
+      "dr_sha256": "2ed4b5e6a1fd84639b59befc60af3ab82fd89be8ebbd67b589f085d641da5072",
+      "builder_sha256": "b28d34c5daf85de95d7945d7f91d4cac1f547a640cbcb6fe40e0c9693e810837"
+    }
+  },
+  "limitations": [
+    "GX substitutes CPU-known control metadata while retaining original scalar GPU operations; all adapters checked during native kernel calibration. GX does not validate GPU arithmetic.",
+    "Native calibration generation time includes profiler overhead; it is not a warmed unprofiled native baseline.",
+    "FA2 signatures alias self- and cross-attention input lengths with up to 21.7x sampled duration variation. 98.88% prediction coverage does not establish timing accuracy.",
+    "CPU calibration has 264 unresolved samples out of 3065 total instruction samples (8.61%), on the GX host rather than the A100 host.",
+    "Only camera-memory selection has three distinct PCV states; other marked interfaces are underdetermined.",
+    "Outer generate exclusive cost contains output handling and other unmarked work. Two NumPy copy functions account for 11.484 billion instructions, supporting output-copy dominance without attributing the entire outer region to copying.",
+    "Small partial-sync idle share is a prioritization heuristic, not a bound on native improvement."
+  ]
+}

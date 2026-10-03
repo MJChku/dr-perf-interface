@@ -1,0 +1,14 @@
+raw: 20 states; 4*x + 0*y + 19; unexplained 94.208292%; max residual 0.000000 instructions/call
+conditional: 14 states; 109*expensive_iters + 11*cheap_iters + 19; unexplained 0.000000%; max residual 0.000000 instructions/call
+
+CLI output from the same measurements:
+  conditional = 109*expensive_iters + 11*cheap_iters + 19
+      expensive_iters: 100 expensive_step [branch_pcvs], 9 process [branch_pcvs]
+      cheap_iters: 9 process [branch_pcvs], 2 cheap_step [branch_pcvs]
+      constant: 8 process [branch_pcvs], 6 measure [branch_pcvs], 2 _init [branch_pcvs]
+  raw         = 4*x + 19   (y: no effect; 94% of the cost follows no declared state)
+      x: 4 process [branch_pcvs]
+      constant: 8 process [branch_pcvs], 6 measure [branch_pcvs], 2 _init [branch_pcvs]
+      unexplained: 222,500 expensive_step [branch_pcvs], 18,750 process [branch_pcvs]
+
+PASS: raw inputs fail; conditional PCVs explain all blocks within tolerance.

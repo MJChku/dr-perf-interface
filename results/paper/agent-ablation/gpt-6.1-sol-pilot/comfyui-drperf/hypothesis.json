@@ -1,0 +1,47 @@
+{
+  "claims": [
+    {
+      "id": "ancestry-local",
+      "region": "source/comfy_execution/caching.py:161 get_ordered_ancestry_internal / ancestry.visit",
+      "expression": "K = len(dynprompt.get_node(node_id)[\"inputs\"]); L = sum(is_link(x) for x in those inputs.values()); H = int(L > 0)",
+      "evidence": "Each invocation sorts and scans K input names and performs link/membership work for L edges. Round 1, without H, had 6.56% own residual and unresolved recursive multiplicity. Rounds 2 and 3, with H, have 0% reported own residual over the three exercised states and symbolic recursive child multiplicity H. Ancestry call counts 4590, 734, 2750 exactly equal independently derived distinct closure volume.",
+      "scope": "This workload has K<=3 and every linked node introduces exactly one recursive child: the x traversal reaches any y parent. For arbitrary graphs, H is insufficient to express fresh child multiplicity; input-key sorting and graph state need additional PCVs."
+    },
+    {
+      "id": "immediate-signature",
+      "region": "source/comfy_execution/caching.py:128 get_immediate_node_signature / signature.immediate",
+      "expression": "K = len(dynprompt.get_node(node_id)[\"inputs\"]); L = number of link-valued inputs",
+      "evidence": "A sorted input scan constructs scalar tuples or link tuples using an existing ancestor mapping. All three rounds report 0% own residual over K,L states (1,0),(2,1),(3,2). Round 3 observed 2750 calls.",
+      "scope": "K=L+1 in this workload; separate effects of input count and link count are not identifiable. Scalar inputs are fixed-size, hidden unique IDs are absent, classes are idempotent, and change status is False."
+    },
+    {
+      "id": "signature-assembly",
+      "region": "source/comfy_execution/caching.py:120 signature construction after ordered ancestry / signature.assemble",
+      "expression": "C = [node_id] + ancestors; V = len(C); I = sum(len(dynprompt.get_node(v)[\"inputs\"]) for v in C); L = sum(number of link inputs of v for v in C)",
+      "evidence": "C and order_mapping already exist at this region entry; these expressions inspect their sizes and immediate inputs without rebuilding signatures. Exactly V immediate-signature children and one hashable conversion child are observed. Round 1 has 126 states and 11.84% own residual; round 3 has 94 states and 13.50% own residual. At V=64, chain and extra-edge graphs have the same V but I=127 versus 189, and assembly observed own counts approximately 3.14M versus 3.26M instructions.",
+      "scope": "I=V+L in the workload, so V,L are sufficient independent structural dimensions. Reported assembly costs include async marker wrapper and child entry-PCV calculation overhead; a complete affine explanation is not established."
+    },
+    {
+      "id": "hashable-structure",
+      "region": "source/comfy_execution/caching.py:125 to_hashable(signature) / signature.hashable",
+      "expression": "V = len(signature); I = sum(len(s)-2 for s in signature); L = count of immediate signature input pairs whose value is the ANCESTOR triple; derived primitive leaves P=3*V+I+3*L and sequence containers Q=1+V+I+L",
+      "evidence": "The entry signature consists of existing nested lists and tuples; counts describe structure without converting or hashing it. For this workload I=V+L, so total recursive conversion calls for one signature are 1+6*(V+L). Across round 2, the predicted and observed conversion calls both equal 9972; across round 3 both equal 39156. Round 1 at V=64: chain hash conversion observed about 5.63M instructions versus 8.60M for extra links, despite equal ancestry size.",
+      "scope": "Structural volume explains traversal multiplicity and broad growth, but not the complete instruction interface: initial outer hashing own residual was 60.79%; with recursive child separation the final outer own residual is 46.55%. GC, allocation, hashing and wrapper costs remain unresolved; this percentage excludes modeled child work."
+    },
+    {
+      "id": "hashable-local",
+      "region": "source/comfy_execution/caching.py:55 to_hashable(obj) / hashable.visit",
+      "expression": "P=int(obj is a primitive scalar); S=len(obj) for a nonprimitive Sequence else 0; C=number of nonprimitive immediate children; G=sum(len(v) for immediate nonprimitive Sequence/Mapping child v); B=int(isinstance(obj,list))",
+      "evidence": "Entry inspection is shallow and does not call to_hashable or construct the output. Recursive child multiplicity is exactly S. Round 2 with P,S alone reports 30.94% own residual over 25 states; round 3 with shallow C,G and list-kind reports 14.76% over 101 states and 39156 calls.",
+      "scope": "The improvement is suggestive, with different input ranges and different annotation overhead between rounds; it is not a controlled speedup. Child marker PCV evaluation occurs inside the parent and contributes G-dependent work. Mapping objects were never exercised; no mapping-cost claim is validated. List-kind is not independently established as a necessary variable."
+    },
+    {
+      "id": "batch-reachable-volume",
+      "region": "source/comfy_execution/caching.py:102 CacheKeySetInputSignature.add_keys (composition of nested interfaces)",
+      "expression": "N=len(node_ids); R=sum(1+|distinct transitive ancestors(v)| for each requested uncached valid v); E=sum(number of linked inputs across each such root closure)",
+      "evidence": "Each key separately rebuilds its ancestry and signatures, even when ancestor nodes also have cached keys. For generated chains R=N*(N+1)/2,E=N*(N-1)/2; for stars R=2*N-1,E=N-1; for overlapping two-parent graphs R=N*(N+1)/2,E=(N-1)^2. Exact observed ancestry/immediate call totals match R in all three rounds; total recursive conversion calls match N+6*(R+E) when marked. Thus shared paths do not cause exponential expansion, but additional edges still add work.",
+      "scope": "R,E are semantic composition summaries of the entry graph, not annotations computed by replaying ancestry traversal. Direct annotations were placed after ancestry where the closure already exists. Closed forms describe only the generated workload, and do not replace the general structural interface. No wall-time law or exact globally affine instruction law is claimed."
+    }
+  ],
+  "experiment": "Final: source-only round 0 submitted before measurement; three DrPerf rounds, six configurations each: n={16,64}, n={8,24}, n={16,48}, all shapes 0/1/2. All 18 processes succeeded. Behavior preserved; only observation wrappers added."
+}

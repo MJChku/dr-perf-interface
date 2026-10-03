@@ -1,0 +1,14 @@
+LMCACHE_OVERLAY 15 modules -> /w/runs/lmc-waits-20260929-probe-get/lmcache_pkg
+LMCACHE arm=remote_naive config:
+  chunk_size: 256
+  local_cpu: False
+  max_local_cpu_size: 2
+  remote_url: "lm://localhost:65432"
+  remote_serde: "naive"
+DRPERF_LMCACHE run=/w/runs/lmc-waits-20260929-probe-get arm=remote_naive mode=late model=Qwen/Qwen2.5-0.5B-Instruct sessions=24 turns=6 2026-09-29T14:47:36Z
+DRPERF_LMCACHE serve rc=0 2026-09-29T14:54:35Z
+OFFLINE engine ready in 58.8s pid=55
+CLIENT_SUMMARY {"requests": 144, "failed": 0, "total_s": 102.7}
+OFFLINE_DONE
+LMCache events: stored=47 retrieved=110 key_errors=0 errors=0
+DRPERF_LMCACHE_DONE 2026-09-29T14:54:35Z

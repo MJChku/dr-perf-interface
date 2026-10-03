@@ -1,0 +1,3194 @@
+{
+  "schema": 1,
+  "system": "Causal Forcing++ framewise one-step",
+  "source_revision": "b4ffbd491b4f941e25bde66f425384c31f8dc9af",
+  "decision": "Deprioritize further CPU-only optimization: little modeled idle, small candidate effect. This is a heuristic GX screening decision, not a proven hardware bound.",
+  "workload": {
+    "model": "1.3B EMA",
+    "latent_frames": 21,
+    "pixel_frames": 81,
+    "height": 480,
+    "width": 832,
+    "first_frame_steps": 4,
+    "later_frame_steps": 1,
+    "cache_refresh_per_frame": true,
+    "layers": 30,
+    "text_offload": true,
+    "measurement": "Warmed text encoding, denoising, VAE decode and CPU output; excludes setup and video-file encoding."
+  },
+  "checkpoint": {
+    "repository": "zhuhz22/Causal-Forcing",
+    "revision": "2f8eb8bb6eeb1238da9d13e5420d342a74d634a6",
+    "file": "causal-forcing++/framewise-1step.pt",
+    "source_sha256": "bdb1b475fc88d528f510158a0990cd457f02c661b527ceb11ca9e4728533e2d0",
+    "source_bytes": 5676220819,
+    "source_keys": [
+      "generator_ema"
+    ],
+    "tensors": 825,
+    "source_dtypes": [
+      "torch.float32"
+    ],
+    "derived_sha256": "2814638e855520bcfcf7238fda81990a4c8f724529a59bca9d00fa58a7403bdc",
+    "derived_bytes": 2838280956,
+    "verified": "Every reloaded EMA tensor exactly equals the original cast to the public inference BF16 dtype."
+  },
+  "kernel_profile": {
+    "statistics": {
+      "signatures": 332,
+      "samples": 866,
+      "observed_launches": 118865,
+      "skips": 0
+    },
+    "archive": "kernel-databases/causal-forcing-profile.json.gz",
+    "actual_gpu": "A100 GPU1; kernel calibration only; no candidate native validation"
+  },
+  "gx": {
+    "before": {
+      "run": "/home/ubuntu/GX/NEX/build/experiments/cf-time-before-1789706682946543443",
+      "virtual_seconds": 7.253082086562296,
+      "cpu_work_seconds_sum": 1.8298552564724122,
+      "generation_wall_seconds": [
+        146.6007548738271
+      ],
+      "load_wall_seconds": 10.25900967232883,
+      "warmup_wall_seconds": [
+        35.455871956422925
+      ],
+      "prediction_hits": 118781,
+      "prediction_misses": 84,
+      "prediction_coverage": 0.9992933159466622,
+      "copies": {
+        "nodes": 17277,
+        "missing_metadata": 0,
+        "unmodeled_host_link": 0,
+        "host_service_ns_sum": 904245462.7690024,
+        "counts_h2h_h2d_d2h_d2d": [
+          0,
+          5873,
+          2703,
+          8701
+        ],
+        "bytes_h2h_h2d_d2h_d2d": [
+          0,
+          11362798208,
+          392392808,
+          130729743360
+        ]
+      },
+      "trace": "/home/ubuntu/GX/NEX/build/experiments/cf-time-before-1789706682946543443/timeline-report/trace.json.gz",
+      "trace_bytes": 16527133,
+      "miss_signatures": [
+        {
+          "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+          "grid": [
+            1,
+            3,
+            3
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "count": 21
+        },
+        {
+          "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+          "grid": [
+            37687,
+            3,
+            1
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "count": 1
+        },
+        {
+          "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+          "grid": [
+            75373,
+            3,
+            1
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "count": 20
+        },
+        {
+          "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+          "grid": [
+            12480,
+            1,
+            1
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "count": 1
+        },
+        {
+          "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+          "grid": [
+            49920,
+            1,
+            1
+          ],
+          "block": [
+            256,
+            1,
+            1
+          ],
+          "count": 20
+        },
+        {
+          "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+          "grid": [
+            1,
+            3120,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "count": 1
+        },
+        {
+          "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+          "grid": [
+            1,
+            12480,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "count": 20
+        }
+      ],
+      "harness_sha256": "b2425791a3046acebd1dbac4e6e647cda1ad459cb292f01dd7f33bedc975d49f",
+      "source_sha256": {
+        "pipeline/__init__.py": "55efa8e73f634eaaaa186719c5aa9142fe4842e4b60a46de539b4127298fd63e",
+        "pipeline/bidirectional_diffusion_inference.py": "4c9646902d566b7bf5beb3df908209a02152dd85a9692eaf1938887821e3b9c7",
+        "pipeline/bidirectional_inference.py": "797f5c1d9c18f27163cbb7cd028640a3f9adeb0ccdc0cb18253b08a3c8fa3346",
+        "pipeline/bidirectional_training.py": "76c584b59073d0de303531035eb19393d6a49634dc178e4308d47988245bae77",
+        "pipeline/causal_diffusion_inference.py": "2d7b0beac053cf2f7a0284d91b6bf54004981e1379efa625b46fef1e1e787d65",
+        "pipeline/causal_inference.py": "9feff55d8b8fe7177c2c437850a51f442ef33b3c7c1837cadfd03c04691a2733",
+        "pipeline/self_forcing_training.py": "97044b36d23d63122e55b6f0b070e6c1e7f5ff0763f5fe83cd26b020c80081f3",
+        "pipeline/teacher_forcing_training.py": "2bbe5830cc56be97d0d4049ded65cb028ed28b30e11692c6df1d426be5b59401",
+        "utils/create_lmdb_iterative.py": "e655e8db5ec757ce838b5d56d9d9b4791ac0b0298815e7de757cb0b290ce4e9e",
+        "utils/dataset.py": "4c97f4881e0329747fc90e627dd4b30679ecf54e9435d2d40161264eaed5eb77",
+        "utils/distributed.py": "38ee5f7ba55ae4fd7eb0aca7316b8b721cc50b7572bb54c7f9a7444f22491035",
+        "utils/lmdb_.py": "d8bfb912cd75a947a8214955b1022662c99d4b23ff882d6e68bb717faafe8b1e",
+        "utils/loss.py": "5a08ba589ef54d5deb50d1ff1984f2969b1fdc2f03c53751167eb23a7082ecfe",
+        "utils/merge_and_get_clean.py": "1acfdeb6406fa834230333bcc1a77a26fcf5d078319cda38ead6cc3d775c2da2",
+        "utils/merge_lmdb.py": "08c04768ad7b521488ff15d07d9ff3ec967c5b8bcd48cb2e17f7975f2a694b52",
+        "utils/misc.py": "610bead16d50d99fabdccb2e9ce3c20fa1fa1cd3bdf735d7ff7ffda978bfe195",
+        "utils/ode_generation.py": "ee1166acfc75ae89f27f1f4fba5216132a0e762f2c3e4016d205363e5f43394e",
+        "utils/scheduler.py": "4194ef1324bb06527621749c7f9a82f431ccf011823aa65099cb7bdf116b642e",
+        "utils/wan_wrapper.py": "5120536c7d58fabc75187245a007f0a1486889372386b698d640fb80b280331d",
+        "wan/__init__.py": "d9390f993a448bd679ac8d5254620ca6b5d2bc450f65bbf5f4a64c82cb4f4a99",
+        "wan/configs/__init__.py": "7b782183abca0e09c3efbc8ff02ab12c50c023d59642f6077cc16d1a23fa8bac",
+        "wan/configs/shared_config.py": "e3785cd01cff5763f83159ccc242f2d17435ba8dcef99f4a70db958c88e7f5ab",
+        "wan/configs/wan_i2v_14B.py": "2d5a3ff4326a5b1c1c8d564f8a8829fe30879cb99fe0ad1b18c236ecb43aac54",
+        "wan/configs/wan_t2v_14B.py": "a1d8f5f876fa20c4f58c5ee5433ca0d5e2cdf37accef7c97bc0c5aee7ba8db8c",
+        "wan/configs/wan_t2v_1_3B.py": "28dea1d8ef2095d7ddd1e2506e7b498ba698b32e962bdbc79d6d7da3ca5a6d0c",
+        "wan/distributed/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "wan/distributed/fsdp.py": "a20cbd8ea747db64226eb21e5e848c44cc2ccf95a76efbf13956efe8e9f900a3",
+        "wan/distributed/xdit_context_parallel.py": "b3b16b38dd08b0e857d90e4c97c7a41a06368be477abafa460ce3a44ea596474",
+        "wan/image2video.py": "46348294457e81210c70d40c6a1be6e24e5b749a48bf4aaac3febb6bd8e155ee",
+        "wan/modules/__init__.py": "6cba8c084de01455a914a3b5620e0a286d4dee2c39143b6508bb8fac87e71b4b",
+        "wan/modules/attention.py": "02ad719a76e6bdec79d18fc62b094ef2ad7c28b2d593c9f395ae1226041b7c9d",
+        "wan/modules/causal_model.py": "0566a17f867a7c8ea8ad80d8b79bdfe17aaa4c7859873ffde881a6cdc12c9edd",
+        "wan/modules/clip.py": "2ab8672603a998422defb897e16531608750737ab8d631520b055bda93aba35c",
+        "wan/modules/model.py": "f15214485a5297e6f9e79684bbad80acbcdc88c3272596b256a739a734529449",
+        "wan/modules/t5.py": "8b0cebf3192c542f92a344255a06c203df3ba24160715899a055cc8de0cd930f",
+        "wan/modules/tokenizers.py": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934",
+        "wan/modules/vae.py": "a4c1d9362f25a1bef463ac51caed4097317c007d4d87887b02a3a733fdbc48d5",
+        "wan/modules/xlm_roberta.py": "7e27d93573b5fb0fef1c9db9205264453bd30dcb1404c38031f24ed9c84b8d4a",
+        "wan/text2video.py": "ca344c0f24d3d305dd93a0433dc88a212e5d815bb8a784f8f54fc9fa98ff06c1",
+        "wan/utils/__init__.py": "4a8d71cd9feefa65d51770ee8351a07cd6ebe82f9b75fef1ddaf0f30b4db502c",
+        "wan/utils/fm_solvers.py": "f7254e3ac5c6c6715317cdf991d927cde61c1400ad73851be41fc51ce5ecba5d",
+        "wan/utils/fm_solvers_unipc.py": "de622aced9aa5022622509295e5a0e40589b53f59ce13cf64061af9e99af5f66",
+        "wan/utils/prompt_extend.py": "f00f7f03ed5dc6d7648290c3d9b0f80b33d71692958542c447d722acc42dcbd6",
+        "wan/utils/qwen_vl_utils.py": "9ae8190bdb0c6ad5b283fd9fecae65f3adfe45bc90326d3851fb5c8d777995c9",
+        "wan/utils/utils.py": "ebf33b0c4dc69a62faca6243d58bfa890ea4fb9c056e7c1ef0fa501cbbe22566",
+        "demo_utils/constant.py": "d1c53d7d5209bd5065bf566948333849a3bf9c71d151a0d7325acf67f46cb3d9",
+        "demo_utils/memory.py": "ca0b31c93019f802e1312d512591ae6bea35b450064cdde19b6202779f50bb7f",
+        "demo_utils/taehv.py": "865b1dd0516682c02352bd76bce2ad0472588330ea9fab30ca0895630f263244",
+        "demo_utils/utils.py": "f539911c5317323e24cdbcb331dc66645f6e7a1e6c68aa8ed4bb24effefa9843",
+        "demo_utils/vae.py": "0b938e1e356a221b8c9ac1c64e554bfd01016b609752ab760805829303deb034",
+        "demo_utils/vae_block3.py": "2a9a50fd1731992a32232a79bf0457d50c12d12db1ea9c14d9adb4201816e0f4",
+        "demo_utils/vae_torch2trt.py": "8a267d73ac8a506a402c340726c6dbcdeca3328a909ce61922114bbe3fcb7068"
+      },
+      "low_memory": true,
+      "control_scalar_counts": {
+        "reads": 5400,
+        "writes": 5400,
+        "emulated_read_mismatches": 5280
+      },
+      "gpu_utilization": {
+        "build/experiments/cf-time-before-1789706682946543443/host-0/d0/timeline/rank-unknown-pid-330.jsonl:gpu:0": {
+          "busy_ns": 7069867070.785128,
+          "idle_ns": 183232637.01203156,
+          "busy_fraction": 0.9747373337753713
+        }
+      },
+      "iterations": [
+        {
+          "record": "build/experiments/cf-time-before-1789706682946543443/host-0/d0/timeline/rank-unknown-pid-330.jsonl",
+          "iteration": 1,
+          "start_ns": 17621.23486328125,
+          "end_ns": 7253099707.797159,
+          "virtual_ns": 7253082086.562296
+        }
+      ]
+    },
+    "after": {
+      "run": "/home/ubuntu/GX/NEX/build/experiments/cf-time-after-1789706976684671218",
+      "virtual_seconds": 7.127745580853846,
+      "cpu_work_seconds_sum": 1.8213933687280273,
+      "generation_wall_seconds": [
+        134.22575557045639
+      ],
+      "load_wall_seconds": 10.226234074681997,
+      "warmup_wall_seconds": [
+        33.463309459388256
+      ],
+      "prediction_hits": 116144,
+      "prediction_misses": 21,
+      "prediction_coverage": 0.999819222657427,
+      "copies": {
+        "nodes": 14517,
+        "missing_metadata": 0,
+        "unmodeled_host_link": 0,
+        "host_service_ns_sum": 904243764.3062491,
+        "counts_h2h_h2d_d2h_d2d": [
+          0,
+          5813,
+          3,
+          8701
+        ],
+        "bytes_h2h_h2d_d2h_d2d": [
+          0,
+          11362797728,
+          392371208,
+          130729743360
+        ]
+      },
+      "trace": "/home/ubuntu/GX/NEX/build/experiments/cf-time-after-1789706976684671218/timeline-report/trace.json.gz",
+      "trace_bytes": 15472407,
+      "miss_signatures": [
+        {
+          "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+          "grid": [
+            276608512,
+            1,
+            1
+          ],
+          "block": [
+            896,
+            1,
+            1
+          ],
+          "count": 21
+        }
+      ],
+      "harness_sha256": "b2425791a3046acebd1dbac4e6e647cda1ad459cb292f01dd7f33bedc975d49f",
+      "source_sha256": {
+        "pipeline/__init__.py": "55efa8e73f634eaaaa186719c5aa9142fe4842e4b60a46de539b4127298fd63e",
+        "pipeline/bidirectional_diffusion_inference.py": "4c9646902d566b7bf5beb3df908209a02152dd85a9692eaf1938887821e3b9c7",
+        "pipeline/bidirectional_inference.py": "797f5c1d9c18f27163cbb7cd028640a3f9adeb0ccdc0cb18253b08a3c8fa3346",
+        "pipeline/bidirectional_training.py": "76c584b59073d0de303531035eb19393d6a49634dc178e4308d47988245bae77",
+        "pipeline/causal_diffusion_inference.py": "2d7b0beac053cf2f7a0284d91b6bf54004981e1379efa625b46fef1e1e787d65",
+        "pipeline/causal_inference.py": "7b12b6489381b2d499812ff7a4065a7102ac75a2e3ed7fc154a3b20f9c1524fa",
+        "pipeline/self_forcing_training.py": "97044b36d23d63122e55b6f0b070e6c1e7f5ff0763f5fe83cd26b020c80081f3",
+        "pipeline/teacher_forcing_training.py": "2bbe5830cc56be97d0d4049ded65cb028ed28b30e11692c6df1d426be5b59401",
+        "utils/create_lmdb_iterative.py": "e655e8db5ec757ce838b5d56d9d9b4791ac0b0298815e7de757cb0b290ce4e9e",
+        "utils/dataset.py": "4c97f4881e0329747fc90e627dd4b30679ecf54e9435d2d40161264eaed5eb77",
+        "utils/distributed.py": "38ee5f7ba55ae4fd7eb0aca7316b8b721cc50b7572bb54c7f9a7444f22491035",
+        "utils/lmdb_.py": "d8bfb912cd75a947a8214955b1022662c99d4b23ff882d6e68bb717faafe8b1e",
+        "utils/loss.py": "5a08ba589ef54d5deb50d1ff1984f2969b1fdc2f03c53751167eb23a7082ecfe",
+        "utils/merge_and_get_clean.py": "1acfdeb6406fa834230333bcc1a77a26fcf5d078319cda38ead6cc3d775c2da2",
+        "utils/merge_lmdb.py": "08c04768ad7b521488ff15d07d9ff3ec967c5b8bcd48cb2e17f7975f2a694b52",
+        "utils/misc.py": "610bead16d50d99fabdccb2e9ce3c20fa1fa1cd3bdf735d7ff7ffda978bfe195",
+        "utils/ode_generation.py": "ee1166acfc75ae89f27f1f4fba5216132a0e762f2c3e4016d205363e5f43394e",
+        "utils/scheduler.py": "4194ef1324bb06527621749c7f9a82f431ccf011823aa65099cb7bdf116b642e",
+        "utils/wan_wrapper.py": "5120536c7d58fabc75187245a007f0a1486889372386b698d640fb80b280331d",
+        "wan/__init__.py": "d9390f993a448bd679ac8d5254620ca6b5d2bc450f65bbf5f4a64c82cb4f4a99",
+        "wan/configs/__init__.py": "7b782183abca0e09c3efbc8ff02ab12c50c023d59642f6077cc16d1a23fa8bac",
+        "wan/configs/shared_config.py": "e3785cd01cff5763f83159ccc242f2d17435ba8dcef99f4a70db958c88e7f5ab",
+        "wan/configs/wan_i2v_14B.py": "2d5a3ff4326a5b1c1c8d564f8a8829fe30879cb99fe0ad1b18c236ecb43aac54",
+        "wan/configs/wan_t2v_14B.py": "a1d8f5f876fa20c4f58c5ee5433ca0d5e2cdf37accef7c97bc0c5aee7ba8db8c",
+        "wan/configs/wan_t2v_1_3B.py": "28dea1d8ef2095d7ddd1e2506e7b498ba698b32e962bdbc79d6d7da3ca5a6d0c",
+        "wan/distributed/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "wan/distributed/fsdp.py": "a20cbd8ea747db64226eb21e5e848c44cc2ccf95a76efbf13956efe8e9f900a3",
+        "wan/distributed/xdit_context_parallel.py": "b3b16b38dd08b0e857d90e4c97c7a41a06368be477abafa460ce3a44ea596474",
+        "wan/image2video.py": "46348294457e81210c70d40c6a1be6e24e5b749a48bf4aaac3febb6bd8e155ee",
+        "wan/modules/__init__.py": "6cba8c084de01455a914a3b5620e0a286d4dee2c39143b6508bb8fac87e71b4b",
+        "wan/modules/attention.py": "02ad719a76e6bdec79d18fc62b094ef2ad7c28b2d593c9f395ae1226041b7c9d",
+        "wan/modules/causal_model.py": "0566a17f867a7c8ea8ad80d8b79bdfe17aaa4c7859873ffde881a6cdc12c9edd",
+        "wan/modules/clip.py": "2ab8672603a998422defb897e16531608750737ab8d631520b055bda93aba35c",
+        "wan/modules/model.py": "f15214485a5297e6f9e79684bbad80acbcdc88c3272596b256a739a734529449",
+        "wan/modules/t5.py": "8b0cebf3192c542f92a344255a06c203df3ba24160715899a055cc8de0cd930f",
+        "wan/modules/tokenizers.py": "cf5b189c1ae017326efadab2fc6380ba223fa7a59d0be6464bd264db53c76934",
+        "wan/modules/vae.py": "a4c1d9362f25a1bef463ac51caed4097317c007d4d87887b02a3a733fdbc48d5",
+        "wan/modules/xlm_roberta.py": "7e27d93573b5fb0fef1c9db9205264453bd30dcb1404c38031f24ed9c84b8d4a",
+        "wan/text2video.py": "ca344c0f24d3d305dd93a0433dc88a212e5d815bb8a784f8f54fc9fa98ff06c1",
+        "wan/utils/__init__.py": "4a8d71cd9feefa65d51770ee8351a07cd6ebe82f9b75fef1ddaf0f30b4db502c",
+        "wan/utils/fm_solvers.py": "f7254e3ac5c6c6715317cdf991d927cde61c1400ad73851be41fc51ce5ecba5d",
+        "wan/utils/fm_solvers_unipc.py": "de622aced9aa5022622509295e5a0e40589b53f59ce13cf64061af9e99af5f66",
+        "wan/utils/prompt_extend.py": "f00f7f03ed5dc6d7648290c3d9b0f80b33d71692958542c447d722acc42dcbd6",
+        "wan/utils/qwen_vl_utils.py": "9ae8190bdb0c6ad5b283fd9fecae65f3adfe45bc90326d3851fb5c8d777995c9",
+        "wan/utils/utils.py": "ebf33b0c4dc69a62faca6243d58bfa890ea4fb9c056e7c1ef0fa501cbbe22566",
+        "demo_utils/constant.py": "d1c53d7d5209bd5065bf566948333849a3bf9c71d151a0d7325acf67f46cb3d9",
+        "demo_utils/memory.py": "ca0b31c93019f802e1312d512591ae6bea35b450064cdde19b6202779f50bb7f",
+        "demo_utils/taehv.py": "865b1dd0516682c02352bd76bce2ad0472588330ea9fab30ca0895630f263244",
+        "demo_utils/utils.py": "f539911c5317323e24cdbcb331dc66645f6e7a1e6c68aa8ed4bb24effefa9843",
+        "demo_utils/vae.py": "0b938e1e356a221b8c9ac1c64e554bfd01016b609752ab760805829303deb034",
+        "demo_utils/vae_block3.py": "2a9a50fd1731992a32232a79bf0457d50c12d12db1ea9c14d9adb4201816e0f4",
+        "demo_utils/vae_torch2trt.py": "8a267d73ac8a506a402c340726c6dbcdeca3328a909ce61922114bbe3fcb7068"
+      },
+      "low_memory": true,
+      "control_scalar_counts": {
+        "reads": 5400,
+        "writes": 5400
+      },
+      "gpu_utilization": {
+        "build/experiments/cf-time-after-1789706976684671218/host-0/d0/timeline/rank-unknown-pid-330.jsonl:gpu:0": {
+          "busy_ns": 7117501793.322315,
+          "idle_ns": 10261347.724157333,
+          "busy_fraction": 0.9985603691479217
+        }
+      },
+      "iterations": [
+        {
+          "record": "build/experiments/cf-time-after-1789706976684671218/host-0/d0/timeline/rank-unknown-pid-330.jsonl",
+          "iteration": 1,
+          "start_ns": 17560.192626953125,
+          "end_ns": 7127763141.046473,
+          "virtual_ns": 7127745580.853846
+        }
+      ]
+    },
+    "launch_differences": [
+      {
+        "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+        "grid": [
+          276608512,
+          1,
+          1
+        ],
+        "block": [
+          896,
+          1,
+          1
+        ],
+        "before": 0,
+        "after": 21
+      },
+      {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi2ENS0_11FillFunctorIlEESt5arrayIPcLm1EEEEviT0_T1_",
+        "grid": [
+          1,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "before": 2772,
+        "after": 72
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          37687,
+          3,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 6,
+        "after": 7
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          75373,
+          3,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 120,
+        "after": 140
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          1,
+          3,
+          3
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 21,
+        "after": 0
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          37687,
+          3,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 1,
+        "after": 0
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16ffLb0ELb1EL21cudnnKernelDataType_t2EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          75373,
+          3,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 20,
+        "after": 0
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          12480,
+          1,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 0,
+        "after": 1
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          49920,
+          1,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 0,
+        "after": 20
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          12480,
+          1,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 1,
+        "after": 0
+      },
+      {
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelIf13__nv_bfloat16fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+        "grid": [
+          49920,
+          1,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "before": 20,
+        "after": 0
+      },
+      {
+        "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+        "grid": [
+          1,
+          1560,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "before": 0,
+        "after": 1
+      },
+      {
+        "name": "sm80_xmma_fprop_implicit_gemm_indexed_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize256x32x32_stage4_warpsize4x1x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+        "grid": [
+          1,
+          6240,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "before": 0,
+        "after": 20
+      },
+      {
+        "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+        "grid": [
+          1,
+          3120,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "before": 1,
+        "after": 0
+      },
+      {
+        "name": "sm80_xmma_fprop_implicit_gemm_indexed_wo_smem_tf32f32_tf32f32_f32_nhwckrsc_nhwc_tilesize128x16x64_stage1_warpsize4x1x1_g1_tensor16x8x8_aligna4_alignc4_execute_kernel__5x_cudnn",
+        "grid": [
+          1,
+          12480,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "before": 20,
+        "after": 0
+      }
+    ],
+    "model": "partial_sync with workload-specific CPU calibration and native kernel database. Attention context aliasing and cuDNN shape differences limit timing accuracy.",
+    "cpu_calibration": {
+      "database": "/home/ubuntu/drperf/out/causal-video/causal-forcing/cpu.db",
+      "sha256": "d0f0941eee0eec223ac57990abf8a945dab2666a51be4dfbeceba8315d704007",
+      "header": "GXVM_NATIVE_IPS_V1 instruction_period=5000000 task_period_ns=5000000 instruction_samples=23650 task_samples=4778 unresolved_instruction_samples=6652 unresolved_task_samples=4"
+    },
+    "gpu_calibration": {
+      "database": "/home/ubuntu/drperf/out/causal-video/causal-forcing/gpu.sqlite",
+      "sha256": "791067de4e9319a3f91905820c7ce06205b7083bbf90bb245b8c0fbc4dcd8463"
+    }
+  },
+  "drperf": {
+    "before": {
+      "schema": "causal-video-drperf-summary-v1",
+      "input_raw": "/home/ubuntu/GX/NEX/build/experiments/cf-drperf-1789706305113411927/host-0/drperf/raw",
+      "validity": [],
+      "counters": [
+        {
+          "version": "0.3",
+          "pid": 330,
+          "app": "python3.12",
+          "excluded_cuda_module": "gx_cuda.so",
+          "follow_unmarked_threads": false,
+          "excluded_cuda_exports": 1555,
+          "excluded_cuda_calls": 2822337,
+          "excluded_instructions": 2899421252,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 123849,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 19,
+          "trace_file": "/workspace/runs/1789706305113411927/drperf/raw/run.330.json.trace",
+          "trace_records": 6844,
+          "trace_dropped": 0
+        }
+      ],
+      "regions": {
+        "cf_block": {
+          "calls": 1350,
+          "exclusive_instructions": 2004943219,
+          "mean_exclusive_instructions": 1485143.125185185,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start": 0.0
+            },
+            "constant": 1465732.4150794374,
+            "max_unexplained_fraction": 0.011636937280018621,
+            "max_reconstruction_error_fraction": 0.030254616882341514
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 184221573
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 53969546
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 49341540
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 45370440
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 41683581
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "pthread_mutex_lock",
+              "instructions": 31917720
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 30368925
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 28408026
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_decode": {
+          "calls": 1,
+          "exclusive_instructions": 320825521,
+          "mean_exclusive_instructions": 320825521.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "frames"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              21
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 21
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 22034839
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 7617621
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 7093176
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 6695547
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 5702690
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "malloc",
+              "instructions": 4890637
+            },
+            {
+              "module": "libgcc_s.so.1",
+              "symbol": "_Unwind_GetTextRelBase+?",
+              "instructions": 4650934
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 4368087
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_flash_dispatch": {
+          "calls": 1350,
+          "exclusive_instructions": 652235161,
+          "mean_exclusive_instructions": 483137.1562962963,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "q_tokens",
+            "k_tokens"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ],
+            [
+              1560,
+              32760
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "q_tokens"
+          ],
+          "fixed_pcv_observations": {
+            "q_tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "q_tokens": 1560
+            },
+            "coefficients": {
+              "k_tokens": 0.003018481518481518
+            },
+            "constant": 482574.21349206235,
+            "max_unexplained_fraction": 0.0013493922812770605,
+            "max_reconstruction_error_fraction": 0.0023729565980923784
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 45290457
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 17952300
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 17192804
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 14844240
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 14401173
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 13072065
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 11801759
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDescr_IsData+?",
+              "instructions": 11429100
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: q_tokens"
+          ]
+        },
+        "cf_generate": {
+          "calls": 1,
+          "exclusive_instructions": 19168908,
+          "mean_exclusive_instructions": 19168908.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "frames"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              21
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 21
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 4292283
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 971759
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_SetItem+?",
+              "instructions": 616251
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 543678
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Update+?",
+              "instructions": 375532
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Malloc",
+              "instructions": 364323
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 347001
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 320085
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_model": {
+          "calls": 45,
+          "exclusive_instructions": 266988952,
+          "mean_exclusive_instructions": 5933087.822222223,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "start",
+            "frames"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              0,
+              1
+            ],
+            [
+              1560,
+              1
+            ],
+            [
+              3120,
+              1
+            ],
+            [
+              4680,
+              1
+            ],
+            [
+              6240,
+              1
+            ],
+            [
+              7800,
+              1
+            ],
+            [
+              9360,
+              1
+            ],
+            [
+              10920,
+              1
+            ],
+            [
+              12480,
+              1
+            ],
+            [
+              14040,
+              1
+            ],
+            [
+              15600,
+              1
+            ],
+            [
+              17160,
+              1
+            ],
+            [
+              18720,
+              1
+            ],
+            [
+              20280,
+              1
+            ],
+            [
+              21840,
+              1
+            ],
+            [
+              23400,
+              1
+            ],
+            [
+              24960,
+              1
+            ],
+            [
+              26520,
+              1
+            ],
+            [
+              28080,
+              1
+            ],
+            [
+              29640,
+              1
+            ],
+            [
+              31200,
+              1
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 1
+          },
+          "conditional_fit": {
+            "condition": {
+              "frames": 1
+            },
+            "coefficients": {
+              "start": -0.004382284382284381
+            },
+            "constant": 5797577.73030304,
+            "max_unexplained_fraction": 0.023380348250979573,
+            "max_reconstruction_error_fraction": 0.0008170817616646139
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 60919199
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 17813175
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_SetItem+?",
+              "instructions": 17073060
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Update+?",
+              "instructions": 7691947
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 6919843
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyTuple_Resize+?",
+              "instructions": 6030270
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 5706932
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyErr_ChainStackItem+?",
+              "instructions": 5674245
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_rope": {
+          "calls": 2700,
+          "exclusive_instructions": 754025867,
+          "mean_exclusive_instructions": 279268.8396296296,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start_frame"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1
+            ],
+            [
+              1560,
+              2
+            ],
+            [
+              1560,
+              3
+            ],
+            [
+              1560,
+              4
+            ],
+            [
+              1560,
+              5
+            ],
+            [
+              1560,
+              6
+            ],
+            [
+              1560,
+              7
+            ],
+            [
+              1560,
+              8
+            ],
+            [
+              1560,
+              9
+            ],
+            [
+              1560,
+              10
+            ],
+            [
+              1560,
+              11
+            ],
+            [
+              1560,
+              12
+            ],
+            [
+              1560,
+              13
+            ],
+            [
+              1560,
+              14
+            ],
+            [
+              1560,
+              15
+            ],
+            [
+              1560,
+              16
+            ],
+            [
+              1560,
+              17
+            ],
+            [
+              1560,
+              18
+            ],
+            [
+              1560,
+              19
+            ],
+            [
+              1560,
+              20
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start_frame": 0.0
+            },
+            "constant": 279259.66888888885,
+            "max_unexplained_fraction": 0.0,
+            "max_reconstruction_error_fraction": 0.001163293993167597
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 22693491
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 21578400
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "pthread_mutex_lock",
+              "instructions": 14623200
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 14287051
+            },
+            {
+              "module": "libtorch_cpu.so",
+              "symbol": "at::native::canUse32BitIndexMath",
+              "instructions": 13659300
+            },
+            {
+              "module": "libtorch_python.so",
+              "symbol": "torch::check_has_torch_function",
+              "instructions": 12865500
+            },
+            {
+              "module": "libtorch_cpu.so",
+              "symbol": "c10::TensorImpl::set_sizes_and_strides",
+              "instructions": 12376800
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__nss_database_lookup+?",
+              "instructions": 11336402
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_self_attn": {
+          "calls": 1350,
+          "exclusive_instructions": 1280743083,
+          "mean_exclusive_instructions": 948698.58,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start": 0.0
+            },
+            "constant": 945217.78285714,
+            "max_unexplained_fraction": 0.003689929655809862,
+            "max_reconstruction_error_fraction": 0.0028677548220512996
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 176227877
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 42572294
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 27032040
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 22069770
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 21198074
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyTuple_Resize+?",
+              "instructions": 21028254
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 18603497
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 17030406
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_t5_attn": {
+          "calls": 24,
+          "exclusive_instructions": 16914220,
+          "mean_exclusive_instructions": 704759.1666666666,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              512
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 512
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 1165350
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 851201
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 456768
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 429973
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 416567
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 377952
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_GetSlot+?",
+              "instructions": 318653
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "malloc",
+              "instructions": 281157
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_text": {
+          "calls": 1,
+          "exclusive_instructions": 44478767,
+          "mean_exclusive_instructions": 44478767.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "chars"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              41
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "chars"
+          ],
+          "fixed_pcv_observations": {
+            "chars": 41
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 3761079
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 2030466
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 1291736
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 1188431
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 1091400
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 892645
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_GetSlot+?",
+              "instructions": 720358
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_IsSubtype",
+              "instructions": 657131
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: chars"
+          ]
+        }
+      },
+      "excluded_setup_regions": [
+        "fastvideo_attach_setup"
+      ],
+      "total_marked_exclusive_instructions": 5360323698,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 520606148
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 143514025
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 119790456
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 111632062
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 101865648
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 80312847
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 79692996
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 73233487
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 73079959
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 67079966
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__nss_database_lookup+?",
+          "instructions": 60590885
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 58992652
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 58679591
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDescr_IsData+?",
+          "instructions": 57353086
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 57275943
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 51286304
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_IsSubtype",
+          "instructions": 50788646
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 49811681
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_SetItem+?",
+          "instructions": 46860364
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 45385337
+        }
+      ],
+      "limitations": [
+        "Exclusive basic-block instructions are summed across marked regions without nested double counting.",
+        "A fitted affine relation describes observed states only; it is not evidence of causation or GPU time.",
+        "Irregular function ranking is mean instructions per observed state, not total weighted cost."
+      ]
+    },
+    "after": {
+      "schema": "causal-video-drperf-summary-v1",
+      "input_raw": "/home/ubuntu/GX/NEX/build/experiments/cf-drperf-after-1789707306053904487/host-0/drperf/raw",
+      "validity": [],
+      "counters": [
+        {
+          "version": "0.3",
+          "pid": 288,
+          "app": "python3.12",
+          "excluded_cuda_module": "gx_cuda.so",
+          "follow_unmarked_threads": false,
+          "excluded_cuda_exports": 1555,
+          "excluded_cuda_calls": 2775417,
+          "excluded_instructions": 2854848295,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 123959,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 19,
+          "trace_file": "/workspace/runs/1789707306053904487/drperf/raw/run.288.json.trace",
+          "trace_records": 6844,
+          "trace_dropped": 0
+        }
+      ],
+      "regions": {
+        "cf_block": {
+          "calls": 1350,
+          "exclusive_instructions": 2001246831,
+          "mean_exclusive_instructions": 1482405.06,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start": 0.0
+            },
+            "constant": 1460024.3025397537,
+            "max_unexplained_fraction": 0.013721002232686906,
+            "max_reconstruction_error_fraction": 0.03097509404106767
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 184221573
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 55181832
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 49341540
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 45299520
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 40510133
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "pthread_mutex_lock",
+              "instructions": 31917720
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 31462220
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 28140640
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_decode": {
+          "calls": 1,
+          "exclusive_instructions": 321186331,
+          "mean_exclusive_instructions": 321186331.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "frames"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              21
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 21
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 22034839
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 7617621
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 7093176
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 6669350
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 5902574
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "malloc",
+              "instructions": 4884726
+            },
+            {
+              "module": "libgcc_s.so.1",
+              "symbol": "_Unwind_GetTextRelBase+?",
+              "instructions": 4650934
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 4533369
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_flash_dispatch": {
+          "calls": 1350,
+          "exclusive_instructions": 650189833,
+          "mean_exclusive_instructions": 481622.0985185185,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "q_tokens",
+            "k_tokens"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ],
+            [
+              1560,
+              32760
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "q_tokens"
+          ],
+          "fixed_pcv_observations": {
+            "q_tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "q_tokens": 1560
+            },
+            "coefficients": {
+              "k_tokens": 0.0
+            },
+            "constant": 479563.9766666667,
+            "max_unexplained_fraction": 0.004736167573804014,
+            "max_reconstruction_error_fraction": 0.0016349936401543691
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 45290449
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 17952300
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 16630876
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 14821560
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 14484419
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 13018897
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 11758086
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDescr_IsData+?",
+              "instructions": 11429100
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: q_tokens"
+          ]
+        },
+        "cf_generate": {
+          "calls": 1,
+          "exclusive_instructions": 18565817,
+          "mean_exclusive_instructions": 18565817.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "frames"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              21
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 21
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 4289473
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 951159
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_SetItem+?",
+              "instructions": 616251
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 522990
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Update+?",
+              "instructions": 375352
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Malloc",
+              "instructions": 354122
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 347001
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 332145
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_model": {
+          "calls": 45,
+          "exclusive_instructions": 267076952,
+          "mean_exclusive_instructions": 5935043.377777778,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "start",
+            "frames"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              0,
+              1
+            ],
+            [
+              1560,
+              1
+            ],
+            [
+              3120,
+              1
+            ],
+            [
+              4680,
+              1
+            ],
+            [
+              6240,
+              1
+            ],
+            [
+              7800,
+              1
+            ],
+            [
+              9360,
+              1
+            ],
+            [
+              10920,
+              1
+            ],
+            [
+              12480,
+              1
+            ],
+            [
+              14040,
+              1
+            ],
+            [
+              15600,
+              1
+            ],
+            [
+              17160,
+              1
+            ],
+            [
+              18720,
+              1
+            ],
+            [
+              20280,
+              1
+            ],
+            [
+              21840,
+              1
+            ],
+            [
+              23400,
+              1
+            ],
+            [
+              24960,
+              1
+            ],
+            [
+              26520,
+              1
+            ],
+            [
+              28080,
+              1
+            ],
+            [
+              29640,
+              1
+            ],
+            [
+              31200,
+              1
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "frames"
+          ],
+          "fixed_pcv_observations": {
+            "frames": 1
+          },
+          "conditional_fit": {
+            "condition": {
+              "frames": 1
+            },
+            "coefficients": {
+              "start": 0.002251082251082251
+            },
+            "constant": 5796643.554545459,
+            "max_unexplained_fraction": 0.023901045758010553,
+            "max_reconstruction_error_fraction": 0.00104649791357977
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 60919199
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 17862864
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_SetItem+?",
+              "instructions": 17073060
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Update+?",
+              "instructions": 7691947
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 6919843
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyTuple_Resize+?",
+              "instructions": 6030270
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 5737184
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyErr_ChainStackItem+?",
+              "instructions": 5674245
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: frames"
+          ]
+        },
+        "cf_rope": {
+          "calls": 2700,
+          "exclusive_instructions": 754885406,
+          "mean_exclusive_instructions": 279587.1874074074,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start_frame"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1
+            ],
+            [
+              1560,
+              2
+            ],
+            [
+              1560,
+              3
+            ],
+            [
+              1560,
+              4
+            ],
+            [
+              1560,
+              5
+            ],
+            [
+              1560,
+              6
+            ],
+            [
+              1560,
+              7
+            ],
+            [
+              1560,
+              8
+            ],
+            [
+              1560,
+              9
+            ],
+            [
+              1560,
+              10
+            ],
+            [
+              1560,
+              11
+            ],
+            [
+              1560,
+              12
+            ],
+            [
+              1560,
+              13
+            ],
+            [
+              1560,
+              14
+            ],
+            [
+              1560,
+              15
+            ],
+            [
+              1560,
+              16
+            ],
+            [
+              1560,
+              17
+            ],
+            [
+              1560,
+              18
+            ],
+            [
+              1560,
+              19
+            ],
+            [
+              1560,
+              20
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start_frame": 0.0
+            },
+            "constant": 279588.5560317456,
+            "max_unexplained_fraction": 0.0,
+            "max_reconstruction_error_fraction": 0.0011275667621515474
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 22693491
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 21578400
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "pthread_mutex_lock",
+              "instructions": 14623200
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 14261429
+            },
+            {
+              "module": "libtorch_cpu.so",
+              "symbol": "at::native::canUse32BitIndexMath",
+              "instructions": 13659300
+            },
+            {
+              "module": "libtorch_python.so",
+              "symbol": "torch::check_has_torch_function",
+              "instructions": 12865500
+            },
+            {
+              "module": "libtorch_cpu.so",
+              "symbol": "c10::TensorImpl::set_sizes_and_strides",
+              "instructions": 12376800
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__nss_database_lookup+?",
+              "instructions": 11303166
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_self_attn": {
+          "calls": 1350,
+          "exclusive_instructions": 1259573602,
+          "mean_exclusive_instructions": 933017.4829629629,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens",
+            "start"
+          ],
+          "distinct_states": 21,
+          "state_values": [
+            [
+              1560,
+              0
+            ],
+            [
+              1560,
+              1560
+            ],
+            [
+              1560,
+              3120
+            ],
+            [
+              1560,
+              4680
+            ],
+            [
+              1560,
+              6240
+            ],
+            [
+              1560,
+              7800
+            ],
+            [
+              1560,
+              9360
+            ],
+            [
+              1560,
+              10920
+            ],
+            [
+              1560,
+              12480
+            ],
+            [
+              1560,
+              14040
+            ],
+            [
+              1560,
+              15600
+            ],
+            [
+              1560,
+              17160
+            ],
+            [
+              1560,
+              18720
+            ],
+            [
+              1560,
+              20280
+            ],
+            [
+              1560,
+              21840
+            ],
+            [
+              1560,
+              23400
+            ],
+            [
+              1560,
+              24960
+            ],
+            [
+              1560,
+              26520
+            ],
+            [
+              1560,
+              28080
+            ],
+            [
+              1560,
+              29640
+            ],
+            [
+              1560,
+              31200
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 1560
+          },
+          "conditional_fit": {
+            "condition": {
+              "tokens": 1560
+            },
+            "coefficients": {
+              "start": 0.0
+            },
+            "constant": 929313.5084126978,
+            "max_unexplained_fraction": 0.004183367264915425,
+            "max_reconstruction_error_fraction": 0.003428915637544295
+          },
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 175508794
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 42641328
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 26416440
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 22069770
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyObject_Free",
+              "instructions": 21175904
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyTuple_Resize+?",
+              "instructions": 20587374
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 17706561
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyEval_EvalCode+?",
+              "instructions": 17030406
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_t5_attn": {
+          "calls": 24,
+          "exclusive_instructions": 16917780,
+          "mean_exclusive_instructions": 704907.5,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "tokens"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              512
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "tokens"
+          ],
+          "fixed_pcv_observations": {
+            "tokens": 512
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 1165350
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 854278
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 456768
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 430152
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 417310
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 377952
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_GetSlot+?",
+              "instructions": 318626
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "malloc",
+              "instructions": 281014
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: tokens"
+          ]
+        },
+        "cf_text": {
+          "calls": 1,
+          "exclusive_instructions": 44425273,
+          "mean_exclusive_instructions": 44425273.0,
+          "gx_module_instructions": 0,
+          "declared_pcvs": [
+            "chars"
+          ],
+          "distinct_states": 1,
+          "state_values": [
+            [
+              41
+            ]
+          ],
+          "dropped_calls": 0,
+          "affine_identifiable": false,
+          "rank_deficient_pcvs": [
+            "chars"
+          ],
+          "fixed_pcv_observations": {
+            "chars": 41
+          },
+          "conditional_fit": null,
+          "coefficients": null,
+          "constant": null,
+          "max_unexplained_fraction": null,
+          "max_reconstruction_error_fraction": null,
+          "top_exclusive_functions": [
+            {
+              "module": "python3.12",
+              "symbol": "_PyEval_EvalFrameDefault",
+              "instructions": 3761079
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyDict_Contains+?",
+              "instructions": 2037453
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyObject_GenericGetAttrWithDict",
+              "instructions": 1291736
+            },
+            {
+              "module": "python3.12",
+              "symbol": "_PyType_Lookup",
+              "instructions": 1191753
+            },
+            {
+              "module": "ld-linux-x86-64.so.2",
+              "symbol": "__tls_get_addr",
+              "instructions": 1091400
+            },
+            {
+              "module": "libc.so.6",
+              "symbol": "__default_morecore+?",
+              "instructions": 875732
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_GetSlot+?",
+              "instructions": 720402
+            },
+            {
+              "module": "python3.12",
+              "symbol": "PyType_IsSubtype",
+              "instructions": 657131
+            }
+          ],
+          "top_irregular_functions_mean_per_state": [],
+          "warnings": [
+            "one observed state; a constant cost is not a discovered relation",
+            "rank-deficient PCVs: chars"
+          ]
+        }
+      },
+      "excluded_setup_regions": [
+        "fastvideo_attach_setup"
+      ],
+      "total_marked_exclusive_instructions": 5334067825,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 519884247
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 145617917
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 119040720
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 111644122
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 99177756
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 80066083
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 79190744
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 74924281
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 72639079
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 65248925
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__nss_database_lookup+?",
+          "instructions": 60340581
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 58679591
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 58629280
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDescr_IsData+?",
+          "instructions": 57221566
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 57111192
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 51280284
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_IsSubtype",
+          "instructions": 50703146
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 49783862
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_SetItem+?",
+          "instructions": 46654444
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 44894553
+        }
+      ],
+      "limitations": [
+        "Exclusive basic-block instructions are summed across marked regions without nested double counting.",
+        "A fitted affine relation describes observed states only; it is not evidence of causation or GPU time.",
+        "Irregular function ranking is mean instructions per observed state, not total weighted cost."
+      ]
+    },
+    "total_instruction_reduction_fraction": 0.004898187960140632
+  },
+  "candidate": {
+    "patch": "../cpu_patches/causal_forcing_metadata_cpu.patch",
+    "description": "Place global/local cache positions on CPU at initialization and reset; keep payload cache on GPU.",
+    "status": "GX functional/timing/instruction checks only; candidate output equality and native latency not validated.",
+    "removed_d2h_calls": 2700,
+    "removed_h2d_calls": 60,
+    "removed_gpu_fill_calls": 2700
+  },
+  "limits": [
+    "Native kernel calibration verifies the original pipeline and CPU-derived control audit, not candidate numerical equivalence.",
+    "GX substitutes CPU-known cache-position and tokenizer-length values while preserving GPU reads/writes/reductions; audit Python overhead is included.",
+    "CPU T5 construction uses strict assignment from mmap BF16 weights to avoid temporary FP32 allocations; same unmeasured setup for both variants.",
+    "Explicit low-memory text offload matches the A100 public branch; rounded GX free-memory reporting would otherwise choose a different policy.",
+    "Fixed geometry makes the declared multi-PCV fits rank-deficient. Conditional fits explain most cost, but are not general interfaces across unseen geometries.",
+    "Attention launches with key lengths 512 to 32760 alias to a single kernel signature; early samples do not cover all contexts.",
+    "cuDNN launch names/shapes differ between GX variants despite only changing metadata placement; tiny timing delta is not a clean speedup estimate.",
+    "CPU calibration is from the GX host, not the A100 CPU; 6652 of 30302 instruction samples are unresolved.",
+    "Baseline modeled idle is a prioritization signal, not a mathematical upper bound on native CPU optimization."
+  ]
+}

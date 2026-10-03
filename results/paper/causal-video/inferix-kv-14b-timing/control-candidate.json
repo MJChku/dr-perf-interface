@@ -1,0 +1,110 @@
+{
+  "name": "ix14-partial-after",
+  "hosts": [
+    {
+      "address": "ubuntu@icdslab4.epfl.ch",
+      "containers": 1
+    }
+  ],
+  "image": "gx-mixed-profile:rcp-20260915-110d87373a4a",
+  "workspace": "/home/ubuntu/gx-ix14",
+  "resources": {
+    "cpus": 24,
+    "memory": "57g"
+  },
+  "network": {
+    "name": "wan-timing-net",
+    "manager": 0
+  },
+  "files": {
+    "bundle": "/home/ubuntu/drperf/out/causal-video/inferix-kv-14b-timing/bundle",
+    "gpu_db": "/home/ubuntu/drperf/out/causal-video/inferix-kv-14b-timing/sync-predictor.sqlite",
+    "cpu_db": "/home/ubuntu/drperf/out/causal-video/inferix-cpu21/merged.db",
+    "context_limits": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/context-limits.tsv",
+    "device_attributes": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/device-attributes.tsv",
+    "source": "/home/ubuntu/drperf/out/causal-video/Inferix-kvtransfer-distributed"
+  },
+  "gxvm": {
+    "mode": "partial_sync",
+    "attachment": "late",
+    "replay": {
+      "database": "{file:cpu_db}",
+      "accounting": "refund",
+      "ns_per_instruction_scale": 1.0
+    },
+    "timeline": {
+      "sample_ns": 0
+    },
+    "gpu_memory": {
+      "mode": "hbm",
+      "hbm_bytes_per_second": 1555000000000,
+      "nvlink_bytes_per_second": 300000000000,
+      "host_link_bytes_per_second": 13000000000
+    }
+  },
+  "runtime": {
+    "gx_library": "/home/ubuntu/drperf/out/causal-video/streamdiffusionv2/sync-gx_cuda.so",
+    "client": "/home/ubuntu/GX/NEX/build/gxvm-runtime/libgxvm_native_client.so",
+    "profiler": "/home/ubuntu/GX/NEX/build/gxvm-runtime/libgxvm_native_ipc_profiler.so"
+  },
+  "timeout_seconds": 7200,
+  "application": {
+    "cwd": "/workspace",
+    "environment": {
+      "GX_HOME": "/home/jma/GX",
+      "GX_COMM_ONLY": "1",
+      "GX_DEVICE_MODEL": "A100",
+      "GX_NUM_LOCAL_GPUS": "8",
+      "GX_SHM_ARENA_GB": "8",
+      "GX_APP_REAL_MAX_BYTES": "8388608",
+      "GX_CHROME_TRACE": "1",
+      "GX_REAL_CUDNN": "1",
+      "GX_PREDICT_DB": "{file:gpu_db}",
+      "GX_CUDA_CONTEXT_LIMITS": "{file:context_limits}",
+      "GX_CUDA_DEVICE_ATTRIBUTES": "{file:device_attributes}",
+      "NCCL_SOCKET_IFNAME": "lo",
+      "GLOO_SOCKET_IFNAME": "lo",
+      "NCCL_DEBUG": "WARN",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7",
+      "PYTHONPATH": "{file:bundle}:{file:source}:/workspace/causal/deps:/workspace/causal/base/deps",
+      "LD_LIBRARY_PATH": "/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+      "TOKENIZERS_PARALLELISM": "false",
+      "HF_HUB_OFFLINE": "1",
+      "PYTHONUNBUFFERED": "1",
+      "GX_DEVICE_MEM_GB": "80"
+    },
+    "command": [
+      "bash",
+      "{file:bundle}/entry.sh",
+      "{run_dir}",
+      "8",
+      "{file:bundle}/runner.py",
+      "--role",
+      "partial_sync",
+      "--tree",
+      "{file:source}",
+      "--base",
+      "/workspace/wan-gx/checkpoint",
+      "--checkpoint",
+      "/dev/null",
+      "--output",
+      "{run_dir}/model",
+      "--latent-frames",
+      "21",
+      "--warmup-frames",
+      "21",
+      "--segments",
+      "1",
+      "--kv-residency",
+      "offload",
+      "--ulysses-size",
+      "2",
+      "--ring-size",
+      "4"
+    ]
+  }
+}

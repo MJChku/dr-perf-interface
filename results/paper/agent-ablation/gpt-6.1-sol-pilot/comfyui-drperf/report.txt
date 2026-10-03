@@ -1,0 +1,249 @@
+DRPERF PERFORMANCE REPORT
+Command: not recorded
+Regions: 5; graph: observed
+Declared event ordering: ordered
+Declared dependency channels observed: 0; waited(null) refinements: 0.
+Null refinements do not establish publishers; checking their markers/indicators does not validate their reasons.
+Wait obligations: 0/0 covered; 0 unexplained
+Read the graph below for structure; COST INTERFACES AND BREAKDOWN for formulas and functions.
+Queries: drperf --report REPORT.json --stats | --region NAME | --top costly | --top unexplained | --full
+graph.html: interactive region graph and selected-region performance details.
+profile.drperf.json: machine-readable formulas, checks, state tables and graph.
+Numeric displays are rounded to integers; the JSON retains full precision.
+Evidence sidecars support rechecking; keep them with the JSON.
+Cost evidence: 0/5 regions have one observed PCV state; 3 have nonzero own residual; 3 have nonzero interface residual including unresolved child terms.
+A one-state constant fit explains that state mean only; it does not establish growth or per-call variation.
+
+CODE COVERAGE
+Source lines inside marked regions: 8/2211 (0%); unmarked: 2203; status: measured
+Nonblank, noncomment source lines lexically inside discovered region spans / all such lines in the selected source tree. Nested spans count once; unexecuted regions still count. Includes marker/decorator lines and string literals. Callees outside a marked lexical span are not counted as marked. Supports Python, C/C++, headers and Rust; discovery exclusions and scan limits apply. Python region contexts/decorators support dynamic names; unrecognized wrappers and unmatched manual begin/end spans need explicit source support.
+  source/comfy/comfy_types/__init__.py: 0/30 lines marked
+  source/comfy/comfy_types/node_typing.py: 0/272 lines marked
+  source/comfy/comfy_types/examples/example_nodes.py: 0/21 lines marked
+  source/comfy_execution/asset_enrichment.py: 0/56 lines marked
+  source/comfy_execution/cache_provider.py: 0/104 lines marked
+  source/comfy_execution/caching.py: 8/514 lines marked
+  source/comfy_execution/graph.py: 0/269 lines marked
+  source/comfy_execution/graph_utils.py: 0/131 lines marked
+  source/comfy_execution/jobs.py: 0/430 lines marked
+  source/comfy_execution/progress.py: 0/272 lines marked
+  source/comfy_execution/utils.py: 0/37 lines marked
+  source/comfy_execution/validation.py: 0/33 lines marked
+  workload.py: 0/42 lines marked
+Annotated region names observed: 5/5; not observed: 0; status: observed
+Coverage of literal region names discovered in the selected source tree, not whole-program line or branch coverage. Multiple sites sharing one name cannot be distinguished. Dynamic marker names and excluded/unscanned source files are outside the denominator. Source discovery is bounded to 5000 files and skips files over 2 MB. A not-observed region has unknown cost; a complete fit says nothing about unexecuted code.
+
+ARCHITECTURE GRAPH
+contains = direct subregion; next = observed sibling order, not a dependency;
+waited -> = declared consumer-to-publisher claim. Check status is shown.
+Wait[?] = uncovered synchronization; waited(null) = event-free refinement with a supplied reason, not a dependency.
+Graph aggregates observed invocations; it is not a latency or critical-path model.
+
+REGION "ancestry.visit" (calls=2750; PCVs=inputs, links, has_links)
+  source: source/comfy_execution/caching.py:163
+  contains -> "ancestry.visit" [observations=2558; within="ancestry.visit"]
+  next -> "signature.assemble" [observations=192]
+
+REGION "hashable.visit" (calls=39156; PCVs=primitive, sequence_items, mapping_items, containers, child_slots, list_kind)
+  source: source/comfy_execution/caching.py:61
+  contains -> "hashable.visit" [observations=38964; within="hashable.visit"]
+  next -> "hashable.visit" [observations=25784; within="hashable.visit"]
+
+REGION "signature.assemble" (calls=192; PCVs=vertices, inputs, links)
+  source: source/comfy_execution/caching.py:117
+  contains -> "signature.hashable" [observations=192; within="signature.assemble"]
+  contains -> "signature.immediate" [observations=2750; within="signature.assemble"]
+  next -> "ancestry.visit" [observations=186]
+
+REGION "signature.hashable" (calls=192; PCVs=vertices, inputs, links)
+  source: source/comfy_execution/caching.py:125
+  contains -> "hashable.visit" [observations=192; within="signature.hashable"]
+
+REGION "signature.immediate" (calls=2750; PCVs=inputs, links)
+  source: source/comfy_execution/caching.py:130
+  next -> "signature.hashable" [observations=192; within="signature.assemble"]
+  next -> "signature.immediate" [observations=2558; within="signature.assemble"]
+
+COST INTERFACES AND BREAKDOWN
+CPU instructions on observed states; symbolic child costs use F[child].
+Own residual percentages exclude child terms. A single state supports only a constant mean fit.
+Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.
+  ancestry.visit = 4,367*inputs + 47,556*has_links + 2,095 + (has_links)*F[ancestry.visit]   (0% own unexplained; 3 observed states)
+      inputs:
+        3,105 _PyEval_EvalFrameDefault [python3.12]
+        283 PyDict_Contains+? [python3.12]
+        192 _PyMem_Strdup+? [python3.12]
+        133 PyObject_GC_Del [python3.12]
+        113 PyList_Sort+? [python3.12]
+        95 _PyErr_ChainStackItem+? [python3.12]
+        58 PyLong_FromSsize_t [python3.12]
+        49 _PyTuple_Resize+? [python3.12]
+      has_links:
+        14,359 _PyEval_EvalFrameDefault [python3.12]
+        1,582 _PyTuple_Resize+? [python3.12]
+        1,505 PyObject_Free [python3.12]
+        1,361 PyEval_EvalCode+? [python3.12]
+        1,313 PyType_GenericNew+? [python3.12]
+        1,276 PyObject_GC_Del [python3.12]
+        1,217 PyObject_Malloc [python3.12]
+        1,107 _PyErr_ChainStackItem+? [python3.12]
+      constant:
+        -552 _PyEval_EvalFrameDefault [python3.12]
+        325 PyObject_Free [python3.12]
+        318 PyDict_Contains+? [python3.12]
+        216 PyCMethod_New+? [python3.12]
+        212 _PyObject_GC_New [python3.12]
+        208 PyObject_Malloc [python3.12]
+        -192 _PyMem_Strdup+? [python3.12]
+        190 _PyErr_ChainStackItem+? [python3.12]
+  hashable.visit = -1,445*primitive + 64,310*sequence_items + -8,158*containers + 7,240*child_slots + 3,970 + unexplained(own) + (sequence_items)*F[hashable.visit]   (15% own unexplained; 101 observed states)
+      primitive:
+        -224 PyType_GenericAlloc+? [python3.12]
+        -175 PyTuple_New+? [python3.12]
+        -169 _PyWeakref_ClearRef+? [python3.12]
+        -120 _PyObject_MakeTpCall [python3.12]
+        -120 _PyEval_EvalFrameDefault [python3.12]
+        -108 _PyMem_Strdup+? [python3.12]
+        -96 PyType_IsSubtype [python3.12]
+        -92 PyObject_GetIter [python3.12]
+      sequence_items:
+        16,779 _PyEval_EvalFrameDefault [python3.12]
+        2,602 PyEval_EvalCode+? [python3.12]
+        2,561 PyType_GenericNew+? [python3.12]
+        2,215 _PyTuple_Resize+? [python3.12]
+        1,860 PyObject_Free [python3.12]
+        1,647 PyDict_SetItem+? [python3.12]
+        1,618 PyObject_Malloc [python3.12]
+        1,551 PyMethod_New [python3.12]
+      containers:
+        -1,741 _PyEval_EvalFrameDefault [python3.12]
+        -582 PyEval_EvalCode+? [python3.12]
+        -470 PyMethod_New [python3.12]
+        -444 _PyObject_GenericGetAttrWithDict [python3.12]
+        -377 PyType_GenericNew+? [python3.12]
+        -287 PyObject_IsInstance [python3.12]
+        -279 PyObject_Malloc [python3.12]
+        -257 _PyTuple_Resize+? [python3.12]
+      child_slots:
+        2,256 _PyEval_EvalFrameDefault [python3.12]
+        402 PyEval_EvalCode+? [python3.12]
+        324 PyMethod_New [python3.12]
+        287 PyObject_IsInstance [python3.12]
+        270 _PyObject_GenericGetAttrWithDict [python3.12]
+        244 _PyObject_LookupSpecial [python3.12]
+        222 _PyErr_ChainStackItem+? [python3.12]
+        190 _PyTuple_Resize+? [python3.12]
+      constant:
+        -1,896 _PyEval_EvalFrameDefault [python3.12]
+        -557 PyObject_RichCompareBool [python3.12]
+        523 PyEval_EvalCode+? [python3.12]
+        473 _PyObject_LookupSpecial [python3.12]
+        455 PyObject_Free [python3.12]
+        -432 PyObject_RichCompare [python3.12]
+        418 PyMethod_New [python3.12]
+        370 _PyErr_ChainStackItem+? [python3.12]
+      unexplained:
+        141,555 _PyEval_EvalFrameDefault [python3.12]
+        33,194 _PyType_Lookup [python3.12]
+        21,478 _PyObject_GenericGetAttrWithDict [python3.12]
+        19,931 PyType_IsSubtype [python3.12]
+        19,864 _PyObject_LookupAttr [python3.12]
+        19,075 PyNumber_Long+? [python3.12]
+        18,774 PyDescr_IsData+? [python3.12]
+        15,589 PyDict_Contains+? [python3.12]
+  signature.assemble = 38,134*vertices + 1,827*inputs + 35,745 + unexplained(own) + F[signature.hashable] + (vertices)*F[signature.immediate]   (13% own unexplained; 94 observed states)
+      vertices:
+        11,587 _PyEval_EvalFrameDefault [python3.12]
+        1,294 _PyTuple_Resize+? [python3.12]
+        1,281 _PyErr_ChainStackItem+? [python3.12]
+        1,212 PyEval_EvalCode+? [python3.12]
+        1,105 PyType_GenericNew+? [python3.12]
+        830 PyException_SetCause+? [python3.12]
+        755 _PyObject_GenericGetAttrWithDict [python3.12]
+        701 PyDict_SetItem+? [python3.12]
+      inputs:
+        1,303 _PyEval_EvalFrameDefault [python3.12]
+        162 _PyTuple_Resize+? [python3.12]
+        48 PyDict_Size+? [python3.12]
+        44 _PyErr_ChainStackItem+? [python3.12]
+        41 PyException_SetCause+? [python3.12]
+        34 _PyTrash_end [python3.12]
+        32 PyErr_WarnExplicit+? [python3.12]
+        30 _PyTrash_begin [python3.12]
+      constant:
+        10,249 _PyEval_EvalFrameDefault [python3.12]
+        1,413 _PyTuple_Resize+? [python3.12]
+        1,300 PyType_GenericNew+? [python3.12]
+        1,241 PyEval_EvalCode+? [python3.12]
+        780 PyMethod_New [python3.12]
+        737 _PyObject_GenericGetAttrWithDict [python3.12]
+        736 PyType_IsSubtype [python3.12]
+        731 _PyErr_ChainStackItem+? [python3.12]
+      unexplained:
+        45,096 _PyEval_EvalFrameDefault [python3.12]
+        36,945 PyObject_Free [python3.12]
+        22,893 PyObject_Malloc [python3.12]
+        22,396 PyDict_Contains+? [python3.12]
+        9,729 _PyType_Lookup [python3.12]
+        8,805 _PyObject_GC_New [python3.12]
+        7,689 PyObject_GC_UnTrack [python3.12]
+        3,454 PyInterpreterState_Get+? [python3.12]
+  signature.hashable = 4,073*vertices + 5*inputs + 43,040 + unexplained(own) + F[hashable.visit]   (47% own unexplained; 94 observed states)
+      vertices:
+        1,149 _PyEval_EvalFrameDefault [python3.12]
+        402 _PyObject_GenericGetAttrWithDict [python3.12]
+        296 PyNumber_Long+? [python3.12]
+        287 PyObject_IsInstance [python3.12]
+        242 _PyObject_LookupAttr [python3.12]
+        208 PyDescr_IsData+? [python3.12]
+        190 _PyTuple_Resize+? [python3.12]
+        172 _PyObject_LookupSpecial [python3.12]
+      inputs:
+        5 _PyObject_GC_NewVar [python3.12]
+        0 PyTuple_GetItem+? [python3.12]
+      constant:
+        11,395 _PyEval_EvalFrameDefault [python3.12]
+        2,120 _PyTuple_Resize+? [python3.12]
+        1,680 _PyObject_GenericGetAttrWithDict [python3.12]
+        1,647 PyDict_SetItem+? [python3.12]
+        1,198 PyType_IsSubtype [python3.12]
+        1,157 PyObject_RichCompareBool [python3.12]
+        1,146 _PyErr_CheckSignalsTstate+? [python3.12]
+        1,112 _PyObject_MakeTpCall [python3.12]
+      unexplained:
+        49,543 _PyEval_EvalFrameDefault [python3.12]
+        8,852 PyEval_EvalCode+? [python3.12]
+        8,482 PyMethod_New [python3.12]
+        6,010 _PyType_Lookup [python3.12]
+        5,490 PyObject_Free [python3.12]
+        4,932 _PyErr_ChainStackItem+? [python3.12]
+        4,166 _PyObject_GC_New [python3.12]
+        3,983 PyObject_Malloc [python3.12]
+  signature.immediate = 1,368*inputs + 16,078   (0% own unexplained; 3 observed states)
+      inputs:
+        970 _PyEval_EvalFrameDefault [python3.12]
+        123 PyTuple_GetItem+? [python3.12]
+        120 PyDict_Contains+? [python3.12]
+        47 PyDict_Clear+? [python3.12]
+        26 PyLong_FromSsize_t [python3.12]
+        18 PyBool_FromLong [python3.12]
+        15 PyObject_IsInstance [python3.12]
+        11 PyObject_Size [python3.12]
+      constant:
+        5,671 _PyEval_EvalFrameDefault [python3.12]
+        954 PyDict_Contains+? [python3.12]
+        814 _PyEval_AddPendingCall+? [python3.12]
+        747 PyObject_Free [python3.12]
+        602 PyObject_Malloc [python3.12]
+        538 _PyErr_ChainStackItem+? [python3.12]
+        431 _PyObject_GC_New [python3.12]
+        289 PyObject_GC_Del [python3.12]
+native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):
+  <outside regions>: sem_wait [completion] 234 calls; per-region-call = ?; 0 matched, 234 unresolved
+  outside application regions (aggregated): pthread_join: 18, pthread_mutex_lock: 149574
+declared event order: ordered
+annotation coverage: 0/0 wait obligations
+
+OBSERVED PCV RELATIONSHIPS
+These are observed equalities, not causal propagation or latency predictions.
+None fitted.

@@ -1,0 +1,41 @@
+{
+  "claims": [
+    {
+      "id": "native-parse-size",
+      "region": "libcst._parser.entrypoints._parse/native.parse_module",
+      "expression": "len(source_str)",
+      "evidence": "Source inspection: native/libcst/src/lib.rs:22-47 tokenizes module_text and builds whitespace Config; tokenizer/whitespace_parser.rs:62-107 scans input lines. len(source_str) is available before the call. All measured cases are ASCII. No independent identifier-length perturbation is available within the workload envelope, so a separate character-length coefficient is not established.",
+      "scope": "ASCII single-line workload, native backend",
+      "uncertainty": "Input length and term count strongly correlated; cannot yet identify separate coefficients. This PCV explains scanning only, not the entire native call."
+    },
+    {
+      "id": "cached-binary-prefixes",
+      "region": "native/libcst/src/parser/grammar.rs:sum and bitwise_or cache_left_rec rules",
+      "expression": "k*(k+1)//2, with k=source_str.count(' + ') for shape 0, or k=source_str.count(' | ') for shape 1",
+      "evidence": "Round 1: addition chains at n=2,8,16,32,64,128 cost 1,639,588; 2,484,643; 3,777,256; 6,750,790; 14,306,701; 36,098,253 instructions. A terms-only DrPerf model leaves 54% own unexplained work in n=32..128, dominated by DeflatedExpression::clone and allocator/free/drop work. This supports cumulative prefix subtree size rather than only final tree size. cstnode.rs derives Clone for deflated trees. Offline least-squares fits on the six saved total instruction measurements: affine in n plus k*(k+1)/2 has mean absolute relative error 0.214%, maximum 0.608%, versus 30.2% mean error for affine in n alone. Round 3 independently changes the operator/assignment shape to annotated bitwise-or chains: n=8,16,32,64,128,256. DrPerf fits terms plus triangular prefix_work with 2.758% own residual, attributing the quadratic coefficient to DeflatedExpression::clone, allocator/free and drop work. Saved-total quadratic-model mean error 0.445%; the held-out n=256 prediction errs by 1.097%, versus 33.3% for the linear model.",
+      "uncertainty": "Clone and drop mechanism is supported by source-derived deep Clone and native attribution. Exact copy multiplicities are not derived from the external PEG macro implementation. Addition has offline total-cost validation, whereas union has directly marked quadratic-PCV blockwise validation.",
+      "scope": "Native parser; homogeneous left-associated addition and union chains. PCV models cumulative growing subtree size, not final CST size alone."
+    },
+    {
+      "id": "cached-primary-prefixes",
+      "region": "native/libcst/src/parser/grammar.rs:primary cache_left_rec rule",
+      "expression": "t*(t+1)//2, with t=2*source_str.count('.m') for the supplied shape-2 source (one attribute and one empty-call trailer per method)",
+      "evidence": "Round 2: method chains at n=2,8,16,32,64,128 cost 2,088,491; 3,967,494; 7,482,365; 17,767,026; 51,694,890; 171,058,018 instructions. DrPerf positively attributes prefix_work=(2*n)*(2*n+1)//2 to DeflatedExpression::clone, DeflatedAttribute::clone, malloc, free and drop. Model retains 21% own residual, concentrated in allocator internals. The quadratic term is supported; complete blockwise explanation is not claimed. Saved-total model mean absolute relative error 0.805%; held-out n=128 error 0.995%, versus 41.0% for a linear model.",
+      "uncertainty": "Cumulative prefix size captures cloning growth, but allocator size classes, heap state, cache rehashing and identifier lengths leave residual. The exact prefix-size constant differs for alternating attribute and call nodes."
+    },
+    {
+      "id": "linear-node-population",
+      "region": "native/libcst/src/lib.rs:parse_module inflation and native/libcst_derive/src/into_py.rs:83-104 Python CST construction",
+      "expression": "n=source_str.count(' + ')+1 (shape 0), source_str.count(' | ')+1 (shape 1), or source_str.count('.m') (shape 2); use separate shape-specific coefficients, equivalently I[shape=s]*n",
+      "evidence": "Inflate recursively traverses the completed tree, and TryIntoPy recursively converts each field and calls the Python node constructor once per node. Fixed homogeneous chains have node populations affine in n. DrPerf attributes linear terms to Python evaluation/dictionaries, construction and parser literal work; after adding prefix size, the total models fit with mean relative errors below 1%.",
+      "scope": "Jointly with quadratic prefix-size PCV and a constant. This workload has fixed node/argument/whitespace patterns per shape; general CST construction would need per-node-type counts and argument/parenthesis counts."
+    },
+    {
+      "id": "python-grammar-inactive",
+      "region": "libcst/_parser/python_parser.py and libcst/_parser/conversions/*",
+      "expression": "0 (no Python grammar/conversion invocations on this native parse_module path)",
+      "evidence": "entrypoints._parse directly selects native.parse_module; native py.rs:14-16 parses then calls TryIntoPy. DrPerf native attribution locates cloning in DeflatedExpression, not Python convert_binop or convert_atom_expr. Python node constructors remain active.",
+      "scope": "Only this configured native backend; import startup is outside marked native-call regions."
+    }
+  ]
+}

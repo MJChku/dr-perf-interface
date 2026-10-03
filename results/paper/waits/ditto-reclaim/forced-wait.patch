@@ -1,0 +1,10 @@
+--- src/cache/compaction.py
++++ isolated/compaction_forced.py
+@@ -837,6 +837,7 @@
+                     newly = True
+                 aborted = True
+         if aborted:
++            self.compaction_stream.synchronize()  # Deliberately restored blocking fence.
+             if newly:  # a redelivered flush must not count twice
+                 self._note_lease_stat(owner, aborts=1)
+                 self.resources.ftl.count("compress_lease_abort")

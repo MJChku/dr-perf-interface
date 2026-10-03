@@ -1,0 +1,9 @@
+probe validity {'errors': [], 'traceErrors': []} waits observed
+event checks {'status': 'ordered', 'probe': True, 'edges': {'lmc.remote.wait_exists -> lmc.remote.exists_ready': 421, 'lmc.remote.wait_get -> lmc.remote.get_ready': 381}, 'violations': [], 'unverified': []}
+lmc.gpu.from_gpu cudaStreamSynchronize chunks 88 in 40 calls
+lmc.gpu.to_gpu cudaStreamSynchronize 1 110 in 110 calls
+lmc.remote.get lmc.remote.wait_get chunks 381 in 110 calls
+lmc.remote.contains lmc.remote.wait_exists 1 421 in 421 calls
+lmc.vllm.start_load_kv cudaStreamSynchronize unexplained 220 in 721 calls
+lmc.vllm.wait_for_save cudaStreamSynchronize unexplained 128 in 576 calls
+lmc.vllm.build_connector_meta cudaStreamSynchronize 0 0 in 721 calls

@@ -1,0 +1,342 @@
+{
+  "schema": "inferix-kv-multigpu-gx-evidence-v1",
+  "mode": "managed GX functional emulation only; no timing or numerical inference",
+  "image": "gx-mixed-profile:rcp-20260915-110d87373a4a",
+  "runtime_gx_library": {
+    "path": "/home/ubuntu/drperf/out/causal-video/gx-copy-runtime/bazel-bin/src/sims/gpu/gx_cuda.so",
+    "bytes": 12710232,
+    "sha256": "8aaefd86c8ba11d64b3265e8d85c82e017e286d3acf7cfde7584a80fb0d08bcd"
+  },
+  "successful": {
+    "full_ring2_6_latent": {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789655160299321956",
+      "config": {
+        "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ring6.json",
+        "bytes": 2601,
+        "sha256": "5b57f175e2f1333ab5e83ad6a110d3a52ac72c86f3c71d8ba6818410d52c0ac7"
+      },
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789655160299321956/result.json",
+        "bytes": 401,
+        "sha256": "de91dea34dc42e7609246b7b42260fcb86db2dc7d280e059c246adac91bf7c96"
+      },
+      "passed": true,
+      "cleanup_errors": [],
+      "rank_reports": [
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ring6-results/rank-0.json",
+          "bytes": 104213,
+          "sha256": "049321773fe2cd0084d6f355e5db372230370c76395b23f088748b04cffd9c7b"
+        },
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ring6-results/rank-1.json",
+          "bytes": 103771,
+          "sha256": "7feb813865a4fa9c674891c91e850518503cf3b89f16c067f02d41999efce93d"
+        }
+      ],
+      "per_rank_collectives": {
+        "0": {
+          "batch_isend_irecv": 300,
+          "all_gather": 10
+        },
+        "1": {
+          "batch_isend_irecv": 300,
+          "all_gather": 10
+        }
+      },
+      "per_rank_cache": {
+        "0": {
+          "reads": 300,
+          "writes": 300,
+          "capacity_counts": {
+            "16380": 300
+          },
+          "read_length_counts": {
+            "0": 150,
+            "2340": 150
+          },
+          "write_start_counts": {
+            "0": 150,
+            "2340": 150
+          },
+          "write_length_counts": {
+            "2340": 300
+          },
+          "output_shape": [
+            1,
+            18,
+            480,
+            832,
+            3
+          ]
+        },
+        "1": {
+          "reads": 300,
+          "writes": 300,
+          "capacity_counts": {
+            "16380": 300
+          },
+          "read_length_counts": {
+            "0": 150,
+            "2340": 150
+          },
+          "write_start_counts": {
+            "0": 150,
+            "2340": 150
+          },
+          "write_length_counts": {
+            "2340": 300
+          },
+          "output_shape": [
+            1,
+            21,
+            480,
+            832,
+            3
+          ]
+        }
+      },
+      "source_sha256": {
+        "inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py": "4b6d030aead26461c4b2f5f9fc6a568a2a6ff871f3bebf03be8ad985613194f0",
+        "inferix/models/self_forcing/causal_model.py": "3e6b5cf0c3980c78b464c2dbdd8cb29f38b5ccb0acdccc90f565f69500d57807"
+      },
+      "containers_retained_stopped": true
+    },
+    "full_ulysses2_6_latent": {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ulysses6-emu-1789655279422815044",
+      "config": {
+        "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ulysses6.json",
+        "bytes": 2604,
+        "sha256": "6cd1331f1384729e0cc35f51169485d818c1d4ce15db24929774d404d7385218"
+      },
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ulysses6-emu-1789655279422815044/result.json",
+        "bytes": 410,
+        "sha256": "3e837088c1333f1ad64e7d71eb6d33ee81bdc52a3b6c6ca4518652ab2f8f3c30"
+      },
+      "passed": true,
+      "cleanup_errors": [],
+      "rank_reports": [
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ulysses6-results/rank-0.json",
+          "bytes": 103912,
+          "sha256": "2db6e8d074b37592b874b100efdddad73b9a68cbbf72b409bd45029887b91c49"
+        },
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/ulysses6-results/rank-1.json",
+          "bytes": 103470,
+          "sha256": "90982d8482d826ca03b9cadcd49c6a6ae5d51107ed28d766cf66fd8a859ef779"
+        }
+      ],
+      "per_rank_collectives": {
+        "0": {
+          "all_to_all_single": 1200,
+          "all_gather": 10
+        },
+        "1": {
+          "all_to_all_single": 1200,
+          "all_gather": 10
+        }
+      },
+      "per_rank_cache": {
+        "0": {
+          "reads": 300,
+          "writes": 300,
+          "capacity_counts": {
+            "32760": 300
+          },
+          "read_length_counts": {
+            "0": 150,
+            "4680": 150
+          },
+          "write_start_counts": {
+            "0": 150,
+            "4680": 150
+          },
+          "write_length_counts": {
+            "4680": 300
+          },
+          "output_shape": [
+            1,
+            18,
+            480,
+            832,
+            3
+          ]
+        },
+        "1": {
+          "reads": 300,
+          "writes": 300,
+          "capacity_counts": {
+            "32760": 300
+          },
+          "read_length_counts": {
+            "0": 150,
+            "4680": 150
+          },
+          "write_start_counts": {
+            "0": 150,
+            "4680": 150
+          },
+          "write_length_counts": {
+            "4680": 300
+          },
+          "output_shape": [
+            1,
+            21,
+            480,
+            832,
+            3
+          ]
+        }
+      },
+      "source_sha256": {
+        "inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py": "4b6d030aead26461c4b2f5f9fc6a568a2a6ff871f3bebf03be8ad985613194f0",
+        "inferix/models/self_forcing/causal_model.py": "3e6b5cf0c3980c78b464c2dbdd8cb29f38b5ccb0acdccc90f565f69500d57807"
+      },
+      "containers_retained_stopped": true
+    },
+    "real_block_combined4": {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/ixkv-gxcombined4-emu-1789655414107223581",
+      "config": {
+        "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/gxcombined4.json",
+        "bytes": 2253,
+        "sha256": "afb1d2558dfbb6370796434d8841018c3342ed2effa0ba1f70be8a733bce4d76"
+      },
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/ixkv-gxcombined4-emu-1789655414107223581/result.json",
+        "bytes": 401,
+        "sha256": "3ae419511a8f1da2aec1f81ea46d030fc67fae9f6ab15a150fff4c734ae5d665"
+      },
+      "passed": true,
+      "cleanup_errors": [],
+      "rank_reports": [
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/gxcombined4-results/rank-0.json",
+          "bytes": 6165,
+          "sha256": "3764f52d5991b62b23061e0a9a0736bdcca100852971af886581f7e5d0abe854"
+        },
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/gxcombined4-results/rank-1.json",
+          "bytes": 6165,
+          "sha256": "d22f888d587b0079d4898936c8398e62b4515f3096b2362058193c0c26fb2ca1"
+        },
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/gxcombined4-results/rank-2.json",
+          "bytes": 6165,
+          "sha256": "69070e79449033037f76f05945643087760f16fe3e54bdded8218ee4ba81c194"
+        },
+        {
+          "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-multigpu-gx/gxcombined4-results/rank-3.json",
+          "bytes": 6165,
+          "sha256": "1eee2d9ec550f0c7a4de5c19e67c7959263263e75dcbefb4fdbaa0d3da1dc26a"
+        }
+      ],
+      "per_rank_collectives": {
+        "0": {
+          "all_to_all_single": 128,
+          "batch_isend_irecv": 32
+        },
+        "1": {
+          "all_to_all_single": 128,
+          "batch_isend_irecv": 32
+        },
+        "2": {
+          "all_to_all_single": 128,
+          "batch_isend_irecv": 32
+        },
+        "3": {
+          "all_to_all_single": 128,
+          "batch_isend_irecv": 32
+        }
+      },
+      "per_rank_scenarios": {
+        "0": {
+          "passed": true,
+          "scenarios": 4,
+          "steps": 32,
+          "capacity": [
+            96
+          ]
+        },
+        "1": {
+          "passed": true,
+          "scenarios": 4,
+          "steps": 32,
+          "capacity": [
+            96
+          ]
+        },
+        "2": {
+          "passed": true,
+          "scenarios": 4,
+          "steps": 32,
+          "capacity": [
+            96
+          ]
+        },
+        "3": {
+          "passed": true,
+          "scenarios": 4,
+          "steps": 32,
+          "capacity": [
+            96
+          ]
+        }
+      },
+      "source_sha256": {
+        "inferix/models/self_forcing/causal_model.py": "3e6b5cf0c3980c78b464c2dbdd8cb29f38b5ccb0acdccc90f565f69500d57807",
+        "inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py": "4b6d030aead26461c4b2f5f9fc6a568a2a6ff871f3bebf03be8ad985613194f0"
+      },
+      "containers_retained_stopped": true
+    }
+  },
+  "failed_setup_attempts": [
+    {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring3-emu-1789654559423034040",
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring3-emu-1789654559423034040/result.json",
+        "bytes": 472,
+        "sha256": "a81f2c0315d319e137041e1cf3eca684a529bcb80d8b4f4d984e48b1c972e46f"
+      },
+      "failure": "application failed in gx-inferix-kv-ring3-emu-18d62156fd1172b8-0: exit 1",
+      "cause": "Initial single-GPU-only Diffusers compatibility shim asserted world_size=1 before checkpoint load.",
+      "cleanup_errors": [],
+      "containers_retained_stopped": true
+    },
+    {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789654719512421893",
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789654719512421893/result.json",
+        "bytes": 280,
+        "sha256": "839dbcac991548bb59ea622f98215e11f1e38ccd384aa419b1a1d9ca5ff5f9ee"
+      },
+      "failure": "a host memory guard exited; stopping this run (see memory-*.log)",
+      "cause": "Original T5 FP32 constructor caused the managed 58 GiB container to reach its 80% guard at 49.93 GB during pipeline construction; no OOM.",
+      "cleanup_errors": [],
+      "containers_retained_stopped": true
+    },
+    {
+      "run_dir": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789655042622443328",
+      "result": {
+        "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-ring6-emu-1789655042622443328/result.json",
+        "bytes": 472,
+        "sha256": "c49a6c2fae58b76fb30814186cbe39b7426c496266cfaf6d62fe3379e24b0c23"
+      },
+      "failure": "application failed in gx-inferix-kv-ring6-emu-18d621c77dff4f40-0: exit 1",
+      "cause": "Config omitted GX_CUDA_DEVICE_ATTRIBUTES required by GX_REAL_CUDNN=1; aborted at CUDA initialization.",
+      "cleanup_errors": [],
+      "containers_retained_stopped": true
+    }
+  ],
+  "harness_adaptations": [
+    "Isolated compat.py restores Inferix CoreAttention configuration after Diffusers consumes its reserved parallel_config keyword.",
+    "Opt-in INFERIX_GX_META_T5 builds the original UMT5 encoder on meta, strictly assigns the real mmap BF16 checkpoint, checks no meta tensors remain, and permits BF16 setup without transient FP32 model allocation.",
+    "Managed GX emu uses real Torch NCCL via torchrun; no predictor or virtual timing."
+  ],
+  "limits": [
+    "GX skips ordinary CUDA arithmetic, so generated frames and intermediate tensor values are not numerically validated.",
+    "CPU/Gloo independent-oracle tests validate values separately; GX reports validate cache bounds, tensor shapes, and NCCL execution only.",
+    "Rank 0 streams two 9-frame chunks; nonzero ranks use the source full-video decode fallback because their callbacks are skipped."
+  ]
+}

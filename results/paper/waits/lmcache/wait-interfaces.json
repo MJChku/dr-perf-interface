@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "claims": [
+    {
+      "id": "remote-lookup",
+      "region": "lmc.remote.contains",
+      "event": "2001",
+      "indicator": "connected == 1 and async_exists == 1",
+      "producer": "lmc.remote.exists_operation"
+    },
+    {
+      "id": "remote-retrieve",
+      "region": "lmc.remote.get",
+      "event": "2002",
+      "indicator": "ready == 1 and individual == 1 and chunks > 0",
+      "producer": "lmc.remote.get_operation"
+    },
+    {
+      "id": "remote-store-completion",
+      "region": "lmc.remote.put_callback",
+      "event": "2003",
+      "indicator": "True",
+      "producer": "lmc.remote.put_operation"
+    },
+    {
+      "id": "scheduler-lookup",
+      "region": "lmc.lookup_rpc.request",
+      "event": "2101",
+      "indicator": "blending == 1 or chunks > 0",
+      "producer": "lmc.lookup_rpc.handle"
+    },
+    {
+      "id": "gpu-chunks-load",
+      "region": "lmc.gpu.to_gpu",
+      "event": null,
+      "indicator": "True",
+      "producer": null,
+      "reason": "The existing load-stream fence completes the submitted batch, including an empty batch; no CPU-region publisher is claimed."
+    },
+    {
+      "id": "gpu-chunks-store",
+      "region": "lmc.gpu.from_gpu",
+      "event": null,
+      "indicator": "host_chunks > 0",
+      "producer": null,
+      "reason": "The called chunk routine fences the store stream for each host destination; this is not a dependency on the synchronous child."
+    },
+    {
+      "id": "slot-mapping-load",
+      "region": "lmc.vllm.start_load_kv",
+      "event": null,
+      "indicator": "load_uploads > 0",
+      "producer": null,
+      "reason": "Blocking upload of nonempty slot mappings returns before use; no CPU-region publisher is claimed."
+    },
+    {
+      "id": "slot-mapping-store",
+      "region": "lmc.vllm.wait_for_save",
+      "event": null,
+      "indicator": "store_uploads > 0",
+      "producer": null,
+      "reason": "Blocking upload of nonempty slot mappings returns before store; no CPU-region publisher is claimed."
+    }
+  ]
+}

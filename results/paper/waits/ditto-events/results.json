@@ -1,0 +1,964 @@
+{
+  "source": "/home/ubuntu/compression/ditto_kv/src/compressor/native/ditto_runtime.cpp",
+  "sourceSha256": "ded19272fb647672772ccbe97925b839897c284734147b93e90c8b823a4639dd",
+  "output": "checksum=6654681029067795999",
+  "scope": "Actual Ditto CPU candidate scheduler, 2 workers, cache capacity 2; no model/GPU run.",
+  "correct": {
+    "baseline": {
+      "status": "ordered",
+      "probe": false,
+      "edges": [
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 7,
+          "waited": "0:1083740:17",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:11",
+          "producerInvocation": 5,
+          "distanceUs": 197506
+        },
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 9,
+          "waited": "0:1083740:23",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:11",
+          "producerInvocation": 5,
+          "distanceUs": 198924
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 15,
+          "waited": "0:1083740:41",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:35",
+          "producerInvocation": 12,
+          "distanceUs": 187454
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 17,
+          "waited": "0:1083740:47",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:35",
+          "producerInvocation": 12,
+          "distanceUs": 188409
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 23,
+          "waited": "0:1083740:65",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:59",
+          "producerInvocation": 20,
+          "distanceUs": 198375
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 25,
+          "waited": "0:1083740:71",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:59",
+          "producerInvocation": 20,
+          "distanceUs": 198560
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 31,
+          "waited": "0:1083740:89",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:83",
+          "producerInvocation": 28,
+          "distanceUs": 195455
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 33,
+          "waited": "0:1083740:95",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:83",
+          "producerInvocation": 28,
+          "distanceUs": 195688
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 39,
+          "waited": "0:1083740:113",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:105",
+          "producerInvocation": 36,
+          "distanceUs": 200552
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083740",
+          "consumer": "candidates.get",
+          "consumerInvocation": 41,
+          "waited": "0:1083740:119",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083740:105",
+          "producerInvocation": 36,
+          "distanceUs": 200610
+        }
+      ],
+      "violations": [],
+      "unverified": [],
+      "unexplained": [
+        {
+          "region": "candidates.get",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083740:13",
+            "0:1083740:19",
+            "0:1083740:37"
+          ]
+        },
+        {
+          "region": "candidates.prefetch",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083740:1",
+            "0:1083740:3",
+            "0:1083740:25"
+          ]
+        }
+      ],
+      "interfaces": [
+        {
+          "region": "candidates.get",
+          "event": "1",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "2",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "3",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "4",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "5",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        }
+      ],
+      "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+      "coverage": "Native synchronization observations are separate; waited does not establish their coverage."
+    },
+    "plan": {
+      "region": "candidates.build",
+      "delayMs": 301,
+      "baselineMaxDistanceUs": 200610,
+      "capped": false,
+      "scope": "all declared publications in this region; rerun one region per probe"
+    },
+    "probe": {
+      "status": "ordered",
+      "probe": true,
+      "edges": [
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 6,
+          "waited": "0:1083755:17",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:11",
+          "producerInvocation": 5,
+          "distanceUs": 3880
+        },
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 9,
+          "waited": "0:1083755:23",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:11",
+          "producerInvocation": 5,
+          "distanceUs": 5984
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 14,
+          "waited": "0:1083755:41",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:35",
+          "producerInvocation": 12,
+          "distanceUs": 403
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 17,
+          "waited": "0:1083755:47",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:35",
+          "producerInvocation": 12,
+          "distanceUs": 2060
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 22,
+          "waited": "0:1083755:65",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:59",
+          "producerInvocation": 20,
+          "distanceUs": 154
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 25,
+          "waited": "0:1083755:71",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:59",
+          "producerInvocation": 20,
+          "distanceUs": 457
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 30,
+          "waited": "0:1083755:89",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:83",
+          "producerInvocation": 28,
+          "distanceUs": 212
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 33,
+          "waited": "0:1083755:95",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:83",
+          "producerInvocation": 28,
+          "distanceUs": 451
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 38,
+          "waited": "0:1083755:113",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:105",
+          "producerInvocation": 36,
+          "distanceUs": 109
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083755",
+          "consumer": "candidates.get",
+          "consumerInvocation": 41,
+          "waited": "0:1083755:119",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083755:105",
+          "producerInvocation": 36,
+          "distanceUs": 177
+        }
+      ],
+      "violations": [],
+      "unverified": [],
+      "unexplained": [
+        {
+          "region": "candidates.get",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083755:12",
+            "0:1083755:19",
+            "0:1083755:36"
+          ]
+        },
+        {
+          "region": "candidates.prefetch",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083755:1",
+            "0:1083755:3",
+            "0:1083755:25"
+          ]
+        }
+      ],
+      "interfaces": [
+        {
+          "region": "candidates.get",
+          "event": "1",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "2",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "3",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "4",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "5",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        }
+      ],
+      "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+      "coverage": "Native synchronization observations are separate; waited does not establish their coverage."
+    }
+  },
+  "premature": {
+    "baseline": {
+      "status": "ordered",
+      "probe": false,
+      "edges": [
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 7,
+          "waited": "0:1083802:17",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:11",
+          "producerInvocation": 5,
+          "distanceUs": 196768
+        },
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 9,
+          "waited": "0:1083802:23",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:11",
+          "producerInvocation": 5,
+          "distanceUs": 198827
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 15,
+          "waited": "0:1083802:41",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:35",
+          "producerInvocation": 12,
+          "distanceUs": 187530
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 17,
+          "waited": "0:1083802:47",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:35",
+          "producerInvocation": 12,
+          "distanceUs": 189308
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 23,
+          "waited": "0:1083802:65",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:59",
+          "producerInvocation": 20,
+          "distanceUs": 196553
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 25,
+          "waited": "0:1083802:71",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:59",
+          "producerInvocation": 20,
+          "distanceUs": 196731
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 31,
+          "waited": "0:1083802:89",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:83",
+          "producerInvocation": 28,
+          "distanceUs": 196389
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 33,
+          "waited": "0:1083802:95",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:83",
+          "producerInvocation": 28,
+          "distanceUs": 196659
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 39,
+          "waited": "0:1083802:113",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:105",
+          "producerInvocation": 36,
+          "distanceUs": 200577
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083802",
+          "consumer": "candidates.get",
+          "consumerInvocation": 41,
+          "waited": "0:1083802:119",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083802:105",
+          "producerInvocation": 36,
+          "distanceUs": 200647
+        }
+      ],
+      "violations": [],
+      "unverified": [],
+      "unexplained": [
+        {
+          "region": "candidates.get",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083802:13",
+            "0:1083802:19",
+            "0:1083802:37"
+          ]
+        },
+        {
+          "region": "candidates.prefetch",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083802:1",
+            "0:1083802:3",
+            "0:1083802:25"
+          ]
+        }
+      ],
+      "interfaces": [
+        {
+          "region": "candidates.get",
+          "event": "1",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "2",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "3",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "4",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "5",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        }
+      ],
+      "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+      "coverage": "Native synchronization observations are separate; waited does not establish their coverage."
+    },
+    "plan": {
+      "region": "candidates.build",
+      "delayMs": 301,
+      "baselineMaxDistanceUs": 200647,
+      "capped": false,
+      "scope": "all declared publications in this region; rerun one region per probe"
+    },
+    "probe": {
+      "status": "violation",
+      "probe": true,
+      "edges": [
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 6,
+          "waited": "0:1083810:16",
+          "status": "violation",
+          "producer": "candidates.build",
+          "publication": "0:1083810:11",
+          "producerInvocation": 5
+        },
+        {
+          "event": "1",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 9,
+          "waited": "0:1083810:23",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083810:11",
+          "producerInvocation": 5,
+          "distanceUs": 6002
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 14,
+          "waited": "0:1083810:40",
+          "status": "violation",
+          "producer": "candidates.build",
+          "publication": "0:1083810:35",
+          "producerInvocation": 12
+        },
+        {
+          "event": "2",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 17,
+          "waited": "0:1083810:47",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083810:35",
+          "producerInvocation": 12,
+          "distanceUs": 1490
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 22,
+          "waited": "0:1083810:64",
+          "status": "violation",
+          "producer": "candidates.build",
+          "publication": "0:1083810:59",
+          "producerInvocation": 20
+        },
+        {
+          "event": "3",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 25,
+          "waited": "0:1083810:71",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083810:59",
+          "producerInvocation": 20,
+          "distanceUs": 327
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 30,
+          "waited": "0:1083810:88",
+          "status": "violation",
+          "producer": "candidates.build",
+          "publication": "0:1083810:83",
+          "producerInvocation": 28
+        },
+        {
+          "event": "4",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 33,
+          "waited": "0:1083810:95",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083810:83",
+          "producerInvocation": 28,
+          "distanceUs": 424
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 38,
+          "waited": "0:1083810:112",
+          "status": "violation",
+          "producer": "candidates.build",
+          "publication": "0:1083810:105",
+          "producerInvocation": 36
+        },
+        {
+          "event": "5",
+          "generation": "1",
+          "group": "0:1083810",
+          "consumer": "candidates.get",
+          "consumerInvocation": 41,
+          "waited": "0:1083810:119",
+          "status": "ordered",
+          "producer": "candidates.build",
+          "publication": "0:1083810:105",
+          "producerInvocation": 36,
+          "distanceUs": 185
+        }
+      ],
+      "violations": [
+        {
+          "event": [
+            "0:1083810",
+            "1",
+            "1"
+          ],
+          "consumer": "candidates.get",
+          "producer": "candidates.build",
+          "waited": "0:1083810:16",
+          "publication": "0:1083810:11",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:1083810",
+            "2",
+            "1"
+          ],
+          "consumer": "candidates.get",
+          "producer": "candidates.build",
+          "waited": "0:1083810:40",
+          "publication": "0:1083810:35",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:1083810",
+            "3",
+            "1"
+          ],
+          "consumer": "candidates.get",
+          "producer": "candidates.build",
+          "waited": "0:1083810:64",
+          "publication": "0:1083810:59",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:1083810",
+            "4",
+            "1"
+          ],
+          "consumer": "candidates.get",
+          "producer": "candidates.build",
+          "waited": "0:1083810:88",
+          "publication": "0:1083810:83",
+          "reason": "Consumer passed waited before declared publication completed"
+        },
+        {
+          "event": [
+            "0:1083810",
+            "5",
+            "1"
+          ],
+          "consumer": "candidates.get",
+          "producer": "candidates.build",
+          "waited": "0:1083810:112",
+          "publication": "0:1083810:105",
+          "reason": "Consumer passed waited before declared publication completed"
+        }
+      ],
+      "unverified": [],
+      "unexplained": [
+        {
+          "region": "candidates.get",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083810:12",
+            "0:1083810:19",
+            "0:1083810:36"
+          ]
+        },
+        {
+          "region": "candidates.prefetch",
+          "api": "pthread_mutex_lock",
+          "count": 10,
+          "term": "unexplained(Wait[?])",
+          "examples": [
+            "0:1083810:1",
+            "0:1083810:3",
+            "0:1083810:25"
+          ]
+        }
+      ],
+      "interfaces": [
+        {
+          "region": "candidates.get",
+          "event": "1",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "2",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "3",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "4",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        },
+        {
+          "region": "candidates.get",
+          "event": "5",
+          "states": [
+            "tokens",
+            "cached"
+          ],
+          "countFormula": null,
+          "present": 2,
+          "absent": 8
+        }
+      ],
+      "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+      "coverage": "Native synchronization observations are separate; waited does not establish their coverage."
+    }
+  }
+}

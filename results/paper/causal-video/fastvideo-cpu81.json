@@ -1,0 +1,84 @@
+{
+  "name": "fastvideo-cpu81",
+  "hosts": [
+    {
+      "address": "ubuntu@icdslab2.epfl.ch",
+      "containers": 1
+    }
+  ],
+  "image": "gx-mixed-profile:rcp-20260915-110d87373a4a",
+  "workspace": "/home/ubuntu/drperf-wan-timing",
+  "resources": {
+    "cpus": 8,
+    "memory": "58g"
+  },
+  "network": {
+    "name": "wan-timing-net",
+    "manager": 0
+  },
+  "files": {
+    "gpu_db": "/home/ubuntu/drperf/out/causal-video/fastvideo-gpu/fastvideo-metadata-gpu-01.rank0.pid3697.sqlite",
+    "context_limits": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/context-limits.tsv",
+    "device_attributes": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/device-attributes.tsv"
+  },
+  "gxvm": {
+    "mode": "profile",
+    "attachment": "late",
+    "profile": {
+      "output": "{run_dir}/profile-%p.db",
+      "autostart": false,
+      "instruction_period": 5000000,
+      "task_period_ns": 5000000
+    }
+  },
+  "runtime": {
+    "gx_library": "/home/ubuntu/.cache/bazel/_bazel_ubuntu/ebbf5befbe67d1654d2c061dc9f42fbd/execroot/_main/bazel-out/k8-opt/bin/src/sims/gpu/gx_cuda.so"
+  },
+  "timeout_seconds": 1800,
+  "application": {
+    "cwd": "/workspace",
+    "environment": {
+      "GX_HOME": "/home/jma/GX",
+      "GX_COMM_ONLY": "1",
+      "GX_DEVICE_MODEL": "A100",
+      "GX_NUM_LOCAL_GPUS": "1",
+      "GX_SHM_ARENA_GB": "8",
+      "GX_APP_REAL_MAX_BYTES": "16777216",
+      "GX_CHROME_TRACE": "1",
+      "GX_ID": "0",
+      "GX_REAL_CUDNN": "1",
+      "GX_PREDICT_DB": "{file:gpu_db}",
+      "GX_CUDA_CONTEXT_LIMITS": "{file:context_limits}",
+      "GX_CUDA_DEVICE_ATTRIBUTES": "{file:device_attributes}",
+      "NCCL_SOCKET_IFNAME": "lo",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "PYTHONPATH": "/workspace/causal/code:/workspace/causal/FastVideo:/workspace/causal/deps:/workspace/causal/base/deps",
+      "LD_LIBRARY_PATH": "/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+      "FASTVIDEO_ATTENTION_BACKEND": "FLASH_ATTN",
+      "HF_HUB_OFFLINE": "1",
+      "PYTHONUNBUFFERED": "1"
+    },
+    "command": [
+      "bash",
+      "/workspace/causal/code/entry.sh",
+      "{run_dir}",
+      "python3",
+      "/workspace/causal/code/fastvideo_runner.py",
+      "--role",
+      "cpu-profile",
+      "--tree",
+      "/workspace/causal/FastVideo",
+      "--output",
+      "{run_dir}/model",
+      "--model",
+      "/workspace/causal/models/SFWan2.1-T2V-1.3B-Diffusers",
+      "--frames",
+      "81",
+      "--metadata-mode"
+    ]
+  }
+}

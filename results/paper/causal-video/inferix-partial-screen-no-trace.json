@@ -1,0 +1,88 @@
+{
+  "schema": "causal-video-partial-screening-v1",
+  "sources": {
+    "summary": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-partial-report-no-trace/summary.json",
+      "sha256": "7a394595cfd8cdb6694c4a66044c87f0accd1fb8626254d18a6ead3e0e4a85a0"
+    },
+    "cpu_attribution": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-partial-report-no-trace/cpu-attribution.json",
+      "sha256": "e65f2911ef77aceb787af3abdffd9b3aa56e115d1287ade9baf65af594e6bb46"
+    },
+    "trace": null,
+    "result": {
+      "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-1789608115131050087/result.json",
+      "sha256": "fe76895f8f372661ac6d2a7382d2848c7ece1fc48503f39aef0e71a341316add"
+    }
+  },
+  "run_passed": true,
+  "model": "optimistic-dependency-timeline",
+  "guaranteed_hardware_lower_bound": false,
+  "interval_evidence_available": false,
+  "capture": {
+    "virtual_ns": 51814464129.39453,
+    "cpu_work_ns_sum_threads": 45396164845.33594,
+    "gpu_busy_by_device": {
+      "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-1789608115131050087/host-0/d0/timeline/rank-unknown-pid-340.jsonl:gpu:0": {
+        "busy_ns": 11915227666.0,
+        "idle_ns": 39899236463.39453,
+        "busy_fraction": 0.22995948845952552
+      }
+    },
+    "prediction": {
+      "hits": 106449,
+      "misses": 168,
+      "errors": 0,
+      "disabled": 0,
+      "coverage_hits_over_hits_plus_misses": 0.9984242662989955
+    },
+    "cpu_sampling": {
+      "segments": 114262,
+      "sampled_segments": 0,
+      "sampled_cpu_ns": 0.0,
+      "unattributed_cpu_ns": 45396164845.33594,
+      "sampled_cpu_fraction": 0.0,
+      "samples_used": 0,
+      "resolved_samples": 0,
+      "unresolved_symbol_samples": 0,
+      "low_sample_segments": 0,
+      "native_ipc_profile_coverage_logs": [
+        {
+          "log": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-1789608115131050087/host-0/gx-inferix-partial-18d5f719558ae867-0.log",
+          "instruction_samples": "14390",
+          "unresolved_instruction_samples": "6684",
+          "task_samples": "6539",
+          "unresolved_task_samples": "9",
+          "covered": "14350",
+          "coverage": "99.722%",
+          "page_min": "4",
+          "module_min": "32",
+          "fallback_ns_per_instruction": "0.310714625",
+          "cost_scale_ppm": "1000000"
+        }
+      ]
+    }
+  },
+  "iterations": [
+    {
+      "record": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-1789608115131050087/host-0/d0/timeline/rank-unknown-pid-340.jsonl",
+      "iteration": 1,
+      "start_ns": 16734.763427734375,
+      "end_ns": 51814464129.39453,
+      "virtual_ns": 51814447394.6311,
+      "cpu_work_ns": null,
+      "gpu_work_ns": null,
+      "gpu_devices": null,
+      "largest_cpu_segments_before_gpu_submission": null
+    }
+  ],
+  "limitations": [
+    "Modeled interval CPU work sums overlapping threads; it is not critical-path CPU time.",
+    "Modeled GPU idle is not evidence by itself of a CPU bottleneck.",
+    "Partial synchronization omits arbitrary CPU mutex, shared-memory and thread-creation dependencies.",
+    "Prediction misses and unmodeled copies, memsets and callbacks have zero modeled service cost.",
+    "NCCL rendezvous is launch-granular; independent communication contention is omitted.",
+    "CPU segment labels name the following interaction, not the exclusive cost of that API.",
+    "Prediction and CPU sampling counts are for the whole capture, not individual iterations."
+  ]
+}

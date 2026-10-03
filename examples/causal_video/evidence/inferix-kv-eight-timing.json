@@ -1,0 +1,467 @@
+{
+  "model": "GX partial_sync, approximate virtual timing",
+  "hardware_validation": false,
+  "before": {
+    "summary_path": "/home/ubuntu/GX/NEX/build/experiments/ixkv8-baseline-partial-1789658765894253570/timeline-report/summary.json",
+    "rank_count": 8,
+    "virtual_iteration_seconds": 18.894637836314942,
+    "rank_iteration_seconds": [
+      18.8946192120028,
+      18.894637836314942,
+      18.894628565907528,
+      18.894627827216123,
+      18.894628389186824,
+      18.894628513564754,
+      18.894628377479304,
+      18.894627841317686
+    ],
+    "host_transfer_bytes": 336637307904,
+    "copy_bytes": {
+      "h2h": 0,
+      "h2d": 212096707584,
+      "d2h": 124540600320,
+      "d2d": 711683153920
+    },
+    "summed_host_link_service_seconds": 25.895177531076854,
+    "summed_cpu_work_seconds": 51.48584375968457,
+    "prediction_hits": 390146,
+    "prediction_misses": 638367,
+    "prediction_errors": 0,
+    "prediction_disabled": 0,
+    "compute_prediction_coverage": 0.37933015917154184,
+    "collective_groups": 38,
+    "p2p_transfers": 117600
+  },
+  "after": {
+    "summary_path": "/home/ubuntu/GX/NEX/build/experiments/ixkv8-candidate-partial-1789659378195114236/timeline-report/summary.json",
+    "rank_count": 8,
+    "virtual_iteration_seconds": 16.955283268698313,
+    "rank_iteration_seconds": [
+      16.955265629359555,
+      16.95527442968445,
+      16.955274381303106,
+      16.955274885547734,
+      16.955274360610233,
+      16.955274342917363,
+      16.95527472955579,
+      16.955283268698313
+    ],
+    "host_transfer_bytes": 125295995904,
+    "copy_bytes": {
+      "h2h": 0,
+      "h2d": 91330243584,
+      "d2h": 33965752320,
+      "d2d": 711683153920
+    },
+    "summed_host_link_service_seconds": 9.638153531068493,
+    "summed_cpu_work_seconds": 52.310170244452145,
+    "prediction_hits": 385220,
+    "prediction_misses": 643293,
+    "prediction_errors": 0,
+    "prediction_disabled": 0,
+    "compute_prediction_coverage": 0.3745407204381471,
+    "collective_groups": 38,
+    "p2p_transfers": 117600
+  },
+  "virtual_latency_reduction_percent": 10.264047315525925,
+  "virtual_speedup": 1.1143805465755288,
+  "host_transfer_bytes_saved": 211341312000,
+  "analytic_self_cache_bytes_saved": 211341312000,
+  "limitations": [
+    "Compute prediction misses contribute zero modeled duration.",
+    "The available kernel database was profiled on one rank, not this sharded topology.",
+    "Summed service across ranks is not end-to-end latency.",
+    "CPU synchronization and contention are not modeled completely."
+  ],
+  "model_name": "Self-Forcing/Wan 1.3B",
+  "latent_frames": 21,
+  "ulysses_size": 2,
+  "ring_size": 4,
+  "candidate_commit": "50ee5abc2727308a36c91317bd2005a7400ed6aa",
+  "baseline": "same distributed correction, bounded_kv=False; CPU offload retained",
+  "artifacts": "/home/ubuntu/GX/NEX/Example/infrix_kvcache/eight_gpu_partial_sync/1.3b-partial_sync.tar.gz",
+  "backing_threshold_bytes": 8388608,
+  "extrapolation_status": "additional captures in progress",
+  "weightless_14b": {
+    "workload": "Inferix Self-Forcing weightless Wan 14B architecture, eight GPU Ulysses2/ring4, CPU KV offload, 80 GiB configured device capacity",
+    "method": "GX partial_sync, same pinned A10040GB measured predictor profile; one matched Chrome-enabled baseline/candidate pair; sensitivity estimates are not GPU measurements",
+    "primary_basis": "max over eight ranks of marked iteration virtual_ns; broad same-name kernel grid and opt-in cuBLAS M*N*K cross-shape sensitivity, maximum ratio 16",
+    "baseline": {
+      "marked_max_virtual_ns": 32992175721.24334,
+      "full_capture_virtual_ns": 32996147573.456833,
+      "prediction_hits_exact_measured": 408666,
+      "prediction_misses_original": 841927,
+      "prediction_estimates_kernel": 659287,
+      "prediction_estimates_cublas": 91920,
+      "prediction_estimates_cublas_broad": 91360,
+      "prediction_misses_unresolved": 90720,
+      "exact_measured_coverage": 0.32677777662277013,
+      "exact_plus_estimated_coverage": 0.9274584137285272,
+      "copy_bytes_h2h_h2d_d2h_d2d": [
+        0,
+        942650606464,
+        543114444800,
+        2378177126400
+      ],
+      "copy_count_h2h_h2d_d2h_d2d": [
+        0,
+        34260,
+        23054,
+        101388
+      ],
+      "p2p_transfers": 156800,
+      "collective_groups": 38
+    },
+    "candidate": {
+      "marked_max_virtual_ns": 23888404771.043007,
+      "full_capture_virtual_ns": 23892371813.3627,
+      "prediction_hits_exact_measured": 399192,
+      "prediction_misses_original": 851401,
+      "prediction_estimates_kernel": 668887,
+      "prediction_estimates_cublas": 91920,
+      "prediction_estimates_cublas_broad": 91360,
+      "prediction_misses_unresolved": 90594,
+      "exact_measured_coverage": 0.3192021704903194,
+      "exact_plus_estimated_coverage": 0.927559165931682,
+      "copy_bytes_h2h_h2d_d2h_d2d": [
+        0,
+        405910766464,
+        140559564800,
+        2378177126400
+      ],
+      "copy_count_h2h_h2d_d2h_d2d": [
+        0,
+        42260,
+        23054,
+        101388
+      ],
+      "p2p_transfers": 156800,
+      "collective_groups": 38
+    },
+    "primary_saved_virtual_ns": 9103770950.200333,
+    "primary_reduction_percent": 27.59372715252151,
+    "copy_saved_bytes_h2d": 536739840000,
+    "copy_saved_bytes_d2h": 402554880000,
+    "copy_saved_bytes_host_total": 939294720000,
+    "analytic_expected_copy_saved_bytes_host_total": 939294720000,
+    "analytic_expected_copy_saved_bytes_host_per_rank": 117411840000,
+    "full_capture_sensitivity": {
+      "exact": {
+        "basis": "full_capture_virtual_ns",
+        "baseline_ns": 31766594849.09498,
+        "candidate_ns": 22873367834.23462,
+        "saved_ns": 8893227014.86036,
+        "reduction_percent": 27.995531334431725
+      },
+      "strict_same_inner_and_fixed_extents": {
+        "basis": "full_capture_virtual_ns",
+        "baseline_ns": 31807850954.97999,
+        "candidate_ns": 22913085575.100346,
+        "saved_ns": 8894765379.879642,
+        "reduction_percent": 27.964056397488356
+      },
+      "broad_cross_shape": {
+        "basis": "full_capture_virtual_ns",
+        "baseline_ns": 32996147573.456833,
+        "candidate_ns": 23892371813.3627,
+        "saved_ns": 9103775760.094131,
+        "reduction_percent": 27.590420184135382
+      }
+    },
+    "pinned_reporter_sha256": "d89da03b555dd5d14ed079e89a0c32cf8b56672a249d1766106de352eb5e6b1d",
+    "architecture": {
+      "model": "Wan2.1-T2V-14B causal/Self-Forcing architecture",
+      "trained_weights_loaded": false,
+      "numerical_validation": false,
+      "dim": 5120,
+      "ffn_dim": 13824,
+      "num_heads": 40,
+      "num_layers": 40,
+      "head_dim": 128,
+      "components": {
+        "text_encoder": {
+          "parameters": 5680910336,
+          "parameter_bytes": 11361820672
+        },
+        "generator": {
+          "parameters": 14288491584,
+          "parameter_bytes": 28576983168
+        },
+        "vae": {
+          "parameters": 126892531,
+          "parameter_bytes": 253785062
+        }
+      }
+    },
+    "host_execution": {
+      "baseline": {
+        "application_wall_seconds": 948.869278568,
+        "peak_container_bytes": 40874819584,
+        "minimum_host_available_bytes": 56824901632,
+        "memory_guard_bytes": 48962627174.4,
+        "oom_events": 0,
+        "managed_pass": true
+      },
+      "candidate": {
+        "application_wall_seconds": 859.305089925,
+        "peak_container_bytes": 20622483456,
+        "minimum_host_available_bytes": 75677229056,
+        "memory_guard_bytes": 48962627174.4,
+        "oom_events": 0,
+        "managed_pass": true
+      }
+    },
+    "warmup_cpu_sample": {
+      "duration_seconds": 5,
+      "rank_scope": "one candidate rank before GXVM adoption",
+      "samples": 806,
+      "lost": 0,
+      "cycle_percent": {
+        "boost_fiber": 28.03,
+        "reduced_nccl": 15.63,
+        "gx_cuda": 15.13,
+        "kernel": 14.8,
+        "libc": 8.43,
+        "sqlite": 5.8
+      },
+      "dynamorio_jit_seen": false,
+      "separate_5s_stat": {
+        "context_switches": 6526,
+        "minor_faults_approx": 6500,
+        "major_faults": 0
+      },
+      "interpretation": "A short sample, not a full-run overhead attribution."
+    },
+    "artifacts": {
+      "before": {
+        "trace": "14b-before.chrome.json.gz",
+        "capture_archive": "14b-before.capture.tar.gz"
+      },
+      "after": {
+        "trace": "14b-after.chrome.json.gz",
+        "capture_archive": "14b-after.capture.tar.gz"
+      },
+      "reproduction_archive": "14b-reproduce.tar.gz"
+    },
+    "hardware_validation": false,
+    "numerical_output_validation": false,
+    "identity_checks_passed": true,
+    "full_evidence": "/home/ubuntu/GX/NEX/Example/infrix_kvcache/eight_gpu_partial_sync/14b-results.json",
+    "viewer_overview": {
+      "bin_ms": 10,
+      "description": "Interval-union activity counters for all eight ranks; sub-bin gaps are averaged; detailed records retained in capture archives.",
+      "before": {
+        "overview_events": 147783,
+        "output_json_bytes": 14683108,
+        "output_compressed_bytes": 774167,
+        "output_sha256": "e152cce13e57eca836dfc8262975c36b10ac66a2726388d23a1da6e3bdf08a06"
+      },
+      "after": {
+        "overview_events": 68624,
+        "output_json_bytes": 6857220,
+        "output_compressed_bytes": 380813,
+        "output_sha256": "4522d24b42ca4e38d942e967ef238481b80e40a168b8478fe6a00830661bb2c1"
+      }
+    }
+  },
+  "weightless_14b_gpu_only": {
+    "mode": "gpu_only_partial_sync",
+    "workload": "Same weightless 14B Inferix U2/R4, 21 latent frames, CPU KV offload, 80 GiB virtual devices",
+    "basis": "Max over eight ranks of marked virtual interval; max rank generation wall excludes setup and warmup",
+    "prediction_method": "Same measured GPU database and explicit same-name grid/cuBLAS work scaling, maximum ratio16; unresolved launches contribute zero time",
+    "baseline": {
+      "marked_max_virtual_seconds": 30.701639891,
+      "generation_max_wall_seconds": 408.612235853,
+      "marked_max_wall_seconds": 408.615094959,
+      "warmup_max_wall_seconds": 395.018997639,
+      "application_wall_seconds": 826.361280056,
+      "wall_over_virtual": 13.309133886779195,
+      "cpu_work_ns": 0,
+      "dynamorio_loaded": false,
+      "managed_pass": true
+    },
+    "candidate": {
+      "marked_max_virtual_seconds": 21.661589891,
+      "generation_max_wall_seconds": 376.826314603,
+      "marked_max_wall_seconds": 376.844659234,
+      "warmup_max_wall_seconds": 322.246096743,
+      "application_wall_seconds": 721.830786617,
+      "wall_over_virtual": 17.396059869066423,
+      "cpu_work_ns": 0,
+      "dynamorio_loaded": false,
+      "managed_pass": true
+    },
+    "kv_optimization_virtual_reduction_percent": 29.444844093328182,
+    "candidate_wall_reduction_vs_earlier_partial_sync_percent": 24.077183113591673,
+    "comparison_limit": "The GX runtime was rebuilt for the new mode; wall-time changes versus earlier partial_sync do not isolate DynamoRIO overhead. Virtual times are modeled estimates, not hardware measurements.",
+    "artifact_status": "GPU-only artifacts removed at user request; numerical summary retained here."
+  },
+  "matched_current_runtime": {
+    "workload": "Weightless Wan14B, 8 simulated GPUs, U2/R4, 21 latent frames480x832, 80GiB simulatedGPU capacity, CPUKVoffload retained.",
+    "hardware_validation": false,
+    "identity": "Across current mode2/mode3: exact source, harness, packages, architecture, prompt, seed, offload, prediction provenance and copy inventories match for each side.",
+    "notes": [
+      "All timing is simulated; unresolved kernels receive zero service. Both modes use the same45 archived extrapolation estimates online, not just exact measured kernels.",
+      "Archived mode2 32.99->23.89 used an older runtime/offline extrapolation; current mode2 is35.53->26.49. Do not combine those as matched-runtime samples.",
+      "Mode3 timing includes epoch waits; GPU and CPU span sums are not hardware utilization."
+    ],
+    "canonical_artifacts": {
+      "14b-current-results.json": {
+        "path": "/home/ubuntu/GX/NEX/Example/infrix_kvcache/eight_gpu_partial_sync/14b-current-results.json",
+        "sha256": "cae915670ec09c55771db209d99355e5c667b61ba87e70e46e775478bcb9a836"
+      },
+      "14b-sync-results.json": {
+        "path": "/home/ubuntu/GX/NEX/Example/infrix_kvcache/eight_gpu_partial_sync/14b-sync-results.json",
+        "sha256": "21e274d2b959451d6c131bfa1a43be8959fc68998293a9c2b20d0ac42d815e17"
+      }
+    },
+    "modes": {
+      "mode2": {
+        "before": {
+          "run": "/home/ubuntu/GX/NEX/build/experiments/ix14-partial-before-1789776819525580194",
+          "maximum_marked_virtual_seconds": 35.525804510346916,
+          "prediction_classes": {
+            "measured_database": 408540,
+            "estimated": 751207,
+            "miss": 90846
+          },
+          "measured_launch_fraction": 0.3266770244196153,
+          "measured_plus_estimated_launch_fraction": 0.9273576615253724,
+          "limitations": [
+            "Estimated durations are the identical archived 45 shape-scaling estimates, inserted before execution; no offline modification of observed epoch timestamps.",
+            "Predictor runtime calls estimated rows hits; this audit reclassifies them using the SQLite provenance table.",
+            "No native eight-GPU validation. GPU profile originates from an A100-40GB; modeled capacity is 80GiB.",
+            "Partial-sync includes per-thread CPU timing but not all cross-thread ordering. Marked virtual duration comes from the dependency report; application perf_counter is host time."
+          ],
+          "copy_summary": {
+            "nodes": 158702,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 114289619328.01898,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              34260,
+              23054,
+              101388
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              942650606464,
+              543114444800,
+              2378177126400
+            ]
+          }
+        },
+        "after": {
+          "run": "/home/ubuntu/GX/NEX/build/experiments/ix14-partial-after-1789777578967374964",
+          "maximum_marked_virtual_seconds": 26.490450668101513,
+          "prediction_classes": {
+            "measured_database": 399192,
+            "estimated": 760807,
+            "miss": 90594
+          },
+          "measured_launch_fraction": 0.3192021704903194,
+          "measured_plus_estimated_launch_fraction": 0.927559165931682,
+          "limitations": [
+            "Estimated durations are the identical archived 45 shape-scaling estimates, inserted before execution; no offline modification of observed epoch timestamps.",
+            "Predictor runtime calls estimated rows hits; this audit reclassifies them using the SQLite provenance table.",
+            "No native eight-GPU validation. GPU profile originates from an A100-40GB; modeled capacity is 80GiB.",
+            "Partial-sync includes per-thread CPU timing but not all cross-thread ordering. Marked virtual duration comes from the dependency report; application perf_counter is host time."
+          ],
+          "copy_summary": {
+            "nodes": 166702,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 42036179328.008606,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              42260,
+              23054,
+              101388
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              405910766464,
+              140559564800,
+              2378177126400
+            ]
+          }
+        },
+        "reduction_percent": 25.433213875885208
+      },
+      "mode3": {
+        "before": {
+          "run": "/home/ubuntu/GX/NEX/build/experiments/ix14-sync-baseline-1789773143183639087",
+          "maximum_marked_virtual_seconds": 39.78151,
+          "prediction_classes": {
+            "measured_database": 408792,
+            "estimated": 751207,
+            "miss": 90594
+          },
+          "measured_launch_fraction": 0.326878528825925,
+          "measured_plus_estimated_launch_fraction": 0.927559165931682,
+          "limitations": [
+            "Estimated durations are the identical archived 45 shape-scaling estimates, inserted before execution; no offline modification of observed epoch timestamps.",
+            "Predictor runtime calls estimated rows hits; this audit reclassifies them using the SQLite provenance table.",
+            "No native eight-GPU validation. GPU profile originates from an A100-40GB; modeled capacity is 80GiB.",
+            "Full-sync spans include epoch/worker/wait costs; post-attachment application perf_counter uses virtual time. Physical host duration is in result.applications."
+          ],
+          "copy_summary": {
+            "nodes": 158702,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 114289619328.01898,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              34260,
+              23054,
+              101388
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              942650606464,
+              543114444800,
+              2378177126400
+            ]
+          }
+        },
+        "after": {
+          "run": "/home/ubuntu/GX/NEX/build/experiments/ix14-sync-candidate-1789775036563063696",
+          "maximum_marked_virtual_seconds": 30.51885,
+          "prediction_classes": {
+            "measured_database": 398814,
+            "estimated": 760807,
+            "miss": 90972
+          },
+          "measured_launch_fraction": 0.3188999138808549,
+          "measured_plus_estimated_launch_fraction": 0.9272569093222175,
+          "limitations": [
+            "Estimated durations are the identical archived 45 shape-scaling estimates, inserted before execution; no offline modification of observed epoch timestamps.",
+            "Predictor runtime calls estimated rows hits; this audit reclassifies them using the SQLite provenance table.",
+            "No native eight-GPU validation. GPU profile originates from an A100-40GB; modeled capacity is 80GiB.",
+            "Full-sync spans include epoch/worker/wait costs; post-attachment application perf_counter uses virtual time. Physical host duration is in result.applications."
+          ],
+          "copy_summary": {
+            "nodes": 166702,
+            "missing_metadata": 0,
+            "unmodeled_host_link": 0,
+            "host_service_ns_sum": 42036179328.008606,
+            "counts_h2h_h2d_d2h_d2d": [
+              0,
+              42260,
+              23054,
+              101388
+            ],
+            "bytes_h2h_h2d_d2h_d2d": [
+              0,
+              405910766464,
+              140559564800,
+              2378177126400
+            ]
+          }
+        },
+        "reduction_percent": 23.283832111953508
+      }
+    }
+  }
+}

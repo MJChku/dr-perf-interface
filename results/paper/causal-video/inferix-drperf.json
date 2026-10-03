@@ -1,0 +1,89 @@
+{
+  "name": "inferix-drperf",
+  "hosts": [
+    {
+      "address": "ubuntu@icdslab2.epfl.ch",
+      "containers": 1
+    }
+  ],
+  "image": "gx-mixed-profile:rcp-20260915-110d87373a4a",
+  "workspace": "/home/ubuntu/drperf-wan-timing",
+  "resources": {
+    "cpus": 8,
+    "memory": "58g"
+  },
+  "network": {
+    "name": "wan-timing-net",
+    "manager": 0
+  },
+  "files": {
+    "gpu_db": "/home/ubuntu/drperf/out/causal-video/inferix-original-gpu/inferix-original-gpu.pid3158.sqlite",
+    "context_limits": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/context-limits.tsv",
+    "device_attributes": "/home/ubuntu/drperf/examples/wan_gx/evidence/timing-inputs/device-attributes.tsv",
+    "drperf": "/home/ubuntu/drperf/out/causal-video/drperf-bundle"
+  },
+  "gxvm": {
+    "mode": "plain",
+    "attachment": "late"
+  },
+  "runtime": {
+    "gx_library": "/home/ubuntu/.cache/bazel/_bazel_ubuntu/ebbf5befbe67d1654d2c061dc9f42fbd/execroot/_main/bazel-out/k8-opt/bin/src/sims/gpu/gx_cuda.so"
+  },
+  "timeout_seconds": 1800,
+  "application": {
+    "cwd": "/workspace",
+    "environment": {
+      "GX_HOME": "/home/jma/GX",
+      "GX_COMM_ONLY": "1",
+      "GX_DEVICE_MODEL": "A100",
+      "GX_NUM_LOCAL_GPUS": "1",
+      "GX_SHM_ARENA_GB": "8",
+      "GX_APP_REAL_MAX_BYTES": "16777216",
+      "GX_CHROME_TRACE": "1",
+      "GX_ID": "0",
+      "GX_REAL_CUDNN": "1",
+      "GX_PREDICT_DB": "{file:gpu_db}",
+      "GX_CUDA_CONTEXT_LIMITS": "{file:context_limits}",
+      "GX_CUDA_DEVICE_ATTRIBUTES": "{file:device_attributes}",
+      "NCCL_SOCKET_IFNAME": "lo",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "CUDA_VISIBLE_DEVICES": "0",
+      "PYTHONPATH": "/workspace/causal/code:/workspace/causal/Inferix-metadata:/workspace/causal/deps:/workspace/causal/base/deps",
+      "LD_LIBRARY_PATH": "{file:drperf}/build:{file:drperf}/third_party/dynamorio/lib64/release:{file:drperf}/third_party/dynamorio/ext/lib64/release:/home/jma/bridge-venv2/lib/python3.12/site-packages/nvidia/cudnn/lib",
+      "FASTVIDEO_ATTENTION_BACKEND": "FLASH_ATTN",
+      "HF_HUB_OFFLINE": "1",
+      "PYTHONUNBUFFERED": "1",
+      "DRPERF_EXCLUDE_CUDA_MODULE": "gx_cuda.so",
+      "DRPERF_FOLLOW_THREADS": "0"
+    },
+    "command": [
+      "bash",
+      "/workspace/causal/code/entry.sh",
+      "{run_dir}",
+      "python3",
+      "{file:drperf}/examples/wan_gx/measure.py",
+      "{run_dir}/drperf",
+      "python3",
+      "/workspace/causal/code/inferix_runner.py",
+      "--role",
+      "drperf",
+      "--tree",
+      "/workspace/causal/Inferix-metadata",
+      "--output",
+      "{run_dir}/model",
+      "--base",
+      "/workspace/wan-gx/checkpoint",
+      "--checkpoint",
+      "/workspace/causal/models/self-forcing/checkpoints/self_forcing_dmd.pt",
+      "--latent-frames",
+      "21",
+      "--warmup-frames",
+      "3",
+      "--segments",
+      "1"
+    ]
+  }
+}

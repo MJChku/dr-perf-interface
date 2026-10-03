@@ -1,0 +1,76 @@
+--- /home/ubuntu/compression/ditto_kv/src/compressor/native/ditto_runtime.cpp
++++ /home/ubuntu/drperf/out/waits/ditto-events/ditto_runtime.cpp
+@@ -1,3 +1,5 @@
++#include "perfmark.h"
++#include <atomic>
+ #include "ditto_runtime.h"
+ 
+ #include <algorithm>
+@@ -22,6 +24,7 @@
+ #include "../cpu/lz77/lz77.h"
+ 
+ namespace {
++std::atomic<uint64_t> annotation_next_event{1};
+ 
+ constexpr uint32_t kAbiVersion = 2;
+ constexpr size_t kCandidateCount = 7;
+@@ -326,18 +329,26 @@
+     explicit ditto_context(uint32_t workers, uint32_t limit)
+         : pool(workers), cache_limit(std::max<uint32_t>(1, limit)) {}
+ 
+-    Future submit(const int32_t* tokens, size_t count, int32_t min_match) {
++    Future submit(const int32_t* tokens, size_t count, int32_t min_match, uint64_t* event_out = nullptr) {
+         const std::string key = candidate_key(tokens, count, min_match);
+         std::lock_guard<std::mutex> lock(mu);
+         auto found = cache.find(key);
+         if (found != cache.end()) {
+             lru.splice(lru.end(), lru, found->second.second);
++            if (event_out) *event_out = annotation_events.at(key);
+             return found->second.first;
+         }
+         std::vector<int32_t> copy(tokens, tokens + count);
++        const uint64_t event = annotation_next_event++;
++        annotation_events[key] = event;
++        if (event_out) *event_out = event;
+         Future future = pool.submit(
+-            [tokens = std::move(copy), min_match]() {
+-                return build_candidates(tokens, min_match);
++            [tokens = std::move(copy), min_match, event]() {
++                perfmark_begin("candidates.build", "tokens", tokens.size());
++                auto result = build_candidates(tokens, min_match);
++                perfmark_event_publish(event, 1);
++                perfmark_end("candidates.build");
++                return result;
+             });
+         lru.push_back(key);
+         cache.emplace(key, std::make_pair(future, std::prev(lru.end())));
+@@ -345,10 +356,12 @@
+             const std::string victim = lru.front();
+             lru.pop_front();
+             cache.erase(victim);
++            annotation_events.erase(victim);
+         }
+         return future;
+     }
+ 
++    std::unordered_map<std::string, uint64_t> annotation_events;
+     ThreadPool pool;
+     size_t cache_limit;
+     std::mutex mu;
+@@ -466,7 +479,15 @@
+         if ((!output && needed) || output_count < needed)
+             return fail(report, DITTO_BUFFER_TOO_SMALL,
+                         "candidate output buffer is too small");
+-        const auto result = context->submit(tokens, ntokens, min_match).get();
++        uint64_t event;
++        auto future = context->submit(tokens, ntokens, min_match, &event);
++#ifdef FALSE_WAITED
++        perfmark_event_waited(event, 1); // Deliberately premature annotation.
++#endif
++        const auto result = future.get();
++#ifndef FALSE_WAITED
++        perfmark_event_waited(event, 1);
++#endif
+         std::copy(result.begin(), result.end(), output);
+         set_report(report, DITTO_OK, "");
+         return DITTO_OK;

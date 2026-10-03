@@ -1,0 +1,35 @@
+DRPERF_SERVE late: DYNAMORIO_OPTIONS=-code_api -no_follow_children -attach_unmask_suspend_signal -client_lib '/home/ubuntu/drperf/build/libdrperf.so;0;-o /w/runs/lmc-waits-20260929-futures/raw/run.%p.json -blocks -waits -max_wait_records 1000000 -native_gx -max_states_per_region 4096 -max_slots 2097152 -exclude_cuda_module gx_cuda.so -no_follow_threads'
+DRPERF_SERVE rc=0 files=['run.54.json']
+
+===
+Execution time (ms): 372519 
+===
+/home/jma/bridge-venv2/lib/python3.12/site-packages/torch/cuda/__init__.py:180: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 34: CUDA driver is a stub library (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:119.)
+  return torch._C._cuda_getDeviceCount() > 0
+[32;20m[2026-09-29 14:44:51,494] LMCache INFO:[0m torch_dev=StubCPUDevice(device_type=cpu), torch_device_type=cpu [3m(_device_detect.py:311:lmcache.v1.platform._device_detect)[0m
+[
+  {
+    "method": "/w/runs/lmc-waits-20260929-futures/lmcache_pkg/lmcache/v1/storage_backend/connector/lm_connector.py",
+    "responseHeldMs": 200,
+    "unrelatedCallbackRanWhileHeld": false,
+    "unrelatedCallbackRanAfterRelease": true,
+    "existsResult": true,
+    "conclusion": "A blocking EXISTS response stalls the connector event loop."
+  },
+  {
+    "method": "/w/runs/lmc-waits-20260929-futures/lmcache_pkg/lmcache/v1/storage_backend/connector/lm_connector.py",
+    "responseHeldMs": 200,
+    "unrelatedCallbackRanWhileHeld": false,
+    "unrelatedCallbackRanAfterRelease": true,
+    "existsResult": true,
+    "conclusion": "A blocking EXISTS response stalls the connector event loop."
+  },
+  {
+    "method": "/w/runs/lmc-waits-20260929-futures/lmcache_pkg/lmcache/v1/storage_backend/connector/lm_connector.py",
+    "responseHeldMs": 200,
+    "unrelatedCallbackRanWhileHeld": false,
+    "unrelatedCallbackRanAfterRelease": true,
+    "existsResult": true,
+    "conclusion": "A blocking EXISTS response stalls the connector event loop."
+  }
+]

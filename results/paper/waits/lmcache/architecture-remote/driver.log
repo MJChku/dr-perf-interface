@@ -1,0 +1,14 @@
+LMCACHE_OVERLAY 56 modules -> /w/runs/drperf-lmc-refined4-remote/lmcache_pkg
+LMCACHE arm=remote_naive config:
+  chunk_size: 256
+  local_cpu: False
+  max_local_cpu_size: 2
+  remote_url: "lm://localhost:65432"
+  remote_serde: "naive"
+DRPERF_LMCACHE run=/w/runs/drperf-lmc-refined4-remote arm=remote_naive mode=late model=Qwen/Qwen2.5-0.5B-Instruct sessions=12 turns=3 2026-10-01T10:26:30Z
+DRPERF_LMCACHE serve rc=0 2026-10-01T10:31:43Z
+OFFLINE engine ready in 57.7s pid=95
+CLIENT_SUMMARY {"requests": 36, "failed": 0, "total_s": 18.2}
+OFFLINE_DONE
+LMCache events: stored=22 retrieved=21 key_errors=0 errors=0
+DRPERF_LMCACHE_DONE 2026-10-01T10:31:43Z

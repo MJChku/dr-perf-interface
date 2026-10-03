@@ -1,0 +1,79 @@
+{
+  "drperf": {"version": "0.3", "pid": 3366297, "app": "coverage",
+    "excluded_cuda_module": "", "follow_unmarked_threads": false, "native_gx": false, "native_gx_hooks": 0, "native_gx_calls": 0, "max_states_per_region": 4096, "max_keys": 65536, "counter_budget_bytes": 103079215104, "counter_bytes": 41943040, "excluded_cuda_exports": 0, "excluded_cuda_calls": 0, "excluded_instructions": 139,
+    "rep_expand": true, "symbols": true, "max_slots": 1048576, "slots_used": 362, "slots_overflow": 0, "counter_denied": 0,
+    "marker_seen": true, "unmatched_ends": 0, "depth_overflows": 0, "state_overflows": 0, "threads": 1,
+    "waits_enabled": true, "wait_records": 53, "wait_dropped": 0, "wait_hooks": 27, "wait_delay_ms": 0, "wait_delay_injections": 0, "max_wait_records": 100000,
+    "wait_delay_region": "", "wait_delay_kind": "semaphore",
+    "wait_unattributed": {"pthread_mutex_lock":{"kind":"lock","calls":1},"pthread_mutex_unlock":{"kind":"unlock","calls":1}},
+    "trace_file": "/home/ubuntu/drperf/out/waits/coverage/branch/run.3366297.json.trace", "trace_records": 11, "trace_dropped": 0},
+  "modules": [
+    {"name": "libdynamorio.so", "path": "/home/ubuntu/drperf/third_party/DynamoRIO-gx-7c0717f412f8/lib64/release/libdynamorio.so"},
+    {"name": "libdrperf.so", "path": "/home/ubuntu/drperf/build/libdrperf.so"},
+    {"name": "coverage", "path": "/home/ubuntu/drperf/out/waits/coverage/coverage"},
+    {"name": "libc.so.6", "path": "/usr/lib/x86_64-linux-gnu/libc.so.6"},
+    {"name": "libperfmark.so", "path": "/home/ubuntu/drperf/build/libperfmark.so"},
+    {"name": "libdrperf_attach.so", "path": "/home/ubuntu/drperf/build/libdrperf_attach.so"},
+    {"name": "linux-vdso.so.1", "path": "[vdso]"},
+    {"name": "ld-linux-x86-64.so.2", "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}
+  ],
+  "threads": [
+    {"tid": 3366297, "instrs": 5097, "open_regions": 0}
+  ],
+  "total_instrs": 5097,
+  "regions": [
+    {"region": "capture", "state_name": "n", "state_value": 1, "states": {"n": 1}, "parent": "", "root": "",
+     "count": 1, "incl": {"sum": 4, "min": 4, "max": 4}, "self": 4, "self_min": 4, "self_max": 4,
+     "self_slots": 4, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 4},
+     "symbols": [
+      {"module": "coverage", "symbol": "main", "instrs": 2},
+      {"module": "coverage", "symbol": "_init", "instrs": 2}
+     ]},
+    {"region": "P", "state_name": "generation", "state_value": 1, "states": {"generation": 1}, "parent": "", "root": "",
+     "count": 1, "incl": {"sum": 651, "min": 651, "max": 651}, "self": 651, "self_min": 651, "self_max": 651,
+     "self_slots": 651, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 267, "libc.so.6": 384},
+     "symbols": [
+      {"module": "libc.so.6", "symbol": "__new_sem_post", "instrs": 384},
+      {"module": "coverage", "symbol": "publish", "instrs": 199},
+      {"module": "coverage", "symbol": "_init", "instrs": 68}
+     ]},
+    {"region": "A", "state_name": "need", "state_value": 0, "states": {"need": 0}, "parent": "", "root": "",
+     "count": 3, "incl": {"sum": 21, "min": 7, "max": 7}, "self": 21, "self_min": 7, "self_max": 7,
+     "self_slots": 21, "other_threads": 0, "threads_active": 1, "syscalls": 0, "implicit_ends": 0,
+     "modules": {"coverage": 21},
+     "symbols": [
+      {"module": "coverage", "symbol": "main", "instrs": 15},
+      {"module": "coverage", "symbol": "_init", "instrs": 6}
+     ]},
+    {"region": "A", "state_name": "need", "state_value": 1, "states": {"need": 1}, "parent": "", "root": "",
+     "count": 3, "incl": {"sum": 2217, "min": 739, "max": 739}, "self": 96, "self_min": 32, "self_max": 32,
+     "self_slots": 96, "other_threads": 0, "threads_active": 1, "syscalls": 6, "implicit_ends": 0,
+     "modules": {"coverage": 96},
+     "symbols": [
+      {"module": "coverage", "symbol": "B", "instrs": 48},
+      {"module": "coverage", "symbol": "main", "instrs": 30},
+      {"module": "coverage", "symbol": "_init", "instrs": 18}
+     ]},
+    {"region": "B", "state_name": "retries", "state_value": 2, "states": {"retries": 2}, "parent": "A", "root": "A",
+     "count": 3, "incl": {"sum": 2121, "min": 707, "max": 707}, "self": 2121, "self_min": 707, "self_max": 707,
+     "self_slots": 2121, "other_threads": 0, "threads_active": 1, "syscalls": 6, "implicit_ends": 0,
+     "modules": {"coverage": 195, "libc.so.6": 1926},
+     "symbols": [
+      {"module": "libc.so.6", "symbol": "___pthread_cond_timedwait", "instrs": 738},
+      {"module": "libc.so.6", "symbol": "__condvar_cancel_waiting", "instrs": 282},
+      {"module": "libc.so.6", "symbol": "__GI___futex_abstimed_wait_cancelable64", "instrs": 252},
+      {"module": "libc.so.6", "symbol": "__pthread_mutex_cond_lock", "instrs": 180},
+      {"module": "coverage", "symbol": "B", "instrs": 159},
+      {"module": "libc.so.6", "symbol": "__GI___pthread_mutex_unlock_usercnt", "instrs": 144},
+      {"module": "libc.so.6", "symbol": "___pthread_mutex_lock", "instrs": 111},
+      {"module": "libc.so.6", "symbol": "___pthread_mutex_unlock", "instrs": 69},
+      {"module": "libc.so.6", "symbol": "__new_sem_wait", "instrs": 51},
+      {"module": "libc.so.6", "symbol": "__GI___pthread_cleanup_push", "instrs": 42},
+      {"module": "coverage", "symbol": "_init", "instrs": 36},
+      {"module": "libc.so.6", "symbol": "__pthread_cleanup_pop", "instrs": 36},
+      {"module": "libc.so.6", "symbol": "__GI___pthread_testcancel", "instrs": 21}
+     ]}
+  ]
+}

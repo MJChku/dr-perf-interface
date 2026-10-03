@@ -1,0 +1,40 @@
+{
+  "claims": [
+    {
+      "id": "native-binary-prefix-size",
+      "region": "source/native/libcst/src/parser/grammar.rs:969 bitwise_or and 1001 sum within native parse; dispatched by source/libcst/_parser/entrypoints.py:25",
+      "expression": "Let A=source.count('+') and U=source.count('|'). PCVs are A, U, A*(A+1)/2, U*(U+1)/2. These source counts are available at parse entry and equal the lengths of the growing binary chains for the allowed inputs.",
+      "evidence": "Source has cached left-recursive sum/bitwise_or rules and Box-owned nested BinaryOperation children. The cst_node macro derives Clone for deflated nodes (source/native/libcst_derive/src/cstnode.rs:120,210). Six n values 2,32,64,128,192,256 in each shape give exclusive _parse times in ms: addition 0.774,1.178,2.149,4.548,7.798,12.360; union 0.771,1.296,2.127,4.382,7.741,12.352. An affine model in linear and triangular chain lengths fits substantially better than a linear-only model: RMS residual 0.069 vs 0.771 ms (addition), 0.049 vs 0.816 ms (union). This supports cumulative prefix size as an additional dependency.",
+      "scope": "Generated unparenthesized homogeneous chains only. Inner native rules are opaque to cProfile, so cloning is a source-supported mechanism, not a directly measured attribution. Union is in an annotation; the measured differences include surrounding syntax."
+    },
+    {
+      "id": "native-primary-prefix-size",
+      "region": "source/native/libcst/src/parser/grammar.rs:1059 primary and 1445 t_primary within native parse_module",
+      "expression": "Let D=source.count('.') and C=source.count('()'), P=D+C. PCVs are D, C, P*(P+1)/2. In this family D=C, but separate counts describe the attribute and call additions to the primary spine; the triangular expression describes cumulative growing-prefix size.",
+      "evidence": "primary and t_primary use cached left recursion and construct Box-owned Attribute.value/Call.func subtrees. Assignment alternatives may try t_primary before parsing the RHS via primary. At n=2,32,64,128,192,256, exclusive _parse times are 0.821,2.866,7.554,24.443,52.332,93.881 ms. Quadratic-plus-linear fit RMS residual is 0.470 ms versus 8.687 ms for a linear fit. At n=256 this shape has ~7.6x the exclusive parsing time of either binary shape, despite only a constant-factor token and Python-node increase.",
+      "scope": "Generated alternating '.mN()' chains only. D and C cannot be independently varied within the input envelope, so their separate coefficients and t_primary versus primary contributions are unresolved."
+    },
+    {
+      "id": "native-linear-processing",
+      "region": "source/native/libcst/src/lib.rs:33 tokenize, parse_module; source/native/libcst/src/tokenizer/whitespace_parser.rs:64 Config::new; native tree inflation and TryIntoPy conversion",
+      "expression": "B=len(source.encode('utf-8')), plus counts of identifier tokens, binary operators, dots, and empty calls obtainable by a non-parsing lexical scan of this restricted input family",
+      "evidence": "Source tokenizes bytes, constructs whitespace configuration, inflates each tree field, and converts each final node to Python. The measured parser cost supports both linear and nonlinear components. Native TryIntoPy derives field-wise conversion and invokes Python constructors once per final node. These linear components coexist with the cumulative-prefix term.",
+      "uncertainty": "No independent byte-length/identifier-length input exists here. Exact byte versus token versus final-node contributions cannot be identified separately, and cProfile does not expose tokenizer or inflation timings. This claim is source-supported rather than independently fitted."
+    },
+    {
+      "id": "python-local-validation",
+      "region": "source/libcst/_nodes/expression.py:231 _BaseParenthesizedNode._validate, :352 Name._validate, :2597 _BaseExpressionWithArgs._validate; source/libcst/_nodes/base.py:115 __post_init__",
+      "expression": "At Name._validate entry: len(self.value). At call-validator entry: len(self.args), with 0 iterations when empty. At parenthesis-validator entry: indicators bool(self.lpar), bool(self.rpar), and len(self.lpar)==len(self.rpar); validation does not traverse either sequence. There is no dependency on len(Call.func's ancestor spine) in empty-call validation.",
+      "evidence": "Name validation calls str.isidentifier; argument validation iterates self.args; parenthesis validation checks only booleans and O(1) lengths. At all 6 chain sizes call-validator count equals n with zero argument-loop iterations. At n=256 cumulative call validation takes 0.397 ms, compared with 93.881 ms exclusive _parse. Python constructor counts are exactly 5*n+11 (addition), 5*n+15 (union), and 8*n+16 (methods), including fixed import-created defaults. Parenthesis validator counts are 2*n, 2*n+1, and 3*n+2 respectively. Linear counts and timings exclude recursive Python validation as the observed quadratic mechanism.",
+      "scope": "Measurements aggregate import defaults and parse-time construction. Local state expressions hold for these valid empty-parenthesis, empty-argument generated nodes. Name length is coupled to n by numbered identifiers, preventing an independent length experiment."
+    },
+    {
+      "id": "import-invariant",
+      "region": "source/libcst/__init__.py imports and Python dataclass generation for node classes",
+      "expression": "1 (constant with respect to source bytes, binary chain length and method chain length)",
+      "evidence": "All 18 processes invoke dataclasses._process_class exactly 196 times, with cumulative time roughly 0.129-0.136 seconds. Import precedes source construction and has no input dependence. Whole-process wall times mostly stay around 0.294-0.324 seconds except the initial cold point (0.431 seconds) and largest method chains; import startup dominates and hides most parsing growth.",
+      "scope": "Fixed source files and fresh-process workload. Constant dependency does not imply identical wall time under environmental/cache variation."
+    }
+  ],
+  "experiment": "Final: source-only round 0 and three timing rounds completed, 18 configurations total, no source or workload behavior edits. Fits inspect saved cProfile results only; native-internal attribution and separately identifying collinear linear terms remain uncertain."
+}

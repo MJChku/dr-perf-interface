@@ -1,0 +1,115 @@
+{
+  "status": "Historical CPU source candidate subsequently screened with GX; no material gain from last-row mask.",
+  "source_remote": "https://github.com/FunAudioLLM/CosyVoice.git",
+  "source_commit": "074ca6dc9e80a2f424f1f74b48bdd7d3fea531cc",
+  "source_sha256": "c3799f4b2a00baaf1784bda86c5c7f22d4f9199b45e1fb9edd247b996d101ffa",
+  "patch_sha256": "1deba7a7cb59ea8f62cfd598db0fd861a5ca4fb1e52be462eeb8d89a26c7f7da",
+  "mask_cases": [
+    {
+      "length": 1,
+      "old_elements": 1,
+      "new_elements": 1
+    },
+    {
+      "length": 2,
+      "old_elements": 4,
+      "new_elements": 2
+    },
+    {
+      "length": 3,
+      "old_elements": 9,
+      "new_elements": 3
+    },
+    {
+      "length": 7,
+      "old_elements": 49,
+      "new_elements": 7
+    },
+    {
+      "length": 32,
+      "old_elements": 1024,
+      "new_elements": 32
+    },
+    {
+      "length": 257,
+      "old_elements": 66049,
+      "new_elements": 257
+    },
+    {
+      "length": 1024,
+      "old_elements": 1048576,
+      "new_elements": 1024
+    },
+    {
+      "length": 4096,
+      "old_elements": 16777216,
+      "new_elements": 4096
+    }
+  ],
+  "custom_encoder_fallback_cases": 6,
+  "actual_qwen2_forward_checks": 20,
+  "torch": "2.11.0+cu130",
+  "transformers": "5.5.4",
+  "scope": "AST-extracted original Qwen2Encoder forward_one_step, candidate helper, random tiny Qwen2 model with independent real DynamicCaches. CPU FP32/BF16, prefill and decode, both current-length and full-history masks. Exact hidden outputs. Different stack from GX; no pretrained correctness or timing claim.",
+  "gx_evaluation": {
+    "evidence": "cosyvoice-cpu.json",
+    "screen": {
+      "client_iterations": {
+        "before": 7.346832822701275,
+        "after": 7.346649550282011,
+        "reduction_percent": 0.002494577237388551
+      },
+      "llm_cpu_execution": {
+        "before": 7.127448048068453,
+        "after": 7.127186009619461,
+        "reduction_percent": 0.0036764694351210103
+      },
+      "interpretation": "Mode2 caller interval is the request metric. Newly spawned LLM threads start their clocks at zero, so raw worker marker spans are NOT request latencies; report their CPU execution only. Mode3 is required for globally synchronized request timing. No native latency claim."
+    },
+    "native_validation": false
+  },
+  "A100_validation": null,
+  "source_encoder_ast_unchanged": true,
+  "patch_application_check": true,
+  "hypothesis": "Streaming text decode constructs a square causal mask on every step but standard Qwen2Encoder consumes only its last row, which is all true. Construct that Boolean row directly for the exact built-in encoder; retain full mask for subclasses and custom encoders.",
+  "other_observations": [
+    {
+      "file": "cosyvoice/cli/model.py",
+      "lines": [
+        195,
+        347
+      ],
+      "finding": "100ms polling waits in streaming producer/consumer loops. Potential scheduling latency, not evidence of CPU instruction overhead; notification replacement must retain token thresholds, termination, exception handling, and concurrency."
+    },
+    {
+      "file": "cosyvoice/cli/model.py",
+      "lines": [
+        241,
+        393
+      ],
+      "finding": "Request-end allocator cache clear and stream synchronization. Cannot remove without evaluating memory/concurrency policy."
+    },
+    {
+      "file": "cosyvoice/llm/llm.py",
+      "line": 521,
+      "finding": "vLLM path materializes list(request_output.outputs[0].token_ids) and keeps only [-1]. If token_ids is a sized indexable sequence, this copies the whole generated prefix per token. Total CPU copying can grow quadratically with output length. Inspect the pinned vLLM output contract before replacing with direct indexing; this path is separate from the native Qwen mask candidate.",
+      "status": "source hypothesis, not implemented or timed"
+    }
+  ],
+  "next_steps": [
+    "Profile one pinned pretrained CosyVoice2/3 streaming request for kernel latency database and native control tape.",
+    "Run original workload under GX modes0/2; inspect actual CPU/dispatch contribution and mask kernel coverage.",
+    "Evaluate last-row mask candidate using the same database, then mode3 if material.",
+    "Only then validate full pretrained outputs and latency on idle physical A100 GPU1."
+  ],
+  "timing_claim": false,
+  "reproduction": {
+    "file": "cosyvoice-candidate.tar.gz",
+    "sha256": "1d292fb64a33840fd81e91aef18aae5ab2ea1777066c4e0e673677d708f912f9",
+    "files": [
+      "mask_oracle.py",
+      "mask-oracle.json",
+      "last-row-mask.patch"
+    ]
+  }
+}

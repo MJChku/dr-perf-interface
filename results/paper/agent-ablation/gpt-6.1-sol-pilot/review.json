@@ -1,0 +1,58 @@
+{
+  "status": "completed-supervisor-review",
+  "reviewer": "parent agent; not condition-blind",
+  "scope": "Recovery of expected mechanism and PCV family, not precision across every claim or held-out predictive accuracy.",
+  "cases": {
+    "sqlglot": {
+      "expected": "Repeated scope analysis while merging isolated table CTEs; work grows with merge count times outer scope size.",
+      "timing": {
+        "recovered": true,
+        "first_measured_round": 1,
+        "evidence": "merge_ctes and _merge_expressions cumulative timing plus source cache invalidation; submitted M*C and M*S products.",
+        "limits": "Only table count varies; individual structural factors cannot be separated."
+      },
+      "drperf": {
+        "recovered": true,
+        "first_measured_round": 1,
+        "evidence": "Timing round identified merge_ctes before first DrPerf round. DrPerf then localized scope collection and attributed work to structural PCVs.",
+        "limits": "Final collector has 59% block residual. Preparation added work to enclosing regions; total-state fit is not a blockwise explanation."
+      },
+      "comparison": "Both recover the main dependency after timing feedback. This pair does not show a discovery-accuracy advantage for DrPerf."
+    },
+    "libcst": {
+      "expected": "Cached left-recursive parsing repeatedly copies growing expression prefixes; linear and triangular-size PCVs vary by grammar shape.",
+      "timing": {
+        "recovered": true,
+        "evidence": "Native parse timings plus grammar.rs cached-left-recursive rules, recursive Box fields and generated Clone; attributes clone mechanism as an inference.",
+        "limits": "cProfile cannot attribute native functions; lexical and shape features co-vary."
+      },
+      "drperf": {
+        "recovered": true,
+        "evidence": "Instruction feedback attributes triangular-size work to native DeflatedExpression/Attribute clone and allocation/free.",
+        "limits": "Retrospective saved-data train/test split was not evaluator-reserved. Call-chain block residual remains 21%."
+      },
+      "comparison": "Same PCV family recovered; DrPerf supplies direct native-function attribution beyond the control profiler."
+    },
+    "comfyui": {
+      "expected": "Per-key ancestor/signature reconstruction; total distinct ancestor closure and link/input volume, quadratic for deep families but linear for wide family.",
+      "timing": {
+        "recovered": true,
+        "evidence": "Matched-size shapes distinguish closure size from link volume; cProfile calls match source-derived ancestry and conversion counts."
+      },
+      "drperf": {
+        "recovered": true,
+        "evidence": "Instruction attribution and call counts support closure/input/link volume. Deep graph adds quadratic work; shape controls separate node and link contributions.",
+        "limits": "Final recursive hashing residual 15%, outer hashing 47%, assembly 14% (rounded); low residual in local helpers is on a few correlated states."
+      },
+      "comparison": "Both recover the expected dependency. DrPerf exposes incomplete fine-grained explanation; no discovery-accuracy gain in this pair."
+    }
+  },
+  "summary": {
+    "pairs": 3,
+    "main_mechanism_recovery": {
+      "timing": 3,
+      "drperf": 3
+    },
+    "interpretation": "No observed recovery advantage in this development pilot. This is not a full precision/recall score, independent held-out accuracy, or a statistical equivalence finding."
+  }
+}

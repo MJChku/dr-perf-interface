@@ -1,0 +1,2362 @@
+{
+  "schema": "causal-video-drperf-summary-v1",
+  "input_raw": "out/wan-timing/baseline-drperf-db-result/drperf/raw",
+  "validity": [],
+  "counters": [
+    {
+      "version": "0.3",
+      "pid": 309,
+      "app": "python3.12",
+      "excluded_cuda_module": "gx_cuda.so",
+      "follow_unmarked_threads": false,
+      "excluded_cuda_exports": 1551,
+      "excluded_cuda_calls": 8208059,
+      "excluded_instructions": 218961466200,
+      "rep_expand": true,
+      "symbols": true,
+      "max_slots": 1048576,
+      "slots_used": 140402,
+      "slots_overflow": 0,
+      "counter_denied": 0,
+      "marker_seen": true,
+      "unmatched_ends": 0,
+      "depth_overflows": 0,
+      "state_overflows": 0,
+      "threads": 19,
+      "trace_file": "/workspace/runs/1789584046890044733/drperf/raw/run.309.json.trace",
+      "trace_records": 43719,
+      "trace_dropped": 0
+    }
+  ],
+  "regions": {
+    "wan_block": {
+      "calls": 3000,
+      "exclusive_instructions": 2846827912,
+      "mean_exclusive_instructions": 948942.6373333334,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 472775275
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 93297643
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 60600000
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 52225200
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 50072952
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 48089158
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 45891000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 45087000
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_cross_attention": {
+      "calls": 3000,
+      "exclusive_instructions": 1798751485,
+      "mean_exclusive_instructions": 599583.8283333334,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 285533061
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 47685165
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 45828000
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "getenv",
+          "instructions": 32304000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 31656000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 30844269
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 29789997
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 28441191
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_encode_text": {
+      "calls": 2,
+      "exclusive_instructions": 580490,
+      "mean_exclusive_instructions": 290245.0,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "chars"
+      ],
+      "distinct_states": 2,
+      "state_values": [
+        [
+          41
+        ],
+        [
+          137
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 74906
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 73811
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "timer_settime+?",
+          "instructions": 44583
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 11571
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 10122
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 8621
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 8400
+        },
+        {
+          "module": "libtorch_cpu.so",
+          "symbol": "_ZN3c1012function_refIFvPPcPKlllEE11callback_fnIZN2at18TensorIteratorBase15loop_2d_from_1dIZNS8_6native4AVX210cpu_kernelIZZZNSB_12_GLOBAL__N_19gt_kernelERS9_ENKUlvE_clEvENKUlvE2_clEvEUlllE_EEvSF_OT_lEUlS2_S4_lE_EEDaRKSJ_EUlS2_S4_llE_EEvlS2_S4_ll",
+          "instructions": 8318
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "too few distinct states for an affine relation"
+      ]
+    },
+    "wan_flash_attention": {
+      "calls": 6000,
+      "exclusive_instructions": 3993314583,
+      "mean_exclusive_instructions": 665552.4305,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "q_tokens",
+        "k_tokens"
+      ],
+      "distinct_states": 2,
+      "state_values": [
+        [
+          32760,
+          512
+        ],
+        [
+          32760,
+          32760
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "q_tokens"
+      ],
+      "fixed_pcv_observations": {
+        "q_tokens": 32760
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 235842026
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 119339790
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 92410800
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 87003000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 71204217
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 70620064
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 68003671
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 64981476
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "too few distinct states for an affine relation",
+        "rank-deficient PCVs: q_tokens"
+      ]
+    },
+    "wan_generate": {
+      "calls": 1,
+      "exclusive_instructions": 46452669,
+      "mean_exclusive_instructions": 46452669.0,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "frames",
+        "steps"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          81,
+          50
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "frames",
+        "steps"
+      ],
+      "fixed_pcv_observations": {
+        "frames": 81,
+        "steps": 50
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 11509619
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 2093262
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 1346158
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_SetItem+?",
+          "instructions": 1048172
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 962148
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 961453
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 960874
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 918098
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: frames, steps"
+      ]
+    },
+    "wan_head": {
+      "calls": 100,
+      "exclusive_instructions": 27115706,
+      "mean_exclusive_instructions": 271157.06,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 3985228
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 941517
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 648100
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 541272
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 447200
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 435985
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 420478
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 390815
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_layer_norm": {
+      "calls": 9100,
+      "exclusive_instructions": 448391936,
+      "mean_exclusive_instructions": 49273.83912087912,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 35657691
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 16008563
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 14790000
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 11568016
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 11351987
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 10483200
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 9265813
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 8845200
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_model_to": {
+      "calls": 50,
+      "exclusive_instructions": 2352966688,
+      "mean_exclusive_instructions": 47059333.76,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "modules"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          677
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "modules"
+      ],
+      "fixed_pcv_observations": {
+        "modules": 677
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 603024591
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 137331644
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 106545872
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 68003762
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 59638945
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 49411400
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 48159201
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 46493300
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: modules"
+      ]
+    },
+    "wan_rms_norm": {
+      "calls": 12000,
+      "exclusive_instructions": 1660919124,
+      "mean_exclusive_instructions": 138409.927,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 2,
+      "state_values": [
+        [
+          786432
+        ],
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 55440004
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 53244000
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 40980004
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 37568409
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 36456031
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 32234552
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 31251572
+        },
+        {
+          "module": "libc10_cuda.so",
+          "symbol": "c10::cuda::c10_cuda_check_implementation",
+          "instructions": 26136000
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "too few distinct states for an affine relation"
+      ]
+    },
+    "wan_rope_apply": {
+      "calls": 6000,
+      "exclusive_instructions": 2252293350,
+      "mean_exclusive_instructions": 375382.225,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 89074468
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 74322045
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 69658800
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 57336000
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 45057660
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 42924002
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 41754000
+        },
+        {
+          "module": "libtorch_cpu.so",
+          "symbol": "at::native::canUse32BitIndexMath",
+          "instructions": 30354000
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_scheduler": {
+      "calls": 50,
+      "exclusive_instructions": 94580738,
+      "mean_exclusive_instructions": 1891614.76,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "step"
+      ],
+      "distinct_states": 50,
+      "state_values": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ],
+        [
+          7
+        ],
+        [
+          8
+        ],
+        [
+          9
+        ],
+        [
+          10
+        ],
+        [
+          11
+        ],
+        [
+          12
+        ],
+        [
+          13
+        ],
+        [
+          14
+        ],
+        [
+          15
+        ],
+        [
+          16
+        ],
+        [
+          17
+        ],
+        [
+          18
+        ],
+        [
+          19
+        ],
+        [
+          20
+        ],
+        [
+          21
+        ],
+        [
+          22
+        ],
+        [
+          23
+        ],
+        [
+          24
+        ],
+        [
+          25
+        ],
+        [
+          26
+        ],
+        [
+          27
+        ],
+        [
+          28
+        ],
+        [
+          29
+        ],
+        [
+          30
+        ],
+        [
+          31
+        ],
+        [
+          32
+        ],
+        [
+          33
+        ],
+        [
+          34
+        ],
+        [
+          35
+        ],
+        [
+          36
+        ],
+        [
+          37
+        ],
+        [
+          38
+        ],
+        [
+          39
+        ],
+        [
+          40
+        ],
+        [
+          41
+        ],
+        [
+          42
+        ],
+        [
+          43
+        ],
+        [
+          44
+        ],
+        [
+          45
+        ],
+        [
+          46
+        ],
+        [
+          47
+        ],
+        [
+          48
+        ],
+        [
+          49
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": true,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": {
+        "step": 0.0
+      },
+      "constant": 256493.71999999954,
+      "max_unexplained_fraction": 0.8696772682409041,
+      "max_reconstruction_error_fraction": 0.30451510029876144,
+      "top_exclusive_functions": [
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 4640290
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 2766492
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 2581144
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 2286564
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 2124944
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 1656788
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 1549163
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 1422621
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 88853
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 55330
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 44695
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 42499
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 36292
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 33136
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 30983
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 28452
+        }
+      ],
+      "warnings": []
+    },
+    "wan_self_attention": {
+      "calls": 3000,
+      "exclusive_instructions": 2170064197,
+      "mean_exclusive_instructions": 723354.7323333333,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          50319360
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 50319360
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 372794262
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 59004686
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 50652000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 37383000
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 36762687
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 36104183
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 35165673
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 34500000
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_t5_attention": {
+      "calls": 48,
+      "exclusive_instructions": 30606437,
+      "mean_exclusive_instructions": 637634.1041666666,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          2097152
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 2097152
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 1728264
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 1117562
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 932832
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 691454
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 656256
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 602496
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 519360
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 498079
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_t5_encoder": {
+      "calls": 2,
+      "exclusive_instructions": 47220869,
+      "mean_exclusive_instructions": 23610434.5,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          512
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 512
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 3575935
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 1189476
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 1151912
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 1056876
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 1013250
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 851666
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 773239
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 767548
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_t5_ffn": {
+      "calls": 48,
+      "exclusive_instructions": 18862842,
+      "mean_exclusive_instructions": 392975.875,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          2097152
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 2097152
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 1589416
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 581842
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 562800
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 488112
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 425760
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 367543
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 313942
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 311232
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_time_embedding": {
+      "calls": 100,
+      "exclusive_instructions": 18394173,
+      "mean_exclusive_instructions": 183941.73,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "batch"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          1
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "batch"
+      ],
+      "fixed_pcv_observations": {
+        "batch": 1
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 651039
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 649200
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 467942
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 447200
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 332900
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 300700
+        },
+        {
+          "module": "libc10_cuda.so",
+          "symbol": "c10::cuda::c10_cuda_check_implementation",
+          "instructions": 277200
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 272201
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: batch"
+      ]
+    },
+    "wan_tokenize": {
+      "calls": 2,
+      "exclusive_instructions": 9896155,
+      "mean_exclusive_instructions": 4948077.5,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "chars"
+      ],
+      "distinct_states": 2,
+      "state_values": [
+        [
+          41
+        ],
+        [
+          137
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 1282242
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 848728
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_IsSubtype",
+          "instructions": 726576
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_CheckSignalsTstate+?",
+          "instructions": 601988
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 464838
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyNumber_Long+?",
+          "instructions": 456913
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDescr_IsData+?",
+          "instructions": 400966
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_IsInstance",
+          "instructions": 385276
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "too few distinct states for an affine relation"
+      ]
+    },
+    "wan_transformer": {
+      "calls": 100,
+      "exclusive_instructions": 375822157,
+      "mean_exclusive_instructions": 3758221.57,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "tokens"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          32760
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "tokens"
+      ],
+      "fixed_pcv_observations": {
+        "tokens": 32760
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 88215552
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 18438617
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_SetItem+?",
+          "instructions": 16364900
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Update+?",
+          "instructions": 11128500
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 10558442
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 9273300
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 8589470
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 8104000
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: tokens"
+      ]
+    },
+    "wan_vae_attention": {
+      "calls": 21,
+      "exclusive_instructions": 11703928,
+      "mean_exclusive_instructions": 557329.9047619047,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          2396160
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 2396160
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 724161
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 340326
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 317364
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 263928
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 221305
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 220668
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 193137
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyArg_ParseStack+?",
+          "instructions": 191394
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_vae_clear_cache": {
+      "calls": 2,
+      "exclusive_instructions": 4189001,
+      "mean_exclusive_instructions": 2094500.5,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "modules"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          295
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "modules"
+      ],
+      "fixed_pcv_observations": {
+        "modules": 295
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 1550272
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyUnicode_Concat+?",
+          "instructions": 253792
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 223557
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 153300
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 144970
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyType_GetSlot+?",
+          "instructions": 131995
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyDictView_New+?",
+          "instructions": 122280
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 119446
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: modules"
+      ]
+    },
+    "wan_vae_conv": {
+      "calls": 692,
+      "exclusive_instructions": 101369585,
+      "mean_exclusive_instructions": 146487.83959537573,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 9,
+      "state_values": [
+        [
+          99840
+        ],
+        [
+          2096640
+        ],
+        [
+          2396160
+        ],
+        [
+          4792320
+        ],
+        [
+          9584640
+        ],
+        [
+          19169280
+        ],
+        [
+          38338560
+        ],
+        [
+          76677120
+        ],
+        [
+          153354240
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": true,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": {
+        "elements": 5.158088733109975e-07
+      },
+      "constant": 94277.27322173951,
+      "max_unexplained_fraction": 0.2668956175942628,
+      "max_reconstruction_error_fraction": 0.41690414861236075,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 4344991
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 3342319
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 2856408
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 2526844
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 1641295
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 1478906
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 1467727
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__nss_database_lookup+?",
+          "instructions": 1410997
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 3546
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 3142
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "malloc",
+          "instructions": 2819
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__libc_free",
+          "instructions": 2045
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 1796
+        },
+        {
+          "module": "libtorch_cpu.so",
+          "symbol": "c10::impl::OperatorEntry::lookup",
+          "instructions": 1415
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__nss_database_lookup+?",
+          "instructions": 1222
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 1025
+        }
+      ],
+      "warnings": []
+    },
+    "wan_vae_decode": {
+      "calls": 1,
+      "exclusive_instructions": 3390034,
+      "mean_exclusive_instructions": 3390034.0,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          2096640
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 2096640
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 577626
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 106886
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 82169
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 76877
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 62677
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 57899
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 54910
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 54184
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_vae_decoder": {
+      "calls": 21,
+      "exclusive_instructions": 33194161,
+      "mean_exclusive_instructions": 1580674.3333333333,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 1,
+      "state_values": [
+        [
+          99840
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": false,
+      "rank_deficient_pcvs": [
+        "elements"
+      ],
+      "fixed_pcv_observations": {
+        "elements": 99840
+      },
+      "conditional_fit": null,
+      "coefficients": null,
+      "constant": null,
+      "max_unexplained_fraction": null,
+      "max_reconstruction_error_fraction": null,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 8151431
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 979032
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 905921
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyTuple_Resize+?",
+          "instructions": 901869
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyErr_ChainStackItem+?",
+          "instructions": 811098
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyEval_EvalCode+?",
+          "instructions": 773890
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Malloc",
+          "instructions": 673999
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 625313
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [],
+      "warnings": [
+        "one observed state; a constant cost is not a discovered relation",
+        "rank-deficient PCVs: elements"
+      ]
+    },
+    "wan_vae_resample": {
+      "calls": 63,
+      "exclusive_instructions": 34832771,
+      "mean_exclusive_instructions": 552901.126984127,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 4,
+      "state_values": [
+        [
+          2396160
+        ],
+        [
+          9584640
+        ],
+        [
+          19169280
+        ],
+        [
+          76677120
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": true,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": {
+        "elements": -6.400741650570392e-05
+      },
+      "constant": 194858.3160776397,
+      "max_unexplained_fraction": 0.6449818724839061,
+      "max_reconstruction_error_fraction": 0.33554797388988783,
+      "top_exclusive_functions": [
+        {
+          "module": "libgcc_s.so.1",
+          "symbol": "_Unwind_GetTextRelBase+?",
+          "instructions": 4794973
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 2709319
+        },
+        {
+          "module": "libgcc_s.so.1",
+          "symbol": "_Unwind_Find_FDE",
+          "instructions": 1019768
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 665569
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 619776
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 608129
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__nss_database_lookup+?",
+          "instructions": 519554
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 496277
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [
+        {
+          "module": "libgcc_s.so.1",
+          "symbol": "_Unwind_GetTextRelBase+?",
+          "instructions": 56233
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 17422
+        },
+        {
+          "module": "libgcc_s.so.1",
+          "symbol": "_Unwind_Find_FDE",
+          "instructions": 12140
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 8734
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 7817
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 6473
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 6262
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 5507
+        }
+      ],
+      "warnings": []
+    },
+    "wan_vae_residual": {
+      "calls": 294,
+      "exclusive_instructions": 200210715,
+      "mean_exclusive_instructions": 680988.8265306122,
+      "gx_module_instructions": 0,
+      "declared_pcvs": [
+        "elements"
+      ],
+      "distinct_states": 7,
+      "state_values": [
+        [
+          2396160
+        ],
+        [
+          4792320
+        ],
+        [
+          9584640
+        ],
+        [
+          19169280
+        ],
+        [
+          38338560
+        ],
+        [
+          76677120
+        ],
+        [
+          153354240
+        ]
+      ],
+      "dropped_calls": 0,
+      "affine_identifiable": true,
+      "rank_deficient_pcvs": [],
+      "fixed_pcv_observations": {},
+      "conditional_fit": null,
+      "coefficients": {
+        "elements": -1.984799859897868e-06
+      },
+      "constant": 394042.3806520037,
+      "max_unexplained_fraction": 0.4125404563997238,
+      "max_reconstruction_error_fraction": 0.0710630672176673,
+      "top_exclusive_functions": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 20916755
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 4786007
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 3797424
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 3630492
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 3511463
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 3375524
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 3034263
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyType_Lookup",
+          "instructions": 2762332
+        }
+      ],
+      "top_irregular_functions_mean_per_state": [
+        {
+          "module": "python3.12",
+          "symbol": "_PyEval_EvalFrameDefault",
+          "instructions": 25169
+        },
+        {
+          "module": "ld-linux-x86-64.so.2",
+          "symbol": "__tls_get_addr",
+          "instructions": 12076
+        },
+        {
+          "module": "python3.12",
+          "symbol": "_PyObject_GenericGetAttrWithDict",
+          "instructions": 11107
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "pthread_mutex_lock",
+          "instructions": 10956
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyObject_Free",
+          "instructions": 9569
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__default_morecore+?",
+          "instructions": 9445
+        },
+        {
+          "module": "python3.12",
+          "symbol": "PyDict_Contains+?",
+          "instructions": 8512
+        },
+        {
+          "module": "libc.so.6",
+          "symbol": "__pthread_mutex_unlock",
+          "instructions": 8294
+        }
+      ],
+      "warnings": []
+    }
+  },
+  "total_marked_exclusive_instructions": 18581951706,
+  "top_exclusive_functions": [
+    {
+      "module": "python3.12",
+      "symbol": "_PyEval_EvalFrameDefault",
+      "instructions": 2279742008
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyDict_Contains+?",
+      "instructions": 489987386
+    },
+    {
+      "module": "ld-linux-x86-64.so.2",
+      "symbol": "__tls_get_addr",
+      "instructions": 429522648
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyObject_GenericGetAttrWithDict",
+      "instructions": 386507733
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "__default_morecore+?",
+      "instructions": 374079048
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "pthread_mutex_lock",
+      "instructions": 302177608
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyObject_Free",
+      "instructions": 284888994
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyTuple_Resize+?",
+      "instructions": 258502092
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyType_Lookup",
+      "instructions": 251268744
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "malloc",
+      "instructions": 232137053
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyEval_EvalCode+?",
+      "instructions": 223030147
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "__pthread_mutex_unlock",
+      "instructions": 222595879
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyObject_Malloc",
+      "instructions": 211523138
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyErr_ChainStackItem+?",
+      "instructions": 199706679
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyArg_ParseStack+?",
+      "instructions": 197601924
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "__nss_database_lookup+?",
+      "instructions": 194466376
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyType_GetSlot+?",
+      "instructions": 165605154
+    },
+    {
+      "module": "libc.so.6",
+      "symbol": "__libc_free",
+      "instructions": 156207747
+    },
+    {
+      "module": "python3.12",
+      "symbol": "_PyObject_GC_New",
+      "instructions": 156036618
+    },
+    {
+      "module": "python3.12",
+      "symbol": "PyDescr_IsData+?",
+      "instructions": 151486779
+    }
+  ],
+  "limitations": [
+    "Exclusive basic-block instructions are summed across marked regions without nested double counting.",
+    "A fitted affine relation describes observed states only; it is not evidence of causation or GPU time.",
+    "Irregular function ranking is mean instructions per observed state, not total weighted cost."
+  ]
+}

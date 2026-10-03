@@ -1,0 +1,451 @@
+DRPERF PERFORMANCE REPORT
+Command: not recorded
+Regions: 1; graph: observed
+Declared event ordering: ordered
+Declared dependency channels observed: 0; waited(null) refinements: 0.
+Null refinements do not establish publishers; checking their markers/indicators does not validate their reasons.
+Wait obligations: 0/24 covered; 24 unexplained
+WAIT COVERAGE INCOMPLETE: declared event ordering does not mean all synchronization is explained.
+Read the graph below for structure; COST INTERFACES AND BREAKDOWN for formulas and functions.
+Queries: drperf --report REPORT.json --stats | --region NAME | --top costly | --top unexplained | --full
+graph.html: interactive region graph and selected-region performance details.
+profile.drperf.json: machine-readable formulas, checks, state tables and graph.
+Numeric displays are rounded to integers; the JSON retains full precision.
+Evidence sidecars support rechecking; keep them with the JSON.
+Cost evidence: 0/1 regions have one observed PCV state; 1 have nonzero own residual; 1 have nonzero interface residual including unresolved child terms.
+A one-state constant fit explains that state mean only; it does not establish growth or per-call variation.
+
+CODE COVERAGE
+Source lines inside marked regions: 6/103294 (0%); unmarked: 103288; status: partial
+Nonblank, noncomment source lines lexically inside discovered region spans / all such lines in the selected source tree. Nested spans count once; unexecuted regions still count. Includes marker/decorator lines and string literals. Callees outside a marked lexical span are not counted as marked. Supports Python, C/C++, headers and Rust; discovery exclusions and scan limits apply. Python region contexts/decorators support dynamic names; unrecognized wrappers and unmatched manual begin/end spans need explicit source support.
+  source/libcst/__init__.py: 0/461 lines marked
+  source/libcst/_add_slots.py: 0/36 lines marked
+  source/libcst/_batched_visitor.py: 0/133 lines marked
+  source/libcst/_exceptions.py: 0/130 lines marked
+  source/libcst/_flatten_sentinel.py: 0/29 lines marked
+  source/libcst/_maybe_sentinel.py: 0/41 lines marked
+  source/libcst/_metadata_dependent.py: 0/106 lines marked
+  source/libcst/_position.py: 0/33 lines marked
+  source/libcst/_removal_sentinel.py: 0/35 lines marked
+  source/libcst/_tabs.py: 0/18 lines marked
+  source/libcst/_type_enforce.py: 0/115 lines marked
+  source/libcst/_typed_visitor.py: 0/6120 lines marked
+  source/libcst/_typed_visitor_base.py: 0/10 lines marked
+  source/libcst/_types.py: 0/7 lines marked
+  source/libcst/_visitors.py: 0/127 lines marked
+  source/libcst/tool.py: 0/560 lines marked
+  source/libcst/_nodes/__init__.py: 0/4 lines marked
+  source/libcst/_nodes/base.py: 0/337 lines marked
+  source/libcst/_nodes/deep_equals.py: 0/41 lines marked
+  source/libcst/_nodes/expression.py: 0/2985 lines marked
+  source/libcst/_nodes/internal.py: 0/179 lines marked
+  source/libcst/_nodes/module.py: 0/113 lines marked
+  source/libcst/_nodes/op.py: 0/647 lines marked
+  source/libcst/_nodes/statement.py: 0/2989 lines marked
+  source/libcst/_nodes/whitespace.py: 0/199 lines marked
+  source/libcst/_nodes/tests/__init__.py: 0/0 lines marked
+  source/libcst/_nodes/tests/base.py: 0/203 lines marked
+  source/libcst/_nodes/tests/test_assert.py: 0/122 lines marked
+  source/libcst/_nodes/tests/test_assign.py: 0/399 lines marked
+  source/libcst/_nodes/tests/test_atom.py: 0/1156 lines marked
+  source/libcst/_nodes/tests/test_attribute.py: 0/67 lines marked
+  source/libcst/_nodes/tests/test_await.py: 0/161 lines marked
+  source/libcst/_nodes/tests/test_binary_op.py: 0/178 lines marked
+  source/libcst/_nodes/tests/test_boolean_op.py: 0/105 lines marked
+  source/libcst/_nodes/tests/test_call.py: 0/517 lines marked
+  source/libcst/_nodes/tests/test_classdef.py: 0/409 lines marked
+  source/libcst/_nodes/tests/test_comment.py: 0/25 lines marked
+  source/libcst/_nodes/tests/test_comparison.py: 0/333 lines marked
+  source/libcst/_nodes/tests/test_cst_node.py: 0/170 lines marked
+  source/libcst/_nodes/tests/test_del.py: 0/67 lines marked
+  source/libcst/_nodes/tests/test_dict.py: 0/170 lines marked
+  source/libcst/_nodes/tests/test_dict_comp.py: 0/239 lines marked
+  source/libcst/_nodes/tests/test_docstring.py: 0/129 lines marked
+  source/libcst/_nodes/tests/test_else.py: 0/25 lines marked
+  source/libcst/_nodes/tests/test_empty_line.py: 0/27 lines marked
+  source/libcst/_nodes/tests/test_flatten_behavior.py: 0/62 lines marked
+  source/libcst/_nodes/tests/test_for.py: 0/175 lines marked
+  source/libcst/_nodes/tests/test_funcdef.py: 0/2176 lines marked
+  source/libcst/_nodes/tests/test_global.py: 0/114 lines marked
+  source/libcst/_nodes/tests/test_if.py: 0/131 lines marked
+  source/libcst/_nodes/tests/test_ifexp.py: 0/126 lines marked
+  source/libcst/_nodes/tests/test_import.py: 0/836 lines marked
+  source/libcst/_nodes/tests/test_indented_block.py: 0/139 lines marked
+  source/libcst/_nodes/tests/test_lambda.py: 0/965 lines marked
+  source/libcst/_nodes/tests/test_leaf_small_statements.py: 0/9 lines marked
+  source/libcst/_nodes/tests/test_list.py: 0/111 lines marked
+  source/libcst/_nodes/tests/test_match.py: 0/488 lines marked
+  source/libcst/_nodes/tests/test_matrix_multiply.py: 0/65 lines marked
+  source/libcst/_nodes/tests/test_module.py: 0/179 lines marked
+  source/libcst/_nodes/tests/test_namedexpr.py: 0/194 lines marked
+  source/libcst/_nodes/tests/test_newline.py: 0/25 lines marked
+  source/libcst/_nodes/tests/test_nonlocal.py: 0/121 lines marked
+  source/libcst/_nodes/tests/test_number.py: 0/118 lines marked
+  source/libcst/_nodes/tests/test_raise.py: 0/180 lines marked
+  source/libcst/_nodes/tests/test_removal_behavior.py: 0/85 lines marked
+  source/libcst/_nodes/tests/test_return.py: 0/100 lines marked
+  source/libcst/_nodes/tests/test_set.py: 0/119 lines marked
+  source/libcst/_nodes/tests/test_simple_comp.py: 0/532 lines marked
+  source/libcst/_nodes/tests/test_simple_statement.py: 0/327 lines marked
+  source/libcst/_nodes/tests/test_simple_string.py: 0/22 lines marked
+  source/libcst/_nodes/tests/test_simple_whitespace.py: 0/92 lines marked
+  source/libcst/_nodes/tests/test_small_statement.py: 0/72 lines marked
+  source/libcst/_nodes/tests/test_subscript.py: 0/442 lines marked
+  source/libcst/_nodes/tests/test_template_strings.py: 0/163 lines marked
+  source/libcst/_nodes/tests/test_trailing_whitespace.py: 0/22 lines marked
+  source/libcst/_nodes/tests/test_try.py: 0/606 lines marked
+  source/libcst/_nodes/tests/test_tuple.py: 0/265 lines marked
+  source/libcst/_nodes/tests/test_type_alias.py: 0/242 lines marked
+  source/libcst/_nodes/tests/test_unary_op.py: 0/76 lines marked
+  source/libcst/_nodes/tests/test_while.py: 0/122 lines marked
+  source/libcst/_nodes/tests/test_with.py: 0/309 lines marked
+  source/libcst/_nodes/tests/test_yield.py: 0/217 lines marked
+  source/libcst/_parser/__init__.py: 0/0 lines marked
+  source/libcst/_parser/_parsing_check.py: 0/40 lines marked
+  source/libcst/_parser/base_parser.py: 0/136 lines marked
+  source/libcst/_parser/custom_itertools.py: 0/7 lines marked
+  source/libcst/_parser/detect_config.py: 0/153 lines marked
+  source/libcst/_parser/entrypoints.py: 6/113 lines marked
+  source/libcst/_parser/grammar.py: 0/374 lines marked
+  source/libcst/_parser/production_decorator.py: 0/32 lines marked
+  source/libcst/_parser/py_whitespace_parser.py: 0/197 lines marked
+  source/libcst/_parser/python_parser.py: 0/35 lines marked
+  source/libcst/_parser/whitespace_parser.py: 0/17 lines marked
+  source/libcst/_parser/wrapped_tokenize.py: 0/161 lines marked
+  source/libcst/_parser/conversions/__init__.py: 0/0 lines marked
+  source/libcst/_parser/conversions/expression.py: 0/1364 lines marked
+  source/libcst/_parser/conversions/module.py: 0/30 lines marked
+  source/libcst/_parser/conversions/params.py: 0/270 lines marked
+  source/libcst/_parser/conversions/statement.py: 0/1170 lines marked
+  source/libcst/_parser/conversions/terminals.py: 0/37 lines marked
+  source/libcst/_parser/parso/__init__.py: 0/0 lines marked
+  source/libcst/_parser/parso/utils.py: 0/147 lines marked
+  source/libcst/_parser/parso/pgen2/__init__.py: 0/0 lines marked
+  source/libcst/_parser/parso/pgen2/generator.py: 0/265 lines marked
+  source/libcst/_parser/parso/pgen2/grammar_parser.py: 0/115 lines marked
+  source/libcst/_parser/parso/python/__init__.py: 0/0 lines marked
+  source/libcst/_parser/parso/python/py_token.py: 0/26 lines marked
+  source/libcst/_parser/parso/python/token.py: 0/24 lines marked
+  source/libcst/_parser/parso/python/tokenize.py: 0/907 lines marked
+  source/libcst/_parser/parso/tests/__init__.py: 0/0 lines marked
+  source/libcst/_parser/parso/tests/test_fstring.py: 0/31 lines marked
+  source/libcst/_parser/parso/tests/test_tokenize.py: 0/351 lines marked
+  source/libcst/_parser/parso/tests/test_utils.py: 0/37 lines marked
+  source/libcst/_parser/tests/__init__.py: 0/0 lines marked
+  source/libcst/_parser/tests/test_config.py: 0/34 lines marked
+  source/libcst/_parser/tests/test_detect_config.py: 0/323 lines marked
+  source/libcst/_parser/tests/test_footer_behavior.py: 0/210 lines marked
+  source/libcst/_parser/tests/test_node_identity.py: 0/35 lines marked
+  source/libcst/_parser/tests/test_parse_errors.py: 0/143 lines marked
+  source/libcst/_parser/tests/test_version_compare.py: 0/34 lines marked
+  source/libcst/_parser/tests/test_whitespace_parser.py: 0/217 lines marked
+  source/libcst/_parser/tests/test_wrapped_tokenize.py: 0/1888 lines marked
+  source/libcst/_parser/types/__init__.py: 0/0 lines marked
+  source/libcst/_parser/types/config.py: 0/120 lines marked
+  source/libcst/_parser/types/conversions.py: 0/5 lines marked
+  source/libcst/_parser/types/partials.py: 0/116 lines marked
+  source/libcst/_parser/types/production.py: 0/10 lines marked
+  source/libcst/_parser/types/py_config.py: 0/37 lines marked
+  source/libcst/_parser/types/py_token.py: 0/15 lines marked
+  source/libcst/_parser/types/py_whitespace_state.py: 0/23 lines marked
+  source/libcst/_parser/types/token.py: 0/5 lines marked
+  source/libcst/_parser/types/whitespace_state.py: 0/8 lines marked
+  source/libcst/_parser/types/tests/__init__.py: 0/0 lines marked
+  source/libcst/_parser/types/tests/test_config.py: 0/47 lines marked
+  source/libcst/codegen/__init__.py: 0/0 lines marked
+  source/libcst/codegen/gather.py: 0/105 lines marked
+  source/libcst/codegen/gen_matcher_classes.py: 0/513 lines marked
+  source/libcst/codegen/gen_type_mapping.py: 0/48 lines marked
+  source/libcst/codegen/gen_visitor_functions.py: 0/92 lines marked
+  source/libcst/codegen/generate.py: 0/110 lines marked
+  source/libcst/codegen/transforms.py: 0/24 lines marked
+  source/libcst/codegen/tests/__init__.py: 0/0 lines marked
+  source/libcst/codegen/tests/test_codegen_clean.py: 0/142 lines marked
+  source/libcst/codemod/__init__.py: 0/49 lines marked
+  source/libcst/codemod/_cli.py: 0/575 lines marked
+  source/libcst/codemod/_codemod.py: 0/94 lines marked
+  source/libcst/codemod/_command.py: 0/190 lines marked
+  source/libcst/codemod/_context.py: 0/33 lines marked
+  source/libcst/codemod/_dummy_pool.py: 0/37 lines marked
+  source/libcst/codemod/_runner.py: 0/104 lines marked
+  source/libcst/codemod/_testing.py: 0/111 lines marked
+  source/libcst/codemod/_visitor.py: 0/90 lines marked
+  source/libcst/codemod/commands/__init__.py: 0/0 lines marked
+  source/libcst/codemod/commands/add_pyre_directive.py: 0/37 lines marked
+  source/libcst/codemod/commands/add_trailing_commas.py: 0/110 lines marked
+  source/libcst/codemod/commands/convert_format_to_fstring.py: 0/298 lines marked
+  source/libcst/codemod/commands/convert_namedtuple_to_dataclass.py: 0/54 lines marked
+  source/libcst/codemod/commands/convert_percent_format_to_fstring.py: 0/109 lines marked
+  source/libcst/codemod/commands/convert_type_comments.py: 0/698 lines marked
+  source/libcst/codemod/commands/convert_union_to_or.py: 0/44 lines marked
+  source/libcst/codemod/commands/ensure_import_present.py: 0/49 lines marked
+  source/libcst/codemod/commands/fix_pyre_directives.py: 0/60 lines marked
+  source/libcst/codemod/commands/fix_variadic_callable.py: 0/28 lines marked
+  source/libcst/codemod/commands/noop.py: 0/6 lines marked
+  source/libcst/codemod/commands/remove_pyre_directive.py: 0/36 lines marked
+  source/libcst/codemod/commands/remove_unused_imports.py: 0/69 lines marked
+  source/libcst/codemod/commands/rename.py: 0/329 lines marked
+  source/libcst/codemod/commands/rename_typing_generic_aliases.py: 0/26 lines marked
+  source/libcst/codemod/commands/strip_strings_from_types.py: 0/35 lines marked
+  source/libcst/codemod/commands/unnecessary_format_string.py: 0/35 lines marked
+  source/libcst/codemod/commands/tests/__init__.py: 0/0 lines marked
+  source/libcst/codemod/commands/tests/test_add_pyre_directive.py: 0/103 lines marked
+  source/libcst/codemod/commands/tests/test_add_trailing_commas.py: 0/68 lines marked
+  source/libcst/codemod/commands/tests/test_convert_format_to_fstring.py: 0/328 lines marked
+  source/libcst/codemod/commands/tests/test_convert_namedtuple_to_dataclass.py: 0/140 lines marked
+  source/libcst/codemod/commands/tests/test_convert_percent_format_to_fstring.py: 0/38 lines marked
+  source/libcst/codemod/commands/tests/test_convert_type_comments.py: 0/401 lines marked
+  source/libcst/codemod/commands/tests/test_convert_union_to_or.py: 0/70 lines marked
+  source/libcst/codemod/commands/tests/test_ensure_import_present.py: 0/24 lines marked
+  source/libcst/codemod/commands/tests/test_fix_pyre_directives.py: 0/174 lines marked
+  source/libcst/codemod/commands/tests/test_fix_variadic_callable.py: 0/76 lines marked
+  source/libcst/codemod/commands/tests/test_noop.py: 0/28 lines marked
+  source/libcst/codemod/commands/tests/test_remove_pyre_directive.py: 0/153 lines marked
+  source/libcst/codemod/commands/tests/test_remove_unused_imports.py: 0/108 lines marked
+  source/libcst/codemod/commands/tests/test_rename.py: 0/746 lines marked
+  source/libcst/codemod/commands/tests/test_rename_typing_generic_aliases.py: 0/23 lines marked
+  source/libcst/codemod/commands/tests/test_strip_strings_from_types.py: 0/165 lines marked
+  source/libcst/codemod/commands/tests/test_unnecessary_format_string.py: 0/33 lines marked
+  source/libcst/codemod/tests/__init__.py: 0/0 lines marked
+  source/libcst/codemod/tests/test_codemod.py: 0/70 lines marked
+  source/libcst/codemod/tests/test_codemod_cli.py: 0/98 lines marked
+  source/libcst/codemod/tests/test_command_helpers.py: 0/237 lines marked
+  source/libcst/codemod/tests/test_metadata.py: 0/35 lines marked
+  source/libcst/codemod/tests/test_runner.py: 0/88 lines marked
+  source/libcst/codemod/visitors/__init__.py: 0/24 lines marked
+  source/libcst/codemod/visitors/_add_imports.py: 0/378 lines marked
+  source/libcst/codemod/visitors/_apply_type_annotations.py: 0/1061 lines marked
+  source/libcst/codemod/visitors/_gather_comments.py: 0/40 lines marked
+  source/libcst/codemod/visitors/_gather_exports.py: 0/106 lines marked
+  source/libcst/codemod/visitors/_gather_global_names.py: 0/56 lines marked
+  source/libcst/codemod/visitors/_gather_imports.py: 0/106 lines marked
+  source/libcst/codemod/visitors/_gather_string_annotation_names.py: 0/83 lines marked
+  source/libcst/codemod/visitors/_gather_unused_imports.py: 0/111 lines marked
+  source/libcst/codemod/visitors/_imports.py: 0/32 lines marked
+  source/libcst/codemod/visitors/_remove_imports.py: 0/356 lines marked
+  source/libcst/codemod/visitors/tests/__init__.py: 0/0 lines marked
+  source/libcst/codemod/visitors/tests/test_add_imports.py: 0/806 lines marked
+  source/libcst/codemod/visitors/tests/test_apply_type_annotations.py: 0/1829 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_comments.py: 0/36 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_exports.py: 0/104 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_global_names.py: 0/43 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_imports.py: 0/142 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_string_annotation_names.py: 0/79 lines marked
+  source/libcst/codemod/visitors/tests/test_gather_unused_imports.py: 0/109 lines marked
+  source/libcst/codemod/visitors/tests/test_remove_imports.py: 0/771 lines marked
+  source/libcst/display/__init__.py: 0/6 lines marked
+  source/libcst/display/graphviz.py: 0/156 lines marked
+  source/libcst/display/text.py: 0/103 lines marked
+  source/libcst/display/tests/__init__.py: 0/0 lines marked
+  source/libcst/display/tests/test_dump_graphviz.py: 0/62 lines marked
+  source/libcst/display/tests/test_dump_text.py: 0/731 lines marked
+  source/libcst/helpers/__init__.py: 0/52 lines marked
+  source/libcst/helpers/_template.py: 0/371 lines marked
+  source/libcst/helpers/common.py: 0/16 lines marked
+  source/libcst/helpers/expression.py: 0/32 lines marked
+  source/libcst/helpers/matchers.py: 0/31 lines marked
+  source/libcst/helpers/module.py: 0/106 lines marked
+  source/libcst/helpers/node_fields.py: 0/91 lines marked
+  source/libcst/helpers/paths.py: 0/17 lines marked
+  source/libcst/helpers/tests/__init__.py: 0/0 lines marked
+  source/libcst/helpers/tests/test_expression.py: 0/72 lines marked
+  source/libcst/helpers/tests/test_matchers.py: 0/43 lines marked
+  source/libcst/helpers/tests/test_module.py: 0/309 lines marked
+  source/libcst/helpers/tests/test_node_fields.py: 0/267 lines marked
+  source/libcst/helpers/tests/test_paths.py: 0/40 lines marked
+  source/libcst/helpers/tests/test_template.py: 0/339 lines marked
+  source/libcst/matchers/__init__.py: 0/16901 lines marked
+  source/libcst/matchers/_decorators.py: 0/89 lines marked
+  source/libcst/matchers/_matcher_base.py: 0/1462 lines marked
+  source/libcst/matchers/_return_types.py: 0/377 lines marked
+  source/libcst/matchers/_visitors.py: 0/645 lines marked
+  source/libcst/matchers/tests/__init__.py: 0/0 lines marked
+  source/libcst/matchers/tests/test_decorators.py: 0/744 lines marked
+  source/libcst/matchers/tests/test_extract.py: 0/422 lines marked
+  source/libcst/matchers/tests/test_findall.py: 0/168 lines marked
+  source/libcst/matchers/tests/test_matchers.py: 0/1268 lines marked
+  source/libcst/matchers/tests/test_matchers_with_metadata.py: 0/552 lines marked
+  source/libcst/matchers/tests/test_replace.py: 0/237 lines marked
+  source/libcst/matchers/tests/test_visitors.py: 0/389 lines marked
+  source/libcst/metadata/__init__.py: 0/88 lines marked
+  source/libcst/metadata/accessor_provider.py: 0/9 lines marked
+  source/libcst/metadata/base_provider.py: 0/125 lines marked
+  source/libcst/metadata/expression_context_provider.py: 0/156 lines marked
+  source/libcst/metadata/file_path_provider.py: 0/36 lines marked
+  source/libcst/metadata/full_repo_manager.py: 0/93 lines marked
+  source/libcst/metadata/name_provider.py: 0/160 lines marked
+  source/libcst/metadata/parent_node_provider.py: 0/14 lines marked
+  source/libcst/metadata/position_provider.py: 0/99 lines marked
+  source/libcst/metadata/reentrant_codegen.py: 0/162 lines marked
+  source/libcst/metadata/scope_provider.py: 0/969 lines marked
+  source/libcst/metadata/span_provider.py: 0/82 lines marked
+  source/libcst/metadata/type_inference_provider.py: 0/92 lines marked
+  source/libcst/metadata/wrapper.py: 0/171 lines marked
+  source/libcst/metadata/tests/__init__.py: 0/0 lines marked
+  source/libcst/metadata/tests/test_accessor_provider.py: 0/54 lines marked
+  source/libcst/metadata/tests/test_base_provider.py: 0/97 lines marked
+  source/libcst/metadata/tests/test_expression_context_provider.py: 0/387 lines marked
+  source/libcst/metadata/tests/test_file_path_provider.py: 0/117 lines marked
+  source/libcst/metadata/tests/test_full_repo_manager.py: 0/49 lines marked
+  source/libcst/metadata/tests/test_metadata_provider.py: 0/253 lines marked
+  source/libcst/metadata/tests/test_metadata_wrapper.py: 0/98 lines marked
+  source/libcst/metadata/tests/test_name_provider.py: 0/519 lines marked
+  source/libcst/metadata/tests/test_parent_node_provider.py: 0/51 lines marked
+  source/libcst/metadata/tests/test_position_provider.py: 0/165 lines marked
+  source/libcst/metadata/tests/test_reentrant_codegen.py: 0/98 lines marked
+  source/libcst/metadata/tests/test_scope_provider.py: 0/2054 lines marked
+  source/libcst/metadata/tests/test_span_provider.py: 0/85 lines marked
+  source/libcst/metadata/tests/test_type_inference_provider.py: 0/83 lines marked
+  source/libcst/testing/__init__.py: 0/0 lines marked
+  source/libcst/testing/utils.py: 0/125 lines marked
+  source/libcst/tests/__init__.py: 0/0 lines marked
+  source/libcst/tests/__main__.py: 0/3 lines marked
+  source/libcst/tests/test_add_slots.py: 0/29 lines marked
+  source/libcst/tests/test_batched_visitor.py: 0/47 lines marked
+  source/libcst/tests/test_deep_clone.py: 0/41 lines marked
+  source/libcst/tests/test_deep_replace.py: 0/116 lines marked
+  source/libcst/tests/test_e2e.py: 0/73 lines marked
+  source/libcst/tests/test_exceptions.py: 0/79 lines marked
+  source/libcst/tests/test_fuzz.py: 0/130 lines marked
+  source/libcst/tests/test_import.py: 0/4 lines marked
+  source/libcst/tests/test_pyre_integration.py: 0/86 lines marked
+  source/libcst/tests/test_roundtrip.py: 0/28 lines marked
+  source/libcst/tests/test_tabs.py: 0/17 lines marked
+  source/libcst/tests/test_type_enforce.py: 0/138 lines marked
+  source/libcst/tests/test_visitor.py: 0/69 lines marked
+  source/libcst/tests/pyre/simple_class.py: 0/11 lines marked
+  source/native/libcst/benches/parser_benchmark.rs: 0/150 lines marked
+  source/native/libcst/src/bin.rs: 0/27 lines marked
+  source/native/libcst/src/lib.rs: 0/231 lines marked
+  source/native/libcst/src/py.rs: 0/23 lines marked
+  source/native/libcst/src/nodes/codegen.rs: 0/54 lines marked
+  source/native/libcst/src/nodes/expression.rs: 0/2537 lines marked
+  source/native/libcst/src/nodes/inflate_helpers.rs: 0/32 lines marked
+  source/native/libcst/src/nodes/macros.rs: 0/18 lines marked
+  source/native/libcst/src/nodes/mod.rs: 0/122 lines marked
+  source/native/libcst/src/nodes/module.rs: 0/81 lines marked
+  source/native/libcst/src/nodes/op.rs: 0/1374 lines marked
+  source/native/libcst/src/nodes/parser_config.rs: 0/112 lines marked
+  source/native/libcst/src/nodes/py_cached.rs: 0/60 lines marked
+  source/native/libcst/src/nodes/statement.rs: 0/3401 lines marked
+  source/native/libcst/src/nodes/test_utils.rs: 0/34 lines marked
+  source/native/libcst/src/nodes/traits.rs: 0/149 lines marked
+  source/native/libcst/src/nodes/whitespace.rs: 0/149 lines marked
+  source/native/libcst/src/parser/errors.rs: 0/62 lines marked
+  source/native/libcst/src/parser/grammar.rs: 0/3212 lines marked
+  source/native/libcst/src/parser/mod.rs: 0/6 lines marked
+  source/native/libcst/src/parser/numbers.rs: 0/58 lines marked
+  source/native/libcst/src/tokenizer/debug_utils.rs: 0/7 lines marked
+  source/native/libcst/src/tokenizer/mod.rs: 0/8 lines marked
+  source/native/libcst/src/tokenizer/operators.rs: 0/67 lines marked
+  source/native/libcst/src/tokenizer/tests.rs: 0/796 lines marked
+  source/native/libcst/src/tokenizer/whitespace_parser.rs: 0/458 lines marked
+  source/native/libcst/src/tokenizer/core/mod.rs: 0/991 lines marked
+  source/native/libcst/src/tokenizer/core/string_types.rs: 0/100 lines marked
+  source/native/libcst/src/tokenizer/text_position/char_width.rs: 0/271 lines marked
+  source/native/libcst/src/tokenizer/text_position/mod.rs: 0/270 lines marked
+  source/native/libcst/tests/parser_roundtrip.rs: 0/46 lines marked
+  source/native/libcst/tests/fixtures/big_binary_operator.py: 0/32 lines marked
+  source/native/libcst/tests/fixtures/class_craziness.py: 0/18 lines marked
+  source/native/libcst/tests/fixtures/comments.py: 0/44 lines marked
+  source/native/libcst/tests/fixtures/comparisons.py: 0/15 lines marked
+  source/native/libcst/tests/fixtures/dangling_indent.py: 0/2 lines marked
+  source/native/libcst/tests/fixtures/decorated_function_without_body.py: 0/3 lines marked
+  source/native/libcst/tests/fixtures/dysfunctional_del.py: 0/7 lines marked
+  source/native/libcst/tests/fixtures/expr.py: 0/368 lines marked
+  source/native/libcst/tests/fixtures/expr_statement.py: 0/9 lines marked
+  source/native/libcst/tests/fixtures/fun_with_func_defs.py: 0/114 lines marked
+  source/native/libcst/tests/fixtures/global_nonlocal.py: 0/4 lines marked
+  source/native/libcst/tests/fixtures/import.py: 0/15 lines marked
+  source/native/libcst/tests/fixtures/indents_but_no_eol_before_eof.py: 0/4 lines marked
+  source/native/libcst/tests/fixtures/just_a_comment_without_nl.py: 0/0 lines marked
+  source/native/libcst/tests/fixtures/malicious_match.py: 0/34 lines marked
+  source/native/libcst/tests/fixtures/mixed_newlines.py: 0/3 lines marked
+  source/native/libcst/tests/fixtures/pep646.py: 0/28 lines marked
+  source/native/libcst/tests/fixtures/raise.py: 0/4 lines marked
+  source/native/libcst/tests/fixtures/smol_statements.py: 0/3 lines marked
+  source/native/libcst/tests/fixtures/spacious_spaces.py: 0/0 lines marked
+  source/native/libcst/tests/fixtures/starry_tries.py: 0/23 lines marked
+  source/native/libcst/tests/fixtures/suicidal_slices.py: 0/27 lines marked
+  source/native/libcst/tests/fixtures/trailing_comment_without_nl.py: 0/0 lines marked
+  source/native/libcst/tests/fixtures/trailing_whitespace.py: 0/2 lines marked
+  source/native/libcst/tests/fixtures/tuple_shenanigans.py: 0/26 lines marked
+  source/native/libcst/tests/fixtures/vast_emptiness.py: 0/0 lines marked
+  source/native/libcst/tests/fixtures/with_wickedness.py: 0/34 lines marked
+  source/native/libcst/tests/fixtures/wonky_walrus.py: 0/9 lines marked
+  source/native/libcst_derive/src/codegen.rs: 0/61 lines marked
+  source/native/libcst_derive/src/cstnode.rs: 0/364 lines marked
+  source/native/libcst_derive/src/inflate.rs: 0/69 lines marked
+  source/native/libcst_derive/src/into_py.rs: 0/172 lines marked
+  source/native/libcst_derive/src/lib.rs: 0/38 lines marked
+  source/native/libcst_derive/src/parenthesized_node.rs: 0/120 lines marked
+  source/native/libcst_derive/tests/pass/minimal_cst.rs: 0/104 lines marked
+  source/native/libcst_derive/tests/pass/simple.rs: 0/38 lines marked
+  workload.py: 0/23 lines marked
+Annotated region names observed: 1/3; not observed: 2; status: observed
+Coverage of literal region names discovered in the selected source tree, not whole-program line or branch coverage. Multiple sites sharing one name cannot be distinguished. Dynamic marker names and excluded/unscanned source files are outside the denominator. Source discovery is bounded to 5000 files and skips files over 2 MB. A not-observed region has unknown cost; a complete fit says nothing about unexecuted code.
+  parse.add_chain: not-observed; unique-name; source/libcst/_parser/entrypoints.py:59
+  parse.call_chain: not-observed; unique-name; source/libcst/_parser/entrypoints.py:51
+
+ARCHITECTURE GRAPH
+contains = direct subregion; next = observed sibling order, not a dependency;
+waited -> = declared consumer-to-publisher claim. Check status is shown.
+Wait[?] = uncovered synchronization; waited(null) = event-free refinement with a supplied reason, not a dependency.
+Graph aggregates observed invocations; it is not a latency or critical-path model.
+
+REGION "parse.union_chain" (calls=6; PCVs=terms, prefix_work)
+  source: source/libcst/_parser/entrypoints.py:55
+  unexplained(Wait[?]): 24 obligations
+
+COST INTERFACES AND BREAKDOWN
+CPU instructions on observed states; symbolic child costs use F[child].
+Own residual percentages exclude child terms. A single state supports only a constant mean fit.
+Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.
+  parse.union_chain = 118,623*terms + 2,076*prefix_work + 1,496,198 + unexplained(own) + unexplained(Wait[?])   (3% own unexplained; 6 observed states)
+      terms:
+        9,455 _PyEval_EvalFrameDefault [python3.12]
+        4,512 _int_free [libc.so.6]
+        4,119 PyDict_Contains+? [python3.12]
+        4,090 <libcst_native::nodes::expression::DeflatedExpression as core::clone::Clone>::clone [native.cpython-312-x86_64-linux-gnu.so]
+        3,799 _int_malloc [libc.so.6]
+        3,513 __GI___libc_malloc [libc.so.6]
+        2,821 malloc_consolidate [libc.so.6]
+        2,800 __free [libc.so.6]
+      prefix_work:
+        600 _int_free [libc.so.6]
+        362 <libcst_native::nodes::expression::DeflatedExpression as core::clone::Clone>::clone [native.cpython-312-x86_64-linux-gnu.so]
+        362 __GI___libc_malloc [libc.so.6]
+        248 __free [libc.so.6]
+        238 _int_malloc [libc.so.6]
+        142 core::ptr::drop_glue::<libcst_native::nodes::expression::DeflatedExpression> [native.cpython-312-x86_64-linux-gnu.so]
+        72 __rustc::__rdl_alloc [native.cpython-312-x86_64-linux-gnu.so]
+        16 <no symbol> [python3.12]
+      constant:
+        182,188 _int_free [libc.so.6]
+        120,597 __GI___libc_malloc [libc.so.6]
+        60,856 core::ptr::drop_glue::<core::cell::RefCell<regex_automata::nfa::thompson::compiler::Utf8State>> [native.cpython-312-x86_64-linux-gnu.so]
+        57,562 <alloc::vec::Vec<regex_automata::nfa::thompson::map::Utf8BoundedEntry>>::extend_with [native.cpython-312-x86_64-linux-gnu.so]
+        54,840 <regex_automata::hybrid::dfa::Lazy>::init_cache [native.cpython-312-x86_64-linux-gnu.so]
+        38,228 __free [libc.so.6]
+        36,489 <alloc::raw_vec::RawVecInner>::finish_grow [native.cpython-312-x86_64-linux-gnu.so]
+        34,440 __memcpy_avx_unaligned_erms [libc.so.6]
+      unexplained:
+        497,059 _int_malloc [libc.so.6]
+        73,826 PyObject_GC_Del [python3.12]
+        62,296 PyType_FromModuleAndSpec+? [python3.12]
+        36,945 __memcmp_avx2_movbe [libc.so.6]
+        19,596 malloc_consolidate [libc.so.6]
+        9,774 PyStaticMethod_New+? [python3.12]
+        7,929 PyObject_IS_GC [python3.12]
+        6,418 PyObject_Free [python3.12]
+native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):
+  <outside regions>: sem_wait [completion] 90 calls; per-region-call = ?; 0 matched, 90 unresolved
+  parse.union_chain: pthread_mutex_lock [lock] 24 calls; per-region-call = 4; 0 matched, 24 unresolved
+  outside application regions (aggregated): pthread_mutex_lock: 30
+declared event order: ordered
+annotation coverage: 0/24 wait obligations
+  parse.union_chain: unexplained(Wait[?]) (24 observations)
+
+OBSERVED PCV RELATIONSHIPS
+These are observed equalities, not causal propagation or latency predictions.
+None fitted.

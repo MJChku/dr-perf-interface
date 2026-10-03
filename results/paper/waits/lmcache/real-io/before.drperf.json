@@ -1,0 +1,4058 @@
+{
+  "schema": "drperf.explorer.v1",
+  "title": "LMCache real TCP I/O: before",
+  "measurement": {
+    "unit": "CPU instructions per call",
+    "scope": "exclusive region work",
+    "markerAdjustment": "marker modules excluded exactly; no wrapper calibration subtraction",
+    "composition": "symbolic direct-child work in composition; no latency or parallelism model",
+    "tolerance": {
+      "absolute": 64.0,
+      "relative": 0.05
+    }
+  },
+  "provenance": {
+    "rawDirectory": "/home/ubuntu/drperf/out/waits/lmcache/real-io/captures/before/raw",
+    "sourceRoot": "/home/ubuntu/drperf",
+    "runs": [
+      {
+        "file": "run.111.json",
+        "measurement": {
+          "version": "0.3",
+          "pid": 111,
+          "app": "python3.12",
+          "excluded_cuda_module": "",
+          "follow_unmarked_threads": false,
+          "native_gx": false,
+          "native_gx_hooks": 0,
+          "native_gx_calls": 0,
+          "max_states_per_region": 4096,
+          "max_keys": 65536,
+          "counter_budget_bytes": 103079215104,
+          "counter_bytes": 75497472,
+          "excluded_cuda_exports": 0,
+          "excluded_cuda_calls": 0,
+          "excluded_instructions": 30299,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 67195,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 5,
+          "waits_enabled": true,
+          "wait_records": 2410,
+          "wait_dropped": 0,
+          "wait_hooks": 41,
+          "wait_delay_ms": 0,
+          "wait_delay_injections": 0,
+          "max_wait_records": 200000,
+          "wait_delay_region": "",
+          "wait_delay_kind": "semaphore",
+          "wait_unattributed": {
+            "pthread_mutex_destroy": {
+              "kind": "mutex_destroy",
+              "calls": 52
+            },
+            "pthread_mutex_lock": {
+              "kind": "lock",
+              "calls": 33111
+            },
+            "pthread_mutex_unlock": {
+              "kind": "unlock",
+              "calls": 33115
+            },
+            "pthread_cond_wait": {
+              "kind": "condition",
+              "calls": 6
+            },
+            "pthread_cond_timedwait": {
+              "kind": "condition",
+              "calls": 46
+            },
+            "pthread_cond_signal": {
+              "kind": "signal",
+              "calls": 406
+            },
+            "pthread_join": {
+              "kind": "join",
+              "calls": 3
+            },
+            "recv": {
+              "kind": "receive",
+              "calls": 32
+            }
+          },
+          "trace_file": "/w/lmc-waits/real-io-capture/before/raw/run.111.json.trace",
+          "trace_records": 25,
+          "trace_dropped": 0
+        }
+      }
+    ]
+  },
+  "validity": {
+    "errors": [],
+    "traceErrors": []
+  },
+  "regions": [
+    {
+      "id": "capture",
+      "name": "capture",
+      "originalName": "capture",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 520.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 520.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 90,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 157.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 20.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 520.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 520.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 90,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 157.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 72.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyTuple_New+?",
+                "instructions": 70.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 57.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyObject_MakeTpCall",
+                "instructions": 36.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Vectorcall",
+                "instructions": 25.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_GC_Del",
+                "instructions": 24.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTrash_end",
+                "instructions": 20.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 520.0,
+          "observed": 520.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "examples/waits/lmcache_real_io.py",
+          "line": 122,
+          "endLine": 122,
+          "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+          "expressions": {
+            "n": "1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lmc.bulk.consume",
+      "name": "lmc.bulk.consume",
+      "originalName": "lmc.bulk.consume",
+      "states": [
+        "mib"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              3
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            20.230769230769326
+          ],
+          "constant": 10633.30769230767,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 10693.999999999978,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 10956.999999999978,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 827,
+            "constant": 489,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "__default_morecore+?",
+                  "instructions": 16.43589743589743
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -15.307692307692301
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -14.94871794871795
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -12.153846153846152
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 11.871794871794872
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -11.615384615384611
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyType_FromModuleAndSpec+?",
+                  "instructions": 8.923076923076922
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Keys+?",
+                  "instructions": 6.179487179487179
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2962.3076923076933
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 551.0512820512821
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 455.5641025641025
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 291.92307692307674
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 290.25641025641033
+              },
+              {
+                "module": "python3.12",
+                "function": "PyMethod_New",
+                "instructions": 262.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 239.1794871794872
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 236.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            20.230769230769326
+          ],
+          "constant": 10633.30769230767,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 10693.999999999978,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 10956.999999999978,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 827,
+            "constant": 489,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "__default_morecore+?",
+                  "instructions": 16.43589743589743
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -15.307692307692301
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -14.94871794871795
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -12.153846153846152
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Free",
+                  "instructions": 11.871794871794872
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -11.615384615384611
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyType_FromModuleAndSpec+?",
+                  "instructions": 8.923076923076922
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Keys+?",
+                  "instructions": 6.179487179487179
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 2962.3076923076933
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 551.0512820512821
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 455.5641025641025
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 291.92307692307674
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 290.25641025641033
+              },
+              {
+                "module": "python3.12",
+                "function": "PyMethod_New",
+                "instructions": 262.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 239.1794871794872
+              },
+              {
+                "module": "python3.12",
+                "function": "PyCMethod_New+?",
+                "instructions": 236.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            3
+          ],
+          "calls": 3,
+          "recorded": 10694.0,
+          "observed": 10694.0
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 10957.0,
+          "observed": 10957.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "examples/waits/lmcache_real_io.py",
+          "line": 163,
+          "endLine": 165,
+          "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+          "expressions": {
+            "mib": "mib"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lmc.bulk.get",
+      "name": "lmc.bulk.get",
+      "originalName": "lmc.bulk.get",
+      "states": [
+        "mib"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              3
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            -161.8974358974355
+          ],
+          "constant": 132093.69230769217,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 131607.99999999985,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 129503.3333333332,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 1479,
+            "constant": 3724,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "ld-linux-x86-64.so.2",
+                  "function": "__tls_get_addr",
+                  "instructions": -208.0
+                },
+                {
+                  "module": "libtorch_cpu.so",
+                  "function": "at::(anonymous namespace)::LocalCallbackManager::LocalCallbackManager",
+                  "instructions": -194.76923076923075
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -193.61538461538473
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 109.7179487179488
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -107.05128205128209
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyODict_SetItem+?",
+                  "instructions": 97.99999999999999
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -93.87179487179492
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                  "instructions": 83.33333333333333
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 33534.179487179485
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 4808.589743589745
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "__tls_get_addr",
+                "instructions": 3940.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 3755.000000000001
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 3331.179487179491
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 3254.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 3135.0
+              },
+              {
+                "module": "libtorch_cpu.so",
+                "function": "at::(anonymous namespace)::LocalCallbackManager::LocalCallbackManager",
+                "instructions": 3116.307692307692
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            -161.8974358974355
+          ],
+          "constant": 132093.69230769217,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 131607.99999999985,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 129503.3333333332,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 1479,
+            "constant": 3724,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "ld-linux-x86-64.so.2",
+                  "function": "__tls_get_addr",
+                  "instructions": -208.0
+                },
+                {
+                  "module": "libtorch_cpu.so",
+                  "function": "at::(anonymous namespace)::LocalCallbackManager::LocalCallbackManager",
+                  "instructions": -194.76923076923075
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -193.61538461538473
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": 109.7179487179488
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -107.05128205128209
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyODict_SetItem+?",
+                  "instructions": 97.99999999999999
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -93.87179487179492
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                  "instructions": 83.33333333333333
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 33534.179487179485
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 4808.589743589745
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "__tls_get_addr",
+                "instructions": 3940.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 3755.000000000001
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyOS_URandom+?",
+                "instructions": 3331.179487179491
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 3254.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 3135.0
+              },
+              {
+                "module": "libtorch_cpu.so",
+                "function": "at::(anonymous namespace)::LocalCallbackManager::LocalCallbackManager",
+                "instructions": 3116.307692307692
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            3
+          ],
+          "calls": 3,
+          "recorded": 131608.0,
+          "observed": 131608.0
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 129503.33333333333,
+          "observed": 129503.33333333333
+        }
+      ],
+      "nested": {},
+      "sources": []
+    },
+    {
+      "id": "lmc.lookup.consume",
+      "name": "lmc.lookup.consume",
+      "originalName": "lmc.lookup.consume",
+      "states": [
+        "mib"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              3
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            -223.76923076923117
+          ],
+          "constant": 20261.97435897439,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 19590.666666666693,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 16681.66666666669,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 755,
+            "constant": 934,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_signal+?",
+                  "instructions": -16.410256410256405
+                },
+                {
+                  "module": "linux-vdso.so.1",
+                  "function": "<no symbol>",
+                  "instructions": -15.8974358974359
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseStack+?",
+                  "instructions": -15.256410256410257
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -13.230769230769234
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_timedwait",
+                  "instructions": -13.025641025641026
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_mutex_lock",
+                  "instructions": -10.153846153846153
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyEval_SaveThread+?",
+                  "instructions": -8.179487179487177
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__nptl_death_event+?",
+                  "instructions": -8.153846153846155
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 5028.307692307693
+              },
+              {
+                "module": "linux-vdso.so.1",
+                "function": "<no symbol>",
+                "instructions": 750.3589743589744
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 534.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_timedwait",
+                "instructions": 470.4102564102563
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple",
+                "instructions": 448.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                "instructions": 438.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_signal+?",
+                "instructions": 410.5641025641024
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseStack+?",
+                "instructions": 395.1025641025639
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            -223.76923076923117
+          ],
+          "constant": 20261.97435897439,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 19590.666666666693,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 16681.66666666669,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 755,
+            "constant": 934,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_signal+?",
+                  "instructions": -16.410256410256405
+                },
+                {
+                  "module": "linux-vdso.so.1",
+                  "function": "<no symbol>",
+                  "instructions": -15.8974358974359
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyArg_ParseStack+?",
+                  "instructions": -15.256410256410257
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -13.230769230769234
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_cond_timedwait",
+                  "instructions": -13.025641025641026
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "pthread_mutex_lock",
+                  "instructions": -10.153846153846153
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyEval_SaveThread+?",
+                  "instructions": -8.179487179487177
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__nptl_death_event+?",
+                  "instructions": -8.153846153846155
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 5028.307692307693
+              },
+              {
+                "module": "linux-vdso.so.1",
+                "function": "<no symbol>",
+                "instructions": 750.3589743589744
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 534.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_timedwait",
+                "instructions": 470.4102564102563
+              },
+              {
+                "module": "python3.12",
+                "function": "PyArg_ParseTuple",
+                "instructions": 448.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseTupleAndKeywords_SizeT+?",
+                "instructions": 438.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "pthread_cond_signal+?",
+                "instructions": 410.5641025641024
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyArg_ParseStack+?",
+                "instructions": 395.1025641025639
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            3
+          ],
+          "calls": 3,
+          "recorded": 19590.666666666668,
+          "observed": 19590.666666666668
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 16681.666666666668,
+          "observed": 16681.666666666668
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "examples/waits/lmcache_real_io.py",
+          "line": 160,
+          "endLine": 162,
+          "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+          "expressions": {
+            "mib": "mib"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lmc.lookup.exists",
+      "name": "lmc.lookup.exists",
+      "originalName": "lmc.lookup.exists",
+      "states": [
+        "mib"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; current clients also exclude native event helpers and their callees; no calibration subtraction; ordinary Python region wrappers and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              3
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          },
+          {
+            "state": [
+              16
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 3.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            -145.07692307692344
+          ],
+          "constant": 62845.23076923072,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 62409.99999999995,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 60523.99999999995,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 261,
+            "constant": 2601,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -47.666666666666686
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -32.179487179487175
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -29.076923076923077
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -17.076923076923073
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -12.179487179487172
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyUnicodeWriter_Finish",
+                  "instructions": -2.4615384615384617
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_GetDict",
+                  "instructions": -2.435897435897436
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 1.6923076923076925
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 21068.89743589743
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 2784.230769230769
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 2582.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 2133.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_GenericNew+?",
+                "instructions": 1821.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1586.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 1425.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 1108.923076923077
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 6,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            -145.07692307692344
+          ],
+          "constant": 62845.23076923072,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                3
+              ],
+              "calls": 3,
+              "explained": 62409.99999999995,
+              "unexplained": 0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                16
+              ],
+              "calls": 3,
+              "explained": 60523.99999999995,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              3,
+              16
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 261,
+            "constant": 2601,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "python3.12",
+                  "function": "_PyOS_URandom+?",
+                  "instructions": -47.666666666666686
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyDict_DelItem_KnownHash+?",
+                  "instructions": -32.179487179487175
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyEval_EvalFrameDefault",
+                  "instructions": -29.076923076923077
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyDict_Contains+?",
+                  "instructions": -17.076923076923073
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_Lookup",
+                  "instructions": -12.179487179487172
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyUnicodeWriter_Finish",
+                  "instructions": -2.4615384615384617
+                },
+                {
+                  "module": "python3.12",
+                  "function": "_PyType_GetDict",
+                  "instructions": -2.435897435897436
+                },
+                {
+                  "module": "python3.12",
+                  "function": "PyObject_Malloc",
+                  "instructions": 1.6923076923076925
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "python3.12",
+                "function": "_PyEval_EvalFrameDefault",
+                "instructions": 21068.89743589743
+              },
+              {
+                "module": "python3.12",
+                "function": "PyDict_Contains+?",
+                "instructions": 2784.230769230769
+              },
+              {
+                "module": "python3.12",
+                "function": "PyEval_EvalCode+?",
+                "instructions": 2582.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyErr_ChainStackItem+?",
+                "instructions": 2133.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyType_GenericNew+?",
+                "instructions": 1821.0
+              },
+              {
+                "module": "python3.12",
+                "function": "_PyTuple_Resize+?",
+                "instructions": 1586.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Free",
+                "instructions": 1425.0
+              },
+              {
+                "module": "python3.12",
+                "function": "PyObject_Malloc",
+                "instructions": 1108.923076923077
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            3
+          ],
+          "calls": 3,
+          "recorded": 62410.0,
+          "observed": 62410.0
+        },
+        {
+          "state": [
+            16
+          ],
+          "calls": 3,
+          "recorded": 60524.0,
+          "observed": 60524.0
+        }
+      ],
+      "nested": {},
+      "sources": []
+    }
+  ],
+  "relations": [],
+  "discovery": {
+    "truncated": false,
+    "warnings": [],
+    "scope": "discovery disabled or complete trace unavailable"
+  },
+  "composition": {
+    "status": "observed",
+    "scope": "same-thread direct-child instruction work",
+    "basis": "marker-adjusted own interfaces; runtime waiting excluded; wrapper calibration is an estimate",
+    "contract": "Observed calls only. F includes U. U includes descendant unexplained work. N*F denotes N applications of an atomic child interface, not N times a global measured mean. Argument mappings are metadata, not prerequisites for child multipliers. Own cost fits and U tables are per-state means across callers. No prediction of per-invocation inclusive counts or latency.",
+    "regions": [
+      {
+        "id": "capture",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 520.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.bulk.consume",
+        "states": [
+          "mib"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              20.230769230769326
+            ],
+            "constant": 10633.30769230767,
+            "states": [
+              [
+                3
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              3
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.bulk.get",
+        "states": [
+          "mib"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              -161.8974358974355
+            ],
+            "constant": 132093.69230769217,
+            "states": [
+              [
+                3
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              3
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.lookup.consume",
+        "states": [
+          "mib"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              -223.76923076923117
+            ],
+            "constant": 20261.97435897439,
+            "states": [
+              [
+                3
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              3
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "lmc.lookup.exists",
+        "states": [
+          "mib"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              -145.07692307692344
+            ],
+            "constant": 62845.23076923072,
+            "states": [
+              [
+                3
+              ],
+              [
+                16
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              3
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              16
+            ],
+            "calls": 3,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "trace": {
+    "complete": true,
+    "recordCount": 25,
+    "limit": 50000,
+    "events": [
+      {
+        "group": "0:111",
+        "seq": 1,
+        "end": 2,
+        "thread": "111",
+        "region": "capture",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 3,
+        "end": 8,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 4,
+        "end": 5,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 6,
+        "end": 7,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 9,
+        "end": 10,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 11,
+        "end": 16,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 12,
+        "end": 13,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 14,
+        "end": 15,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 17,
+        "end": 18,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 19,
+        "end": 24,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 20,
+        "end": 21,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 22,
+        "end": 23,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 25,
+        "end": 26,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 3
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 27,
+        "end": 32,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 28,
+        "end": 29,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 30,
+        "end": 31,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 33,
+        "end": 34,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 35,
+        "end": 40,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 36,
+        "end": 37,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 38,
+        "end": 39,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 41,
+        "end": 42,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 43,
+        "end": 48,
+        "thread": "111",
+        "region": "lmc.lookup.consume",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 44,
+        "end": 45,
+        "thread": "120",
+        "region": "lmc.bulk.get",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 46,
+        "end": 47,
+        "thread": "120",
+        "region": "lmc.lookup.exists",
+        "values": {
+          "mib": 16
+        }
+      },
+      {
+        "group": "0:111",
+        "seq": 49,
+        "end": 50,
+        "thread": "111",
+        "region": "lmc.bulk.consume",
+        "values": {
+          "mib": 16
+        }
+      }
+    ]
+  },
+  "scenarioContract": {
+    "fixed": [
+      "recorded call count",
+      "marker sequence order",
+      "nesting"
+    ],
+    "unknown": [
+      "causality of observed relationships",
+      "unexplained cost at changed states",
+      "new branches or calls",
+      "CPU/GPU latency and overlap"
+    ],
+    "requiresExplicitAssumptions": true
+  },
+  "waits": {
+    "status": "observed",
+    "warnings": [],
+    "pendingCalls": [],
+    "unattributedOperations": {
+      "pthread_mutex_lock": 33111,
+      "pthread_cond_wait": 6,
+      "pthread_cond_timedwait": 46,
+      "pthread_join": 3,
+      "recv": 32
+    },
+    "probeRequested": false,
+    "probe": false,
+    "coverage": "Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and native GX internals are not fully observed. Late attach misses earlier operations.",
+    "contract": "Observed operation counts and conservative object-based dependency evidence. API elapsed time and syscall attempts do not establish sleeping or native latency. Matched CUDA producers identify submitted stream work, not CPU completion of the launch region. Stream-prefix matches are partial; unobserved kernels/dependencies can also be required.",
+    "regions": [
+      {
+        "region": "",
+        "api": "sem_clockwait",
+        "kind": "completion",
+        "calls": 9,
+        "parentCalls": 0,
+        "states": [],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 9,
+        "potentialSyscalls": 9,
+        "elapsedUs": 288969
+      },
+      {
+        "region": "",
+        "api": "sem_wait",
+        "kind": "completion",
+        "calls": 49,
+        "parentCalls": 0,
+        "states": [],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 49,
+        "potentialSyscalls": 0,
+        "elapsedUs": 365
+      },
+      {
+        "region": "lmc.bulk.consume",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 15,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 15,
+        "potentialSyscalls": 0,
+        "elapsedUs": 22
+      },
+      {
+        "region": "lmc.bulk.get",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 153,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 153,
+        "potentialSyscalls": 0,
+        "elapsedUs": 186
+      },
+      {
+        "region": "lmc.bulk.get",
+        "api": "recv",
+        "kind": "receive",
+        "calls": 37,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 37,
+        "potentialSyscalls": 37,
+        "elapsedUs": 57232
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "api": "pthread_cond_timedwait",
+        "kind": "condition",
+        "calls": 16,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 16,
+        "potentialSyscalls": 17,
+        "elapsedUs": 28503
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "api": "pthread_cond_wait",
+        "kind": "condition",
+        "calls": 1,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 1,
+        "potentialSyscalls": 1,
+        "elapsedUs": 158
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 29,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 29,
+        "potentialSyscalls": 0,
+        "elapsedUs": 1443
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "api": "sem_clockwait",
+        "kind": "completion",
+        "calls": 7,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 7,
+        "potentialSyscalls": 7,
+        "elapsedUs": 338504
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "api": "sem_wait",
+        "kind": "completion",
+        "calls": 3,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": null,
+        "matched": 0,
+        "unresolved": 3,
+        "potentialSyscalls": 0,
+        "elapsedUs": 104
+      },
+      {
+        "region": "lmc.lookup.exists",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 36,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "6",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "matched": 0,
+        "unresolved": 36,
+        "potentialSyscalls": 0,
+        "elapsedUs": 81
+      },
+      {
+        "region": "lmc.lookup.exists",
+        "api": "recv",
+        "kind": "receive",
+        "calls": 6,
+        "parentCalls": 6,
+        "states": [
+          "mib"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "matched": 0,
+        "unresolved": 6,
+        "potentialSyscalls": 6,
+        "elapsedUs": 697
+      }
+    ],
+    "operations": [],
+    "events": [
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 4,
+        "start": 284,
+        "end": 286,
+        "object": "8101",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 150,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277577990224",
+        "endUs": "13435277577990374",
+        "group": "0:111",
+        "id": "0:111:284"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 6,
+        "start": 350,
+        "end": 351,
+        "object": "8102",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578106192",
+        "endUs": "13435277578106194",
+        "group": "0:111",
+        "id": "0:111:350"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 3,
+        "start": 415,
+        "end": 416,
+        "object": "8102",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 132,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578150818",
+        "endUs": "13435277578150950",
+        "group": "0:111",
+        "id": "0:111:415"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 9,
+        "start": 421,
+        "end": 422,
+        "object": "8101",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578155036",
+        "endUs": "13435277578155038",
+        "group": "0:111",
+        "id": "0:111:421"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 12,
+        "start": 566,
+        "end": 567,
+        "object": "8101",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578253237",
+        "endUs": "13435277578253238",
+        "group": "0:111",
+        "id": "0:111:566"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 14,
+        "start": 602,
+        "end": 603,
+        "object": "8102",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578262939",
+        "endUs": "13435277578262941",
+        "group": "0:111",
+        "id": "0:111:602"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 11,
+        "start": 649,
+        "end": 650,
+        "object": "8102",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578270075",
+        "endUs": "13435277578270078",
+        "group": "0:111",
+        "id": "0:111:649"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 17,
+        "start": 673,
+        "end": 674,
+        "object": "8101",
+        "aux": "2",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578278941",
+        "endUs": "13435277578278943",
+        "group": "0:111",
+        "id": "0:111:673"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 20,
+        "start": 810,
+        "end": 811,
+        "object": "8101",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578317225",
+        "endUs": "13435277578317226",
+        "group": "0:111",
+        "id": "0:111:810"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 22,
+        "start": 846,
+        "end": 847,
+        "object": "8102",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578321156",
+        "endUs": "13435277578321158",
+        "group": "0:111",
+        "id": "0:111:846"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 19,
+        "start": 893,
+        "end": 894,
+        "object": "8102",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578324441",
+        "endUs": "13435277578324443",
+        "group": "0:111",
+        "id": "0:111:893"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 25,
+        "start": 917,
+        "end": 918,
+        "object": "8101",
+        "aux": "3",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578326000",
+        "endUs": "13435277578326002",
+        "group": "0:111",
+        "id": "0:111:917"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 28,
+        "start": 1280,
+        "end": 1281,
+        "object": "8101",
+        "aux": "4",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578508314",
+        "endUs": "13435277578508316",
+        "group": "0:111",
+        "id": "0:111:1280"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 30,
+        "start": 1316,
+        "end": 1317,
+        "object": "8102",
+        "aux": "4",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578512696",
+        "endUs": "13435277578512697",
+        "group": "0:111",
+        "id": "0:111:1316"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 27,
+        "start": 1363,
+        "end": 1364,
+        "object": "8102",
+        "aux": "4",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578516147",
+        "endUs": "13435277578516149",
+        "group": "0:111",
+        "id": "0:111:1363"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 33,
+        "start": 1387,
+        "end": 1388,
+        "object": "8101",
+        "aux": "4",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578517844",
+        "endUs": "13435277578517846",
+        "group": "0:111",
+        "id": "0:111:1387"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 36,
+        "start": 1596,
+        "end": 1597,
+        "object": "8101",
+        "aux": "5",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578578625",
+        "endUs": "13435277578578627",
+        "group": "0:111",
+        "id": "0:111:1596"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 38,
+        "start": 1632,
+        "end": 1633,
+        "object": "8102",
+        "aux": "5",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578583144",
+        "endUs": "13435277578583145",
+        "group": "0:111",
+        "id": "0:111:1632"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 35,
+        "start": 1679,
+        "end": 1680,
+        "object": "8102",
+        "aux": "5",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578586993",
+        "endUs": "13435277578586996",
+        "group": "0:111",
+        "id": "0:111:1679"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 41,
+        "start": 1703,
+        "end": 1704,
+        "object": "8101",
+        "aux": "5",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578592893",
+        "endUs": "13435277578592895",
+        "group": "0:111",
+        "id": "0:111:1703"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.bulk.get",
+        "tid": 120,
+        "regionSeq": 44,
+        "start": 1876,
+        "end": 1877,
+        "object": "8101",
+        "aux": "6",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578656733",
+        "endUs": "13435277578656735",
+        "group": "0:111",
+        "id": "0:111:1876"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "lmc.lookup.exists",
+        "tid": 120,
+        "regionSeq": 46,
+        "start": 1912,
+        "end": 1913,
+        "object": "8102",
+        "aux": "6",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578662495",
+        "endUs": "13435277578662496",
+        "group": "0:111",
+        "id": "0:111:1912"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.lookup.consume",
+        "tid": 111,
+        "regionSeq": 43,
+        "start": 1959,
+        "end": 1960,
+        "object": "8102",
+        "aux": "6",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578666368",
+        "endUs": "13435277578666370",
+        "group": "0:111",
+        "id": "0:111:1959"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "lmc.bulk.consume",
+        "tid": 111,
+        "regionSeq": 49,
+        "start": 1983,
+        "end": 1984,
+        "object": "8101",
+        "aux": "6",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435277578671324",
+        "endUs": "13435277578671326",
+        "group": "0:111",
+        "id": "0:111:1983"
+      }
+    ],
+    "evidence": {
+      "format": "drperf.wait-evidence.v1",
+      "path": "before.drperf.json.waits.532d74f2e466ec34.jsonl.gz",
+      "sha256": "532d74f2e466ec34be58ff80869436bd2119acf56ca91ae7d45770ef0d337bdf",
+      "bytes": 45734,
+      "eventCount": 2410,
+      "operationCount": 361,
+      "inlineEventCount": 24,
+      "inlineOperationCount": 0,
+      "scope": "Inline records support display only. Load the complete sidecar before checking event order, missing waits, or native provenance."
+    }
+  },
+  "eventModel": {
+    "status": "ordered",
+    "probe": false,
+    "probeRequested": false,
+    "edges": [
+      {
+        "event": "8102",
+        "generation": "1",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 3,
+        "waited": "0:111:415",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:350",
+        "producerInvocation": 6,
+        "distanceUs": 44624,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 4
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 10
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 2
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_wait",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 3
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "1",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 9,
+        "waited": "0:111:421",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:284",
+        "producerInvocation": 4,
+        "distanceUs": 164662,
+        "nativeContext": [],
+        "coverageCredit": null
+      },
+      {
+        "event": "8102",
+        "generation": "2",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 11,
+        "waited": "0:111:649",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:602",
+        "producerInvocation": 14,
+        "distanceUs": 7134,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 4
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_wait",
+            "count": 1
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 7
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 11
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "2",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 17,
+        "waited": "0:111:673",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:566",
+        "producerInvocation": 12,
+        "distanceUs": 25703,
+        "nativeContext": [
+          {
+            "region": "lmc.bulk.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.bulk.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 17
+        }
+      },
+      {
+        "event": "8102",
+        "generation": "3",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 19,
+        "waited": "0:111:893",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:846",
+        "producerInvocation": 22,
+        "distanceUs": 3283,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 2
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 19
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "3",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 25,
+        "waited": "0:111:917",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:810",
+        "producerInvocation": 20,
+        "distanceUs": 8774,
+        "nativeContext": [
+          {
+            "region": "lmc.bulk.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.bulk.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 25
+        }
+      },
+      {
+        "event": "8102",
+        "generation": "4",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 27,
+        "waited": "0:111:1363",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:1316",
+        "producerInvocation": 30,
+        "distanceUs": 3450,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 2
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 27
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "4",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 33,
+        "waited": "0:111:1387",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:1280",
+        "producerInvocation": 28,
+        "distanceUs": 9528,
+        "nativeContext": [
+          {
+            "region": "lmc.bulk.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.bulk.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 33
+        }
+      },
+      {
+        "event": "8102",
+        "generation": "5",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 35,
+        "waited": "0:111:1679",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:1632",
+        "producerInvocation": 38,
+        "distanceUs": 3848,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 2
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 35
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "5",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 41,
+        "waited": "0:111:1703",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:1596",
+        "producerInvocation": 36,
+        "distanceUs": 14266,
+        "nativeContext": [
+          {
+            "region": "lmc.bulk.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.bulk.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 41
+        }
+      },
+      {
+        "event": "8102",
+        "generation": "6",
+        "group": "0:111",
+        "consumer": "lmc.lookup.consume",
+        "consumerInvocation": 43,
+        "waited": "0:111:1959",
+        "status": "ordered",
+        "producer": "lmc.lookup.exists",
+        "publication": "0:111:1912",
+        "producerInvocation": 46,
+        "distanceUs": 3872,
+        "nativeContext": [
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_cond_timedwait",
+            "count": 2
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "api": "sem_clockwait",
+            "count": 1
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.lookup.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 43
+        }
+      },
+      {
+        "event": "8101",
+        "generation": "6",
+        "group": "0:111",
+        "consumer": "lmc.bulk.consume",
+        "consumerInvocation": 49,
+        "waited": "0:111:1983",
+        "status": "ordered",
+        "producer": "lmc.bulk.get",
+        "publication": "0:111:1876",
+        "producerInvocation": 44,
+        "distanceUs": 14589,
+        "nativeContext": [
+          {
+            "region": "lmc.bulk.consume",
+            "api": "pthread_mutex_lock",
+            "count": 3
+          }
+        ],
+        "coverageCredit": {
+          "region": "lmc.bulk.consume",
+          "group": "0:111",
+          "thread": "111",
+          "invocation": 49
+        }
+      }
+    ],
+    "violations": [],
+    "unverified": [],
+    "unexplained": [
+      {
+        "region": "lmc.bulk.get",
+        "count": 6,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "lmc.bulk.get",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 4,
+            "nativeCalls": 32,
+            "apis": {
+              "pthread_mutex_lock": 27,
+              "recv": 5
+            },
+            "ready": 269,
+            "complete": true
+          },
+          {
+            "region": "lmc.bulk.get",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 12,
+            "nativeCalls": 18,
+            "apis": {
+              "pthread_mutex_lock": 15,
+              "recv": 3
+            },
+            "ready": 559,
+            "complete": true
+          },
+          {
+            "region": "lmc.bulk.get",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 20,
+            "nativeCalls": 22,
+            "apis": {
+              "pthread_mutex_lock": 18,
+              "recv": 4
+            },
+            "ready": 803,
+            "complete": true
+          }
+        ]
+      },
+      {
+        "region": "lmc.lookup.exists",
+        "count": 6,
+        "unit": "region invocations",
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          {
+            "region": "lmc.lookup.exists",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 6,
+            "nativeCalls": 7,
+            "apis": {
+              "pthread_mutex_lock": 6,
+              "recv": 1
+            },
+            "ready": 343,
+            "complete": true
+          },
+          {
+            "region": "lmc.lookup.exists",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 14,
+            "nativeCalls": 7,
+            "apis": {
+              "pthread_mutex_lock": 6,
+              "recv": 1
+            },
+            "ready": 595,
+            "complete": true
+          },
+          {
+            "region": "lmc.lookup.exists",
+            "group": "0:111",
+            "thread": "120",
+            "invocation": 22,
+            "nativeCalls": 7,
+            "apis": {
+              "pthread_mutex_lock": 6,
+              "recv": 1
+            },
+            "ready": 839,
+            "complete": true
+          }
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "region": "lmc.bulk.consume",
+        "event": "8101",
+        "states": [
+          "mib"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "present": 6,
+        "absent": 0
+      },
+      {
+        "region": "lmc.lookup.consume",
+        "event": "8102",
+        "states": [
+          "mib"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "present": 6,
+        "absent": 0
+      }
+    ],
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 23,
+      "covered": 11,
+      "uncovered": 12,
+      "eligibleCredits": 12,
+      "unusedCredits": 1,
+      "nativeCalls": 303,
+      "regions": [
+        {
+          "region": "lmc.bulk.consume",
+          "obligations": 5,
+          "covered": 5,
+          "uncovered": 0,
+          "nativeCalls": 15,
+          "examples": []
+        },
+        {
+          "region": "lmc.bulk.get",
+          "obligations": 6,
+          "covered": 0,
+          "uncovered": 6,
+          "nativeCalls": 190,
+          "examples": [
+            {
+              "region": "lmc.bulk.get",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 4,
+              "nativeCalls": 32,
+              "apis": {
+                "pthread_mutex_lock": 27,
+                "recv": 5
+              },
+              "ready": 269,
+              "complete": true
+            },
+            {
+              "region": "lmc.bulk.get",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 12,
+              "nativeCalls": 18,
+              "apis": {
+                "pthread_mutex_lock": 15,
+                "recv": 3
+              },
+              "ready": 559,
+              "complete": true
+            },
+            {
+              "region": "lmc.bulk.get",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 20,
+              "nativeCalls": 22,
+              "apis": {
+                "pthread_mutex_lock": 18,
+                "recv": 4
+              },
+              "ready": 803,
+              "complete": true
+            }
+          ]
+        },
+        {
+          "region": "lmc.lookup.consume",
+          "obligations": 6,
+          "covered": 6,
+          "uncovered": 0,
+          "nativeCalls": 56,
+          "examples": []
+        },
+        {
+          "region": "lmc.lookup.exists",
+          "obligations": 6,
+          "covered": 0,
+          "uncovered": 6,
+          "nativeCalls": 42,
+          "examples": [
+            {
+              "region": "lmc.lookup.exists",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 6,
+              "nativeCalls": 7,
+              "apis": {
+                "pthread_mutex_lock": 6,
+                "recv": 1
+              },
+              "ready": 343,
+              "complete": true
+            },
+            {
+              "region": "lmc.lookup.exists",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 14,
+              "nativeCalls": 7,
+              "apis": {
+                "pthread_mutex_lock": 6,
+                "recv": 1
+              },
+              "ready": 595,
+              "complete": true
+            },
+            {
+              "region": "lmc.lookup.exists",
+              "group": "0:111",
+              "thread": "120",
+              "invocation": 22,
+              "nativeCalls": 7,
+              "apis": {
+                "pthread_mutex_lock": 6,
+                "recv": 1
+              },
+              "ready": 839,
+              "complete": true
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    },
+    "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+    "eventPairs": [
+      {
+        "group": "0:111",
+        "event": "8101",
+        "pairs": [
+          {
+            "producer": "lmc.bulk.get",
+            "consumer": "lmc.bulk.consume"
+          }
+        ]
+      },
+      {
+        "group": "0:111",
+        "event": "8102",
+        "pairs": [
+          {
+            "producer": "lmc.lookup.exists",
+            "consumer": "lmc.lookup.consume"
+          }
+        ]
+      }
+    ],
+    "nativeResolved": 0
+  },
+  "executionGraph": {
+    "status": "observed",
+    "root": null,
+    "nodes": [
+      {
+        "id": "capture",
+        "name": "capture",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 520.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/lmcache_real_io.py",
+            "line": 122,
+            "endLine": 122,
+            "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+            "expressions": {
+              "n": "1"
+            }
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "lmc.bulk.consume",
+        "name": "lmc.bulk.consume",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "mib"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              20.230769230769326
+            ],
+            "constant": 10633.30769230767,
+            "range": [
+              [
+                3,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/lmcache_real_io.py",
+            "line": 163,
+            "endLine": 165,
+            "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+            "expressions": {
+              "mib": "mib"
+            }
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 15,
+          "<unresolved>": 15
+        }
+      },
+      {
+        "id": "lmc.bulk.get",
+        "name": "lmc.bulk.get",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "mib"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              -161.8974358974355
+            ],
+            "constant": 132093.69230769217,
+            "range": [
+              [
+                3,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {
+          "pthread_mutex_lock": 153,
+          "<unresolved>": 190,
+          "recv": 37
+        }
+      },
+      {
+        "id": "lmc.lookup.consume",
+        "name": "lmc.lookup.consume",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "mib"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              -223.76923076923117
+            ],
+            "constant": 20261.97435897439,
+            "range": [
+              [
+                3,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "examples/waits/lmcache_real_io.py",
+            "line": 160,
+            "endLine": 162,
+            "sha256": "1e6df084c6f6793c3c38dc0cdd653a3469cc0a2d7a6a2a9e26e158587bac55e1",
+            "expressions": {
+              "mib": "mib"
+            }
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 29,
+          "<unresolved>": 56,
+          "sem_clockwait": 7,
+          "pthread_cond_timedwait": 16,
+          "sem_wait": 3,
+          "pthread_cond_wait": 1
+        }
+      },
+      {
+        "id": "lmc.lookup.exists",
+        "name": "lmc.lookup.exists",
+        "calls": 6,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "mib"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              -145.07692307692344
+            ],
+            "constant": 62845.23076923072,
+            "range": [
+              [
+                3,
+                16
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [],
+        "waitOperations": {
+          "pthread_mutex_lock": 36,
+          "<unresolved>": 42,
+          "recv": 6
+        }
+      }
+    ],
+    "edges": [
+      {
+        "kind": "sequence",
+        "source": "capture",
+        "target": "lmc.lookup.consume",
+        "context": null,
+        "observations": 1,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.bulk.consume",
+        "target": "lmc.lookup.consume",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.bulk.get",
+        "target": "lmc.lookup.exists",
+        "context": null,
+        "observations": 6,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.lookup.consume",
+        "target": "lmc.bulk.consume",
+        "context": null,
+        "observations": 6,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "lmc.lookup.exists",
+        "target": "lmc.bulk.get",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "wait",
+        "source": "lmc.bulk.consume",
+        "target": "lmc.bulk.get",
+        "context": "lmc.bulk.consume",
+        "observations": 6,
+        "evidence": [
+          {
+            "operation": "0:111:421",
+            "producer": "0:111:284",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:673",
+            "producer": "0:111:566",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "2",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:917",
+            "producer": "0:111:810",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "3",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1387",
+            "producer": "0:111:1280",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "4",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1703",
+            "producer": "0:111:1596",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "5",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1983",
+            "producer": "0:111:1876",
+            "basis": "declared-event",
+            "event": "8101",
+            "generation": "6",
+            "status": "ordered"
+          }
+        ],
+        "origin": "declared-event",
+        "eventStatus": "ordered",
+        "states": [
+          "mib"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "invocationsChecked": 6
+      },
+      {
+        "kind": "wait",
+        "source": "lmc.lookup.consume",
+        "target": "lmc.lookup.exists",
+        "context": "lmc.lookup.consume",
+        "observations": 6,
+        "evidence": [
+          {
+            "operation": "0:111:415",
+            "producer": "0:111:350",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:649",
+            "producer": "0:111:602",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "2",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:893",
+            "producer": "0:111:846",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "3",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1363",
+            "producer": "0:111:1316",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "4",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1679",
+            "producer": "0:111:1632",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "5",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:111:1959",
+            "producer": "0:111:1912",
+            "basis": "declared-event",
+            "event": "8102",
+            "generation": "6",
+            "status": "ordered"
+          }
+        ],
+        "origin": "declared-event",
+        "eventStatus": "ordered",
+        "states": [
+          "mib"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 6
+        },
+        "invocationsChecked": 6
+      }
+    ],
+    "warnings": [],
+    "sourceRoot": "/home/ubuntu/drperf",
+    "workload": "",
+    "waitCoverage": "observed",
+    "declaredEventsIncluded": true,
+    "eventChecks": {
+      "status": "ordered",
+      "probe": false,
+      "violations": 0,
+      "unverified": 0,
+      "coverage": {
+        "status": "uncovered",
+        "unit": "region invocations with directly observed synchronization",
+        "obligations": 23,
+        "covered": 11,
+        "uncovered": 12,
+        "eligibleCredits": 12,
+        "unusedCredits": 1,
+        "nativeCalls": 303,
+        "regions": [
+          {
+            "region": "lmc.bulk.consume",
+            "obligations": 5,
+            "covered": 5,
+            "uncovered": 0,
+            "nativeCalls": 15,
+            "examples": []
+          },
+          {
+            "region": "lmc.bulk.get",
+            "obligations": 6,
+            "covered": 0,
+            "uncovered": 6,
+            "nativeCalls": 190,
+            "examples": [
+              {
+                "region": "lmc.bulk.get",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 4,
+                "nativeCalls": 32,
+                "apis": {
+                  "pthread_mutex_lock": 27,
+                  "recv": 5
+                },
+                "ready": 269,
+                "complete": true
+              },
+              {
+                "region": "lmc.bulk.get",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 12,
+                "nativeCalls": 18,
+                "apis": {
+                  "pthread_mutex_lock": 15,
+                  "recv": 3
+                },
+                "ready": 559,
+                "complete": true
+              },
+              {
+                "region": "lmc.bulk.get",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 20,
+                "nativeCalls": 22,
+                "apis": {
+                  "pthread_mutex_lock": 18,
+                  "recv": 4
+                },
+                "ready": 803,
+                "complete": true
+              }
+            ]
+          },
+          {
+            "region": "lmc.lookup.consume",
+            "obligations": 6,
+            "covered": 6,
+            "uncovered": 0,
+            "nativeCalls": 56,
+            "examples": []
+          },
+          {
+            "region": "lmc.lookup.exists",
+            "obligations": 6,
+            "covered": 0,
+            "uncovered": 6,
+            "nativeCalls": 42,
+            "examples": [
+              {
+                "region": "lmc.lookup.exists",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 6,
+                "nativeCalls": 7,
+                "apis": {
+                  "pthread_mutex_lock": 6,
+                  "recv": 1
+                },
+                "ready": 343,
+                "complete": true
+              },
+              {
+                "region": "lmc.lookup.exists",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 14,
+                "nativeCalls": 7,
+                "apis": {
+                  "pthread_mutex_lock": 6,
+                  "recv": 1
+                },
+                "ready": 595,
+                "complete": true
+              },
+              {
+                "region": "lmc.lookup.exists",
+                "group": "0:111",
+                "thread": "120",
+                "invocation": 22,
+                "nativeCalls": 7,
+                "apis": {
+                  "pthread_mutex_lock": 6,
+                  "recv": 1
+                },
+                "ready": 839,
+                "complete": true
+              }
+            ]
+          }
+        ],
+        "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+      }
+    },
+    "contract": "Solid edges are observed next-sibling order, not proof of a required dependency. Nesting is separate. Wait edges target completion inside a consumer, not its entry. Only regions are shown; cycles can summarize repeated invocations. Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. Sync-call counts do not establish time blocked. Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. Unmarked work between siblings is not assumed free. No critical-path latency is inferred."
+  },
+  "id": "986283384e07a225117da46f93871d56d773781da628ca238f0dee11927363bf"
+}

@@ -1,0 +1,1898 @@
+{
+  "measured_sha256": "2fa3a69b417d79f1cac69f53eb91459c90385785aaf5decbd64f1b46311f1416",
+  "overlay_sha256": "442a99d5e376cd2e46505d800831ff4a6586dac977095a6dcc632f753a9bdf28",
+  "archived_evidence_sha256": "461b9c0104302996fbeed155c8b09b6b3bb9229540285a08cf8998ba2a016e68",
+  "estimated_signatures": [
+    {
+      "target": {
+        "api": "cuLaunch",
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          1,
+          1,
+          5120
+        ],
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN5cudnn19engines_precompiled16nchwToNhwcKernelI13__nv_bfloat16S2_fLb0ELb1EL21cudnnKernelDataType_t0EEEvNS0_18nchw2nhwc_params_tIT1_EEPKT_PT0_",
+        "api": "cuLaunchKernel",
+        "grid": [
+          1,
+          12,
+          384
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 20479.0,
+        "min_ns": 19455,
+        "max_ns": 21503
+      },
+      "estimated_ns": 22754,
+      "estimated_total_ns": 6371120,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.1111111111111112,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cuLaunch",
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          147,
+          160,
+          1
+        ],
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN5cudnn19engines_precompiled16nhwcToNchwKernelI13__nv_bfloat16S2_fLb1ELb0EL21cudnnKernelDataType_t0EEEvNS0_18nhwc2nchw_params_tIT1_EEPKT_PT0_",
+        "api": "cuLaunchKernel",
+        "grid": [
+          1560,
+          12,
+          1
+        ],
+        "block": [
+          256,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 63487.0,
+        "min_ns": 63487,
+        "max_ns": 63487
+      },
+      "estimated_ns": 79766,
+      "estimated_total_ns": 22334480,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.2564102564102564,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cuLaunchEx",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 65536,
+        "grid": [
+          40,
+          37,
+          1
+        ],
+        "name": "sm80_xmma_fprop_implicit_gemm_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize128x128x32_stage4_warpsize2x2x1_g1_tensor16x8x16_execute_kernel__5x_cudnn"
+      },
+      "count": 280,
+      "source": {
+        "name": "sm80_xmma_fprop_implicit_gemm_bf16bf16_bf16f32_f32_nhwckrsc_nhwc_tilesize128x128x32_stage4_warpsize2x2x1_g1_tensor16x8x16_execute_kernel__5x_cudnn",
+        "api": "cuLaunchKernelEx",
+        "grid": [
+          2,
+          780,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 65536,
+        "samples": 3,
+        "mean_ns": 966656.0,
+        "min_ns": 966656,
+        "max_ns": 966656
+      },
+      "estimated_ns": 917084,
+      "estimated_total_ns": 256783520,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.9487179487179487,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          3,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          256,
+          5120,
+          256
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 280,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          256,
+          1536,
+          256
+        ],
+        "block": [
+          3,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 12970.0,
+        "min_ns": 12288,
+        "max_ns": 13311
+      },
+      "estimated_ns": 43233,
+      "estimated_total_ns": 12105240,
+      "model": "same_cublas_operation_matmul_work_ratio_v1",
+      "work_ratio": 3.3333333333333335,
+      "assumption": "fixed batch/dtype, same inferred inner dimension and all but one operand extent; duration proportional to M*N*K"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          3,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          30720,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 280,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          64,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 16724.666666666668,
+        "min_ns": 16383,
+        "max_ns": 17408
+      },
+      "estimated_ns": 17154,
+      "estimated_total_ns": 4803120,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 1.0256410256410255,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          3,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          5120,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 280,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          9216,
+          1536
+        ],
+        "block": [
+          3,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 40617.666666666664,
+        "min_ns": 39935,
+        "max_ns": 40959
+      },
+      "estimated_ns": 75218,
+      "estimated_total_ns": 21061040,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 1.8518518518518519,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          512,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          4096,
+          5120,
+          4096
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 280,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          4096,
+          1536,
+          4096
+        ],
+        "block": [
+          512,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 60074.666666666664,
+        "min_ns": 59392,
+        "max_ns": 60416
+      },
+      "estimated_ns": 200249,
+      "estimated_total_ns": 56069720,
+      "model": "same_cublas_operation_matmul_work_ratio_v1",
+      "work_ratio": 3.3333333333333335,
+      "assumption": "fixed batch/dtype, same inferred inner dimension and all but one operand extent; duration proportional to M*N*K"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          512,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          5120,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 920,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          1536,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 138922.33333333334,
+        "min_ns": 138239,
+        "max_ns": 139264
+      },
+      "estimated_ns": 168870,
+      "estimated_total_ns": 155360400,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 1.2155745489078822,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          585,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          13824,
+          5120,
+          13824
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 11200,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          8960,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 551594.0,
+        "min_ns": 549888,
+        "max_ns": 552959
+      },
+      "estimated_ns": 354596,
+      "estimated_total_ns": 3971475200,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 0.6428571428571429,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          585,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          13824,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 11200,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          8960,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 551594.0,
+        "min_ns": 549888,
+        "max_ns": 552959
+      },
+      "estimated_ns": 354596,
+      "estimated_total_ns": 3971475200,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 0.6428571428571429,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          585,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          5120,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 67200,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          1536,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 138922.33333333334,
+        "min_ns": 138239,
+        "max_ns": 139264
+      },
+      "estimated_ns": 192948,
+      "estimated_total_ns": 12966105600,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 1.3888888888888888,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cublasLtMatmul",
+        "block": [
+          585,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          64,
+          5120
+        ],
+        "name": "cublasLtMatmul"
+      },
+      "count": 280,
+      "source": {
+        "name": "cublasLtMatmul",
+        "api": "cublasLtMatmul",
+        "grid": [
+          1536,
+          64,
+          1536
+        ],
+        "block": [
+          4680,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 16724.666666666668,
+        "min_ns": 16383,
+        "max_ns": 17408
+      },
+      "estimated_ns": 6969,
+      "estimated_total_ns": 1951320,
+      "model": "same_cublas_operation_cross_shape_work_ratio_v1",
+      "work_ratio": 0.4166666666666667,
+      "assumption": "fixed batch/dtype; cross-shape same-operation duration proportional to M*N*K; algorithm and layout may differ"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          10240,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          28080,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 46080.0,
+        "min_ns": 46080,
+        "max_ns": 46080
+      },
+      "estimated_ns": 16804,
+      "estimated_total_ns": 5377280,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.3646723646723647,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          11700,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 33600,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIfffNS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          28080,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 46080.0,
+        "min_ns": 46080,
+        "max_ns": 46080
+      },
+      "estimated_ns": 19200,
+      "estimated_total_ns": 645120000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.4166666666666667,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          15,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_62_GLOBAL__N__7d4ed096_23_ActivationSiluKernel_cu_70c0f2ac_1560211silu_kernelERNS_18TensorIteratorBaseEENKUlvE_clEvENKUlvE4_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_"
+      },
+      "count": 560,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_62_GLOBAL__N__7d4ed096_23_ActivationSiluKernel_cu_70c0f2ac_1560211silu_kernelERNS_18TensorIteratorBaseEENKUlvE_clEvENKUlvE4_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          5,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 6485.333333333333,
+        "min_ns": 6144,
+        "max_ns": 7168
+      },
+      "estimated_ns": 19456,
+      "estimated_total_ns": 10895360,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 3.0,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          180,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 11200,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          195,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 8532.666666666666,
+        "min_ns": 8191,
+        "max_ns": 9216
+      },
+      "estimated_ns": 7876,
+      "estimated_total_ns": 88211200,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.9230769230769231,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          23,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLm3EEEEviT0_T1_"
+      },
+      "count": 67200,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLm3EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          293,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 6485.333333333333,
+        "min_ns": 6144,
+        "max_ns": 7168
+      },
+      "estimated_ns": 509,
+      "estimated_total_ns": 34204800,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.07849829351535836,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2560,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_25bfloat16_copy_kernel_cudaERNS_18TensorIteratorBaseEEUlfE_St5arrayIPcLm2EEEEviT0_T1_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_25bfloat16_copy_kernel_cudaERNS_18TensorIteratorBaseEEUlfE_St5arrayIPcLm2EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2048,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 8874.333333333334,
+        "min_ns": 8191,
+        "max_ns": 9216
+      },
+      "estimated_ns": 11093,
+      "estimated_total_ns": 3549760,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2560,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_51_GLOBAL__N__b1108092_12_PowKernel_cu_70c0f2ac_2135529pow_tensor_scalar_kernel_implIffEEvRNS_18TensorIteratorBaseET0_EUlfE_St5arrayIPcLm2EEEEviS6_T1_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_51_GLOBAL__N__b1108092_12_PowKernel_cu_70c0f2ac_2135529pow_tensor_scalar_kernel_implIffEEvRNS_18TensorIteratorBaseET0_EUlfE_St5arrayIPcLm2EEEEviS6_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2048,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 11264.0,
+        "min_ns": 11264,
+        "max_ns": 11264
+      },
+      "estimated_ns": 14080,
+      "estimated_total_ns": 4505600,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2560,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_18GeluCUDAKernelImplERNS_18TensorIteratorBaseENS0_8GeluTypeEENKUlvE_clEvENKUlvE2_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_18GeluCUDAKernelImplERNS_18TensorIteratorBaseENS0_8GeluTypeEENKUlvE_clEvENKUlvE2_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          768,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 7168.0,
+        "min_ns": 7168,
+        "max_ns": 7168
+      },
+      "estimated_ns": 23893,
+      "estimated_total_ns": 6690040,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 3.3333333333333335,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2560,
+          2,
+          1
+        ],
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj2EEEjLi1ELi128ELi1ELi16ELi8EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj2EEEjLi1ELi128ELi1ELi16ELi8EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2048,
+          2,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 11946.666666666666,
+        "min_ns": 11264,
+        "max_ns": 12288
+      },
+      "estimated_ns": 14933,
+      "estimated_total_ns": 4778560,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2925,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIN3c108BFloat16EEESt5arrayIPcLm3EEEEviT0_T1_"
+      },
+      "count": 33600,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIN3c108BFloat16EEESt5arrayIPcLm3EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2340,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 11605.333333333334,
+        "min_ns": 11264,
+        "max_ns": 12288
+      },
+      "estimated_ns": 14507,
+      "estimated_total_ns": 487435200,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2925,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_25bfloat16_copy_kernel_cudaERNS_18TensorIteratorBaseEEUlfE_St5arrayIPcLm2EEEEviT0_T1_"
+      },
+      "count": 44800,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_25bfloat16_copy_kernel_cudaERNS_18TensorIteratorBaseEEUlfE_St5arrayIPcLm2EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2048,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 8874.333333333334,
+        "min_ns": 8191,
+        "max_ns": 9216
+      },
+      "estimated_ns": 12675,
+      "estimated_total_ns": 567840000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.42822265625,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2925,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_51_GLOBAL__N__b1108092_12_PowKernel_cu_70c0f2ac_2135529pow_tensor_scalar_kernel_implIffEEvRNS_18TensorIteratorBaseET0_EUlfE_St5arrayIPcLm2EEEEviS6_T1_"
+      },
+      "count": 33600,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZNS0_51_GLOBAL__N__b1108092_12_PowKernel_cu_70c0f2ac_2135529pow_tensor_scalar_kernel_implIffEEvRNS_18TensorIteratorBaseET0_EUlfE_St5arrayIPcLm2EEEEviS6_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          2048,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 11264.0,
+        "min_ns": 11264,
+        "max_ns": 11264
+      },
+      "estimated_ns": 16088,
+      "estimated_total_ns": 540556800,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.42822265625,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          2925,
+          2,
+          1
+        ],
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj2EEEjLi1ELi128ELi1ELi16ELi8EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_"
+      },
+      "count": 11200,
+      "source": {
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj2EEEjLi1ELi128ELi1ELi16ELi8EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          3456,
+          2,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 45397.333333333336,
+        "min_ns": 44032,
+        "max_ns": 46080
+      },
+      "estimated_ns": 38422,
+      "estimated_total_ns": 430326400,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.8463541666666666,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          30,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_21CUDAFunctorOnSelf_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 22680,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_21CUDAFunctorOnSelf_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          9,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 8532.666666666666,
+        "min_ns": 8191,
+        "max_ns": 9216
+      },
+      "estimated_ns": 28442,
+      "estimated_total_ns": 645064560,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 3.3333333333333335,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          3456,
+          21,
+          1
+        ],
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj4EEEjLi2ELi128ELi1ELi16ELi4EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_"
+      },
+      "count": 7,
+      "source": {
+        "name": "_ZN2at6native40_GLOBAL__N__0f1a8107_8_Shape_cu_49f7391c30CatArrayBatchedCopy_vectorizedINS1_10OpaqueTypeILj4EEEjLi2ELi128ELi1ELi16ELi4EEEvPcNS1_25CatArrInputTensorMetadataIT_T0_XT2_EXT3_EEENS1_16TensorSizeStrideIS8_Lj4EEEiS8_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          3456,
+          11,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 1,
+        "mean_ns": 568319.0,
+        "min_ns": 568319,
+        "max_ns": 568319
+      },
+      "estimated_ns": 1084973,
+      "estimated_total_ns": 7594811,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.9090909090909092,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          37,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLm1EEEEviT0_T1_"
+      },
+      "count": 2240,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLm1EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          309,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 6144.0,
+        "min_ns": 6144,
+        "max_ns": 6144
+      },
+      "estimated_ns": 736,
+      "estimated_total_ns": 1648640,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.11974110032362459,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          46800,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          37440,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 97962.33333333333,
+        "min_ns": 97280,
+        "max_ns": 99327
+      },
+      "estimated_ns": 122453,
+      "estimated_total_ns": 34286840,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          46800,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_EEvS4_RKT_EUliE_EEviT1_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_EEvS4_RKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          56160,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 143018.33333333334,
+        "min_ns": 142335,
+        "max_ns": 143360
+      },
+      "estimated_ns": 119182,
+      "estimated_total_ns": 33370960,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.8333333333333334,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c108BFloat16ES5_S5_NS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c108BFloat16ES5_S5_NS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 14677.0,
+        "min_ns": 14336,
+        "max_ns": 15359
+      },
+      "estimated_ns": 16057,
+      "estimated_total_ns": 5138240,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.0940170940170941,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5120,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE5_clEvEUlfE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_"
+      },
+      "count": 320,
+      "source": {
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE5_clEvEUlfE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 15700.333333333334,
+        "min_ns": 15359,
+        "max_ns": 16383
+      },
+      "estimated_ns": 17176,
+      "estimated_total_ns": 5496320,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.0940170940170941,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c107complexIdEES6_S6_NS0_15binary_internal10MulFunctorIS6_EEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 22400,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi2EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c107complexIdEES6_S6_NS0_15binary_internal10MulFunctorIS6_EEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          14040,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 91136.0,
+        "min_ns": 91136,
+        "max_ns": 91136
+      },
+      "estimated_ns": 37973,
+      "estimated_total_ns": 850595200,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.4166666666666667,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c108BFloat16ES5_S5_NS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 78680,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_13BinaryFunctorIN3c108BFloat16ES5_S5_NS0_15binary_internal10MulFunctorIfEEEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 14677.0,
+        "min_ns": 14336,
+        "max_ns": 15359
+      },
+      "estimated_ns": 18346,
+      "estimated_total_ns": 1443463280,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 22680,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 15359.0,
+        "min_ns": 15359,
+        "max_ns": 15359
+      },
+      "estimated_ns": 19199,
+      "estimated_total_ns": 435433320,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_EEvS4_RKT_EUliE_EEviT1_"
+      },
+      "count": 56280,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_EEvS4_RKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 22869.0,
+        "min_ns": 16383,
+        "max_ns": 34816
+      },
+      "estimated_ns": 28586,
+      "estimated_total_ns": 1608820080,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESD_NS0_6memory12LoadWithCastILi1EEENSE_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_"
+      },
+      "count": 22400,
+      "source": {
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE10_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESD_NS0_6memory12LoadWithCastILi1EEENSE_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          14040,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 69290.66666666667,
+        "min_ns": 68608,
+        "max_ns": 69632
+      },
+      "estimated_ns": 28871,
+      "estimated_total_ns": 646710400,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.4166666666666667,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE4_clEvEUldE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_"
+      },
+      "count": 22400,
+      "source": {
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE4_clEvEUldE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          14040,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 64511.0,
+        "min_ns": 63487,
+        "max_ns": 65535
+      },
+      "estimated_ns": 26880,
+      "estimated_total_ns": 602112000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.4166666666666667,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          5850,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE5_clEvEUlfE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_"
+      },
+      "count": 44800,
+      "source": {
+        "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE5_clEvEUlfE_St5arrayIPcLm2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 15700.333333333334,
+        "min_ns": 15359,
+        "max_ns": 16383
+      },
+      "estimated_ns": 19625,
+      "estimated_total_ns": 879200000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.25,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          60,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_"
+      },
+      "count": 280,
+      "source": {
+        "name": "_ZN2at6native18elementwise_kernelILi128ELi4EZNS0_22gpu_kernel_impl_nocastINS0_15CUDAFunctor_addIN3c108BFloat16EEEEEvRNS_18TensorIteratorBaseERKT_EUliE_EEviT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          54,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 8874.333333333334,
+        "min_ns": 8191,
+        "max_ns": 9216
+      },
+      "estimated_ns": 9860,
+      "estimated_total_ns": 2760800,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.1111111111111112,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          7898,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_18GeluCUDAKernelImplERNS_18TensorIteratorBaseENS0_8GeluTypeEENKUlvE_clEvENKUlvE2_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_"
+      },
+      "count": 11200,
+      "source": {
+        "name": "_ZN2at6native29vectorized_elementwise_kernelILi4EZZZNS0_18GeluCUDAKernelImplERNS_18TensorIteratorBaseENS0_8GeluTypeEENKUlvE_clEvENKUlvE2_clEvEUlN3c108BFloat16EE_St5arrayIPcLm2EEEEviT0_T1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          40950,
+          1,
+          1
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 124244.33333333333,
+        "min_ns": 123903,
+        "max_ns": 124927
+      },
+      "estimated_ns": 23963,
+      "estimated_total_ns": 268385600,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.19286935286935286,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 65536,
+        "grid": [
+          10,
+          1,
+          20
+        ],
+        "name": "_ZN5flash16flash_fwd_kernelI23Flash_fwd_kernel_traitsILi128ELi128ELi64ELi4ELb0ELb0EN7cutlass10bfloat16_tE19Flash_kernel_traitsILi128ELi128ELi64ELi4ES3_EELb0ELb0ELb0ELb0ELb0ELb1ELb0ELb0EEEvNS_16Flash_fwd_paramsE"
+      },
+      "count": 44800,
+      "source": {
+        "name": "_ZN5flash16flash_fwd_kernelI23Flash_fwd_kernel_traitsILi128ELi128ELi64ELi4ELb0ELb0EN7cutlass10bfloat16_tE19Flash_kernel_traitsILi128ELi128ELi64ELi4ES3_EELb0ELb0ELb0ELb0ELb0ELb1ELb0ELb0EEEvNS_16Flash_fwd_paramsE",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          37,
+          1,
+          12
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 65536,
+        "samples": 3,
+        "mean_ns": 599722.3333333334,
+        "min_ns": 114688,
+        "max_ns": 843775
+      },
+      "estimated_ns": 270145,
+      "estimated_total_ns": 12102496000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.45045045045045046,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "dynamic_shared_bytes": 65536,
+        "grid": [
+          5,
+          1,
+          40
+        ],
+        "name": "_ZN5flash16flash_fwd_kernelI23Flash_fwd_kernel_traitsILi128ELi128ELi64ELi4ELb0ELb0EN7cutlass10bfloat16_tE19Flash_kernel_traitsILi128ELi128ELi64ELi4ES3_EELb0ELb0ELb0ELb0ELb0ELb1ELb0ELb0EEEvNS_16Flash_fwd_paramsE"
+      },
+      "count": 11200,
+      "source": {
+        "name": "_ZN5flash16flash_fwd_kernelI23Flash_fwd_kernel_traitsILi128ELi128ELi64ELi4ELb0ELb0EN7cutlass10bfloat16_tE19Flash_kernel_traitsILi128ELi128ELi64ELi4ES3_EELb0ELb0ELb0ELb0ELb0ELb1ELb0ELb0EEEvNS_16Flash_fwd_paramsE",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          37,
+          1,
+          12
+        ],
+        "block": [
+          128,
+          1,
+          1
+        ],
+        "shared": 65536,
+        "samples": 3,
+        "mean_ns": 599722.3333333334,
+        "min_ns": 114688,
+        "max_ns": 843775
+      },
+      "estimated_ns": 270145,
+      "estimated_total_ns": 3025624000,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.45045045045045046,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          32,
+          16,
+          1
+        ],
+        "dynamic_shared_bytes": 0,
+        "grid": [
+          37,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIfNS0_7MeanOpsIffffEEjfLi4ELi4EEEEEvT1_"
+      },
+      "count": 33600,
+      "source": {
+        "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIfNS0_7MeanOpsIffffEEjfLi4ELi4EEEEEvT1_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          32,
+          1,
+          1
+        ],
+        "block": [
+          32,
+          16,
+          1
+        ],
+        "shared": 0,
+        "samples": 3,
+        "mean_ns": 17749.333333333332,
+        "min_ns": 17408,
+        "max_ns": 18432
+      },
+      "estimated_ns": 20523,
+      "estimated_total_ns": 689572800,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 1.15625,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    },
+    {
+      "target": {
+        "api": "cudaLaunch",
+        "block": [
+          32,
+          4,
+          1
+        ],
+        "dynamic_shared_bytes": 24,
+        "grid": [
+          585,
+          1,
+          1
+        ],
+        "name": "_ZN2at6native53_GLOBAL__N__21739cd4_20_layer_norm_kernel_cu_9c5ada8a28vectorized_layer_norm_kernelIN3c108BFloat16EfLb0EEEviT0_PKT_S8_S8_PS5_S9_PS6_"
+      },
+      "count": 33880,
+      "source": {
+        "name": "_ZN2at6native53_GLOBAL__N__21739cd4_20_layer_norm_kernel_cu_9c5ada8a28vectorized_layer_norm_kernelIN3c108BFloat16EfLb0EEEviT0_PKT_S8_S8_PS5_S9_PS6_",
+        "api": "cudaLaunchKernel",
+        "grid": [
+          4680,
+          1,
+          1
+        ],
+        "block": [
+          32,
+          4,
+          1
+        ],
+        "shared": 24,
+        "samples": 3,
+        "mean_ns": 33450.666666666664,
+        "min_ns": 28672,
+        "max_ns": 37888
+      },
+      "estimated_ns": 4181,
+      "estimated_total_ns": 141652280,
+      "model": "same_name_same_block_grid_ratio_v1",
+      "work_ratio": 0.125,
+      "assumption": "duration scales linearly with grid block count; launch overhead and occupancy changes are ignored"
+    }
+  ],
+  "note": "Runtime hit totals include estimated rows; separate using gx_estimate_provenance. Same durations as archived partial comparison. No new GPU profiling."
+}

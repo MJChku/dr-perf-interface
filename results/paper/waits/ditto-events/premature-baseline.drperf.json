@@ -1,0 +1,4596 @@
+{
+  "schema": "drperf.explorer.v1",
+  "title": "premature-baseline",
+  "measurement": {
+    "unit": "CPU instructions per call",
+    "scope": "exclusive region work",
+    "markerAdjustment": "marker modules excluded exactly; no wrapper calibration subtraction",
+    "composition": "symbolic direct-child work in composition; no latency or parallelism model",
+    "tolerance": {
+      "absolute": 64.0,
+      "relative": 0.05
+    }
+  },
+  "provenance": {
+    "rawDirectory": "/home/ubuntu/drperf/out/waits/ditto-events/premature-baseline",
+    "sourceRoot": "/home/ubuntu/drperf/results/paper/waits/ditto-events",
+    "runs": [
+      {
+        "file": "run.1083802.json",
+        "measurement": {
+          "version": "0.3",
+          "pid": 1083802,
+          "app": "demo",
+          "excluded_cuda_module": "",
+          "follow_unmarked_threads": false,
+          "native_gx": false,
+          "native_gx_hooks": 0,
+          "native_gx_calls": 0,
+          "max_states_per_region": 4096,
+          "max_keys": 65536,
+          "counter_budget_bytes": 103079215104,
+          "counter_bytes": 142606336,
+          "excluded_cuda_exports": 0,
+          "excluded_cuda_calls": 0,
+          "excluded_instructions": 276,
+          "rep_expand": true,
+          "symbols": true,
+          "max_slots": 1048576,
+          "slots_used": 2441,
+          "slots_overflow": 0,
+          "counter_denied": 0,
+          "marker_seen": true,
+          "unmatched_ends": 0,
+          "depth_overflows": 0,
+          "state_overflows": 0,
+          "threads": 3,
+          "waits_enabled": true,
+          "wait_records": 60,
+          "wait_dropped": 0,
+          "wait_hooks": 22,
+          "wait_delay_ms": 0,
+          "max_wait_records": 100000,
+          "wait_unattributed": {
+            "pthread_mutex_lock": {
+              "kind": "lock",
+              "calls": 11
+            },
+            "pthread_mutex_unlock": {
+              "kind": "unlock",
+              "calls": 11
+            },
+            "pthread_cond_wait": {
+              "kind": "condition",
+              "calls": 7
+            },
+            "pthread_cond_broadcast": {
+              "kind": "broadcast",
+              "calls": 1
+            },
+            "pthread_join": {
+              "kind": "join",
+              "calls": 2
+            }
+          },
+          "trace_file": "/home/ubuntu/drperf/out/waits/ditto-events/premature-baseline/run.1083802.json.trace",
+          "trace_records": 21,
+          "trace_dropped": 0
+        }
+      }
+    ],
+    "originalSourceRoot": "/home/ubuntu/drperf/out/waits/ditto-events"
+  },
+  "validity": {
+    "errors": [],
+    "traceErrors": []
+  },
+  "regions": [
+    {
+      "id": "candidates.build",
+      "name": "candidates.build",
+      "originalName": "candidates.build",
+      "states": [
+        "tokens"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; no calibration subtraction; Python wrapper and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              8
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              64
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              256
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              1024
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            148.3993597420822
+          ],
+          "constant": 6074.01640717621,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8
+              ],
+              "calls": 2,
+              "explained": 7261.211285112868,
+              "unexplained": 8208.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64
+              ],
+              "calls": 1,
+              "explained": 15571.57543066947,
+              "unexplained": 46243.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256
+              ],
+              "calls": 1,
+              "explained": 44064.252501149254,
+              "unexplained": 115435.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024
+              ],
+              "calls": 1,
+              "explained": 158034.96078306838,
+              "unexplained": 450148.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ]
+          ],
+          "unexplainedShare": 0.733797572920094,
+          "blocks": {
+            "affine": 90,
+            "constant": 392,
+            "unexplained": 117
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "premature.so",
+                  "function": "(anonymous namespace)::build_candidates",
+                  "instructions": 71.74444726718443
+                },
+                {
+                  "module": "premature.so",
+                  "function": "std::__detail::_Map_base<>::operator[]",
+                  "instructions": 63.144921487503325
+                },
+                {
+                  "module": "premature.so",
+                  "function": "_init",
+                  "instructions": 4.338063439065109
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_malloc",
+                  "instructions": 3.676827018460719
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__memset_avx2_unaligned_erms",
+                  "instructions": 2.1653873605768066
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free_merge_chunk",
+                  "instructions": 0.8180814642762093
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free",
+                  "instructions": 0.5205838232803466
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free_maybe_consolidate",
+                  "instructions": 0.3895169485374175
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 1687.857467760277
+              },
+              {
+                "module": "premature.so",
+                "function": "(anonymous namespace)::build_candidates",
+                "instructions": 595.8768236916601
+              },
+              {
+                "module": "premature.so",
+                "function": "std::_Hashtable<>::_M_insert_unique_node",
+                "instructions": 424.75
+              },
+              {
+                "module": "libc.so.6",
+                "function": "malloc_consolidate",
+                "instructions": 371.67989523602137
+              },
+              {
+                "module": "premature.so",
+                "function": "std::_Hashtable<>::_M_rehash",
+                "instructions": 331.5
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 281.60986910551395
+              },
+              {
+                "module": "premature.so",
+                "function": "void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int&&)",
+                "instructions": 262.3905785003992
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "std::__detail::_Prime_rehash_policy::_M_next_bkt",
+                "instructions": 254.5
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "premature.so",
+                "function": "(anonymous namespace)::build_candidates",
+                "instructions": 115111.75
+              },
+              {
+                "module": "premature.so",
+                "function": "std::__detail::_Map_base<>::operator[]",
+                "instructions": 7447.75
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 6241.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 5993.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 5736.75
+              },
+              {
+                "module": "premature.so",
+                "function": "void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int&&)",
+                "instructions": 4152.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 3968.375
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "operator new",
+                "instructions": 1648.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 5,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            148.3993597420822
+          ],
+          "constant": 6074.01640717621,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8
+              ],
+              "calls": 2,
+              "explained": 7261.211285112868,
+              "unexplained": 8208.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64
+              ],
+              "calls": 1,
+              "explained": 15571.57543066947,
+              "unexplained": 46243.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256
+              ],
+              "calls": 1,
+              "explained": 44064.252501149254,
+              "unexplained": 115435.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024
+              ],
+              "calls": 1,
+              "explained": 158034.96078306838,
+              "unexplained": 450148.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ]
+          ],
+          "unexplainedShare": 0.733797572920094,
+          "blocks": {
+            "affine": 90,
+            "constant": 392,
+            "unexplained": 117
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "premature.so",
+                  "function": "(anonymous namespace)::build_candidates",
+                  "instructions": 71.74444726718443
+                },
+                {
+                  "module": "premature.so",
+                  "function": "std::__detail::_Map_base<>::operator[]",
+                  "instructions": 63.144921487503325
+                },
+                {
+                  "module": "premature.so",
+                  "function": "_init",
+                  "instructions": 4.338063439065109
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_malloc",
+                  "instructions": 3.676827018460719
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__memset_avx2_unaligned_erms",
+                  "instructions": 2.1653873605768066
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free_merge_chunk",
+                  "instructions": 0.8180814642762093
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free",
+                  "instructions": 0.5205838232803466
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "_int_free_maybe_consolidate",
+                  "instructions": 0.3895169485374175
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 1687.857467760277
+              },
+              {
+                "module": "premature.so",
+                "function": "(anonymous namespace)::build_candidates",
+                "instructions": 595.8768236916601
+              },
+              {
+                "module": "premature.so",
+                "function": "std::_Hashtable<>::_M_insert_unique_node",
+                "instructions": 424.75
+              },
+              {
+                "module": "libc.so.6",
+                "function": "malloc_consolidate",
+                "instructions": 371.67989523602137
+              },
+              {
+                "module": "premature.so",
+                "function": "std::_Hashtable<>::_M_rehash",
+                "instructions": 331.5
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 281.60986910551395
+              },
+              {
+                "module": "premature.so",
+                "function": "void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int&&)",
+                "instructions": 262.3905785003992
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "std::__detail::_Prime_rehash_policy::_M_next_bkt",
+                "instructions": 254.5
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "premature.so",
+                "function": "(anonymous namespace)::build_candidates",
+                "instructions": 115111.75
+              },
+              {
+                "module": "premature.so",
+                "function": "std::__detail::_Map_base<>::operator[]",
+                "instructions": 7447.75
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 6241.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 5993.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 5736.75
+              },
+              {
+                "module": "premature.so",
+                "function": "void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int&&)",
+                "instructions": 4152.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 3968.375
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "operator new",
+                "instructions": 1648.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            8
+          ],
+          "calls": 2,
+          "recorded": 11101.0,
+          "observed": 11101.0
+        },
+        {
+          "state": [
+            64
+          ],
+          "calls": 1,
+          "recorded": 62678.0,
+          "observed": 62678.0
+        },
+        {
+          "state": [
+            256
+          ],
+          "calls": 1,
+          "recorded": 160984.0,
+          "observed": 160984.0
+        },
+        {
+          "state": [
+            1024
+          ],
+          "calls": 1,
+          "recorded": 610203.0,
+          "observed": 610203.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "ditto_runtime.cpp",
+          "line": 347,
+          "endLine": 350,
+          "sha256": "18afc9f60d551b54ba1c9dbd8a7ee892b9a912517bbbef026c19e545933e7e73",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "candidates.get",
+      "name": "candidates.get",
+      "originalName": "candidates.get",
+      "states": [
+        "tokens",
+        "cached"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; no calibration subtraction; Python wrapper and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              8,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              8,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              64,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              64,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              256,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              256,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              1024,
+              0
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              1024,
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            1.0358024243304058,
+            0.0
+          ],
+          "constant": 1831.273780576323,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8,
+                0
+              ],
+              "calls": 2,
+              "explained": 1839.560199970966,
+              "unexplained": 0.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                8,
+                1
+              ],
+              "calls": 2,
+              "explained": 1839.560199970966,
+              "unexplained": 0.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64,
+                0
+              ],
+              "calls": 1,
+              "explained": 1897.5651357334689,
+              "unexplained": 288.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64,
+                1
+              ],
+              "calls": 1,
+              "explained": 1897.5651357334689,
+              "unexplained": 288.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256,
+                0
+              ],
+              "calls": 1,
+              "explained": 2096.4392012049066,
+              "unexplained": 1440.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256,
+                1
+              ],
+              "calls": 1,
+              "explained": 2096.4392012049066,
+              "unexplained": 1440.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024,
+                0
+              ],
+              "calls": 1,
+              "explained": 2891.9354630906582,
+              "unexplained": 6048.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024,
+                1
+              ],
+              "calls": 1,
+              "explained": 2891.9354630906582,
+              "unexplained": 6048.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.4712298881919825,
+          "blocks": {
+            "affine": 2,
+            "constant": 323,
+            "unexplained": 2
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "__memcmp_avx2_movbe",
+                  "instructions": 1.0358024243304058
+                }
+              ],
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 385.125
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 162.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 161.5
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 141.0
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_context::submit",
+                "instructions": 141.0
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_candidates_get",
+                "instructions": 110.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 93.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free_merge_chunk",
+                "instructions": 85.75
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 1944.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 10,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            1.0358024243304058,
+            0.0
+          ],
+          "constant": 1831.273780576323,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8,
+                0
+              ],
+              "calls": 2,
+              "explained": 1839.560199970966,
+              "unexplained": 0.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                8,
+                1
+              ],
+              "calls": 2,
+              "explained": 1839.560199970966,
+              "unexplained": 0.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64,
+                0
+              ],
+              "calls": 1,
+              "explained": 1897.5651357334689,
+              "unexplained": 288.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64,
+                1
+              ],
+              "calls": 1,
+              "explained": 1897.5651357334689,
+              "unexplained": 288.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256,
+                0
+              ],
+              "calls": 1,
+              "explained": 2096.4392012049066,
+              "unexplained": 1440.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256,
+                1
+              ],
+              "calls": 1,
+              "explained": 2096.4392012049066,
+              "unexplained": 1440.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024,
+                0
+              ],
+              "calls": 1,
+              "explained": 2891.9354630906582,
+              "unexplained": 6048.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024,
+                1
+              ],
+              "calls": 1,
+              "explained": 2891.9354630906582,
+              "unexplained": 6048.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.4712298881919825,
+          "blocks": {
+            "affine": 2,
+            "constant": 323,
+            "unexplained": 2
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libc.so.6",
+                  "function": "__memcmp_avx2_movbe",
+                  "instructions": 1.0358024243304058
+                }
+              ],
+              []
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 385.125
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 162.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 161.5
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 141.0
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_context::submit",
+                "instructions": 141.0
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_candidates_get",
+                "instructions": 110.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 93.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free_merge_chunk",
+                "instructions": 85.75
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 1944.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            8,
+            0
+          ],
+          "calls": 2,
+          "recorded": 1281.0,
+          "observed": 1281.0
+        },
+        {
+          "state": [
+            8,
+            1
+          ],
+          "calls": 2,
+          "recorded": 1099.0,
+          "observed": 1099.0
+        },
+        {
+          "state": [
+            64,
+            0
+          ],
+          "calls": 1,
+          "recorded": 2232.0,
+          "observed": 2232.0
+        },
+        {
+          "state": [
+            64,
+            1
+          ],
+          "calls": 1,
+          "recorded": 1770.0,
+          "observed": 1770.0
+        },
+        {
+          "state": [
+            256,
+            0
+          ],
+          "calls": 1,
+          "recorded": 4117.0,
+          "observed": 4117.0
+        },
+        {
+          "state": [
+            256,
+            1
+          ],
+          "calls": 1,
+          "recorded": 3393.0,
+          "observed": 3393.0
+        },
+        {
+          "state": [
+            1024,
+            0
+          ],
+          "calls": 1,
+          "recorded": 9747.0,
+          "observed": 9747.0
+        },
+        {
+          "state": [
+            1024,
+            1
+          ],
+          "calls": 1,
+          "recorded": 9364.0,
+          "observed": 9364.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "driver.cpp",
+          "line": 33,
+          "endLine": 35,
+          "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "candidates.prefetch",
+      "name": "candidates.prefetch",
+      "originalName": "candidates.prefetch",
+      "states": [
+        "tokens"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; no calibration subtraction; Python wrapper and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              8
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 2.0
+          },
+          {
+            "state": [
+              64
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              256
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          },
+          {
+            "state": [
+              1024
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            12.277825663545523
+          ],
+          "constant": 5758.469925721613,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8
+              ],
+              "calls": 2,
+              "explained": 5856.6925310299775,
+              "unexplained": 1026.5,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64
+              ],
+              "calls": 1,
+              "explained": 6544.250768188527,
+              "unexplained": 28.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256
+              ],
+              "calls": 1,
+              "explained": 8901.593295589268,
+              "unexplained": 932.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024
+              ],
+              "calls": 1,
+              "explained": 18330.96340519223,
+              "unexplained": 2369.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ]
+          ],
+          "unexplainedShare": 0.09901338971106413,
+          "blocks": {
+            "affine": 4,
+            "constant": 686,
+            "unexplained": 8
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libstdc++.so.6.0.33",
+                  "function": "std::_Hash_bytes",
+                  "instructions": 12.0
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "malloc_consolidate",
+                  "instructions": 0.10566372698458784
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__free",
+                  "instructions": 0.087627930608986
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__memcpy_avx_unaligned_erms",
+                  "instructions": 0.0845340059519489
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 1288.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 767.125
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_context::submit",
+                "instructions": 508.125
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 356.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 250.50675945416273
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "operator new",
+                "instructions": 222.0
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "do_lookup_x",
+                "instructions": 203.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "malloc_consolidate",
+                "instructions": 181.4106602792093
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 657.0
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "_dl_lookup_symbol_x",
+                "instructions": 160.875
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 124.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 97.75
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "do_lookup_x",
+                "instructions": 49.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 5,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            12.277825663545523
+          ],
+          "constant": 5758.469925721613,
+          "dependent": [],
+          "points": [
+            {
+              "state": [
+                8
+              ],
+              "calls": 2,
+              "explained": 5856.6925310299775,
+              "unexplained": 1026.5,
+              "waiting": 0
+            },
+            {
+              "state": [
+                64
+              ],
+              "calls": 1,
+              "explained": 6544.250768188527,
+              "unexplained": 28.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                256
+              ],
+              "calls": 1,
+              "explained": 8901.593295589268,
+              "unexplained": 932.0,
+              "waiting": 0
+            },
+            {
+              "state": [
+                1024
+              ],
+              "calls": 1,
+              "explained": 18330.96340519223,
+              "unexplained": 2369.0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              8,
+              1024
+            ]
+          ],
+          "unexplainedShare": 0.09901338971106413,
+          "blocks": {
+            "affine": 4,
+            "constant": 686,
+            "unexplained": 8
+          },
+          "attribution": {
+            "coefficients": [
+              [
+                {
+                  "module": "libstdc++.so.6.0.33",
+                  "function": "std::_Hash_bytes",
+                  "instructions": 12.0
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "malloc_consolidate",
+                  "instructions": 0.10566372698458784
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__free",
+                  "instructions": 0.087627930608986
+                },
+                {
+                  "module": "libc.so.6",
+                  "function": "__memcpy_avx_unaligned_erms",
+                  "instructions": 0.0845340059519489
+                }
+              ]
+            ],
+            "constant": [
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 1288.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 767.125
+              },
+              {
+                "module": "premature.so",
+                "function": "ditto_context::submit",
+                "instructions": 508.125
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 356.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 250.50675945416273
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "operator new",
+                "instructions": 222.0
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "do_lookup_x",
+                "instructions": 203.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "malloc_consolidate",
+                "instructions": 181.4106602792093
+              }
+            ],
+            "unexplained": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 657.0
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "_dl_lookup_symbol_x",
+                "instructions": 160.875
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 124.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 97.75
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "do_lookup_x",
+                "instructions": 49.0
+              }
+            ]
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            8
+          ],
+          "calls": 2,
+          "recorded": 8321.0,
+          "observed": 8321.0
+        },
+        {
+          "state": [
+            64
+          ],
+          "calls": 1,
+          "recorded": 4872.0,
+          "observed": 4872.0
+        },
+        {
+          "state": [
+            256
+          ],
+          "calls": 1,
+          "recorded": 10051.0,
+          "observed": 10051.0
+        },
+        {
+          "state": [
+            1024
+          ],
+          "calls": 1,
+          "recorded": 20745.0,
+          "observed": 20745.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "driver.cpp",
+          "line": 25,
+          "endLine": 27,
+          "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+          "expressions": {}
+        }
+      ]
+    },
+    {
+      "id": "capture",
+      "name": "capture",
+      "originalName": "capture",
+      "states": [
+        "n"
+      ],
+      "markerCalibration": 0,
+      "diagnostics": [],
+      "markerAdjustment": {
+        "method": "marker-module exclusion only",
+        "scope": "marker modules excluded exactly; no calibration subtraction; Python wrapper and caller-side preparation remain unless explicitly excluded",
+        "points": [
+          {
+            "state": [
+              1
+            ],
+            "exactBlocks": 0.0,
+            "directChildCalls": 0.0,
+            "calls": 1.0
+          }
+        ]
+      },
+      "recordedRegimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 4.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 4.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 2,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "demo",
+                "function": "_init",
+                "instructions": 2.0
+              },
+              {
+                "module": "demo",
+                "function": "main",
+                "instructions": 2.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "calls": 1,
+      "droppedCalls": 0,
+      "status": "modelled",
+      "regimes": [
+        {
+          "coefficients": [
+            0.0
+          ],
+          "constant": 4.0,
+          "dependent": [
+            "n"
+          ],
+          "points": [
+            {
+              "state": [
+                1
+              ],
+              "calls": 1,
+              "explained": 4.0,
+              "unexplained": 0,
+              "waiting": 0
+            }
+          ],
+          "range": [
+            [
+              1,
+              1
+            ]
+          ],
+          "unexplainedShare": 0.0,
+          "blocks": {
+            "affine": 0,
+            "constant": 2,
+            "unexplained": 0
+          },
+          "attribution": {
+            "coefficients": [
+              []
+            ],
+            "constant": [
+              {
+                "module": "demo",
+                "function": "_init",
+                "instructions": 2.0
+              },
+              {
+                "module": "demo",
+                "function": "main",
+                "instructions": 2.0
+              }
+            ],
+            "unexplained": []
+          },
+          "markerCalibration": 0
+        }
+      ],
+      "points": [
+        {
+          "state": [
+            1
+          ],
+          "calls": 1,
+          "recorded": 4.0,
+          "observed": 4.0
+        }
+      ],
+      "nested": {},
+      "sources": [
+        {
+          "path": "driver.cpp",
+          "line": 17,
+          "endLine": 17,
+          "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+          "expressions": {}
+        }
+      ]
+    }
+  ],
+  "relations": [],
+  "discovery": {
+    "truncated": false,
+    "warnings": [],
+    "scope": "discovery disabled or complete trace unavailable"
+  },
+  "composition": {
+    "status": "observed",
+    "scope": "same-thread direct-child instruction work",
+    "basis": "marker-adjusted own interfaces; runtime waiting excluded; wrapper calibration is an estimate",
+    "contract": "Observed calls only. F includes U. U includes descendant unexplained work. N*F denotes N applications of an atomic child interface, not N times a global measured mean. Argument mappings are metadata, not prerequisites for child multipliers. Own cost fits and U tables are per-state means across callers. No prediction of per-invocation inclusive counts or latency.",
+    "regions": [
+      {
+        "id": "candidates.build",
+        "states": [
+          "tokens"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              148.3993597420822
+            ],
+            "constant": 6074.01640717621,
+            "states": [
+              [
+                8
+              ],
+              [
+                64
+              ],
+              [
+                256
+              ],
+              [
+                1024
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": true,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              8
+            ],
+            "calls": 2,
+            "ownUnexplained": 8208.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              64
+            ],
+            "calls": 1,
+            "ownUnexplained": 46243.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              256
+            ],
+            "calls": 1,
+            "ownUnexplained": 115435.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              1024
+            ],
+            "calls": 1,
+            "ownUnexplained": 450148.0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "candidates.get",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              1.0358024243304058,
+              0.0
+            ],
+            "constant": 1831.273780576323,
+            "states": [
+              [
+                8,
+                0
+              ],
+              [
+                8,
+                1
+              ],
+              [
+                64,
+                0
+              ],
+              [
+                64,
+                1
+              ],
+              [
+                256,
+                0
+              ],
+              [
+                256,
+                1
+              ],
+              [
+                1024,
+                0
+              ],
+              [
+                1024,
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": true,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              8,
+              0
+            ],
+            "calls": 2,
+            "ownUnexplained": 0.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              8,
+              1
+            ],
+            "calls": 2,
+            "ownUnexplained": 0.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              64,
+              0
+            ],
+            "calls": 1,
+            "ownUnexplained": 288.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              64,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 288.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              256,
+              0
+            ],
+            "calls": 1,
+            "ownUnexplained": 1440.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              256,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 1440.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              1024,
+              0
+            ],
+            "calls": 1,
+            "ownUnexplained": 6048.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              1024,
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 6048.0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "candidates.prefetch",
+        "states": [
+          "tokens"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              12.277825663545523
+            ],
+            "constant": 5758.469925721613,
+            "states": [
+              [
+                8
+              ],
+              [
+                64
+              ],
+              [
+                256
+              ],
+              [
+                1024
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": true,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              8
+            ],
+            "calls": 2,
+            "ownUnexplained": 1026.5,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              64
+            ],
+            "calls": 1,
+            "ownUnexplained": 28.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              256
+            ],
+            "calls": 1,
+            "ownUnexplained": 932.0,
+            "childCallRanges": {},
+            "children": []
+          },
+          {
+            "state": [
+              1024
+            ],
+            "calls": 1,
+            "ownUnexplained": 2369.0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "capture",
+        "states": [
+          "n"
+        ],
+        "own": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 4.0,
+            "states": [
+              [
+                1
+              ]
+            ]
+          }
+        ],
+        "ownUnexplained": false,
+        "children": [],
+        "recursive": false,
+        "observed": [
+          {
+            "state": [
+              1
+            ],
+            "calls": 1,
+            "ownUnexplained": 0,
+            "childCallRanges": {},
+            "children": []
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "trace": {
+    "complete": true,
+    "recordCount": 21,
+    "limit": 50000,
+    "events": [
+      {
+        "group": "0:1083802",
+        "seq": 1,
+        "end": 2,
+        "thread": "1083802",
+        "region": "capture",
+        "values": {
+          "n": 1
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 3,
+        "end": 4,
+        "thread": "1083802",
+        "region": "candidates.prefetch",
+        "values": {
+          "tokens": 8
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 5,
+        "end": 6,
+        "thread": "1083805",
+        "region": "candidates.build",
+        "values": {
+          "tokens": 8
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 7,
+        "end": 8,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 8,
+          "cached": 0
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 9,
+        "end": 10,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 8,
+          "cached": 1
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 11,
+        "end": 13,
+        "thread": "1083802",
+        "region": "candidates.prefetch",
+        "values": {
+          "tokens": 64
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 12,
+        "end": 14,
+        "thread": "1083804",
+        "region": "candidates.build",
+        "values": {
+          "tokens": 64
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 15,
+        "end": 16,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 64,
+          "cached": 0
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 17,
+        "end": 18,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 64,
+          "cached": 1
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 19,
+        "end": 21,
+        "thread": "1083802",
+        "region": "candidates.prefetch",
+        "values": {
+          "tokens": 256
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 20,
+        "end": 22,
+        "thread": "1083805",
+        "region": "candidates.build",
+        "values": {
+          "tokens": 256
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 23,
+        "end": 24,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 256,
+          "cached": 0
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 25,
+        "end": 26,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 256,
+          "cached": 1
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 27,
+        "end": 29,
+        "thread": "1083802",
+        "region": "candidates.prefetch",
+        "values": {
+          "tokens": 1024
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 28,
+        "end": 30,
+        "thread": "1083804",
+        "region": "candidates.build",
+        "values": {
+          "tokens": 1024
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 31,
+        "end": 32,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 1024,
+          "cached": 0
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 33,
+        "end": 34,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 1024,
+          "cached": 1
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 35,
+        "end": 38,
+        "thread": "1083802",
+        "region": "candidates.prefetch",
+        "values": {
+          "tokens": 8
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 36,
+        "end": 37,
+        "thread": "1083805",
+        "region": "candidates.build",
+        "values": {
+          "tokens": 8
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 39,
+        "end": 40,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 8,
+          "cached": 0
+        }
+      },
+      {
+        "group": "0:1083802",
+        "seq": 41,
+        "end": 42,
+        "thread": "1083802",
+        "region": "candidates.get",
+        "values": {
+          "tokens": 8,
+          "cached": 1
+        }
+      }
+    ]
+  },
+  "scenarioContract": {
+    "fixed": [
+      "recorded call count",
+      "marker sequence order",
+      "nesting"
+    ],
+    "unknown": [
+      "causality of observed relationships",
+      "unexplained cost at changed states",
+      "new branches or calls",
+      "CPU/GPU latency and overlap"
+    ],
+    "requiresExplicitAssumptions": true
+  },
+  "waits": {
+    "status": "observed",
+    "warnings": [],
+    "unattributedOperations": {
+      "pthread_mutex_lock": 11,
+      "pthread_cond_wait": 7,
+      "pthread_join": 2
+    },
+    "probe": false,
+    "coverage": "Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and native GX internals are not fully observed. Late attach misses earlier operations.",
+    "contract": "Observed operation counts and conservative object-based dependency evidence. API elapsed time and syscall attempts do not establish sleeping or native latency. Matched CUDA producers identify submitted stream work, not CPU completion of the launch region. Stream-prefix matches are partial; unobserved kernels/dependencies can also be required.",
+    "regions": [
+      {
+        "region": "candidates.get",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 10,
+        "parentCalls": 10,
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 10
+        },
+        "matched": 0,
+        "unresolved": 10,
+        "potentialSyscalls": 0,
+        "elapsedUs": 33
+      },
+      {
+        "region": "candidates.prefetch",
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "calls": 10,
+        "parentCalls": 5,
+        "states": [
+          "tokens"
+        ],
+        "countFormula": {
+          "coefficients": [
+            "0"
+          ],
+          "constant": "2",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 5
+        },
+        "matched": 0,
+        "unresolved": 10,
+        "potentialSyscalls": 0,
+        "elapsedUs": 130
+      }
+    ],
+    "operations": [
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 1,
+        "end": 2,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 67,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:1",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 3,
+        "end": 4,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 45,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:3",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 7,
+        "start": 13,
+        "end": 14,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 5,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:13",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 9,
+        "start": 19,
+        "end": 20,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:19",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 25,
+        "end": 26,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:25",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 27,
+        "end": 28,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:27",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 15,
+        "start": 37,
+        "end": 38,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:37",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 17,
+        "start": 43,
+        "end": 44,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:43",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 49,
+        "end": 50,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:49",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 51,
+        "end": 52,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:51",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 23,
+        "start": 61,
+        "end": 62,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:61",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 25,
+        "start": 67,
+        "end": 68,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:67",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 73,
+        "end": 74,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:73",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 75,
+        "end": 76,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:75",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 31,
+        "start": 85,
+        "end": 86,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:85",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 33,
+        "start": 91,
+        "end": 92,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:91",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 97,
+        "end": 98,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:97",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 99,
+        "end": 100,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:99",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 39,
+        "start": 109,
+        "end": 110,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:109",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 41,
+        "start": 115,
+        "end": 116,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:115",
+        "dependency": "unresolved",
+        "producers": [],
+        "blocking": "unknown",
+        "reason": "Producer mapping is unsupported or unobserved."
+      }
+    ],
+    "events": [
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 1,
+        "end": 2,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 67,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:1"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 3,
+        "end": 4,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 45,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:3"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 5,
+        "end": 6,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 57,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:5"
+      },
+      {
+        "api": "pthread_cond_signal",
+        "kind": "signal",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 7,
+        "end": 8,
+        "object": "93824992330976",
+        "aux": "0",
+        "result": 140728663539712,
+        "returned": true,
+        "elapsedUs": 550,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:7"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 3,
+        "start": 9,
+        "end": 10,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728663539712,
+        "returned": true,
+        "elapsedUs": 77,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:9"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "candidates.build",
+        "tid": 1083805,
+        "regionSeq": 5,
+        "start": 11,
+        "end": 12,
+        "object": "1",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 47,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153621980741",
+        "endUs": "13435153621980788",
+        "group": "0:1083802",
+        "id": "0:1083802:11"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 7,
+        "start": 13,
+        "end": 14,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 5,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:13"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 7,
+        "start": 15,
+        "end": 16,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728640471040,
+        "returned": true,
+        "elapsedUs": 37,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:15"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 7,
+        "start": 17,
+        "end": 18,
+        "object": "1",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 111,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622177556",
+        "endUs": "13435153622177667",
+        "group": "0:1083802",
+        "id": "0:1083802:17"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 9,
+        "start": 19,
+        "end": 20,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:19"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 9,
+        "start": 21,
+        "end": 22,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728632082432,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:21"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 9,
+        "start": 23,
+        "end": 24,
+        "object": "1",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622179615",
+        "endUs": "13435153622179616",
+        "group": "0:1083802",
+        "id": "0:1083802:23"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 25,
+        "end": 26,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:25"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 27,
+        "end": 28,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:27"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 29,
+        "end": 30,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:29"
+      },
+      {
+        "api": "pthread_cond_signal",
+        "kind": "signal",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 31,
+        "end": 32,
+        "object": "93824992330976",
+        "aux": "0",
+        "result": 140728554487808,
+        "returned": true,
+        "elapsedUs": 6,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:31"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 11,
+        "start": 33,
+        "end": 34,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728554487808,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:33"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "candidates.build",
+        "tid": 1083804,
+        "regionSeq": 12,
+        "start": 35,
+        "end": 36,
+        "object": "2",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622194212",
+        "endUs": "13435153622194214",
+        "group": "0:1083802",
+        "id": "0:1083802:35"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 15,
+        "start": 37,
+        "end": 38,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:37"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 15,
+        "start": 39,
+        "end": 40,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728531419136,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:39"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 15,
+        "start": 41,
+        "end": 42,
+        "object": "2",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622381744",
+        "endUs": "13435153622381747",
+        "group": "0:1083802",
+        "id": "0:1083802:41"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 17,
+        "start": 43,
+        "end": 44,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:43"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 17,
+        "start": 45,
+        "end": 46,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728523030528,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:45"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 17,
+        "start": 47,
+        "end": 48,
+        "object": "2",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622383522",
+        "endUs": "13435153622383524",
+        "group": "0:1083802",
+        "id": "0:1083802:47"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 49,
+        "end": 50,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:49"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 51,
+        "end": 52,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:51"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 53,
+        "end": 54,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:53"
+      },
+      {
+        "api": "pthread_cond_signal",
+        "kind": "signal",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 55,
+        "end": 56,
+        "object": "93824992330976",
+        "aux": "0",
+        "result": 140728514641920,
+        "returned": true,
+        "elapsedUs": 5,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:55"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 19,
+        "start": 57,
+        "end": 58,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728514641920,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:57"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "candidates.build",
+        "tid": 1083805,
+        "regionSeq": 20,
+        "start": 59,
+        "end": 60,
+        "object": "3",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622391258",
+        "endUs": "13435153622391259",
+        "group": "0:1083802",
+        "id": "0:1083802:59"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 23,
+        "start": 61,
+        "end": 62,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:61"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 23,
+        "start": 63,
+        "end": 64,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728497864704,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:63"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 23,
+        "start": 65,
+        "end": 66,
+        "object": "3",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622587812",
+        "endUs": "13435153622587814",
+        "group": "0:1083802",
+        "id": "0:1083802:65"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 25,
+        "start": 67,
+        "end": 68,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:67"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 25,
+        "start": 69,
+        "end": 70,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728420270080,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:69"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 25,
+        "start": 71,
+        "end": 72,
+        "object": "3",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622587990",
+        "endUs": "13435153622587992",
+        "group": "0:1083802",
+        "id": "0:1083802:71"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 73,
+        "end": 74,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:73"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 75,
+        "end": 76,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:75"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 77,
+        "end": 78,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:77"
+      },
+      {
+        "api": "pthread_cond_signal",
+        "kind": "signal",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 79,
+        "end": 80,
+        "object": "93824992330976",
+        "aux": "0",
+        "result": 140728411881472,
+        "returned": true,
+        "elapsedUs": 11,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:79"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 27,
+        "start": 81,
+        "end": 82,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728411881472,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:81"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "candidates.build",
+        "tid": 1083804,
+        "regionSeq": 28,
+        "start": 83,
+        "end": 84,
+        "object": "4",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 1,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622596601",
+        "endUs": "13435153622596602",
+        "group": "0:1083802",
+        "id": "0:1083802:83"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 31,
+        "start": 85,
+        "end": 86,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:85"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 31,
+        "start": 87,
+        "end": 88,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728395104256,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:87"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 31,
+        "start": 89,
+        "end": 90,
+        "object": "4",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622792991",
+        "endUs": "13435153622792993",
+        "group": "0:1083802",
+        "id": "0:1083802:89"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 33,
+        "start": 91,
+        "end": 92,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:91"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 33,
+        "start": 93,
+        "end": 94,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728386715648,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:93"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 33,
+        "start": 95,
+        "end": 96,
+        "object": "4",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622793261",
+        "endUs": "13435153622793263",
+        "group": "0:1083802",
+        "id": "0:1083802:95"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 97,
+        "end": 98,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:97"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 99,
+        "end": 100,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:99"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 101,
+        "end": 102,
+        "object": "93824992330936",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:101"
+      },
+      {
+        "api": "pthread_cond_signal",
+        "kind": "signal",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 103,
+        "end": 104,
+        "object": "93824992330976",
+        "aux": "0",
+        "result": 140728663539712,
+        "returned": true,
+        "elapsedUs": 11,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:103"
+      },
+      {
+        "api": "perfmark_event_publish",
+        "kind": "declared_publish",
+        "region": "candidates.build",
+        "tid": 1083805,
+        "regionSeq": 36,
+        "start": 105,
+        "end": 106,
+        "object": "5",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622795171",
+        "endUs": "13435153622795173",
+        "group": "0:1083802",
+        "id": "0:1083802:105"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.prefetch",
+        "tid": 1083802,
+        "regionSeq": 35,
+        "start": 107,
+        "end": 108,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728663539712,
+        "returned": true,
+        "elapsedUs": 5,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:107"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 39,
+        "start": 109,
+        "end": 110,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:109"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 39,
+        "start": 111,
+        "end": 112,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728640471040,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:111"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 39,
+        "start": 113,
+        "end": 114,
+        "object": "5",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622995750",
+        "endUs": "13435153622995753",
+        "group": "0:1083802",
+        "id": "0:1083802:113"
+      },
+      {
+        "api": "pthread_mutex_lock",
+        "kind": "lock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 41,
+        "start": 115,
+        "end": 116,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 3,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:115"
+      },
+      {
+        "api": "pthread_mutex_unlock",
+        "kind": "unlock",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 41,
+        "start": 117,
+        "end": 118,
+        "object": "93824992331144",
+        "aux": "0",
+        "result": 140728632082432,
+        "returned": true,
+        "elapsedUs": 4,
+        "potentialSyscalls": 0,
+        "instructionExcluded": false,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "group": "0:1083802",
+        "id": "0:1083802:117"
+      },
+      {
+        "api": "perfmark_event_waited",
+        "kind": "declared_waited",
+        "region": "candidates.get",
+        "tid": 1083802,
+        "regionSeq": 41,
+        "start": 119,
+        "end": 120,
+        "object": "5",
+        "aux": "1",
+        "result": 0,
+        "returned": true,
+        "elapsedUs": 2,
+        "potentialSyscalls": 0,
+        "instructionExcluded": true,
+        "injectedDelayMs": 0,
+        "processShared": false,
+        "beginUs": "13435153622995820",
+        "endUs": "13435153622995822",
+        "group": "0:1083802",
+        "id": "0:1083802:119"
+      }
+    ]
+  },
+  "eventModel": {
+    "status": "ordered",
+    "probe": false,
+    "edges": [
+      {
+        "event": "1",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 7,
+        "waited": "0:1083802:17",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:11",
+        "producerInvocation": 5,
+        "distanceUs": 196768
+      },
+      {
+        "event": "1",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 9,
+        "waited": "0:1083802:23",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:11",
+        "producerInvocation": 5,
+        "distanceUs": 198827
+      },
+      {
+        "event": "2",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 15,
+        "waited": "0:1083802:41",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:35",
+        "producerInvocation": 12,
+        "distanceUs": 187530
+      },
+      {
+        "event": "2",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 17,
+        "waited": "0:1083802:47",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:35",
+        "producerInvocation": 12,
+        "distanceUs": 189308
+      },
+      {
+        "event": "3",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 23,
+        "waited": "0:1083802:65",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:59",
+        "producerInvocation": 20,
+        "distanceUs": 196553
+      },
+      {
+        "event": "3",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 25,
+        "waited": "0:1083802:71",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:59",
+        "producerInvocation": 20,
+        "distanceUs": 196731
+      },
+      {
+        "event": "4",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 31,
+        "waited": "0:1083802:89",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:83",
+        "producerInvocation": 28,
+        "distanceUs": 196389
+      },
+      {
+        "event": "4",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 33,
+        "waited": "0:1083802:95",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:83",
+        "producerInvocation": 28,
+        "distanceUs": 196659
+      },
+      {
+        "event": "5",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 39,
+        "waited": "0:1083802:113",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:105",
+        "producerInvocation": 36,
+        "distanceUs": 200577
+      },
+      {
+        "event": "5",
+        "generation": "1",
+        "group": "0:1083802",
+        "consumer": "candidates.get",
+        "consumerInvocation": 41,
+        "waited": "0:1083802:119",
+        "status": "ordered",
+        "producer": "candidates.build",
+        "publication": "0:1083802:105",
+        "producerInvocation": 36,
+        "distanceUs": 200647
+      }
+    ],
+    "violations": [],
+    "unverified": [],
+    "unexplained": [
+      {
+        "region": "candidates.get",
+        "api": "pthread_mutex_lock",
+        "count": 10,
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          "0:1083802:13",
+          "0:1083802:19",
+          "0:1083802:37"
+        ]
+      },
+      {
+        "region": "candidates.prefetch",
+        "api": "pthread_mutex_lock",
+        "count": 10,
+        "term": "unexplained(Wait[?])",
+        "examples": [
+          "0:1083802:1",
+          "0:1083802:3",
+          "0:1083802:25"
+        ]
+      }
+    ],
+    "interfaces": [
+      {
+        "region": "candidates.get",
+        "event": "1",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": null,
+        "present": 2,
+        "absent": 8
+      },
+      {
+        "region": "candidates.get",
+        "event": "2",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": null,
+        "present": 2,
+        "absent": 8
+      },
+      {
+        "region": "candidates.get",
+        "event": "3",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": null,
+        "present": 2,
+        "absent": 8
+      },
+      {
+        "region": "candidates.get",
+        "event": "4",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": null,
+        "present": 2,
+        "absent": 8
+      },
+      {
+        "region": "candidates.get",
+        "event": "5",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "countFormula": null,
+        "present": 2,
+        "absent": 8
+      }
+    ],
+    "contract": "Observed CPU checkpoint order, not proof of necessary dependency. No condition argument: markers follow original control flow. Publish precedes the real release; waited follows observed readiness. IDs/generations are process-scoped. GPU submission alone is not GPU completion.",
+    "coverage": "Native synchronization observations are separate; waited does not establish their coverage."
+  },
+  "executionGraph": {
+    "status": "observed",
+    "root": null,
+    "nodes": [
+      {
+        "id": "candidates.build",
+        "name": "candidates.build",
+        "calls": 5,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "tokens"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              148.3993597420822
+            ],
+            "constant": 6074.01640717621,
+            "range": [
+              [
+                8,
+                1024
+              ]
+            ],
+            "unexplainedFunctions": [
+              {
+                "module": "premature.so",
+                "function": "(anonymous namespace)::build_candidates",
+                "instructions": 115111.75
+              },
+              {
+                "module": "premature.so",
+                "function": "std::__detail::_Map_base<>::operator[]",
+                "instructions": 7447.75
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 6241.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 5993.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__GI___libc_malloc",
+                "instructions": 5736.75
+              },
+              {
+                "module": "premature.so",
+                "function": "void std::vector<unsigned int, std::allocator<unsigned int> >::_M_realloc_insert<unsigned int>(__gnu_cxx::__normal_iterator<unsigned int*, std::vector<unsigned int, std::allocator<unsigned int> > >, unsigned int&&)",
+                "instructions": 4152.0
+              },
+              {
+                "module": "libc.so.6",
+                "function": "__free",
+                "instructions": 3968.375
+              },
+              {
+                "module": "libstdc++.so.6.0.33",
+                "function": "operator new",
+                "instructions": 1648.0
+              }
+            ],
+            "unexplainedShare": 0.733797572920094
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "ditto_runtime.cpp",
+            "line": 347,
+            "endLine": 350,
+            "sha256": "18afc9f60d551b54ba1c9dbd8a7ee892b9a912517bbbef026c19e545933e7e73",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      },
+      {
+        "id": "candidates.get",
+        "name": "candidates.get",
+        "calls": 10,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              1.0358024243304058,
+              0.0
+            ],
+            "constant": 1831.273780576323,
+            "range": [
+              [
+                8,
+                1024
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 1944.0
+              }
+            ],
+            "unexplainedShare": 0.4712298881919825
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "driver.cpp",
+            "line": 33,
+            "endLine": 35,
+            "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 10,
+          "<unresolved>": 10
+        }
+      },
+      {
+        "id": "candidates.prefetch",
+        "name": "candidates.prefetch",
+        "calls": 5,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "tokens"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              12.277825663545523
+            ],
+            "constant": 5758.469925721613,
+            "range": [
+              [
+                8,
+                1024
+              ]
+            ],
+            "unexplainedFunctions": [
+              {
+                "module": "libc.so.6",
+                "function": "__memcpy_avx_unaligned_erms",
+                "instructions": 657.0
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "_dl_lookup_symbol_x",
+                "instructions": 160.875
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_free",
+                "instructions": 124.25
+              },
+              {
+                "module": "libc.so.6",
+                "function": "_int_malloc",
+                "instructions": 97.75
+              },
+              {
+                "module": "ld-linux-x86-64.so.2",
+                "function": "do_lookup_x",
+                "instructions": 49.0
+              }
+            ],
+            "unexplainedShare": 0.09901338971106413
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "driver.cpp",
+            "line": 25,
+            "endLine": 27,
+            "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {
+          "pthread_mutex_lock": 10,
+          "<unresolved>": 10
+        }
+      },
+      {
+        "id": "capture",
+        "name": "capture",
+        "calls": 1,
+        "dependencyOnly": false,
+        "hiddenChildren": [],
+        "states": [
+          "n"
+        ],
+        "ownFits": [
+          {
+            "coefficients": [
+              0.0
+            ],
+            "constant": 4.0,
+            "range": [
+              [
+                1,
+                1
+              ]
+            ],
+            "unexplainedFunctions": [],
+            "unexplainedShare": 0.0
+          }
+        ],
+        "costBasis": "exclusive CPU instructions per invocation; full-profile fit",
+        "sources": [
+          {
+            "path": "driver.cpp",
+            "line": 17,
+            "endLine": 17,
+            "sha256": "b717c88eda2df9a8e75333a21220ba149779589b57ea3396800a1ccab848d9d6",
+            "expressions": {}
+          }
+        ],
+        "waitOperations": {}
+      }
+    ],
+    "edges": [
+      {
+        "kind": "sequence",
+        "source": "candidates.build",
+        "target": "candidates.build",
+        "context": null,
+        "observations": 3,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "candidates.get",
+        "target": "candidates.get",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "candidates.get",
+        "target": "candidates.prefetch",
+        "context": null,
+        "observations": 4,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "candidates.prefetch",
+        "target": "candidates.get",
+        "context": null,
+        "observations": 5,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "sequence",
+        "source": "capture",
+        "target": "candidates.prefetch",
+        "context": null,
+        "observations": 1,
+        "evidence": [],
+        "states": [],
+        "perInvocation": null,
+        "invocationsChecked": 0
+      },
+      {
+        "kind": "wait",
+        "source": "candidates.get",
+        "target": "candidates.build",
+        "context": "candidates.get",
+        "observations": 10,
+        "evidence": [
+          {
+            "operation": "0:1083802:17",
+            "producer": "0:1083802:11",
+            "basis": "declared-event",
+            "event": "1",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:23",
+            "producer": "0:1083802:11",
+            "basis": "declared-event",
+            "event": "1",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:41",
+            "producer": "0:1083802:35",
+            "basis": "declared-event",
+            "event": "2",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:47",
+            "producer": "0:1083802:35",
+            "basis": "declared-event",
+            "event": "2",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:65",
+            "producer": "0:1083802:59",
+            "basis": "declared-event",
+            "event": "3",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:71",
+            "producer": "0:1083802:59",
+            "basis": "declared-event",
+            "event": "3",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:89",
+            "producer": "0:1083802:83",
+            "basis": "declared-event",
+            "event": "4",
+            "generation": "1",
+            "status": "ordered"
+          },
+          {
+            "operation": "0:1083802:95",
+            "producer": "0:1083802:83",
+            "basis": "declared-event",
+            "event": "4",
+            "generation": "1",
+            "status": "ordered"
+          }
+        ],
+        "origin": "declared-event",
+        "eventStatus": "ordered",
+        "states": [
+          "tokens",
+          "cached"
+        ],
+        "perInvocation": {
+          "coefficients": [
+            "0",
+            "0"
+          ],
+          "constant": "1",
+          "kind": "observed-constant",
+          "dependent": [],
+          "samples": 10
+        },
+        "invocationsChecked": 10
+      }
+    ],
+    "warnings": [],
+    "sourceRoot": "/home/ubuntu/drperf/results/paper/waits/ditto-events",
+    "workload": "",
+    "waitCoverage": "observed",
+    "declaredEventsIncluded": true,
+    "eventChecks": {
+      "status": "ordered",
+      "probe": false,
+      "violations": 0,
+      "unverified": 0
+    },
+    "contract": "Solid edges are observed next-sibling order, not proof of a required dependency. Nesting is separate. Wait edges target completion inside a consumer, not its entry. Only regions are shown; cycles can summarize repeated invocations. Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. Sync-call counts do not establish time blocked. Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. Unmarked work between siblings is not assumed free. No critical-path latency is inferred."
+  },
+  "id": "a71964bbbbad6a17d42aeefd72a819987423b603de633aa837bcf2d5bf64f8ed"
+}

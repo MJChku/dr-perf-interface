@@ -1,0 +1,590 @@
+{
+  "deep": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "eligibleCredits": 1,
+      "unusedCredits": 0,
+      "nativeCalls": 5,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 1,
+          "uncovered": 0,
+          "nativeCalls": 5,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "retries": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 1,
+      "uncovered": 0,
+      "eligibleCredits": 1,
+      "unusedCredits": 0,
+      "nativeCalls": 10,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 1,
+          "uncovered": 0,
+          "nativeCalls": 10,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "two": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 2,
+          "uncovered": 0,
+          "nativeCalls": 2,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "missing": {
+    "order": "ordered",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 1,
+      "uncovered": 1,
+      "eligibleCredits": 1,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 1,
+          "uncovered": 1,
+          "nativeCalls": 2,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366225",
+              "thread": "3366225",
+              "invocation": 8,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 72,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "7457",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "early": {
+    "order": "ordered",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "eligibleCredits": 1,
+      "unusedCredits": 1,
+      "nativeCalls": 1,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 0,
+          "uncovered": 1,
+          "nativeCalls": 1,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366228",
+              "thread": "3366228",
+              "invocation": 6,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 72,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "7457",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "own": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "A",
+          "obligations": 1,
+          "covered": 1,
+          "uncovered": 0,
+          "nativeCalls": 1,
+          "examples": []
+        },
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 1,
+          "uncovered": 0,
+          "nativeCalls": 1,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "sibling": {
+    "order": "ordered",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "eligibleCredits": 1,
+      "unusedCredits": 1,
+      "nativeCalls": 1,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 0,
+          "uncovered": 1,
+          "nativeCalls": 1,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366262",
+              "thread": "3366262",
+              "invocation": 6,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 70,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "7457",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "none": {
+    "order": "ordered",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 0,
+      "uncovered": 2,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 0,
+          "uncovered": 2,
+          "nativeCalls": 2,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366281",
+              "thread": "3366281",
+              "invocation": 6,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 70,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "7457",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "B",
+              "group": "0:3366281",
+              "thread": "3366281",
+              "invocation": 8,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 72,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "7457",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "shared": {
+    "order": "violation",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 0,
+      "uncovered": 2,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 0,
+          "uncovered": 2,
+          "nativeCalls": 2,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366285",
+              "thread": "3366285",
+              "invocation": 6,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 70,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "5725",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            },
+            {
+              "region": "B",
+              "group": "0:3366285",
+              "thread": "3366285",
+              "invocation": 12,
+              "nativeCalls": 1,
+              "apis": {
+                "sem_wait": 1
+              },
+              "ready": 140,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "sem_wait",
+                  "module": "coverage",
+                  "offset": "5725",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "relocated": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 2,
+          "uncovered": 0,
+          "nativeCalls": 2,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "parallel": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 2,
+          "uncovered": 0,
+          "nativeCalls": 2,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "branch": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 3,
+      "covered": 3,
+      "uncovered": 0,
+      "eligibleCredits": 3,
+      "unusedCredits": 0,
+      "nativeCalls": 12,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 3,
+          "covered": 3,
+          "uncovered": 0,
+          "nativeCalls": 12,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "uncontended": {
+    "order": "ordered",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 1,
+      "regions": [
+        {
+          "region": "A",
+          "obligations": 1,
+          "covered": 0,
+          "uncovered": 1,
+          "nativeCalls": 1,
+          "examples": [
+            {
+              "region": "A",
+              "group": "0:3366300",
+              "thread": "3366300",
+              "invocation": 3,
+              "nativeCalls": 1,
+              "apis": {
+                "pthread_mutex_lock": 1
+              },
+              "ready": 2,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "coverage",
+                  "offset": "5404",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "null_shared": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 2,
+          "uncovered": 0,
+          "nativeCalls": 2,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "null_parent": {
+    "order": "ordered",
+    "coverage": {
+      "status": "covered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 2,
+      "covered": 2,
+      "uncovered": 0,
+      "eligibleCredits": 2,
+      "unusedCredits": 0,
+      "nativeCalls": 2,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 2,
+          "covered": 2,
+          "uncovered": 0,
+          "nativeCalls": 2,
+          "examples": []
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  },
+  "child_publisher": {
+    "order": "violation",
+    "coverage": {
+      "status": "uncovered",
+      "unit": "region invocations with directly observed synchronization",
+      "obligations": 1,
+      "covered": 0,
+      "uncovered": 1,
+      "eligibleCredits": 0,
+      "unusedCredits": 0,
+      "nativeCalls": 1,
+      "regions": [
+        {
+          "region": "B",
+          "obligations": 1,
+          "covered": 0,
+          "uncovered": 1,
+          "nativeCalls": 1,
+          "examples": [
+            {
+              "region": "B",
+              "group": "0:3366317",
+              "thread": "3366317",
+              "invocation": 4,
+              "nativeCalls": 1,
+              "apis": {
+                "pthread_mutex_lock": 1
+              },
+              "ready": 4,
+              "complete": true,
+              "callers": [
+                {
+                  "api": "pthread_mutex_lock",
+                  "module": "coverage",
+                  "offset": "4951",
+                  "calls": 1
+                }
+              ],
+              "otherCallerCalls": 0
+            }
+          ]
+        }
+      ],
+      "contract": "One obligation per synchronization-bearing invocation; child obligations remain separate. Credits follow completion and are never reused or banked. Coverage allocations are accounting witnesses, not native producer matches."
+    }
+  }
+}

@@ -1,0 +1,278 @@
+{
+  "schema": "causal-video-partial-screening-v1",
+  "sources": {
+    "summary": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-partial-fixed-report-full/summary.json",
+      "sha256": "266c7d82424a2f4ad1f1f306b10e827c2e6c3926296a3ce6b45f023a1f89da5f"
+    },
+    "cpu_attribution": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-partial-fixed-report-full/cpu-attribution.json",
+      "sha256": "e8617940c88de75b4cbfb420498474d8842305bc3bea9bb5d838b17442ed9c4b"
+    },
+    "trace": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-partial-fixed-report-full/trace.json.gz",
+      "size_bytes": 13208051
+    },
+    "result": {
+      "path": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/result.json",
+      "sha256": "6458f261f3b8bd27e7916e01407710ed6b2dd945558a9244cb0f2b879c5d5cde"
+    }
+  },
+  "run_passed": true,
+  "model": "optimistic-dependency-timeline",
+  "guaranteed_hardware_lower_bound": false,
+  "interval_evidence_available": true,
+  "capture": {
+    "virtual_ns": 12267739286.456055,
+    "cpu_work_ns_sum_threads": 4728275459.102051,
+    "gpu_busy_by_device": {
+      "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:gpu:0": {
+        "busy_ns": 11915589228.0,
+        "idle_ns": 352150058.4560547,
+        "busy_fraction": 0.9712946248503309
+      }
+    },
+    "prediction": {
+      "hits": 106449,
+      "misses": 168,
+      "errors": 0,
+      "disabled": 0,
+      "coverage_hits_over_hits_plus_misses": 0.9984242662989955
+    },
+    "cpu_sampling": {
+      "segments": 109627,
+      "sampled_segments": 0,
+      "sampled_cpu_ns": 0.0,
+      "unattributed_cpu_ns": 4728275459.102051,
+      "sampled_cpu_fraction": 0.0,
+      "samples_used": 0,
+      "resolved_samples": 0,
+      "unresolved_symbol_samples": 0,
+      "low_sample_segments": 0,
+      "native_ipc_profile_coverage_logs": [
+        {
+          "log": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/gx-inferix-partial-fixed-18d5f859a0fff05a-0.log",
+          "instruction_samples": "14390",
+          "unresolved_instruction_samples": "6684",
+          "task_samples": "6539",
+          "unresolved_task_samples": "9",
+          "covered": "14350",
+          "coverage": "99.722%",
+          "page_min": "4",
+          "module_min": "32",
+          "fallback_ns_per_instruction": "0.310714625",
+          "cost_scale_ppm": "1000000"
+        }
+      ]
+    }
+  },
+  "iterations": [
+    {
+      "record": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl",
+      "iteration": 1,
+      "start_ns": 16700.162841796875,
+      "end_ns": 12267739286.456055,
+      "virtual_ns": 12267722586.293213,
+      "cpu_work_ns": 4728258758.939209,
+      "gpu_work_ns": 11915589228.0,
+      "gpu_devices": {
+        "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:gpu:0": {
+          "busy_ns": 11915589227.999502,
+          "idle_ns": 352133358.2937107,
+          "busy_fraction": 0.9712959470825374
+        }
+      },
+      "largest_cpu_segments_before_gpu_submission": [
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 41235164.006103516,
+          "duration_ns": 6677441.476074219,
+          "within_iteration_ns": 6677441.476074219,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 6677441.476074219,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "MEMCPY",
+          "start_ns": 928892.7268066406,
+          "duration_ns": 3076607.7658691406,
+          "within_iteration_ns": 3076607.7658691406,
+          "name": "CPU work before memory-copy submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 3076607.7658691406,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 8933559978.026611,
+          "duration_ns": 1702854.9794921875,
+          "within_iteration_ns": 1702854.9794921875,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1702854.9794921875,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 4620357654.407471,
+          "duration_ns": 1676467.9091796875,
+          "within_iteration_ns": 1676467.9091796875,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1676467.9091796875,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 2170494109.236084,
+          "duration_ns": 1674219.1494140625,
+          "within_iteration_ns": 1674219.1494140625,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1674219.1494140625,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 3395403708.7333984,
+          "duration_ns": 1673783.4165039062,
+          "within_iteration_ns": 1673783.4165039062,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1673783.4165039062,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 945502542.2165527,
+          "duration_ns": 1672754.7841796875,
+          "within_iteration_ns": 1672754.7841796875,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1672754.7841796875,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 7069890888.195068,
+          "duration_ns": 1670798.7158203125,
+          "within_iteration_ns": 1670798.7158203125,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1670798.7158203125,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 5845008742.129883,
+          "duration_ns": 1670520.822265625,
+          "within_iteration_ns": 1670520.822265625,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1670520.822265625,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        },
+        {
+          "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-partial-fixed-1789609490786545754/host-0/d0/timeline/rank-unknown-pid-298.jsonl:cpu:298",
+          "boundary": "COMPUTE",
+          "start_ns": 8293586511.174316,
+          "duration_ns": 1667500.2424316406,
+          "within_iteration_ns": 1667500.2424316406,
+          "name": "CPU work before compute submission",
+          "samples": 0,
+          "estimated_function_breakdown": [
+            {
+              "library": "[unattributed]",
+              "function": "[no samples]",
+              "estimated_ns": 1667500.2424316406,
+              "percent": 100.0,
+              "samples": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Modeled interval CPU work sums overlapping threads; it is not critical-path CPU time.",
+    "Modeled GPU idle is not evidence by itself of a CPU bottleneck.",
+    "Partial synchronization omits arbitrary CPU mutex, shared-memory and thread-creation dependencies.",
+    "Prediction misses and unmodeled copies, memsets and callbacks have zero modeled service cost.",
+    "NCCL rendezvous is launch-granular; independent communication contention is omitted.",
+    "CPU segment labels name the following interaction, not the exclusive cost of that API.",
+    "Prediction and CPU sampling counts are for the whole capture, not individual iterations."
+  ]
+}

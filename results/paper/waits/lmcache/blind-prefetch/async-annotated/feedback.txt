@@ -1,0 +1,11 @@
+declared event order: ordered
+annotation coverage: 12/1302 wait obligations
+  lmc.prefetch.consume_b: I[need_b == 1] * Wait[lmc.disk.read_b] [checked]
+  lmc.prefetch.admit_b: I[needs_a_release == 1] * Wait[lmc.prefetch.release_a] [checked]
+  asyncio.Event.wait: unexplained(Wait[?]) (1 observations)
+  asyncio.Lock.acquire: unexplained(Wait[?]) (6 observations)
+  asyncio.Queue.get: unexplained(Wait[?]) (12 observations)
+  asyncio.Queue.put: unexplained(Wait[?]) (16 observations)
+  lmc.disk.read_a: unexplained(Wait[?]) (1089 observations)
+  lmc.disk.read_b: unexplained(Wait[?]) (108 observations)
+  lmc.prefetch.consume_b: unexplained(Wait[?]) (58 observations)

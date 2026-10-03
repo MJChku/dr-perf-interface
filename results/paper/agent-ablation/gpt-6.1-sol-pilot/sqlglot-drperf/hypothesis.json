@@ -1,0 +1,46 @@
+{
+  "claims": [
+    {
+      "id": "merge-outer-column-volume",
+      "region": "source/sqlglot/optimizer/merge_subqueries.py:_merge_expressions (line 416)",
+      "expression": "C + I + D, where C=count of entry columns in outer_scope, I=len(inner_scope.expression.selects), D=sum(max(R[p.alias_or_name]-1,0)*nodes(p.unalias()) for p in inner_scope.expression.selects), and R counts outer references to alias/projection name",
+      "evidence": "The function scans all outer_scope.columns, indexes matching references, then traverses inner projections and copies each projection for all but its final reference. Round 1 observes n calls (4..32) and cumulative time 0.00242,0.00905,0.01991,0.03691,0.07721,0.13329 seconds. Round 2 own mean instructions rise from 413564 at P=8 to 2032850 at P=64. Scope collection is a separate child cost.",
+      "scope": "Trivial two-column inner projections in this workload; wrapping, numeric GROUP BY and alias renaming paths are untested."
+    },
+    {
+      "id": "repeated-merge-outer-volume",
+      "region": "source/sqlglot/optimizer/merge_subqueries.py:merge_ctes singular selection loop (line 114)",
+      "expression": "M*(P+J) and M*(M-1)//2, where M=len(singular_cte_selections), P=len(outer_scope.expression.selects), J=len(outer_scope.expression.args.get(\"joins\", [])) for the shared outer scope",
+      "evidence": "For this workload M=n, P=2*n, J=n-1. Each successful merge clears outer_scope caches; the next _mergeable reads pivots/references and _merge_expressions reads columns, triggering scope recollection. Round 2 sees exactly n mergeable and n merge_expressions calls, with 2*n-1 collector child calls across those helpers. Round 1 merge_ctes times scale approximately quadratically (0.00461s at 4, 0.06643s at 16, 0.24658s at 32). Round 3 confirms n helper calls through n=96.",
+      "uncertainty": "A family-specific aggregate model, not a model for arbitrary rejected/nested/complex CTEs. P and J are correlated under the allowed single-input envelope."
+    },
+    {
+      "id": "scope-structural-volume",
+      "region": "source/sqlglot/optimizer/scope.py:Scope._collect",
+      "expression": "N_scope = count of entry AST nodes stopping at child scope boundaries; A_scope=sum(len(node.args) for these nodes); collectible/Column/CTE node counts refine branch work",
+      "evidence": "_collect walks and classifies these nodes. Round 2 root projection/join/CTE counts left 92% block-level own residual; round 3 structural features reduce that to 59% across 489 states and 2124 calls. A separate weighted least-squares fit of saved per-state mean instruction costs on N_scope and A_scope has R2=0.999938. This supports state-mean affine volume dependence without claiming every basic block is explained.",
+      "uncertainty": "Node kinds and arguments are correlated; coefficients are not independently identified. Large block-level residual remains. Counting preparation for round 3 is outside this region and adds observation work to its parents."
+    },
+    {
+      "id": "cte-removal-suffix",
+      "region": "source/sqlglot/optimizer/merge_subqueries.py:_pop_cte and source/sqlglot/expressions/core.py:Expression.set(index, value=None)",
+      "expression": "len(cte.parent.expressions)-cte.index-1 per removal; for first-to-last removal of M CTEs, sum=M*(M-1)//2",
+      "evidence": "_pop_cte calls cte.pop(). Expression.set pops the list element and loops over expressions[index:] adjusting each remaining index. The entry list suffix is the direct semantic dependency, even though this component was not marked separately.",
+      "uncertainty": "Source-supported component only; no isolated instruction coefficient measured."
+    },
+    {
+      "id": "join-reference-fanout",
+      "region": "source/sqlglot/optimizer/optimize_joins.py:references construction",
+      "expression": "sum(d_t*(d_t-1)//2 for each referenced table t), plus total ON-predicate AST volume, where d_t=count of joins whose ON mentions t excluding that join alias",
+      "evidence": "references[table] = references.get(table, []) + [join] copies the prior list on every append. Star-query fanout d_t0=n-1. Measured rule.optimize_joins instructions are nevertheless dominated by a linear term through n=96 (1.57M at 2,82.08M at 96; 7% own residual), so fanout copying is a smaller source-established component.",
+      "uncertainty": "Fanout and join count cannot be varied independently in the authorized input envelope; quadratic component is not separately validated."
+    },
+    {
+      "id": "identifier-tree-volume",
+      "region": "source/sqlglot/optimizer/qualify_columns.py:quote_identifiers",
+      "expression": "count(entry AST nodes) and count(entry Identifier nodes)",
+      "evidence": "One expression.walk traverses all nodes; only Identifiers receive dialect.quote_identifier. Round 3 quote_identifiers instruction means grow approximately linearly with the workload AST (0.409M at n=2, 8.275M at n=40,19.748M at n=96); join-squared coefficient rounds to zero.",
+      "uncertainty": "Node and identifier counts were not varied independently; branch modes/dialects are fixed."
+    }
+  ]
+}

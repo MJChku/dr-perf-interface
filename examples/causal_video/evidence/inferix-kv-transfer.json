@@ -1,0 +1,633 @@
+{
+  "schema": "inferix-kv-transfer-v1",
+  "baseline_run": "/home/ubuntu/GX/NEX/build/experiments/inferix-copy-cudnn-1789639536204396324",
+  "candidate_run": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540",
+  "kv_offload_enabled_in_both": true,
+  "new_gpu_run": true,
+  "native_candidate_validated": true,
+  "baseline_virtual_seconds": 38.418028992430735,
+  "candidate_virtual_seconds": 22.307320213296876,
+  "virtual_time_reduction_fraction": 0.4193528195397024,
+  "modeled_speedup": 1.7222162332851902,
+  "baseline_copies": {
+    "nodes": 17105,
+    "missing_metadata": 0,
+    "unmodeled_host_link": 0,
+    "host_service_ns_sum": 25584499783.38413,
+    "counts_h2h_h2d_d2h_d2d": [
+      0,
+      5333,
+      2167,
+      9605
+    ],
+    "bytes_h2h_h2d_d2h_d2d": [
+      0,
+      211435745184,
+      121162752000,
+      512578119680
+    ]
+  },
+  "candidate_copies": {
+    "nodes": 17855,
+    "missing_metadata": 0,
+    "unmodeled_host_link": 0,
+    "host_service_ns_sum": 9327475783.382826,
+    "counts_h2h_h2d_d2h_d2d": [
+      0,
+      6083,
+      2167,
+      9605
+    ],
+    "bytes_h2h_h2d_d2h_d2d": [
+      0,
+      90669281184,
+      30587904000,
+      512578119680
+    ]
+  },
+  "candidate_iteration": {
+    "record": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl",
+    "iteration": 1,
+    "start_ns": 16821.66357421875,
+    "end_ns": 22307337034.96045,
+    "virtual_ns": 22307320213.296875,
+    "cpu_work_ns": 4825387273.046387,
+    "gpu_work_ns": 22011799147.993546,
+    "gpu_devices": {
+      "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:gpu:0": {
+        "busy_ns": 22011799147.992012,
+        "idle_ns": 295521065.304863,
+        "busy_fraction": 0.9867522829959329
+      }
+    },
+    "largest_cpu_segments_before_gpu_submission": [
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "COMPUTE",
+        "start_ns": 40916443.40872881,
+        "duration_ns": 6681825.82421875,
+        "within_iteration_ns": 6681825.82421875,
+        "name": "CPU work before compute submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 6681825.82421875,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 934085.1276855469,
+        "duration_ns": 3082783.5876464844,
+        "within_iteration_ns": 3082783.5876464844,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 3082783.5876464844,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "COMPUTE",
+        "start_ns": 18621632584.5916,
+        "duration_ns": 1632284.7229003906,
+        "within_iteration_ns": 1632284.7229003906,
+        "name": "CPU work before compute submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1632284.7229003906,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 18892443028.425583,
+        "duration_ns": 1628534.9035644531,
+        "within_iteration_ns": 1628534.9035644531,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1628534.9035644531,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 5662062689.799358,
+        "duration_ns": 1628158.6652832031,
+        "within_iteration_ns": 1628158.6652832031,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1628158.6652832031,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 14598624129.740412,
+        "duration_ns": 1625554.0483398438,
+        "within_iteration_ns": 1625554.0483398438,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1625554.0483398438,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 3346767695.3906255,
+        "duration_ns": 1625019.9230957031,
+        "within_iteration_ns": 1625019.9230957031,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1625019.9230957031,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 1363211407.6756446,
+        "duration_ns": 1624719.4208984375,
+        "within_iteration_ns": 1624719.4208984375,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1624719.4208984375,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 8309124857.381128,
+        "duration_ns": 1624039.9714355469,
+        "within_iteration_ns": 1624039.9714355469,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1624039.9714355469,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      },
+      {
+        "record_lane": "/home/ubuntu/GX/NEX/build/experiments/inferix-kv-transfer-1789644983222209540/host-0/d0/timeline/rank-unknown-pid-309.jsonl:cpu:309",
+        "boundary": "MEMCPY",
+        "start_ns": 11288001270.02598,
+        "duration_ns": 1623826.9404296875,
+        "within_iteration_ns": 1623826.9404296875,
+        "name": "CPU work before memory-copy submission",
+        "samples": 0,
+        "estimated_function_breakdown": [
+          {
+            "library": "[unattributed]",
+            "function": "[no samples]",
+            "estimated_ns": 1623826.9404296875,
+            "percent": 100.0,
+            "samples": 0
+          }
+        ]
+      }
+    ]
+  },
+  "candidate_prediction": {
+    "prediction_hits": 106575,
+    "prediction_misses": 42,
+    "prediction_errors": 0
+  },
+  "audit": {
+    "observable_inventory_matches": false,
+    "native_launches": 106617,
+    "gx_launches": 106617,
+    "config_differences": [
+      "GX trace clock does not identify the expected mixed clock"
+    ],
+    "source_changes": {
+      "inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py": {
+        "native": "07df3f8f2aeb8d9e76d0afeb16debcf198402a2701ebbdd64080c4db96af49bf",
+        "gx": "c16ab9516b63bdf9a2a2ac60d0a6fb506816b6694b65d55a9472ec8fcbb6f334"
+      },
+      "inferix/models/self_forcing/causal_model.py": {
+        "native": "6ea994efae297f6d2fb1494e5b8a7597a1167c461e550388ab6ec9d9c44ee7fa",
+        "gx": "985d444b9cb706d2bf4d0b81d37931b499fe6a1aa3e61ffb17308853f388f86c"
+      }
+    },
+    "missing": [
+      {
+        "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+        "grid": [
+          1946630720,
+          1,
+          1
+        ],
+        "block": [
+          416,
+          1,
+          1
+        ],
+        "count": 42
+      }
+    ],
+    "count_differences": [
+      {
+        "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+        "grid": [
+          216,
+          1,
+          1
+        ],
+        "block": [
+          1024,
+          1,
+          1
+        ],
+        "count": 0,
+        "native_count": 42
+      },
+      {
+        "name": "_Z22tensorTransformGenericI13__nv_bfloat16S0_fLb1ELb0ELb0EL21cudnnKernelDataType_t0EEv26cudnnTensorTransformStruct21tensorTransformParamsimPKT_PT0_T1_S9_",
+        "grid": [
+          1946630720,
+          1,
+          1
+        ],
+        "block": [
+          416,
+          1,
+          1
+        ],
+        "count": 42,
+        "native_count": 0
+      }
+    ]
+  },
+  "cpu_validation": {
+    "result": "pass",
+    "torch_version": "2.11.0+cu130",
+    "device": "cpu",
+    "reference": "/home/ubuntu/drperf/out/causal-video/Inferix-metadata",
+    "candidate": "/home/ubuntu/drperf/out/causal-video/Inferix-kvtransfer",
+    "paired_steps": 144,
+    "request_calls": 288,
+    "total_original_read_tokens": 3168,
+    "total_candidate_read_tokens": 2152,
+    "total_original_write_tokens": 1624,
+    "total_candidate_write_tokens": 1144,
+    "scenarios": [
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 0,
+        "parallel_config": "none",
+        "offload": true,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 44,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 52,
+        "poisoned_scratch_allocations": 18
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 0,
+        "parallel_config": "none",
+        "offload": false,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 108,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 72,
+        "poisoned_scratch_allocations": 0
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 0,
+        "parallel_config": "world_size_1",
+        "offload": true,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 44,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 52,
+        "poisoned_scratch_allocations": 18
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 0,
+        "parallel_config": "world_size_1",
+        "offload": false,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 108,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 72,
+        "poisoned_scratch_allocations": 0
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 1,
+        "parallel_config": "none",
+        "offload": true,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 44,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 48,
+        "poisoned_scratch_allocations": 18
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 1,
+        "parallel_config": "none",
+        "offload": false,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 108,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 72,
+        "poisoned_scratch_allocations": 0
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 1,
+        "parallel_config": "world_size_1",
+        "offload": true,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 44,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 48,
+        "poisoned_scratch_allocations": 18
+      },
+      {
+        "scenario": "window",
+        "capacity_tokens": 6,
+        "local_attn_size": 6,
+        "sink_tokens": 1,
+        "parallel_config": "world_size_1",
+        "offload": false,
+        "paired_steps": 9,
+        "request_calls": 18,
+        "original_read_tokens": 108,
+        "candidate_read_tokens": 108,
+        "original_write_tokens": 72,
+        "candidate_write_tokens": 72,
+        "poisoned_scratch_allocations": 0
+      },
+      {
+        "scenario": "global",
+        "capacity_tokens": 16,
+        "local_attn_size": -1,
+        "sink_tokens": 0,
+        "parallel_config": "none",
+        "offload": true,
+        "paired_steps": 18,
+        "request_calls": 36,
+        "original_read_tokens": 576,
+        "candidate_read_tokens": 196,
+        "original_write_tokens": 262,
+        "candidate_write_tokens": 66,
+        "poisoned_scratch_allocations": 36
+      },
+      {
+        "scenario": "global",
+        "capacity_tokens": 16,
+        "local_attn_size": -1,
+        "sink_tokens": 0,
+        "parallel_config": "none",
+        "offload": false,
+        "paired_steps": 18,
+        "request_calls": 36,
+        "original_read_tokens": 576,
+        "candidate_read_tokens": 576,
+        "original_write_tokens": 262,
+        "candidate_write_tokens": 262,
+        "poisoned_scratch_allocations": 0
+      },
+      {
+        "scenario": "global",
+        "capacity_tokens": 16,
+        "local_attn_size": -1,
+        "sink_tokens": 0,
+        "parallel_config": "world_size_1",
+        "offload": true,
+        "paired_steps": 18,
+        "request_calls": 36,
+        "original_read_tokens": 576,
+        "candidate_read_tokens": 196,
+        "original_write_tokens": 262,
+        "candidate_write_tokens": 66,
+        "poisoned_scratch_allocations": 36
+      },
+      {
+        "scenario": "global",
+        "capacity_tokens": 16,
+        "local_attn_size": -1,
+        "sink_tokens": 0,
+        "parallel_config": "world_size_1",
+        "offload": false,
+        "paired_steps": 18,
+        "request_calls": 36,
+        "original_read_tokens": 576,
+        "candidate_read_tokens": 576,
+        "original_write_tokens": 262,
+        "candidate_write_tokens": 262,
+        "poisoned_scratch_allocations": 0
+      }
+    ],
+    "scope": "AST-extracted attention/block and KV wrapper methods; mocked projections and RoPE; dense CPU attention and CPU backing; exact output and active-cache comparison",
+    "limitations": "No CUDA transfer timing, GPU kernels, or distributed world_size>1 execution"
+  },
+  "recovery": {
+    "application": {
+      "container": "gx-inferix-kv-transfer-18d618a15b050c04-0",
+      "returncode": 0,
+      "host_seconds": 310.318084168
+    },
+    "controller_completed_normally": false,
+    "controller_failure": "disk full collecting artifacts and writing result.json",
+    "artifacts_recovered": true,
+    "recovery_method": "rsync checksum copy of completed remote run, then independent remote/local SHA-256 and size verification of model report, dependency capture, kernel trace, and application result",
+    "container_state": "exited",
+    "remote_artifact_hashes": {
+      "d0/timeline/rank-unknown-pid-309.jsonl": {
+        "sha256": "9dd1d57b21bda7afce6a834b3dababdd63304d45aff9b28c10b14a6aea102924",
+        "bytes": 76592548
+      },
+      "kernel_profile_gx/chrome_trace_309.json": {
+        "sha256": "265a1e183df1c6c679502af0c3bf49bc859773f4c36b7d194a2944c0e09cfb88",
+        "bytes": 163946743
+      },
+      "model/report.json": {
+        "sha256": "400fece0046634e9914469ac671bdd2f8cb410b7b91b693b3fd090f66805dec8",
+        "bytes": 23518
+      },
+      "gx-inferix-kv-transfer-18d618a15b050c04-0.result.json": {
+        "sha256": "00998eaacbe06e0cd00df01d460f755a4193d95ae30318e5184e33f3cbe26604",
+        "bytes": 106
+      }
+    }
+  },
+  "artifacts": {
+    "config": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/config.json",
+      "sha256": "a093802cb5195a667752b383424e27e173b712497a74f592b7a361cd746b2e87"
+    },
+    "summary": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/report/summary.json",
+      "sha256": "7ccd274e78a7c0af9dc42dfdb436783d688f3434f8e25b8978151432380c64d5"
+    },
+    "screen": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/screen.json",
+      "sha256": "c6eef2d7253d4f4aaffac98dbacb452d5ad7bc0dbc2887109ba9f40f41a50084"
+    },
+    "kernel_audit": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/kernel-audit.json",
+      "sha256": "c34f0c97c5e3250ec7ed38be0e36ad086b62ee687463a2f07b183d3ab6a35c6d"
+    },
+    "cpu_validation": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/cpu-validation.json",
+      "sha256": "a06432e9bb9ac9d7bb46377f7426582a386b7e5b00819b70792054d1088cf078"
+    },
+    "recovery": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-kv-transfer/recovery.json",
+      "sha256": "3fab11beff3aed9c2f528bb2b846d9702be76b5c1a55308c048a05a7d26e9877"
+    },
+    "patch": {
+      "path": "/home/ubuntu/drperf/examples/causal_video/cpu_patches/inferix_kv_transfer.patch",
+      "sha256": "c7e11827a44b747406d62b69f470f57c2be8df304dff3bf74271d5f7e03434a5"
+    },
+    "applicator": {
+      "path": "/home/ubuntu/drperf/examples/causal_video/inferix_kv_transfer.py",
+      "sha256": "3d34d560cac5fd7343fc6df74b0d2ad571cece17aa083ca91299ddbc9197826b"
+    },
+    "validation_script": {
+      "path": "/home/ubuntu/drperf/examples/causal_video/validate_inferix_kv.py",
+      "sha256": "594cd5792280698f2c66aa0eace655ff8f9c7557a9e5b0d1b70a5e5f4052e2cc"
+    }
+  },
+  "runtime": {
+    "path": "/home/ubuntu/.cache/bazel/_bazel_ubuntu/bee29e726153c0fa4c0d6666b7a6db50/execroot/_main/bazel-out/k8-opt/bin/src/sims/gpu/gx_cuda.so",
+    "sha256": "8aaefd86c8ba11d64b3265e8d85c82e017e286d3acf7cfde7584a80fb0d08bcd"
+  },
+  "profile_databases": {
+    "gpu_db": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-gpu-fresh/inferix-gpu-baseline-fresh-20260917.pid4371.sqlite",
+      "sha256": "2fa3a69b417d79f1cac69f53eb91459c90385785aaf5decbd64f1b46311f1416"
+    },
+    "cpu_db": {
+      "path": "/home/ubuntu/drperf/out/causal-video/inferix-cpu21/merged.db",
+      "sha256": "89d0a68ca442bcbb768e949fcd5a5d1cf0db27c23eec4e22a1f6b4d7a22201a3"
+    }
+  },
+  "same_runtime_config_profiles_workload_except_candidate_tree": true,
+  "native_validation": {
+    "schema": "inferix-kv-native-v1",
+    "hardware": "NVIDIA A100-PCIE-40GB, GPU1",
+    "date": "2026-09-17",
+    "repetitions_per_variant": 3,
+    "warmup_latent_frames": 21,
+    "before_seconds": [
+      41.225256003,
+      41.278679535,
+      41.298210403
+    ],
+    "after_seconds": [
+      25.217425132,
+      25.292466142,
+      25.327277117
+    ],
+    "before_median_seconds": 41.278679535,
+    "after_median_seconds": 25.292466142,
+    "speedup": 1.6320543557614464,
+    "latency_reduction_fraction": 0.38727530950803224,
+    "before_peak_allocated_bytes": 24858716160,
+    "after_peak_allocated_bytes": 24857970688,
+    "before_peak_reserved_bytes": 26891780096,
+    "after_peak_reserved_bytes": 27468496896,
+    "kv_offload_enabled_in_both": true,
+    "saved_video_exact": true,
+    "output_shape": [
+      1,
+      63,
+      480,
+      832,
+      3
+    ],
+    "scope": "One prompt/seed/resolution/21-latent-frame segment; three timed generations after full-size warmup; CPU metadata adaptation common to both; no instrumentation. Eviction covered by CPU regression, distributed execution untested."
+  },
+  "gx_evaluation_required_new_gpu_run": false
+}
