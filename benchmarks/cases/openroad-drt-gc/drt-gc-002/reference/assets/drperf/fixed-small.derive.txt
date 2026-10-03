@@ -1,0 +1,30 @@
+derive drt-gc-002   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vR=0,vF=0,layers=0,nlogn=0 x72, vR=112,vF=32,layers=4,nlogn=222 x8, vR=112,vF=64,layers=4,nlogn=262 x8, vR=112,vF=128,layers=4,nlogn=358 x8, vR=224,vF=32,layers=4,nlogn=516 x8, vR=224,vF=64,layers=4,nlogn=556 x8, vR=224,vF=128,layers=4,nlogn=652 x8, vR=448,vF=32,layers=4,nlogn=1,200 x8, vR=448,vF=64,layers=4,nlogn=1,240 x8, vR=448,vF=128,layers=4,nlogn=1,336 x8
+  cost(vR, vF, layers, nlogn) = 4,110.3*vR + 2,095.7*vF + -670*layers + 131.8*nlogn + 19,059.6        [all vR, vF, layers, nlogn]   blocks: 2008 affine, 282 constant, 5 irregular (0.3% of cost)
+    irregular blocks, per call: 0 .. 4,728
+    per-vR coefficient by function:
+               586.1  __GI___libc_malloc  [libc.so.6]
+               501.9  _int_free  [libc.so.6]
+                 415  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+               288.6  __free  [libc.so.6]
+    per-vF coefficient by function:
+               390.7  __GI___libc_malloc  [libc.so.6]
+               250.3  _int_free  [libc.so.6]
+               173.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+               172.2  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+    per-layers coefficient by function:
+            -1,737.2  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+            -1,041.1  std::__introsort_loop<>  [gcbench]
+               414.4  std::__insertion_sort<>  [gcbench]
+               352.6  boost::polygon::polygon_formation::ScanLineToPolygonItrs<>::processEdg  [gcbench]
+    per-nlogn coefficient by function:
+                35.8  std::__introsort_loop<>  [gcbench]
+                27.2  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+                21.7  std::_Rb_tree<>::_M_insert_unique<>  [gcbench]
+                  21  boost::polygon::polygon_formation::ScanLineToPolygonItrs<>::processEdg  [gcbench]
+    constant by function:
+             4,480.8  drt::FlexGCWorker::initNet  [gcbench]
+             2,264.9  boost::polygon::get_polygons<>  [gcbench]
+             1,887.6  __GI___libc_malloc  [libc.so.6]
+             1,496.8  drt::FlexGCWorker::initNet_pins_maxRectangles  [gcbench]
+

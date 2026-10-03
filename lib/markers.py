@@ -17,7 +17,7 @@ def is_marker(symbol):
     module = Path(module).name
     return (module == 'libperfmark.so' or module.startswith('libperfmark.so.') or
             module == '_perfmark.so' or module.startswith('_perfmark.') and module.endswith('.so') or
-            name in ('perfmark_begin', 'perfmark_begin_v', 'perfmark_end', 'perfmark_state', 'perfmark_event_publish', 'perfmark_event_waited'))
+            name in ('perfmark_begin', 'perfmark_begin_v', 'perfmark_end', 'perfmark_state', 'perfmark_event_publish', 'perfmark_event_waited', 'perfmark_wait', 'perfmark_wait_null', 'perfmark_release'))
 
 
 def _run(key):

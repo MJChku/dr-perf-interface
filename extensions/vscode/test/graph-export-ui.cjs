@@ -82,6 +82,19 @@ const afterScroll=await page.locator('.execution-canvas').evaluate(e=>({x:e.scro
     await page.locator('.execution-graph[aria-busy="false"] .execution-svg').waitFor({timeout:60000});
     assert.equal(await page.evaluate(()=>new Set([...document.querySelectorAll('.execution-node')].map(n=>n.dataset.region)).size),report.regions.length);
     assert.equal(await page.locator('.execution-edge.wait').evaluateAll(es=>es.filter(e=>e.dataset.source===e.dataset.target).length),0);
+    assert.equal(await page.locator('.execution-edge.wait').evaluateAll(es=>es.filter(e=>!e.dataset.eventStatus).length),0,
+      'native API matches must not become wait edges during expansion');
+    const wait=page.locator('.execution-edge.wait').first();
+    if(await wait.count()) {
+      const [source,target]=await wait.evaluate(e=>[e.dataset.sourcePath,e.dataset.targetPath]);
+      for(const key of [source,target]) {
+        await page.locator('.execution-node').evaluateAll((nodes,key)=>
+          nodes.find(n=>n.dataset.path===key).dispatchEvent(new MouseEvent('click',{bubbles:true})),key);
+        await page.waitForFunction(([source,target])=>[source,target].every(key=>
+          [...document.querySelectorAll('.execution-node.wait-connected')].some(n=>n.dataset.path===key)),[source,target]);
+        assert.ok(await page.locator('.execution-edge.wait-highlighted').count()>0);
+      }
+    }
     // Real pointer clicks on box padding select the cell, not just its name.
     const leaf=page.locator('.execution-node').filter({hasNot:page.locator('.execution-toggle')}).last();
     const key=await leaf.getAttribute('data-path'),id=await leaf.getAttribute('data-region');

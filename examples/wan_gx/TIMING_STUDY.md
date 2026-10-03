@@ -169,7 +169,7 @@ The installed `/usr/local/bin/gxvm` on this system predates that subcommand.
 `audit_kernel_trace.py`, `analyze_timing_trace.py` and `report_timing.py` apply
 the inventory, clock, prediction, source-change and paired-input checks.
 
-Raw local results are under `out/wan-timing/`:
+Raw local results are under `results/paper/wan-timing/`:
 
 | Evidence | Directory | Managed run ID |
 | --- | --- | --- |

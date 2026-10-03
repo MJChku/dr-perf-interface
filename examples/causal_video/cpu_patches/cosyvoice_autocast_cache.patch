@@ -1,0 +1,11 @@
+--- a/cosyvoice/llm/llm.py
++++ b/cosyvoice/llm/llm.py
+@@ -548,7 +548,7 @@
+                 out_tokens.append(top_ids)
+                 lm_input = self.speech_embedding.weight[top_ids].reshape(1, 1, -1)
+ 
+-    @torch.inference_mode()
++    @torch.no_grad()
+     def inference_bistream(
+             self,
+             text: Generator,

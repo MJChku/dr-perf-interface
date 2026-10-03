@@ -20,7 +20,7 @@ modes for the paths the first round never entered:
 
 Under drperf (from /home/ubuntu/drperf-cases/videogen):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
         --max-slots 2097152 -o out/videogen_more --state hw=128,192,256 --state frames=5,9,17 \\
         -- /home/ubuntu/drperf-cases/videogen/.venv/bin/python run_more.py
 """

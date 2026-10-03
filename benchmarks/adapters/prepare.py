@@ -1,5 +1,6 @@
-"""Reviewed neutral exports for the first three pilot workloads."""
+"""Pinned neutral exports for paired discovery workloads."""
 import ast
+import hashlib
 import io
 import json
 import shutil
@@ -8,6 +9,14 @@ import tarfile
 from pathlib import Path
 
 SPECS = {
+    'libcst': {'repo': 'oss/libcst-src', 'revision': 'c029c17bf45a3737fc8d1347001ab2422f42ae58',
+               'package': 'libcst', 'extra_paths': ['native'], 'native_binaries': True,
+               'driver': 'oss/run_libcst.py', 'python': 'oss-venv/bin/python',
+               'defaults': [{'n_terms': n, 'shape': shape} for shape in (0, 2) for n in (16, 32, 64)]},
+    'comfyui': {'repo': 'comfy/ComfyUI', 'revision': '54e03f5367ebd8d96380e4cf02fa3084f7a7eca5',
+                'package': 'comfy_execution', 'extra_paths': ['comfy/comfy_types'],
+                'neutral_driver': 'comfyui.py', 'python': 'videogen/.venv/bin/python',
+                'defaults': [{'n': n, 'shape': shape} for shape in (0, 1) for n in (16, 32, 64)]},
     'sqlglot': {'repo': 'oss/sqlglot-src', 'revision': '2e86ded7d0f6474e9041882058358616fb911464',
                 'package': 'sqlglot', 'driver': 'oss/run_sqlglot.py',
                 'python': 'oss-venv/bin/python', 'defaults': [{'n_joins': n} for n in (4, 8, 12, 16, 24, 32)]},
@@ -25,7 +34,7 @@ SPECS = {
 
 
 class NeutralDriver(ast.NodeTransformer):
-    # Applied only to the three audited drivers above. This is not a generic
+    # Applied only to the explicitly listed historical drivers above. This is not a generic
     # leakage detector: archive drivers containing optimized variants need
     # separate review and adapters.
     def visit_Expr(self, node):
@@ -81,7 +90,8 @@ def prepare(case, destination, archive, drperf, condition, track='discovery'):
     repo, python = resolve(spec['repo']), resolve(spec['python'])
     if not python.exists():
         raise ValueError(f'missing environment: {python}')
-    data = subprocess.check_output(['git', '-C', str(repo), 'archive', spec['revision'], spec['package']])
+    data = subprocess.check_output(['git', '-C', str(repo), 'archive', spec['revision'],
+                                   spec['package'], *spec.get('extra_paths', [])])
     destination.mkdir(parents=True)
     source = destination/'source'
     source.mkdir()
@@ -92,14 +102,26 @@ def prepare(case, destination, archive, drperf, condition, track='discovery'):
         if proc.returncode == 0:
             (source/license_name).write_bytes(proc.stdout)
     package = source/spec['package']
-    if case == 'vllm_b':
-        for binary in (repo/'vllm').glob('*.so'):
+    binaries = {}
+    if case == 'vllm_b' or spec.get('native_binaries'):
+        available = list((repo/spec['package']).glob('*.so'))
+        if not available:
+            raise ValueError('missing native libraries for the pinned source; rebuild before preparation')
+        if spec.get('native_binaries'):
+            # A locally modified parser would invalidate the supposedly clean arm.
+            subprocess.run(['git', '-C', str(repo), 'diff', '--exit-code', spec['revision'],
+                            '--', spec['package'], *spec.get('extra_paths', [])], check=True)
+        for binary in available:
             shutil.copy2(binary, package/binary.name)
+            binaries[binary.name] = hashlib.sha256(binary.read_bytes()).hexdigest()
     # Use the checked-in evidence snapshot, not a mutable archived driver.
     benchmark = Path(__file__).resolve().parents[1]
-    raw = (benchmark/'cases'/case/'reference'/'assets'/spec['driver']).read_text()
-    tree = ast.fix_missing_locations(NeutralDriver().visit(ast.parse(raw)))
-    driver = ast.unparse(tree)+'\n'
+    if spec.get('neutral_driver'):
+        driver = (benchmark/'adapters'/spec['neutral_driver']).read_text()
+    else:
+        raw = (benchmark/'cases'/case/'reference'/'assets'/spec['driver']).read_text()
+        tree = ast.fix_missing_locations(NeutralDriver().visit(ast.parse(raw)))
+        driver = ast.unparse(tree)+'\n'
     if '/home/ubuntu/' in driver or 'perfmark.region' in driver:
         raise ValueError('driver still contains historical paths or solved markers')
     (destination/'workload.py').write_text(driver)
@@ -122,6 +144,7 @@ def states(**defaults):
     session = {'schema_version':1, 'case':case, 'condition':condition, 'track':track,
                'python':str(python.absolute()), 'workload':'workload.py', 'env':env,
                'source_revision':spec['revision'], 'round_budget':3, 'points_per_round':6,
+               'native_binary_sha256':binaries,
                'process_timeout_seconds':300,
                'note':'Supervisor configuration, not a filesystem security boundary.'}
     if track == 'small-to-large':

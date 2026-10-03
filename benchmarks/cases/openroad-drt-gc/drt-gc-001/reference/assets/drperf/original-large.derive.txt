@@ -1,0 +1,24 @@
+derive drt-gc-001   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vc=0,vm=0,scan=0,fcut=0 x144, vc=512,vm=12,scan=16,640,fcut=128 x12, vc=640,vm=12,scan=24,832,fcut=128 x12, vc=1,024,vm=12,scan=49,408,fcut=128 x12, vc=1,024,vm=12,scan=66,048,fcut=256 x12, vc=1,152,vm=12,scan=82,432,fcut=256 x12, vc=1,536,vm=12,scan=131,584,fcut=256 x12, vc=2,048,vm=12,scan=263,168,fcut=512 x12, vc=2,176,vm=12,scan=295,936,fcut=512 x12, vc=2,560,vm=12,scan=394,240,fcut=512 x12, vc=3,072,vm=12,scan=591,360,fcut=768 x12, vc=3,200,vm=12,scan=640,512,fcut=768 x12, vc=3,584,vm=12,scan=787,968,fcut=768 x12, vc=4,096,vm=12,scan=1,050,624,fcut=1,024 x12, vc=4,224,vm=12,scan=1,116,160,fcut=1,024 x12, vc=4,608,vm=12,scan=1,312,768,fcut=1,024 x12, vc=8,192,vm=12,scan=4,198,400,fcut=2,048 x12, vc=8,320,vm=12,scan=4,329,472,fcut=2,048 x12, vc=8,704,vm=12,scan=4,722,688,fcut=2,048 x12
+  cost(vc, vm, scan, fcut) = 370.2*vc + 2,128.8*vm + 5*scan + 7.1*fcut + 1,043.1        [all vc, vm, scan, fcut]   blocks: 511 affine, 99 constant, 0 irregular (0.0% of cost)
+    per-vc coefficient by function:
+               191.5  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+                89.3  __GI___libc_malloc  [libc.so.6]
+                  32  operator new  [libstdc++.so.6.0.33]
+                  27  _int_free  [libc.so.6]
+    per-vm coefficient by function:
+               352.5  __GI___libc_malloc  [libc.so.6]
+                 351  _int_free  [libc.so.6]
+               250.3  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+               201.5  __free  [libc.so.6]
+    per-scan coefficient by function:
+                   5  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+    per-fcut coefficient by function:
+                   7  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+              0.0213  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+    constant by function:
+                 664  drt::FlexGCWorker::init  [gcbench]
+               167.1  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+                  54  _int_free  [libc.so.6]
+                  45  __GI___libc_malloc  [libc.so.6]
+

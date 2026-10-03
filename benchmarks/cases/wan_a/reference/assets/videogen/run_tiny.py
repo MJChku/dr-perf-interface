@@ -14,12 +14,12 @@ script puts wan-src first on sys.path itself, so the editable checkout at
 
 Under drperf (from /home/ubuntu/drperf-cases/videogen):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
         --max-slots 2097152 -o out/videogen_tiny --state frames=5,9,17 --state steps=4,6,8 \\
         --state hw=128,192,256 \\
         -- /home/ubuntu/drperf-cases/videogen/.venv/bin/python run_tiny.py
-    /home/ubuntu/drperf/bin/drperf-dev derive out/videogen_tiny
-    /home/ubuntu/drperf/bin/drperf-dev learn  out/videogen_tiny
+    /home/ubuntu/drperf/tools/drperf-dev derive out/videogen_tiny
+    /home/ubuntu/drperf/tools/drperf-dev learn  out/videogen_tiny
 """
 
 import os

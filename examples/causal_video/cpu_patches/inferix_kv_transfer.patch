@@ -1,0 +1,102 @@
+--- a/inferix/models/self_forcing/causal_model.py
++++ b/inferix/models/self_forcing/causal_model.py
+@@ -294,10 +294,13 @@
+                 local_end_index = kv_cache_meta["local_end_index"].item() + current_end - \
+                     kv_cache_meta["global_end_index"].item() - num_evicted_tokens
+                 local_start_index = local_end_index - num_new_tokens
++                # Rolling changes historical positions as well as new tokens.
++                kv_cache_meta["_writeback_start"] = min(sink_tokens, local_start_index)
+             else:
+                 # Assign new keys/values directly up to current_end
+                 local_end_index = kv_cache_meta["local_end_index"].item() + current_end - kv_cache_meta["global_end_index"].item()
+                 local_start_index = local_end_index - num_new_tokens
++                kv_cache_meta["_writeback_start"] = local_start_index
+             
+             # Update KV cache with new keys/values
+             kv_cache_meta["k"][:, local_start_index:local_end_index] = roped_key
+@@ -412,7 +415,10 @@
+         e = (self.modulation.unsqueeze(1) + e).chunk(6, dim=2)
+         # assert e[0].dtype == torch.float32
+ 
+-        # Fetch self-attention kv cache    
++        # Bound transfers only for CPU-backed, single-GPU KV caches.
++        bounded_kv = self.enable_kv_offload and (
++            self.parallel_config is None or self.parallel_config.world_size <= 1)
++        # Fetch self-attention kv cache
+         if kv_cache_meta is not None:
+             assert kv_cache_manager is not None
+             assert kv_cache_requests is not None
+@@ -420,7 +426,22 @@
+             all_k_cache = []
+             all_v_cache = []
+             for kv_cache_request in kv_cache_requests:
+-                kv_cache = self.kv_cache_manager.get_kv_cache(kv_cache_manager=kv_cache_manager, kv_cache_request=kv_cache_request)
++                read_length = None
++                if bounded_kv:
++                    capacity = kv_cache_manager.get_raw(
++                        kv_cache_request, f"layer_{self.kv_cache_manager.layer_number}").shape[1]
++                    old_local_end = kv_cache_meta["local_end_index"].item()
++                    old_global_end = kv_cache_meta["global_end_index"].item()
++                    evicts = self.local_attn_size != -1 and (
++                        current_start + x.shape[1] > old_global_end) and (
++                        x.shape[1] + old_local_end > capacity)
++                    # Eviction needs the old history to perform the existing
++                    # roll. Otherwise the current block replaces its own KV.
++                    read_length = (old_local_end if evicts else
++                                   old_local_end + current_start - old_global_end)
++                kv_cache = self.kv_cache_manager.get_kv_cache(
++                    kv_cache_manager=kv_cache_manager, kv_cache_request=kv_cache_request,
++                    read_length=read_length)
+                 all_k_cache.append(kv_cache[0])
+                 all_v_cache.append(kv_cache[1])
+             k_cache = torch.stack(all_k_cache, dim=0)
+@@ -437,8 +458,12 @@
+         # Set self-attention kv cache
+         if kv_cache_meta is not None:
+             for request_idx, kv_cache_request in enumerate(kv_cache_requests):
+-                cur_k_cache, cur_v_cache = new_k[request_idx], new_v[request_idx]
+-                self.kv_cache_manager.set_kv_cache(kv_cache_manager=kv_cache_manager, kv_cache_request=kv_cache_request, start_index=0, k_data=cur_k_cache, v_data=cur_v_cache)
++                write_start = kv_cache_meta["_writeback_start"] if bounded_kv else 0
++                if not 0 <= write_start <= new_k.shape[1]:
++                    raise ValueError(f"invalid KV writeback offset {write_start}")
++                cur_k_cache = new_k[request_idx, write_start:]
++                cur_v_cache = new_v[request_idx, write_start:]
++                self.kv_cache_manager.set_kv_cache(kv_cache_manager=kv_cache_manager, kv_cache_request=kv_cache_request, start_index=write_start, k_data=cur_k_cache, v_data=cur_v_cache)
+ 
+         # with amp.autocast(dtype=torch.float32):
+         x = x + (y.unflatten(dim=1, sizes=(num_frames, frame_seqlen)) * e[2]).flatten(1, 2)
+--- a/inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py
++++ b/inferix/kvcache_manager/model/self_forcing_kv_cache_manager.py
+@@ -109,7 +109,7 @@
+             # Reset cross-attention cache (simulating original is_init=False)
+             pass  # The underlying manager handles this
+ 
+-    def get_kv_cache(self, kv_cache_manager: KVCacheManager, kv_cache_request: KVCacheRequest) -> torch.Tensor:
++    def get_kv_cache(self, kv_cache_manager: KVCacheManager, kv_cache_request: KVCacheRequest, read_length: int | None = None) -> torch.Tensor:
+         """
+         Get KV cache data for a specific range.
+         
+@@ -122,9 +122,20 @@
+         Returns:
+             KV cache tensor with shape compatible with original implementation
+         """
+-        return kv_cache_manager.get(
+-            kv_cache_request, f"layer_{self.layer_number}",
+-        ).squeeze(2)
++        if read_length is None:
++            return kv_cache_manager.get(
++                kv_cache_request, f"layer_{self.layer_number}",
++            ).squeeze(2)
++        source = kv_cache_manager.get_raw(kv_cache_request, f"layer_{self.layer_number}")
++        if not 0 <= read_length <= source.shape[1]:
++            raise ValueError(f"invalid KV history length {read_length}")
++        # Keep the allocated capacity: attention's eviction decisions use it.
++        # The current block overwrites the uncopied range before attention.
++        cache = torch.empty(source.shape, dtype=source.dtype, device=kv_cache_manager.device)
++        if read_length:
++            cache[0, :read_length].copy_(source[0, :read_length])
++            cache[1, :read_length].copy_(source[1, :read_length])
++        return cache.squeeze(2)
+ 
+     def set_kv_cache(self, kv_cache_manager: KVCacheManager, kv_cache_request: KVCacheRequest, 
+                     start_index: int, k_data: torch.Tensor, v_data: torch.Tensor) -> None:

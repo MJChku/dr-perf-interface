@@ -82,7 +82,9 @@ class EventModel(unittest.TestCase):
     def test_native_operation_is_not_assigned_by_proximity(self):
         m=self.valid();m['waits']['operations']=[dict(checkpoint('wait_begin',3),api='sem_wait')]
         r=event_model.check(m);self.assertEqual(r['status'],'ordered')
-        self.assertEqual(r['unexplained'][0]['count'],1)
+        self.assertEqual(r['unexplained'],[])
+        self.assertEqual(r['coverage']['covered'],1)
+        self.assertEqual(r['nativeResolved'],0)
 
     def contextual(self):
         m = model([])
@@ -106,8 +108,10 @@ class EventModel(unittest.TestCase):
         self.assertEqual([(e['consumer'],e['producer']) for e in r['edges']],[('A','C'),('D','E')])
         self.assertEqual([e['nativeContext'] for e in r['edges']],
                          [[dict(region='sync',api='sem_wait',count=1)]]*2)
-        # Enclosing annotations do not fabricate primitive-to-publisher matches.
-        self.assertEqual(r['unexplained'][0]['count'],2)
+        # Count coverage does not fabricate primitive-to-publisher matches.
+        self.assertEqual(r['unexplained'],[])
+        self.assertEqual(r['coverage']['covered'],2)
+        self.assertEqual(r['nativeResolved'],0)
 
     def test_unmarked_primitive_has_the_same_semantic_edges(self):
         m=self.contextual()
@@ -123,13 +127,14 @@ class EventModel(unittest.TestCase):
         m=self.contextual();m['waits']['events'][1].update(start=32,end=33)
         r=event_model.check(m)
         self.assertEqual(r['edges'][0]['nativeContext'],[])
-        self.assertEqual(r['unexplained'][0]['count'],2)
+        self.assertEqual(r['unexplained'][0]['count'],1)
 
     def test_existing_native_producer_mapping_is_not_reported_unexplained(self):
         m=self.contextual();m['waits']['operations'][0]['producers']=['native-publication']
         r=event_model.check(m)
         self.assertEqual(r['nativeResolved'],1)
-        self.assertEqual(r['unexplained'][0]['count'],1)
+        self.assertEqual(r['unexplained'],[])
+        self.assertEqual(r['coverage']['covered'],2)
 
     def test_partial_capture_is_not_verified(self):
         m=self.valid();m['waits']['status']='partial'
@@ -201,6 +206,36 @@ class EventModel(unittest.TestCase):
 
 
 class PythonEventProbe(unittest.TestCase):
+    def test_discarded_native_marker_return_is_preserved(self):
+        # The publisher discards the return value and immediately overwrites
+        # EAX. drreg must preserve that dead register for drwrap's API check.
+        with tempfile.TemporaryDirectory(prefix='wait-retval-',dir=ROOT/'out') as tmp:
+            folder=Path(tmp)
+            library=folder/'completion.so'
+            subprocess.run(['gcc','-O2','-shared','-fPIC','-pthread',
+                str(ROOT/'examples/waits/ditto_reclaim_completion.c'),
+                '-I'+str(ROOT/'perfmark'),'-L'+str(ROOT/'build'),'-lperfmark',
+                '-Wl,-rpath,'+str(ROOT/'build'),'-o',str(library)],check=True)
+            script=folder/'app.py'
+            script.write_text("""import ctypes, perfmark, sys
+f=ctypes.CDLL(sys.argv[1])
+with perfmark.region('capture',n=1): pass
+f.completion_start(1)
+with perfmark.region('consumer',n=1):
+    f.completion_wait()
+    perfmark.event_waited(7001,1)
+f.completion_finish()
+""")
+            with patch.dict(os.environ,{'DRPERF_WAITS':'1','DRPERF_FOLLOW_THREADS':'0',
+                                       'DRPERF_WAIT_DELAY_MS':'0'}):
+                rc,log,_=runner.run([sys.executable,str(script),str(library)],str(folder/'raw'),timeout=30)
+            self.assertEqual(rc,0,log)
+            model=explorer.build_model(folder/'raw',discover=False)
+            self.assertEqual(model['eventModel']['status'],'ordered',model['eventModel'])
+            for event in model['waits']['events']:
+                if event['kind'].startswith('declared_'):
+                    self.assertEqual(event['result'],0,event)
+
     def test_python_publication_delay_releases_gil_and_exposes_missing_wait(self):
         with tempfile.TemporaryDirectory(prefix='python-events-',dir=ROOT/'out') as tmp:
             for mode in ['correct','missing-wait']:
@@ -234,7 +269,7 @@ class PythonEventProbe(unittest.TestCase):
             self.assertFalse(report['probe'])
             self.assertTrue(profile['waits']['probeRequested'])
             checked=Path(tmp)/'profile.json'; checked.write_text(json.dumps(profile))
-            result=subprocess.run([str(ROOT/'bin/drperf-check-events'),str(checked)],capture_output=True,text=True)
+            result=subprocess.run([str(ROOT/'tools/drperf-check-events'),str(checked)],capture_output=True,text=True)
             self.assertEqual(result.returncode,2,result.stdout+result.stderr)
             self.assertIn('requested delay probe did not execute',result.stdout)
 

@@ -7,6 +7,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "lib"))
 import explorer
+import event_model
 
 
 def main():
@@ -19,18 +20,22 @@ def main():
     parser.add_argument("--no-relations", action="store_true")
     parser.add_argument("--max-trace", type=int, default=50_000)
     parser.add_argument("--relation-budget", type=int, default=200_000)
+    parser.add_argument('--wait-interfaces', help='JSON declarations of event wait targets and explicit indicators')
     args = parser.parse_args()
     if args.max_trace < 0 or args.relation_budget < 0:
         parser.error("budgets must be nonnegative")
     try:
         model = explorer.build_model(args.raw, args.source_root, args.source,
-                                     not args.no_relations, args.max_trace, args.relation_budget)
+                                     not args.no_relations, args.max_trace, args.relation_budget,
+                                     json.loads(Path(args.wait_interfaces).read_text()) if args.wait_interfaces else None)
         output = Path(args.output)
         explorer.write_model(model, output)
     except (OSError, ValueError, KeyError, TypeError) as error:
         print("drperf-export: " + str(error), file=sys.stderr)
         return 1
     print(f"{output}: {len(model['regions'])} regions, {len(model['relations'])} observed relationships")
+    for line in event_model.lines(model.get("eventModel")):
+        print(line)
     if model["validity"]["errors"]:
         print("Measurement errors retained in model; scenario predictions must be disabled.", file=sys.stderr)
     return 0

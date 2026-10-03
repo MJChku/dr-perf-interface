@@ -1,0 +1,31 @@
+diff --git a/pipeline/causal_inference.py b/pipeline/causal_inference.py
+index 48ad1dd..f71bc8f 100755
+--- a/pipeline/causal_inference.py
++++ b/pipeline/causal_inference.py
+@@ -156,9 +156,9 @@ class CausalInferencePipeline(torch.nn.Module):
+             # reset kv cache
+             for block_index in range(len(self.kv_cache1)):
+                 self.kv_cache1[block_index]["global_end_index"] = torch.tensor(
+-                    [0], dtype=torch.long, device=noise.device)
++                    [0], dtype=torch.long, device="cpu")
+                 self.kv_cache1[block_index]["local_end_index"] = torch.tensor(
+-                    [0], dtype=torch.long, device=noise.device)
++                    [0], dtype=torch.long, device="cpu")
+ 
+         # Step 2: Cache context feature
+         current_start_frame = 0
+@@ -347,11 +347,12 @@ class CausalInferencePipeline(torch.nn.Module):
+             kv_cache_size = 32760
+ 
+         for _ in range(self.num_transformer_blocks):
++            # Host indexing reads these positions; they do not need CUDA storage.
+             kv_cache1.append({
+                 "k": torch.zeros([batch_size, kv_cache_size, 12, 128], dtype=dtype, device=device),
+                 "v": torch.zeros([batch_size, kv_cache_size, 12, 128], dtype=dtype, device=device),
+-                "global_end_index": torch.tensor([0], dtype=torch.long, device=device),
+-                "local_end_index": torch.tensor([0], dtype=torch.long, device=device)
++                "global_end_index": torch.tensor([0], dtype=torch.long, device="cpu"),
++                "local_end_index": torch.tensor([0], dtype=torch.long, device="cpu")
+             })
+ 
+         self.kv_cache1 = kv_cache1  # always store the clean cache

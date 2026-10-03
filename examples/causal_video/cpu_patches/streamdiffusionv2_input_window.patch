@@ -1,0 +1,31 @@
+diff --git a/streamdiffusionv2/pipeline.py b/streamdiffusionv2/pipeline.py
+index 97cfd90..93c1466 100644
+--- a/streamdiffusionv2/pipeline.py
++++ b/streamdiffusionv2/pipeline.py
+@@ -294,6 +294,17 @@ class StreamDiffusionV2Pipeline:
+         initial_noise_scale: float | None = None,
+     ) -> EncodedChunk:
+         """Encode one chunk in the same style as the offline inference loop."""
++        # Adaptive noise reads only this chunk and its preceding frame.
++        # Normalize that window instead of converting/uploading the whole video.
++        noise_end_idx = chunk.end_idx
++        if (
++            isinstance(input_video, torch.Tensor)
++            and input_video.ndim in (4, 5)
++            and self.chunk_size < chunk.end_idx <= input_video.shape[-3]
++        ):
++            first_frame = chunk.end_idx - self.chunk_size - 1
++            input_video = input_video[..., first_frame:chunk.end_idx, :, :]
++            noise_end_idx = self.chunk_size + 1
+         full_video = _normalize_video_tensor(
+             input_video,
+             height=self.height,
+@@ -307,7 +318,7 @@ class StreamDiffusionV2Pipeline:
+         if chunk.start_idx != 0:
+             noise_scale, current_step = compute_noise_scale_and_step(
+                 full_video,
+-                chunk.end_idx,
++                noise_end_idx,
+                 self.chunk_size,
+                 noise_scale,
+                 init_noise_scale,

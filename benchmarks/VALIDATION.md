@@ -39,3 +39,39 @@ oversized/implicit inputs before execution and preventing comparisons that mix
 input-access tracks. A freshly exported small-to-large SQLGlot workspace also
 completed its six default timing-profile inputs (4 through 32 tables). This
 validates the small-input runner, not transfer to larger inputs.
+
+## Paired harness refresh (2026-10-02)
+
+The primary ablation is with versus without the whole DrPerf tool. The updated
+supervisor exports current checked reports instead of calling the removed
+`bin/drperf.cost_lines` entry point. Each DrPerf round produces text, JSON and
+HTML, including composition and declared wait checking. Merged raw files use
+hard links, avoiding a second copy of capture data. Paired preparation rejects
+payload differences beyond supervisor configuration. Inherited delay/profiling
+settings are cleared before a measurement.
+
+SQLGlot, libcst and ComfyUI each completed six timing-profile and six DrPerf
+processes (36 total), with matching workload result lines. Both arms start with
+byte-identical exports; smoke-only raw-input markers were added afterwards.
+These are infrastructure checks, **not agent ablation results**. Native libcst
+libraries are hashed, its Rust source is exported, and the source checkout is
+checked against the pinned revision. ComfyUI uses real cache-key/graph code and
+CPU Torch, with adapters for unused model-management imports.
+
+Compact evidence: [smoke.json](../results/paper/agent-ablation/smoke.json).
+Reproduction automatically removes temporary workspaces and captures:
+
+```sh
+python3 benchmarks/tools/smoke_pairs.py --archive /home/ubuntu/drperf-cases \
+  --output results/paper/agent-ablation/smoke.json
+```
+
+Fourteen benchmark tests pass, including neutral-driver answer removal,
+paired-payload equality, rejection of an extra hint in one arm, restricted tool
+access, budgets, failed captures and semantic scoring. Historical evidence
+hashes now preserve both original archive hashes and local hashes for the
+previous developer-command relocation; only command paths changed.
+
+## Actual GPT-6.1 Sol pilot (2026-10-02)
+
+Separate from the harness smoke checks, six fresh agent sessions completed 102 successful workload processes across SQLGlot, LibCST and ComfyUI. Settings, per-round answers, source, raw captures, final reports and limitations are retained in the [pilot record](../results/paper/agent-ablation/gpt-6.1-sol-pilot/README.md). Both arms recovered the expected main mechanism in each case under supervisor review; this is not a blinded or held-out accuracy result.

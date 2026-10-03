@@ -2,8 +2,9 @@
 
 The question: **within a few measurement rounds, how accurately can an agent
 identify a program region's performance-critical variables, with and without
-drperf feedback?** Coefficients are inferred by the checker. Optimization is a
-separate task and is not the score here.
+drperf feedback?** Coefficients are inferred by the checker. Discovery is scored first; a subsequent, separately budgeted phase should
+compare correctness-preserving optimizations. The current runner implements
+discovery only, not that optimization phase.
 
 A second question is whether **symbolic insights from small inputs reduce the
 need for long or large benchmark runs**. The [small-to-large track](SMALL_TO_LARGE.md)
@@ -19,10 +20,55 @@ These counts are not additive: the region inventory overlaps the case families.
 Candidates are not validated benchmark cases, and workload sizes are not
 counted as independent cases.
 
-Three reviewed neutral workload adapters are available initially: `sqlglot`,
-`vllm_b`, and `wan_a`. Remaining families preserve evidence and task descriptions
-but need clean-source adapters and reviewed ground truth. There are no agent
-accuracy results yet.
+Five neutral workload adapters are available: `sqlglot`, `libcst`,
+`comfyui`, `vllm_b`, and `wan_a`. The CPU development pilot uses the first
+three; the vLLM environment removed during disk cleanup must be rebuilt before use. Remaining families preserve evidence and task descriptions
+but need clean-source adapters and reviewed ground truth. A [GPT-6.1 Sol development pilot](../results/paper/agent-ablation/gpt-6.1-sol-pilot/README.md)
+completed six sessions; both arms recovered the expected main mechanism in all
+three cases. This is not blinded precision/recall or held-out accuracy.
+
+## Primary ablation: with versus without DrPerf
+
+The primary ablation removes **the entire DrPerf tool** from one otherwise
+matched agent session. It is not a comparison between original and optimized
+application code, nor between two DrPerf configurations. The timing arm keeps
+source inspection, tests, wall timing, and conventional function profiling.
+The treatment adds DrPerf's complete feedback. Feature removal experiments
+would be secondary and cannot substitute for this comparison.
+
+The [study manifest](evaluator/ablation.json) records a three-case development
+pilot, five independent trial IDs per case, and two arms (30 planned sessions).
+**Six exploratory agent sessions have completed; the controlled repeated study remains pending.**
+The pilot used GPT-6.1 Sol with medium reasoning and a 15-minute wall budget,
+but lacked hard filesystem isolation, blinded review and token telemetry.
+Preparation and harness smoke checks are recorded separately. Freeze model
+settings, enforced agent token/time limits, reviewed answer keys, and held-out
+inputs before controlled scored runs. The development cases are not a locked test
+set; a broader evaluation must select source families before prompt tuning.
+
+```sh
+python3 benchmarks/bench.py prepare-pair libcst /tmp/libcst-pair \
+  --archive /home/ubuntu/drperf-cases --model gpt-6.1-sol --seed 0
+```
+
+`prepare-pair` creates `timing/`, `drperf/`, and an evaluator-only `pair.json`.
+It requires byte-identical exported payloads, including task text, source,
+fixtures, default input plans, and dependency inventories. Only the supervisor
+configuration differs. This checks the starting material, not isolation or
+agent determinism. Neither export includes solved markers or reference answers.
+Native libcst libraries are copied with hashes, and its Rust sources remain
+visible so both agents can investigate the implementation. ComfyUI uses the
+original cache/graph modules with explicit adapters for unused model machinery;
+no image model or GPU is involved. Do not replace these smoke-tested tasks with
+annotated smoke workspaces when launching blind sessions.
+
+After discovery, freeze each answer before giving both arms an equal additional
+optimization budget. Keep unsuccessful discovery trials in that phase too;
+conditioning admission on DrPerf acceptance would bias the comparison. Check
+outputs independently and measure optimized versus baseline application code
+without instrumentation. Report correct patch rate, regressions, latency and
+work reductions separately from discovery accuracy. This phase and a held-out
+execution oracle are still required; historical fixes are not substitutes.
 
 ## Paired protocol
 
@@ -125,7 +171,7 @@ workload or source, then requests:
 python3 benchmarks/bench.py measure /tmp/sqlglot-drperf --mode drperf
 ```
 
-Replace `sqlglot` with `wan_a` or `vllm_b` to prepare those pilots. Wan uses tiny
+Replace `sqlglot` with `libcst`, `comfyui`, `wan_a`, or `vllm_b` to prepare those pilots. Wan uses tiny
 random weights on CPU; it measures real diffusers host paths but does not stand
 in for GPU kernel latency. vLLM uses the CPU backend and cached OPT-125M weights.
 The small pilot plans are smoke inputs, not finalized discovery/held-out splits.
@@ -133,7 +179,9 @@ The small pilot plans are smoke inputs, not finalized discovery/held-out splits.
 The supervisor records pre-run hypotheses, source hashes, input plans, process
 outcomes, raw profiles, and validity warnings. drperf feedback merges compatible
 basic-block observations across the round's processes; it does not infer
-cross-process temporal relations. Invalid counts suppress formulas. Failed
+cross-process temporal relations. The merged round exports the current text/JSON/HTML report, including child
+composition and declared wait checks. Invalid counts suppress formulas.
+Correctly rejected agent declarations remain feedback, not infrastructure failures. Failed
 rounds consume budget. `cProfile` perturbs execution and includes startup; use
 its function breakdown and report initialization separately. Timings under
 drperf are instrumented timings and must not be compared to native latency.

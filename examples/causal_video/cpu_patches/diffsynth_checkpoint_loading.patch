@@ -1,0 +1,73 @@
+diff --git a/diffsynth/core/loader/file.py b/diffsynth/core/loader/file.py
+index b922f6d..0af60c3 100644
+--- a/diffsynth/core/loader/file.py
++++ b/diffsynth/core/loader/file.py
+@@ -1,5 +1,5 @@
+ from safetensors import safe_open
+-import torch, hashlib, json
++import torch, hashlib, json, inspect, zipfile
+ 
+ 
+ def load_state_dict(file_path, torch_dtype=None, device="cpu", pin_memory=False, verbose=0):
+@@ -54,8 +54,10 @@ def merge_metadata_value(old_value, new_value):
+     return new_value
+ 
+ 
+-def load_state_dict_from_bin(file_path, torch_dtype=None, device="cpu"):
+-    state_dict = torch.load(file_path, map_location=device, weights_only=True)
++def load_state_dict_from_bin(file_path, torch_dtype=None, device="cpu", mmap=False):
++    # mmap is unavailable for legacy pickle checkpoints and older PyTorch.
++    options = {"mmap": True} if mmap and "mmap" in inspect.signature(torch.load).parameters and zipfile.is_zipfile(file_path) else {}
++    state_dict = torch.load(file_path, map_location=device, weights_only=True, **options)
+     if len(state_dict) == 1:
+         if "state_dict" in state_dict:
+             state_dict = state_dict["state_dict"]
+@@ -123,7 +125,8 @@ def convert_state_dict_to_keys_dict(state_dict):
+ 
+ 
+ def load_keys_dict_from_bin(file_path):
+-    state_dict = load_state_dict_from_bin(file_path)
++    # Key/shape inspection does not need to read or allocate checkpoint data.
++    state_dict = load_state_dict_from_bin(file_path, device="meta", mmap=True)
+     keys_dict = convert_state_dict_to_keys_dict(state_dict)
+     return keys_dict
+ 
+diff --git a/diffsynth/core/vram/disk_map.py b/diffsynth/core/vram/disk_map.py
+index 7073006..70653ee 100644
+--- a/diffsynth/core/vram/disk_map.py
++++ b/diffsynth/core/vram/disk_map.py
+@@ -1,5 +1,5 @@
+ from safetensors import safe_open
+-import torch, os
++import torch, os, inspect, zipfile
+ 
+ 
+ class SafetensorsCompatibleTensor:
+@@ -13,7 +13,8 @@ class SafetensorsCompatibleTensor:
+ class SafetensorsCompatibleBinaryLoader:
+     def __init__(self, path, device):
+         print("Detected non-safetensors files, which may cause slower loading. It's recommended to convert it to a safetensors file.")
+-        self.state_dict = torch.load(path, weights_only=True, map_location=device)
++        options = {"mmap": True} if "mmap" in inspect.signature(torch.load).parameters and zipfile.is_zipfile(path) else {}
++        self.state_dict = torch.load(path, weights_only=True, map_location=device, **options)
+         
+     def keys(self):
+         return self.state_dict.keys()
+@@ -60,10 +61,13 @@ class DiskMap:
+         if self.rename_dict is not None: name = self.rename_dict[name]
+         file_id = self.name_map[name]
+         param = self.files[file_id].get_tensor(name)
+-        if self.torch_dtype is not None and isinstance(param, torch.Tensor):
+-            param = param.to(self.torch_dtype)
+-        if isinstance(param, torch.Tensor) and param.device.type == "cpu":
+-            param = param.clone()
++        if isinstance(param, torch.Tensor):
++            if self.torch_dtype is not None:
++                # A CPU result must own its storage, but dtype conversion can
++                # provide that copy without cloning the converted tensor again.
++                param = param.to(self.torch_dtype, copy=param.device.type == "cpu")
++            elif param.device.type == "cpu":
++                param = param.clone()
+         if isinstance(param, torch.Tensor):
+             self.num_params += param.numel()
+         if self.num_params > self.buffer_size:

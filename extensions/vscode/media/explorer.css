@@ -781,6 +781,9 @@ details.card > summary {
 .execution-formula { font-size:13px; line-height:22px; overflow-wrap:anywhere; margin-top:6px; }
 .execution-formula .child-interface { padding:0; font:inherit; white-space:normal; }
 .execution-node.highlighted>rect { stroke:var(--blue); stroke-width:3; }
+.execution-node.wait-connected:not(.selected)>rect { stroke:var(--blue); stroke-width:3; fill:color-mix(in srgb,var(--blue) 10%,var(--card)); }
+.execution-edge.wait-highlighted { stroke-width:4; filter:drop-shadow(0 0 2px var(--card)); }
+.execution-edge.wait-muted { opacity:.18; }
 .execution-edge.wait,.execution-edge-label.wait { cursor:pointer; }
 
 .execution-edge.violation { stroke:var(--danger); }

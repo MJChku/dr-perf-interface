@@ -50,6 +50,6 @@ above describe actual native GPU work.
 
 [Machine-readable trace summary](evidence/native-traces.json) names the raw
 `.nsys-rep`, SQLite, stats, native reports, and GPU databases under
-`out/causal-video/`. The uninstrumented latency and exact tensor validation
+`results/paper/causal-video/`. The uninstrumented latency and exact tensor validation
 are documented in [NATIVE_RESULTS.md](NATIVE_RESULTS.md), with FastVideo's
 native comparisons in [FASTVIDEO_NATIVE_RESULTS.md](FASTVIDEO_NATIVE_RESULTS.md).

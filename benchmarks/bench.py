@@ -8,7 +8,6 @@ import io
 import json
 import os
 import pstats
-import runpy
 import shutil
 import subprocess
 import sys
@@ -31,6 +30,36 @@ def snapshot(workspace):
     return {str(p.relative_to(workspace)):hashlib.sha256(p.read_bytes()).hexdigest()
             for p in workspace.rglob('*') if p.is_file() and
             (p.suffix in ('.py', '.c', '.h', '.rs', '.so')) and 'measurements' not in p.parts}
+
+
+def prepare_pair(case, destination, archive, model, seed, track='discovery'):
+    """Prepare identical blind task payloads; this does not launch agents."""
+    from adapters.prepare import SPECS, prepare
+    if case not in SPECS:
+        raise ValueError('this case needs a neutral adapter before paired preparation')
+    if destination.exists():
+        raise ValueError('pair destination already exists; use a fresh study directory')
+    destination.mkdir(parents=True)
+    configs = {}
+    for condition in ('timing', 'drperf'):
+        workspace = destination/condition
+        config = prepare(case, workspace, archive, DRPERF, condition, track)
+        config.update(model=model, seed=seed)
+        write(workspace/'session.json', config)
+        configs[condition] = config
+    def payload(workspace):
+        return {str(p.relative_to(workspace)):hashlib.sha256(p.read_bytes()).hexdigest()
+                for p in workspace.rglob('*') if p.is_file() and p.name != 'session.json'}
+    control, treatment = (payload(destination/c) for c in ('timing', 'drperf'))
+    if control != treatment:
+        raise ValueError('paired exports differ beyond their supervisor configuration')
+    write(destination/'pair.json', dict(schema_version=1, case=case, model=model, seed=seed,
+        track=track, status='prepared-not-run', payload_sha256=control,
+        conditions=['timing', 'drperf'],
+        source_revision=configs['timing']['source_revision'],
+        budget=dict(rounds=3, points_per_round=6),
+        scope='Evaluator manifest. Isolated fresh agent sessions and reviewed submissions still required.'))
+    print(destination/'pair.json')
 
 
 def submit(workspace, claims_path):
@@ -63,6 +92,7 @@ def submit(workspace, claims_path):
         if number and not (submissions/f'round-{number-1:02d}.json').exists():
             raise ValueError('record a submission at round 0 and after every measurement; missing earlier answer')
         write(target,{'case':config['case'],'condition':config['condition'],
+                      'model':config.get('model'),'seed':config.get('seed'),
                       'track':config.get('track','discovery'),
                       'round':number,'claims':claims,'source_hashes':snapshot(workspace)})
     print(target)
@@ -109,10 +139,12 @@ def measure(workspace, mode, plan_path, hypothesis_path):
     write(out/'plan.json', points)
     write(out/'source-hashes.json', snapshot(workspace))
     result = {'round':used+1, 'mode':mode, 'condition':config['condition'],
+              'model':config.get('model'), 'seed':config.get('seed'),
               'track':config.get('track','discovery'),
               'case':config['case'], 'status':'running', 'points':[]}
     write(out/'result.json',result)
-    env = dict(os.environ, **config['env'])
+    env = {k:v for k,v in os.environ.items() if not k.startswith('DRPERF_')}
+    env.update(config['env'])
     for key in ('DRPERF','DRPERF_LATE','DYNAMORIO_OPTIONS','LD_PRELOAD','PERFMARK_CALIBRATE'):
         env.pop(key,None)
     env['PYTHONPATH'] = os.pathsep.join([str(workspace),env.get('PYTHONPATH',''),str(DRPERF/'perfmark/python')])
@@ -168,15 +200,29 @@ def measure(workspace, mode, plan_path, hypothesis_path):
         for i,point in enumerate(points):
             raw = out/f'point-{i:02d}'/'raw'
             for file in raw.iterdir():
-                shutil.copy2(file,merged/f'{i:02d}-{file.name}')
-        rs = runner.load_runs(str(merged))
-        keys,slots = runner.blocks_of_set(rs)
-        if keys:
-            cli = runpy.run_path(str(DRPERF/'bin/drperf'))
-            lines = cli['cost_lines'](rs,keys,runner.demangle_slots(slots),runner.load_traces_all(rs))
-            (out/'feedback.txt').write_text('\n'.join(lines)+'\n')
-        else:
-            result['error'] = 'No counted regions in traces.'
+                # One evidence copy per point, even while fitting the merged round.
+                os.link(file,merged/f'{i:02d}-{file.name}')
+        try:
+            import explorer
+            import report_bundle
+            declarations_path = workspace/'drperf.waits.json'
+            declarations = read(declarations_path) if declarations_path.exists() else None
+            source_paths = [str(path.relative_to(workspace))
+                            for path in explorer.source_files(workspace/'source')]
+            source_paths.append(config['workload'])
+            model = explorer.build_model(merged, source_root=workspace,
+                                         source_paths=source_paths, discover=False,
+                                         wait_declarations=declarations)
+            errors = model['validity']['errors'] + model['validity']['traceErrors']
+            if errors:
+                result['error'] = 'Invalid merged capture: ' + '; '.join(errors)
+            else:
+                paths = report_bundle.write(model, out/'profile.drperf.json')
+                shutil.copy2(paths['text'], out/'feedback.txt')
+                result['reports'] = {name:str(path.relative_to(workspace)) for name,path in paths.items()}
+                result['wait_check_status'] = model.get('eventModel', {}).get('interfaceChecks', {}).get('status')
+        except (ValueError, OSError) as exc:
+            result['error'] = 'Report generation failed: ' + str(exc)
     result['status'] = 'ok' if not result.get('error') and all(p['returncode']==0 and not p['warnings'] for p in result['points']) else 'invalid'
     write(out/'result.json', result)
     print(json.dumps({'output':str(out),'status':result['status']},indent=2))
@@ -192,6 +238,12 @@ def main():
     p.add_argument('--archive',type=Path,required=True)
     p.add_argument('--condition',choices=['timing','drperf'],required=True)
     p.add_argument('--track',choices=['discovery','small-to-large'],default='discovery')
+    p = sub.add_parser('prepare-pair', help='prepare matched payloads; no agents are launched')
+    p.add_argument('case'); p.add_argument('destination', type=Path)
+    p.add_argument('--archive', type=Path, required=True)
+    p.add_argument('--model', default='gpt-5.6-sol')
+    p.add_argument('--seed', type=int, default=0, help='trial identifier, not a guarantee of model determinism')
+    p.add_argument('--track', choices=['discovery','small-to-large'], default='discovery')
     p = sub.add_parser('measure')
     p.add_argument('workspace',type=Path)
     p.add_argument('--mode',choices=['timing','drperf'],required=True)
@@ -207,6 +259,9 @@ def main():
             for case in read(ROOT/'catalog.json')['cases']:
                 info = read(ROOT/'cases'/case/'case.json')
                 print(f"{case:14} {'pilot adapter' if case in SPECS else 'reference only':16} {info['title']}")
+        elif args.cmd == 'prepare-pair':
+            prepare_pair(args.case, args.destination.resolve(), args.archive.resolve(),
+                         args.model, args.seed, args.track)
         elif args.cmd == 'prepare':
             from adapters.prepare import SPECS, prepare
             if args.case not in SPECS:

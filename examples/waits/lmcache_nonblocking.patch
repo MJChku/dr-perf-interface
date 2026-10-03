@@ -1,0 +1,104 @@
+--- lmcache/v1/storage_backend/connector/lm_connector.py
++++ lmcache/v1/storage_backend/connector/lm_connector.py
+@@ -46,7 +46,7 @@
+ 
+         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+         self.client_socket.connect((host, port))
+-        # loop.sock_recv_into(sock, buf)
++        self.client_socket.setblocking(False)
+ 
+         self.loop = loop
+         self.local_cpu_backend = local_cpu_backend
+@@ -54,7 +54,7 @@
+         self.async_socket_lock = asyncio.Lock()
+ 
+     # TODO(Jiayi): This should be an async function
+-    def receive_all(self, meta: ServerMetaMessage) -> Optional[MemoryObj]:
++    async def receive_all(self, meta: ServerMetaMessage) -> Optional[MemoryObj]:
+         received = 0
+         n = meta.length
+ 
+@@ -73,18 +73,34 @@
+         view = memoryview(buffer)
+ 
+         while received < n:
+-            num_bytes = self.client_socket.recv_into(view[received:], n - received)
++            num_bytes = await self.loop.sock_recv_into(self.client_socket, view[received:min(n, received + 1048576)])
+             if num_bytes == 0:
+                 return None
+             received += num_bytes
++            # A readable socket can complete sock_recv_into without yielding.
++            # Bound work per turn so other connections can make progress.
++            if received < n:
++                await asyncio.sleep(0)
+ 
+         return memory_obj
++
++    async def _recv_exact(self, size):
++        data = bytearray(size)
++        view = memoryview(data)
++        received = 0
++        while received < size:
++            count = await self.loop.sock_recv_into(self.client_socket, view[received:])
++            if not count:
++                raise ConnectionError("EOF in LMCache response metadata")
++            received += count
++        return data
+ 
+     async def exists(self, key: CacheEngineKey) -> bool:
+         # logger.debug("Call to exists()!")
+ 
+         async with self.async_socket_lock:
+-            self.client_socket.sendall(
++            await self.loop.sock_sendall(
++                self.client_socket,
+                 ClientMetaMessage(
+                     ClientCommand.EXIST,
+                     key,
+@@ -95,7 +111,7 @@
+                 ).serialize()
+             )
+ 
+-            response = self.client_socket.recv(ServerMetaMessage.packlength())
++            response = await self._recv_exact(ServerMetaMessage.packlength())
+ 
+         return ServerMetaMessage.deserialize(response).code == ServerReturnCode.SUCCESS
+ 
+@@ -138,12 +154,10 @@
+     # TODO(Jiayi): This should be an async function
+     @_lmcache_nvtx_annotate
+     async def get(self, key: CacheEngineKey) -> Optional[MemoryObj]:
+-        # NOTE(Jiayi): Not using any await in the following as
+-        # we don't want to yield control to other tasks which could
+-        # sacrifice the performance loading to trade the performance of
+-        # saving
++        # Let independent connections progress while this transaction waits.
+         async with self.async_socket_lock:
+-            self.client_socket.sendall(
++            await self.loop.sock_sendall(
++                self.client_socket,
+                 ClientMetaMessage(
+                     ClientCommand.GET,
+                     key,
+@@ -154,14 +168,14 @@
+                 ).serialize()
+             )
+ 
+-            data = self.client_socket.recv(ServerMetaMessage.packlength())
++            data = await self._recv_exact(ServerMetaMessage.packlength())
+ 
+-        meta = ServerMetaMessage.deserialize(data)
+-        if meta.code != ServerReturnCode.SUCCESS:
+-            return None
+-
+-        async with self.async_socket_lock:
+-            memory_obj = self.receive_all(meta)
++            # Keep the entire response under one transaction lock: another
++            # coroutine must not consume this GET's payload as its metadata.
++            meta = ServerMetaMessage.deserialize(data)
++            if meta.code != ServerReturnCode.SUCCESS:
++                return None
++            memory_obj = await self.receive_all(meta)
+ 
+         return memory_obj
+ 

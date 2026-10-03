@@ -1,0 +1,11 @@
+--- a/soprano/backends/transformers.py
++++ b/soprano/backends/transformers.py
+@@ -37,7 +37,7 @@
+             max_length=512,
+         ).to(self.device)
+         
+-        with torch.no_grad():
++        with torch.inference_mode():
+             outputs = self.model.generate(
+                 input_ids=inputs['input_ids'],
+                 attention_mask=inputs['attention_mask'],

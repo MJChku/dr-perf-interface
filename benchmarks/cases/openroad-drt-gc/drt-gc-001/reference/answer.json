@@ -1,0 +1,84 @@
+{
+  "case": "openroad-drt-gc/drt-gc-001",
+  "region": "drt-gc-001",
+  "pcvs": [
+    {
+      "name": "vc",
+      "expression": "sum over cut layers l with pins of the vertices of net->getPins(l) (outer ring + holes)"
+    },
+    {
+      "name": "vm",
+      "expression": "sum over non-cut layers of the vertices of net->getPins(l)"
+    },
+    {
+      "name": "scan",
+      "expression": "sum over convex corners of cut-layer pins of the fixed cut rectangles (net->getRectangles(true)[l]) compared until the first one whose corner in the corner's direction is the corner point, all of them if none is"
+    },
+    {
+      "name": "fcut",
+      "expression": "sum over cut layers with pins of net->getRectangles(true)[l].size()"
+    }
+  ],
+  "factors": [
+    {
+      "id": "f1",
+      "criterion": "cost per corner or pin vertex on cut layers (corner objects), separate from the other layers"
+    },
+    {
+      "id": "f2",
+      "criterion": "the cut-corner scan: comparisons of a corner against the net's fixed cut rectangles, quadratic in fixed cut rectangles per layer; corners x fixed rectangles (drperf's q) is an acceptable upper-bound form"
+    },
+    {
+      "id": "f3",
+      "criterion": "the early exit: a fixed cut rectangle's own corner stops its scan, so the scan is about half the product for fixed pins"
+    }
+  ],
+  "fix": {
+    "gate": "GC_CUTCORNERCACHE",
+    "patch": "assets/fix.patch",
+    "effect": "scan term removed; a term per fixed cut rectangle (hash-set insertion) appears"
+  },
+  "drperf": {
+    "original": {
+      "small": [
+        "370*vc + 2,128.8*vm + 5*scan + 7*fcut + 1,062",
+        0.0
+      ],
+      "large": [
+        "370.2*vc + 2,128.8*vm + 5*scan + 7.1*fcut + 1,043.1",
+        0.0
+      ],
+      "small_formula_at_large": -0.0
+    },
+    "fixed": {
+      "small": [
+        "398.6*vc + 2,328.3*vm + 0.0987*scan + 1,166*fcut + 2,378.7",
+        1.1
+      ],
+      "large": [
+        "401.7*vc + 1,994.8*vm - 0.00247*scan + 1,124.2*fcut + 13,171.5",
+        3.8
+      ],
+      "small_formula_at_large": 1.6
+    },
+    "units": "instructions per region call; [formula, unexplained percent]; small_formula_at_large in percent of the measured large total"
+  },
+  "historical": {
+    "design": "aes",
+    "formula": "gc_corner_cut = 376.8*vc + 5.3*q + 1,109",
+    "unexplained": 37
+  },
+  "reference_annotation": "assets/pcvs.patch",
+  "small_to_large": {
+    "small_input_envelope": {
+      "size": "small"
+    },
+    "held_out_inputs": [
+      {
+        "size": "large"
+      }
+    ]
+  },
+  "grading": "Semantic review against the record and code, not keyword matching. Equivalent expressions and well-supported alternative decompositions count. Coefficients are measured on this build and machine and are not acceptance thresholds.",
+  "scope": "The case's scenario at the listed sizes on the standalone extraction; not an all-input guarantee and not a claim about OpenROAD's full router."
+}

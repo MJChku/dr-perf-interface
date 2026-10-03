@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "status": "development-pilot-completed; controlled-study-pending",
+  "question": "Does adding DrPerf help the same agent recover correct cost dependencies and produce validated optimizations?",
+  "model": "gpt-6.1-sol",
+  "model_policy": "GPT-6.1 Sol medium reasoning was used in the development pilot; serving build and token telemetry were not exposed. Freeze and record settings for the controlled study.",
+  "arms": {
+    "timing": [
+      "source inspection",
+      "tests",
+      "wall time",
+      "time-based function profiling"
+    ],
+    "drperf": [
+      "source inspection",
+      "tests",
+      "wall time",
+      "time-based function profiling",
+      "DrPerf annotations, formulas, composition, attribution, and wait checks"
+    ]
+  },
+  "development_pilot": [
+    "sqlglot",
+    "libcst",
+    "comfyui"
+  ],
+  "trial_ids": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "planned_pilot_sessions": 30,
+  "completed_agent_sessions": 6,
+  "discovery_budget": {
+    "rounds": 3,
+    "configurations_per_round": 6,
+    "timeout_seconds_per_process": 300
+  },
+  "trial_policy": "Fresh isolated sessions. Trial IDs label repeated runs; they are not claims of deterministic model sampling. Randomize arm execution order; retain failures and timeouts.",
+  "equal_resources": [
+    "source revision",
+    "workload and fixtures",
+    "native dependencies",
+    "hardware limits",
+    "base task prompt",
+    "input access",
+    "model and reasoning settings",
+    "agent token and elapsed-time caps",
+    "measurement launch budget"
+  ],
+  "unfrozen_limits": [
+    "Development pilot used a 900-second wall budget, three measurement rounds and at most six configurations per round. Enforce token/time caps and filesystem isolation before the controlled study."
+  ],
+  "discovery_outcomes": [
+    "reviewed semantic precision and recall",
+    "strict accuracy after each round",
+    "first correct round",
+    "unsupported claims",
+    "held-out prediction with frozen PCVs and coefficients"
+  ],
+  "optimization_phase": {
+    "status": "not-implemented",
+    "policy": "Freeze discovery answers, then give both arms the same additional budget on identical baseline code. Do not admit only successful DrPerf explanations. Validate patches on independent correctness tests and alternate uninstrumented native timing order.",
+    "outcomes": [
+      "correct patch rate",
+      "native latency or declared component work",
+      "regressions",
+      "agent tokens",
+      "total measurement wall time"
+    ]
+  },
+  "small_to_large": {
+    "primary": "Both arms restricted to the same small inputs; larger evaluator-only inputs revealed after final claims are frozen.",
+    "supported_envelope": "sqlglot only",
+    "held_out_oracle_status": "not-implemented",
+    "secondary": "An expanding-input timing arm is a separate cost-to-discovery experiment, not pooled with the primary pair."
+  },
+  "grading": "Condition-blind semantic review against independently reviewed factors and held-out states. Equivalent expressions count; low unexplained work alone is not ground truth.",
+  "aggregation": "Pair by case and trial. Report family-balanced accuracy differences and uncertainty clustered by source/behavior family. Variants, sizes, and repeats are not additional independent cases.",
+  "isolation": "The supervisor is not a sandbox. Actual agents must not see reference/, prior investigations, Git history, sibling sessions, or the study manifest.",
+  "case_collection": "1,000 collected source regions and 29 historical case families are candidate pools, not completed agent trials or 1,000 independently confirmed performance bugs.",
+  "historical_optimizations": "The manuscript's 22 before/after rows motivate cases; they do not measure the effect of giving an agent DrPerf.",
+  "completed_controlled_sessions": 0,
+  "development_results": "../../results/paper/agent-ablation/gpt-6.1-sol-pilot/README.md"
+}

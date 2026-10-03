@@ -7,6 +7,20 @@ parallelism, GPU overlap, or scheduling.
 
 ## Region execution graph
 
+Version 0.1.20 displays declared wait terms and explicit null refinements:
+`CPU_formula + I[condition] * Wait[R] + unexplained(Wait[?])`.
+Indicators come from the exported `waitDeclarations`, checked per invocation;
+the viewer never infers them from occurrence counts. Failed/unverified claims
+remain labelled. Click `Wait[R]` to inspect its publisher. CPU unexplained
+percentages do not include waits or describe latency. See the
+[declaration and checking guide](../../docs/waited.md).
+
+`I[condition] * waited(null)` has no publisher link or dependency arrow. Its
+indicator is checked and its reason is displayed for manual review. Null markers
+can be placed in a helper shared by different callers. An event-backed parent
+wait on its synchronous child is rejected by the exporter/checker; re-export
+older captures to apply the new check, and reprofile to capture null markers.
+
 Open a performance report and select **Graph**. The upper canvas shows region
 names, nesting, and relationships. The bottom panel shows the selected region's
 composed formula, unexplained share, function breakdown, and observed states.
@@ -90,7 +104,7 @@ DRPERF_SOURCE_ROOT=. bin/drperf python app.py
 Or export measurements you already have:
 
 ```sh
-bin/drperf-export out/raw --source-root /path/to/project \
+tools/drperf-export out/raw --source-root /path/to/project \
   -o out/my-program.drperf.json
 ```
 
@@ -288,8 +302,8 @@ failed extrapolation and a successful PCV refinement. **Open Refined PCV Demo**
 opens its improved interface. For agents and terminal workflows:
 
 ```sh
-bin/drperf-explore report.drperf.json --list
-bin/drperf-explore report.drperf.json --edit producer items scale 2 \
+tools/drperf-explore report.drperf.json --list
+tools/drperf-explore report.drperf.json --edit producer items scale 2 \
   --relation RELATION_ID --validate changed.drperf.json -o scenario.json
 ```
 
@@ -356,7 +370,7 @@ proof that the equations are equivalent. The CLI can raise the search budget
 to 64 probes:
 
 ```sh
-bin/drperf-explore report.drperf.json --assume-first \
+tools/drperf-explore report.drperf.json --assume-first \
   --suggest-experiments --max-probes 12 -o experiments.json
 ```
 
@@ -374,7 +388,7 @@ coefficient differences, and flags changes to captured PCV source expressions.
 PCV meanings still need to be consistent across the reports.
 
 ```sh
-bin/drperf-explore before.drperf.json --compare after.drperf.json -o comparison.json
+tools/drperf-explore before.drperf.json --compare after.drperf.json -o comparison.json
 ```
 
 Unlike scenario validation, this comparison does not need a complete trace or
@@ -398,7 +412,7 @@ PCV expressions are flagged, since matching names alone cannot establish matchin
 semantics. Checked proposals from the What-if panel are included.
 
 ```sh
-bin/drperf-explore before.drperf.json --check-relations after.drperf.json \
+tools/drperf-explore before.drperf.json --check-relations after.drperf.json \
   -o relationship-check.json
 ```
 

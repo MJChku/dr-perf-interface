@@ -1,0 +1,30 @@
+derive drt-gc-002   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vR=0,vF=0,layers=0,nlogn=0 x72, vR=896,vF=256,layers=4,nlogn=3,120 x8, vR=896,vF=512,layers=4,nlogn=3,632 x8, vR=896,vF=1,024,layers=4,nlogn=4,784 x8, vR=1,792,vF=256,layers=4,nlogn=6,624 x8, vR=1,792,vF=512,layers=4,nlogn=7,136 x8, vR=1,792,vF=1,024,layers=4,nlogn=8,288 x8, vR=3,584,vF=256,layers=4,nlogn=14,401 x8, vR=3,584,vF=512,layers=4,nlogn=14,913 x8, vR=3,584,vF=1,024,layers=4,nlogn=16,065 x8
+  cost(vR, vF, layers, nlogn) = 3,940.3*vR + 1,972.9*vF + -2,186.9*layers + 159.2*nlogn + 102,210.6        [all vR, vF, layers, nlogn]   blocks: 2095 affine, 235 constant, 31 irregular (0.4% of cost)
+    irregular blocks, per call: 316 .. 68,254.5
+    per-vR coefficient by function:
+               562.8  __GI___libc_malloc  [libc.so.6]
+                 478  _int_free  [libc.so.6]
+               458.7  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+               274.2  __free  [libc.so.6]
+    per-vF coefficient by function:
+               377.7  __GI___libc_malloc  [libc.so.6]
+               236.8  _int_free  [libc.so.6]
+               199.6  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+               173.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+    per-layers coefficient by function:
+            -6,298.2  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+            -3,204.6  std::__introsort_loop<>  [gcbench]
+             3,194.1  std::__adjust_heap<>  [gcbench]
+               871.9  void std::vector<boost::polygon::interval_data<int>, std::allocator<bo  [gcbench]
+    per-nlogn coefficient by function:
+                75.7  std::__introsort_loop<>  [gcbench]
+                23.1  std::_Rb_tree<>::_M_insert_unique<>  [gcbench]
+                19.3  boost::polygon::polygon_formation::ScanLineToPolygonItrs<>::processEdg  [gcbench]
+                14.5  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+    constant by function:
+            30,934.8  __GI___libc_malloc  [libc.so.6]
+            15,379.4  std::__introsort_loop<>  [gcbench]
+            13,418.1  _int_free  [libc.so.6]
+            11,877.3  operator new  [libstdc++.so.6.0.33]
+

@@ -68,6 +68,6 @@ reconstruction errors, and all exclusion diagnostics.
 Compact evidence: [baseline](evidence/baseline.json),
 [optimized](evidence/optimized.json). These include source and client hashes,
 raw-artifact hashes, runtime policy and package versions. Raw block/trace files
-remain under `out/wan-gx/results/{baseline,optimized}-final-profile/raw/`.
+remain under `results/paper/wan-gx/results/{baseline,optimized}-final-profile/raw/`.
 Earlier exploratory measurements with narrower CUDA exclusions are superseded
 by this matched comparison.

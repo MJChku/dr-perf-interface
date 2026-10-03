@@ -75,7 +75,10 @@ it overlaps both the historical families and the collected targets and must
 not be added to the collected-region count.
 
 The earlier [agent-pipeline design](PIPELINE_DESIGN.md), pilot runner and scorer
-remain available as deferred evaluation work. The [small-to-large design](SMALL_TO_LARGE.md)
+now include matched-pair preparation and five neutral adapters. The primary
+ablation is the same agent with versus without the whole DrPerf tool;
+[the study manifest](evaluator/ablation.json) separates planned trials from
+harness checks and historical optimizations. The [small-to-large design](SMALL_TO_LARGE.md)
 records the hypothesis that symbolic insights from small executions can reduce
 the need for expensive large-case runs. The current collection supplies code
 targets for testing those ideas later; no agent accuracy or execution savings
@@ -85,3 +88,5 @@ Separate [annotation and optimization experiments](growth/README.md) retain
 failed rounds, correctness checks, and real drperf measurements. Two measured
 workloads show 10.69x and 5.34x target-instruction reductions. These case results
 do not establish agent accuracy or complete the with/without-drperf comparison.
+
+The [GPT-6.1 Sol development pilot](../results/paper/agent-ablation/gpt-6.1-sol-pilot/README.md) completed six fresh sessions and 102 workload processes. Both arms recovered the expected main mechanism in all three cases; native attribution and remaining residuals are recorded separately. Independent held-out accuracy and the controlled repeated study remain pending.

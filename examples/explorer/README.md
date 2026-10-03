@@ -83,7 +83,7 @@ each export. No GPU is used.
 To explore the bundled measurements without running DynamoRIO:
 
 ```sh
-bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+tools/drperf-explore extensions/vscode/demo/refined.drperf.json \
   --edit enqueue items scale 2 --assume-first \
   --propose lookup pairs 'last("dequeue", "items") ** 2' \
   --validate extensions/vscode/demo/refined-changed.drperf.json \
@@ -129,7 +129,7 @@ The explorer can now propose this experiment itself. Select relationship
 assumptions and click **Find distinguishing experiments**, or run:
 
 ```sh
-bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+tools/drperf-explore extensions/vscode/demo/refined.drperf.json \
   --assume-first --suggest-experiments -o out/experiments.json
 ```
 
@@ -174,7 +174,7 @@ uses chosen relationships and a fixed call structure, and the measured joint
 case supports that one intervention, not every possible `s,t`.
 
 ```sh
-bin/drperf-explore extensions/vscode/demo/refined.drperf.json \
+tools/drperf-explore extensions/vscode/demo/refined.drperf.json \
   --edit enqueue items scale 2 --edit decode tokens scale 1.5 --assume-first \
   --propose lookup pairs 'last("dequeue", "items") ** 2' \
   --propose dispatch items 'last("dequeue", "items")' \

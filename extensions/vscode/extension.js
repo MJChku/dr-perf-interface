@@ -472,7 +472,7 @@ function activate(context) {
       vscode.workspace.getWorkspaceFolder(raw)?.uri.fsPath ||
       path.dirname(raw.fsPath);
     const script =
-      configuration().get('exporterPath', '') || path.join(root, 'bin', 'drperf-export');
+      configuration().get('exporterPath', '') || path.join(root, 'tools', 'drperf-export');
     const python = configuration().get('pythonPath', 'python3');
     await vscode.window.withProgress(
       {

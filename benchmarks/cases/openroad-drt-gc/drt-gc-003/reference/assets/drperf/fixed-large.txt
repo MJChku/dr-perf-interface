@@ -1,0 +1,9 @@
+$ GC_EMPTYLAYERS=1 bin/drperf build/drt-gc-003/fixed/gcbench scenario=mix size=large
+cost per call, in instructions
+
+  drt-gc-003 = 2,323*nets + 1,842.6*layers + 3,322.8*v + 17,898.3*f + 64,207.1
+      nets: 1,197 drt::FlexGCWorker::initNets [gcbench], 840 std::vector<>::operator[] [gcbench]
+      layers: 344.2 _int_free [libc.so.6], 255 void std::vector<int, std::allocator<int> >… [gcbench], 198.8 boost::polygon::polygon_formation::ScanLine… [gcbench]
+      v: 486.5 __GI___libc_malloc [libc.so.6], 360 _int_free [libc.so.6], 265 boost::polygon::polygon_90_set_data<>::clean [gcbench]
+      f: 2,988 _int_free [libc.so.6], 2,464 __GI___libc_malloc [libc.so.6], 1,715.3 __free [libc.so.6]
+      constant: 41,987 __GI___libc_malloc [libc.so.6], 17,623.3 operator new [libstdc++.so.6.0.33]

@@ -1,0 +1,17 @@
+% Draft rows for tab:optimization-cases (sections/evaluation.tex), from the
+% examples/measured_cases rerun of 2026-10-02.  IDs continue the table's
+% numbering.  Wan rows W6/W7 come from the QUICK grids; rerun without QUICK
+% before fixing the numbers.  Study numbers (CASES.md) in the trailing comment.
+%
+% --- CPU work; these reductions are not application-latency speedups ---
+V5 & vLLM & Replace Python id bounds scans with one C pass; prime the detokenizer with the last seven tokens & Instructions/prompt token (\texttt{process\_inputs}) & 318 & 115 & 64\%\\   % study 315.6 -> 109.2
+V6 & vLLM & Skip \texttt{copy\_to\_gpu} when source and destination alias; fill per-step buffers from numpy views & Instructions/step, fixed part of \texttt{prepare\_inputs} & 486,995 & 223,838 & 54\%\\   % study 464,928 -> 205,310
+V7 & vLLM & Skip the cached-request rebuild when no block was added; hoist bound methods & Instructions/running request & 4,930 & 1,660 & 66\%\\   % study 4,916 -> 1,671
+V8 & vLLM & Cache \texttt{array("i")} rows for prompt ids; memoise batch metadata; batch condense moves & Instructions/prompt token (\texttt{add\_request}) & 266 & 188 & 29\%\\   % study 275.2 -> 202.9
+V9 & vLLM & Skip the early-return call on the output path & Instructions/request-step (\texttt{process\_outputs}) & 8,037 & 6,758 & 16\%\\   % study 8,247.5 -> 6,989.4
+V10 & vLLM & Run the logprob top-k only on rows that asked & Worker-thread instructions/step (\texttt{gather\_logprobs}, 8 requests, 4 asking) & 14.62M & 11.53M & 21\%\\   % study 16.2M -> 11.5M
+W3 & Wan & Memoise the prompt projection on tensor identity & Instructions/call (\texttt{cond\_embed}) & 778,804 & 579,915 & 26\%\\   % study 780,728 -> 564,337
+W4 & Wan & Compute VAE posterior statistics on first read & Instructions/latent element (\texttt{dgd\_init} slope) & 14 & 0 & $>99$\%\\   % study 14.2 -> 0.349
+W5 & Wan & Capture step-callback locals once & Instructions/callback input (\texttt{callback\_step} slope) & 15,369 & 434 & 97\%\\   % study 14,019.5 -> 425
+W6 & Wan & Memoise cross-attention K/V of the fixed prompt & Instructions/attention call, constant (\texttt{attn}) & 457,574 & 351,848 & 23\%\\   % study probe ax_qkv 378,712 -> 137,932 (64%)
+W7 & Wan & Encode the prompt at its real length, re-pad after & Instructions/encode call, 512-token budget (\texttt{t5\_enc}) & 61.0M & 10.35M & 83\%\\   % study 384.8M -> 8.07M at 8 real tokens (98%)

@@ -1,0 +1,30 @@
+--- a/src/chatterbox/models/t3/llama_configs.py
++++ b/src/chatterbox/models/t3/llama_configs.py
+@@ -33,7 +33,7 @@
+ )
+ 
+ GPT2_MEDIUM_CONFIG = {
+-  "activation_function": "gelu_new",
++  "activation_function": "gelu_pytorch_tanh",
+   "architectures": [
+     "GPT2LMHeadModel"
+   ],
+@@ -68,7 +68,7 @@
+ }
+ 
+ GPT2_SMALL_CONFIG = {
+-  "activation_function": "gelu_new",
++  "activation_function": "gelu_pytorch_tanh",
+   "architectures": [
+     "GPT2LMHeadModel"
+   ],
+--- a/src/chatterbox/tts_turbo.py
++++ b/src/chatterbox/tts_turbo.py
+@@ -269,6 +269,7 @@
+         ).to(device=self.device)
+         self.conds = Conditionals(t3_cond, s3gen_ref_dict)
+ 
++    @torch.inference_mode()
+     def generate(
+         self,
+         text,

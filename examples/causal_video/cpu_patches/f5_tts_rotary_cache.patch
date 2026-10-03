@@ -1,0 +1,86 @@
+--- a/src/f5_tts/model/modules.py
++++ b/src/f5_tts/model/modules.py
+@@ -19,9 +19,25 @@
+ import torchaudio
+ from librosa.filters import mel as librosa_mel_fn
+ from torch import nn
+-from x_transformers.x_transformers import apply_rotary_pos_emb
++from x_transformers.x_transformers import apply_rotary_pos_emb as _apply_rotary_pos_emb, rotate_half
+ 
+ from f5_tts.model.utils import is_package_available
++
++
++def apply_rotary_pos_emb(t, freqs, scale=1, precomputed=None):
++    if precomputed is None:
++        return _apply_rotary_pos_emb(t, freqs, scale)
++    # Match x-transformers' operation order and dtype, reusing only sin/cos.
++    with torch.autocast(device_type="cuda", enabled=False):
++        cos, sin = precomputed
++        rot_dim, seq_len, orig_dtype = freqs.shape[-1], t.shape[-2], t.dtype
++        cos, sin = cos[:, -seq_len:, :], sin[:, -seq_len:, :]
++        scale = scale[:, -seq_len:, :] if isinstance(scale, torch.Tensor) else scale
++        if t.ndim == 4 and cos.ndim == 3:
++            cos, sin = cos.unsqueeze(1), sin.unsqueeze(1)
++        t, t_unrotated = t[..., :rot_dim], t[..., rot_dim:]
++        t = (t * cos * scale) + (rotate_half(t) * sin * scale)
++        return torch.cat((t, t_unrotated), dim=-1).type(orig_dtype)
+ 
+ 
+ # raw wav to mel spec
+@@ -497,16 +513,17 @@
+ 
+         # apply rotary position embedding
+         if rope is not None:
+-            freqs, xpos_scale = rope
++            freqs, xpos_scale = rope[:2]
++            precomputed = rope[2] if len(rope) == 3 else None
+             q_xpos_scale, k_xpos_scale = (xpos_scale, xpos_scale**-1.0) if xpos_scale is not None else (1.0, 1.0)
+ 
+             if self.pe_attn_head is not None:
+                 pn = self.pe_attn_head
+-                query[:, :pn, :, :] = apply_rotary_pos_emb(query[:, :pn, :, :], freqs, q_xpos_scale)
+-                key[:, :pn, :, :] = apply_rotary_pos_emb(key[:, :pn, :, :], freqs, k_xpos_scale)
++                query[:, :pn, :, :] = apply_rotary_pos_emb(query[:, :pn, :, :], freqs, q_xpos_scale, precomputed)
++                key[:, :pn, :, :] = apply_rotary_pos_emb(key[:, :pn, :, :], freqs, k_xpos_scale, precomputed)
+             else:
+-                query = apply_rotary_pos_emb(query, freqs, q_xpos_scale)
+-                key = apply_rotary_pos_emb(key, freqs, k_xpos_scale)
++                query = apply_rotary_pos_emb(query, freqs, q_xpos_scale, precomputed)
++                key = apply_rotary_pos_emb(key, freqs, k_xpos_scale, precomputed)
+ 
+         if self.attn_backend == "torch":
+             # mask. e.g. inference got a batch with different target durations, mask out the padding
+--- a/src/f5_tts/model/backbones/dit.py
++++ b/src/f5_tts/model/backbones/dit.py
+@@ -315,6 +315,7 @@
+ 
+     def clear_cache(self):
+         self.text_cond, self.text_uncond = None, None
++        self._get_cache_local().rotary = None
+ 
+     def forward(
+         self,
+@@ -349,7 +350,22 @@
+                 x, cond, text, drop_audio_cond=drop_audio_cond, drop_text=drop_text, cache=cache, audio_mask=mask
+             )
+ 
+-        rope = self.rotary_embed.forward_from_seq_len(seq_len)
++        if cache and not torch.is_grad_enabled():
++            # Sequence geometry is fixed within a sampling request. Keep this
++            # beside the existing per-thread text cache, cleared by clear_cache.
++            local = self._get_cache_local()
++            inv_freq = self.rotary_embed.inv_freq
++            key = (seq_len, inv_freq.device, inv_freq.dtype)
++            cached = getattr(local, "rotary", None)
++            if cached is None or cached[0] != key:
++                freqs, scale = self.rotary_embed.forward_from_seq_len(seq_len)
++                with torch.autocast(device_type="cuda", enabled=False):
++                    rope = (freqs, scale, (freqs.cos(), freqs.sin()))
++                local.rotary = (key, rope)
++            else:
++                rope = cached[1]
++        else:
++            rope = self.rotary_embed.forward_from_seq_len(seq_len)
+ 
+         if self.long_skip_connection is not None:
+             residual = x

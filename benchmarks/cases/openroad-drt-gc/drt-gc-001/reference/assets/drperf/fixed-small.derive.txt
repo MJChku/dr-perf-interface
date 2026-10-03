@@ -1,0 +1,29 @@
+derive drt-gc-001   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vc=0,vm=0,scan=0,fcut=0 x144, vc=16,vm=12,scan=24,fcut=4 x12, vc=32,vm=12,scan=56,fcut=4 x12, vc=32,vm=12,scan=80,fcut=8 x12, vc=48,vm=12,scan=144,fcut=8 x12, vc=64,vm=12,scan=120,fcut=4 x12, vc=64,vm=12,scan=288,fcut=16 x12, vc=80,vm=12,scan=272,fcut=8 x12, vc=80,vm=12,scan=416,fcut=16 x12, vc=96,vm=12,scan=624,fcut=24 x12, vc=112,vm=12,scan=672,fcut=16 x12, vc=112,vm=12,scan=816,fcut=24 x12, vc=128,vm=12,scan=1,088,fcut=32 x12, vc=144,vm=12,scan=1,200,fcut=24 x12, vc=144,vm=12,scan=1,344,fcut=32 x12, vc=176,vm=12,scan=1,856,fcut=32 x12, vc=192,vm=12,scan=2,400,fcut=48 x12, vc=208,vm=12,scan=2,784,fcut=48 x12, vc=240,vm=12,scan=3,552,fcut=48 x12
+  cost(vc, vm, scan, fcut) = 398.6*vc + 2,328.3*vm + 0.0987*scan + 1,166*fcut + 2,378.7        [all vc, vm, scan, fcut]   blocks: 587 affine, 144 constant, 8 irregular (1.1% of cost)
+    irregular blocks, per call: 0 .. 3,056
+    per-vc coefficient by function:
+               199.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+                88.5  __GI___libc_malloc  [libc.so.6]
+                31.7  operator new  [libstdc++.so.6.0.33]
+                26.2  _int_free  [libc.so.6]
+    per-vm coefficient by function:
+               390.9  _int_free  [libc.so.6]
+               385.7  __GI___libc_malloc  [libc.so.6]
+               264.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+               224.4  __free  [libc.so.6]
+    per-scan coefficient by function:
+              0.0598  std::__detail::_Prime_rehash_policy::_M_next_bkt  [libstdc++.so.6.0.33]
+              0.0199  std::__detail::_Prime_rehash_policy::_M_need_rehash  [libstdc++.so.6.0.33]
+               0.019  std::_Hashtable<>::find  [gcbench]
+    per-fcut coefficient by function:
+               320.3  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+               226.1  _int_free  [libc.so.6]
+               188.4  __GI___libc_malloc  [libc.so.6]
+               129.8  __free  [libc.so.6]
+    constant by function:
+             1,083.1  main  [gcbench]
+               438.5  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+               199.2  std::__detail::_Prime_rehash_policy::_M_need_rehash  [libstdc++.so.6.0.33]
+               179.8  _int_free  [libc.so.6]
+

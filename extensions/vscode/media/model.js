@@ -39,7 +39,7 @@
   function validate(model) {
     if (!model || model.schema !== schema)
       throw new Error(
-        'Not a supported drperf explorer report. Export raw measurements with drperf-export.'
+        'Not a supported drperf explorer report. Run your workload with drperf to generate a report.'
       );
     if (
       typeof model.id !== 'string' ||
@@ -1697,6 +1697,24 @@
     };
   }
 
+  function waitTerms(model, region) {
+    const report = model.eventModel;
+    if (!report) return [];
+    const checked = report.interfaceChecks;
+    if (checked) return [
+      ...checked.claims.filter(r => r.region === region).map(r => ({...r, kind:'declared', suffix:''})),
+      ...checked.unexplained.filter(r => r.region === region).map(r => ({...r,
+        status:'unexplained', prefix:'unexplained(', reference:r.refinement === 'null' ? 'waited(null)' : `Wait[${r.producer || '?'}]`, suffix:')'}))
+    ];
+    // Older profiles contain occurrence fits, not explicit indicator claims.
+    // Never turn a fitted constant into an implicitly accepted I[True].
+    const targets = new Set((report.edges || []).filter(e => e.consumer === region).map(e => e.producer || '?'));
+    if ((report.unexplained || []).some(r => r.region === region)) targets.add('?');
+    return [...targets].map(producer => ({producer, status:'unexplained',
+      prefix:'unexplained(', reference:`Wait[${producer}]`, suffix:')',
+      term:`unexplained(Wait[${producer}])`, reason:'No checked explicit wait interface in this report'}));
+  }
+
   function suggestedExperiments(model, region) {
     const suggestions = [];
     if (!region.regimes.length)
@@ -1735,6 +1753,7 @@
     format,
     formula,
     childTerms,
+    waitTerms,
     interfaceExplanation,
     relationship,
     evaluate,

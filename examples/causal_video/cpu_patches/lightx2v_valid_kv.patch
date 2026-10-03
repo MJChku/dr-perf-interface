@@ -1,0 +1,30 @@
+diff --git a/lightx2v/common/kvcache/rolling.py b/lightx2v/common/kvcache/rolling.py
+index 11d6ab8..23c9635 100755
+--- a/lightx2v/common/kvcache/rolling.py
++++ b/lightx2v/common/kvcache/rolling.py
+@@ -245,8 +245,12 @@ class RollingKVCachePool(BaseKVCachePool):
+         self._cpu_update_event(layer_id).record(torch.cuda.current_stream())
+ 
+     def _copy_layer_to_gpu(self, layer_id: int) -> None:
+-        self._k_gpu_buf.copy_(self._k_cpu_layer(layer_id), non_blocking=True)
+-        self._v_gpu_buf.copy_(self._v_cpu_layer(layer_id), non_blocking=True)
++        # Unpopulated capacity is never read by attention. Preserve the physical
++        # ring layout, including its fixed sink, when loading initialized slots.
++        for _, start, length in self._logical_chunks(layer_id, 0, self.get_local_end(layer_id)):
++            end = start + length
++            self._k_gpu_buf[start:end].copy_(self._k_cpu_layer(layer_id)[start:end], non_blocking=True)
++            self._v_gpu_buf[start:end].copy_(self._v_cpu_layer(layer_id)[start:end], non_blocking=True)
+ 
+     def _prefetch_layer(self, layer_id: int) -> None:
+         if layer_id >= self._num_layers:
+@@ -646,9 +650,7 @@ class HybridStepRollingKVCachePool(StepRollingKVCachePool):
+         )
+ 
+     def _copy_layer_to_gpu(self, layer_id: int) -> None:
+-        size = self.cache_size_for_layer(layer_id)
+-        self._k_gpu_buf[:size].copy_(self._k_cpu_layer(layer_id), non_blocking=True)
+-        self._v_gpu_buf[:size].copy_(self._v_cpu_layer(layer_id), non_blocking=True)
++        super()._copy_layer_to_gpu(layer_id)
+ 
+     @property
+     def allocated_bytes(self) -> int:

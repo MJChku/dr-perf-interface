@@ -207,7 +207,7 @@ def check(model, declaration):
     for (region, api), ops in sorted(residual.items()):
         targets = sorted({by_id[p]['region'] or '?' for o in ops for p in o['producers']})
         report['unexplained'].append({'region': region, 'api': api, 'operations': len(ops),
-            'observedProducers': targets, 'term': 'unexplained(Wait[' + ('|'.join(targets) if targets else '?') + '])',
+            'nativeCandidateRegions': targets, 'term': 'unexplained(Wait[?])',
             'examples': [o['id'] for o in ops[:3]]})
     report['coverage'] = {'regionInvocations': len(traces), 'recordedOperations': len(operations),
         'regionOperations': sum(bool(o['region']) for o in operations),

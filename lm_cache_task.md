@@ -42,7 +42,7 @@ ssh icdslab2.epfl.ch "docker run --rm -v ~/ditto_kv_gx/runs/NAME:/r \
   --entrypoint /bin/chmod gx-kimi-k3:latest -R a+rX /r; docker rm NAME"
 rsync -a --exclude lmcache_pkg icdslab2.epfl.ch:~/ditto_kv_gx/runs/NAME/ \
   example/qwen2.5B/lmcache/runs/NAME/
-/home/ubuntu/drperf/bin/drperf-export example/qwen2.5B/lmcache/runs/NAME/raw \
+/home/ubuntu/drperf/tools/drperf-export example/qwen2.5B/lmcache/runs/NAME/raw \
   --source-root "$PWD" --max-trace 100000 -o OUT.drperf.json
 python3 example/qwen2.5B/lmcache/interface_table.py OUT.drperf.json
 ```

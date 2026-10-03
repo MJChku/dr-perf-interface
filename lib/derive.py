@@ -375,11 +375,8 @@ def inclusive_vectors(keys, region, recs):
 
 
 def fmt(x):
-    if x != 0 and abs(x) < 1:        # a small per-unit coefficient is not zero
-        return "%.3g" % x
-    if abs(x - round(x)) < 0.05:
-        return "{:,}".format(int(round(x)))
-    return "{:,.1f}".format(x)
+    """Integer display only; fitting and exported numeric values stay unchanged."""
+    return "{:,}".format(int(round(x)))
 
 
 def fmt_state(names, v):
@@ -413,7 +410,7 @@ def describe(region, names, regimes, trig, slots, top=6):
         rng = regime_range(regimes, r, names)
         share = r.irr_share()
         weak = "   (3 points: weak)" if len(r.values) == 3 and len(regimes) > 1 else ""
-        out.append("  cost(%s) = %s        [%s]   blocks: %d affine, %d constant, %d irregular (%.1f%% of cost)%s" % (
+        out.append("  cost(%s) = %s        [%s]   blocks: %d affine, %d constant, %d irregular (%.0f%% of cost)%s" % (
             ", ".join(names), formula_text(r, names), rng, r.n_affine, r.n_const, r.n_irr, 100 * share, weak))
         for j in sorted(r.dependent):
             if j < k:

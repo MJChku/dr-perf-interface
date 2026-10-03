@@ -1,0 +1,27 @@
+--- a/lightx2v/common/kvcache/rolling.py
++++ b/lightx2v/common/kvcache/rolling.py
+@@ -401,10 +401,8 @@
+     def reset(self) -> None:
+         if self._kv_offload:
+             self.sync_all()
+-            self._k_cpu.zero_()
+-            self._v_cpu.zero_()
+-            self._k_gpu_buf.zero_()
+-            self._v_gpu_buf.zero_()
++            # Valid lengths and ring metadata invalidate all prior contents.
++            # Newly visible slots are written before attention can read them.
+             self._global_end.zero_()
+             self._local_end.zero_()
+             self._init_ring_metadata()
+@@ -670,10 +668,7 @@
+     def reset(self) -> None:
+         if self._kv_offload:
+             self.sync_all()
+-            for tensor in (*self._k_cpu_buckets.values(), *self._v_cpu_buckets.values()):
+-                tensor.zero_()
+-            self._k_gpu_buf.zero_()
+-            self._v_gpu_buf.zero_()
++            # Payload is invalidated by metadata, as in the resident cache.
+             self._global_end.zero_()
+             self._local_end.zero_()
+             self._init_ring_metadata()

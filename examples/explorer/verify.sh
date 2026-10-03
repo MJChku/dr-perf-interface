@@ -15,23 +15,23 @@ DRPERF_EXPLORER_OUT="$OUT/expansion-changed" DRPERF_EXPLORER_REFINED=1 \
     DRPERF_EXPLORER_TOKEN_MULTIPLIER=4 examples/explorer/run.sh
 DRPERF_EXPLORER_OUT="$OUT/joint-changed" DRPERF_EXPLORER_REFINED=1 \
     DRPERF_EXPLORER_SCALE=2 DRPERF_EXPLORER_TOKEN_MULTIPLIER=3 examples/explorer/run.sh
-bin/drperf-explore "$OUT/baseline/pipeline.drperf.json" \
+tools/drperf-explore "$OUT/baseline/pipeline.drperf.json" \
     --edit enqueue items scale 2 --assume-first \
     --validate "$OUT/changed/pipeline.drperf.json" -o "$OUT/initial-scenario.json"
-bin/drperf-explore "$OUT/refined/pipeline.drperf.json" \
+tools/drperf-explore "$OUT/refined/pipeline.drperf.json" \
     --edit enqueue items scale 2 --assume-first \
     --propose lookup pairs 'last("dequeue", "items") ** 2' \
     --validate "$OUT/refined-changed/pipeline.drperf.json" -o "$OUT/refined-scenario.json"
-bin/drperf-explore "$OUT/refined/pipeline.drperf.json" \
+tools/drperf-explore "$OUT/refined/pipeline.drperf.json" \
     --edit decode tokens scale 2 --assume-first --audit-alternatives \
     --propose lookup pairs 'last("dequeue", "items") ** 2' \
     --validate "$OUT/expansion-changed/pipeline.drperf.json" -o "$OUT/expansion-first.json"
-bin/drperf-explore "$OUT/refined/pipeline.drperf.json" \
+tools/drperf-explore "$OUT/refined/pipeline.drperf.json" \
     --edit decode tokens scale 2 --assume-first --audit-alternatives \
     --propose lookup pairs 'last("dequeue", "items") ** 2' \
     --propose dispatch items 'last("dequeue", "items")' \
     --validate "$OUT/expansion-changed/pipeline.drperf.json" -o "$OUT/expansion-checked.json"
-bin/drperf-explore "$OUT/refined/pipeline.drperf.json" \
+tools/drperf-explore "$OUT/refined/pipeline.drperf.json" \
     --edit enqueue items scale 2 --edit decode tokens scale 1.5 --assume-first \
     --propose lookup pairs 'last("dequeue", "items") ** 2' \
     --propose dispatch items 'last("dequeue", "items")' \
@@ -79,12 +79,12 @@ for scale, name in ((1,'call-structure-before'),(2,'call-structure-after')):
         model=explorer.build_model(raw,source_root='.',source_paths=['examples/explorer/call_structure.c'])
         explorer.write_model(model,root/(name+'.drperf.json'))
 PY
-bin/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
+tools/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
     --edit batch items scale 2 --validate "$OUT/call-structure-after.drperf.json" \
     -o "$OUT/call-structure-scenario.json"
-bin/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
+tools/drperf-explore "$OUT/call-structure-before.drperf.json" --recorded \
     --compare "$OUT/call-structure-after.drperf.json" -o "$OUT/call-structure-comparison.json"
-bin/drperf-explore "$OUT/call-structure-before.drperf.json" \
+tools/drperf-explore "$OUT/call-structure-before.drperf.json" \
     --propose batch items 'count("batch") + 1' \
     --check-relations "$OUT/call-structure-after.drperf.json" -o "$OUT/call-structure-relations.json"
 python3 - "$OUT" <<'PY'

@@ -36,7 +36,7 @@ counts (`-exclude_cuda_module gx_cuda.so`) and holds no region, so translating
 it through the code cache buys nothing. DynamoRIO's `-native_exec_list` runs
 listed modules natively and retakes control when they call back or return;
 drperf exposes it as `DRPERF_NATIVE_EXEC_MODULES` (lib/runner.py,
-bin/drperf-dev, README "measurement scope"). With GX it crashes, in both attach
+tools/drperf-dev, README "measurement scope"). With GX it crashes, in both attach
 modes.
 
 ## Where to run it

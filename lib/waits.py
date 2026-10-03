@@ -4,6 +4,7 @@ API semantics identify wait operations. Durations and syscall attempts never
 prove sleeping. Only a deliberately narrow set of producer mappings is resolved;
 all other operations remain visible with an unresolved dependency.
 """
+from bisect import bisect_left
 from collections import Counter, defaultdict
 from pathlib import Path
 import json
@@ -12,6 +13,39 @@ import composition
 
 WAIT_KINDS = {'completion', 'lock', 'condition', 'join', 'receive',
               'event_wait', 'stream_wait', 'device_wait', 'stream_dependency'}
+CPU_WAIT_KINDS = {'completion', 'lock', 'condition', 'join', 'receive'}
+
+
+def application_operations(records, runs):
+    """Keep GX implementation waits separate from target-program obligations.
+
+    Require BOTH the recorded native-GX configuration and an exact recorded
+    caller-module match. Do not infer scope from a filename pattern, duration,
+    instruction exclusion, or lack of syscalls. CUDA API observations and
+    declared checkpoints remain application evidence even when forwarded by GX.
+    The original records are retained unchanged in the capture/sidecar.
+    """
+    modules = {}
+    for index, run in enumerate(runs):
+        meta = run.get('measurement', run.get('data', {}).get('drperf', {}))
+        module = meta.get('excluded_cuda_module')
+        if meta.get('native_gx') is True and isinstance(module, str) and module:
+            modules[f'{index}:{meta.get("pid", 0)}'] = module
+    application, internal = [], Counter()
+    for record in records:
+        module = modules.get(record.get('group'))
+        if (module and record.get('callerModule') == module
+                and record.get('kind') in CPU_WAIT_KINDS):
+            internal[record.get('region', ''), record['api'], module] += 1
+        else:
+            application.append(record)
+    summary = dict(calls=sum(internal.values()),
+        regions=[dict(region=region, api=api, callerModule=module, calls=count)
+                 for (region, api, module), count in sorted(internal.items())],
+        contract='CPU synchronization called directly by the explicitly excluded native-GX '
+                 'module is emulator implementation evidence, not an application wait obligation. '
+                 'Raw records are retained. CUDA synchronization and all other callers remain in scope.')
+    return application, summary
 
 
 def validate_delay_probes(events, runs, original_names=None):
@@ -162,6 +196,55 @@ def analyze(events, complete=True):
                                        'completed sync/create; kernels and imported dependencies may be missing.')
                     item['stream'] = event['object']
         operations.append(item)
+    # A runtime adapter emits begin/end for one logical await, not one record
+    # per suspension or retry. Completion ownership follows the active scope
+    # at resume; logical scope metadata preserves ancestor coverage across steps.
+    beginnings = defaultdict(list)
+    endings = defaultdict(list)
+    api_names = {1: 'asyncio.Lock.acquire', 2: 'asyncio.Semaphore.acquire',
+                 3: 'asyncio.Event.wait', 4: 'asyncio.Condition.wait',
+                 5: 'asyncio.Queue.get', 6: 'asyncio.Queue.put'}
+    for e in events:
+        if e['kind'] in ('runtime_wait_begin', 'runtime_wait_end'):
+            key = e['group'], str(e['object']), str(e['aux'])
+            (beginnings if e['kind'] == 'runtime_wait_begin' else endings)[key].append(e)
+    runtime_intervals = []
+    for key in sorted(beginnings.keys() | endings.keys()):
+        bs, es = beginnings[key], endings[key]
+        end = es[0] if es else bs[0]
+        valid = (len(bs) == len(es) == 1 and bs[0]['end'] < end['start']
+                 and bs[0].get('returned') and end.get('returned'))
+        item = dict(end, kind='runtime_wait', api=api_names.get(int(key[2]), 'runtime.await'),
+                    start=bs[0]['start'] if bs else end['start'],
+                    result=end.get('runtimeStatus', 1), returned=bool(valid),
+                    dependency='unresolved', producers=[], blocking='task',
+                    reason='Runtime-observed logical await; publisher remains user-declared.',
+                    logicalWait=key[1], observation='runtime')
+        # Endpoints before late attach cannot establish a complete await.
+        if not valid:
+            item['reason'] = 'Missing, duplicate, or unordered runtime await endpoints.'
+        operations.append(item)
+        if valid and bs[0].get('asyncScope') and bs[0].get('asyncScope') == end.get('asyncScope'):
+            runtime_intervals.append((bs[0], end, item))
+    # Preserve nested native evidence, but do not charge twice for one observed
+    # runtime primitive. A logical task scope is essential: wall-time intervals
+    # on a shared event-loop thread alone would absorb other tasks' work.
+    intervals = defaultdict(list)
+    for begin, end, item in runtime_intervals:
+        intervals[begin['group'], str(begin['tid']), str(begin['asyncScope'])].append((begin, end, item))
+    for identity, candidates in intervals.items():
+        candidates.sort(key=lambda triple: triple[0]['end'])
+        intervals[identity] = ([triple[0]['end'] for triple in candidates], candidates)
+    for op in operations:
+        if op['kind'] == 'runtime_wait' or not op.get('returned') or not op.get('asyncScope'):
+            continue
+        starts, candidates = intervals.get((op['group'], str(op['tid']), str(op['asyncScope'])), ([], []))
+        index = bisect_left(starts, op['start']) - 1
+        if index >= 0:
+            begin, end, outer = candidates[index]
+            if op['end'] < end['start']:
+                op['runtimeContainer'] = outer['id']
+                outer.setdefault('nativeOperations', []).append(op['id'])
     return operations
 
 
@@ -205,9 +288,11 @@ def build(runs, regions, traces, errors=()):
     # region histories. analyze() disables mappings for every affected object.
     pending = [e for e in events if not e['end'] or not e['returned']]
     schemas = {r['id']: r['states'] for r in regions}
-    if any(e['region'] in schemas for e in pending):
+    application_pending, _ = application_operations(pending, runs['runs'])
+    if any(e['region'] in schemas for e in application_pending):
         warnings.append('Some synchronization calls inside application regions did not return normally.')
     operations = analyze(events, complete=not warnings)
+    operations, implementation = application_operations(operations, runs['runs'])
     counts = Counter((r['group'], str(r['tid']), r['regionSeq'], r['api']) for r in operations)
     summaries = []
     grouped = defaultdict(list)
@@ -230,9 +315,11 @@ def build(runs, regions, traces, errors=()):
             'pendingCalls': [{'id': e['id'], 'region': e['region'], 'api': e['api'],
                               'object': e['object']} for e in pending],
             'unattributedOperations': dict(unattributed),
+            'implementationSynchronization': implementation,
             'probeRequested': probe['requested'],
             'probe': probe['actual'],
-            'coverage': 'Wrapped libc synchronization/socket APIs and selected CUDA runtime APIs; '
+            'coverage': 'Wrapped libc synchronization/socket APIs, selected CUDA runtime APIs, '
+                        'and supported asyncio primitives when the Python adapter is enabled; '
                         'unmarked libc housekeeping is aggregated; semaphore/CUDA object history is retained. '
                         'outer API only. Custom atomics, raw syscalls, CUDA driver-only calls and '
                         'native GX internals are not fully observed. Late attach misses earlier operations.',
@@ -249,18 +336,19 @@ def lines(report):
     out = ['native synchronization observations (instrumented evidence, not semantic dependency declarations or latency):']
     if report['probe']:
         out.append('  DELAY PROBE: perturbed execution; keep separate from baseline cost fits.')
-    by_id = {r['id']: r for r in report['events']}
     for row in report['regions']:
         relation = row['countFormula']
         count = composition.affine_text(relation, row['states']) if relation else '?'
         out.append(f'  {row["region"] or "<outside regions>"}: {row["api"]} [{row["kind"]}] '
                    f'{row["calls"]} calls; per-region-call = {count}; '
                    f'{row["matched"]} matched, {row["unresolved"]} unresolved')
-    edges = Counter((r['region'], by_id[p]['region'], r['dependency'])
-                    for r in report['operations'] for p in r['producers'])
-    for (consumer, producer, kind), count in sorted(edges.items()):
-        out.append(f'    {consumer or "<outside regions>"} waits on completion published by '
-                   f'{producer or "<outside regions>"}: {count} observations ({kind})')
+    # Matching a native object or earlier stream submission is evidence for
+    # refinement, not a declared region publisher. Only event_model may render
+    # semantic waited/publish dependencies (the graph follows the same rule).
+    matches = Counter(r['dependency'] for r in report['operations'] if r['producers'])
+    if matches:
+        out.append('  Native API matches (not declared region dependencies): ' + ', '.join(
+            f'{kind}: {count}' for kind, count in sorted(matches.items())))
     out += ['  note: ' + w for w in report['warnings']]
     if report.get('pendingCalls'):
         out.append(f'  {len(report["pendingCalls"])} unfinished synchronization calls retained; '
@@ -268,4 +356,8 @@ def lines(report):
     if report.get('unattributedOperations'):
         out.append('  outside application regions (aggregated): '+', '.join(
             f'{api}: {count}' for api, count in sorted(report['unattributedOperations'].items())))
+    internal = report.get('implementationSynchronization', {})
+    if internal.get('calls'):
+        out.append(f'  native-GX implementation: {internal["calls"]} CPU synchronization calls '
+                   'retained separately from application wait obligations.')
     return out

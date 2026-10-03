@@ -1,0 +1,385 @@
+diff -ruN a/src/FlexGC.h b/src/FlexGC.h
+--- a/src/FlexGC.h
++++ b/src/FlexGC.h
+@@ -8,6 +8,7 @@
+ #pragma once
+ 
+ #include <cstdint>
++#include <cstdlib>
+ #include <functional>
+ #include <map>
+ #include <memory>
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -141,6 +141,184 @@
+   }
+ }
+ 
++// ------------------------------------------------------------ GC_EMPTYLAYERS
++//
++// initNet() runs four passes and each walks every layer of the technology
++// (21 here), building polygon sets, extracting polygons, computing maximal
++// rectangles and constructing per-layer std::sets for all of them, while a
++// net's shapes usually sit on one to three layers. With the gate on:
++//  a) the layers where the net has content (a route or fixed polygon, a route
++//     or fixed cut rectangle, or a pin) are recorded once per initNet(), and
++//     every per-layer loop of the passes walks only those, in ascending order;
++//  b) within them, reads of a kind that holds nothing are skipped: get() of an
++//     empty fixed polygon set (fixed edges, vertex cache),
++//     get_max_rectangles() of it, and the pin merge of a layer without
++//     polygons (its vector of merge sets is sized at the first layer that has
++//     polygons);
++//  c) the per-layer std::set vectors of the edge and maximal-rectangle passes
++//     and the corner pass's vertex-cache vector are per-thread, handed out
++//     empty and emptied again, on the visited layers, when the pass ends.
++//
++// Equivalence: a polygon set without vertex data was never added to, so it is
++// in its default state; get(), get_max_rectangles() and += of it produce
++// nothing and change nothing. A layer without content has no polygon, cut
++// rectangle or pin, so every loop body over it does nothing: no pin is
++// created, no fixed edge, rectangle or vertex is recorded, and no pin is
++// visited. Pins are only added on layers that have polygons or cut
++// rectangles, and no shape list changes during initNet(), so the recorded
++// layers stay exactly the layers with content. Layers are visited in the same
++// ascending order, so pins get the same ids and every container the same
++// insertion order. Reused sets and caches are empty when handed out, as fresh
++// ones are, and only visited layers are written. More than 64 layers, or a
++// pass called outside initNet(): every layer is walked (b and c still apply).
++// Gate read once from the environment: unset or 0 = original.
++namespace {
++
++bool emptyLayersEnabled()
++{
++  static const bool enabled = [] {
++    const char* v = std::getenv("GC_EMPTYLAYERS");
++    return v != nullptr && v[0] != '\0' && v[0] != '0';
++  }();
++  return enabled;
++}
++
++// The layers one pass visits: all of them, or the set bits of mask.
++struct LayerRange
++{
++  uint64_t mask = 0;
++  bool active = false;
++  int numLayers = 0;
++
++  template <typename F>
++  void forEach(F&& f) const
++  {
++    if (active) {
++      for (uint64_t m = mask; m != 0; m &= m - 1) {
++        f(__builtin_ctzll(m));
++      }
++    } else {
++      for (int i = 0; i < numLayers; i++) {
++        f(i);
++      }
++    }
++  }
++};
++
++struct EmptyLayersState
++{
++  const gcNet* net = nullptr;
++  int numLayers = 0;
++  uint64_t mask = 0;
++};
++thread_local EmptyLayersState* emptyLayersActive = nullptr;
++
++inline bool layerHasContent(const gcNet* net, int i)
++{
++  return !net->getPolygons(i, false).value().empty()
++         || !net->getPolygons(i, true).value().empty()
++         || !net->getRectangles(i, false).empty()
++         || !net->getRectangles(i, true).empty() || !net->getPins(i).empty();
++}
++
++// Valid for one initNet(): records the layers with content when it begins.
++class EmptyLayersScope
++{
++ public:
++  EmptyLayersScope(const gcNet* net, int numLayers)
++  {
++    if (!emptyLayersEnabled() || numLayers > 64) {
++      return;
++    }
++    uint64_t mask = 0;
++    for (int i = 0; i < numLayers; i++) {
++      if (layerHasContent(net, i)) {
++        mask |= uint64_t(1) << i;
++      }
++    }
++    state_.net = net;
++    state_.numLayers = numLayers;
++    state_.mask = mask;
++    prev_ = emptyLayersActive;
++    emptyLayersActive = &state_;
++    active_ = true;
++  }
++  ~EmptyLayersScope()
++  {
++    if (active_) {
++      emptyLayersActive = prev_;
++    }
++  }
++  EmptyLayersScope(const EmptyLayersScope&) = delete;
++  EmptyLayersScope& operator=(const EmptyLayersScope&) = delete;
++
++ private:
++  EmptyLayersState state_;
++  EmptyLayersState* prev_ = nullptr;
++  bool active_ = false;
++};
++
++LayerRange layersOf(const gcNet* net, int numLayers)
++{
++  LayerRange range;
++  range.numLayers = numLayers;
++  const EmptyLayersState* st = emptyLayersActive;
++  if (st != nullptr && st->net == net && st->numLayers == numLayers) {
++    range.mask = st->mask;
++    range.active = true;
++  }
++  return range;
++}
++
++// A vector of numLayers default-constructed T for one pass: fresh when the
++// gate is off, otherwise a per-thread vector handed out with every element
++// empty and emptied again, on the visited layers, when the pass ends.
++template <typename T>
++class LayerScratch
++{
++ public:
++  LayerScratch(int numLayers, const LayerRange& layers)
++      : layers_(layers), own_(emptyLayersEnabled() ? 0 : numLayers)
++  {
++    if (!emptyLayersEnabled()) {
++      return;
++    }
++    thread_local Slot slot;
++    if (slot.busy) {  // nested use on this thread: a fresh vector
++      own_.resize(numLayers);
++      return;
++    }
++    slot.busy = true;
++    slot_ = &slot;
++    if (static_cast<int>(slot.v.size()) != numLayers) {
++      slot.v.clear();
++      slot.v.resize(numLayers);
++    }
++  }
++  ~LayerScratch()
++  {
++    if (slot_ == nullptr) {
++      return;
++    }
++    layers_.forEach([&](int i) { slot_->v[i] = T(); });
++    slot_->busy = false;
++  }
++  LayerScratch(const LayerScratch&) = delete;
++  LayerScratch& operator=(const LayerScratch&) = delete;
++  std::vector<T>& get() { return slot_ != nullptr ? slot_->v : own_; }
++
++ private:
++  struct Slot
++  {
++    std::vector<T> v;
++    bool busy = false;
++  };
++  const LayerRange layers_;
++  Slot* slot_ = nullptr;
++  std::vector<T> own_;
++};
++}  // namespace
++
+ // ------------------------------------------------------------ pins
+ 
+ // Pins are the merged polygons of a routing layer (route and fixed shapes
+@@ -148,9 +326,18 @@
+ void FlexGCWorker::initNet_pins_polygon(gcNet* net)
+ {
+   int numLayers = getTech()->numLayers();
+-  std::vector<gtl::polygon_90_set_data<frCoord>> layerPolys(numLayers);
++  const LayerRange layers = layersOf(net, numLayers);
++  std::vector<gtl::polygon_90_set_data<frCoord>> layerPolys(
++      layers.active ? 0 : numLayers);
+   std::vector<gtl::polygon_90_with_holes_data<frCoord>> polys;
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
++    if (layers.active && net->getPolygons(i, false).value().empty()
++        && net->getPolygons(i, true).value().empty()) {
++      return;  // no polygon on this layer: the merge makes no pin
++    }
++    if (layerPolys.empty()) {
++      layerPolys.resize(numLayers);
++    }
+     polys.clear();
+     using gtl::operators::operator+=;
+     layerPolys[i] += net->getPolygons(i, false);
+@@ -159,15 +346,15 @@
+     for (auto& poly : polys) {
+       net->addPin(poly, i);
+     }
+-  }
+-  for (int i = 0; i < numLayers; i++) {
++  });
++  layers.forEach([&](int i) {
+     for (auto& rect : net->getRectangles(i, false)) {
+       net->addPin(rect, i);
+     }
+     for (auto& rect : net->getRectangles(i, true)) {
+       net->addPin(rect, i);
+     }
+-  }
++  });
+ }
+ 
+ // ------------------------------------------------------------ edges
+@@ -198,8 +385,12 @@
+     PointPairSets& fixedPolygonEdges)
+ {
+   int numLayers = getTech()->numLayers();
++  const LayerRange layers = layersOf(net, numLayers);
+   std::vector<gtl::polygon_90_with_holes_data<frCoord>> polys;
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
++    if (emptyLayersEnabled() && net->getPolygons(i, true).value().empty()) {
++      return;  // no fixed polygon
++    }
+     polys.clear();
+     net->getPolygons(i, true).get(polys);
+     for (auto& poly : polys) {
+@@ -209,9 +400,9 @@
+         insertRingEdges(fixedPolygonEdges[i], holeIt->begin(), holeIt->end());
+       }
+     }
+-  }
++  });
+   // cut rectangles are not merged: their four edges as they are
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
+     for (auto& rect : net->getRectangles(i, true)) {
+       const odb::Point ll(gtl::xl(rect), gtl::yl(rect));
+       const odb::Point lr(gtl::xh(rect), gtl::yl(rect));
+@@ -222,7 +413,7 @@
+       fixedPolygonEdges[i].insert(std::make_pair(ur, ul));
+       fixedPolygonEdges[i].insert(std::make_pair(ul, ll));
+     }
+-  }
++  });
+ }
+ 
+ // One closed ring of gcSegments for a polygon outline or hole.
+@@ -267,9 +458,12 @@
+ void FlexGCWorker::initNet_pins_polygonEdges(gcNet* net)
+ {
+   int numLayers = getTech()->numLayers();
+-  PointPairSets fixedPolygonEdges(numLayers);
++  const LayerRange layers = layersOf(net, numLayers);
++  LayerScratch<std::set<std::pair<odb::Point, odb::Point>>> edgeSets(numLayers,
++                                                                   layers);
++  PointPairSets& fixedPolygonEdges = edgeSets.get();
+   initNet_pins_polygonEdges_getFixedPolygonEdges(net, fixedPolygonEdges);
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
+     for (auto& pin : net->getPins(i)) {
+       auto poly = pin->getPolygon();
+       initNet_pins_polygonEdges_helper(
+@@ -284,7 +478,7 @@
+                                          fixedPolygonEdges);
+       }
+     }
+-  }
++  });
+ }
+ 
+ // ------------------------------------------------------------ corners
+@@ -414,7 +608,10 @@
+         auto& slot = (*vcache)[layerNum];
+         if (!slot) {
+           slot = std::make_unique<PtSet>();
+-          collectPolygonVertices(net->getPolygons(true)[layerNum], *slot);
++          if (!emptyLayersEnabled()
++              || !net->getPolygons(true)[layerNum].value().empty()) {
++            collectPolygonVertices(net->getPolygons(true)[layerNum], *slot);
++          }
+         }
+         currCorner->setFixed(
+             slot->find({currCorner->x(), currCorner->y()}) != slot->end());
+@@ -438,12 +635,14 @@
+ void FlexGCWorker::initNet_pins_polygonCorners(gcNet* net)
+ {
+   int numLayers = getTech()->numLayers();
+-  VertexCache vcache(numLayers);
+-  for (int i = 0; i < numLayers; i++) {
++  const LayerRange layers = layersOf(net, numLayers);
++  LayerScratch<std::unique_ptr<PtSet>> vcacheScratch(numLayers, layers);
++  VertexCache& vcache = vcacheScratch.get();
++  layers.forEach([&](int i) {
+     for (auto& pin : net->getPins(i)) {
+       initNet_pins_polygonCorners_helper(net, pin.get(), &vcache);
+     }
+-  }
++  });
+ }
+ 
+ // ------------------------------------------------------------ max rectangles
+@@ -453,10 +652,13 @@
+     PointPairSets& fixedMaxRectangles)
+ {
+   int numLayers = getTech()->numLayers();
++  const LayerRange layers = layersOf(net, numLayers);
+   std::vector<gtl::rectangle_data<frCoord>> rects;
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
+     rects.clear();
+-    gtl::get_max_rectangles(rects, net->getPolygons(i, true));
++    if (!emptyLayersEnabled() || !net->getPolygons(i, true).value().empty()) {
++      gtl::get_max_rectangles(rects, net->getPolygons(i, true));
++    }
+     for (auto& rect : rects) {
+       fixedMaxRectangles[i].insert(
+           std::make_pair(odb::Point(gtl::xl(rect), gtl::yl(rect)),
+@@ -467,7 +669,7 @@
+           std::make_pair(odb::Point(gtl::xl(rect), gtl::yl(rect)),
+                          odb::Point(gtl::xh(rect), gtl::yh(rect))));
+     }
+-  }
++  });
+ }
+ 
+ void FlexGCWorker::initNet_pins_maxRectangles_helper(
+@@ -508,10 +710,13 @@
+ void FlexGCWorker::initNet_pins_maxRectangles(gcNet* net)
+ {
+   int numLayers = getTech()->numLayers();
+-  PointPairSets fixedMaxRectangles(numLayers);
++  const LayerRange layers = layersOf(net, numLayers);
++  LayerScratch<std::set<std::pair<odb::Point, odb::Point>>> maxRectSets(
++      numLayers, layers);
++  PointPairSets& fixedMaxRectangles = maxRectSets.get();
+   initNet_pins_maxRectangles_getFixedMaxRectangles(net, fixedMaxRectangles);
+   std::vector<gtl::rectangle_data<frCoord>> rects;
+-  for (int i = 0; i < numLayers; i++) {
++  layers.forEach([&](int i) {
+     for (auto& pin : net->getPins(i)) {
+       rects.clear();
+       gtl::get_max_rectangles(rects, *(pin->getPolygon()));
+@@ -520,13 +725,14 @@
+             net, pin.get(), rect, i, fixedMaxRectangles);
+       }
+     }
+-  }
++  });
+ }
+ 
+ // ------------------------------------------------------------ drivers
+ 
+ void FlexGCWorker::initNet(gcNet* net)
+ {
++  EmptyLayersScope emptyLayersScope(net, getTech()->numLayers());
+   initNet_pins_polygon(net);
+   initNet_pins_polygonEdges(net);
+   initNet_pins_polygonCorners(net);

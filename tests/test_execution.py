@@ -74,13 +74,28 @@ class ExecutionGraph(unittest.TestCase):
         self.assertEqual(len(m['waits']['operations']), 1)
 
     def test_root_retains_external_wait_producer_without_thread_nodes(self):
-        g = execution.build(self.wait_model(), 'consumer')
+        m=self.wait_model()
+        m['waits']['events'].append(m['waits']['operations'][0])
+        m['eventModel']={'edges':[dict(waited='wait',publication='publish',event='1',generation='1',status='ordered')]}
+        g = execution.build(m, 'consumer')
         self.assertEqual([(e['kind'], e['source'], e['target']) for e in g['edges']],
                          [('wait', 'consumer', 'producer')])
         nodes = {n['id']: n for n in g['nodes']}
         self.assertTrue(nodes['producer']['dependencyOnly'])
         self.assertFalse(nodes['consumer']['dependencyOnly'])
         self.assertEqual(g['edges'][0]['evidence'][0]['producer'], 'publish')
+
+    def test_native_matches_never_create_region_edges_or_external_nodes(self):
+        for dependency in ('observed-stream-prefix','matched-event-record','matched-completion'):
+            m=self.wait_model()
+            m['waits']['operations'][0]['dependency']=dependency
+            original=copy.deepcopy(m)
+            g=execution.build(m,'consumer')
+            self.assertEqual(g['edges'],[])
+            self.assertEqual([n['id'] for n in g['nodes']],['consumer'])
+            self.assertEqual(g['nodes'][0]['waitOperations']['sem_wait'],1)
+            self.assertEqual(m,original)
+            self.assertNotIn('producer',execution.dot(g))
 
     def test_partial_or_missing_producer_does_not_invent_edge(self):
         for partial in (True, False):

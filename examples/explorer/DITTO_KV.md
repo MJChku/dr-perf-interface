@@ -128,7 +128,7 @@ all nine process reports. Do not silently omit a failed worker.
 
 ```bash
 cd /home/ubuntu/compression/ditto_kv
-/home/ubuntu/drperf/bin/drperf-export \
+/home/ubuntu/drperf/tools/drperf-export \
   "exp/gx_kimi/runs/$DITTO_PROFILE_RUN/raw" \
   --source-root "$PWD" --max-trace 100000 \
   -o "exp/gx_kimi/runs/$DITTO_PROFILE_RUN/$DITTO_PROFILE_PRESET.drperf.json"
@@ -185,9 +185,9 @@ VS Code extension change is required. Fits still describe only observed states.
 cd /home/ubuntu/compression/ditto_kv
 qwen_run=exp/gx_kimi/runs/drperf-offline-qwen-late16-evictable-20260923-042415
 kimi_run=exp/gx_kimi/runs/drperf-offline-kimi-late3-final-20260923-040329
-/home/ubuntu/drperf/bin/drperf-export "$qwen_run/raw" \
+/home/ubuntu/drperf/tools/drperf-export "$qwen_run/raw" \
   --source-root "$PWD" --max-trace 100000 -o "$qwen_run/qwen.drperf.json"
-/home/ubuntu/drperf/bin/drperf-export "$kimi_run/raw" \
+/home/ubuntu/drperf/tools/drperf-export "$kimi_run/raw" \
   --source-root "$PWD" --max-trace 100000 -o "$kimi_run/kimi.drperf.json"
 ```
 

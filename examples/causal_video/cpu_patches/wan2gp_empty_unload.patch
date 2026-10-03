@@ -1,0 +1,13 @@
+--- a/mmgp/offload.py
++++ b/mmgp/offload.py
+@@ -3238,7 +3238,9 @@
+         # new_model_id = getattr(module, "_mm_id") 
+         # do not always unload existing models if it is more efficient to keep in them in the GPU 
+         # (e.g: small modules whose calls are text encoders) 
+-        if not self.can_model_be_cotenant(model_id) :
++        skip_empty = os.environ.get("MMGP_SKIP_EMPTY_UNLOAD") == "1"
++        if (not self.can_model_be_cotenant(model_id)
++                and (self.active_models_ids or not skip_empty)):
+             self.unload_all()
+         self.gpu_load(model_id)
+ 

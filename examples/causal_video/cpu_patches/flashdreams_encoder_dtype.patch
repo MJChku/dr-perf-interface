@@ -1,0 +1,20 @@
+diff --git a/flashdreams/flashdreams/infra/encoder/text/umt5.py b/flashdreams/flashdreams/infra/encoder/text/umt5.py
+index 40681d4..e325f64 100644
+--- a/flashdreams/flashdreams/infra/encoder/text/umt5.py
++++ b/flashdreams/flashdreams/infra/encoder/text/umt5.py
+@@ -53,6 +53,7 @@ class UMT5TextEncoderConfig(EncoderConfig):
+     """HF repo id or local snapshot path."""
+ 
+     dtype: torch.dtype = torch.bfloat16
++    load_in_requested_dtype: bool = False
+ 
+ 
+ class UMT5TextEncoder(Encoder):
+@@ -81,6 +82,7 @@ class UMT5TextEncoder(Encoder):
+                 config.model_id_or_local_path,
+                 subfolder="text_encoder",
+                 local_files_only=True,
++                dtype=config.dtype if config.load_in_requested_dtype else None,
+             ),
+         )
+         self.text_encoder.eval().requires_grad_(False)

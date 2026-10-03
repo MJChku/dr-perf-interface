@@ -12,9 +12,12 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('profile')
 parser.add_argument('-o','--output',help='Write checked event model JSON')
 parser.add_argument('--plan',action='store_true',help='Suggest per-publisher second-run delays')
+parser.add_argument('--wait-interfaces', help='Explicit wait-interface declaration JSON (otherwise use embedded declarations)')
 args=parser.parse_args()
 try:
     model=explorer.load_model(args.profile, wait_evidence=True)
+    if args.wait_interfaces:
+        model['waitDeclarations'] = json.loads(Path(args.wait_interfaces).read_text())
     report=event_model.check(model)
     if report is None:
         parser.exit(2,'No event annotations were captured.\n')
@@ -27,12 +30,24 @@ try:
     for e in report['edges']:
         print(f"  {e['consumer']} -> {e['producer'] or '?'}: {e['status']} (event {e['event']}, generation {e['generation']})")
     for v in report['violations']+report['unverified']:print(' ',v['reason'])
-    if report['unexplained']:print('Native synchronization without a resolved publisher (separate from declared edges):')
-    for r in report['unexplained']:print(f"  {r['region']}: {r['count']} {r['api']} — native publisher unresolved")
+    coverage = report['coverage']
+    print('Annotation coverage:', coverage['status'])
+    if 'obligations' in coverage:
+        print(f"  {coverage['covered']}/{coverage['obligations']} wait obligations covered; "
+              f"{coverage['nativeCalls']} native calls, {coverage.get('runtimeCalls', 0)} runtime calls "
+              f"(retry chains grouped; {coverage.get('nestedNativeCalls', 0)} nested native calls retained as evidence)")
+    interfaces = report['interfaceChecks']
+    for row in interfaces['claims']:
+        print(f"  {row['region']}: {row['term']} [{row['status']}]")
+        if row.get('refinement') == 'null':
+            print('    reason (manual review):', row['reason'])
+    for row in interfaces['unexplained']:
+        print(f"  {row['region']}: {row['term']} ({row['count']} observations)")
     if args.plan:
         for p in event_model.probe_plan(report):
             print(f"  Probe: DRPERF_WAITS=1 DRPERF_WAIT_DELAY_KIND=event DRPERF_WAIT_DELAY_REGION={p['region']} DRPERF_WAIT_DELAY_MS={p['delayMs']}")
     print(report['contract'])
-    sys.exit(1 if report['violations'] else 0 if report['status']=='ordered' else 2)
+    sys.exit(1 if report['violations'] or interfaces['status']=='invalid' else
+             0 if report['status']=='ordered' and coverage['status']=='covered' and interfaces['status']=='checked' else 2)
 except (OSError,ValueError,KeyError,TypeError) as error:
     parser.error(str(error))

@@ -1,0 +1,31 @@
+derive drt-gc-003   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: nets=4,layers=8,v=32,f=2 x4, nets=4,layers=8,v=40,f=4 x4, nets=4,layers=8,v=56,f=2 x4, nets=4,layers=8,v=64,f=4 x4, nets=6,layers=16,v=64,f=4 x4, nets=6,layers=16,v=80,f=8 x4, nets=6,layers=16,v=112,f=4 x4, nets=6,layers=16,v=128,f=8 x4, nets=10,layers=32,v=128,f=8 x4, nets=10,layers=32,v=160,f=16 x4, nets=10,layers=32,v=224,f=8 x4, nets=10,layers=32,v=256,f=16 x4, nets=12,layers=8,v=32,f=2 x4, nets=12,layers=8,v=40,f=4 x4, nets=12,layers=8,v=56,f=2 x4, nets=12,layers=8,v=64,f=4 x4, nets=14,layers=16,v=64,f=4 x4, nets=14,layers=16,v=80,f=8 x4, nets=14,layers=16,v=112,f=4 x4, nets=14,layers=16,v=128,f=8 x4, nets=18,layers=32,v=128,f=8 x4, nets=18,layers=32,v=160,f=16 x4, nets=18,layers=32,v=224,f=8 x4, nets=18,layers=32,v=256,f=16 x4, nets=28,layers=8,v=32,f=2 x4, nets=28,layers=8,v=40,f=4 x4, nets=28,layers=8,v=56,f=2 x4, nets=28,layers=8,v=64,f=4 x4, nets=30,layers=16,v=64,f=4 x4, nets=30,layers=16,v=80,f=8 x4, nets=30,layers=16,v=112,f=4 x4, nets=30,layers=16,v=128,f=8 x4, nets=34,layers=32,v=128,f=8 x4, nets=34,layers=32,v=160,f=16 x4, nets=34,layers=32,v=224,f=8 x4, nets=34,layers=32,v=256,f=16 x4
+  cost(nets, layers, v, f) = 20,489*nets + 918.1*layers + 3,291.1*v + 18,175.3*f + 19,518.4        [all nets, layers, v, f]   blocks: 1521 affine, 81 constant, 0 irregular (0.0% of cost)
+    per-nets coefficient by function:
+               5,311  drt::FlexGCWorker::initNets  [gcbench]
+               4,410  boost::polygon::get_polygons<>  [gcbench]
+               2,897  drt::FlexGCWorker::initNet_pins_maxRectangles  [gcbench]
+               2,646  boost::polygon::polygon_formation::ScanLineToPolygonItrs<>::processEdg  [gcbench]
+    per-layers coefficient by function:
+               330.7  _int_free  [libc.so.6]
+                 255  void std::vector<int, std::allocator<int> >::_M_realloc_insert<int con  [gcbench]
+               189.9  __free  [libc.so.6]
+              -179.5  std::_Rb_tree_rebalance_for_erase  [libstdc++.so.6.0.33]
+    per-v coefficient by function:
+               486.5  __GI___libc_malloc  [libc.so.6]
+                 360  _int_free  [libc.so.6]
+               264.8  boost::polygon::polygon_90_set_data<>::clean  [gcbench]
+               206.7  __free  [libc.so.6]
+    per-f coefficient by function:
+               2,988  _int_free  [libc.so.6]
+               2,464  __GI___libc_malloc  [libc.so.6]
+             1,715.3  __free  [libc.so.6]
+               885.3  operator new  [libstdc++.so.6.0.33]
+    constant by function:
+             8,157.7  __GI___libc_malloc  [libc.so.6]
+               3,744  _int_free  [libc.so.6]
+             3,237.3  operator new  [libstdc++.so.6.0.33]
+             2,149.3  __free  [libc.so.6]
+  predict out/drt-gc-003/original-large (nets=18,layers=64,v=256,f=16 x4, nets=18,layers=64,v=320,f=32 x4, nets=18,layers=64,v=448,f=16 x4, nets=18,layers=64,v=512,f=32 x4, nets=34,layers=128,v=512,f=32 x4, nets=34,layers=128,v=640,f=64 x4, nets=34,layers=128,v=896,f=32 x4, nets=34,layers=128,v=1,024,f=64 x4, nets=66,layers=256,v=1,024,f=64 x4, nets=66,layers=256,v=1,280,f=128 x4, nets=66,layers=256,v=1,792,f=64 x4, nets=66,layers=256,v=2,048,f=128 x4, nets=82,layers=64,v=256,f=16 x4, nets=82,layers=64,v=320,f=32 x4, nets=82,layers=64,v=448,f=16 x4, nets=82,layers=64,v=512,f=32 x4, nets=98,layers=128,v=512,f=32 x4, nets=98,layers=128,v=640,f=64 x4, nets=98,layers=128,v=896,f=32 x4, nets=98,layers=128,v=1,024,f=64 x4, nets=130,layers=256,v=1,024,f=64 x4, nets=130,layers=256,v=1,280,f=128 x4, nets=130,layers=256,v=1,792,f=64 x4, nets=130,layers=256,v=2,048,f=128 x4, nets=210,layers=64,v=256,f=16 x4, nets=210,layers=64,v=320,f=32 x4, nets=210,layers=64,v=448,f=16 x4, nets=210,layers=64,v=512,f=32 x4, nets=226,layers=128,v=512,f=32 x4, nets=226,layers=128,v=640,f=64 x4, nets=226,layers=128,v=896,f=32 x4, nets=226,layers=128,v=1,024,f=64 x4, nets=258,layers=256,v=1,024,f=64 x4, nets=258,layers=256,v=1,280,f=128 x4, nets=258,layers=256,v=1,792,f=64 x4, nets=258,layers=256,v=2,048,f=128 x4):
+    [all nets, layers, v, f] formula 961,567,168 vs measured 979,930,912 (-1.9%) over 144 triggers
+

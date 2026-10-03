@@ -32,6 +32,7 @@ typedef struct {
     PyObject *name;   /* bytes */
     PyObject *states; /* list of (bytes, int): declared states, all part of the key; or NULL */
     PyObject *extra;  /* list of (bytes, bytes) or NULL */
+    int waited_null_on_exit;
 } RegionObject;
 
 static int
@@ -64,6 +65,7 @@ Region_init(RegionObject *self, PyObject *args, PyObject *kwds)
         return -1;
     if (extra != Py_None && check_pairs(extra, 0, "extra") < 0)
         return -1;
+    self->waited_null_on_exit = 0;
     Py_INCREF(name);
     Py_XSETREF(self->name, name);
     if (states == Py_None) {
@@ -90,10 +92,13 @@ Region_dealloc(RegionObject *self)
     Py_TYPE(self)->tp_free((PyObject *)self);
 }
 
+static int capture_started;
+static _Thread_local unsigned int region_depth;
+
 #define STACK_KEY_STATES 8 /* allocation-free fast path, not a limit */
 
-static PyObject *
-Region_enter(RegionObject *self, PyObject *Py_UNUSED(ignored))
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_region_enter(RegionObject *self, PyObject *Py_UNUSED(ignored))
 {
     const char *name = PyBytes_AS_STRING(self->name);
     Py_ssize_t n = self->states != NULL ? PyList_GET_SIZE(self->states) : 0;
@@ -148,15 +153,28 @@ Region_enter(RegionObject *self, PyObject *Py_UNUSED(ignored))
                            PyBytes_AS_STRING(PyTuple_GET_ITEM(t, 1)));
         }
     }
+    capture_started = 1;
+    region_depth++;
     Py_INCREF(self);
     return (PyObject *)self;
 }
 
-static PyObject *
-Region_exit(RegionObject *self, PyObject *Py_UNUSED(args))
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_region_exit(RegionObject *self, PyObject *Py_UNUSED(args))
 {
+    if (self->waited_null_on_exit)
+        perfmark_waited_null();
     perfmark_end(PyBytes_AS_STRING(self->name));
+    if (region_depth) region_depth--;
     Py_RETURN_FALSE;
+}
+
+static PyObject *
+Region_waited_null_on_exit(RegionObject *self, PyObject *Py_UNUSED(ignored))
+{
+    self->waited_null_on_exit = 1;
+    Py_INCREF(self);
+    return (PyObject *)self;
 }
 
 static PyObject *
@@ -173,9 +191,11 @@ Region_state(RegionObject *self, PyObject *args)
 }
 
 static PyMethodDef Region_methods[] = {
-    { "__enter__", (PyCFunction)Region_enter, METH_NOARGS, "open the region" },
-    { "__exit__", (PyCFunction)Region_exit, METH_VARARGS, "close the region" },
+    { "__enter__", (PyCFunction)perfmark_py_region_enter, METH_NOARGS, "open the region" },
+    { "__exit__", (PyCFunction)perfmark_py_region_exit, METH_VARARGS, "close the region" },
     { "state", (PyCFunction)Region_state, METH_VARARGS, "attach an extra state to the open region" },
+    { "waited_null_on_exit", (PyCFunction)Region_waited_null_on_exit, METH_NOARGS,
+      "explicitly emit waited(null) immediately before exit, including exception exit; requires an interface reason and indicator" },
     { NULL, NULL, 0, NULL }
 };
 
@@ -192,8 +212,8 @@ static PyTypeObject RegionType = {
     .tp_new = PyType_GenericNew,
 };
 
-static PyObject *
-mod_begin(PyObject *Py_UNUSED(m), PyObject *args)
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_begin(PyObject *Py_UNUSED(m), PyObject *args)
 {
     PyObject *no, *so = NULL;
     const char *name, *sname = "";
@@ -205,11 +225,13 @@ mod_begin(PyObject *Py_UNUSED(m), PyObject *args)
     if (so != NULL && (sname = as_cstr(so)) == NULL)
         return NULL;
     perfmark_begin(name, sname, value);
+    capture_started = 1;
+    region_depth++;
     Py_RETURN_NONE;
 }
 
-static PyObject *
-mod_end(PyObject *Py_UNUSED(m), PyObject *args)
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_end(PyObject *Py_UNUSED(m), PyObject *args)
 {
     PyObject *no;
     const char *name;
@@ -218,6 +240,7 @@ mod_end(PyObject *Py_UNUSED(m), PyObject *args)
     if ((name = as_cstr(no)) == NULL)
         return NULL;
     perfmark_end(name);
+    if (region_depth) region_depth--;
     Py_RETURN_NONE;
 }
 
@@ -238,11 +261,17 @@ mod_state(PyObject *Py_UNUSED(m), PyObject *args)
  * callees exactly. The actual checkpoint still uses libperfmark's C ABI. */
 static PyObject *event_checkpoint(PyObject *args, int publish)
 {
-    PyObject *eo, *go;
+    PyObject *eo, *go = NULL;
     unsigned long long event, generation;
-    if (!PyArg_ParseTuple(args, "OO", &eo, &go))
+    if (!PyArg_ParseTuple(args, "O|O", &eo, &go))
         return NULL;
-    if (!PyLong_Check(eo) || !PyLong_Check(go) || PyBool_Check(eo) || PyBool_Check(go)) {
+    if (!publish && eo == Py_None && go == NULL) {
+        Py_BEGIN_ALLOW_THREADS
+        perfmark_waited_null();
+        Py_END_ALLOW_THREADS
+        Py_RETURN_NONE;
+    }
+    if (go == NULL || !PyLong_Check(eo) || !PyLong_Check(go) || PyBool_Check(eo) || PyBool_Check(go)) {
         PyErr_SetString(PyExc_ValueError, "event IDs and generations must be unsigned 64-bit integers");
         return NULL;
     }
@@ -251,7 +280,8 @@ static PyObject *event_checkpoint(PyObject *args, int publish)
     generation = PyLong_AsUnsignedLongLong(go);
     if (PyErr_Occurred()) return NULL;
     Py_BEGIN_ALLOW_THREADS
-    if (publish) perfmark_event_publish(event, generation);
+    if (publish == 2) perfmark_release(event, generation);
+    else if (publish) perfmark_event_publish(event, generation);
     else perfmark_event_waited(event, generation);
     Py_END_ALLOW_THREADS
     Py_RETURN_NONE;
@@ -271,11 +301,103 @@ perfmark_py_event_waited(PyObject *m, PyObject *args)
     return event_checkpoint(args, 0);
 }
 
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_release(PyObject *m, PyObject *args)
+{
+    (void)m;
+    return event_checkpoint(args, 2);
+}
+
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_wait(PyObject *m, PyObject *args, PyObject *kwargs)
+{
+    PyObject *eo, *go = Py_None;
+    const char *indicator = NULL, *producer = NULL, *reason = NULL;
+    static char *keywords[] = {"event", "generation", "indicator", "producer", "reason", NULL};
+    unsigned long long event, generation;
+    (void)m;
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|Ozzz:wait", keywords,
+                                    &eo, &go, &indicator, &producer, &reason))
+        return NULL;
+    if (!indicator || !indicator[0] || strlen(indicator) > 2048 ||
+        (producer && (!producer[0] || strlen(producer) > 127)) ||
+        (reason && (!reason[0] || strlen(reason) > 2048))) {
+        PyErr_SetString(PyExc_ValueError, "wait requires a nonempty indicator expression (at most 2048 bytes); producer/reason must be nonempty when supplied");
+        return NULL;
+    }
+    if (eo == Py_None) {
+        if (go != Py_None || producer || !reason) {
+            PyErr_SetString(PyExc_ValueError, "wait(None) requires a reason and no generation or producer");
+            return NULL;
+        }
+        Py_BEGIN_ALLOW_THREADS
+        perfmark_wait_null(indicator, reason);
+        Py_END_ALLOW_THREADS
+        Py_RETURN_NONE;
+    }
+    if (!PyLong_Check(eo) || !PyLong_Check(go) || PyBool_Check(eo) || PyBool_Check(go) || reason) {
+        PyErr_SetString(PyExc_ValueError, "wait requires uint64 event/generation; reason is only for wait(None)");
+        return NULL;
+    }
+    event = PyLong_AsUnsignedLongLong(eo);
+    if (PyErr_Occurred()) return NULL;
+    generation = PyLong_AsUnsignedLongLong(go);
+    if (PyErr_Occurred()) return NULL;
+    Py_BEGIN_ALLOW_THREADS
+    perfmark_wait(event, generation, indicator, producer);
+    Py_END_ALLOW_THREADS
+    Py_RETURN_NONE;
+}
+
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_runtime(PyObject *m, PyObject *args)
+{
+    int kind, status = 0;
+    unsigned long long id, api;
+    (void)m;
+    if (!PyArg_ParseTuple(args, "iKK|i", &kind, &id, &api, &status))
+        return NULL;
+    if (kind == 0) perfmark_runtime_wait_begin(id, api);
+    else if (kind == 1) perfmark_runtime_wait_end(id, api, status);
+    else if (kind == 2) perfmark_async_scope(id, api);
+    else { PyErr_SetString(PyExc_ValueError, "invalid runtime observation"); return NULL; }
+    Py_RETURN_NONE;
+}
+
+/* Only observation bookkeeping belongs inside this dynamic exclusion. The
+ * adapter invokes the original awaitable outside it. */
+__attribute__((visibility("default"), noinline)) PyObject *
+perfmark_py_runtime_call(PyObject *m, PyObject *args)
+{
+    (void)m;
+    if (PyTuple_GET_SIZE(args) < 1) {
+        PyErr_SetString(PyExc_TypeError, "runtime_call requires a callable");
+        return NULL;
+    }
+    PyObject *tail = PyTuple_GetSlice(args, 1, PyTuple_GET_SIZE(args));
+    if (tail == NULL) return NULL;
+    PyObject *result = PyObject_CallObject(PyTuple_GET_ITEM(args, 0), tail);
+    Py_DECREF(tail);
+    return result;
+}
+
+static PyObject *
+runtime_state(PyObject *m, PyObject *args)
+{
+    (void)m; (void)args;
+    return Py_BuildValue("ii", capture_started, region_depth);
+}
+
 static PyMethodDef mod_methods[] = {
+    { "runtime_call", perfmark_py_runtime_call, METH_VARARGS, "excluded observation bookkeeping" },
+    { "runtime_state", runtime_state, METH_NOARGS, "capture started and active depth" },
+    { "runtime", perfmark_py_runtime, METH_VARARGS, "internal runtime observation" },
+    { "release", perfmark_py_release, METH_VARARGS, "record completion immediately before the real release" },
+    { "wait", (PyCFunction)perfmark_py_wait, METH_VARARGS | METH_KEYWORDS, "record completed wait with an inline entry-PCV indicator" },
     { "event_publish", perfmark_py_event_publish, METH_VARARGS, "publish immediately before the original release" },
     { "event_waited", perfmark_py_event_waited, METH_VARARGS, "record observed readiness; never blocks" },
-    { "begin", mod_begin, METH_VARARGS, "begin(name, state_name='', value=0)" },
-    { "end", mod_end, METH_VARARGS, "end(name)" },
+    { "begin", perfmark_py_begin, METH_VARARGS, "begin(name, state_name='', value=0)" },
+    { "end", perfmark_py_end, METH_VARARGS, "end(name)" },
     { "state", mod_state, METH_VARARGS, "state(name, value)" },
     { NULL, NULL, 0, NULL }
 };
@@ -287,6 +409,8 @@ static struct PyModuleDef moduledef = {
 PyMODINIT_FUNC
 PyInit__perfmark(void)
 {
+    /* Resolve TLS before the first region can trigger late attachment. */
+    region_depth = 0;
     PyObject *m;
     if (PyType_Ready(&RegionType) < 0)
         return NULL;

@@ -13,7 +13,7 @@ ready = threading.Event()
 def produce():
     with perfmark.region('B', n=1):
         time.sleep(.01)
-        perfmark.event_publish(1, 1)  # Delay here holds back the following set().
+        perfmark.release(1, 1)  # Delay here holds back the following set().
         ready.set()
 
 
@@ -24,5 +24,5 @@ with perfmark.region('A', need=1):
         time.sleep(.2)  # Deliberate bug: timing coincidence instead of readiness.
     else:
         ready.wait()
-    perfmark.event_waited(1, 1)
+    perfmark.wait(1, 1, indicator="need == 1", producer="B")
 thread.join()

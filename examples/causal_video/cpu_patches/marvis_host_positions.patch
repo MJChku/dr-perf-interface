@@ -1,0 +1,59 @@
+--- a/torchtune/modules/kv_cache.py
++++ b/torchtune/modules/kv_cache.py
+@@ -42,15 +42,34 @@
+             "cache_pos", torch.arange(0, cache_shape[2]), persistent=False
+         )
+         self.batch_size = batch_size
++        self._host_size = None
++
++    def enable_host_position_tracking(self, *, initial_size: int) -> None:
++        """Opt in for eager inference with exclusively owned cache state.
++
++        The caller supplies a known current position (zero for a fresh cache).
++        All subsequent mutations must use update/reset; direct cache_pos writes
++        and torch.compile are unsupported while this mode is enabled. K/V data,
++        GPU positions and reset behavior are retained.
++        """
++        if not isinstance(initial_size, int) or not 0 <= initial_size <= self.k_cache.shape[2]:
++            raise ValueError("initial_size must be a known valid cache position")
++        self._host_size = initial_size
+ 
+     def reset(self) -> None:
+         """Reset the cache to zero."""
+         self.k_cache.zero_()
+         self.v_cache.zero_()
+         self.cache_pos -= self.size
++        if self._host_size is not None:
++            self._host_size = 0
+ 
+     @property
+     def size(self) -> int:
++        if self._host_size is not None:
++            if torch.compiler.is_compiling():
++                raise RuntimeError("host position tracking supports eager inference only")
++            return self._host_size
+         return self.cache_pos[0].item()
+ 
+     def update(
+@@ -99,7 +118,12 @@
+                 f", but found new key tensors with batch size {k_val.shape[0]}!"
+             )
+ 
+-        assert (self.cache_pos[0] + seq_len) <= self.k_cache.shape[2]
++        if self._host_size is not None:
++            if torch.compiler.is_compiling():
++                raise RuntimeError("host position tracking supports eager inference only")
++            assert self._host_size + seq_len <= self.k_cache.shape[2]
++        else:
++            assert (self.cache_pos[0] + seq_len) <= self.k_cache.shape[2]
+         k_out = self.k_cache
+         v_out = self.v_cache
+ 
+@@ -114,5 +138,7 @@
+         # after the last update in a compile-friendly way without any dynamism
+         # e.g. relying on an int size tracker, or re-creating cache_pos every time
+         self.cache_pos.add_(seq_len)
++        if self._host_size is not None:
++            self._host_size += seq_len
+ 
+         return k_out, v_out

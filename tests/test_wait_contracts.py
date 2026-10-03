@@ -61,7 +61,8 @@ class WaitContracts(unittest.TestCase):
     def test_no_declaration_leaves_detected_sync_unexplained(self):
         report = W.check(fixture(), dict(version=1, claims=[]))
         self.assertEqual(report['status'], 'incomplete')
-        self.assertEqual(report['unexplained'][0]['term'], 'unexplained(Wait[B])')
+        self.assertEqual(report['unexplained'][0]['term'], 'unexplained(Wait[?])')
+        self.assertEqual(report['unexplained'][0]['nativeCandidateRegions'], ['B'])
 
     def test_producer_must_have_evidence_and_cannot_be_filtered_out(self):
         report = W.check(fixture(), declaration(producer='wrong'))

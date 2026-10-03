@@ -100,6 +100,40 @@ class EvidenceTests(unittest.TestCase):
         self.assertNotIn('perfmark.region',neutral)
         self.assertIn('optimize(expression, schema=schema)',neutral)
 
+    def test_neutral_libcst_driver_removes_reference_basis(self):
+        original=(ROOT/'cases/libcst/reference/assets/oss/run_libcst.py').read_text()
+        neutral=ast.unparse(ast.fix_missing_locations(NeutralDriver().visit(ast.parse(original))))
+        self.assertNotIn('n_terms_sq',neutral)
+        self.assertNotIn('perfmark.region',neutral)
+        self.assertNotIn('quadratic',neutral)
+        self.assertIn('libcst.parse_module(src)',neutral)
+
+    def test_pair_checks_payload_equality_beyond_configuration(self):
+        def fake_prepare(case, dest, archive, drperf, condition, track):
+            dest.mkdir()
+            (dest/'workload.py').write_text('pass\n')
+            return dict(case=case,condition=condition,source_revision='pinned')
+        with tempfile.TemporaryDirectory() as directory:
+            pair=Path(directory)/'pair'
+            with patch('adapters.prepare.prepare',side_effect=fake_prepare),contextlib.redirect_stdout(io.StringIO()):
+                bench.prepare_pair('sqlglot',pair,Path(directory),'model',2)
+            manifest=bench.read(pair/'pair.json')
+            self.assertEqual(manifest['status'],'prepared-not-run')
+            self.assertEqual(bench.read(pair/'timing/session.json')['seed'],2)
+            self.assertEqual(bench.read(pair/'drperf/session.json')['model'],'model')
+            self.assertEqual(len(manifest['payload_sha256']),1)
+
+    def test_pair_rejects_extra_hints_in_only_one_arm(self):
+        def leaked_prepare(case, dest, archive, drperf, condition, track):
+            dest.mkdir()
+            (dest/'workload.py').write_text('pass\n')
+            if condition=='drperf': (dest/'hint.txt').write_text('extra information')
+            return dict(source_revision='pinned')
+        with tempfile.TemporaryDirectory() as directory:
+            with patch('adapters.prepare.prepare',side_effect=leaked_prepare):
+                with self.assertRaisesRegex(ValueError,'exports differ'):
+                    bench.prepare_pair('sqlglot',Path(directory)/'pair',Path(directory),'model',0)
+
 
 class BudgetTests(unittest.TestCase):
     def test_small_input_envelope_rejects_large_or_implicit_inputs(self):

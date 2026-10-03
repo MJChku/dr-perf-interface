@@ -109,7 +109,7 @@
   function explanationBadge(info) {
     const tag = info.share === null
       ? badge('Unexplained share unavailable', 'warn')
-      : badge(`${unexplainedPercent(info.share)}% unexplained${info.estimated ? ' (estimate)' : ''}`,
+      : badge(`${unexplainedPercent(info.share)}% unexplained CPU work${info.estimated ? ' (estimate)' : ''}`,
         info.share > 0.05 ? 'warn' : 'good');
     tag.classList.add('interface-unexplained');
     tag.title = info.reason || (info.estimated
@@ -120,6 +120,7 @@
   function formulaCard(r, openChild = id => choose(id, 'interface')) {
     const card = el('section', 'card formula-card');
     const childTerms = M.childTerms(model, r.id);
+    const waitTerms = M.waitTerms(model, r.id);
     const formulaWithChildren = (own) => {
       const row = el('div', 'formula', own);
       for (const term of childTerms) {
@@ -127,6 +128,18 @@
         const link = button(term.reference, () => openChild(term.child), 'link-button child-interface');
         link.title = 'Open child interface, including its unexplained cost';
         row.append(link, el('span', '', term.suffix));
+      }
+      for (const term of waitTerms) {
+        row.append(el('span', '', ' + ' + term.prefix));
+        const known = model.regions.some(r => r.id === term.producer);
+        const ref = known ? button(term.reference, () => openChild(term.producer), 'link-button wait-interface')
+          : el('span', 'wait-interface', term.reference);
+        ref.title = term.refinement === 'null'
+          ? `Reason (manual review): ${term.reason || 'not declared'}. Indicator check: ${term.status}. No publisher is claimed.`
+          : term.reason || `Declared indicator: ${term.indicator}; check: ${term.status}. Wait terms are dependencies, not elapsed time.`;
+        row.append(ref, el('span', '', term.suffix || ''));
+        if (term.kind === 'declared' && term.status !== 'checked')
+          row.append(el('span', 'wait-interface-status', ` [${term.status}]`));
       }
       return row;
     };
@@ -143,6 +156,15 @@
     if (r.droppedCalls) tags.append(badge(`${r.droppedCalls} calls omitted from fitting`, 'warn'));
     append(card, tags);
     card.append(el('p', 'small muted', 'Costs and percentages rounded to whole numbers for display; calculations retain full precision.'));
+    if (waitTerms.length) {
+      card.append(el('p', 'small muted', 'I[condition] is the declared wait indicator, checked on every observed invocation. Wait terms describe dependencies, not instruction counts or elapsed time. Uncovered waits remain unexplained. Click Wait to inspect its publisher.'));
+      for (const term of waitTerms.filter(t => t.refinement === 'null'))
+        card.append(el('p', 'small muted', `waited(null) — reason for manual review: ${term.reason || 'not declared'}. No publisher is claimed.`));
+      for (const term of waitTerms.filter(t => t.kind === 'declared' && t.status !== 'checked'))
+        card.append(el('p', 'notice warn', `${term.term}: ${term.status}. ` +
+          ((term.counterexamples || []).map(c => `Invocation ${c.invocation}, PCVs ${JSON.stringify(c.state)}: ${c.kind}`).join('; ') ||
+           'The recorded evidence does not establish this complete interface.')));
+    }
     if (childTerms.length)
       card.append(el('p', 'small muted', 'Unexplained includes own unexplained work and the full contribution of unexplained(F[child]) terms. Fitted child terms count as explained here, even when the child has its own unexplained work. Percentages estimate child costs from measured per-state means and recorded calls. Click F to inspect the child. The charts and function breakdown below show own work only.'));
     const statuses = sourceStatuses.get(r.id) || [];
@@ -168,7 +190,7 @@
     if (!r.regimes.length)
       append(
         card,
-        childTerms.length ? formulaWithChildren('own (not fitted)') : null,
+        childTerms.length || waitTerms.length ? formulaWithChildren('own (not fitted)') : null,
         childTerms.length ? explanationBadge(M.interfaceExplanation(model, r.id)) : null,
         el(
           'p',
@@ -1843,9 +1865,9 @@
     const menu=el('div','execution-menu');more.append(menu);
     const actions=el('div','execution-menu-actions');menu.append(actions);
     append(controls,window.DrperfStandalone ? null : fullscreen,
-      button('Expand all',()=>{graphMode='top';for(const n of tree.nodes.values())if(n.children.length)graphExpanded.add(n.key);render();},'execution-expand-all'));
+      button('Expand all',()=>{graphAutoFit=true;graphMode='top';for(const n of tree.nodes.values())if(n.children.length)graphExpanded.add(n.key);render();},'execution-expand-all'));
     append(actions,
-      button('Collapse all',()=>{graphExpanded.clear();render();}),
+      button('Collapse all',()=>{graphAutoFit=true;graphExpanded.clear();render();}),
       button('Selected region',()=>{graphMode='region';render();}),
       button('Full graph',()=>{graphMode='top';render();}),
       button(`All waits (${waitPairs})`,()=>{graphMode='waits';render();},'execution-waits-button'));
@@ -1860,12 +1882,28 @@
     menu.addEventListener('click',event=>{if(event.target.closest('button'))more.open=false;});
     const guide=append(el('details','execution-guide'),el('summary','','Legend and scope'),
       el('p','execution-legend','Nested boxes contain subregions. Optional gray arrows show observed sequence; dashed blue shows waits between distinct regions; red shows violated declarations; amber shows unverified declarations. Same-region synchronization is excluded from this graph.'));
+    if(loadedModel.codeCoverage) {
+      const c=loadedModel.codeCoverage;
+      guide.append(el('p','small muted',c.status==='unavailable'
+        ? `Annotation coverage unavailable: ${c.reason}`
+        : `Region names exercised: ${c.observed}/${c.declared}; ${c.notObserved} not observed.`));
+      if(c.lines?.kind==='marked-source-lines')guide.append(el('p','small muted',
+        `Source lines inside marked regions: ${c.lines.marked}/${c.lines.total}; ${c.lines.status}. This is static annotation coverage, independent of execution.`));
+      if(c.basis)guide.append(el('p','small muted',c.basis));
+      for(const region of c.regions||[])if(region.status!=='observed')guide.append(el('p','small',`${region.region}: ${region.status}`));
+    }
     menu.append(guide);card.append(controls);
     if(graph.waitCoverage!=='observed')card.append(el('p','notice warn',graph.waitCoverage==='not captured'
       ?'Waits not captured. Enable DRPERF_WAITS=1.'
       :'Wait capture is incomplete. Producer edges are disabled.'));
     if(graph.eventChecks?.status!=='not captured' && graph.eventChecks) {
       const checks=graph.eventChecks;
+      if (model.eventModel?.interfaceChecks?.status === 'invalid')
+        card.append(el('p', 'notice warn', 'A declared wait interface failed its indicator or publisher check. Select the region to inspect counterexamples.'));
+      // Uncovered waits appear in the selected region's performance interface,
+      // rather than only as a global warning detached from the formula.
+      if(checks.coverage?.obligations!==undefined)menu.append(el('p','execution-coverage',
+        `Wait coverage: ${checks.coverage.covered}/${checks.coverage.obligations} obligations; distinct waits in one invocation remain separate.`));
       menu.append(el('p','execution-event-summary notice'+(checks.violations||checks.unverified?' warn':''),
         `Declared events: ${checks.status} · ${checks.probe?'delay probe':'baseline'} · ${checks.violations} violations · ${checks.unverified} unverified`));
     }
@@ -1895,10 +1933,10 @@
         if(a.top<b.top||a.top>b.bottom-60)canvas.scrollTop+=a.top-b.top-24;
         if(a.left<b.left||a.left>b.right-80)canvas.scrollLeft+=a.left-b.left-24;}
     };
-    const openEdge=e=>{reveal(e.actualSource);reveal(e.actualTarget);graphHighlight=e.actualTarget;render();focusBox(e.actualTarget);};
+    const openEdge=e=>{reveal(e.actualSource);reveal(e.actualTarget);selectNode(e.actualSource);focusBox(e.actualSource);};
     const selectNode=key=>{
       const node=tree.nodes.get(key);if(!node)return;
-      graphHighlight=key;choose(node.id,'graph');
+      graphDetailsOpen=true;graphHighlight=key;choose(node.id,'graph');
     };
     const selectChild=id=>{
       const parent=[...tree.nodes.values()].find(n=>n.id===r.id&&n.key===graphHighlight)
@@ -1938,6 +1976,9 @@
     }
     try{view.roots.forEach(measure);}finally{stage.remove();}
     const routedEdges=view.edges.filter(e=>e.source!==e.target&&(e.kind==='wait'||graphShowSequence));
+    const selectedPaths=new Set(graphHighlight&&tree.nodes.get(graphHighlight)?.id===r.id
+      ?[graphHighlight]:[...view.visible].filter(key=>tree.nodes.get(key).id===r.id));
+    const neighborhood=G.waitNeighborhood(routedEdges,selectedPaths);
     const layoutKey=JSON.stringify([model.id,[...layoutNodes],routedEdges.map(e=>[e.source,e.target])]);
     graphLayoutRequest=layoutKey;
     let layout=graphLayouts.get(layoutKey);
@@ -1973,6 +2014,7 @@
       const isSelected=n.id===r.id&&(!graphHighlight||tree.nodes.get(graphHighlight)?.id!==r.id||key===graphHighlight);
       const group=svgEl('g',{'class':'execution-node'+(isSelected?' selected':'')+(key===graphHighlight?' highlighted':''),
         'data-region':n.id,'data-path':key,role:'group',tabindex:0,'aria-label':'Region '+n.id,'aria-current':String(isSelected)});
+      if(neighborhood.nodes.has(key))group.classList.add('wait-connected');
       group.addEventListener('click',event=>{
         if(event.target.closest('button')||card.getAttribute('aria-busy')==='true')return;
         selectNode(key);
@@ -1986,13 +2028,16 @@
       foreign.append(headers.get(key));group.append(foreign);svg.append(group);
       if(graphExpanded.has(key))for(const child of n.children)draw(child);
     }view.roots.forEach(draw);
-    for(const [i,e]of routedEdges.entries()){
+    // Draw connected wires last, above unrelated crossings, without relayout.
+    for(const [i,e]of [...routedEdges.entries()].sort((a,b)=>Number(neighborhood.edges.has(a[1]))-Number(neighborhood.edges.has(b[1])))){
       const [source,target]=endpoints(e),wait=e.kind==='wait';
       const style=e.eventStatus==='violation'?'violation':e.eventStatus==='unverified'?'unverified':e.kind;
       const sections=layout.value.routes.get(i)||[];
       const d=sections.map(points=>points.map((p,j)=>`${j?'L':'M'} ${p.x} ${p.y}`).join(' ')).join(' ');
-      const attrs={d,'class':'execution-edge '+e.kind+' '+style,'data-kind':e.kind,'data-event-status':e.eventStatus||'',
-        'data-source':source.id,'data-target':target.id,'marker-end':`url(#execution-arrow-${style})`};
+      const emphasized=neighborhood.edges.has(e);
+      const attrs={d,'class':'execution-edge '+e.kind+' '+style+(emphasized?' wait-highlighted':wait&&neighborhood.edges.size?' wait-muted':''),'data-kind':e.kind,'data-event-status':e.eventStatus||'',
+        'data-source':source.id,'data-target':target.id,'data-source-path':e.source,'data-target-path':e.target,
+        'marker-end':`url(#execution-arrow-${style})`};
       const line=svgEl('path',attrs);line.append(svgEl('title',{},describe(e)));svg.append(line);
       if(wait){
         const hit=svgEl('path',{...attrs,'class':'execution-edge-hit','marker-end':'',role:'button',tabindex:0,'aria-label':describe(e)});

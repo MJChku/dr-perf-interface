@@ -43,6 +43,21 @@ def fixture(noise=0, violation=False):
 
 
 class ReportStorage(unittest.TestCase):
+    def test_budget_coverage_is_identical_after_evidence_roundtrip(self):
+        from test_wait_coverage import Capture
+        c=Capture();c.publish()
+        with c.region('A'):
+            with c.region('B'): c.sync(5)
+            with c.region('B'): c.sync(3)
+            c.waited()
+        model=c.model();model['eventModel']=event_model.check(model)
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'coverage.json';explorer.write_model(model,path)
+            compact=explorer.load_model(path)
+            self.assertEqual(compact['eventModel']['coverage']['uncovered'],1)
+            self.assertEqual(compact['waits']['operations'],[])
+            self.assertEqual(event_model.check(explorer.load_model(path,True)),model['eventModel'])
+
     def test_native_edges_and_pending_records_remain_available_to_viewer(self):
         model=fixture(3)
         pub=dict(model['waits']['events'][0], id='100', kind='transfer', start=100,
@@ -126,14 +141,17 @@ class ReportStorage(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path=Path(tmp)/'report.json'
             for violation in (False,True):
-                explorer.write_model(fixture(3,violation),path)
-                result=subprocess.run([str(ROOT/'bin/drperf-check-events'),str(path)],
+                model = fixture(3,violation)
+                model['waitDeclarations'] = dict(version=1, claims=[dict(id='ready', region='A',
+                    event='1', indicator='True', producer='B')])
+                explorer.write_model(model,path)
+                result=subprocess.run([str(ROOT/'tools/drperf-check-events'),str(path)],
                                       capture_output=True,text=True)
                 self.assertEqual(result.returncode,1 if violation else 0,result.stderr)
                 self.assertIn('violation' if violation else 'ordered',result.stdout)
             compact=explorer.load_model(path)
             (path.parent/compact['waits']['evidence']['path']).unlink()
-            result=subprocess.run([str(ROOT/'bin/drperf-check-events'),str(path)],
+            result=subprocess.run([str(ROOT/'tools/drperf-check-events'),str(path)],
                                   capture_output=True,text=True)
             self.assertNotEqual(result.returncode,0)
             self.assertIn('required for rechecking',result.stderr)

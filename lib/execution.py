@@ -30,15 +30,18 @@ def build(model, root=None, max_depth=None):
               'eventChecks': {'status': model.get('eventModel', {}).get('status', 'not captured'),
                               'probe': bool(model.get('eventModel', {}).get('probe')),
                               'violations': len(model.get('eventModel', {}).get('violations', [])),
-                              'unverified': len(model.get('eventModel', {}).get('unverified', []))},
+                              'unverified': len(model.get('eventModel', {}).get('unverified', [])),
+                              'coverage': model.get('eventModel', {}).get('coverage')},
               'contract': 'Solid edges are observed next-sibling order, not proof of a required dependency. '
                           'Nesting is separate. Wait edges target completion inside a consumer, not its entry. '
                           'Only regions are shown; cycles can summarize repeated invocations. '
                           'Costs are exclusive state-wise mean instructions per invocation and are never charged per edge. '
                           'Sync-call counts do not establish time blocked. '
+                          'Native API matches never create region wait edges. '
                           'Declared event edges check observed publish/waited order; violations are rejected claims, not dependencies. '
                           'Unmarked work between siblings is not assumed free. No critical-path latency is inferred.'}
     errors = list(model.get('validity', {}).get('errors', [])) + list(model.get('validity', {}).get('traceErrors', []))
+    result['eventChecks']['interfaceStatus'] = model.get('eventModel', {}).get('interfaceChecks', {}).get('status')
     if not model.get('trace', {}).get('complete'):
         errors.append('Complete region trace required.')
     if root is not None and root not in regions:
@@ -117,14 +120,8 @@ def build(model, root=None, max_depth=None):
                 producer = by_key.get(invocation(event)) if event else None
                 if not producer:
                     continue
-                if producer['region'] == consumer['region']:
-                    found = True
-                    continue
-                dependency_nodes.add(producer['region'])
-                # Arrows read "consumer waits on work from producer", not CPU return-before-entry.
-                add('wait', consumer['region'], producer['region'], consumer['region'], consumer,
-                    {'operation': operation['id'], 'producer': producer_id,
-                     'basis': operation['dependency']})
+                # This is a native object/stream match only. It must not add
+                # region edges, include producer nodes, or cover annotations.
                 found = True
         if not found:
             summary['<unresolved>'] += 1
@@ -201,7 +198,7 @@ def dot(graph):
             label += f'\n{len(node["hiddenChildren"])} nested regions (click to explore)'
         unknown = node['waitOperations'].get('<unresolved>', 0)
         if unknown:
-            label += f'\n{unknown} sync calls: producer unresolved'
+            label += f'\n{unknown} sync calls: native API link unresolved'
         lines.append(f'{ids[node["id"]]} [id={q(ids[node["id"]])},label={q(label)},'
                      f'color={q("#b56c10" if unknown else "#60758b")}];')
     for edge in graph['edges']:

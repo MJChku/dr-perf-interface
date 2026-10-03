@@ -1,0 +1,19 @@
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -24,6 +24,7 @@
+ #include <vector>
+ 
+ #include "FlexGC.h"
++#include "drperf_bench_region.h"
+ 
+ namespace drt {
+ 
+@@ -436,6 +437,7 @@
+ 
+ void FlexGCWorker::initNet_pins_polygonCorners(gcNet* net)
+ {
++  DRPERF_BENCH_REGION("drt-gc-001");
+   int numLayers = getTech()->numLayers();
+   VertexCache vcache(numLayers);
+   for (int i = 0; i < numLayers; i++) {

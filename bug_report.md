@@ -14,8 +14,8 @@ IndexError: tuple index out of range
 
 The program runs to completion and the client writes its JSON; only the
 derivation at the end fails, so `bin/drperf` never prints anything. The same
-data analysed through `bin/drperf-dev run --blocks -o OUT` and
-`bin/drperf-dev derive OUT` works and prints the formulas.
+data analysed through `tools/drperf-dev run --blocks -o OUT` and
+`tools/drperf-dev derive OUT` works and prints the formulas.
 
 ## Cause
 
@@ -50,11 +50,11 @@ declares at least one state should hit it. It did not show up in the examples
 presumably because their first region is entered with the same states as every
 later call, so the malformed key merges into an existing state point.
 
-`bin/drperf-dev derive` hits the same malformed key by a different route, so
+`tools/drperf-dev derive` hits the same malformed key by a different route, so
 the fix belongs in `lib/derive.py` rather than in either CLI:
 
 ```
-$ bin/drperf-dev derive OUT --region bind
+$ tools/drperf-dev derive OUT --region bind
   File "lib/derive.py", line 419, in describe
     top_a = sorted(r.by_sym_a[j].items(), key=lambda kv: -abs(kv[1]))[:top]
 IndexError: list index out of range
@@ -94,5 +94,5 @@ not belong to, so the drop in `per_state` is the better place.
 ## Environment
 
 DynamoRIO 11.3.0 as built by `./build.sh`, Python 3.12, client JSON from
-`bin/drperf-dev run --blocks`. The failing analysis path is shared by
+`tools/drperf-dev run --blocks`. The failing analysis path is shared by
 `bin/drperf` only; `drperf-dev show|derive` are fine.

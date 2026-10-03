@@ -40,7 +40,7 @@ bitwise equivalence between CPU and CUDA coefficient solves.
 ## Changes driven by the observed CPU work
 
 [optimization.patch](optimization.patch) applies only to the boundary-fixed
-baseline. The isolated source copies live under ignored `out/wan-gx/`.
+baseline. The isolated source copies live under ignored `results/paper/wan-gx/`.
 
 | Observed repeated work | Application change |
 | --- | --- |
@@ -116,7 +116,7 @@ Do not run concurrent GX jobs sharing the host IPC namespace.
 
 ```
 ./build.sh
-mkdir -p out/wan-gx
+mkdir -p results/paper/wan-gx
 git clone https://github.com/Wan-Video/Wan2.1.git out/wan-gx/upstream
 git -C out/wan-gx/upstream checkout 9737cba9c1c3c4d04b33fcad41c111989865d315
 python3 examples/wan_gx/download.py
@@ -128,12 +128,12 @@ make -f examples/wan_gx/run.mk command CMD='OMP_NUM_THREADS=1 python3 /workspace
 make -f examples/wan_gx/run.mk command CMD='OMP_NUM_THREADS=1 python3 /workspace/examples/wan_gx/test_optimizations.py'
 ```
 
-Ensure `out/wan-gx/results` is writable by the container user (the experiment
+Ensure `results/paper/wan-gx/results` is writable by the container user (the experiment
 used mode 1777 for this output directory). For each variant `baseline` or
 `optimized`, choose a fresh output name:
 
 ```
-make -f examples/wan_gx/run.mk command CMD='DRPERF_FOLLOW_THREADS=0 DRPERF_EXCLUDE_CUDA_MODULE=gx_cuda.so bash /workspace/examples/wan_gx/entry.sh python3 /workspace/examples/wan_gx/measure.py /workspace/out/wan-gx/results/baseline-final-profile python3 /workspace/examples/wan_gx/run_model.py --tree /workspace/out/wan-gx/baseline --mark --conv-backend native --output /workspace/out/wan-gx/results/baseline-final-profile.json'
+make -f examples/wan_gx/run.mk command CMD='DRPERF_FOLLOW_THREADS=0 DRPERF_EXCLUDE_CUDA_MODULE=gx_cuda.so bash /workspace/examples/wan_gx/entry.sh python3 /workspace/examples/wan_gx/measure.py /workspace/out/wan-gx/results/baseline-final-profile python3 /workspace/examples/wan_gx/run_model.py --tree /workspace/out/wan-gx/baseline --mark --conv-backend native --output /workspace/results/paper/wan-gx/results/baseline-final-profile.json'
 python3 examples/wan_gx/analyze.py out/wan-gx/results/baseline-final-profile
 ```
 

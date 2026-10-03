@@ -178,11 +178,17 @@ if _ext is not None:
 
 class _region_ctypes(object):
     """Context manager and decorator delimiting a counted region (ctypes path)."""
-    __slots__ = ("_name", "_key", "_extra")
+    __slots__ = ("_name", "_key", "_extra", "_waited_null_exit")
 
     def __init__(self, name, **state):
         self._name = _encode(name)
         self._key, self._extra = _split_state(state)
+        self._waited_null_exit = False
+
+    def waited_null_on_exit(self):
+        """Explicit scope-end null refinement; declare a reason and indicator."""
+        self._waited_null_exit = True
+        return self
 
     def state(self, name, value):
         """Attach an extra state to the open region (call inside the block)."""
@@ -193,6 +199,8 @@ class _region_ctypes(object):
         return self
 
     def __exit__(self, *exc):
+        if self._waited_null_exit:
+            event_waited(None)
         _end(self._name)
         return False
 
@@ -205,7 +213,7 @@ class _region_ctypes(object):
             try:
                 return fn(*args, **kwargs)
             finally:
-                _end(name)
+                self.__exit__(None, None, None)
         return wrapper
 
 
@@ -362,9 +370,34 @@ if _ext is not None and hasattr(_ext, "event_waited"):
     event_publish = _ext.event_publish
     event_waited = _ext.event_waited
 else:
-    def _missing_event_checkpoint(event, generation):
+    def _missing_event_checkpoint(event, generation=None):
         if os.environ.get("DRPERF"):
             raise RuntimeError("Event checkpoints require a rebuilt _perfmark extension (run build.sh)")
     event_publish = event_waited = _missing_event_checkpoint
 
 __all__ += ["event_publish", "event_waited"]
+
+# Preferred public names. The expression is recorded, never used to skip a
+# checkpoint. The offline checker evaluates it on each invocation's entry PCVs.
+if _ext is not None and hasattr(_ext, "wait"):
+    wait, release = _ext.wait, _ext.release
+else:
+    def wait(event, generation=None, indicator=None, *, producer=None, reason=None):
+        if os.environ.get("DRPERF"):
+            raise RuntimeError("Inline wait/release markers require a rebuilt _perfmark extension (run build.sh)")
+    def release(event, generation):
+        if os.environ.get("DRPERF"):
+            raise RuntimeError("Inline wait/release markers require a rebuilt _perfmark extension (run build.sh)")
+__all__ += ['wait', 'release']
+
+
+# Opt-in wait capture also enables observations of supported asyncio primitives.
+# This observes runtime calls; publish/waited and indicators remain user-supplied.
+from perfmark_asyncio import async_region, install as enable_asyncio_waits
+__all__ += ['async_region', 'enable_asyncio_waits']
+if os.environ.get('DRPERF_WAITS') == '1' and os.environ.get('DRPERF_ASYNCIO_WAITS', '1') != '0':
+    if _ext is not None and hasattr(_ext, 'runtime'):
+        enable_asyncio_waits()
+    else:
+        sys.stderr.write('drperf: asyncio observations unavailable without rebuilt Python bindings; '
+                         'native wait capture remains enabled (run ./build.sh).\n')

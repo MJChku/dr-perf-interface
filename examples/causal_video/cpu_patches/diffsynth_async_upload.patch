@@ -1,0 +1,57 @@
+--- a/diffsynth/core/vram/layers.py
++++ b/diffsynth/core/vram/layers.py
+@@ -1,9 +1,19 @@
+-import torch, copy
++import torch, copy, os
+ from collections import OrderedDict
+ from typing import Union
+ from .initialization import skip_model_initialization
+ from .disk_map import DiskMap
+ from ..device import parse_device_type, get_device_name, IS_NPU_AVAILABLE
++
++
++_ASYNC_WEIGHT_UPLOADS = os.environ.get("DIFFSYNTH_ASYNC_WEIGHT_UPLOADS") == "1"
++
++
++def _async_weight_h2d(weight, device):
++    # The original CPU weights remain owned by the inference pipeline.
++    # Keep CPU copies, GPU-to-CPU copies, and autograd behavior unchanged.
++    return (_ASYNC_WEIGHT_UPLOADS and not torch.is_grad_enabled()
++            and weight.device.type == "cpu" and torch.device(device).type == "cuda")
+ 
+ 
+ class AutoTorchModule(torch.nn.Module):
+@@ -60,7 +70,7 @@
+ 
+     def cast_to(self, weight, dtype, device):
+         r = torch.empty_like(weight, dtype=dtype, device=device)
+-        r.copy_(weight)
++        r.copy_(weight, non_blocking=_async_weight_h2d(weight, device))
+         return r
+ 
+     def check_free_vram(self):
+@@ -181,6 +191,14 @@
+             self.state = 2
+ 
+     def cast_to(self, module, dtype, device):
++        if (_ASYNC_WEIGHT_UPLOADS and not torch.is_grad_enabled()
++                and torch.device(device).type == "cuda"
++                and not module._modules
++                and type(module).to is torch.nn.Module.to
++                and type(module)._apply is torch.nn.Module._apply
++                and all(p.device.type == "cpu" for p in module.parameters())
++                and all(b.device.type == "cpu" for b in module.buffers())):
++            return copy.deepcopy(module).to(dtype=dtype, device=device, non_blocking=True)
+         return copy.deepcopy(module).to(dtype=dtype, device=device)
+             
+     def computation(self):
+@@ -253,7 +271,8 @@
+             else:
+                 if id(param) not in memo:
+                     memo[id(param)] = torch.nn.Parameter(
+-                        param.to(device=device, dtype=dtype, copy=True),
++                        param.to(device=device, dtype=dtype, copy=True,
++                                 non_blocking=_async_weight_h2d(param, device)),
+                         requires_grad=param.requires_grad)
+                 result._parameters[name] = memo[id(param)]
+         return result

@@ -24,6 +24,67 @@ def e(kind, start, end, obj='1', **fields):
 
 
 class WaitEvidence(unittest.TestCase):
+    def test_native_stream_match_is_not_rendered_as_a_region_publication(self):
+        events=[e('transfer',1,2,obj='10',region='mv.d2h'),
+                e('stream_wait',3,4,obj='10',region='mv.sync')]
+        operations=waits.analyze(events)
+        self.assertEqual(operations[0]['dependency'],'observed-stream-prefix')
+        report=dict(probe=False,events=events,operations=operations,regions=[],warnings=[])
+        text='\n'.join(waits.lines(report))
+        self.assertIn('observed-stream-prefix: 1',text)
+        self.assertNotIn('published by',text)
+        self.assertNotIn('mv.sync waits',text)
+        self.assertEqual(operations[0]['producers'],['1'])  # Preserve raw evidence.
+
+    def test_gx_implementation_scope_requires_recorded_mode_and_caller(self):
+        records = [e('lock', 1, 2, callerModule='gx_cuda.so'),
+                   e('lock', 3, 4, callerModule='python3.12', instructionExcluded=True),
+                   e('completion', 5, 6, callerModule='application.so'),
+                   e('lock', 7, 8),  # Older captures without origin must stay visible.
+                   e('stream_wait', 9, 10, callerModule='gx_cuda.so'),
+                   e('declared_waited', 11, 12, callerModule='gx_cuda.so')]
+        original = copy.deepcopy(records)
+        meta = dict(pid=1, native_gx=True, excluded_cuda_module='gx_cuda.so')
+        selected, summary = waits.application_operations(records, [dict(measurement=meta)])
+        self.assertEqual(selected, records[1:])
+        self.assertEqual(summary['calls'], 1)
+        self.assertEqual(records, original, 'Raw evidence must not be rewritten or removed')
+        for override in ({'native_gx': False}, {'excluded_cuda_module': 'other.so'},
+                         {'pid': 2}, {'native_gx': 'true'}):
+            selected, summary = waits.application_operations(records,
+                [dict(measurement=dict(meta, **override))])
+            self.assertEqual(selected, records)
+            self.assertEqual(summary['calls'], 0)
+
+    def test_gx_scope_is_process_local_and_preserves_cuda_waits(self):
+        records = [e('lock', 1, 2, callerModule='gx_cuda.so'),
+                   e('lock', 3, 4, callerModule='gx_cuda.so', group='1:2'),
+                   e('event_wait', 5, 6, callerModule='gx_cuda.so'),
+                   e('device_wait', 7, 8, callerModule='gx_cuda.so'),
+                   e('stream_dependency', 9, 10, callerModule='gx_cuda.so')]
+        selected, summary = waits.application_operations(records,
+            [dict(data=dict(drperf=dict(pid=1, native_gx=True, excluded_cuda_module='gx_cuda.so'))),
+             dict(data=dict(drperf=dict(pid=2, native_gx=False, excluded_cuda_module='gx_cuda.so')))])
+        self.assertEqual(selected, records[1:])
+        self.assertEqual(summary['calls'], 1)
+
+    def test_build_retains_gx_raw_evidence_and_only_budgets_application_calls(self):
+        records = [e('lock', 1, 2, callerModule='gx_cuda.so'),
+                   e('completion', 3, 4, callerModule='application.so'),
+                   e('stream_wait', 5, 6, callerModule='gx_cuda.so')]
+        with tempfile.TemporaryDirectory() as folder:
+            (Path(folder)/'run.json.waits').write_text(
+                ''.join(json.dumps(row)+'\n' for row in records))
+            runs = dict(path=folder, runs=[dict(file='run.json', data=dict(drperf=dict(
+                pid=1, waits_enabled=True, wait_records=len(records), wait_dropped=0,
+                native_gx=True, excluded_cuda_module='gx_cuda.so')))])
+            report = waits.build(runs, [dict(id='r', states=[])], [])
+            self.assertEqual(len(report['events']), 3)
+            self.assertEqual([o['kind'] for o in report['operations']], ['completion', 'stream_wait'])
+            self.assertEqual(report['implementationSynchronization']['calls'], 1)
+            self.assertTrue(any('native-GX implementation: 1' in line for line in waits.lines(report)))
+
+
     def lifetime(self):
         return [e('sem_init',1,2), e('sem_publish',4,5,region='producer'),
                 e('completion',3,6,region='consumer'), e('sem_destroy',7,8)]
@@ -161,6 +222,14 @@ class WaitEvidence(unittest.TestCase):
             records=[e('transfer',1,2,obj=handle),e('stream_wait',5,6,obj=handle)]
             if handle=='40': records.append(e('stream_destroy',3,4,obj=handle))
             self.assertFalse(waits.analyze(records)[0]['producers'])
+
+    def test_wait_capture_defaults_on_and_explicit_opt_out_is_preserved(self):
+        self.assertEqual(runner.wait_options({}), ['-waits'])
+        self.assertEqual(runner.wait_options({'DRPERF_WAITS':'0'}), [])
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(runner.build_env()['DRPERF_WAITS'], '1')
+        with patch.dict(os.environ, {'DRPERF_WAITS':'0'}, clear=True):
+            self.assertEqual(runner.build_env()['DRPERF_WAITS'], '0')
 
     def test_delay_options_require_explicit_probe(self):
         with self.assertRaises(ValueError): runner.wait_options({'DRPERF_WAIT_DELAY_MS':'100'})

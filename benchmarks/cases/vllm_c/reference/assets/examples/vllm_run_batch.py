@@ -8,11 +8,11 @@ replaced, which makes num_new / num_finished / condense vary every few steps.
 
 Under drperf (from /home/ubuntu/drperf-cases, same env exported):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
         --max-slots 2097152 -o out/vllm_batch \
         -- /home/ubuntu/drperf/third_party/vllm-cpu/.venv/bin/python examples/vllm_run_batch.py
-    /home/ubuntu/drperf/bin/drperf-dev derive out/vllm_batch
-    /home/ubuntu/drperf/bin/drperf-dev learn out/vllm_batch
+    /home/ubuntu/drperf/tools/drperf-dev derive out/vllm_batch
+    /home/ubuntu/drperf/tools/drperf-dev learn out/vllm_batch
 """
 import os
 import sys

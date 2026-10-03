@@ -18,8 +18,15 @@ typedef struct {
     int object_arg, aux_arg;
 } wait_api_t;
 static const wait_api_t wait_apis[] = {
+    {"perfmark_release", "declared_publish", 0, 1},
+    {"perfmark_wait", "declared_waited", 0, 1},
+    {"perfmark_wait_null", "declared_waited_null", -1, -1},
     {"perfmark_event_publish", "declared_publish", 0, 1},
     {"perfmark_event_waited", "declared_waited", 0, 1},
+    {"perfmark_waited_null", "declared_waited_null", -1, -1},
+    {"perfmark_runtime_wait_begin", "runtime_wait_begin", 0, 1},
+    {"perfmark_runtime_wait_end", "runtime_wait_end", 0, 1},
+    {"perfmark_async_scope", "runtime_scope", 0, 1},
     {"sem_init", "sem_init", 0, 2}, {"sem_destroy", "sem_destroy", 0, -1},
     {"sem_post", "sem_publish", 0, -1}, {"sem_wait", "completion", 0, -1},
     {"sem_timedwait", "completion", 0, -1},
@@ -64,14 +71,41 @@ typedef struct {
     rkey_t *key;
     thread_id_t tid;
     ptr_uint_t object, aux;
+    int caller_mod;
+    ptr_uint_t caller_offset;
     int64 start, end, region_seq;
     uint64 begin_us, elapsed_us, sys_begin, potential_syscalls;
     ptr_int_t result;
     bool returned, excluded, exclude_scope, process_shared;
     int delay_ms;
+    uint64 async_scope;
+    int runtime_status;
+    char *indicator, *producer, *reason;
+    bool declaration_error;
 } wait_record_t;
 static wait_record_t *wait_records;
 static void json_str(file_t f, const char *s);
+static int module_index_for_pc(app_pc pc);
+
+/* Annotation strings are copied at the checkpoint: Python argument storage may
+ * disappear on return. Reject unreadable/overlong strings rather than truncate. */
+static char *
+wait_annotation_string(const char *source, bool *error)
+{
+    char buffer[2049];
+    size_t n;
+    if (!source) return NULL;
+    for (n = 0; n < sizeof(buffer); n++) {
+        if (!dr_safe_read(source + n, 1, &buffer[n], NULL)) break;
+        if (!buffer[n]) {
+            char *copy = dr_global_alloc(n + 1);
+            memcpy(copy, buffer, n + 1);
+            return copy;
+        }
+    }
+    *error = true;
+    return NULL;
+}
 
 static void
 wait_pre(void *wrapcxt, void **user_data)
@@ -82,7 +116,8 @@ wait_pre(void *wrapcxt, void **user_data)
     wait_record_t *r;
     /* GIL handoff and validation inside annotations are not application waits.
      * Retain the explicit checkpoint itself even inside this exclusion scope. */
-    if (t->marker_api_depth && strncmp(api->kind, "declared_", 9) != 0) {
+    bool runtime = strncmp(api->kind, "runtime_", 8) == 0;
+    if (t->marker_api_depth && strncmp(api->kind, "declared_", 9) != 0 && !runtime) {
         *user_data = NULL;
         return;
     }
@@ -105,7 +140,7 @@ wait_pre(void *wrapcxt, void **user_data)
                            strncmp(region, "perf.", 5) != 0 && !strchr(region, ':');
         if (!application && strncmp(api->name, "sem_", 4) != 0 &&
             strncmp(api->name, "cuda", 4) != 0 &&
-            strncmp(api->kind, "declared_", 9) != 0) {
+            strncmp(api->kind, "declared_", 9) != 0 && !runtime) {
             dr_atomic_add64_return_sum(&wait_unattributed[api - wait_apis], 1);
             return;
         }
@@ -120,6 +155,21 @@ wait_pre(void *wrapcxt, void **user_data)
     r->start = ++wait_order;
     dr_mutex_unlock(wait_lock);
     r->api = api;
+    if (strcmp(api->kind, "runtime_scope") == 0)
+        t->async_scope = (uint64)(ptr_uint_t)drwrap_get_arg(wrapcxt, 0);
+    r->async_scope = t->async_scope;
+    if (strcmp(api->kind, "runtime_wait_end") == 0)
+        r->runtime_status = (int)(ptr_int_t)drwrap_get_arg(wrapcxt, 2);
+    /* Attribute the actual native caller. A mutex seen while a Python region
+     * runs may belong to the interpreter, allocator, or a library. Preserve
+     * that evidence instead of guessing ownership from the active region.
+     * Resolve symbols offline; do not put symbol lookup on this hot path. */
+    {
+        app_pc caller = drwrap_get_retaddr(wrapcxt);
+        r->caller_mod = caller ? module_index_for_pc(caller - 1) : -1;
+        r->caller_offset = r->caller_mod >= 0
+            ? (ptr_uint_t)(caller - 1 - modules[r->caller_mod].start) : 0;
+    }
     r->exclude_scope = hook->excluded;
     r->tid = t->tid;
     if (t->depth) {
@@ -131,6 +181,15 @@ wait_pre(void *wrapcxt, void **user_data)
     r->process_shared = strcmp(api->kind, "sem_init") == 0 &&
                         (ptr_uint_t)drwrap_get_arg(wrapcxt, 1) != 0;
     r->excluded = *(ptr_uint_t *)(dr_get_dr_segment_base(tls_seg) + TLS_EXCLUDE_DEPTH) != 0;
+    if (strcmp(api->name, "perfmark_wait") == 0) {
+        r->indicator = wait_annotation_string(drwrap_get_arg(wrapcxt, 2), &r->declaration_error);
+        r->producer = wait_annotation_string(drwrap_get_arg(wrapcxt, 3), &r->declaration_error);
+        if (!r->indicator || !r->indicator[0]) r->declaration_error = true;
+    } else if (strcmp(api->name, "perfmark_wait_null") == 0) {
+        r->indicator = wait_annotation_string(drwrap_get_arg(wrapcxt, 0), &r->declaration_error);
+        r->reason = wait_annotation_string(drwrap_get_arg(wrapcxt, 1), &r->declaration_error);
+        if (!r->indicator || !r->indicator[0] || !r->reason || !r->reason[0]) r->declaration_error = true;
+    }
     r->sys_begin = t->wait_syscalls;
     t->wait_api_depth++;
     *user_data = r;
@@ -179,30 +238,53 @@ wait_post(void *wrapcxt, void *user_data)
 }
 
 static void
+wait_wrap(app_pc p, const wait_api_t *api)
+{
+    if (p && !drwrap_is_wrapped(p, wait_pre, wait_post)) {
+        wait_hook_t *hook;
+        if (wait_hooks == sizeof(wait_hook_info) / sizeof(wait_hook_info[0])) {
+            dr_fprintf(STDERR, "drperf: too many synchronization hooks\n");
+            dr_abort();
+        }
+        hook = &wait_hook_info[wait_hooks];
+        hook->api = api;
+        hook->address = p;
+        hook->excluded = strncmp(api->kind, "declared_", 9) == 0 ||
+                         strncmp(api->kind, "runtime_", 8) == 0;
+        if (drwrap_wrap_ex(p, wait_pre, wait_post, hook, DRWRAP_UNWIND_ON_EXCEPTION))
+            wait_hooks++;
+    }
+}
+
+static void
 wait_module(const module_data_t *mod, const char *name)
 {
     uint i;
-    /* Explicit symbol resolution, never a whole-module export-table walk. */
     if (!opt_waits || !name ||
         !(mod->start == main_module_start || strstr(name, "libc.") || strstr(name, "libpthread") ||
           strstr(name, "libcuda") || strstr(name, "gx_cuda") || strstr(name, "perfmark") ||
           (opt_exclude_cuda_module[0] && strcmp(name, opt_exclude_cuda_module) == 0)))
         return;
-    for (i = 0; i < sizeof(wait_apis) / sizeof(wait_apis[0]); i++) {
-        app_pc p = (app_pc)dr_get_proc_address(mod->handle, wait_apis[i].name);
-        if (p && !drwrap_is_wrapped(p, wait_pre, wait_post)) {
-            wait_hook_t *hook;
-            if (wait_hooks == sizeof(wait_hook_info) / sizeof(wait_hook_info[0])) {
-                dr_fprintf(STDERR, "drperf: too many synchronization hooks\n");
-                dr_abort();
+    for (i = 0; i < sizeof(wait_apis) / sizeof(wait_apis[0]); i++)
+        wait_wrap((app_pc)dr_get_proc_address(mod->handle, wait_apis[i].name), &wait_apis[i]);
+    /* glibc exports old AND current condition-wait ABIs under the same name.
+     * Single-name lookup can return only the compatibility implementation.
+     * Enumerate only libc/libpthread, never torch/CUDA/GX module tables. */
+    if (strstr(name, "libc.") || strstr(name, "libpthread")) {
+        dr_symbol_export_iterator_t *iter = dr_symbol_export_iterator_start(mod->handle);
+        if (iter) {
+            while (dr_symbol_export_iterator_hasnext(iter)) {
+                dr_symbol_export_t *symbol = dr_symbol_export_iterator_next(iter);
+                if (!symbol->name || !symbol->is_code || symbol->is_indirect_code)
+                    continue;
+                for (i = 0; i < sizeof(wait_apis) / sizeof(wait_apis[0]); i++) {
+                    if (strcmp(symbol->name, wait_apis[i].name) == 0) {
+                        wait_wrap(symbol->addr, &wait_apis[i]);
+                        break;
+                    }
+                }
             }
-            hook = &wait_hook_info[wait_hooks];
-            hook->api = &wait_apis[i];
-            hook->address = p;
-            hook->excluded = strncmp(hook->api->kind, "declared_", 9) == 0;
-            if (drwrap_wrap_ex(p, wait_pre, wait_post, hook,
-                              DRWRAP_UNWIND_ON_EXCEPTION))
-                wait_hooks++;
+            dr_symbol_export_iterator_stop(iter);
         }
     }
 }
@@ -277,6 +359,10 @@ write_waits(void)
         dr_fprintf(f, "{\"api\":"); json_str(f, r->api->name);
         dr_fprintf(f, ",\"kind\":"); json_str(f, r->api->kind);
         dr_fprintf(f, ",\"region\":"); json_str(f, r->key ? r->key->region : "");
+        dr_fprintf(f, ",\"callerModule\":");
+        json_str(f, r->caller_mod >= 0 ? modules[r->caller_mod].name : "<unknown>");
+        dr_fprintf(f, ",\"callerOffset\":\"%llu\"",
+                   (unsigned long long)r->caller_offset);
         dr_fprintf(f, ",\"tid\":%d,\"regionSeq\":%lld,\"start\":%lld,\"end\":%lld,"
                    "\"object\":\"%llu\",\"aux\":\"%llu\",\"result\":%lld,"
                    "\"returned\":%s,\"elapsedUs\":%llu,\"potentialSyscalls\":%llu,"
@@ -293,6 +379,14 @@ write_waits(void)
             dr_fprintf(f, ",\"beginUs\":%llu,\"endUs\":%llu",
                        (unsigned long long)r->begin_us,
                        (unsigned long long)(r->begin_us + r->elapsed_us));
+        if (r->indicator) { dr_fprintf(f, ",\"indicator\":"); json_str(f, r->indicator); }
+        if (r->producer) { dr_fprintf(f, ",\"producer\":"); json_str(f, r->producer); }
+        if (r->reason) { dr_fprintf(f, ",\"reason\":"); json_str(f, r->reason); }
+        if (r->declaration_error) dr_fprintf(f, ",\"declarationError\":true");
+        if (r->async_scope)
+            dr_fprintf(f, ",\"asyncScope\":\"%llu\"", (unsigned long long)r->async_scope);
+        if (strcmp(r->api->kind, "runtime_wait_end") == 0)
+            dr_fprintf(f, ",\"runtimeStatus\":%d", r->runtime_status);
         dr_fprintf(f, "}\n");
     }
     dr_close_file(f);

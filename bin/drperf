@@ -1,189 +1,93 @@
 #!/usr/bin/env python3
 """drperf COMMAND [ARGS...]
 
-Run a program under DynamoRIO and print, for each marked region, the cost
-function of the states it declared, and the relations between those states
-across regions.  Nothing else, and no options.
+Run the marked program, fit CPU-cost interfaces, check declared waits, and
+write drperf-report/report.txt, profile.drperf.json, and graph.html.
 
     drperf ./myapp
-    drperf python app.py
+    drperf python3 app.py
+    drperf --report [REPORT.json] --stats
+    drperf --report [REPORT.json] --region REGION
+    drperf --report [REPORT.json] --top unexplained --topk 10
+    drperf --report [REPORT.json] --top costly --topk 10
+    drperf --report [REPORT.json] --full
 
-Set DRPERF_MAX_STATES_PER_REGION to change the default 4096 retained state
-combinations per region (subject to the shared counter-memory budget).
-Set DRPERF_REPORT=path.drperf.json to save a portable report for the VS Code
-region explorer. DRPERF_SOURCE_ROOT selects the source tree (default: cwd).
+Report queries are read-only; add --json for structured output.
 
-Cost is instructions per call, counted exactly on every thread that ran while
-the region was open.  A coefficient appears only for a state that varied in
-this run; a state that did not vary is part of the constant.
+report.txt includes the text architecture graph, formulas, function breakdowns,
+and unexplained waits. graph.html is the interactive human view. No separate
+check, export, or graph command is needed. Declare conditions inline with wait(event, generation, indicator="entry PCV expression").
+Legacy drperf.waits.json files remain supported.
+
+Optional environment settings:
+  DRPERF_REPORT_DIR     report directory (default: ./drperf-report)
+  DRPERF_SOURCE_ROOT    source tree (default: working directory)
+  DRPERF_WAIT_INTERFACES  legacy wait-declaration file
+  DRPERF_WAITS=0        instruction-only capture
+
+Ordinary runs never inject delays. Unexplained work remains feedback; failed
+wait claims return 1, measurement/report errors return 2. The program's own
+failure status is propagated.
 """
 import os
-import shutil
+import json
 import sys
 import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(ROOT, "lib"))
-import derive   # noqa: E402
-import composition   # noqa: E402
 import runner   # noqa: E402
 
 
-def short(sym, n=44):
-    return sym if len(sym) <= n else sym[:n - 1] + "\u2026"
-
-
-def blame(entries, total, top=3, floor=0.05):
-    """The few functions that carry a term, largest first; entries too small to
-    matter are left out rather than padding the line."""
-    out = []
-    for (mod, sym), v in sorted(entries.items(), key=lambda kv: -abs(kv[1]))[:top]:
-        if total and abs(v) < floor * abs(total):
-            break
-        out.append("%s %s [%s]" % (derive.fmt(v), short(sym), mod))
-    return out
-
-
-def cost_lines(rs, keys, slots, recs):
-    """Use the same marker-adjusted block fits as the portable report."""
-    import explorer
-    model = explorer.build_model(rs["path"], discover=False)
-    return explorer.cost_lines(model)
-
-
-def strip_aliases(e):
-    """Remove the " (= other, names)" groups, matching parentheses."""
-    while " (= " in e:
-        i = e.index(" (= ")
-        depth, j = 0, i + 1
-        while j < len(e):
-            if e[j] == "(":
-                depth += 1
-            elif e[j] == ")":
-                depth -= 1
-                if depth == 0:
-                    break
-            j += 1
-        e = e[:i] + e[j + 1:]
-    return e
-
-
-def tidy(e):
-    """Readable relation: aliases dropped, a positive term first."""
-    e = strip_aliases(e).strip()
-    parts, cur = [], ""
-    for tok in e.split(" "):
-        if tok in ("+", "-") and cur:
-            parts.append(cur.strip())
-            cur = tok + " "
-        else:
-            cur += tok + " "
-    if cur.strip():
-        parts.append(cur.strip())
-    pos = [p for p in parts if not p.startswith("-")]
-    neg = [p for p in parts if p.startswith("-")]
-    parts = pos + neg
-    out = ""
-    for i, p in enumerate(parts):
-        p = p[2:].strip() if p.startswith("+ ") else p
-        if i == 0:
-            out = p.lstrip("+ ").strip()
-        else:
-            out += " " + (p if p.startswith("-") else "+ " + p.lstrip("+ ").strip())
-    return " ".join(out.split())
-
-
-def trivial(t, R, f):
-    """True for a relation that only restates how often the region ran: it
-    refers to its own state and otherwise only to call counts."""
-    own = "%s.%s)" % (R, f)
-    if own not in t:
-        return False
-    others = [w for w in t.replace("+", " ").replace("-", " ").split()
-              if "(" in w and own not in w]
-    return all(w.startswith("count(") for w in others)
-
-
-def relation_lines(recs):
-    """Exact relations between the states of different regions."""
-    # the cumulative features are built by walking the trigger stream, so the
-    # records must be in the order the markers fired
-    recs = sorted(recs, key=lambda r: (r.get("run", 0), r["seq"]))
-    regions, states = runner.trace_regions(recs, False)
-    out = []
-    for R in regions:
-        for f in states[R]:
-            names, rows = runner.feature_rows(recs, R, f, False)
-            ys = [y for _, y in rows]
-            if len(rows) < 3 or len(set(ys)) <= 1:
-                continue
-            for e in runner.exact_relations(names, rows, 3):
-                t = tidy(e)
-                if trivial(t, R, f):
-                    continue
-                out.append("  %s.%s = %s   (holds at all %d calls)" % (R, f, t, len(rows)))
-                break
-    return out
-
-
 def main(argv):
+    if argv and argv[0] == '--report':
+        import report_query
+        return report_query.main(argv[1:])
     if not argv or argv[0] in ("-h", "--help"):
         sys.stderr.write(__doc__)
-        return 2
-    tmp = tempfile.mkdtemp(prefix="drperf.")
+        return 0 if argv else 2
+    from pathlib import Path
+    import explorer
+    import report_bundle
+    directory = Path(os.environ.get('DRPERF_REPORT_DIR', 'drperf-report'))
+    destination = Path(os.environ.get('DRPERF_REPORT', str(directory/'profile.drperf.json')))
+    source_root = Path(os.environ.get('DRPERF_SOURCE_ROOT', os.getcwd()))
+    explicit = os.environ.get('DRPERF_WAIT_INTERFACES')
+    declaration_path = Path(explicit) if explicit else Path('drperf.waits.json')
     try:
-        out = os.path.join(tmp, "run")
+        declarations = json.loads(declaration_path.read_text()) if explicit or declaration_path.exists() else None
+    except (OSError, ValueError) as error:
+        sys.stderr.write('drperf: cannot read wait declarations: ' + str(error) + '\n')
+        return 2
+    with tempfile.TemporaryDirectory(prefix='drperf.') as temporary:
+        raw = Path(temporary)/'run'
         try:
-            rc, output, files = runner.run(argv, out)
-        except ValueError as error:
-            sys.stderr.write("drperf: %s\n" % error)
+            rc, output, files = runner.run(argv, str(raw))
+            if rc or not files:
+                sys.stderr.write(output)
+                if not files: sys.stderr.write('drperf: no marked region capture was produced.\n')
+                return rc or 1
+            model = explorer.build_model(raw, source_root, wait_declarations=declarations)
+            model['provenance']['command'] = list(argv)
+            paths = report_bundle.write(model, destination)
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            sys.stderr.write('drperf: ' + str(error) + '\n')
             return 2
-        if rc != 0 or not files:
-            sys.stderr.write(output)
-            return rc or 1
-        rs = runner.load_runs(out)
-        keys, slots = runner.blocks_of_set(rs)
-        if not keys:
-            sys.stderr.write("drperf: the program ran, but no marked region was reached.\n")
+        # The persistent report contains the entire graph; keep terminal output
+        # small even when the application contains hundreds of regions.
+        event = model.get('eventModel', {})
+        coverage = event.get('coverage', {})
+        print(f'drperf: {len(model["regions"])} regions; wait checks: {event.get("status", "disabled")}')
+        if 'obligations' in coverage:
+            print(f'  Wait obligations: {coverage["covered"]}/{coverage["obligations"]} covered; '
+                  f'{coverage["uncovered"]} unexplained')
+        for label, path in paths.items(): print(f'  {label}: {path}')
+        if model['validity']['errors'] or model['validity']['traceErrors'] or event.get('unverified'):
+            return 2
+        if event.get('violations') or event.get('interfaceChecks', {}).get('status') == 'invalid':
             return 1
-        slots = runner.demangle_slots(slots)
-        recs = [r for r in runner.load_traces_all(rs) if not r["region"].startswith(runner.CALIB)]
-        warn = runner.validity(rs)
-        report_path = os.environ.get("DRPERF_REPORT")
-        if report_path:
-            import explorer
-            try:
-                model = explorer.build_model(out, os.environ.get("DRPERF_SOURCE_ROOT", os.getcwd()))
-                model["provenance"]["command"] = list(argv)
-                explorer.write_model(model, report_path)
-                costs = explorer.cost_lines(model)
-                rels = ["  " + explorer.relation_text(r) +
-                        "   (observed at %d calls)" % r["evidence"]["calls"] for r in model["relations"]]
-                print("drperf: explorer report -> " + report_path, file=sys.stderr)
-            except (OSError, ValueError, KeyError, TypeError) as error:
-                print("drperf: could not export explorer report: " + str(error), file=sys.stderr)
-                return 2
-        else:
-            costs = cost_lines(rs, keys, slots, recs)
-            rels = relation_lines(recs)
-        if warn:
-            for w in warn:
-                sys.stderr.write("drperf: %s\n" % w)
-            sys.stderr.write("drperf: the numbers below are not trustworthy.\n\n")
-        print("cost per call, in instructions")
-        print()
-        for line in costs:
-            print(line)
-        if rels:
-            print()
-            print("relations")
-            print()
-            for line in rels:
-                print(line)
         return 0
-    finally:
-        shutil.rmtree(tmp, ignore_errors=True)
 
 
 if __name__ == "__main__":

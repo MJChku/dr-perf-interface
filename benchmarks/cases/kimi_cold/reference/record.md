@@ -10,7 +10,7 @@ at "LLM not set", so the whole measurement is local startup work.
 ```
 python3 -m venv kimi-venv && ./kimi-venv/bin/pip install kimi-cli   # 1.50.0
 export PYTHONPATH=/home/ubuntu/drperf-cases/kimi-mark:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q --threads 1 --repeat 2 \
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q --threads 1 --repeat 2 \
     --max-slots 4194304 --state n_tools=1,2,3,4,5,7,8,9,11,13,14,15,16,17 \
     -o out/kimi_fit2 -- ./kimi-venv/bin/python startup/run_kimi.py
 ```

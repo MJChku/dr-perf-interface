@@ -1,6 +1,26 @@
 # Declared wait checking
 
-Status: working opt-in prototype. Motivation: `lm_cache_task.md`.
+Status: working prototype; capture and checking enabled by default. Motivation: `lm_cache_task.md`.
+
+2026-10-01: the semantic-event checker now accepts explicit performance-interface
+indicators through `waitDeclarations` / `--wait-interfaces`. Markers themselves
+still have no condition argument. Each indicator is checked against event
+occurrence per invocation, and uncovered waits are retained in the formula as
+`unexplained(Wait[...])`. See [the current design](docs/waited.md#declare-the-indicator-in-the-performance-interface).
+The historical native-API contract checker and occurrence-fitting experiments
+below are not substitutes for these explicit interface declarations.
+
+Current coverage retains multiple wait obligations per region invocation,
+with credits from checked caller/ancestor `waited` declarations. Consecutive
+failed attempts at one API/object/site are grouped until success; distinct
+successes remain separate. Supported asyncio primitives are observed as logical
+operations, with task scopes preserving coverage across suspension. Event channels cannot
+be shared across different region pairs. See [the current contract](docs/waited.md#coverage-budgets-across-nested-regions)
+and run `python3 examples/waits/check_coverage.py` for eighteen native cases,
+including an uncontended private mutex that demonstrates a conservative
+obligation need not correspond to a missing semantic declaration.
+Historical experiments below predate these budgets; their per-API unresolved
+counts are native provenance diagnostics, not current annotation-coverage totals.
 
 The human or agent declares publication and completed-wait checkpoints inside
 ordinary regions. Drperf checks those declarations against captured execution
@@ -151,8 +171,8 @@ reported synchronization describes emulated execution, not actual GPU latency.
 ## Region execution graphs
 
 ```bash
-bin/drperf-graph profile.drperf.json -o graph.html
-bin/drperf-graph profile.drperf.json -o paths.html \
+tools/drperf-graph profile.drperf.json -o graph.html
+tools/drperf-graph profile.drperf.json -o paths.html \
   --root rt.submit_store --root rt.submit_load --root rt.poll --depth 1 --all-roots
 ```
 
@@ -217,7 +237,7 @@ The graph is not a complete semantic wait model.
 
 ### Checking agent-declared indicators on Ditto
 
-`bin/drperf-check-waits` checks a separate declaration file against an existing
+`tools/drperf-check-waits` checks a separate declaration file against an existing
 profile. It does not alter annotations, fit new PCVs, rerun GX, or install CUDA
 wrappers. The first example is
 [examples/waits/ditto_contracts.json](examples/waits/ditto_contracts.json):
@@ -257,7 +277,7 @@ but does not establish successful completion. Already-satisfied synchronization
 still counts; no claim about blocked duration is made.
 
 ```sh
-bin/drperf-check-waits \
+tools/drperf-check-waits \
   /home/ubuntu/compression/ditto_kv/example/qwen2.5B/qwen.drperf.json \
   examples/waits/ditto_contracts.json \
   -o out/waits/ditto-declarations.json
@@ -379,7 +399,7 @@ The exporter adds `eventModel` to reports containing these checkpoints. Check or
 plan a probe with:
 
 ```sh
-bin/drperf-check-events baseline.drperf.json --plan
+tools/drperf-check-events baseline.drperf.json --plan
 ```
 
 For each publisher, planning uses the largest observed publication-to-waited

@@ -71,6 +71,26 @@ EXPORT void perfmark_state(const char *name, const char *value)
     __asm__ __volatile__("" ::: "memory");
 }
 
+EXPORT int perfmark_release(uint64_t event, uint64_t generation)
+{
+    (void)event; (void)generation;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+EXPORT int perfmark_wait(uint64_t event, uint64_t generation,
+                        const char *indicator, const char *producer)
+{
+    (void)event; (void)generation; (void)indicator; (void)producer;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+EXPORT int perfmark_wait_null(const char *indicator, const char *reason)
+{
+    (void)indicator; (void)reason;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+
 EXPORT int perfmark_event_publish(uint64_t event, uint64_t generation)
 {
     (void)event; (void)generation;
@@ -80,6 +100,30 @@ EXPORT int perfmark_event_publish(uint64_t event, uint64_t generation)
 EXPORT int perfmark_event_waited(uint64_t event, uint64_t generation)
 {
     (void)event; (void)generation;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+EXPORT int perfmark_waited_null(void)
+{
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+
+EXPORT int perfmark_runtime_wait_begin(uint64_t id, uint64_t api)
+{
+    (void)id; (void)api;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+EXPORT int perfmark_runtime_wait_end(uint64_t id, uint64_t api, int status)
+{
+    (void)id; (void)api; (void)status;
+    __asm__ __volatile__("" ::: "memory");
+    return 0;
+}
+EXPORT int perfmark_async_scope(uint64_t scope, uint64_t parent)
+{
+    (void)scope; (void)parent;
     __asm__ __volatile__("" ::: "memory");
     return 0;
 }

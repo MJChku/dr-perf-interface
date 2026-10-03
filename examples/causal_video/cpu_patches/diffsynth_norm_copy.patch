@@ -1,0 +1,81 @@
+diff --git a/diffsynth/configs/vram_management_module_maps.py b/diffsynth/configs/vram_management_module_maps.py
+index 7a611e8..430738a 100644
+--- a/diffsynth/configs/vram_management_module_maps.py
++++ b/diffsynth/configs/vram_management_module_maps.py
+@@ -141,8 +141,8 @@ VRAM_MANAGEMENT_MODULE_MAPS = {
+         "diffsynth.models.wan_video_dit.Head": "diffsynth.core.vram.layers.AutoWrappedModule",
+         "torch.nn.Linear": "diffsynth.core.vram.layers.AutoWrappedLinear",
+         "torch.nn.Conv3d": "diffsynth.core.vram.layers.AutoWrappedModule",
+-        "torch.nn.LayerNorm": "diffsynth.core.vram.layers.AutoWrappedModule",
+-        "diffsynth.models.wan_video_dit.RMSNorm": "diffsynth.core.vram.layers.AutoWrappedModule",
++        "torch.nn.LayerNorm": "diffsynth.core.vram.layers.AutoWrappedStatelessNorm",
++        "diffsynth.models.wan_video_dit.RMSNorm": "diffsynth.core.vram.layers.AutoWrappedStatelessNorm",
+         "torch.nn.Conv2d": "diffsynth.core.vram.layers.AutoWrappedModule",
+     },
+     "diffsynth.models.wan_video_image_encoder.WanImageEncoder": {
+diff --git a/diffsynth/core/vram/layers.py b/diffsynth/core/vram/layers.py
+index 716d1d0..aa5165a 100644
+--- a/diffsynth/core/vram/layers.py
++++ b/diffsynth/core/vram/layers.py
+@@ -1,4 +1,5 @@
+ import torch, copy
++from collections import OrderedDict
+ from typing import Union
+ from .initialization import skip_model_initialization
+ from .disk_map import DiskMap
+@@ -209,6 +210,55 @@ class AutoWrappedModule(AutoTorchModule):
+             return getattr(self.module, name)
+ 
+ 
++class AutoWrappedStatelessNorm(AutoWrappedModule):
++    """Avoid recursively copying Python module state for pure leaf norms.
++
++    Only used for known stateless norm implementations. Unusual attributes,
++    hooks, parameter subclasses, buffers and custom conversions keep the
++    original deepcopy path. Each temporary parameter still owns its storage.
++    """
++    def cast_to(self, module, dtype, device):
++        for method in ("__copy__", "__deepcopy__", "__reduce__", "__reduce_ex__",
++                       "__getstate__", "__setstate__"):
++            if getattr(type(module), method, None) is not getattr(torch.nn.Module, method, None):
++                return super().cast_to(module, dtype, device)
++        if (module._modules or module._buffers
++                or type(module)._apply is not torch.nn.Module._apply
++                or any(type(p) is not torch.nn.Parameter
++                       or not (p.is_floating_point() or p.is_complex())
++                       for p in module._parameters.values() if p is not None)):
++            return super().cast_to(module, dtype, device)
++        for name, value in module.__dict__.items():
++            if name == "_parameters":
++                continue
++            if type(value) in (dict, set, OrderedDict) and not value:
++                continue
++            if value is None or type(value) in (bool, int, float, str):
++                continue
++            if type(value) is tuple and all(type(x) is int for x in value):
++                continue
++            return super().cast_to(module, dtype, device)
++        result = copy.copy(module)
++        # Preserve aliases between empty registries, as deepcopy does.
++        state_memo = {}
++        for name, value in module.__dict__.items():
++            if type(value) in (dict, set, OrderedDict):
++                if id(value) not in state_memo:
++                    state_memo[id(value)] = value.copy()
++                result.__dict__[name] = state_memo[id(value)]
++        memo = {}
++        for name, param in module._parameters.items():
++            if param is None:
++                result._parameters[name] = None
++            else:
++                if id(param) not in memo:
++                    memo[id(param)] = torch.nn.Parameter(
++                        param.to(device=device, dtype=dtype, copy=True),
++                        requires_grad=param.requires_grad)
++                result._parameters[name] = memo[id(param)]
++        return result
++
++
+ class AutoWrappedNonRecurseModule(AutoWrappedModule):
+ 
+     def __init__(

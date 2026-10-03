@@ -93,7 +93,7 @@ class ExportIntegrity(unittest.TestCase):
                "attribution": {"coefficients": [[]], "constant": [], "unexplained": []}}
         model = {"regions": [{"name": "large", "states": ["n"], "regimes": [fit, fit]}]}
         lines = explorer.cost_lines(model)
-        self.assertIn(f"{value:,} <= n <= {value + 9:,}", lines[0])
+        self.assertIn(f"{value:,} <= n <= {value + 9:,}", '\n'.join(lines))
 
     def test_all_region_nesting_matches_existing_reader(self):
         records=[

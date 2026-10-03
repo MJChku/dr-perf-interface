@@ -1,0 +1,33 @@
+--- a/torchdiffeq/_impl/solvers.py
++++ b/torchdiffeq/_impl/solvers.py
+@@ -114,15 +114,22 @@
+             dy, f0 = self._step_func(self.func, t0, dt, t1, y0)
+             y1 = y0 + dy
+ 
+-            while j < len(t) and t1 >= t[j]:
+-                if self.interp == "linear":
+-                    solution[j] = self._linear_interp(t0, t1, y0, y1, t[j])
+-                elif self.interp == "cubic":
+-                    f1 = self.func(t1, y1)
+-                    solution[j] = self._cubic_hermite_interp(t0, y0, f0, t1, y1, f1, t[j])
+-                else:
+-                    raise ValueError(f"Unknown interpolation method {self.interp}")
++            # The default fixed grid is exactly the requested output times.
++            # With linear interpolation each step already produces that output.
++            # Preserve endpoint validation, step callbacks, and other grids/modes.
++            if time_grid is t and self.interp == "linear":
++                solution[j] = y1
+                 j += 1
++            else:
++                while j < len(t) and t1 >= t[j]:
++                    if self.interp == "linear":
++                        solution[j] = self._linear_interp(t0, t1, y0, y1, t[j])
++                    elif self.interp == "cubic":
++                        f1 = self.func(t1, y1)
++                        solution[j] = self._cubic_hermite_interp(t0, y0, f0, t1, y1, f1, t[j])
++                    else:
++                        raise ValueError(f"Unknown interpolation method {self.interp}")
++                    j += 1
+             y0 = y1
+ 
+         return solution

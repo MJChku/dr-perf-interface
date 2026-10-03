@@ -1,0 +1,34 @@
+derive drt-gc-001   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vc=0,vm=0,scan=0,fcut=0 x144, vc=512,vm=12,scan=16,640,fcut=128 x12, vc=640,vm=12,scan=24,832,fcut=128 x12, vc=1,024,vm=12,scan=49,408,fcut=128 x12, vc=1,024,vm=12,scan=66,048,fcut=256 x12, vc=1,152,vm=12,scan=82,432,fcut=256 x12, vc=1,536,vm=12,scan=131,584,fcut=256 x12, vc=2,048,vm=12,scan=263,168,fcut=512 x12, vc=2,176,vm=12,scan=295,936,fcut=512 x12, vc=2,560,vm=12,scan=394,240,fcut=512 x12, vc=3,072,vm=12,scan=591,360,fcut=768 x12, vc=3,200,vm=12,scan=640,512,fcut=768 x12, vc=3,584,vm=12,scan=787,968,fcut=768 x12, vc=4,096,vm=12,scan=1,050,624,fcut=1,024 x12, vc=4,224,vm=12,scan=1,116,160,fcut=1,024 x12, vc=4,608,vm=12,scan=1,312,768,fcut=1,024 x12, vc=8,192,vm=12,scan=4,198,400,fcut=2,048 x12, vc=8,320,vm=12,scan=4,329,472,fcut=2,048 x12, vc=8,704,vm=12,scan=4,722,688,fcut=2,048 x12
+  cost(vc, vm, scan, fcut) = 401.7*vc + 1,994.8*vm + -0.00247*scan + 1,124.2*fcut + 13,171.5        [all vc, vm, scan, fcut]   blocks: 696 affine, 208 constant, 15 irregular (3.8% of cost)
+    irregular blocks, per call: 0 .. 218,702
+    per-vc coefficient by function:
+               199.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+                89.3  __GI___libc_malloc  [libc.so.6]
+                  32  operator new  [libstdc++.so.6.0.33]
+                27.1  _int_free  [libc.so.6]
+    per-vm coefficient by function:
+               264.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+               233.3  _int_free  [libc.so.6]
+               226.7  __GI___libc_malloc  [libc.so.6]
+               186.5  std::__detail::_Prime_rehash_policy::_M_next_bkt  [libstdc++.so.6.0.33]
+    per-scan coefficient by function:
+           -0.000727  _int_malloc  [libc.so.6]
+           -0.000434  std::__detail::_Prime_rehash_policy::_M_next_bkt  [libstdc++.so.6.0.33]
+           -0.000269  _int_free_merge_chunk  [libc.so.6]
+           -0.000263  std::__detail::_Prime_rehash_policy::_M_need_rehash  [libstdc++.so.6.0.33]
+    per-fcut coefficient by function:
+               320.7  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+               216.6  _int_free  [libc.so.6]
+               180.6  __GI___libc_malloc  [libc.so.6]
+               124.5  __free  [libc.so.6]
+    constant by function:
+               3,138  __free  [libc.so.6]
+             3,040.7  _int_free  [libc.so.6]
+             2,872.5  __GI___libc_malloc  [libc.so.6]
+             1,892.4  operator new  [libstdc++.so.6.0.33]
+    irregular by function:
+            64,394.5  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+            15,675.8  std::_Hashtable<>::find  [gcbench]
+             3,784.4  __memset_avx2_unaligned_erms  [libc.so.6]
+

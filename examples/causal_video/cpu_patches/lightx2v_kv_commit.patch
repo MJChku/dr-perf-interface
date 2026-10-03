@@ -1,0 +1,93 @@
+diff --git a/lightx2v/common/kvcache/rolling.py b/lightx2v/common/kvcache/rolling.py
+index 11d6ab8..46b5602 100755
+--- a/lightx2v/common/kvcache/rolling.py
++++ b/lightx2v/common/kvcache/rolling.py
+@@ -245,8 +245,12 @@ class RollingKVCachePool(BaseKVCachePool):
+         self._cpu_update_event(layer_id).record(torch.cuda.current_stream())
+ 
+     def _copy_layer_to_gpu(self, layer_id: int) -> None:
+-        self._k_gpu_buf.copy_(self._k_cpu_layer(layer_id), non_blocking=True)
+-        self._v_gpu_buf.copy_(self._v_cpu_layer(layer_id), non_blocking=True)
++        # Unpopulated capacity is never read by attention. Preserve the physical
++        # ring layout, including its fixed sink, when loading initialized slots.
++        for _, start, length in self._logical_chunks(layer_id, 0, self.get_local_end(layer_id)):
++            end = start + length
++            self._k_gpu_buf[start:end].copy_(self._k_cpu_layer(layer_id)[start:end], non_blocking=True)
++            self._v_gpu_buf[start:end].copy_(self._v_cpu_layer(layer_id)[start:end], non_blocking=True)
+ 
+     def _prefetch_layer(self, layer_id: int) -> None:
+         if layer_id >= self._num_layers:
+@@ -317,7 +321,14 @@ class RollingKVCachePool(BaseKVCachePool):
+         start_idx: int,
+         end_idx: int,
+         layer_id: int,
++        *,
++        writeback: bool = True,
+     ) -> None:
++        """Store for current attention, optionally committing to CPU backing.
++
++        A caller may omit writeback only when this entire range will be
++        recomputed before its next use after the staging layer is released.
++        """
+         if end_idx <= start_idx:
+             return
+         self._check_layer_loaded(layer_id)
+@@ -329,11 +340,11 @@ class RollingKVCachePool(BaseKVCachePool):
+             ke = ks + n
+             kb[phys_s : phys_s + n].copy_(k[ks:ke])
+             vb[phys_s : phys_s + n].copy_(v[ks:ke])
+-            if self._kv_offload:
++            if self._kv_offload and writeback:
+                 kcpu[phys_s : phys_s + n].copy_(k[ks:ke], non_blocking=True)
+                 vcpu[phys_s : phys_s + n].copy_(v[ks:ke], non_blocking=True)
+         self._update_ring_len_after_store(layer_id, end_idx)
+-        if self._kv_offload:
++        if self._kv_offload and writeback:
+             self._record_cpu_update(layer_id)
+ 
+     def _read_logical(self, layer_id: int, attn_start: int, local_end: int, which: str) -> torch.Tensor:
+@@ -646,9 +657,7 @@ class HybridStepRollingKVCachePool(StepRollingKVCachePool):
+         )
+ 
+     def _copy_layer_to_gpu(self, layer_id: int) -> None:
+-        size = self.cache_size_for_layer(layer_id)
+-        self._k_gpu_buf[:size].copy_(self._k_cpu_layer(layer_id), non_blocking=True)
+-        self._v_gpu_buf[:size].copy_(self._v_cpu_layer(layer_id), non_blocking=True)
++        super()._copy_layer_to_gpu(layer_id)
+ 
+     @property
+     def allocated_bytes(self) -> int:
+diff --git a/lightx2v/models/networks/wan/infer/self_forcing/transformer_infer.py b/lightx2v/models/networks/wan/infer/self_forcing/transformer_infer.py
+index 43e6024..e852d47 100755
+--- a/lightx2v/models/networks/wan/infer/self_forcing/transformer_infer.py
++++ b/lightx2v/models/networks/wan/infer/self_forcing/transformer_infer.py
+@@ -3,6 +3,7 @@ import torch.distributed as dist
+ import torch.nn.functional as F
+ from loguru import logger
+ 
++from lightx2v.common.kvcache.rolling import RollingKVCachePool
+ from lightx2v.common.offload.manager import WeightAsyncStreamManager
+ from lightx2v.common.ops.attn.utils.all2all import all2all_seq2head
+ from lightx2v.models.networks.wan.infer.transformer_infer import WanTransformerInfer
+@@ -292,12 +293,19 @@ class WanSFTransformerInfer(WanTransformerInfer):
+         if self._kv_offload:
+             kv_cache.begin_layer(self.block_idx)
+ 
++        store_options = {}
++        if type(self) is WanSFTransformerInfer and type(kv_cache) is RollingKVCachePool:
++            # Self-Forcing recomputes the whole current chunk on every pass.
++            # Only the context refresh (or reference prefill) survives into
++            # the next chunk. Step-isolated and custom caches keep writeback.
++            store_options["writeback"] = is_ref_prefill or self.scheduler.is_rerun
++
+         if seq_parallel:
+             k_to_store = all2all_seq2head(k, group=self.seq_p_group)
+             v_to_store = all2all_seq2head(v, group=self.seq_p_group)
+-            kv_cache.store_kv(k_to_store, v_to_store, local_start_idx, local_end_idx, self.block_idx)
++            kv_cache.store_kv(k_to_store, v_to_store, local_start_idx, local_end_idx, self.block_idx, **store_options)
+         else:
+-            kv_cache.store_kv(k, v, local_start_idx, local_end_idx, self.block_idx)
++            kv_cache.store_kv(k, v, local_start_idx, local_end_idx, self.block_idx, **store_options)
+         kv_cache.set_ends(self.block_idx, current_end, local_end_idx)
+ 
+         if self.clean_cuda_cache:

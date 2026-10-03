@@ -1,0 +1,9 @@
+$ GC_FIXEDPOLYS=0 bin/drperf build/drt-gc-002/reference/gcbench scenario=pins size=large
+cost per call, in instructions
+
+  drt-gc-002 = 4,536.9*vR + 7,345.7*vF + 1,575.7*layers + 219.8*nlogn + 179,322
+      vR: 642.9 __GI___libc_malloc [libc.so.6], 565 _int_free [libc.so.6], 515.6 boost::polygon::polygon_90_set_data<>::clean [gcbench]
+      vF: 904.6 __GI___libc_malloc [libc.so.6], 869.4 _int_free [libc.so.6], 728.5 boost::polygon::polygon_90_set_data<>::clean [gcbench]
+      layers: -6,390.9 boost::polygon::polygon_90_set_data<>::clean [gcbench], -3,979 std::__introsort_loop<> [gcbench], 3,194.1 std::__adjust_heap<> [gcbench]
+      nlogn: 99.2 std::__introsort_loop<> [gcbench], 29 boost::polygon::polygon_formation::ScanLine… [gcbench], 25.5 std::_Rb_tree<>::_M_insert_unique<> [gcbench]
+      constant: 60,993.6 _int_free [libc.so.6], 50,176 __GI___libc_malloc [libc.so.6], 37,065.8 __free [libc.so.6]

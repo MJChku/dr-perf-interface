@@ -91,13 +91,14 @@ def build_env():
     env["PERFMARK_LIB"] = PERFMARK
     env.pop("PERFMARK_CALIBRATE", None)  # No automatic wrapper calibration.
     env["DRPERF"] = "1"
+    env.setdefault("DRPERF_WAITS", "1")
     py = os.path.join(ROOT, "perfmark", "python")
     env["PYTHONPATH"] = py + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
     return env
 
 
 def wait_options(env):
-    enabled = env.get("DRPERF_WAITS", "0")
+    enabled = env.get("DRPERF_WAITS", "1")
     if enabled not in ("0", "1"):
         raise ValueError("DRPERF_WAITS must be 0 or 1")
     delay = env.get("DRPERF_WAIT_DELAY_MS", "0")

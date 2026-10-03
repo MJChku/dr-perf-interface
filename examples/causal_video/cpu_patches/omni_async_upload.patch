@@ -1,0 +1,33 @@
+--- a/vllm_omni/diffusion/offloader/sequential_backend.py
++++ b/vllm_omni/diffusion/offloader/sequential_backend.py
+@@ -1,5 +1,7 @@
+ # SPDX-License-Identifier: Apache-2.0
+ # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
++
++import os
+ 
+ import torch
+ from torch import nn
+@@ -13,6 +15,8 @@
+ from .module_collector import ModuleDiscovery
+ 
+ logger = init_logger(__name__)
++
++_ASYNC_UPLOAD = os.environ.get("OMNI_ASYNC_UPLOAD") == "1"
+ 
+ 
+ class SequentialOffloadHook(ModelHook):
+@@ -95,7 +99,12 @@
+         except StopIteration:
+             return
+ 
+-        self._move_params(module, self.device, non_blocking=False)
++        # The final pre_forward device synchronization completes all uploads
++        # before the module executes. CPU weights remain alive in the offload
++        # hooks during this sequence, with pinned allocator event tracking.
++        self._move_params(module, self.device, non_blocking=(
++            _ASYNC_UPLOAD and self.device.type == "cuda" and not self.use_hsdp
++        ))
+ 
+     def pre_forward(self, module: nn.Module, *args, **kwargs) -> tuple[tuple, dict]:
+         # Offload target modules to CPU

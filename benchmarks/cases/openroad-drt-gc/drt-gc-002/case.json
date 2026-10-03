@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "id": "openroad-drt-gc/drt-gc-002",
+  "title": "Per-net pin structures in DRC worker setup",
+  "status": "reference-only",
+  "readiness_note": "Standalone C++ extraction with an empty marker, bounded workloads, correctness tests, a reference annotation and a gated fix, validated with drperf. bench.py has no adapter for C++ drivers yet.",
+  "language": "cpp",
+  "source_family": "openroad-drt-gc",
+  "upstream": {
+    "repository": "https://github.com/The-OpenROAD-Project/OpenROAD",
+    "revision": "ec10d069775173bc856608663c11d33c09f3c9b6",
+    "license": "BSD-3-Clause (../LICENSE.OpenROAD)",
+    "functions": [
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet",
+        "start_line": 943,
+        "end_line": 949
+      },
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet_pins_polygonEdges_getFixedPolygonEdges",
+        "start_line": 487,
+        "end_line": 548
+      },
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet_pins_polygonCorners_helper",
+        "start_line": 749,
+        "end_line": 844
+      },
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet_pins_maxRectangles_getFixedMaxRectangles",
+        "start_line": 856,
+        "end_line": 878
+      }
+    ],
+    "relation": "re-implemented in ../src with the same containers, Boost.Polygon calls and order of work; see ../README.md, Differences from upstream"
+  },
+  "source": {
+    "path": "src/FlexGC_init.cpp",
+    "snapshot": "../src",
+    "sha256": {
+      "FlexGC.h": "5813c2c5c5c8c8a41673fdad34cc7ffdb6852fd37daa5089b5582ac7da7ea17e",
+      "FlexGC_init.cpp": "d6bb19f2212993cee0e074252779568a7a1ac0d46efd47c2c3e03ea4dc60b74a",
+      "FlexGC_main.cpp": "818842eccd8ffbccd457800483a528b169351408c68ed46f148b1c90a87ca693",
+      "frBase.h": "161665a54b78005b450c4abe740eb96749b0ca233c72f97f52757685236927b2",
+      "gcNet.h": "39c61274b4b3031fbb93fb60979cf475ea97e4339c0d33af56098141beccf0eb",
+      "gcPin.h": "c03d276aaf1e3a5ffdffe9cd97d2343a1286b64cbc0ef3ce96e382408ffe439d",
+      "gcShape.h": "04a674661d59382e349232bfe7913bcd38dff17d215c3f91666030ec51421c06",
+      "main.cpp": "b1e3c8b808b1110ed3dee5fa04f87545e913708a4556731c4ce89461343e085a",
+      "workload.cpp": "7bbc978a23e94927686c77dcc223ee4a31d52cf0ef191ecc313ca2067561f130",
+      "workload.h": "ca5ced83c08aec838f883914b1254d873a3d312745e0c45d7e14c60b3e6554ad"
+    }
+  },
+  "region": {
+    "symbol": "drt::FlexGCWorker::initNet",
+    "path": "src/FlexGC_init.cpp",
+    "start_line": 527,
+    "end_line": 533,
+    "kind": "function",
+    "called_once_per": "net"
+  },
+  "marker": {
+    "kind": "cpp-raii",
+    "name": "drt-gc-002",
+    "pcvs": []
+  },
+  "patch": "region.patch",
+  "build_status": "built",
+  "build": [
+    "../build.sh",
+    "drt-gc-002",
+    "neutral"
+  ],
+  "workload": {
+    "description": "Workers with two nets each: L-shaped fixed cell pins on metal1 reached by routed via1s and metal2 wires, and a macro pin of fixed rectangles on metal3 that the worker does not route, plus the two floating supply nets.",
+    "command": [
+      "build/drt-gc-002/neutral/gcbench",
+      "scenario=pins",
+      "size=small"
+    ],
+    "measurement_envelope": {
+      "scenario": "pins",
+      "size": [
+        "tiny",
+        "small"
+      ],
+      "free": [
+        "repeat",
+        "seed"
+      ]
+    },
+    "sizes": {
+      "small": "cell pins {8,16,32} x macro pin rectangles {8,16,32}, 2 nets per worker, repeat 4",
+      "large": "cell pins {64,128,256} x macro pin rectangles {64,128,256}, 2 nets per worker, repeat 4"
+    },
+    "held_out": {
+      "size": "large"
+    }
+  },
+  "tests": {
+    "files": [
+      "../tests/run_tests.sh",
+      "../tests/probe/drperf_bench_region.h"
+    ],
+    "command": [
+      "tests/run_tests.sh",
+      "drt-gc-002"
+    ],
+    "validation": {
+      "status": "region-verified",
+      "details": "Ran natively (g++ 13.3, Boost 1.83, glibc 2.39): totals of pins, edges, corners and maximal rectangles and their fixed counts match hand-derived counts for the four scenarios at size=tiny, digests match the recorded values for all five scenarios, and the recording marker observed drt-gc-002 entered once per net."
+    },
+    "coverage_note": "Checks setup results and reachability; says nothing about cost."
+  },
+  "citations": [
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L943-L949",
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L487-L548",
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L749-L844",
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L856-L878"
+  ]
+}

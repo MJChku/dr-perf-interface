@@ -85,10 +85,10 @@ Runner (`run_case.sh NAME PYTHON DRIVER [--regions R,..]`): runs the driver unde
 and the working directory `vllm-ditto`:
 
 ```
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q -o out/NAME -- PYTHON examples/cases/DRIVER.py
-/home/ubuntu/drperf/bin/drperf-dev derive out/NAME [--region R] [--top N] [--predict out/OTHER]
-/home/ubuntu/drperf/bin/drperf-dev learn  out/NAME
-/home/ubuntu/drperf/bin/drperf-dev trace  out/NAME [--region R] [--limit N] [--check "A.x == count(B) - cum(C.y)"]
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q -o out/NAME -- PYTHON examples/cases/DRIVER.py
+/home/ubuntu/drperf/tools/drperf-dev derive out/NAME [--region R] [--top N] [--predict out/OTHER]
+/home/ubuntu/drperf/tools/drperf-dev learn  out/NAME
+/home/ubuntu/drperf/tools/drperf-dev trace  out/NAME [--region R] [--limit N] [--check "A.x == count(B) - cum(C.y)"]
 ```
 
 Every driver begins with a stateless region so that the first trigger of the
@@ -949,7 +949,7 @@ editable install's finder is appended to `sys.meta_path`, so the copy wins.
 ```
 export PYTHONPATH=/home/ubuntu/drperf-cases/vllm-cpu-src:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
 export VLLM_CPU_OMP_THREADS_BIND=all
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q --threads 8 --repeat 1 --max-slots 2097152 \
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q --threads 8 --repeat 1 --max-slots 2097152 \
     -o out/vllm_base -- /home/ubuntu/drperf/third_party/vllm-cpu/.venv/bin/python examples/vllm_run.py reqs=6
 ```
 
@@ -2071,7 +2071,7 @@ any of it measured what it claimed to:
 export PYTHONPATH=/home/ubuntu/drperf-cases/vllm-cpu-spec:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
 export VLLM_CPU_OMP_THREADS_BIND=all OMP_NUM_THREADS=8
 python mark_spec.py vllm-cpu-spec spec          # or: ... stop
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
     --max-slots 2097152 -o out/vllm_spec_k3 \
     -- <venv>/python examples/vllm_run_spec.py mode=spec reqs=8 k=3
 ```
@@ -2593,7 +2593,7 @@ at "LLM not set", so the whole measurement is local startup work.
 ```
 python3 -m venv kimi-venv && ./kimi-venv/bin/pip install kimi-cli   # 1.50.0
 export PYTHONPATH=/home/ubuntu/drperf-cases/kimi-mark:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q --threads 1 --repeat 2 \
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q --threads 1 --repeat 2 \
     --max-slots 4194304 --state n_tools=1,2,3,4,5,7,8,9,11,13,14,15,16,17 \
     -o out/kimi_fit2 -- ./kimi-venv/bin/python startup/run_kimi.py
 ```

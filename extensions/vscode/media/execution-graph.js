@@ -9,7 +9,7 @@
   const cache = new WeakMap();
   const uid = (e) => JSON.stringify([e.group, String(e.thread ?? e.tid), e.regionSeq ?? e.seq]);
   const contract = 'Sequence means observed consecutive siblings, not a required dependency. '
-    + 'Wait arrows point from consumer to the region that published completion. '
+    + 'Wait arrows show declared event pairs only; native API matches never create region dependencies. '
     + 'Counts cover all captured invocations, including already-satisfied waits. '
     + 'Regions aggregate execution contexts; cycles can represent repeated calls. '
     + 'This is not a latency or critical-path model.';
@@ -26,7 +26,8 @@
   function eventChecks(model) {
     const e=model.eventModel;
     return {status:e?.status||'not captured',probe:!!e?.probe,
-      violations:e?.violations?.length||0,unverified:e?.unverified?.length||0};
+      violations:e?.violations?.length||0,unverified:e?.unverified?.length||0,coverage:e?.coverage,
+      interfaceStatus:e?.interfaceChecks?.status};
   }
   function unavailable(reason) {
     return {status: 'unavailable', nodes: [], edges: [], warnings: [reason], contract};
@@ -69,16 +70,24 @@
         }
       }
       const extra=new Map();
-      if(!exported.declaredEventsIncluded)for(const pair of declaredPairs(model)) {
+      // Reconstruct from checked declarations even for old exports. The old
+      // declaredEventsIncluded flag did not exclude inferred native edges.
+      for(const pair of declaredPairs(model)) {
         const source=pair.consumer.region,target=pair.producer.region;
-        if(!ids.has(source)||!ids.has(target))continue;
+        if(!ids.has(source)||!ids.has(target)||source===target)continue;
         const key=JSON.stringify([source,target,pair.eventStatus]);
         if(!extra.has(key))extra.set(key,{kind:'wait',source,target,context:source,observations:0,
           origin:pair.origin,eventStatus:pair.eventStatus});
         extra.get(key).observations++;
       }
-      return {...exported, contract, eventChecks:eventChecks(model), edges: [...exported.edges,...extra.values()].filter(e =>
-        e.kind !== 'wait' || (model.waits?.status === 'observed' && e.source !== e.target)),
+      for(const edge of extra.values()) {
+        const old=exported.edges.find(e=>e.kind==='wait'&&e.origin==='declared-event'&&
+          e.source===edge.source&&e.target===edge.target&&e.context===edge.context&&
+          e.eventStatus===edge.eventStatus&&e.observations===edge.observations);
+        if(old)Object.assign(edge,{perInvocation:old.perInvocation,states:old.states});
+      }
+      return {...exported, contract, eventChecks:eventChecks(model), edges: [
+        ...exported.edges.filter(e=>e.kind!=='wait'),...extra.values()],
         waitCoverage: model.waits?.status || 'not captured'};
     }
     // No reprofile needed for older portable reports. Validate the forest and
@@ -146,8 +155,7 @@
       if (model.waits.status === 'observed') for (const id of op.producers||[]) {
         const pub = publications.get(id), producer = pub && byInvocation.get(uid(pub));
         if (!producer) continue;
-        if (consumer.region===producer.region) { matched=true; continue; }
-        add('wait',consumer.region,producer.region,consumer.region); matched = true;
+        matched = true; // Native API evidence only; never a semantic graph edge.
       }
       if (!matched) summary['<unresolved>'] = (summary['<unresolved>']||0)+1;
     }
@@ -205,16 +213,6 @@
       if(parent) parent.last=key;else state.last=key;
       const call={node,event,last:null};stack.push(call);byCall.set(uid(event),call);
     }
-    if(model.waits?.status==='observed') {
-      const publications=new Map((model.waits.events||[]).map(e=>[e.id,e]));
-      for(const op of model.waits.operations||[]) {
-        const consumer=byCall.get(uid(op));if(!consumer)continue;
-        for(const id of op.producers||[]) {
-          const pub=publications.get(id),producer=pub&&byCall.get(uid(pub));
-          if(producer&&consumer.node.id!==producer.node.id) add('wait',consumer.node.key,producer.node.key,consumer.node.key);
-        }
-      }
-    }
     for(const pair of declaredPairs(model)) {
       const consumer=byCall.get(uid(pair.consumer)),producer=byCall.get(uid(pair.producer));
       if(consumer&&producer&&consumer.node.id!==producer.node.id)add('wait',consumer.node.key,producer.node.key,consumer.node.key,
@@ -251,6 +249,16 @@
     });
     return {roots,visible,edges};
   }
+  function waitNeighborhood(edges, selected) {
+    const nodes=new Set(), links=new Set();
+    for(const edge of edges) {
+      if(edge.kind!=='wait'||edge.source===edge.target)continue;
+      if([edge.source,edge.target,edge.actualSource,edge.actualTarget].some(k=>k&&selected.has(k))) {
+        links.add(edge);nodes.add(edge.source);nodes.add(edge.target);
+      }
+    }
+    return {nodes,edges:links};
+  }
   function countFormula(edge) {
     const f = edge.perInvocation;
     if (!f) return null;
@@ -282,5 +290,5 @@
     const ids = new Set(edges.flatMap(e=>[e.source,e.target]));
     return {nodes:graph.nodes.filter(n=>ids.has(n.id)),edges,primary:ids};
   }
-  return {build,focus,waits,hierarchy,nestedView,countFormula,layout};
+  return {build,focus,waits,hierarchy,nestedView,waitNeighborhood,countFormula,layout};
 });

@@ -1,0 +1,79 @@
+--- a/src/outlines/models/transformers.py
++++ b/src/outlines/models/transformers.py
+@@ -185,6 +185,7 @@
+         tokenizer: "PreTrainedTokenizer",
+         *,
+         device_dtype: Optional["torch.dtype"] = None,
++        inference_mode: bool = False,
+     ):
+         """
+         Parameters:
+@@ -217,6 +218,7 @@
+         self.hf_tokenizer = tokenizer
+         self.tokenizer = TransformerTokenizer(tokenizer)
+         self.device_dtype = device_dtype
++        self.inference_mode = inference_mode
+         self.type_adapter = TransformersTypeAdapter(
+             tokenizer=tokenizer,
+             has_chat_template=_check_hf_chat_template(tokenizer)
+@@ -359,10 +361,14 @@
+     def _generate_output_seq(self, prompts, inputs, **inference_kwargs):
+         input_ids = inputs["input_ids"]
+ 
+-        output_ids = self.model.generate(
+-            **inputs,
+-            **inference_kwargs,
+-        )
++        # Explicit opt-in: callbacks that require autograd retain the default
++        # path. Generated integer IDs are only sliced/decoded after this scope.
++        if self.tensor_library_name == "torch" and self.inference_mode:
++            import torch
++            with torch.inference_mode():
++                output_ids = self.model.generate(**inputs, **inference_kwargs)
++        else:
++            output_ids = self.model.generate(**inputs, **inference_kwargs)
+ 
+         # encoder-decoder returns output_ids only, decoder-only returns full seq ids
+         if self.model.config.is_encoder_decoder:
+@@ -593,6 +599,7 @@
+         processor,
+         *,
+         device_dtype: Optional["torch.dtype"] = None,
++        inference_mode: bool = False,
+     ):
+         """Create a TransformersMultiModal model instance
+ 
+@@ -665,6 +672,7 @@
+     tokenizer_or_processor: Union["PreTrainedTokenizer", "ProcessorMixin"],
+     *,
+     device_dtype: Optional["torch.dtype"] = None,
++    inference_mode: bool = False,
+ ) -> Union[Transformers, TransformersMultiModal]:
+     """Create an Outlines `Transformers` or `TransformersMultiModal` model
+     instance from a `PreTrainedModel` instance and a `PreTrainedTokenizer` or
+@@ -685,6 +693,12 @@
+         The dtype to use for the model. If not provided, the model will use
+         the default dtype.
+ 
++    inference_mode
++        Opt in to Torch inference mode during generation. All model and logits
++        processor callbacks must be inference-only; leave False when a callback
++        needs autograd or creates tensors for subsequent autograd use. Other
++        tensor libraries retain their original execution path.
++
+     Returns
+     -------
+     Union[Transformers, TransformersMultiModal]
+@@ -698,10 +712,10 @@
+         tokenizer_or_processor, (PreTrainedTokenizer, PreTrainedTokenizerFast)
+     ):
+         tokenizer = tokenizer_or_processor
+-        return Transformers(model, tokenizer, device_dtype=device_dtype)
++        return Transformers(model, tokenizer, device_dtype=device_dtype, inference_mode=inference_mode)
+     elif isinstance(tokenizer_or_processor, ProcessorMixin):
+         processor = tokenizer_or_processor
+-        return TransformersMultiModal(model, processor, device_dtype=device_dtype)
++        return TransformersMultiModal(model, processor, device_dtype=device_dtype, inference_mode=inference_mode)
+     else:
+         raise ValueError(
+             "We couldn't determine whether the model passed to `from_transformers`"

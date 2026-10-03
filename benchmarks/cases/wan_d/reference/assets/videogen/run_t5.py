@@ -15,7 +15,7 @@ Derived from run_more.py; imports diffusers from `videogen/wan-t5`.
 
 Under drperf (from /home/ubuntu/drperf-cases/videogen):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 \\
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 \\
         --repeat 2 --max-slots 2097152 -o out/videogen_t5_sq \\
         --state mode=6 --state rtok=8,32,128,480 --state maxlen=64,128,256,512 \\
         --state batch=1,2 \\

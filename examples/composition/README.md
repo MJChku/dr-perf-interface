@@ -10,7 +10,7 @@ This compiles and runs [app.c](app.c) under DynamoRIO, then checks 20 cases
 against the actual trace. Each marked child is in another `noinline` function.
 There are four runs: `-O2` baseline, new inputs, a deliberately changed child
 count, and an independently compiled `-O0` baseline. Omit `--thorough` to skip
-the last run. It retains one binary, `out/composition/report.txt`, the baseline
+the last run. It retains one binary, `results/paper/composition/report.txt`, the baseline
 and held-out `.drperf.json` reports, and `validation.json` (about 8 MiB total).
 Temporary raw files and the `-O0` binary are removed.
 

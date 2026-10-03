@@ -77,6 +77,8 @@ These are active checker limitations. See [SPEC.md](SPEC.md) for the mechanics.
 
 ## Findings in Wan video generation
 
+Research evidence is indexed in [results/paper/README.md](results/paper/README.md). Generated experiment workspaces have been removed; retained profiles, source snapshots and compact captures are listed there.
+
 The [full-model GX experiment](examples/wan_gx/README.md) runs the official
 pretrained Wan2.1-T2V-1.3B pipeline through text encoding, 81-frame / 50-step
 denoising and VAE decode. It repairs CPU/GPU control-metadata boundaries,
@@ -133,15 +135,79 @@ bottleneck. drperf counts CPU instructions; GPU correctness, device timings,
 memory use, and end-to-end speedups need their own measurements.
 
 The [causal-video study](examples/causal_video/README.md) extends this workflow to
-pretrained Inferix and FastVideo Self-Forcing models, with A100 kernel databases,
+pretrained Inferix, FastVideo, LightX2V and FlashDreams Self-Forcing models, with A100 kernel databases,
 GX `partial_sync`, and separate drperf measurements. A [native Inferix
 comparison](examples/causal_video/NATIVE_RESULTS.md) reduces median latency from
-41.29 to 12.65 seconds with identical saved output. A separate
+41.29 to 12.65 seconds by keeping KV resident and removing a discarded decode,
+with identical saved output; that configuration requires room for the GPU cache. A separate
 [drperf-guided RoPE cache](examples/causal_video/CPU_RESULTS.md) reduces marked
 CPU instructions by 5.2% but yields no additional native latency improvement.
 The [FastVideo comparison](examples/causal_video/FASTVIDEO_NATIVE_RESULTS.md)
 finds no convincing latency gain from keeping DiT weights resident; the study
 includes both [native kernel databases](examples/causal_video/evidence/kernel-databases/README.md).
+With GX copy timing, an [Inferix KV-transfer optimization](examples/causal_video/INFERIX_KV_TRANSFER.md)
+keeps CPU offload enabled while reducing host/device traffic by 63.5% and modeled
+latency from 38.42 to 22.31 seconds. A subsequent native A100 test measures
+**41.28 to 25.29 seconds (38.7% lower latency)** with exactly matching saved video
+tensors and essentially unchanged peak allocated GPU memory.
+An [eight-GPU, weightless 14B follow-up](examples/causal_video/INFERIX_KV_DISTRIBUTED.md#weightless-14b-on-eight-emulated-gpus)
+keeps KV offload enabled and models **32.99 to 23.89 seconds (27.6% lower)**,
+using the existing kernel database with explicit extrapolation.
+
+In [LightX2V](examples/causal_video/README.md#lightx2v-gx-discovery-drperf-interface-a100-validation),
+GX identifies uploads of unused KV slots, and drperf explains cache reset work
+as `0.09375*cache_bytes + 335369` instructions at three observed capacities.
+Loading only valid entries and resetting metadata preserves offloading. For an
+81-frame request, GX with the existing short-case kernel database predicts
+7.42 seconds saved; subsequent A100 validation measures **31.05 → 23.67 seconds
+(23.8% lower latency)** with matching final video hashes and unchanged peak
+allocated GPU memory. GX absolute latency remains optimistic, with documented
+kernel prediction misses.
+
+In [FlashDreams](examples/causal_video/README.md#flashdreams-cpu-initialization-confirmed-on-a100),
+drperf under GX identifies redundant BF16-to-FP32-to-BF16 text-encoder weight
+conversion at request initialization. Direct-dtype loading removes 69.1% of
+marked CPU instructions. Separate A100 confirmation reduces median 105-frame
+request latency from **28.67 to 18.00 seconds (37.2%)**, with identical final
+video hashes and unchanged peak allocated GPU memory. Encoder release/reload
+remains enabled. GX's first numerical timing estimate is rejected because of
+CPU-calibration and kernel-coverage problems; this is a confirmed optimization,
+not a validation of GX's timing accuracy for FlashDreams. A second optimization
+retains the CPU tokenizer while releasing encoder weights, reducing a separately
+paired native baseline from **17.98 to 16.79 seconds (6.6%)**. GX predicts 1.182
+seconds saved for that change; A100 measures 1.192 seconds. The final median is
+41.4% below the original, with the same final video hash and GPU memory peak.
+
+The [Causal Forcing++ screen](examples/causal_video/README.md#causal-forcing-small-modeled-cpu-headroom)
+also records a reason to stop: only 2.5% modeled device idle time, and a cache
+metadata change removes just 0.49% of host instructions. Its small virtual-time
+change is not a validated speedup; further CPU-only work was deprioritized.
+The [Matrix-Game 3 screen](examples/causal_video/README.md#matrix-game-3-output-copies-dominate-cpu-work)
+likewise finds modest modeled CPU headroom (9.1%). drperf identifies output
+copies as the main host cost and explains camera-history selection with a
+candidate/reference-pair PCV; no candidate speedup is claimed.
+[Scope / LongLive](examples/causal_video/README.md#scope--longlive-host-dispatch-mostly-overlaps-gpu-work)
+has 5.6% modeled idle despite substantial host dispatch work. It is another
+recorded decision to deprioritize CPU-only optimization after GX screening.
+
+In [StreamDiffusionV2](examples/causal_video/README.md#streamdiffusionv2-repeated-whole-video-conversion),
+drperf exposes quadratic CPU conversion in the documented chunk API: each chunk
+reconverts and uploads the entire input video. Restricting conversion to the
+required five-frame window removes **34.9% of marked CPU instructions** across
+17/33/65-frame requests. GX flags the traffic reduction; A100 validation with
+upstream metadata confirms **9.175 → 7.696 seconds (16.1%)** at 65 frames, with
+all nine paired outputs identical. GX's CPU-calibration and cuDNN limitations are
+recorded alongside the result.
+
+In [TeleFuser / ABot-World](examples/causal_video/README.md#telefuser--abot-world-cpu-image-layout-modest-latency-gain),
+drperf identifies redundant packing of planar RGB output. Adding a row-count
+PCV explains the small-fixture conversion cost; merging channel planes directly
+removes **38.8% of full-model marked CPU instructions**. GX predicts a modest
+latency reduction with the original kernel database and matching launch counts.
+A100 confirms **9.111 → 8.919 seconds (2.1%)** across twelve control blocks,
+with all 36 paired output chunks identical. The limited gain illustrates why
+GX headroom and CPU instruction savings must be checked separately.
+
 
 ## Use
 
@@ -187,21 +253,32 @@ predictions and cost formulas separately. The explorer can suggest small PCV
 experiments that distinguish competing equations, and compare region interfaces
 at shared states across runs or code versions.
 
-```sh
-DRPERF_REPORT=out/app.drperf.json bin/drperf python app.py
-# Or export saved raw measurements:
-bin/drperf-export out/raw --source-root . -o out/app.drperf.json
+Every run automatically writes `drperf-report/report.txt`,
+`drperf-report/profile.drperf.json`, and `drperf-report/graph.html`.
+The text report includes all region relationships, formulas, function breakdowns,
+unexplained waits, marked-source-line coverage, and region reachability. The HTML is a self-contained
+interactive graph with expandable regions and performance details; it needs no
+VS Code installation. The JSON also opens in the VS Code Region Explorer.
+Keep its companion evidence files with it. There are no separate export, check,
+or graph commands to run. See [SKILL.md](SKILL.md) for the agent workflow.
+
+Agents can query a saved report through the same executable, without rerunning:
+
+```bash
+drperf --report --stats
+drperf --report --top unexplained --topk 10
+drperf --report --top costly --topk 10
+drperf --report --region 'region.name'   # formula, breakdown, states and waits
+drperf --report --full                  # complete text report
 ```
 
-Install the extension's `.vsix`, then run **drperf: Open Performance Report**.
-The JSON contains the viewer data and checked results. With wait capture enabled,
-full synchronization evidence is saved in an adjacent `*.waits.<hash>.jsonl.gz`
-file. The viewer needs only the JSON; checking commands also need the evidence
-file and verify its checksum before loading it.
-The [measured producer/consumer example](examples/explorer/README.md) demonstrates
-propagation across threads, a failed extrapolation, and a semantic PCV refinement
-that fixes it. `bin/drperf-explore` exposes the same scenario checker to agents
-and terminal workflows.
+Supply a report JSON or directory after `--report` to select another capture;
+add `--json` for structured output. Cost ranking uses invocation-weighted own
+instructions. Unexplained ranking also includes estimated full costs of
+unresolved child terms. One-state constant fits are disclosed, even when their
+residual is zero. Coverage means nonblank, noncomment source lines inside
+marked lexical spans divided by all such lines in the selected source tree;
+whether a marked region executed is reported separately.
 
 The profiling command remains `drperf` followed by the command you would have
 run anyway. Optional environment controls can narrow the measurement scope:
@@ -267,18 +344,24 @@ Start with `examples/playground`, a 250-line C system with three regions and a
 one-line change to measure. `SPEC.md` states exactly what is computed, on one
 page.
 
-Declared wait checking is available as an opt-in prototype: annotate publication
-and completed waits with `event_publish` and `event_waited`, then capture with
-`DRPERF_WAITS=1 bin/drperf ./program`. Drperf checks the declared relationships;
+Wait capture and checking are enabled by default: annotate publication
+and completed waits with `release` and `wait`, then run
+`bin/drperf ./program`. Supply the indicator inline, e.g.
+`wait(42, generation, indicator="need == 1", producer="cache.fetch")`.
+No separate declaration file is needed. Use `DRPERF_WAITS=0` for instruction-only runs. Drperf checks the declared relationships;
 requested delay probes test them by postponing publication. Supported native
 synchronization calls also expose missing or unexplained waits, including
-already-satisfied operations. Start with [the publish/waited usage guide](docs/waited.md)
-for annotation placement and what the checker guarantees. See [wait_task.md](wait_task.md)
+already-satisfied operations. Start with [the release/wait usage guide](docs/waited.md)
+for annotation placement and what the checker guarantees. `wait(None, indicator="need == 1", reason="...")`
+refines synchronization without claiming a publisher: it stays visible as
+`I[condition] * waited(null)`, with a required indicator and a reason for manual
+review. Event-backed waits on synchronous child invocations are rejected.
+See [wait_task.md](wait_task.md)
 for capture coverage, delay probes, and the runnable
-`examples/waits` demonstration. Render a region-only graph with
-`bin/drperf-graph profile.drperf.json -o graph.html`: observed sequence, nesting,
-and supported wait dependencies, with clickable cost interfaces. Repeat
-`--root REGION` for workflow views. It does not predict latency.
+`examples/waits` demonstration. The generated `graph.html` shows nesting,
+observed sequence, and declared wait claims with clickable interfaces.
+Native synchronization candidates remain report evidence, not invented semantic
+arrows. No graph or cost formula predicts end-to-end latency.
 
 ## Markers
 
@@ -368,14 +451,14 @@ Outside DynamoRIO the markers are empty functions, one call each.
 
 Markers are cheap but not free: in Python a `with region(...)` costs about
 1,459 ns per entry through a `@contextmanager` shim and 378 ns through the
-cheapest class-based one, because the statement still runs. `bin/perfmark-regions`
+cheapest class-based one, because the statement still runs. `tools/perfmark-regions`
 removes the statement instead of making it cheaper.
 
 ```
-bin/perfmark-regions status src   # how many markers are live
-bin/perfmark-regions check  src   # prove off -> on reproduces every file
-bin/perfmark-regions off    src   # header commented, body dedented
-bin/perfmark-regions on     src   # sources restored byte for byte
+tools/perfmark-regions status src   # how many markers are live
+tools/perfmark-regions check  src   # prove off -> on reproduces every file
+tools/perfmark-regions off    src   # header commented, body dedented
+tools/perfmark-regions on     src   # sources restored byte for byte
 ```
 
 `off` rewrites

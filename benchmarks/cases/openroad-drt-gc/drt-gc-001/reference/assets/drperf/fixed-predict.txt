@@ -1,0 +1,31 @@
+derive drt-gc-001   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: vc=0,vm=0,scan=0,fcut=0 x144, vc=16,vm=12,scan=24,fcut=4 x12, vc=32,vm=12,scan=56,fcut=4 x12, vc=32,vm=12,scan=80,fcut=8 x12, vc=48,vm=12,scan=144,fcut=8 x12, vc=64,vm=12,scan=120,fcut=4 x12, vc=64,vm=12,scan=288,fcut=16 x12, vc=80,vm=12,scan=272,fcut=8 x12, vc=80,vm=12,scan=416,fcut=16 x12, vc=96,vm=12,scan=624,fcut=24 x12, vc=112,vm=12,scan=672,fcut=16 x12, vc=112,vm=12,scan=816,fcut=24 x12, vc=128,vm=12,scan=1,088,fcut=32 x12, vc=144,vm=12,scan=1,200,fcut=24 x12, vc=144,vm=12,scan=1,344,fcut=32 x12, vc=176,vm=12,scan=1,856,fcut=32 x12, vc=192,vm=12,scan=2,400,fcut=48 x12, vc=208,vm=12,scan=2,784,fcut=48 x12, vc=240,vm=12,scan=3,552,fcut=48 x12
+  cost(vc, vm, scan, fcut) = 398.6*vc + 2,328.3*vm + 0.0987*scan + 1,166*fcut + 2,378.7        [all vc, vm, scan, fcut]   blocks: 587 affine, 144 constant, 8 irregular (1.1% of cost)
+    irregular blocks, per call: 0 .. 3,056
+    per-vc coefficient by function:
+               199.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+                88.5  __GI___libc_malloc  [libc.so.6]
+                31.7  operator new  [libstdc++.so.6.0.33]
+                26.2  _int_free  [libc.so.6]
+    per-vm coefficient by function:
+               390.9  _int_free  [libc.so.6]
+               385.7  __GI___libc_malloc  [libc.so.6]
+               264.2  drt::FlexGCWorker::initNet_pins_polygonCorners_helper  [gcbench]
+               224.4  __free  [libc.so.6]
+    per-scan coefficient by function:
+              0.0598  std::__detail::_Prime_rehash_policy::_M_next_bkt  [libstdc++.so.6.0.33]
+              0.0199  std::__detail::_Prime_rehash_policy::_M_need_rehash  [libstdc++.so.6.0.33]
+               0.019  std::_Hashtable<>::find  [gcbench]
+    per-fcut coefficient by function:
+               320.3  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+               226.1  _int_free  [libc.so.6]
+               188.4  __GI___libc_malloc  [libc.so.6]
+               129.8  __free  [libc.so.6]
+    constant by function:
+             1,083.1  main  [gcbench]
+               438.5  std::pair<std::__detail::_Node_iterator<std::pair<int, int>, true, tru  [gcbench]
+               199.2  std::__detail::_Prime_rehash_policy::_M_need_rehash  [libstdc++.so.6.0.33]
+               179.8  _int_free  [libc.so.6]
+  predict out/drt-gc-001/fixed-large (vc=0,vm=0,scan=0,fcut=0 x144, vc=512,vm=12,scan=16,640,fcut=128 x12, vc=640,vm=12,scan=24,832,fcut=128 x12, vc=1,024,vm=12,scan=49,408,fcut=128 x12, vc=1,024,vm=12,scan=66,048,fcut=256 x12, vc=1,152,vm=12,scan=82,432,fcut=256 x12, vc=1,536,vm=12,scan=131,584,fcut=256 x12, vc=2,048,vm=12,scan=263,168,fcut=512 x12, vc=2,176,vm=12,scan=295,936,fcut=512 x12, vc=2,560,vm=12,scan=394,240,fcut=512 x12, vc=3,072,vm=12,scan=591,360,fcut=768 x12, vc=3,200,vm=12,scan=640,512,fcut=768 x12, vc=3,584,vm=12,scan=787,968,fcut=768 x12, vc=4,096,vm=12,scan=1,050,624,fcut=1,024 x12, vc=4,224,vm=12,scan=1,116,160,fcut=1,024 x12, vc=4,608,vm=12,scan=1,312,768,fcut=1,024 x12, vc=8,192,vm=12,scan=4,198,400,fcut=2,048 x12, vc=8,320,vm=12,scan=4,329,472,fcut=2,048 x12, vc=8,704,vm=12,scan=4,722,688,fcut=2,048 x12):
+    [all vc, vm, scan, fcut] formula 519,704,670 vs measured 511,470,685 (+1.6%) over 360 triggers
+

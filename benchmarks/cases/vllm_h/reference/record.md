@@ -26,7 +26,7 @@ any of it measured what it claimed to:
 export PYTHONPATH=/home/ubuntu/drperf-cases/vllm-cpu-spec:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
 export VLLM_CPU_OMP_THREADS_BIND=all OMP_NUM_THREADS=8
 python mark_spec.py vllm-cpu-spec spec          # or: ... stop
-/home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
+/home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
     --max-slots 2097152 -o out/vllm_spec_k3 \
     -- <venv>/python examples/vllm_run_spec.py mode=spec reqs=8 k=3
 ```

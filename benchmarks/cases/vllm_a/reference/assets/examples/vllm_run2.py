@@ -25,7 +25,7 @@ added by examples/vllm_mark_kv.py:
 
 Under drperf (from /home/ubuntu/drperf-cases, same env exported):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
         --max-slots 2097152 -o out/vllm_kv \\
         -- /home/ubuntu/drperf/third_party/vllm-cpu/.venv/bin/python examples/vllm_run2.py
 """

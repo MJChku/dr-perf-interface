@@ -20,5 +20,5 @@ rc,log,files=runner.run([os.path.abspath(out+'/pipeline'), os.environ.get('DRPER
 print(log)
 if rc or not files: raise SystemExit(rc or 1)
 PY
-bin/drperf-export "$RAW" --source-root . --source examples/explorer/pipeline.c \
+tools/drperf-export "$RAW" --source-root . --source examples/explorer/pipeline.c \
   -o "$OUT/pipeline.drperf.json"

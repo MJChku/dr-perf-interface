@@ -6,8 +6,8 @@ scales with how many ENTRIES get copied, which is keys x blocks-per-superblock.
 Here superblocks are built at three different fill levels in one run and the
 region declares `entries` alongside `keys`.
 
-    bin/drperf-dev run --blocks -o out/ftl2 -- python examples/ditto_ftl/app2.py
-    bin/drperf-dev derive out/ftl2 --region plan_load
+    tools/drperf-dev run --blocks -o out/ftl2 -- python examples/ditto_ftl/app2.py
+    tools/drperf-dev derive out/ftl2 --region plan_load
 """
 import sys
 

@@ -4,7 +4,7 @@ stop-string/logprobs paths, against the marked COPY at
 
     export PYTHONPATH=/home/ubuntu/drperf-cases/vllm-cpu-spec:/home/ubuntu/drperf/perfmark/python:/home/ubuntu/drperf/build
     export VLLM_CPU_OMP_THREADS_BIND=all OMP_NUM_THREADS=8
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \
         --max-slots 2097152 -o out/vllm_spec_ngram --state k=3,5 \
         -- <python> examples/vllm_run_spec.py mode=spec reqs=8
 

@@ -1,0 +1,143 @@
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -24,7 +24,7 @@
+ #include <vector>
+ 
+ #include "FlexGC.h"
+-#include "drperf_bench_region.h"
++#include "pcv_drt_gc_002.h"  // reference PCVs instead of the empty marker
+ 
+ namespace drt {
+ 
+diff -ruN a/src/pcv_drt_gc_002.h b/src/pcv_drt_gc_002.h
+--- a/src/pcv_drt_gc_002.h
++++ b/src/pcv_drt_gc_002.h
+@@ -0,0 +1,127 @@
++// Reference annotation for drt-gc-002: the answer key. Not part of the neutral case.
++//
++// Replaces the empty marker of drperf_bench_region.h: DRPERF_BENCH_REGION(name)
++// opens the same region, declaring vR, vF, layers and nlogn.
++//
++//   vR     vertices of the pins initNet() builds on layers where the net has
++//          route shapes (route polygons or route cut rectangles)
++//   vF     vertices of the pins it builds on layers where the net has only
++//          fixed shapes
++//   layers layers where the net has shapes
++//   nlogn  sum over those layers of n*log2(n), n = shapes on the layer: the
++//          sorting of polygon set data and the ordered sets of edges
++#pragma once
++
++#include <cmath>
++#include <cstdint>
++#include <vector>
++
++#include "FlexGC.h"
++#include "perfmark.h"
++
++namespace drt_gc_pcv {
++
++// The region with declared states. The states are computed before
++// perfmark_begin_v, so their cost is not counted in the region.
++struct States
++{
++  const char* names[4];
++  int64_t values[4];
++  int n = 0;
++  void add(const char* name, int64_t value)
++  {
++    names[n] = name;
++    values[n] = value;
++    n++;
++  }
++};
++
++class Region
++{
++ public:
++  Region(const char* name, const States& s) : name_(name)
++  {
++    perfmark_begin_v(name_, s.n, s.names, s.values);
++  }
++  ~Region() { perfmark_end(name_); }
++  Region(const Region&) = delete;
++  Region& operator=(const Region&) = delete;
++
++ private:
++  const char* name_;
++};
++
++inline int64_t verticesOf(const gtl::polygon_90_with_holes_data<drt::frCoord>& p)
++{
++  int64_t v = p.size();
++  for (auto h = p.begin_holes(); h != p.end_holes(); ++h) {
++    v += h->size();
++  }
++  return v;
++}
++
++// What one net holds on one layer when initNet() begins, computed on copies
++// (a polygon set is cleaned by reading it, so the net's own sets are not read).
++struct LayerShapes
++{
++  int64_t shapes = 0;       // rectangles added: fixed and route polygons, cut rectangles
++  int64_t fixedShapes = 0;  // of which fixed
++  int64_t pinVertices = 0;  // vertices of the pins initNet() will build here
++  bool hasRoute = false;    // a route polygon or route cut rectangle
++};
++
++inline LayerShapes layerShapes(const drt::gcNet* net, int layer)
++{
++  LayerShapes s;
++  const auto& route = net->getPolygons(layer, false);
++  const auto& fixed = net->getPolygons(layer, true);
++  const auto& routeRects = net->getRectangles(layer, false);
++  const auto& fixedRects = net->getRectangles(layer, true);
++  // a polygon set that was never read holds 4 vertex entries per rectangle
++  const int64_t routePolys = route.value().size() / 4;
++  const int64_t fixedPolys = fixed.value().size() / 4;
++  s.shapes = routePolys + fixedPolys + routeRects.size() + fixedRects.size();
++  s.fixedShapes = fixedPolys + fixedRects.size();
++  s.hasRoute = routePolys > 0 || !routeRects.empty();
++  if (routePolys > 0 || fixedPolys > 0) {
++    using gtl::operators::operator+=;
++    gtl::polygon_90_set_data<drt::frCoord> merged;
++    merged += route;
++    merged += fixed;
++    std::vector<gtl::polygon_90_with_holes_data<drt::frCoord>> polys;
++    merged.get(polys);
++    for (const auto& p : polys) {
++      s.pinVertices += verticesOf(p);
++    }
++  }
++  s.pinVertices += 4 * static_cast<int64_t>(routeRects.size() + fixedRects.size());
++  return s;
++}
++
++inline States netStates(const drt::FlexGCWorker& gc, const drt::gcNet* net)
++{
++  int64_t vR = 0, vF = 0, layers = 0, nlogn = 0;
++  const int numLayers = gc.getTech()->numLayers();
++  for (int l = 0; l < numLayers; l++) {
++    const LayerShapes s = layerShapes(net, l);
++    if (s.shapes == 0) {
++      continue;
++    }
++    layers++;
++    (s.hasRoute ? vR : vF) += s.pinVertices;
++    if (s.shapes > 1) {
++      nlogn += static_cast<int64_t>(s.shapes * std::log2(static_cast<double>(s.shapes)));
++    }
++  }
++  States st;
++  st.add("vR", vR);
++  st.add("vF", vF);
++  st.add("layers", layers);
++  st.add("nlogn", nlogn);
++  return st;
++}
++
++}  // namespace drt_gc_pcv
++
++#define DRPERF_BENCH_REGION(name) \
++  ::drt_gc_pcv::Region drt_gc_pcv_region_(name, ::drt_gc_pcv::netStates(*this, net))

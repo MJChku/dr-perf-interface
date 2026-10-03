@@ -1,0 +1,314 @@
+diff -ruN a/src/FlexGC.h b/src/FlexGC.h
+--- a/src/FlexGC.h
++++ b/src/FlexGC.h
+@@ -8,6 +8,7 @@
+ #pragma once
+ 
+ #include <cstdint>
++#include <cstdlib>
+ #include <functional>
+ #include <map>
+ #include <memory>
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -141,6 +141,126 @@
+   }
+ }
+ 
++// ------------------------------------------------------------ GC_FIXEDPOLYS
++//
++// Within one initNet() a net's fixed polygons do not change, yet three passes
++// rebuild them from the fixed polygon set, each a Boost.Polygon clean and
++// polygon formation: the fixed-edge set (polygonEdges), the fixed-vertex cache
++// (polygonCorners) and get_max_rectangles over the set (maxRectangles), which
++// copies and re-merges it. With the gate on:
++//  1. the first pass that needs a layer's fixed polygons extracts them once
++//     and the others reuse the list; maximal rectangles are taken per polygon;
++//  2. on a layer where the net has no route polygon and no route rectangle
++//     (an all-fixed layer: obstructions, pins nothing is routed to), its pins
++//     are exactly its fixed shapes, so every pin edge, corner and maximal
++//     rectangle there is fixed; such layers skip the fixed-edge set, the
++//     vertex cache and the fixed maximal rectangles, and their lookups;
++//  3. the pin merge of a layer where only one of the route and fixed sets has
++//     polygons takes that set's polygons directly, and a pin that is a
++//     rectangle is its own only maximal rectangle.
++//
++// Equivalence: (1) edges and corners read exactly the list get() returns.
++// Merged polygons have disjoint interiors and share no edge, so no maximal
++// rectangle spans two of them, and the union of the per-polygon maximal
++// rectangles is the set's; the result only fills a std::set used for
++// membership, so order does not matter. (2) With no route shape on the layer,
++// the merged pins are the fixed polygon set's polygons (routing layer) or the
++// fixed rectangles (cut layer): each pin edge is an edge of a fixed polygon or
++// rectangle, each pin vertex a fixed vertex, each convex cut corner its own
++// rectangle's corner and each concave one lies in no route rectangle, and each
++// pin maximal rectangle is a maximal rectangle of the fixed set. So the
++// original lookups all answer "fixed". Corners the original leaves unset
++// (cut layer, neither convex nor concave) stay unset. (3) Merging a set with
++// an empty set and forming polygons gives the polygons of the set itself, and
++// get_max_rectangles of a rectangle is that rectangle.
++// Gate read once from the environment: unset or 0 = original.
++namespace {
++using PolyList = std::vector<gtl::polygon_90_with_holes_data<frCoord>>;
++
++bool fixedPolysEnabled()
++{
++  static const bool enabled = [] {
++    const char* v = std::getenv("GC_FIXEDPOLYS");
++    return v != nullptr && v[0] != '\0' && v[0] != '0';
++  }();
++  return enabled;
++}
++
++struct FixedPolysState
++{
++  const gcNet* net = nullptr;
++  std::vector<PolyList> polys;          // per layer, valid when ready
++  std::vector<char> ready;
++  std::vector<signed char> allFixed;    // per layer: -1 unknown, 0 no, 1 yes
++};
++
++// Hot-path state is a plain pointer, valid inside one initNet() only.
++thread_local FixedPolysState* fixedPolysActive = nullptr;
++
++class FixedPolysScope
++{
++ public:
++  FixedPolysScope(const gcNet* net, int numLayers)
++  {
++    if (!fixedPolysEnabled()) {
++      return;
++    }
++    thread_local FixedPolysState storage;
++    storage.net = net;
++    if (static_cast<int>(storage.polys.size()) < numLayers) {
++      storage.polys.resize(numLayers);
++    }
++    storage.ready.assign(numLayers, 0);
++    storage.allFixed.assign(numLayers, -1);
++    fixedPolysActive = &storage;
++  }
++  ~FixedPolysScope()
++  {
++    if (fixedPolysActive != nullptr) {
++      fixedPolysActive->net = nullptr;
++      fixedPolysActive = nullptr;
++    }
++  }
++  FixedPolysScope(const FixedPolysScope&) = delete;
++  FixedPolysScope& operator=(const FixedPolysScope&) = delete;
++};
++
++// The fixed polygons of net on layer, extracted on first use; nullptr when
++// the gate is off.
++const PolyList* fixedPolysFor(const gcNet* net, frLayerNum layer)
++{
++  FixedPolysState* st = fixedPolysActive;
++  if (st == nullptr || st->net != net) {
++    return nullptr;
++  }
++  PolyList& polys = st->polys[layer];
++  if (!st->ready[layer]) {
++    polys.clear();
++    net->getPolygons(layer, true).get(polys);
++    st->ready[layer] = 1;
++  }
++  return &polys;
++}
++
++// True when the gate is on and net has no route polygon and no route
++// rectangle on layer.
++inline bool allFixedLayer(const gcNet* net, frLayerNum layer)
++{
++  FixedPolysState* st = fixedPolysActive;
++  if (st == nullptr || st->net != net) {
++    return false;
++  }
++  signed char& e = st->allFixed[layer];
++  if (e < 0) {
++    e = (net->getPolygons(layer, false).value().empty()
++         && net->getRectangles(layer, false).empty())
++            ? 1
++            : 0;
++  }
++  return e == 1;
++}
++}  // namespace
++
+ // ------------------------------------------------------------ pins
+ 
+ // Pins are the merged polygons of a routing layer (route and fixed shapes
+@@ -153,9 +273,18 @@
+   for (int i = 0; i < numLayers; i++) {
+     polys.clear();
+     using gtl::operators::operator+=;
+-    layerPolys[i] += net->getPolygons(i, false);
+-    layerPolys[i] += net->getPolygons(i, true);
+-    layerPolys[i].get(polys);
++    const bool routeNone
++        = fixedPolysEnabled() && net->getPolygons(i, false).value().empty();
++    const bool fixedNone = fixedPolysEnabled() && !routeNone
++                           && net->getPolygons(i, true).value().empty();
++    if (routeNone || fixedNone) {
++      // only one set has polygons: the merge would reproduce its polygons
++      net->getPolygons(i, routeNone).get(polys);
++    } else {
++      layerPolys[i] += net->getPolygons(i, false);
++      layerPolys[i] += net->getPolygons(i, true);
++      layerPolys[i].get(polys);
++    }
+     for (auto& poly : polys) {
+       net->addPin(poly, i);
+     }
+@@ -200,9 +329,16 @@
+   int numLayers = getTech()->numLayers();
+   std::vector<gtl::polygon_90_with_holes_data<frCoord>> polys;
+   for (int i = 0; i < numLayers; i++) {
+-    polys.clear();
+-    net->getPolygons(i, true).get(polys);
+-    for (auto& poly : polys) {
++    if (allFixedLayer(net, i)) {
++      continue;
++    }
++    const PolyList* layerPolys = fixedPolysFor(net, i);
++    if (layerPolys == nullptr) {
++      polys.clear();
++      net->getPolygons(i, true).get(polys);
++      layerPolys = &polys;
++    }
++    for (auto& poly : *layerPolys) {
+       insertRingEdges(fixedPolygonEdges[i], poly.begin(), poly.end());
+       for (auto holeIt = poly.begin_holes(); holeIt != poly.end_holes();
+            holeIt++) {
+@@ -212,6 +348,9 @@
+   }
+   // cut rectangles are not merged: their four edges as they are
+   for (int i = 0; i < numLayers; i++) {
++    if (allFixedLayer(net, i)) {
++      continue;
++    }
+     for (auto& rect : net->getRectangles(i, true)) {
+       const odb::Point ll(gtl::xl(rect), gtl::yl(rect));
+       const odb::Point lr(gtl::xh(rect), gtl::yl(rect));
+@@ -244,9 +383,11 @@
+     edge->addToPin(pin);
+     edge->addToNet(net);
+     edge->setSegment(bp, ep);
+-    const bool fixed = fixedPolygonEdges[i].find(std::make_pair(
+-                           odb::Point(bp.x(), bp.y()), odb::Point(ep.x(), ep.y())))
+-                       != fixedPolygonEdges[i].end();
++    const bool fixed
++        = allFixedLayer(net, i)
++          || fixedPolygonEdges[i].find(std::make_pair(
++                 odb::Point(bp.x(), bp.y()), odb::Point(ep.x(), ep.y())))
++                 != fixedPolygonEdges[i].end();
+     edge->setFixed(fixed);
+     if (!tmpEdges.empty()) {
+       edge->setPrevEdge(tmpEdges.back().get());
+@@ -385,7 +526,11 @@
+       currCorner->setDir(cornerDir(prevEdge->getDir(), nextEdge->getDir()));
+ 
+       if (getTech()->getLayerType(layerNum) == LayerType::CUT) {
+-        if (currCorner->getType() == frCornerTypeEnum::CONVEX) {
++        if (allFixedLayer(net, layerNum)
++            && (currCorner->getType() == frCornerTypeEnum::CONVEX
++                || currCorner->getType() == frCornerTypeEnum::CONCAVE)) {
++          currCorner->setFixed(true);
++        } else if (currCorner->getType() == frCornerTypeEnum::CONVEX) {
+           currCorner->setFixed(false);
+           for (auto& rect : net->getRectangles(true)[layerNum]) {
+             if (isCornerOverlap(currCorner, rect)) {
+@@ -404,6 +549,8 @@
+             }
+           }
+         }
++      } else if (allFixedLayer(net, layerNum)) {
++        currCorner->setFixed(true);
+       } else {
+ #ifdef GC_UPSTREAM_CORNER_LOOKUP
+         (void) vcache;
+@@ -414,7 +561,21 @@
+         auto& slot = (*vcache)[layerNum];
+         if (!slot) {
+           slot = std::make_unique<PtSet>();
+-          collectPolygonVertices(net->getPolygons(true)[layerNum], *slot);
++          if (const PolyList* fp = fixedPolysFor(net, layerNum)) {
++            for (const auto& polygon : *fp) {
++              for (const auto& pt : polygon) {
++                slot->emplace(pt.x(), pt.y());
++              }
++              for (auto h = polygon.begin_holes(); h != polygon.end_holes();
++                   ++h) {
++                for (const auto& pt : *h) {
++                  slot->emplace(pt.x(), pt.y());
++                }
++              }
++            }
++          } else {
++            collectPolygonVertices(net->getPolygons(true)[layerNum], *slot);
++          }
+         }
+         currCorner->setFixed(
+             slot->find({currCorner->x(), currCorner->y()}) != slot->end());
+@@ -455,8 +616,17 @@
+   int numLayers = getTech()->numLayers();
+   std::vector<gtl::rectangle_data<frCoord>> rects;
+   for (int i = 0; i < numLayers; i++) {
++    if (allFixedLayer(net, i)) {
++      continue;
++    }
+     rects.clear();
+-    gtl::get_max_rectangles(rects, net->getPolygons(i, true));
++    if (const PolyList* fp = fixedPolysFor(net, i)) {
++      for (const auto& poly : *fp) {
++        gtl::get_max_rectangles(rects, poly);
++      }
++    } else {
++      gtl::get_max_rectangles(rects, net->getPolygons(i, true));
++    }
+     for (auto& rect : rects) {
+       fixedMaxRectangles[i].insert(
+           std::make_pair(odb::Point(gtl::xl(rect), gtl::yl(rect)),
+@@ -482,10 +652,11 @@
+   rectangle->setLayerNum(i);
+   rectangle->addToPin(pin);
+   rectangle->addToNet(net);
+-  if (fixedMaxRectangles[i].find(
+-          std::make_pair(odb::Point(gtl::xl(rect), gtl::yl(rect)),
+-                         odb::Point(gtl::xh(rect), gtl::yh(rect))))
+-      != fixedMaxRectangles[i].end()) {
++  if (allFixedLayer(net, i)
++      || fixedMaxRectangles[i].find(
++             std::make_pair(odb::Point(gtl::xl(rect), gtl::yl(rect)),
++                            odb::Point(gtl::xh(rect), gtl::yh(rect))))
++             != fixedMaxRectangles[i].end()) {
+     rectangle->setFixed(true);
+   } else {
+     rectangle->setFixed(false);
+@@ -514,7 +685,16 @@
+   for (int i = 0; i < numLayers; i++) {
+     for (auto& pin : net->getPins(i)) {
+       rects.clear();
+-      gtl::get_max_rectangles(rects, *(pin->getPolygon()));
++      const gcPolygon* pinPoly = pin->getPolygon();
++      if (fixedPolysEnabled() && pinPoly->size() == 4
++          && pinPoly->size_holes() == 0) {
++        // a rectangle's only maximal rectangle is itself
++        gtl::rectangle_data<frCoord> box;
++        gtl::extents(box, *pinPoly);
++        rects.push_back(box);
++      } else {
++        gtl::get_max_rectangles(rects, *pinPoly);
++      }
+       for (auto& rect : rects) {
+         initNet_pins_maxRectangles_helper(
+             net, pin.get(), rect, i, fixedMaxRectangles);
+@@ -528,6 +708,7 @@
+ void FlexGCWorker::initNet(gcNet* net)
+ {
+   DRPERF_BENCH_REGION("drt-gc-002");
++  FixedPolysScope fixedPolysScope(net, getTech()->numLayers());
+   initNet_pins_polygon(net);
+   initNet_pins_polygonEdges(net);
+   initNet_pins_polygonCorners(net);

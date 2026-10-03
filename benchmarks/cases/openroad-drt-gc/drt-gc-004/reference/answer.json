@@ -1,0 +1,84 @@
+{
+  "case": "openroad-drt-gc/drt-gc-004",
+  "region": "drt-gc-004",
+  "pcvs": [
+    {
+      "name": "drnets",
+      "expression": "getDRWorker()->nets.size()"
+    },
+    {
+      "name": "newnets",
+      "expression": "DR nets whose owner has no gc net yet (addNet is called)"
+    },
+    {
+      "name": "kinds",
+      "expression": "sum over DR nets of the shape kinds (route/fixed polygons, route/fixed cut rectangles) the net receives in the region and did not hold before"
+    },
+    {
+      "name": "figs",
+      "expression": "connected figures of the DR nets (ext + route: path segments, vias, patch wires)"
+    }
+  ],
+  "factors": [
+    {
+      "id": "f1",
+      "criterion": "a per-new-net term: constructing a gc net builds seven per-layer containers of numLayers elements whatever the net holds"
+    },
+    {
+      "id": "f2",
+      "criterion": "per-figure/per-shape term separate from the per-net term; nets the design already created do not pay construction"
+    },
+    {
+      "id": "f3",
+      "criterion": "first shape of a kind on a net (first insertion into an empty per-layer container) as a term"
+    }
+  ],
+  "fix": {
+    "gate": "GC_NETCTOR",
+    "patch": "assets/fix.patch",
+    "effect": "newnets coefficient falls from 1,627 to 439 (-73%); kinds rises from 403 to 680 (sizing a kind moves to its first add)"
+  },
+  "drperf": {
+    "original": {
+      "small": [
+        "94.1*drnets + 1,627.3*newnets + 403.4*kinds + 724.5*figs + 603.4",
+        2.8
+      ],
+      "large": [
+        "79.7*drnets + 1,586.7*newnets + 419.9*kinds + 724.5*figs + 180.7",
+        7.2
+      ],
+      "small_formula_at_large": -6.5
+    },
+    "fixed": {
+      "small": [
+        "102.1*drnets + 439.2*newnets + 679.9*kinds + 730.5*figs + 622.3",
+        2.4
+      ],
+      "large": [
+        "80.6*drnets + 409.8*newnets + 696.4*kinds + 730.5*figs + 94.9",
+        7.7
+      ],
+      "small_formula_at_large": -6.9
+    },
+    "units": "instructions per region call; [formula, unexplained percent]; small_formula_at_large in percent of the measured large total"
+  },
+  "historical": {
+    "design": "aes",
+    "formula": "gc_drworker = 264.7*fpoly + 936.7*newnets + 871.7 (gcNet::gcNet 429.9 per new net) -> 275.2*fpoly + 523.2*newnets + 1,011.6 (gcNet::gcNet 118.7)",
+    "unexplained": 76
+  },
+  "reference_annotation": "assets/pcvs.patch",
+  "small_to_large": {
+    "small_input_envelope": {
+      "size": "small"
+    },
+    "held_out_inputs": [
+      {
+        "size": "large"
+      }
+    ]
+  },
+  "grading": "Semantic review against the record and code, not keyword matching. Equivalent expressions and well-supported alternative decompositions count. Coefficients are measured on this build and machine and are not acceptance thresholds.",
+  "scope": "The case's scenario at the listed sizes on the standalone extraction; not an all-input guarantee and not a claim about OpenROAD's full router."
+}

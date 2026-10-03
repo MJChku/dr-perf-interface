@@ -1,0 +1,155 @@
+diff -ruN a/src/FlexGC.h b/src/FlexGC.h
+--- a/src/FlexGC.h
++++ b/src/FlexGC.h
+@@ -8,6 +8,7 @@
+ #pragma once
+ 
+ #include <cstdint>
++#include <cstdlib>
+ #include <functional>
+ #include <map>
+ #include <memory>
+@@ -34,6 +35,21 @@
+ using PtSet = std::unordered_set<std::pair<frCoord, frCoord>, PtHash>;
+ using VertexCache = std::vector<std::unique_ptr<PtSet>>;
+ 
++// GC_CUTCORNERCACHE: the corner points of a net's fixed cut rectangles on one
++// layer, one set per corner direction.
++struct CutCorners
++{
++  PtSet ne, se, sw, nw;
++};
++using CutCache = std::vector<std::unique_ptr<CutCorners>>;
++
++// The corner pass's per-net caches (cut: null unless GC_CUTCORNERCACHE).
++struct CornerCaches
++{
++  VertexCache* vertices = nullptr;
++  CutCache* cut = nullptr;
++};
++
+ // ---------------------------------------------------------------- inputs
+ // What the worker reads from the design and from the detailed-routing worker.
+ // Upstream these are frDesign's region query (instance pins, obstructions,
+@@ -161,7 +177,7 @@
+   void initNet_pins_polygonCorners(gcNet* net);
+   void initNet_pins_polygonCorners_helper(gcNet* net,
+                                           gcPin* pin,
+-                                          VertexCache* vcache);
++                                          CornerCaches& caches);
+   void initNet_pins_maxRectangles(gcNet* net);
+   void initNet_pins_maxRectangles_getFixedMaxRectangles(
+       gcNet* net,
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -332,6 +332,30 @@
+ }
+ #endif
+ 
++// GC_CUTCORNERCACHE. On a cut layer a convex corner is fixed when some fixed
++// cut rectangle of the net has its corner, in the corner's direction, at the
++// corner point (isCornerOverlap). Scanning the rectangle list for every
++// corner makes the pass O(corners x fixed cut rectangles) per layer, which is
++// quadratic on power/ground via arrays. With the gate on, the corner points of
++// the layer's fixed rectangles are put in four sets (one per direction) the
++// first time the layer is visited, and each corner is one lookup.
++//
++// Equivalence: isCornerOverlap(corner, rect) holds exactly when the corner
++// point getNextEdge()->low() equals (xh, yh) of rect for NE, (xh, yl) for SE,
++// (xl, yl) for SW and (xl, yh) for NW, and never for another direction. The
++// set for a direction holds exactly those points of the same
++// getRectangles(true)[layer] list, which the corner pass does not modify, so
++// membership is the predicate "some rectangle matches" and the fixed flag is
++// the same. Gate read once from the environment: unset or 0 = original.
++bool cutCornerCacheEnabled()
++{
++  static const bool enabled = [] {
++    const char* v = std::getenv("GC_CUTCORNERCACHE");
++    return v != nullptr && v[0] != '\0' && v[0] != '0';
++  }();
++  return enabled;
++}
++
+ frCornerDirEnum cornerDir(frDirEnum prev, frDirEnum next)
+ {
+   using D = frDirEnum;
+@@ -355,8 +379,9 @@
+ // it belongs to the net's fixed shapes.
+ void FlexGCWorker::initNet_pins_polygonCorners_helper(gcNet* net,
+                                                       gcPin* pin,
+-                                                      VertexCache* vcache)
++                                                      CornerCaches& caches)
+ {
++  VertexCache* const vcache = caches.vertices;
+   for (auto& edges : pin->getPolygonEdges()) {
+     std::vector<std::unique_ptr<gcCorner>> tmpCorners;
+     auto prevEdge = edges.back().get();
+@@ -386,11 +411,44 @@
+ 
+       if (getTech()->getLayerType(layerNum) == LayerType::CUT) {
+         if (currCorner->getType() == frCornerTypeEnum::CONVEX) {
+-          currCorner->setFixed(false);
+-          for (auto& rect : net->getRectangles(true)[layerNum]) {
+-            if (isCornerOverlap(currCorner, rect)) {
+-              currCorner->setFixed(true);
+-              break;
++          if (caches.cut != nullptr) {
++            auto& slot = (*caches.cut)[layerNum];
++            if (!slot) {
++              slot = std::make_unique<CutCorners>();
++              for (auto& rect : net->getRectangles(true)[layerNum]) {
++                slot->ne.emplace(gtl::xh(rect), gtl::yh(rect));
++                slot->se.emplace(gtl::xh(rect), gtl::yl(rect));
++                slot->sw.emplace(gtl::xl(rect), gtl::yl(rect));
++                slot->nw.emplace(gtl::xl(rect), gtl::yh(rect));
++              }
++            }
++            const auto pt = currCorner->getNextEdge()->low();
++            const std::pair<frCoord, frCoord> key(pt.x(), pt.y());
++            bool fixed = false;
++            switch (currCorner->getDir()) {
++              case frCornerDirEnum::NE:
++                fixed = slot->ne.count(key) != 0;
++                break;
++              case frCornerDirEnum::SE:
++                fixed = slot->se.count(key) != 0;
++                break;
++              case frCornerDirEnum::SW:
++                fixed = slot->sw.count(key) != 0;
++                break;
++              case frCornerDirEnum::NW:
++                fixed = slot->nw.count(key) != 0;
++                break;
++              default:
++                break;
++            }
++            currCorner->setFixed(fixed);
++          } else {
++            currCorner->setFixed(false);
++            for (auto& rect : net->getRectangles(true)[layerNum]) {
++              if (isCornerOverlap(currCorner, rect)) {
++                currCorner->setFixed(true);
++                break;
++              }
+             }
+           }
+         } else if (currCorner->getType() == frCornerTypeEnum::CONCAVE) {
+@@ -440,9 +498,16 @@
+   DRPERF_BENCH_REGION("drt-gc-001");
+   int numLayers = getTech()->numLayers();
+   VertexCache vcache(numLayers);
++  CutCache cutcache;
++  CornerCaches caches;
++  caches.vertices = &vcache;
++  if (cutCornerCacheEnabled()) {
++    cutcache.resize(numLayers);
++    caches.cut = &cutcache;
++  }
+   for (int i = 0; i < numLayers; i++) {
+     for (auto& pin : net->getPins(i)) {
+-      initNet_pins_polygonCorners_helper(net, pin.get(), &vcache);
++      initNet_pins_polygonCorners_helper(net, pin.get(), caches);
+     }
+   }
+ }

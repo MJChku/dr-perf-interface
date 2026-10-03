@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "id": "openroad-drt-gc/drt-gc-003",
+  "title": "Net initialization of a DRC worker",
+  "status": "reference-only",
+  "readiness_note": "Standalone C++ extraction with an empty marker, bounded workloads, correctness tests, a reference annotation and a gated fix, validated with drperf. bench.py has no adapter for C++ drivers yet.",
+  "language": "cpp",
+  "source_family": "openroad-drt-gc",
+  "upstream": {
+    "repository": "https://github.com/The-OpenROAD-Project/OpenROAD",
+    "revision": "ec10d069775173bc856608663c11d33c09f3c9b6",
+    "license": "BSD-3-Clause (../LICENSE.OpenROAD)",
+    "functions": [
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNets",
+        "start_line": 951,
+        "end_line": 957
+      },
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet",
+        "start_line": 943,
+        "end_line": 949
+      },
+      {
+        "path": "src/drt/src/gc/FlexGC_init.cpp",
+        "symbol": "drt::FlexGCWorker::Impl::initNet_pins_polygon",
+        "start_line": 460,
+        "end_line": 485
+      }
+    ],
+    "relation": "re-implemented in ../src with the same containers, Boost.Polygon calls and order of work; see ../README.md, Differences from upstream"
+  },
+  "source": {
+    "path": "src/FlexGC_init.cpp",
+    "snapshot": "../src",
+    "sha256": {
+      "FlexGC.h": "5813c2c5c5c8c8a41673fdad34cc7ffdb6852fd37daa5089b5582ac7da7ea17e",
+      "FlexGC_init.cpp": "d6bb19f2212993cee0e074252779568a7a1ac0d46efd47c2c3e03ea4dc60b74a",
+      "FlexGC_main.cpp": "818842eccd8ffbccd457800483a528b169351408c68ed46f148b1c90a87ca693",
+      "frBase.h": "161665a54b78005b450c4abe740eb96749b0ca233c72f97f52757685236927b2",
+      "gcNet.h": "39c61274b4b3031fbb93fb60979cf475ea97e4339c0d33af56098141beccf0eb",
+      "gcPin.h": "c03d276aaf1e3a5ffdffe9cd97d2343a1286b64cbc0ef3ce96e382408ffe439d",
+      "gcShape.h": "04a674661d59382e349232bfe7913bcd38dff17d215c3f91666030ec51421c06",
+      "main.cpp": "b1e3c8b808b1110ed3dee5fa04f87545e913708a4556731c4ce89461343e085a",
+      "workload.cpp": "7bbc978a23e94927686c77dcc223ee4a31d52cf0ef191ecc313ca2067561f130",
+      "workload.h": "ca5ced83c08aec838f883914b1254d873a3d312745e0c45d7e14c60b3e6554ad"
+    }
+  },
+  "region": {
+    "symbol": "drt::FlexGCWorker::initNets",
+    "path": "src/FlexGC_init.cpp",
+    "start_line": 535,
+    "end_line": 540,
+    "kind": "function",
+    "called_once_per": "worker"
+  },
+  "marker": {
+    "kind": "cpp-raii",
+    "name": "drt-gc-003",
+    "pcvs": []
+  },
+  "patch": "region.patch",
+  "build_status": "built",
+  "build": [
+    "../build.sh",
+    "drt-gc-003",
+    "neutral"
+  ],
+  "workload": {
+    "description": "Workers with routed nets (metal2 wires with a via2 and a metal3 wire, and fixed pin rectangles on metal1) and nets of the routing worker with nothing in the box, plus the two floating supply nets.",
+    "command": [
+      "build/drt-gc-003/neutral/gcbench",
+      "scenario=mix",
+      "size=small"
+    ],
+    "measurement_envelope": {
+      "scenario": "mix",
+      "size": [
+        "tiny",
+        "small"
+      ],
+      "free": [
+        "repeat",
+        "seed"
+      ]
+    },
+    "sizes": {
+      "small": "empty nets {0,8,24} x routed nets {2,4,8} x wires {1,2} x pin rectangles {1,2}, repeat 4",
+      "large": "empty nets {0,64,192} x routed nets {16,32,64} x wires {1,2} x pin rectangles {1,2}, repeat 4"
+    },
+    "held_out": {
+      "size": "large"
+    }
+  },
+  "tests": {
+    "files": [
+      "../tests/run_tests.sh",
+      "../tests/probe/drperf_bench_region.h"
+    ],
+    "command": [
+      "tests/run_tests.sh",
+      "drt-gc-003"
+    ],
+    "validation": {
+      "status": "region-verified",
+      "details": "Ran natively (g++ 13.3, Boost 1.83, glibc 2.39): totals of pins, edges, corners and maximal rectangles and their fixed counts match hand-derived counts for the four scenarios at size=tiny, digests match the recorded values for all five scenarios, and the recording marker observed drt-gc-003 entered once per worker."
+    },
+    "coverage_note": "Checks setup results and reachability; says nothing about cost."
+  },
+  "citations": [
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L951-L957",
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L943-L949",
+    "https://github.com/The-OpenROAD-Project/OpenROAD/blob/ec10d069775173bc856608663c11d33c09f3c9b6/src/drt/src/gc/FlexGC_init.cpp#L460-L485"
+  ]
+}

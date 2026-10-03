@@ -1,0 +1,19 @@
+--- a/melo/api.py
++++ b/melo/api.py
+@@ -64,6 +64,16 @@
+ 
+     @staticmethod
+     def audio_numpy_concat(segment_data_list, sr, speed=1.):
++        # Generated waveforms are NumPy float32 arrays. Keep their samples in
++        # array storage rather than boxing every sample into a Python float.
++        if isinstance(segment_data_list, (list, tuple)) and all(segment.dtype == np.float32 for segment in segment_data_list):
++            if not segment_data_list:
++                return np.empty(0, dtype=np.float32)
++            silence = np.zeros(max(0, int((sr * 0.05) / speed)), dtype=np.float32)
++            parts = []
++            for segment in segment_data_list:
++                parts.extend((segment.reshape(-1), silence))
++            return np.concatenate(parts) if parts else np.empty(0, dtype=np.float32)
+         audio_segments = []
+         for segment_data in segment_data_list:
+             audio_segments += segment_data.reshape(-1).tolist()

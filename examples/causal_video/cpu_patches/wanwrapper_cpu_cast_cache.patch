@@ -1,0 +1,87 @@
+--- a/utils.py
++++ b/utils.py
+@@ -1,4 +1,6 @@
+ import importlib.metadata
++import os
++import weakref
+ import torch
+ import logging
+ import math
+@@ -132,6 +134,41 @@
+     return first_device == second_device
+ 
+ # simplified version of the accelerate function https://github.com/huggingface/accelerate/blob/main/src/accelerate/utils/modeling.py
++_CPU_CAST_CACHE = os.environ.get("WANWRAPPER_CPU_CAST_CACHE") == "1"
++
++
++def _cached_cpu_cast(module, name, value, dtype, device):
++    """Reuse immutable CPU dtype conversions before inference weight uploads.
++
++    The cache adds host memory, not GPU residency. Source identity and tensor
++    versions invalidate entries. Training, CPU destinations and inference
++    tensors without version counters keep the original conversion path.
++    """
++    if (torch.is_grad_enabled() or value.requires_grad
++            or value.device.type != "cpu" or torch.device(device).type != "cuda"
++            or value.dtype == dtype or value.layout != torch.strided):
++        return value.to(dtype)
++    try:
++        version = value._version
++    except RuntimeError:
++        return value.to(dtype)
++    cache = getattr(module, "_wan_cpu_cast_cache", None)
++    entry = cache.get(name) if cache is not None else None
++    if (entry is not None and entry[0]() is value and entry[1] == version
++            and entry[2] == dtype and entry[3]._version == entry[4]):
++        return entry[3]
++    # ComfyUI executes nodes in inference_mode. Keep this CPU-only cache entry
++    # versioned so accidental in-place changes still invalidate it.
++    with torch.inference_mode(False), torch.no_grad():
++        result = value.to(dtype)
++    result_version = result._version
++    if cache is None:
++        cache = {}
++        module._wan_cpu_cast_cache = cache
++    cache[name] = (weakref.ref(value), version, dtype, result, result_version)
++    return result
++
++
+ def set_module_tensor_to_device(module, tensor_name, device, value=None, dtype=None):
+     """
+     A helper function to set a given tensor (parameter of buffer) of a module on a specific device (note that doing
+@@ -173,9 +210,11 @@
+ 
+     if value is not None:
+         if dtype is None:
+-            value = value.to(old_value.dtype)
++            value = (_cached_cpu_cast(module, tensor_name, value, old_value.dtype, device)
++                     if _CPU_CAST_CACHE else value.to(old_value.dtype))
+         elif not str(value.dtype).startswith(("torch.uint", "torch.int", "torch.bool")):
+-            value = value.to(dtype)
++            value = (_cached_cpu_cast(module, tensor_name, value, dtype, device)
++                     if _CPU_CAST_CACHE else value.to(dtype))
+ 
+     device_quantization = None
+     with torch.no_grad():
+--- a/nodes_model_loading.py
++++ b/nodes_model_loading.py
+@@ -1,3 +1,4 @@
++from .utils import _CPU_CAST_CACHE
+ import torch
+ import torch.nn as nn
+ import os, gc, uuid
+@@ -1159,7 +1160,13 @@
+ 
+         gguf_reader = None
+         if not gguf:
+-            sd = load_torch_file(model_path, device=transformer_load_device, safe_load=True)
++            if _CPU_CAST_CACHE and torch.device(transformer_load_device).type == "cpu":
++                # Versioned checkpoint tensors let cached CPU dtype conversions
++                # detect in-place edits, including edits from inference_mode.
++                with torch.inference_mode(False), torch.no_grad():
++                    sd = load_torch_file(model_path, device=transformer_load_device, safe_load=True)
++            else:
++                sd = load_torch_file(model_path, device=transformer_load_device, safe_load=True)
+         else:
+             gguf_reader=[]
+             from .gguf.gguf import load_gguf

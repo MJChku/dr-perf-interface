@@ -1,0 +1,19 @@
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -24,6 +24,7 @@
+ #include <vector>
+ 
+ #include "FlexGC.h"
++#include "drperf_bench_region.h"
+ 
+ namespace drt {
+ 
+@@ -119,6 +120,7 @@
+ // The detailed-routing worker's nets and their connected figures.
+ void FlexGCWorker::initDRWorker()
+ {
++  DRPERF_BENCH_REGION("drt-gc-004");
+   if (!getDRWorker()) {
+     return;
+   }

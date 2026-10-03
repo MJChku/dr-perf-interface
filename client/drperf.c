@@ -124,6 +124,7 @@ typedef struct _thread_t {
     uint64 wait_syscalls;
     int wait_api_depth;
     int marker_api_depth;
+    uint64 async_scope;
     thread_id_t tid;
     int index;
     bool alive;
@@ -948,8 +949,12 @@ event_module_load(void *drcontext, const module_data_t *mod, bool loaded)
     if (!(name != NULL && strstr(name, "perfmark") != NULL) && mod->start != main_module_start)
         return;
     {
-        const char *helpers[] = {"perfmark_py_event_publish", "perfmark_py_event_waited",
-                                 "perfmark_event_publish", "perfmark_event_waited"};
+        const char *helpers[] = {"perfmark_py_region_enter", "perfmark_py_region_exit",
+                                 "perfmark_py_begin", "perfmark_py_end", "perfmark_py_event_publish", "perfmark_py_event_waited",
+                                 "perfmark_event_publish", "perfmark_event_waited", "perfmark_waited_null",
+                                 "perfmark_py_wait", "perfmark_py_release", "perfmark_wait", "perfmark_wait_null", "perfmark_release",
+                                 "perfmark_py_runtime", "perfmark_py_runtime_call", "perfmark_runtime_wait_begin",
+                                 "perfmark_runtime_wait_end", "perfmark_async_scope"};
         for (uint i = 0; i < sizeof(helpers) / sizeof(helpers[0]); ++i) {
             app_pc entry = (app_pc)dr_get_proc_address(mod->handle, helpers[i]);
             if (entry && opt_waits && wait_exclude(entry)) continue;
@@ -1695,6 +1700,12 @@ event_exit(void)
     dr_mutex_destroy(slots_lock);
     dr_rwlock_destroy(threads_rw);
     if (opt_waits) {
+        for (int i = 0; i < wait_count; i++) {
+            wait_record_t *r = &wait_records[i];
+            if (r->indicator) dr_global_free(r->indicator, strlen(r->indicator) + 1);
+            if (r->producer) dr_global_free(r->producer, strlen(r->producer) + 1);
+            if (r->reason) dr_global_free(r->reason, strlen(r->reason) + 1);
+        }
         dr_raw_mem_free(wait_records, (size_t)opt_max_wait_records * sizeof(*wait_records));
         dr_mutex_destroy(wait_lock);
     }
@@ -1795,6 +1806,9 @@ dr_client_main(client_id_t id, int argc, const char *argv[])
     module_data_t *main_mod;
     dr_set_client_name("drperf", "https://github.com/DynamoRIO/dynamorio/issues");
     parse_options(argc, argv);
+    /* Wait hooks inspect API return values even when the application discards
+     * them. Preserve dead registers for drwrap's application context too. */
+    ops.conservative = opt_waits;
     if (opt_wait_delay_ms && (!opt_waits || !opt_wait_delay_region[0])) {
         dr_fprintf(STDERR, "drperf: wait delay requires -waits and -wait_delay_region\n");
         dr_abort();

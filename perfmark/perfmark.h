@@ -22,8 +22,24 @@ void perfmark_state(const char *name, const char *value);
 /* Observational event checkpoints: no synchronization outside an explicit
  * drperf delay probe. Use a stable application ID plus a unique generation.
  * Publish immediately BEFORE the real release; waited only after readiness. */
+/* Public passive checkpoints. Indicator is an expression over entry PCVs,
+ * not a switch controlling whether the wait checkpoint is emitted.
+ * producer may be NULL to use the release region recorded for this channel. */
+int perfmark_release(uint64_t event, uint64_t generation);
+int perfmark_wait(uint64_t event, uint64_t generation,
+                  const char *indicator, const char *producer);
+int perfmark_wait_null(const char *indicator, const char *reason);
+/* Compatibility ABI for existing annotations/captures. */
 int perfmark_event_publish(uint64_t event, uint64_t generation);
 int perfmark_event_waited(uint64_t event, uint64_t generation);
+/* Event-free refinement. Its indicator and human-reviewable reason live in
+ * the wait-interface declaration; this marker never performs synchronization. */
+int perfmark_waited_null(void);
+/* Runtime observations, not dependency declarations. IDs identify logical
+ * await invocations; adapters never supply a publisher. */
+int perfmark_runtime_wait_begin(uint64_t id, uint64_t api);
+int perfmark_runtime_wait_end(uint64_t id, uint64_t api, int status);
+int perfmark_async_scope(uint64_t scope, uint64_t parent);
 #ifdef __cplusplus
 }
 #endif

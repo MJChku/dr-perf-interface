@@ -73,19 +73,31 @@ def cost_lines(model):
     def boundary(value):
         return f"{int(value):,}" if isinstance(value, str) else derive.fmt(value)
 
-    lines = []
+    lines = ['Own residual percentages exclude child terms. A single state supports only a constant mean fit.',
+             'Function breakdowns list retained leading functions; coefficients use instructions/PCV unit, residuals use equal-state means.']
+    parents = {r['id']: r for r in model.get('composition', {}).get('regions', [])}
     for region in model["regions"]:
+        import event_interfaces
+        wait_terms = event_interfaces.terms(model.get('eventModel', {}), region.get('id') or region.get('name'))
         if not region["regimes"]:
             calls = sum(point["calls"] for point in region["points"])
             mean = sum(point["observed"] * point["calls"] for point in region["points"]) / calls if calls else 0
-            lines.append("  %s = %s   (observed mean; no exported fit)" % (region["name"], derive.fmt(mean)))
+            lines.append("  %s = %s   (observed mean; no exported fit)" %
+                         (region["name"], ' + '.join([derive.fmt(mean)] + wait_terms)))
             continue
         for fit in region["regimes"]:
             terms = ["%s*%s" % (derive.fmt(a), state) for a, state in zip(fit["coefficients"], region["states"]) if a]
             terms.append(derive.fmt(fit["constant"]))
-            notes = ["%.1f%% unexplained" % (100 * fit["unexplainedShare"])]
-            if fit["dependent"]:
-                notes.append("tied PCVs: " + ", ".join(fit["dependent"]))
+            if any(p['unexplained'] for p in fit.get('points', [])):
+                terms.append('unexplained(own)')
+            terms.extend(composition.edge_text(edge, region['states'])
+                         for edge in parents.get(region.get('id', region['name']), {}).get('children', []))
+            terms.extend(wait_terms)
+            share = fit['unexplainedShare']
+            percentage = '<1%' if 0 < share < .01 else f'{100*share:.0f}%'
+            notes = [percentage + ' own unexplained']
+            if 'points' in fit:
+                notes.append(f'{len(fit["points"])} observed states')
             if len(region["regimes"]) > 1:
                 notes.append(", ".join("%s <= %s <= %s" % (boundary(lo), state, boundary(hi))
                                        for state, (lo, hi) in zip(region["states"], fit["range"])))
@@ -94,14 +106,16 @@ def cost_lines(model):
             groups += [("constant", fit["attribution"]["constant"]), ("unexplained", fit["attribution"]["unexplained"])]
             for label, functions in groups:
                 if functions:
-                    lines.append("      %s: %s" % (label, ", ".join("%s %s [%s]" %
+                    lines.append('      ' + label + ':')
+                    lines.extend("        %s %s [%s]" %
                                  (derive.fmt(row["instructions"]), row["function"], row["module"])
-                                 for row in functions[:3])))
+                                 for row in functions)
         for message in region.get("diagnostics", []):
             lines.append("      note: " + message)
-    if "composition" in model:
-        lines.extend(composition.lines(model["composition"]))
+    if model.get('composition', {}).get('status') not in (None, 'observed'):
+        lines.append('Composition unavailable: ' + '; '.join(model['composition'].get('errors', [])))
     lines.extend(waits.lines(model.get("waits")))
+    lines.extend(event_model.lines(model.get("eventModel")))
     return lines
 
 
@@ -218,7 +232,7 @@ def source_locations(root, region_names, explicit=None):
     """Candidate annotation locations, with source hashes for staleness checks."""
     found = defaultdict(list)
     root = Path(root).resolve()
-    names = set(region_names)
+    names = set(region_names) if region_names is not None else None
     for path in source_files(root, explicit):
         if path.stat().st_size > 2_000_000:
             continue
@@ -239,10 +253,10 @@ def source_locations(root, region_names, explicit=None):
                     continue
                 func = call.func
                 label = func.attr if isinstance(func, ast.Attribute) else getattr(func, "id", "")
-                if label not in ("region", "marked", "begin", "perfmark_begin", "perfmark_begin_v"):
+                if label not in ("region", "async_region", "marked", "active_marked", "begin", "perfmark_begin", "perfmark_begin_v"):
                     continue
                 arg = call.args[0]
-                if not isinstance(arg, ast.Constant) or not isinstance(arg.value, str) or arg.value not in names:
+                if not isinstance(arg, ast.Constant) or not isinstance(arg.value, str) or (names is not None and arg.value not in names):
                     continue
                 end = call.end_lineno
                 parent = parents.get(call)
@@ -288,7 +302,7 @@ def source_locations(root, region_names, explicit=None):
                     name = json.loads('"' + match[1] + '"')
                 except ValueError:
                     continue
-                if name not in names:
+                if names is not None and name not in names:
                     continue
                 line = clean.count("\n", 0, match.start()) + 1
                 end = line
@@ -539,7 +553,7 @@ def nesting_statistics(records):
 
 
 def build_model(raw, source_root=None, source_paths=None, discover=True, max_trace=50_000,
-                relation_budget=200_000):
+                relation_budget=200_000, wait_declarations=None):
     raw = Path(raw).resolve()
     if not raw.is_dir():
         raise ValueError("RAW must be a directory containing run JSON and .blocks/.slots files")
@@ -564,8 +578,7 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
         traces = []  # A prefix would create misleading complete-looking scenarios.
     raw_keys = keys
     keys, marker_accounting = markers.adjust(keys, slots, records, trace_errors + runner.validity(runs))
-    source_names = {interface_metadata.get(name, {}).get("originalName", name) for name in names}
-    locations = source_locations(source_root, source_names, source_paths) if source_root else {}
+    locations = source_locations(source_root, None, source_paths) if source_root else {}
     regions = []
     for name in names:
         own, states, dropped = derive.per_state(keys, name)
@@ -651,11 +664,20 @@ def build_model(raw, source_root=None, source_paths=None, discover=True, max_tra
                                   "requiresExplicitAssumptions": True}}
     synchronization = waits.build(runs, regions, traces, invalid + trace_errors +
                                   ([] if complete else ["Region trace exceeds export limit."]))
+    if wait_declarations is not None and synchronization is None:
+        raise ValueError('Wait interfaces require a synchronization capture (DRPERF_WAITS=1)')
     if synchronization is not None:
         model["waits"] = synchronization
+        if wait_declarations is not None:
+            model['waitDeclarations'] = wait_declarations
+        import inline_waits
+        model['inlineWaitSources'], model['inlineWaitSourceWarnings'] = inline_waits.source_claims(source_root, source_paths)
         declared_events = event_model.check(model)
         if declared_events is not None:
             model["eventModel"] = declared_events
+            model["waitDeclarations"] = declared_events["interfaceChecks"]["declarations"]
+    import source_coverage
+    model["codeCoverage"] = source_coverage.build(model, locations, source_root, source_paths)
     # Keep the checked region graph portable: viewers need no Python/Graphviz
     # process, raw sidecars, or fresh application execution to display it.
     import execution

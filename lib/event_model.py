@@ -9,30 +9,42 @@ import math
 
 import composition
 import waits
+import wait_coverage
 from report_storage import require_inline_waits
 
 # Legacy end checkpoints remain readable; begin is no longer required.
-DECLARED = {'declared_publish', 'declared_waited', 'declared_wait_end'}
-WAITED = {'declared_waited', 'declared_wait_end'}
+DECLARED = {'declared_publish', 'declared_waited', 'declared_wait_end', 'declared_waited_null'}
+WAITED = {'declared_waited', 'declared_wait_end', 'declared_waited_null'}
 
 
 def check(model):
+    report = _check_events(model)
+    if report is not None:
+        import event_interfaces
+        report['interfaceChecks'] = event_interfaces.check(model, report)
+    return report
+
+
+def _check_events(model):
     require_inline_waits(model)
     capture = model.get('waits') or {}
     captured = capture.get('events', [])
     events = [e for e in captured if e['kind'] in DECLARED]
-    if not events:
+    if not capture:
         return None
     original_names = {r['id']: r.get('originalName', r['id']) for r in model.get('regions', [])}
     probe = waits.validate_delay_probes(captured, model.get('provenance', {}).get('runs', []),
                                         original_names)
     out = {'status': 'unverified', 'probe': probe['actual'] or bool(capture.get('probe')),
            'probeRequested': probe['requested'] or bool(capture.get('probeRequested')), 'edges': [],
-           'violations': [], 'unverified': [], 'unexplained': [], 'interfaces': [],
+           'violations': [], 'unverified': [], 'unexplained': [], 'interfaces': [], 'nullWaits': [],
+           'coverage': {'status': 'unverified'},
            'contract': 'Observed CPU checkpoint order, not proof of necessary dependency. '
                        'No condition argument: markers follow original control flow. '
                        'Publish precedes the real release; waited follows observed readiness. '
-                       'IDs/generations are process-scoped. GPU submission alone is not GPU completion.'}
+                       'IDs/generations are process-scoped. GPU submission alone is not GPU completion. '
+                       'waited(null) has no publisher; its indicator and coverage are checked, '
+                       'and its refinement reason is for manual review.'}
     if probe['warnings']:
         out['unverified'].extend({'reason': reason} for reason in probe['warnings'])
         return out
@@ -58,6 +70,7 @@ def check(model):
     traces = model['trace']['events']
     composition._forest(regions, traces)
     by_call = {(t['group'], str(t['thread']), composition._integer(t['seq'])): t for t in traces}
+    logical_calls, aliases, logical_parents = wait_coverage.logical_context(traces, captured)
     canonical = []
     for original in events:
         e = dict(original)
@@ -94,6 +107,12 @@ def check(model):
     for e in sorted(events, key=lambda e: (e['group'], e['start'])):
         if e['kind'] not in WAITED:
             continue
+        if e['kind'] == 'declared_waited_null':
+            out['nullWaits'].append(dict(event=None, generation=None, group=e['group'],
+                consumer=e['region'], consumerInvocation=e['regionSeq'], waited=e['id'],
+                status='recorded' if e['_valid'] else 'unverified', producer=None,
+                publication=None, refinement='null'))
+            continue
         pubs = publications[key(e)]
         edge = {'event': str(e['object']), 'generation': str(e['aux']), 'group': e['group'],
                 'consumer': e['region'], 'consumerInvocation': e['regionSeq'],
@@ -105,7 +124,26 @@ def check(model):
         if len(pubs) == 1:
             pub = pubs[0]
             edge.update(producer=pub['region'], publication=pub['id'], producerInvocation=pub['regionSeq'])
-            if pub['end'] < e['start']:
+            publisher = by_call[(pub['group'], str(pub['tid']), pub['regionSeq'])]
+            consumer = by_call[(e['group'], str(e['tid']), e['regionSeq'])]
+            # Use dynamic invocation ancestry, never just region names. Another
+            # thread can execute the same region independently and release us.
+            nested = (thread(pub) == thread(e) and
+                      int(consumer['seq']) <= int(publisher['seq']) and
+                      int(publisher['end']) <= int(consumer['end']))
+            consumer_key = aliases[wait_coverage.invocation(e)]
+            current = aliases[wait_coverage.invocation(pub)]
+            while current is not None:
+                nested = nested or current == consumer_key
+                current = logical_parents[current]
+            if nested:
+                edge['status'] = 'violation'
+                out['violations'].append(dict(event=list(key(e)), consumer=e['region'],
+                    producer=pub['region'], waited=e['id'], publication=pub['id'],
+                    reason='Publisher is the waiter itself or its synchronous descendant; '
+                           'call/return order is not a waited dependency. Use waited(null) '
+                           'with a reason for an event-free refinement.'))
+            elif pub['end'] < e['start']:
                 edge['status'] = 'ordered'
                 if 'beginUs' in e and 'endUs' in pub:
                     edge['distanceUs'] = max(0, int(e['beginUs'])-int(pub['endUs']))
@@ -118,66 +156,78 @@ def check(model):
             out['unverified'].append({'event': list(key(e)), 'waited': e['id'],
                                       'reason': 'Missing or ambiguous publication generation'})
         out['edges'].append(edge)
+    # A channel is process-scoped and belongs to one ordered region pair,
+    # across all its observed generations. Same-pair repeated calls are valid.
+    channels = defaultdict(list)
+    for edge in out['edges']:
+        if edge['producer'] is not None and edge['consumer']:
+            channels[edge['group'], edge['event']].append(edge)
+    out['eventPairs'] = []
+    for (group, event), claims in sorted(channels.items()):
+        pairs = sorted({(e['producer'], e['consumer']) for e in claims})
+        out['eventPairs'].append(dict(group=group, event=event,
+            pairs=[dict(producer=p, consumer=c) for p, c in pairs]))
+        if len(pairs) > 1:
+            out['violations'].append(dict(group=group, event=event,
+                reason='Event channel is shared across region pairs; use a separate event ID per pair',
+                pairs=[dict(producer=p, consumer=c) for p, c in pairs]))
+            for edge in claims:
+                edge['status'] = 'violation'
     # Declaration ownership follows the captured invocation containing waited,
     # irrespective of which descendant implements the native synchronization.
     # Record that context without claiming a native object/publication match.
-    parents = {}
-    stacks = defaultdict(list)
-    for call in sorted(traces, key=lambda t: (t['group'], int(t['seq']))):
-        identity = (call['group'], str(call['thread']), int(call['seq']))
-        stack = stacks[identity[:2]]
-        while stack and int(stack[-1]['end']) < int(call['seq']):
-            stack.pop()
-        parents[identity] = ((stack[-1]['group'], str(stack[-1]['thread']), int(stack[-1]['seq']))
-                             if stack else None)
-        stack.append(call)
     declarations = defaultdict(list)
     checkpoints = {e['id']: e for e in events}
-    for edge in out['edges']:
+    for edge in out['edges'] + out['nullWaits']:
         e = checkpoints[edge['waited']]
         if e['_valid']:
-            declarations[e['group'], str(e['tid']), e['regionSeq']].append(edge)
+            declarations[aliases[wait_coverage.invocation(e)]].append(edge)
         edge['nativeContext'] = []
     contexts = defaultdict(Counter)
-    unknown = defaultdict(list)
     known_count = 0
-    for op in capture.get('operations', []):
+    # Reapply the recorded capture boundary when checking older reports too.
+    # CUDA synchronization is retained; only proven direct native-GX CPU
+    # implementation calls are outside the application coverage budget.
+    operations, _ = waits.application_operations(capture.get('operations', []),
+                                                 model.get('provenance', {}).get('runs', []))
+    _, out['implementationSynchronization'] = waits.application_operations(captured,
+                                                 model.get('provenance', {}).get('runs', []))
+    for op in operations:
         invocation = (op['group'], str(op['tid']), int(op['regionSeq']))
         call = by_call.get(invocation)
         if call is None:
             continue
         # Canonicalize the region from its actual invocation, as for checkpoints.
         region = call['region']
-        current = invocation
+        current = aliases[invocation]
         while current is not None:
             for edge in declarations[current]:
                 marker = checkpoints[edge['waited']]
                 if op.get('returned') and 0 < int(op.get('end', 0)) < int(marker['start']):
                     contexts[edge['waited']][region, op['api']] += 1
-            current = parents[current]
+            current = logical_parents[current]
         if op.get('producers'):
             known_count += 1
-        else:
-            unknown[region, op['api']].append(op)
-    for edge in out['edges']:
+    for edge in out['edges'] + out['nullWaits']:
         edge['nativeContext'] = [dict(region=region, api=api, count=count)
                                 for (region, api), count in sorted(contexts[edge['waited']].items())]
-    for (region, api), ops in sorted(unknown.items()):
-        out['unexplained'].append({'region': region, 'api': api, 'count': len(ops),
-                                  'term': 'unexplained(Wait[?])', 'examples': [o['id'] for o in ops[:3]]})
     out['nativeResolved'] = known_count
-    out['coverage'] = ('Native publisher resolution and declared event order are separate checks. '
-                       'nativeContext lists preceding synchronization in the declaring invocation '
-                       'or its descendants; it is context, not a claim that the declaration covers '
-                       'every listed operation. A shared primitive needs no semantic region of its own.')
+    out['coverage'] = wait_coverage.check(operations, events, out['edges'] + out['nullWaits'],
+                                          (logical_calls, aliases, logical_parents))
+    for row in out['coverage']['regions']:
+        if row['uncovered']:
+            out['unexplained'].append(dict(region=row['region'], count=row['uncovered'],
+                unit='wait obligations', term='unexplained(Wait[?])', examples=row['examples']))
     # Infer only occurrence counts from existing entry PCVs. No new condition is
     # supplied or evaluated by the marker, and identical states are not averaged.
     buckets = defaultdict(Counter)
     for e in events:
         if e['kind'] in WAITED and e['_valid'] and e['region'] in regions:
-            buckets[e['region'], str(e['object'])][e['group'], str(e['tid']), e['regionSeq']] += 1
-    for (region, event), counts in sorted(buckets.items()):
-        calls = [t for t in traces if t['region'] == region]
+            identity = None if e['kind'] == 'declared_waited_null' else str(e['object'])
+            buckets[e['region'], identity][aliases[wait_coverage.invocation(e)]] += 1
+    for (region, event), counts in sorted(buckets.items(), key=lambda item:
+                                          (item[0][0], '' if item[0][1] is None else item[0][1])):
+        calls = [t for t in logical_calls.values() if t['region'] == region]
         names = regions[region]['states']
         values = [counts[t['group'], str(t['thread']), t['seq']] for t in calls]
         relation = composition.affine([[composition._integer(t['values'][n]) for n in names] for t in calls], values, names)
@@ -202,3 +252,26 @@ def probe_plan(report, margin_ms=100, maximum_ms=5000):
              'capped': math.ceil(max(values)/1000)+margin_ms > maximum_ms,
              'scope': 'all declared publications in this region; rerun one region per probe'}
             for region, values in sorted(gaps.items())]
+
+
+def lines(report):
+    """Keep ordering failures and missing annotation coverage visible in exports."""
+    if not report:
+        return []
+    out = [f"declared event order: {report['status']}"]
+    out.extend('  ERROR: '+v['reason'] for v in report['violations'])
+    out.extend('  UNVERIFIED: '+v['reason'] for v in report['unverified'])
+    coverage = report['coverage']
+    if 'obligations' in coverage:
+        out.append(f"annotation coverage: {coverage['covered']}/{coverage['obligations']} "
+                   'wait obligations')
+    else:
+        out.append('annotation coverage: unverified')
+    interfaces = report.get('interfaceChecks', {})
+    for row in interfaces.get('claims', []):
+        out.append(f"  {row['region']}: {row['term']} [{row['status']}]")
+        if row.get('event') is None:
+            out.append('    refinement reason (manual review): ' + row['reason'])
+    for row in interfaces.get('unexplained', report['unexplained']):
+        out.append(f"  {row['region']}: {row['term']} ({row['count']} observations)")
+    return out

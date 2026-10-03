@@ -7,11 +7,11 @@ teardown), not decode, dominates the run.
 
 Under drperf (from /home/ubuntu/drperf-cases, same env exported):
 
-    /home/ubuntu/drperf/bin/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
+    /home/ubuntu/drperf/tools/drperf-dev run --blocks -q --late --threads 8 --repeat 1 \\
         --max-slots 2097152 -o out/vllm_req \\
         -- /home/ubuntu/drperf/third_party/vllm-cpu/.venv/bin/python examples/vllm_run_req.py
-    /home/ubuntu/drperf/bin/drperf-dev derive out/vllm_req
-    /home/ubuntu/drperf/bin/drperf-dev learn  out/vllm_req
+    /home/ubuntu/drperf/tools/drperf-dev derive out/vllm_req
+    /home/ubuntu/drperf/tools/drperf-dev learn  out/vllm_req
 
 Design: 16 requests whose prompts run from ~16 to ~600 tokens (the same sentence
 repeated), max_tokens=4 so only four decode steps per request follow a prefill,

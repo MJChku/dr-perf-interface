@@ -1,0 +1,33 @@
+derive drt-gc-004   (instructions per call on all threads, nested marked regions included, OpenMP runtime waiting excluded; derived per basic block)
+  states: drnets=4,newnets=2,kinds=8,figs=12 x4, drnets=4,newnets=2,kinds=8,figs=16 x4, drnets=6,newnets=2,kinds=12,figs=20 x4, drnets=6,newnets=2,kinds=12,figs=24 x4, drnets=6,newnets=4,kinds=12,figs=16 x4, drnets=6,newnets=4,kinds=12,figs=24 x4, drnets=8,newnets=4,kinds=16,figs=24 x4, drnets=8,newnets=4,kinds=16,figs=32 x4, drnets=8,newnets=6,kinds=8,figs=12 x4, drnets=8,newnets=6,kinds=8,figs=16 x4, drnets=10,newnets=2,kinds=20,figs=36 x4, drnets=10,newnets=2,kinds=20,figs=40 x4, drnets=10,newnets=6,kinds=12,figs=20 x4, drnets=10,newnets=6,kinds=12,figs=24 x4, drnets=10,newnets=8,kinds=12,figs=16 x4, drnets=10,newnets=8,kinds=12,figs=24 x4, drnets=10,newnets=8,kinds=20,figs=24 x4, drnets=10,newnets=8,kinds=20,figs=40 x4, drnets=12,newnets=4,kinds=24,figs=40 x4, drnets=12,newnets=4,kinds=24,figs=48 x4, drnets=12,newnets=8,kinds=16,figs=24 x4, drnets=12,newnets=8,kinds=16,figs=32 x4, drnets=12,newnets=8,kinds=24,figs=32 x4, drnets=12,newnets=8,kinds=24,figs=48 x4, drnets=14,newnets=6,kinds=20,figs=36 x4, drnets=14,newnets=6,kinds=20,figs=40 x4, drnets=14,newnets=12,kinds=20,figs=24 x4, drnets=14,newnets=12,kinds=20,figs=40 x4, drnets=16,newnets=8,kinds=24,figs=40 x4, drnets=16,newnets=8,kinds=24,figs=48 x4, drnets=16,newnets=8,kinds=32,figs=48 x4, drnets=16,newnets=8,kinds=32,figs=64 x4, drnets=16,newnets=12,kinds=24,figs=32 x4, drnets=16,newnets=12,kinds=24,figs=48 x4, drnets=16,newnets=14,kinds=8,figs=12 x4, drnets=16,newnets=14,kinds=8,figs=16 x4, drnets=18,newnets=14,kinds=12,figs=20 x4, drnets=18,newnets=14,kinds=12,figs=24 x4, drnets=18,newnets=16,kinds=12,figs=16 x4, drnets=18,newnets=16,kinds=12,figs=24 x4, drnets=20,newnets=12,kinds=32,figs=48 x4, drnets=20,newnets=12,kinds=32,figs=64 x4, drnets=20,newnets=16,kinds=16,figs=24 x4, drnets=20,newnets=16,kinds=16,figs=32 x4, drnets=22,newnets=14,kinds=20,figs=36 x4, drnets=22,newnets=14,kinds=20,figs=40 x4, drnets=22,newnets=20,kinds=20,figs=24 x4, drnets=22,newnets=20,kinds=20,figs=40 x4, drnets=24,newnets=16,kinds=24,figs=40 x4, drnets=24,newnets=16,kinds=24,figs=48 x4, drnets=24,newnets=20,kinds=24,figs=32 x4, drnets=24,newnets=20,kinds=24,figs=48 x4, drnets=28,newnets=20,kinds=32,figs=48 x4, drnets=28,newnets=20,kinds=32,figs=64 x4
+  cost(drnets, newnets, kinds, figs) = 94.1*drnets + 1,627.3*newnets + 403.4*kinds + 724.5*figs + 603.4        [all drnets, newnets, kinds, figs]   blocks: 214 affine, 45 constant, 6 irregular (2.8% of cost)
+    irregular blocks, per call: 299 .. 3,209
+    per-drnets coefficient by function:
+                55.4  drt::FlexGCWorker::init  [gcbench]
+                  38  drt::(anonymous namespace)::addNonTaperedPatches  [gcbench]
+               0.746  drt::FlexGCWorker::addNet  [gcbench]
+    per-newnets coefficient by function:
+               957.6  drt::FlexGCWorker::addNet  [gcbench]
+               419.5  __GI___libc_malloc  [libc.so.6]
+               149.1  operator new  [libstdc++.so.6.0.33]
+                37.9  std::_Rb_tree_insert_and_rebalance  [libstdc++.so.6.0.33]
+    per-kinds coefficient by function:
+                 174  void std::vector<std::pair<int, std::pair<int, int> >, std::allocator<  [gcbench]
+               112.3  __GI___libc_malloc  [libc.so.6]
+                47.8  _int_free  [libc.so.6]
+                39.9  operator new  [libstdc++.so.6.0.33]
+    per-figs coefficient by function:
+                 188  drt::gcNet::addPolygon  [gcbench]
+                 126  void std::vector<std::pair<int, std::pair<int, int> >, std::allocator<  [gcbench]
+               115.5  drt::FlexGCWorker::initDRObj  [gcbench]
+                  81  _int_free  [libc.so.6]
+    constant by function:
+               306.2  std::_Rb_tree_insert_and_rebalance  [libstdc++.so.6.0.33]
+               189.6  _int_free  [libc.so.6]
+               -88.9  drt::FlexGCWorker::init  [gcbench]
+                80.1  operator delete  [libstdc++.so.6.0.33]
+    irregular by function:
+               689.7  drt::FlexGCWorker::initDRObj  [gcbench]
+               422.7  std::unique_ptr<>::~unique_ptr  [gcbench]
+               176.9  drt::FlexGCWorker::init  [gcbench]
+

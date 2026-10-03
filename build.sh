@@ -3,7 +3,7 @@
 set -eu
 cd "$(dirname "$0")"
 third_party/get_dynamorio.sh
-mkdir -p build
+mkdir -p build out
 gcc -O2 -fPIC -shared -fvisibility=hidden -o build/libperfmark.so perfmark/perfmark.c -ldl
 cp build/libperfmark.so perfmark/libperfmark.so
 # preloaded so DynamoRIO can be started at the first marked region instead of

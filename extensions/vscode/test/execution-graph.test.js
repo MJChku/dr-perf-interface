@@ -19,6 +19,21 @@ function fixture() {
   return {call,model};
 }
 const keys=g=>g.edges.map(e=>[e.kind,e.source,e.target,e.context,e.observations]);
+test('wait highlighting works in both directions and preserves contextual endpoints',()=>{
+  const wait={kind:'wait',source:'parentA',target:'B',actualSource:'parentA/child',actualTarget:'B'};
+  const other={kind:'wait',source:'other/child',target:'C'};
+  const sequence={kind:'sequence',source:'parentA',target:'C'};
+  for(const selected of ['parentA','parentA/child','B']) {
+    const focused=G.waitNeighborhood([wait,other,sequence],new Set([selected]));
+    assert.deepEqual([...focused.nodes],['parentA','B']);
+    assert.deepEqual([...focused.edges],[wait]);
+  }
+  assert.equal(G.waitNeighborhood([wait],new Set(['other/child'])).edges.size,0);
+});
+function declare(m,consumer,producer) {
+  m.waits={status:'observed',events:[{...producer,id:'pub'},{...consumer,id:'waited'}],operations:[]};
+  m.eventModel={edges:[{waited:'waited',publication:'pub',status:'ordered'}]};
+}
 test('all waits exposes global dependencies outside selected neighborhood',()=>{
   const graph={nodes:['a','b','c','d'].map(id=>({id})),edges:[
     {kind:'contains',source:'a',target:'b'},
@@ -49,12 +64,20 @@ test('incomplete, crossing and counter-mismatched traces are unavailable',()=>{
     assert.equal(G.build(m).status,'unavailable',kind);
   }
 });
-test('wait links require captured producer evidence, not temporal proximity',()=>{
+test('native matches do not create dependencies in fallback, saved, or nested graphs',()=>{
   const f=fixture(),pub=f.call('producer'),op=f.call('consumer',null,'2'),m=f.model();
   m.waits={status:'observed',events:[{...pub,id:'publication'}],
     operations:[{...op,api:'sem_wait',producers:['publication']}]};
-  const g=G.build(m);assert.deepEqual(keys(g),[['wait','consumer','producer','consumer',1]]);
+  const g=G.build(m);assert.deepEqual(keys(g),[]);
   assert.equal(g.nodes.length,2);
+  for(const claimedOrigin of [undefined,'declared-event']) {
+    const copy=structuredClone(m);
+    copy.executionGraph={...structuredClone(g),declaredEventsIncluded:true,edges:[
+      {kind:'wait',source:'consumer',target:'producer',context:'consumer',observations:1,
+       origin:claimedOrigin,eventStatus:claimedOrigin?'ordered':undefined}]};
+    assert.equal(G.build(copy).edges.length,0);
+    assert.equal(G.hierarchy(copy).edges.filter(e=>e.kind==='wait').length,0);
+  }
   for(const condition of ['partial','missing']) {
     const copy=structuredClone(m);
     if(condition==='partial')copy.waits.status='partial';else copy.waits.events=[];
@@ -88,8 +111,7 @@ test('nested waits retain actual endpoints and independent expansion',()=>{
   const f=fixture();let consumer,producer;
   f.call('A',()=>{consumer=f.call('a1');});
   f.call('B',()=>{producer=f.call('b1');});
-  const m=f.model();m.waits={status:'observed',events:[{...producer,id:'pub'}],
-    operations:[{...consumer,producers:['pub']}]};
+  const m=f.model();declare(m,consumer,producer);
   const h=G.hierarchy(m),A=JSON.stringify(['A']),B=JSON.stringify(['B']);
   const expanded=new Set(),collapsed=G.nestedView(h,'A','top',expanded);
   const edge=collapsed.edges.find(e=>e.kind==='wait');
@@ -104,7 +126,7 @@ test('same region name in different parents does not misattribute a wait',()=>{
   const f=fixture();let consumer,producer;
   f.call('A',()=>f.call('shared'));
   f.call('B',()=>{consumer=f.call('shared');producer=f.call('producer');});
-  const m=f.model();m.waits={status:'observed',events:[{...producer,id:'pub'}],operations:[{...consumer,producers:['pub']}]};
+  const m=f.model();declare(m,consumer,producer);
   const tree=G.hierarchy(m),view=G.nestedView(tree,'A','region',new Set());
   assert.equal(view.edges.filter(e=>e.kind==='wait').length,0);
   const all=G.nestedView(tree,'A','waits',new Set());
@@ -159,4 +181,15 @@ test('same-region native and declared waits remain evidence, not graph edges',()
   assert.equal(exported.status,'observed');
   assert.equal(exported.edges.length,0);
   assert.equal(m.waits.operations.length,1);
+});
+
+test('annotation coverage survives portable graph export separately from order',()=>{
+  const f=fixture();f.call('A',()=>f.call('B'));const m=f.model();
+  const coverage={status:'uncovered',obligations:2,covered:1,uncovered:1};
+  m.eventModel={status:'ordered',edges:[],violations:[],unverified:[],coverage};
+  const g=G.build(m);
+  assert.equal(g.eventChecks.status,'ordered');
+  assert.deepEqual(g.eventChecks.coverage,coverage);
+  const portable=structuredClone(m);portable.executionGraph=g;
+  assert.deepEqual(G.build(portable).eventChecks.coverage,coverage);
 });

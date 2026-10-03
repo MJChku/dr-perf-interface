@@ -34,6 +34,10 @@ def run(mode, label, target='', delay=0):
     explorer.write_model(model, out/(mode+'-'+label+'.drperf.json'))
     result = model.get('eventModel')
     assert result, 'Event hooks were not observed'
+    native = [e for e in model['waits']['events'] if e['kind'] == 'completion' and e['region']]
+    assert bool(native) == (mode != 'missing-wait'), native
+    assert all(e.get('callerModule') == program.name
+               and int(e.get('callerOffset', 0)) > 0 for e in native), native
     return result
 
 
@@ -44,6 +48,7 @@ for mode in ['correct', 'conditional', 'chain', 'missing-wait', 'wrong-pair', 'o
         # The closed semaphore lifetime resolves its native publisher, but does
         # not manufacture an application-level waited declaration.
         assert not baseline['edges'] and baseline['nativeResolved'] >= 1, baseline
+        assert baseline['coverage']['uncovered'] == 1, baseline
         results[mode] = {'baseline':baseline}
         print(mode, 'native synchronization retained; no declared edge invented', flush=True)
         continue

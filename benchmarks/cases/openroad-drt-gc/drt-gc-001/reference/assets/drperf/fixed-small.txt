@@ -1,0 +1,9 @@
+$ GC_CUTCORNERCACHE=1 bin/drperf build/drt-gc-001/fixed/gcbench scenario=pgvias size=small
+cost per call, in instructions
+
+  drt-gc-001 = 398.6*vc + 2,328.3*vm + 0.0987*scan + 1,166*fcut + 2,378.7
+      vc: 199.2 drt::FlexGCWorker::initNet_pins_polygonCorn… [gcbench], 88.5 __GI___libc_malloc [libc.so.6], 31.7 operator new [libstdc++.so.6.0.33]
+      vm: 390.9 _int_free [libc.so.6], 385.7 __GI___libc_malloc [libc.so.6], 264.2 drt::FlexGCWorker::initNet_pins_polygonCorn… [gcbench]
+      scan: 0.0598 std::__detail::_Prime_rehash_policy::_M_nex… [libstdc++.so.6.0.33], 0.0199 std::__detail::_Prime_rehash_policy::_M_nee… [libstdc++.so.6.0.33], 0.019 std::_Hashtable<>::find [gcbench]
+      fcut: 320.3 std::pair<std::__detail::_Node_iterator<std… [gcbench], 226.1 _int_free [libc.so.6], 188.4 __GI___libc_malloc [libc.so.6]
+      constant: 1,083.1 main [gcbench], 438.5 std::pair<std::__detail::_Node_iterator<std… [gcbench], 199.2 std::__detail::_Prime_rehash_policy::_M_nee… [libstdc++.so.6.0.33]

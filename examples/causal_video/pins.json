@@ -19,5 +19,1168 @@
   "fastvideo_model": {
     "repository": "wlsaidhi/SFWan2.1-T2V-1.3B-Diffusers",
     "revision": "4b44356635ae5e927ca552a220f768022be76004"
+  },
+  "LightX2V": {
+    "commit": "69018c92b0a42d9b0cf962a248fadbfe0cbc03de",
+    "remote": "https://github.com/ModelTC/LightX2V.git"
+  },
+  "FlashDreams": {
+    "commit": "c1889e04ac8d93189f5ab558232b892ef673b1e4",
+    "remote": "https://github.com/NVIDIA/flashdreams.git"
+  },
+  "CausalForcing": {
+    "remote": "https://github.com/thu-ml/Causal-Forcing.git",
+    "commit": "b4ffbd491b4f941e25bde66f425384c31f8dc9af",
+    "status": "GX screened: small modeled CPU headroom; metadata candidate checked under GX, no native candidate validation."
+  },
+  "causal_forcing_model": {
+    "repository": "zhuhz22/Causal-Forcing",
+    "revision": "2f8eb8bb6eeb1238da9d13e5420d342a74d634a6",
+    "file": "causal-forcing++/framewise-1step.pt",
+    "sha256": "bdb1b475fc88d528f510158a0990cd457f02c661b527ceb11ca9e4728533e2d0"
+  },
+  "MatrixGame3": {
+    "remote": "https://github.com/SkyworkAI/Matrix-Game.git",
+    "commit": "71c3cd7f741311f8100f6cf9cde942b6c1378d11",
+    "subdirectory": "Matrix-Game-3",
+    "status": "Full pretrained-model GX screen completed; small modeled CPU headroom, no optimization candidate."
+  },
+  "matrix_game3_model": {
+    "repository": "Skywork/Matrix-Game-3.0",
+    "revision": "382aa382a03cec057360755aa72c7735025770bb",
+    "variant": "base_distilled_model; MG-LightVAE_v2 decoder with Wan2.2 encoder"
+  },
+  "Scope": {
+    "remote": "https://github.com/daydreamlive/scope.git",
+    "commit": "2aced4ded3513a76cd35f0dbfb42fbfbf5e98ab0",
+    "status": "Full LongLive GX screen completed; 5.6% modeled idle; no optimization candidate."
+  },
+  "scope_longlive_model": {
+    "repository": "daydreamlive/LongLive-1.3B",
+    "revision": "7735d25c7944e4497fa5882aaf7a3bdc9c1fda32",
+    "files": [
+      "models/longlive_base.pt",
+      "models/lora.pt"
+    ]
+  },
+  "StreamDiffusionV2": {
+    "commit": "6961a5cf2045d1dda05a04ef229698bdc04e873a",
+    "remote": "https://github.com/chenfengxu714/StreamDiffusionV2.git",
+    "status": "GX/drperf discovery; final input-window patch confirmed on A100 with original upstream GPU metadata."
+  },
+  "streamdiffusionv2_model": {
+    "repository": "jerryfeng/StreamDiffusionV2",
+    "revision": "2373eb2b39278b3a1aa174964a724ee78ead96f0",
+    "file": "wan_causal_dmd_v2v/model.pt"
+  },
+  "TeleFuser": {
+    "commit": "8dbf39da0e957da1bc69ad46ae814228aca8527a",
+    "remote": "https://github.com/Tele-AI/TeleFuser.git",
+    "status": "GX/drperf-guided planar output conversion: fewer CPU instructions, modest A100 latency improvement, exact output hashes."
+  },
+  "telefuser_model": {
+    "repository": "acvlab/ABot-World-0-5B-LF",
+    "revision": "d26a3003701e70d38cd17e2af2faf63bd4ff7632",
+    "files": {
+      "Wan2.2_VAE.pth": {
+        "size": 2818839170,
+        "lfs": {
+          "sha256": "20eb789667fa5e60e7516bf509512f6cb61f01b0aa0695eadaea930c13892b36"
+        }
+      },
+      "config.json": {
+        "size": 292,
+        "blobId": "05f179b02036433a59c8a886c4ef29af654a3500"
+      },
+      "diffusion_pytorch_model.safetensors": {
+        "size": 10540744232,
+        "lfs": {
+          "sha256": "fab41e21ee927eeebfd4d9d5b7120d0660f39d22c54fae45178b1db2e0fba127"
+        }
+      },
+      "taew2_2.pth": {
+        "size": 22884021,
+        "lfs": {
+          "sha256": "d053e216ca50e2bb837bbcd79b85f0366bea00e5938025572382a773b74c559a"
+        }
+      }
+    }
+  },
+  "SkyReels-V2": {
+    "commit": "9351d13152207cc04de780e055346b08ade0b851",
+    "remote": "https://github.com/SkyworkAI/SkyReels-V2.git",
+    "status": "GX screen complete after occupancy-query deduplication; deprioritized for CPU-only optimization."
+  },
+  "skyreels_model": {
+    "repository": "Skywork/SkyReels-V2-DF-1.3B-540P",
+    "revision": "1100111771ba2d921f10e76991f54db9f73edb3d",
+    "files": {
+      "config.json": {
+        "size": 279,
+        "blobId": "3e222be19053dcb9bde638d8a1ffb4a5bb9303bb"
+      },
+      "model.safetensors": {
+        "size": 5742186488,
+        "lfs": {
+          "sha256": "a034647ccc71aceda3d9c2c439707b5e829a3c3361dba71a1c083a72db3c4dd9"
+        }
+      }
+    }
+  },
+  "DiffSynth-Studio": {
+    "remote": "https://github.com/modelscope/DiffSynth-Studio.git",
+    "commit": "c458cb42ab1ee838bff85c6546e14bb01c3571e9",
+    "status": "GX CPU module-copying and checkpoint-loading changes evaluated; module-copying validated on A100 with identical outputs. See evidence/diffsynth-cpu.json."
+  },
+  "VideoX-Fun": {
+    "commit": "968f0e2192ba4c7a12868bf36d73260d135424ca",
+    "remote": "https://github.com/aigc-apps/VideoX-Fun.git",
+    "status": "GX-guided bounded asynchronous sequential CPU offload; mode2/mode3 and A100 validation. Accelerate1.14.0 opt-in patch; original VideoX source unchanged."
+  },
+  "xDiT": {
+    "commit": "324cff965f955a0c922f4141a34966c0a81a7cee",
+    "remote": "https://github.com/xdit-project/xDiT.git",
+    "status": "GX mode2 CPU screen only; no optimization or native speedup claim."
+  },
+  "SGLang-Diffusion": {
+    "commit": "8ea0ee300d67c44f9ed3cdd17336113080fabc24",
+    "remote": "https://github.com/sgl-project/sglang.git",
+    "status": "GX mode2 CPU screen only; no optimization or native speedup claim."
+  },
+  "WanVideoWrapper": {
+    "commit": "088128b224242e110d3906c6750e9a3a348a659b",
+    "remote": "https://github.com/kijai/ComfyUI-WanVideoWrapper.git"
+  },
+  "ComfyUI": {
+    "commit": "3c80da7f87ee359b2d06f107cb3c0797079dfbbb",
+    "remote": "https://github.com/comfyanonymous/ComfyUI.git"
+  },
+  "vLLM-Omni": {
+    "commit": "963ba1ab7a02b2c1f687285fcd2072cd57cd0b34",
+    "tag": "v0.22.0",
+    "remote": "https://github.com/vllm-project/vllm-omni.git"
+  },
+  "Wan2GP": {
+    "commit": "bfaff285463ef6124c2357136e8d36c6c93c0fb2",
+    "remote": "https://github.com/deepbeepmeep/Wan2GP.git"
+  },
+  "FastGen": {
+    "commit": "f7d845629b00c75527fd04d8ce66392c363b1fbb",
+    "remote": "https://github.com/NVlabs/FastGen.git",
+    "status": "Deprioritized after mode2 CPU screen. Native kernel calibration/control checks only; no mode3 or optimized A100 validation."
+  },
+  "Qwen3-TTS": {
+    "source": "https://github.com/QwenLM/Qwen3-TTS.git",
+    "commit": "022e286b98fbec7e1e916cb940cdf532cd9f488e",
+    "model": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+    "revision": "85e237c12c027371202489a0ec509ded67b5e4b5",
+    "stage": "GX modes2/3 and A100 control and uninstrumented ABBA validation completed.",
+    "workload": "One fixed English request, speaker Ryan, seed42, CustomVoice0.6B, non_streaming_mode=True, max_new_tokens256, sampling enabled; original public generate_custom_voice including tokenization, talker/code-predictor autoregression, speech decoder and CPU waveform return. Resident BF16 parameters and FA2; no encoding.",
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "tokenizers": "0.22.2",
+      "accelerate": "1.12.0",
+      "numpy": "1.26.4",
+      "librosa": "0.11.0",
+      "onnxruntime": "1.22.0"
+    }
+  },
+  "VoxCPM2": {
+    "commit": "f772e498a45fbb5fb8e13fbf9b9c48be9fe33e69",
+    "remote": "https://github.com/OpenBMB/VoxCPM.git",
+    "status": "Low-gain mode2 CPU candidate screen. Native initial calibration only; no mode3 or optimized native latency/correctness validation."
+  },
+  "Chatterbox Turbo": {
+    "source": {
+      "remote": "https://github.com/resemble-ai/chatterbox.git",
+      "commit": "5de7a54aa4e5e2baadb0182dde554908b48b85c2"
+    },
+    "model": {
+      "repository": "ResembleAI/chatterbox-turbo",
+      "revision": "749d1c1a46eb10492095d68fbcf55691ccf137cd",
+      "path": "/home/ubuntu/gx-ix14/causal/models/ChatterboxTurbo",
+      "files": [
+        {
+          "path": ".gitattributes",
+          "bytes": 1519,
+          "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "README.md",
+          "bytes": 9544,
+          "sha256": "d007d8c2ed2093530d95eee9d623f8977c321f6f361c19dafa07c000375808d7",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "added_tokens.json",
+          "bytes": 418,
+          "sha256": "72e4ab6acb0d9309ac3df4b526ae5fd80a2da5bc5ab7bb02d85096a374f69193",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "conds.pt",
+          "bytes": 169454,
+          "sha256": "b1852099306fd6a7814eb9d0bd10186caba7249596cc23868f78a0eefbfa5033",
+          "lfs_sha_verified": true
+        },
+        {
+          "path": "merges.txt",
+          "bytes": 456318,
+          "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "s3gen_meanflow.safetensors",
+          "bytes": 1064875036,
+          "sha256": "d65cb687a2ed581ee6cc297e919ffefa63386944f42364ae13b78a594945514f",
+          "lfs_sha_verified": true
+        },
+        {
+          "path": "special_tokens_map.json",
+          "bytes": 470,
+          "sha256": "92ba8063bf40aa163eadebbfe0de07c2aebe44cf0d4a9e8726580b0781fd2640",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "t3_turbo_v1.safetensors",
+          "bytes": 1915480052,
+          "sha256": "fcf1f8c1d651bb7e3acd69ee5be269b4ac10c02980b7708213d598bc9f7cdf87",
+          "lfs_sha_verified": true
+        },
+        {
+          "path": "t3_turbo_v1.yaml",
+          "bytes": 8457,
+          "sha256": "57623237f5072148a138a47fd93da1241bc5069fd0df7f1850c00053391c50de",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "tokenizer_config.json",
+          "bytes": 3878,
+          "sha256": "bca16a2ac1ddbd78b8d6228f0031884cc74b6ea54b967d6f6d2ebae9ccde23e6",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "ve.safetensors",
+          "bytes": 5695784,
+          "sha256": "f0921cab452fa278bc25cd23ffd59d36f816d7dc5181dd1bef9751a7fb61f63c",
+          "lfs_sha_verified": true
+        },
+        {
+          "path": "vocab.json",
+          "bytes": 999186,
+          "sha256": "f6bd25a65e4e63ca31360e9fb11c7e4f9a391a78385d640acd814092dd6eee4f",
+          "lfs_sha_verified": false
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "5.2.0",
+      "numpy": "1.26.4",
+      "librosa": "0.11.0",
+      "chatterbox-tts": "0.1.7",
+      "resemble-perth": "1.0.1",
+      "diffusers": "0.35.1"
+    },
+    "workload": {
+      "text": "Hello. This is a test of speech generation.",
+      "audio_prompt_path": null,
+      "temperature": 0.8,
+      "top_k": 1000,
+      "top_p": 0.95,
+      "repetition_penalty": 1.2,
+      "seed": 42
+    },
+    "scope": "Public ChatterboxTurboTTS.from_local and generate using built-in voice. Original tokenizer, autoregressive loop, meanflow decoder and CPU Perth watermark; no reference encoding or file encoding."
+  },
+  "Kokoro": {
+    "source": {
+      "remote": "https://github.com/hexgrad/kokoro.git",
+      "commit": "dfb907a02bba8152ca444717ca5d78747ccb4bec"
+    },
+    "model": {
+      "repository": "hexgrad/Kokoro-82M",
+      "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+      "path": "/home/ubuntu/gx-ix14/causal/models/Kokoro-82M",
+      "files": [
+        {
+          "path": "config.json",
+          "bytes": 2351,
+          "sha256": "5abb01e2403b072bf03d04fde160443e209d7a0dad49a423be15196b9b43c17f",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "kokoro-v1_0.pth",
+          "bytes": 327212226,
+          "sha256": "496dba118d1a58f5f3db2efc88dbdc216e0483fc89fe6e47ee1f2c53f18ad1e4",
+          "lfs_sha_verified": true
+        },
+        {
+          "path": "voices/af_heart.pt",
+          "bytes": 523425,
+          "sha256": "0ab5709b8ffab19bfd849cd11d98f75b60af7733253ad0d67b12382a102cb4ff",
+          "lfs_sha_verified": true
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "kokoro": "0.9.4",
+      "misaki": "0.9.4",
+      "spacy": "3.7.5",
+      "en-core-web-sm": "3.7.1"
+    },
+    "workload": {
+      "text": "Hello. This is a test of speech generation.",
+      "voice": "af_heart",
+      "speed": 1.0,
+      "seed": 42
+    },
+    "scope": "Public Kokoro KPipeline using local pretrained KModel and af_heart voice. Original English G2P, model duration prediction, packed RNNs, decoder, CPU waveform/duration return and word timestamps; no file encoding."
+  },
+  "F5-TTS": {
+    "source": {
+      "remote": "https://github.com/SWivid/F5-TTS.git",
+      "commit": "9c614e9657089213efc6a7421b30630be138a3f5"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/F5-TTS",
+      "files": [
+        {
+          "repository": "SWivid/F5-TTS",
+          "revision": "84e5a410d9cead4de2f847e7c9369a6440bdfaca",
+          "path": "F5-TTS/F5TTS_v1_Base/model_1250000.safetensors",
+          "bytes": 1348435761,
+          "sha256": "670900fd14e6c458b95da6e9ed317cdb20dbaf7a1c02ac06a05475a9d32b6a38",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "SWivid/F5-TTS",
+          "revision": "84e5a410d9cead4de2f847e7c9369a6440bdfaca",
+          "path": "F5-TTS/F5TTS_v1_Base/vocab.txt",
+          "bytes": 13800,
+          "sha256": "2a05f992e00af9b0bd3800a8d23e78d520dbd705284ed2eedb5f4bd29398fa3c",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "charactr/vocos-mel-24khz",
+          "revision": "0feb3fdd929bcd6649e0e7c5a688cf7dd012ef21",
+          "path": "vocos-mel-24khz/config.yaml",
+          "bytes": 461,
+          "sha256": "da9033922f969a47f0c160010226919e59f27761fd5066f3828d46de6650b0fc",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "charactr/vocos-mel-24khz",
+          "revision": "0feb3fdd929bcd6649e0e7c5a688cf7dd012ef21",
+          "path": "vocos-mel-24khz/pytorch_model.bin",
+          "bytes": 54365991,
+          "sha256": "97ec976ad1fd67a33ab2682d29c0ac7df85234fae875aefcc5fb215681a91b2a",
+          "lfs_sha_verified": true
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "f5-tts": "1.1.22",
+      "torchdiffeq": "0.2.5",
+      "x-transformers": "2.3.18",
+      "vocos": "0.1.0",
+      "torchcodec": "0.11.1+cpu"
+    },
+    "workload": {
+      "reference_text": "Some call me nature, others call me mother nature.",
+      "text": "This is a test of speech generation.",
+      "steps": 32,
+      "cfg_strength": 2.0,
+      "sway_sampling_coef": -1.0,
+      "speed": 1.0,
+      "seed": 42
+    },
+    "scope": "Original F5TTS.infer with supplied reference transcript, original reference preprocessing/cache, English text conversion, one generation chunk,32Euler steps, CFG2, sway-1, Vocos decode and CPU return. No ASR or output file encoding."
+  },
+  "Soprano": {
+    "source": {
+      "remote": "https://github.com/ekwek1/soprano.git",
+      "commit": "12fac06eb8fa53bad8b3941d3cb11e9c869477c4"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/Soprano",
+      "files": [
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "config.json",
+          "bytes": 1118,
+          "sha256": "b4e487a7a3bbee21fa0fc3c0faaaf404911e5f843058b3a10d1102170d4c2bb5",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "decoder.pth",
+          "bytes": 121448447,
+          "sha256": "11245487e4588b0f4128d6b4c82035212bad42ffb26f36e059e9c7f861c1f8c4",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "generation_config.json",
+          "bytes": 111,
+          "sha256": "83e8d44a0cfae1f40801b6f96ba8090286cfd5f707ae7fa3ec64e6f68550828c",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "model.safetensors",
+          "bytes": 159449112,
+          "sha256": "10e8c4223e14115688a1c8a1c5464ebb78826f17fb98ad459da9bce5471866ed",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "special_tokens_map.json",
+          "bytes": 28,
+          "sha256": "c68f391a753fa4ff6df6890a62fd584eba54ee5d1773c5f388e80f521ebba942",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "tokenizer.json",
+          "bytes": 1630675,
+          "sha256": "eb27ca6c9b55d2f880659a9619d6b8f9b9e6d8553d3ea424f5427788688d7286",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "ekwek/Soprano-1.1-80M",
+          "revision": "27b5a5f5f541a1db3a51d6fd1b0fc7147b92cd01",
+          "path": "tokenizer_config.json",
+          "bytes": 1366802,
+          "sha256": "06e83fdb0bdf94eef83ebb08f30620c8ab640344babb4d405ff27befd1a4c270",
+          "lfs_sha_verified": false
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "inflect": "7.5.0",
+      "Unidecode": "1.4.0"
+    },
+    "workload": {
+      "text": "Hello. This is a test of speech generation.",
+      "temperature": 0.0,
+      "top_p": 0.95,
+      "repetition_penalty": 1.2,
+      "retries": 0,
+      "seed": 42
+    },
+    "scope": "Original SopranoTTS.infer with official Transformers backend, public text preprocessing, autoregressive generation, Vocos decoder and CPU waveform return. Constructor warmup retained outside measured requests. No file encoding or playback. Default LMDeploy-preferred auto backend is not measured."
+  },
+  "ZipVoice": {
+    "remote": "https://github.com/k2-fsa/ZipVoice.git",
+    "commit": "2f7326fbfe999a3ad179e3f1af82a424d4a62819",
+    "status": "Inconclusive GX timing screen: material omitted FP32 SGEMM work; no optimized native validation."
+  },
+  "MeloTTS": {
+    "source": {
+      "remote": "https://github.com/myshell-ai/MeloTTS.git",
+      "commit": "209145371cff8fc3bd60d7be902ea69cbdb7965a"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/MeloTTS",
+      "files": [
+        {
+          "repository": "myshell-ai/MeloTTS-English-v3",
+          "revision": "f7c4a35392c0e9be24a755f1edb4c3f63040f759",
+          "path": "checkpoint.pth",
+          "bytes": 207602918,
+          "sha256": "959433dc1c6df618922560b4b7bc8c7af0a4b7ceaea267480c5d9ae8a3cfe536",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "myshell-ai/MeloTTS-English-v3",
+          "revision": "f7c4a35392c0e9be24a755f1edb4c3f63040f759",
+          "path": "config.json",
+          "bytes": 3409,
+          "sha256": "66db2f9d3fba6e94e7f430668188130129c0428a5a1646bcd8bd453a966e778a",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-uncased",
+          "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "path": "hf-cache/hub/models--bert-base-uncased/snapshots/86b5e0934494bd15c9632b12f734a8a67f723594/config.json",
+          "bytes": 570,
+          "sha256": "7160e1553ad2ca51d8c1cb066be533db31826e12d173824c1bb0cb1a4f187d20",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-uncased",
+          "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "path": "hf-cache/hub/models--bert-base-uncased/snapshots/86b5e0934494bd15c9632b12f734a8a67f723594/model.safetensors",
+          "bytes": 440449768,
+          "sha256": "68d45e234eb4a928074dfd868cead0219ab85354cc53d20e772753c6bb9169d3",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "bert-base-uncased",
+          "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "path": "hf-cache/hub/models--bert-base-uncased/snapshots/86b5e0934494bd15c9632b12f734a8a67f723594/tokenizer.json",
+          "bytes": 466062,
+          "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-uncased",
+          "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "path": "hf-cache/hub/models--bert-base-uncased/snapshots/86b5e0934494bd15c9632b12f734a8a67f723594/tokenizer_config.json",
+          "bytes": 48,
+          "sha256": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-uncased",
+          "revision": "86b5e0934494bd15c9632b12f734a8a67f723594",
+          "path": "hf-cache/hub/models--bert-base-uncased/snapshots/86b5e0934494bd15c9632b12f734a8a67f723594/vocab.txt",
+          "bytes": 231508,
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-multilingual-uncased",
+          "revision": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+          "path": "hf-cache/hub/models--bert-base-multilingual-uncased/snapshots/7cbf9a625e29989f6b9c6c2fa68234c304f7e38f/config.json",
+          "bytes": 625,
+          "sha256": "fba5d4b0a351a43f6ccb7a6587301fd9f6876ca36aae62af762af67c8f18db1c",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-multilingual-uncased",
+          "revision": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+          "path": "hf-cache/hub/models--bert-base-multilingual-uncased/snapshots/7cbf9a625e29989f6b9c6c2fa68234c304f7e38f/tokenizer.json",
+          "bytes": 1715180,
+          "sha256": "41a9e8ccfd02a7bf5bb8426ed22eec3a5bd81d85d7c10ef4a5cbdbfa21faa21b",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-multilingual-uncased",
+          "revision": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+          "path": "hf-cache/hub/models--bert-base-multilingual-uncased/snapshots/7cbf9a625e29989f6b9c6c2fa68234c304f7e38f/tokenizer_config.json",
+          "bytes": 48,
+          "sha256": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "bert-base-multilingual-uncased",
+          "revision": "7cbf9a625e29989f6b9c6c2fa68234c304f7e38f",
+          "path": "hf-cache/hub/models--bert-base-multilingual-uncased/snapshots/7cbf9a625e29989f6b9c6c2fa68234c304f7e38f/vocab.txt",
+          "bytes": 871891,
+          "sha256": "87b44292b452f6c05afa49b2e488e7eedf79ea4f4c39db6f2f4b37764228ef3f",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "tohoku-nlp/bert-base-japanese-v3",
+          "revision": "65243d6e5629b969c77309f217bd7b1a79d43c7e",
+          "path": "hf-cache/hub/models--tohoku-nlp--bert-base-japanese-v3/snapshots/65243d6e5629b969c77309f217bd7b1a79d43c7e/config.json",
+          "bytes": 472,
+          "sha256": "2a86800f7f45c980d14cbb0f22a71e4f42642fad8c4b2b658fb98b65dfa9e527",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "tohoku-nlp/bert-base-japanese-v3",
+          "revision": "65243d6e5629b969c77309f217bd7b1a79d43c7e",
+          "path": "hf-cache/hub/models--tohoku-nlp--bert-base-japanese-v3/snapshots/65243d6e5629b969c77309f217bd7b1a79d43c7e/tokenizer_config.json",
+          "bytes": 251,
+          "sha256": "d40f1e84b9a179a96b5e143ac54151158bb8c703b5134da4ea98a3faf4643ce8",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "tohoku-nlp/bert-base-japanese-v3",
+          "revision": "65243d6e5629b969c77309f217bd7b1a79d43c7e",
+          "path": "hf-cache/hub/models--tohoku-nlp--bert-base-japanese-v3/snapshots/65243d6e5629b969c77309f217bd7b1a79d43c7e/vocab.txt",
+          "bytes": 231026,
+          "sha256": "5e9a696b0191b833cfdf8eefada01f41f23ccbd7e7746946864260b1cdd0a784",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "kykim/bert-kor-base",
+          "revision": "1779cc0982ada0216dd6de0dd4e86fb78201926d",
+          "path": "hf-cache/hub/models--kykim--bert-kor-base/snapshots/1779cc0982ada0216dd6de0dd4e86fb78201926d/config.json",
+          "bytes": 725,
+          "sha256": "c37ae92c39e3600e7c9645148e406286d44c9863cb8a237196ac6ad35bc47749",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "kykim/bert-kor-base",
+          "revision": "1779cc0982ada0216dd6de0dd4e86fb78201926d",
+          "path": "hf-cache/hub/models--kykim--bert-kor-base/snapshots/1779cc0982ada0216dd6de0dd4e86fb78201926d/tokenizer_config.json",
+          "bytes": 80,
+          "sha256": "cac5808f517ce8a9706e7e18f29a45bc819a316c4f3222294a2a7db49490cf1b",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "kykim/bert-kor-base",
+          "revision": "1779cc0982ada0216dd6de0dd4e86fb78201926d",
+          "path": "hf-cache/hub/models--kykim--bert-kor-base/snapshots/1779cc0982ada0216dd6de0dd4e86fb78201926d/vocab.txt",
+          "bytes": 344259,
+          "sha256": "25a329a892130c73f7dffd6aafa0382d713f93633ef320e49ea54a449096a089",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dbmdz/bert-base-french-europeana-cased",
+          "revision": "b895c3cf291f7bf4c15639078a6bee0b3e272c5b",
+          "path": "hf-cache/hub/models--dbmdz--bert-base-french-europeana-cased/snapshots/b895c3cf291f7bf4c15639078a6bee0b3e272c5b/config.json",
+          "bytes": 420,
+          "sha256": "0da603d6d30507b56d7ff92010bf68b95b9c6330be707c578c18bffc9baaced0",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dbmdz/bert-base-french-europeana-cased",
+          "revision": "b895c3cf291f7bf4c15639078a6bee0b3e272c5b",
+          "path": "hf-cache/hub/models--dbmdz--bert-base-french-europeana-cased/snapshots/b895c3cf291f7bf4c15639078a6bee0b3e272c5b/tokenizer_config.json",
+          "bytes": 83,
+          "sha256": "25f2b98fcd4c39add7f30fa8e129c9d7d1fc2d27a37d615ae6452a47dca10378",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dbmdz/bert-base-french-europeana-cased",
+          "revision": "b895c3cf291f7bf4c15639078a6bee0b3e272c5b",
+          "path": "hf-cache/hub/models--dbmdz--bert-base-french-europeana-cased/snapshots/b895c3cf291f7bf4c15639078a6bee0b3e272c5b/vocab.txt",
+          "bytes": 227141,
+          "sha256": "2012518b30b8c3534aaa98b1c39f988158b925633b0039d7f273ca96017b77ad",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dccuchile/bert-base-spanish-wwm-uncased",
+          "revision": "d1c9c4565c9d6731e57ed7f027b802697bad861e",
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/snapshots/d1c9c4565c9d6731e57ed7f027b802697bad861e/config.json",
+          "bytes": 650,
+          "sha256": "ee7d29a157d70dd6736e8dfadff7e32544566c701e95565a8849c1e65218e86f",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dccuchile/bert-base-spanish-wwm-uncased",
+          "revision": "d1c9c4565c9d6731e57ed7f027b802697bad861e",
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/snapshots/d1c9c4565c9d6731e57ed7f027b802697bad861e/special_tokens_map.json",
+          "bytes": 134,
+          "sha256": "bd6ed009009f8264d0ef87d5b50798cb57c5219a0bbb7c8973372855241aa05f",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dccuchile/bert-base-spanish-wwm-uncased",
+          "revision": "d1c9c4565c9d6731e57ed7f027b802697bad861e",
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/snapshots/d1c9c4565c9d6731e57ed7f027b802697bad861e/tokenizer.json",
+          "bytes": 486125,
+          "sha256": "ff36242d47f9721d0279969b0337693ffa891ee264bc1fc67af70caee9a1f619",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dccuchile/bert-base-spanish-wwm-uncased",
+          "revision": "d1c9c4565c9d6731e57ed7f027b802697bad861e",
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/snapshots/d1c9c4565c9d6731e57ed7f027b802697bad861e/tokenizer_config.json",
+          "bytes": 310,
+          "sha256": "bb31376a755297ba6ac0d2a802d89e9aa92bf4fa2c41dfe745244e643d62d84a",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "dccuchile/bert-base-spanish-wwm-uncased",
+          "revision": "d1c9c4565c9d6731e57ed7f027b802697bad861e",
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/snapshots/d1c9c4565c9d6731e57ed7f027b802697bad861e/vocab.txt",
+          "bytes": 247723,
+          "sha256": "a7e3f713aafb7d9dbd789a0f0bc30a457e622d963294e40b391b4d83ca4508b5",
+          "lfs_sha_verified": false
+        },
+        {
+          "path": "hf-cache/hub/models--bert-base-uncased/refs/main",
+          "bytes": 40,
+          "sha256": "2cddf5a9b63cbf6d5c80c1f9c5ceee322cd0a5d614774e6daf7e37e99ad94d94",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "path": "hf-cache/hub/models--tohoku-nlp--bert-base-japanese-v3/refs/main",
+          "bytes": 40,
+          "sha256": "9dc808691979a6e1fcd89f6b2561be9d8c4c994a562a8417e73bcf1c97f63716",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "path": "hf-cache/hub/models--bert-base-multilingual-uncased/refs/main",
+          "bytes": 40,
+          "sha256": "a87207cee1f7a318d6e287b487078185fc1424a89d432b3ba0c48e1a6fb7d4ad",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "path": "hf-cache/hub/models--dccuchile--bert-base-spanish-wwm-uncased/refs/main",
+          "bytes": 40,
+          "sha256": "abddbe15b3dd6ea9e47ebec577698ea5ca19fcd805bf7cb603bf6c5466e673b6",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "path": "hf-cache/hub/models--dbmdz--bert-base-french-europeana-cased/refs/main",
+          "bytes": 40,
+          "sha256": "8b03de427ab36cc1fd6c7b9838ca40dc57ff818ecb876dd325a581adedda06d3",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "path": "hf-cache/hub/models--kykim--bert-kor-base/refs/main",
+          "bytes": 40,
+          "sha256": "2c74ea8d56824d82ecfbb92fd11d4ac3bb885ee6cc4fef4a70bc2cfc3b9ee3b2",
+          "kind": "pinned-cache-reference"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/corpora/cmudict.zip",
+          "bytes": 896069,
+          "sha256": "d07cca47fd72ad32ea9d8ad1219f85301eeaf4568f8b6b73747506a71fb5afd6"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger.zip",
+          "bytes": 2526731,
+          "sha256": "e1f13cf2532daadfd6f3bc481a49859f0b8ea6432ccdcd83e6a49a5f19008de9"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger_eng.zip",
+          "bytes": 1539115,
+          "sha256": "6025f530624335c67d6547d44757b357b4e79bae030a0383e9887a92c1718f0b"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/corpora/cmudict/README",
+          "bytes": 3808,
+          "sha256": "b0556be7a2b12bea6a667277b75864f802dd4854480657ce298c62e6897e766b"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/corpora/cmudict/cmudict",
+          "bytes": 3820830,
+          "sha256": "cad209c39eb87677d64e93d97f8eed10b7e6f9bdd42de8e7ca8efc8e17d62e8a"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger/averaged_perceptron_tagger.pickle",
+          "bytes": 6138625,
+          "sha256": "25a5a19c7ced7b2bac3831da5bc0afcc2c34e5dd01cd4f361bb799949a696238"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger_eng/averaged_perceptron_tagger_eng.tagdict.json",
+          "bytes": 25788,
+          "sha256": "4c713731cb06727736962bc8cd94ad919217a040e76691059af99bc0c2c9c246"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger_eng/averaged_perceptron_tagger_eng.weights.json",
+          "bytes": 5677744,
+          "sha256": "789e8e35f6fac656d9b7eccea29ba4e8a137cbb5b525dd31f39e4291a9e80832"
+        },
+        {
+          "repository": "nltk/nltk_data",
+          "revision": "550b6625bcef1f2abff2ff770a5a0d272c9c6b2a",
+          "path": "nltk_data/taggers/averaged_perceptron_tagger_eng/averaged_perceptron_tagger_eng.classes.json",
+          "bytes": 285,
+          "sha256": "d152ffa69d45b8357276341a3d592c6c025911d52ec0d9068d4f382560dd48b6"
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "g2p-en": "2.1.0",
+      "nltk": "3.10.0",
+      "numba": "0.61.2",
+      "librosa": "0.11.0"
+    },
+    "workload": {
+      "text": "Hello. This is a test of speech generation.",
+      "speaker_id": 0,
+      "sdp_ratio": 0.2,
+      "noise_scale": 0.6,
+      "noise_scale_w": 0.8,
+      "speed": 1.0,
+      "seed": 42
+    },
+    "scope": "Original MeloTTS TTS.tts_to_file, English-v3, pretrained FP32 synthesizer plus English BERT, public defaults, resident models. Includes text/phoneme processing, BERT features, synthesis, original empty_cache and CPU audio concatenation. Returns array; no file encoding."
+  },
+  "Marvis": {
+    "source": {
+      "remote": "https://github.com/Marvis-Labs/marvis-tts.git",
+      "commit": "47fb92bbe19b1fd0ab6c66388e4fce7ddf25abaa"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/Marvis",
+      "files": [
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "config.json",
+          "bytes": 3669,
+          "sha256": "b24d6ed75cc0b026e9bc387337d95724e662c330bd7b3d6f3d095be316d41e7d",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "generation_config.json",
+          "bytes": 293,
+          "sha256": "a26d9c6d8b2ad82516fbe082a5e4d2caf669241f0a26f83804dd3715411d0bfa",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "merges.txt",
+          "bytes": 466391,
+          "sha256": "0b54e8aa4e53d5383e2e4bc635a56b43f9647f7b13832d5d9ecd8f82dac4f510",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "model.safetensors",
+          "bytes": 2275477816,
+          "sha256": "273931d39ec647f2594b0f8503b4a98cf4a89de5da9fd24284c2c2df6d49fd91",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "special_tokens_map.json",
+          "bytes": 599,
+          "sha256": "cf447163c62cff3e63447705798604b1ad473a8d79570c053c68346b64d7380b",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "tokenizer.json",
+          "bytes": 3523993,
+          "sha256": "05e0c4dbf3b0d768c82058441fb78d84340fd056fb4949cd216229ca18334bd0",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "tokenizer_config.json",
+          "bytes": 3684,
+          "sha256": "0098212d730c9fd5bad0cf3f8f49c9053962a7b431a6a8872555b7657b1768de",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "Marvis-AI/marvis-tts-250m-v0.1",
+          "revision": "0fcb1428603acf0f6f4cdaad9edc6b351f7a4650",
+          "path": "vocab.json",
+          "bytes": 800662,
+          "sha256": "82b84012e3add4d01d12ba14442026e49b8cbbaead1f79ecf3d919784f82dc79",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "kyutai/moshiko-pytorch-bf16",
+          "revision": "2bfc9ae6e89079a5cc7ed2a68436010d91a3d289",
+          "path": "mimi/tokenizer-e351c8d8-checkpoint125.safetensors",
+          "bytes": 384644900,
+          "sha256": "09b782f0629851a271227fb9d36db65c041790365f11bbe5d3d59369cf863f50",
+          "lfs_sha_verified": true
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/config.json",
+          "bytes": 704,
+          "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/merges.txt",
+          "bytes": 466391,
+          "sha256": "0b54e8aa4e53d5383e2e4bc635a56b43f9647f7b13832d5d9ecd8f82dac4f510",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/special_tokens_map.json",
+          "bytes": 831,
+          "sha256": "e786b595b9a23148bf1630df78d9037a048ea671e48bfd3549a1e3c233742bb3",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/tokenizer.json",
+          "bytes": 2104556,
+          "sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/tokenizer_config.json",
+          "bytes": 3658,
+          "sha256": "4bb9af56a342753d39374f4016a16574cab299fe088e896f425ce3c433f61424",
+          "lfs_sha_verified": false
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "smollm-tokenizer/vocab.json",
+          "bytes": 800662,
+          "sha256": "82b84012e3add4d01d12ba14442026e49b8cbbaead1f79ecf3d919784f82dc79",
+          "lfs_sha_verified": false
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "torchaudio": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "torchtune": "0.6.1",
+      "torchao": "0.17.0",
+      "moshi": "0.2.12"
+    },
+    "workload": {
+      "text": "Hello.",
+      "speaker": 0,
+      "max_audio_length_ms": 2560,
+      "temperature": 0.9,
+      "topk": 50,
+      "seed": 42
+    },
+    "scope": "Original Marvis native Generator.generate, no reference context, Hello., max32audioframes/2.56seconds, temperature0.9 topk50 seed42. BF16 backbone/depth models (supported create_model default), original FP32 Mimi. Includes text processing, original diagnostic print, all frame/codebook sampling, Mimi decode and output D2H; no file encoding. Pinned safetensors checkpoint loaded strictly into native model, without a Transformers conversion."
+  },
+  "Dia": {
+    "remote": "https://github.com/nari-labs/dia.git",
+    "commit": "876125e461a03b157ec905b0fe8b57a0f8b9e7a0",
+    "status": "Unselected low-gain GX CPU screen; additional opportunities remain unexplored. No optimized A100 validation."
+  },
+  "Outlines": {
+    "source": {
+      "remote": "https://github.com/dottxt-ai/outlines.git",
+      "commit": "c52af8472c6fe8a607a733ec11b709476af77a96"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/Outlines-SmolLM2",
+      "files": [
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "config.json",
+          "bytes": 704,
+          "sha256": "1d556eab73b69c7f11f64c557a2f9c6f440bd4c6b89bb2584a6b498c92603843"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "generation_config.json",
+          "bytes": 111,
+          "sha256": "2056c988e990b0d13670f63f2f3b87b3b6d07edaf7a3416998ba27dab2d8a059"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "merges.txt",
+          "bytes": 466391,
+          "sha256": "0b54e8aa4e53d5383e2e4bc635a56b43f9647f7b13832d5d9ecd8f82dac4f510"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "model.safetensors",
+          "bytes": 269060552,
+          "sha256": "80521b40281d6ce74e35c9282c22539e75aa0ac8578892b2a59955ef78d55da1"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "special_tokens_map.json",
+          "bytes": 831,
+          "sha256": "e786b595b9a23148bf1630df78d9037a048ea671e48bfd3549a1e3c233742bb3"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "tokenizer.json",
+          "bytes": 2104556,
+          "sha256": "9ca9acddb6525a194ec8ac7a87f24fbba7232a9a15ffa1af0c1224fcd888e47c"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "tokenizer_config.json",
+          "bytes": 3658,
+          "sha256": "4bb9af56a342753d39374f4016a16574cab299fe088e896f425ce3c433f61424"
+        },
+        {
+          "repository": "HuggingFaceTB/SmolLM2-135M",
+          "revision": "93efa2f097d58c2a74874c7e644dbc9b0cee75a2",
+          "path": "vocab.json",
+          "bytes": 800662,
+          "sha256": "82b84012e3add4d01d12ba14442026e49b8cbbaead1f79ecf3d919784f82dc79"
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "outlines_core": "0.2.14"
+    },
+    "workload": {
+      "prompt": "Return a 64 digit integer:",
+      "regex": "[0-9]{64}",
+      "batch_size": 4,
+      "max_new_tokens": 96,
+      "do_sample": false,
+      "use_cache": true,
+      "seed": 42
+    },
+    "scope": "Original Outlines Generator.batch with outlines_core regex backend and pretrained SmolLM2-135M BF16 SDPA. Four identical prompts, constrained64digits, max96newtokens,greedy,seed42. Includes prompt tokenization, model decoding, CPU grammar and token-mask processing, output decoding; excludes model/grammar compilation and file I/O."
+  },
+  "CosyVoice": {
+    "source": {
+      "remote": "https://github.com/FunAudioLLM/CosyVoice.git",
+      "commit": "074ca6dc9e80a2f424f1f74b48bdd7d3fea531cc",
+      "matcha_commit": "dd9105b34bf2be2230f4aa1e4769fb586a3c824e"
+    },
+    "model": {
+      "root": "/home/ubuntu/gx-ix14/causal/models/CosyVoice2",
+      "files": [
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/config.json",
+          "bytes": 659,
+          "sha256": "168aa1bd401abc3bc262ba15ba4e499627a8b4e006e9d050b47c22de20660185"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/generation_config.json",
+          "bytes": 242,
+          "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/merges.txt",
+          "bytes": 1402109,
+          "sha256": "ac8ff86a72bee70828fbc1119bc4398c6f3a9a6e490d7b0dbe917be025478bd0"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/model.safetensors",
+          "bytes": 988097824,
+          "sha256": "130282af0dfa9fe5840737cc49a0d339d06075f83c5a315c3372c9a0740d0b96"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/tokenizer_config.json",
+          "bytes": 1287,
+          "sha256": "482bd979881423375ca5414e4e0d94cd7c5349dbb17fffd46b4d36d71e62a1bc"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "CosyVoice-BlankEN/vocab.json",
+          "bytes": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "campplus.onnx",
+          "bytes": 28303423,
+          "sha256": "a6ac6a63997761ae2997373e2ee1c47040854b4b759ea41ec48e4e42df0f4d73"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "cosyvoice2.yaml",
+          "bytes": 7330,
+          "sha256": "0af2c0d010c477187c39f3e8fd5f1ae2e4e6f90ad03ba37c10ed6c6a87b05959"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "flow.pt",
+          "bytes": 450575567,
+          "sha256": "ff4c2f867674411e0a08cee702996df13fa67c1cd864c06108da88d16d088541"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "hift.pt",
+          "bytes": 83390254,
+          "sha256": "3386cc880324d4e98e05987b99107f49e40ed925b8ecc87c1f4939432d429879"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "llm.pt",
+          "bytes": 2023316821,
+          "sha256": "b144ef55b51ce8cfb79a73c90dbba0bdaba4e451c0ebcfab20f769264f84a608"
+        },
+        {
+          "repository": "FunAudioLLM/CosyVoice2-0.5B",
+          "revision": "eec1ae6c79877dbd9379285cf8789c9e0879293d",
+          "path": "speech_tokenizer_v2.onnx",
+          "bytes": 496082973,
+          "sha256": "d43342aa12163a80bf07bffb94c9de2e120a8df2f9917cd2f642e7f4219c6f71"
+        }
+      ]
+    },
+    "dependencies": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.57.3",
+      "numpy": "1.26.4",
+      "onnxruntime": "1.22.0",
+      "HyperPyYAML": "1.2.3"
+    },
+    "request": {
+      "text_chunks": [
+        "\u6536\u5230\u597d\u53cb\u4ece\u8fdc\u65b9\u5bc4\u6765\u7684\u751f\u65e5\u793c\u7269\uff0c",
+        "\u90a3\u4efd\u610f\u5916\u7684\u60ca\u559c\u4e0e\u6df1\u6df1\u7684\u795d\u798f",
+        "\u8ba9\u6211\u5fc3\u4e2d\u5145\u6ee1\u4e86\u751c\u871c\u7684\u5feb\u4e50\uff0c",
+        "\u7b11\u5bb9\u5982\u82b1\u513f\u822c\u7efd\u653e\u3002"
+      ],
+      "prompt_text": "\u5e0c\u671b\u4f60\u4ee5\u540e\u80fd\u591f\u505a\u7684\u6bd4\u6211\u8fd8\u597d\u5466\u3002",
+      "stream_audio": false,
+      "fp16": true,
+      "seed": 42,
+      "cached_speaker": true,
+      "sampling": "original RAS top_p0.8 top_k25"
+    },
+    "scope": "Original CosyVoice2.inference_zero_shot text generator from official example, cached reference speaker, batched audio output. Native Qwen2,flow,HiFT pretrained weights,fp16,original RAS sampling. Includes text tokenization,threaded autoregressive generation,flow/vocoder,output transfer,request-end allocator clear/sync; excludes load,prompt speaker extraction,file encoding. Existing Torch stack,CPU ONNX provider for one-time reference preparation."
   }
 }

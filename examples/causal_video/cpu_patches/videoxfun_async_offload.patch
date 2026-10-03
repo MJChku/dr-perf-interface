@@ -1,0 +1,27 @@
+--- a/src/accelerate/hooks.py
++++ b/src/accelerate/hooks.py
+@@ -271,6 +271,9 @@
+         tied_params_map: Optional[dict[int, dict[torch.device, torch.Tensor]]] = None,
+     ):
+         self.execution_device = execution_device
++        # Opt-in for inference with immutable CPU sources and stream-ordered use.
++        self.non_blocking = False
++        self.clear_cache = True
+         self.offload = offload
+         self.io_same_device = io_same_device
+         self.weights_map = weights_map
+@@ -392,10 +395,12 @@
+                     value=value,
+                     fp16_statistics=fp16_statistics,
+                     tied_params_map=self.tied_params_map,
++                    non_blocking=self.non_blocking,
++                    clear_cache=self.clear_cache,
+                 )
+ 
+-        return send_to_device(args, self.execution_device), send_to_device(
+-            kwargs, self.execution_device, skip_keys=self.skip_keys
++        return send_to_device(args, self.execution_device, non_blocking=self.non_blocking), send_to_device(
++            kwargs, self.execution_device, non_blocking=self.non_blocking, skip_keys=self.skip_keys
+         )
+ 
+     @_compiler_disable

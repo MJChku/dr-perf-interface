@@ -1,0 +1,340 @@
+diff -ruN a/src/gcNet.h b/src/gcNet.h
+--- a/src/gcNet.h
++++ b/src/gcNet.h
+@@ -5,7 +5,11 @@
+ // ec10d069775173bc856608663c11d33c09f3c9b6. See ../LICENSE.OpenROAD.
+ #pragma once
+ 
++#include <atomic>
++#include <cstdint>
++#include <cstdlib>
+ #include <memory>
++#include <mutex>
+ #include <utility>
+ #include <vector>
+ 
+@@ -14,28 +18,99 @@
+ 
+ namespace drt {
+ 
++// GC_NETCTOR. Every gcNet the worker creates used to construct seven vectors
++// of numLayers elements (fixed and route polygon sets, fixed and route cut
++// rectangles, pins, tapered and non-tapered rectangles): seven allocations and
++// 7 x numLayers element constructions per net, and as many destructions later,
++// whether the net holds one shape or none. With the gate on, a kind's vector
++// is sized on the first add to that kind; until then every getter reads a
++// shared, never written vector of numLayers default-constructed elements (one
++// per layer count). Per-layer getters read through a per-kind data pointer in
++// both modes, and keep the bounds check vector::operator[] makes under
++// _GLIBCXX_ASSERTIONS.
++//
++// Equivalence: a kind not yet sized has had no add since construction, so in
++// the original every layer of it is a default-constructed element; the shared
++// vector has the same length and default-constructed elements, so every
++// getter returns an equal value (sizes, iteration, contents, polygon set
++// orientation and dirty/sorted state). The shared objects are never written:
++// the only mutators of a gcNet's per-layer data are the add methods, which
++// write the net's own members, and const reads of a pristine polygon set do
++// not modify it (clean() and sort() test their flags first). Callers do not keep a getter reference across an add to the same net
++// and kind, so the different address of an untouched layer is not observable.
++// Sizing on first add creates numLayers default-constructed elements, the state
++// the constructor produced. Gate read once from the environment: unset or 0 =
++// original eager construction.
++inline bool gcNetCtorLazy()
++{
++  static const bool lazy = [] {
++    const char* v = std::getenv("GC_NETCTOR");
++    return v != nullptr && v[0] != '\0' && v[0] != '0';
++  }();
++  return lazy;
++}
++
++// Default-constructed per-layer containers shared by every lazily sized gcNet
++// with the same layer count. Never written.
++struct gcNetEmptyLayers
++{
++  explicit gcNetEmptyLayers(int n)
++      : numLayers(n), polygons(n), rectangles(n), pins(n), rects(n)
++  {
++  }
++  const int numLayers;
++  const std::vector<gtl::polygon_90_set_data<frCoord>> polygons;
++  const std::vector<std::vector<gtl::rectangle_data<frCoord>>> rectangles;
++  const std::vector<std::vector<std::unique_ptr<gcPin>>> pins;
++  const std::vector<std::vector<odb::Rect>> rects;
++};
++
++inline const gcNetEmptyLayers& gcNetEmpties(int numLayers)
++{
++  static std::atomic<const gcNetEmptyLayers*> last{nullptr};
++  const gcNetEmptyLayers* e = last.load(std::memory_order_acquire);
++  if (e != nullptr && e->numLayers == numLayers) {
++    return *e;
++  }
++  static std::mutex mu;
++  std::lock_guard<std::mutex> lock(mu);
++  // one per distinct layer count, never freed (outlives every gcNet)
++  static auto* all = new std::vector<const gcNetEmptyLayers*>();
++  for (const gcNetEmptyLayers* p : *all) {
++    if (p->numLayers == numLayers) {
++      last.store(p, std::memory_order_release);
++      return *p;
++    }
++  }
++  all->push_back(new gcNetEmptyLayers(numLayers));
++  last.store(all->back(), std::memory_order_release);
++  return *all->back();
++}
++
++#ifdef __glibcxx_assert
++#define GC_NET_LAYER_CHECK(i) \
++  __glibcxx_assert(static_cast<size_t>(i) < static_cast<size_t>(numLayers_))
++#else
++#define GC_NET_LAYER_CHECK(i) ((void) 0)
++#endif
++
+ // The shapes of one net inside a DRC worker's extended box, kept per layer:
+ // polygon sets on routing layers, rectangle lists on cut layers, each split
+ // into fixed (from the design) and route (from the detailed-routing worker).
+ class gcNet
+ {
+  public:
+-  explicit gcNet(const int numLayers)
+-      : fixedPolygons_(numLayers),
+-        routePolygons_(numLayers),
+-        fixedRectangles_(numLayers),
+-        routeRectangles_(numLayers),
+-        pins_(numLayers),
+-        taperedRects_(numLayers),
+-        nonTaperedRects_(numLayers)
+-  {
+-  }
++  explicit gcNet(const int numLayers) : gcNet(numLayers, gcNetCtorLazy()) {}
+ 
+   void addPolygon(const odb::Rect& box, frLayerNum layerNum, bool isFixed = false)
+   {
+     gtl::rectangle_data<frCoord> rect(
+         box.xMin(), box.yMin(), box.xMax(), box.yMax());
+     using gtl::operators::operator+=;
++    const uint8_t kind = isFixed ? kFixedPolygons : kRoutePolygons;
++    if (__builtin_expect(lazy_ & kind, 0)) {
++      sizeKinds(kind);
++    }
+     if (isFixed) {
+       fixedPolygons_[layerNum] += rect;
+     } else {
+@@ -48,6 +123,10 @@
+   {
+     gtl::rectangle_data<frCoord> rect(
+         box.xMin(), box.yMin(), box.xMax(), box.yMax());
++    const uint8_t kind = isFixed ? kFixedRectangles : kRouteRectangles;
++    if (__builtin_expect(lazy_ & kind, 0)) {
++      sizeKinds(kind);
++    }
+     if (isFixed) {
+       fixedRectangles_[layerNum].push_back(rect);
+     } else {
+@@ -57,12 +136,18 @@
+   void addPin(const gtl::polygon_90_with_holes_data<frCoord>& shape,
+               frLayerNum layerNum)
+   {
++    if (__builtin_expect(lazy_ & kPins, 0)) {
++      sizeKinds(kPins);
++    }
+     auto pin = std::make_unique<gcPin>(shape, layerNum, this);
+     pin->setId(pins_[layerNum].size());
+     pins_[layerNum].push_back(std::move(pin));
+   }
+   void addPin(const gtl::rectangle_data<frCoord>& rect, frLayerNum layerNum)
+   {
++    if (__builtin_expect(lazy_ & kPins, 0)) {
++      sizeKinds(kPins);
++    }
+     gtl::polygon_90_with_holes_data<frCoord> shape;
+     std::vector<frCoord> coords
+         = {gtl::xl(rect), gtl::yl(rect), gtl::xh(rect), gtl::yh(rect)};
+@@ -73,10 +158,16 @@
+   }
+   void addTaperedRect(const odb::Rect& bx, int zIdx)
+   {
++    if (__builtin_expect(lazy_ & kTaperedRects, 0)) {
++      sizeKinds(kTaperedRects);
++    }
+     taperedRects_[zIdx].push_back(bx);
+   }
+   void addNonTaperedRect(const odb::Rect& bx, int zIdx)
+   {
++    if (__builtin_expect(lazy_ & kNonTaperedRects, 0)) {
++      sizeKinds(kNonTaperedRects);
++    }
+     nonTaperedRects_[zIdx].push_back(bx);
+   }
+   void addSpecialSpcRect(const odb::Rect& bx,
+@@ -97,40 +188,53 @@
+   const std::vector<gtl::polygon_90_set_data<frCoord>>& getPolygons(
+       bool isFixed = false) const
+   {
+-    return isFixed ? fixedPolygons_ : routePolygons_;
++    if (isFixed) {
++      return (lazy_ & kFixedPolygons) ? empties_->polygons : fixedPolygons_;
++    }
++    return (lazy_ & kRoutePolygons) ? empties_->polygons : routePolygons_;
+   }
+   const gtl::polygon_90_set_data<frCoord>& getPolygons(frLayerNum layerNum,
+                                                        bool isFixed
+                                                        = false) const
+   {
+-    return isFixed ? fixedPolygons_[layerNum] : routePolygons_[layerNum];
++    GC_NET_LAYER_CHECK(layerNum);
++    return isFixed ? fixedPolygonsData_[layerNum] : routePolygonsData_[layerNum];
+   }
+   const std::vector<std::vector<gtl::rectangle_data<frCoord>>>& getRectangles(
+       bool isFixed = false) const
+   {
+-    return isFixed ? fixedRectangles_ : routeRectangles_;
++    if (isFixed) {
++      return (lazy_ & kFixedRectangles) ? empties_->rectangles
++                                        : fixedRectangles_;
++    }
++    return (lazy_ & kRouteRectangles) ? empties_->rectangles : routeRectangles_;
+   }
+   const std::vector<gtl::rectangle_data<frCoord>>& getRectangles(
+       frLayerNum layerNum,
+       bool isFixed = false) const
+   {
+-    return isFixed ? fixedRectangles_[layerNum] : routeRectangles_[layerNum];
++    GC_NET_LAYER_CHECK(layerNum);
++    return isFixed ? fixedRectanglesData_[layerNum]
++                   : routeRectanglesData_[layerNum];
+   }
+   const std::vector<std::vector<std::unique_ptr<gcPin>>>& getPins() const
+   {
+-    return pins_;
++    return (lazy_ & kPins) ? empties_->pins : pins_;
+   }
+   const std::vector<std::unique_ptr<gcPin>>& getPins(frLayerNum layerNum) const
+   {
+-    return pins_[layerNum];
++    GC_NET_LAYER_CHECK(layerNum);
++    return pinsData_[layerNum];
+   }
+   const std::vector<odb::Rect>& getTaperedRects(int z) const
+   {
+-    return taperedRects_[z];
++    GC_NET_LAYER_CHECK(z);
++    return taperedRectsData_[z];
+   }
+   const std::vector<odb::Rect>& getNonTaperedRects(int z) const
+   {
+-    return nonTaperedRects_[z];
++    GC_NET_LAYER_CHECK(z);
++    return nonTaperedRectsData_[z];
+   }
+   const std::vector<std::unique_ptr<gcRect>>& getSpecialSpcRects() const
+   {
+@@ -140,6 +244,84 @@
+   int getId() const { return id_; }
+ 
+  private:
++  enum : uint8_t
++  {
++    kFixedPolygons = 1,
++    kRoutePolygons = 2,
++    kFixedRectangles = 4,
++    kRouteRectangles = 8,
++    kPins = 16,
++    kTaperedRects = 32,
++    kNonTaperedRects = 64,
++    kAllKinds = 127
++  };
++
++  gcNet(const int numLayers, const bool lazy)
++      : fixedPolygons_(lazy ? 0 : numLayers),
++        routePolygons_(lazy ? 0 : numLayers),
++        fixedRectangles_(lazy ? 0 : numLayers),
++        routeRectangles_(lazy ? 0 : numLayers),
++        pins_(lazy ? 0 : numLayers),
++        taperedRects_(lazy ? 0 : numLayers),
++        nonTaperedRects_(lazy ? 0 : numLayers),
++        numLayers_(numLayers)
++  {
++    if (!lazy) {
++      fixedPolygonsData_ = fixedPolygons_.data();
++      routePolygonsData_ = routePolygons_.data();
++      fixedRectanglesData_ = fixedRectangles_.data();
++      routeRectanglesData_ = routeRectangles_.data();
++      pinsData_ = pins_.data();
++      taperedRectsData_ = taperedRects_.data();
++      nonTaperedRectsData_ = nonTaperedRects_.data();
++      return;
++    }
++    empties_ = &gcNetEmpties(numLayers);
++    fixedPolygonsData_ = empties_->polygons.data();
++    routePolygonsData_ = empties_->polygons.data();
++    fixedRectanglesData_ = empties_->rectangles.data();
++    routeRectanglesData_ = empties_->rectangles.data();
++    pinsData_ = empties_->pins.data();
++    taperedRectsData_ = empties_->rects.data();
++    nonTaperedRectsData_ = empties_->rects.data();
++    lazy_ = kAllKinds;
++  }
++
++  // Sizes the still-unsized kinds among `kinds` to numLayers
++  // default-constructed elements, what the eager constructor made.
++  void sizeKinds(uint8_t kinds)
++  {
++    kinds &= lazy_;
++    if (kinds & kFixedPolygons) {
++      sizeLayers(fixedPolygons_, fixedPolygonsData_);
++    }
++    if (kinds & kRoutePolygons) {
++      sizeLayers(routePolygons_, routePolygonsData_);
++    }
++    if (kinds & kFixedRectangles) {
++      sizeLayers(fixedRectangles_, fixedRectanglesData_);
++    }
++    if (kinds & kRouteRectangles) {
++      sizeLayers(routeRectangles_, routeRectanglesData_);
++    }
++    if (kinds & kPins) {
++      sizeLayers(pins_, pinsData_);
++    }
++    if (kinds & kTaperedRects) {
++      sizeLayers(taperedRects_, taperedRectsData_);
++    }
++    if (kinds & kNonTaperedRects) {
++      sizeLayers(nonTaperedRects_, nonTaperedRectsData_);
++    }
++    lazy_ &= ~kinds;
++  }
++  template <typename T>
++  void sizeLayers(std::vector<T>& v, const T*& data)
++  {
++    std::vector<T>(numLayers_).swap(v);
++    data = v.data();
++  }
++
+   std::vector<gtl::polygon_90_set_data<frCoord>> fixedPolygons_;  // routing
+   std::vector<gtl::polygon_90_set_data<frCoord>> routePolygons_;  // routing
+   std::vector<std::vector<gtl::rectangle_data<frCoord>>> fixedRectangles_;  // cut
+@@ -150,6 +332,20 @@
+   std::vector<std::vector<odb::Rect>> taperedRects_;     // routing, by z
+   std::vector<std::vector<odb::Rect>> nonTaperedRects_;  // routing, by z
+   std::vector<std::unique_ptr<gcRect>> specialSpacingRects_;
++
++  // GC_NETCTOR: per-layer reads go through these (members' data() or the
++  // shared empties)
++  int numLayers_;
++  uint8_t lazy_{0};  // kinds not sized yet
++  const gcNetEmptyLayers* empties_{nullptr};
++  const gtl::polygon_90_set_data<frCoord>* fixedPolygonsData_{nullptr};
++  const gtl::polygon_90_set_data<frCoord>* routePolygonsData_{nullptr};
++  const std::vector<gtl::rectangle_data<frCoord>>* fixedRectanglesData_{nullptr};
++  const std::vector<gtl::rectangle_data<frCoord>>* routeRectanglesData_{nullptr};
++  const std::vector<std::unique_ptr<gcPin>>* pinsData_{nullptr};
++  const std::vector<odb::Rect>* taperedRectsData_{nullptr};
++  const std::vector<odb::Rect>* nonTaperedRectsData_{nullptr};
+ };
+ 
++#undef GC_NET_LAYER_CHECK
+ }  // namespace drt

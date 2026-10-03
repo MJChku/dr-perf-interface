@@ -1,0 +1,10 @@
+$ GC_NETCTOR=1 bin/drperf build/drt-gc-004/fixed/gcbench scenario=drnets size=large
+cost per call, in instructions
+
+  drt-gc-004 = 80.6*drnets + 409.8*newnets + 696.4*kinds + 730.5*figs + 94.9   (8% of the cost follows no declared state)
+      drnets: 38 drt::(anonymous namespace)::addNonTaperedPa… [gcbench], 27.4 drt::FlexGCWorker::init [gcbench], 13.7 drt::FlexGCWorker::initDRObj [gcbench]
+      newnets: 158.8 drt::FlexGCWorker::addNet [gcbench], 91.8 __GI___libc_malloc [libc.so.6], 68.1 std::_Rb_tree_insert_and_rebalance [libstdc++.so.6.0.33]
+      kinds: 174 void std::vector<std::pair<int, std::pair<i… [gcbench], 157.5 __GI___libc_malloc [libc.so.6], 100 drt::gcNet::sizeKinds [gcbench]
+      figs: 194 drt::gcNet::addPolygon [gcbench], 126 void std::vector<std::pair<int, std::pair<i… [gcbench], 115.5 drt::FlexGCWorker::initDRObj [gcbench]
+      constant: -176 drt::FlexGCWorker::initDRObj [gcbench], 144.4 _int_malloc [libc.so.6], 95.6 drt::FlexGCWorker::addNet [gcbench]
+      unexplained: 11,540.7 drt::FlexGCWorker::initDRObj [gcbench], 7,971.6 drt::FlexGCWorker::addNet [gcbench], 7,368.1 drt::FlexGCWorker::init [gcbench]

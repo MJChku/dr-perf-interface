@@ -1,0 +1,164 @@
+diff -ruN a/src/FlexGC_init.cpp b/src/FlexGC_init.cpp
+--- a/src/FlexGC_init.cpp
++++ b/src/FlexGC_init.cpp
+@@ -24,7 +24,7 @@
+ #include <vector>
+ 
+ #include "FlexGC.h"
+-#include "drperf_bench_region.h"
++#include "pcv_drt_gc_001.h"  // reference PCVs instead of the empty marker
+ 
+ namespace drt {
+ 
+diff -ruN a/src/pcv_drt_gc_001.h b/src/pcv_drt_gc_001.h
+--- a/src/pcv_drt_gc_001.h
++++ b/src/pcv_drt_gc_001.h
+@@ -0,0 +1,148 @@
++// Reference annotation for drt-gc-001: the answer key. Not part of the neutral case.
++//
++// Replaces the empty marker of drperf_bench_region.h: DRPERF_BENCH_REGION(name)
++// opens the same region, declaring vc, vm, scan and fcut.
++//
++//   vc    vertices of the net's pins on cut layers (4 per cut rectangle)
++//   vm    vertices of its pins on the other layers
++//   scan  fixed cut rectangles the cut-corner check compares, over all convex
++//         corners of cut-layer pins: the loop stops at the first rectangle
++//         whose corner in the corner's direction is the corner point
++//   fcut  fixed cut rectangles on cut layers where the net has pins
++#pragma once
++
++#include <cmath>
++#include <cstdint>
++#include <vector>
++
++#include "FlexGC.h"
++#include "perfmark.h"
++
++namespace drt_gc_pcv {
++
++// The region with declared states. The states are computed before
++// perfmark_begin_v, so their cost is not counted in the region.
++struct States
++{
++  const char* names[4];
++  int64_t values[4];
++  int n = 0;
++  void add(const char* name, int64_t value)
++  {
++    names[n] = name;
++    values[n] = value;
++    n++;
++  }
++};
++
++class Region
++{
++ public:
++  Region(const char* name, const States& s) : name_(name)
++  {
++    perfmark_begin_v(name_, s.n, s.names, s.values);
++  }
++  ~Region() { perfmark_end(name_); }
++  Region(const Region&) = delete;
++  Region& operator=(const Region&) = delete;
++
++ private:
++  const char* name_;
++};
++
++inline int64_t verticesOf(const gtl::polygon_90_with_holes_data<drt::frCoord>& p)
++{
++  int64_t v = p.size();
++  for (auto h = p.begin_holes(); h != p.end_holes(); ++h) {
++    v += h->size();
++  }
++  return v;
++}
++
++// What one net holds on one layer when initNet() begins, computed on copies
++// (a polygon set is cleaned by reading it, so the net's own sets are not read).
++struct LayerShapes
++{
++  int64_t shapes = 0;       // rectangles added: fixed and route polygons, cut rectangles
++  int64_t fixedShapes = 0;  // of which fixed
++  int64_t pinVertices = 0;  // vertices of the pins initNet() will build here
++  bool hasRoute = false;    // a route polygon or route cut rectangle
++};
++
++inline LayerShapes layerShapes(const drt::gcNet* net, int layer)
++{
++  LayerShapes s;
++  const auto& route = net->getPolygons(layer, false);
++  const auto& fixed = net->getPolygons(layer, true);
++  const auto& routeRects = net->getRectangles(layer, false);
++  const auto& fixedRects = net->getRectangles(layer, true);
++  // a polygon set that was never read holds 4 vertex entries per rectangle
++  const int64_t routePolys = route.value().size() / 4;
++  const int64_t fixedPolys = fixed.value().size() / 4;
++  s.shapes = routePolys + fixedPolys + routeRects.size() + fixedRects.size();
++  s.fixedShapes = fixedPolys + fixedRects.size();
++  s.hasRoute = routePolys > 0 || !routeRects.empty();
++  if (routePolys > 0 || fixedPolys > 0) {
++    using gtl::operators::operator+=;
++    gtl::polygon_90_set_data<drt::frCoord> merged;
++    merged += route;
++    merged += fixed;
++    std::vector<gtl::polygon_90_with_holes_data<drt::frCoord>> polys;
++    merged.get(polys);
++    for (const auto& p : polys) {
++      s.pinVertices += verticesOf(p);
++    }
++  }
++  s.pinVertices += 4 * static_cast<int64_t>(routeRects.size() + fixedRects.size());
++  return s;
++}
++
++inline States cornerStates(const drt::FlexGCWorker& gc, const drt::gcNet* net)
++{
++  int64_t vc = 0, vm = 0, scan = 0, fcut = 0;
++  const int numLayers = gc.getTech()->numLayers();
++  for (int l = 0; l < numLayers; l++) {
++    const auto& pins = net->getPins(l);
++    if (pins.empty()) {
++      continue;
++    }
++    const bool cut = gc.getTech()->getLayerType(l) == drt::LayerType::CUT;
++    const auto& fixed = net->getRectangles(l, true);
++    if (cut) {
++      fcut += fixed.size();
++    }
++    for (const auto& pin : pins) {
++      const int64_t v = verticesOf(*pin->getPolygon());
++      (cut ? vc : vm) += v;
++      if (!cut) {
++        continue;
++      }
++      // cut-layer pins are rectangles: four convex corners, SW SE NE NW
++      gtl::rectangle_data<drt::frCoord> r;
++      gtl::extents(r, *pin->getPolygon());
++      const drt::frCoord xs[4] = {gtl::xl(r), gtl::xh(r), gtl::xh(r), gtl::xl(r)};
++      const drt::frCoord ys[4] = {gtl::yl(r), gtl::yl(r), gtl::yh(r), gtl::yh(r)};
++      for (int d = 0; d < 4; d++) {
++        for (const auto& f : fixed) {
++          ++scan;
++          const drt::frCoord fx = (d == 1 || d == 2) ? gtl::xh(f) : gtl::xl(f);
++          const drt::frCoord fy = (d >= 2) ? gtl::yh(f) : gtl::yl(f);
++          if (fx == xs[d] && fy == ys[d]) {
++            break;
++          }
++        }
++      }
++    }
++  }
++  States s;
++  s.add("vc", vc);
++  s.add("vm", vm);
++  s.add("scan", scan);
++  s.add("fcut", fcut);
++  return s;
++}
++
++}  // namespace drt_gc_pcv
++
++#define DRPERF_BENCH_REGION(name) \
++  ::drt_gc_pcv::Region drt_gc_pcv_region_(name, ::drt_gc_pcv::cornerStates(*this, net))
