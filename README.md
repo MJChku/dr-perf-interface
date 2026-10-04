@@ -326,6 +326,10 @@ accidental-quadratic cases. Each target has pinned source, an empty marker, and
 test support, ready for PCV discovery. The planned evaluation compares agents
 with and without drperf feedback, including whether small cases expose growth
 that timing alone misses. The collection is not a completed agent-accuracy study.
+The [evaluation harness](evaluation/README.md) implements a separate comparison:
+static discovery with measurability feedback versus adaptive Dr. Perf discovery
+on a fixed workload. It measures both selected feature sets with the same engine
+and keeps performance feedback out of the static baseline.
 Browse [annotated regions, successful cases first](bench_anontated/review/annotated-regions.md),
 [experiment results](bench_anontated/RESULTS.md), and
 [optimization copies](bench_optimized/README.md).
