@@ -1,0 +1,140 @@
+{
+  "automatic_regime_splitting": false,
+  "calls": 18,
+  "case": "wan-004",
+  "distinct_states": 6,
+  "dropped_calls": 0,
+  "formula": {
+    "coefficients": {
+      "batch_size": 64941.26150234741,
+      "element_count": 46.54896322378718,
+      "total_rows": 271.150234741784
+    },
+    "constant": 48909.88920187737,
+    "dependent_columns": []
+  },
+  "gate_pass": true,
+  "gate_reasons": [],
+  "instruction_scope": "target own work, excluding configured runtime waiting modules; marker overhead included",
+  "instrumented_wall_seconds": 8.862723504193127,
+  "irregularity_breakdown": {
+    "basis": "mean instructions per call across observed states for basic blocks classified as non-affine",
+    "functions": [
+      {
+        "function": "_PyDict_GetItemStringWithError+?",
+        "irregular_instructions_per_call": 1561.4444444444443,
+        "module": "python3.10",
+        "share_of_irregular_instructions": 0.7850837988826815
+      },
+      {
+        "function": "_Py_HashPointer",
+        "irregular_instructions_per_call": 280.22222222222223,
+        "module": "python3.10",
+        "share_of_irregular_instructions": 0.14089385474860336
+      },
+      {
+        "function": "__strcmp_evex",
+        "irregular_instructions_per_call": 114.33333333333333,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 0.05748603351955307
+      },
+      {
+        "function": "resolve_implementation_info",
+        "irregular_instructions_per_call": 32.88888888888889,
+        "module": "_multiarray_umath.cpython-310-x86_64-linux-gnu.so",
+        "share_of_irregular_instructions": 0.016536312849162016
+      }
+    ],
+    "irregular_basic_blocks": 4,
+    "total_irregular_instructions_per_call": 1988.8888888888887
+  },
+  "max_unexplained_share": 0.014768435646574431,
+  "nested_calls_per_call": 0.0,
+  "pcv_names": [
+    "batch_size",
+    "element_count",
+    "total_rows"
+  ],
+  "posthoc_remeasurement": {
+    "agent_rerun": false,
+    "candidate_sha256": "03c7215b4ea97e16a85ba08ee8cab14fadf5d993e04568fc44f80002d70c8ea5",
+    "historical_agent_feedback_unchanged": true,
+    "purpose": "populate function-level irregularity breakdown"
+  },
+  "raw_files": [
+    "run.2542062.json"
+  ],
+  "required_states": 5,
+  "returncode": 0,
+  "states": [
+    {
+      "calls": 3,
+      "instructions_per_call": 127185.66666666667,
+      "state": {
+        "batch_size": 1,
+        "element_count": 144,
+        "total_rows": 6
+      },
+      "unexplained_instructions_per_call": 1878.3333333333335,
+      "unexplained_share": 0.014768435646574431
+    },
+    {
+      "calls": 3,
+      "instructions_per_call": 121629.0,
+      "state": {
+        "batch_size": 1,
+        "element_count": 192,
+        "total_rows": 8
+      },
+      "unexplained_instructions_per_call": 1578.6666666666665,
+      "unexplained_share": 0.012979360733596975
+    },
+    {
+      "calls": 3,
+      "instructions_per_call": 122679.66666666667,
+      "state": {
+        "batch_size": 1,
+        "element_count": 216,
+        "total_rows": 6
+      },
+      "unexplained_instructions_per_call": 1462.0,
+      "unexplained_share": 0.01191721529511818
+    },
+    {
+      "calls": 3,
+      "instructions_per_call": 132448.66666666666,
+      "state": {
+        "batch_size": 1,
+        "element_count": 360,
+        "total_rows": 10
+      },
+      "unexplained_instructions_per_call": 1415.3333333333333,
+      "unexplained_share": 0.010685900952821974
+    },
+    {
+      "calls": 3,
+      "instructions_per_call": 201991.66666666666,
+      "state": {
+        "batch_size": 2,
+        "element_count": 288,
+        "total_rows": 12
+      },
+      "unexplained_instructions_per_call": 2779.6666666666665,
+      "unexplained_share": 0.013761293782746813
+    },
+    {
+      "calls": 3,
+      "instructions_per_call": 214001.66666666666,
+      "state": {
+        "batch_size": 2,
+        "element_count": 480,
+        "total_rows": 20
+      },
+      "unexplained_instructions_per_call": 2819.3333333333335,
+      "unexplained_share": 0.013174352224671148
+    }
+  ],
+  "sufficient_points": true,
+  "threshold": 0.05,
+  "validity_warnings": []
+}

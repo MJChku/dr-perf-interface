@@ -1,0 +1,486 @@
+{
+  "automatic_regime_splitting": false,
+  "calls": 336,
+  "case": "vllm-004",
+  "distinct_states": 25,
+  "dropped_calls": 0,
+  "formula": {
+    "coefficients": {
+      "max_context_length": 0.0,
+      "max_query_length": 75.87153843168798,
+      "query_tokens": 3691.5323208399545,
+      "requests": 1289.0113120669814
+    },
+    "constant": 90602.26401531938,
+    "dependent_columns": []
+  },
+  "gate_pass": false,
+  "gate_reasons": [
+    "unexplained share exceeds 5% at an observed state"
+  ],
+  "instruction_scope": "target own work, excluding configured runtime waiting modules; marker overhead included",
+  "instrumented_wall_seconds": 135.0002219164744,
+  "irregularity_breakdown": {
+    "basis": "mean instructions per call across observed states for basic blocks classified as non-affine",
+    "functions": [
+      {
+        "function": "cpu_attention::(anonymous namespace)::TileGemm82<>::gemm_micro<>",
+        "irregular_instructions_per_call": 731767.68,
+        "module": "_C_AVX512.abi3.so",
+        "share_of_irregular_instructions": 0.8333628443513292
+      },
+      {
+        "function": "cpu_attention::AttentionMainLoop<>::operator()",
+        "irregular_instructions_per_call": 99526.56,
+        "module": "_C_AVX512.abi3.so",
+        "share_of_irregular_instructions": 0.11334435695506971
+      },
+      {
+        "function": "cpu_attention::AttentionMainLoop<>::Attention<>::apply_softmax",
+        "irregular_instructions_per_call": 42491.03999999999,
+        "module": "_C_AVX512.abi3.so",
+        "share_of_irregular_instructions": 0.048390295064474696
+      },
+      {
+        "function": "_PyType_Lookup",
+        "irregular_instructions_per_call": 1423.1966666666667,
+        "module": "python3.12",
+        "share_of_irregular_instructions": 0.0016207865619381604
+      },
+      {
+        "function": "PyDict_Contains+?",
+        "irregular_instructions_per_call": 606.9933333333333,
+        "module": "python3.12",
+        "share_of_irregular_instructions": 0.0006912654174190382
+      },
+      {
+        "function": "pybind11::detail::get_internals",
+        "irregular_instructions_per_call": 602.8333333333334,
+        "module": "libtorch_python.so",
+        "share_of_irregular_instructions": 0.0006865278626906011
+      },
+      {
+        "function": "_PyObject_GenericGetAttrWithDict",
+        "irregular_instructions_per_call": 540.0733333333334,
+        "module": "python3.12",
+        "share_of_irregular_instructions": 0.0006150545610663896
+      },
+      {
+        "function": "operator new",
+        "irregular_instructions_per_call": 191.29,
+        "module": "libstdc++.so.6.0.33",
+        "share_of_irregular_instructions": 0.00021784779903912367
+      },
+      {
+        "function": "__GI___libc_malloc",
+        "irregular_instructions_per_call": 174.03333333333333,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 0.00019819529837476516
+      },
+      {
+        "function": "_int_free",
+        "irregular_instructions_per_call": 159.27333333333334,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 0.00018138608977098312
+      },
+      {
+        "function": "_PyEval_EvalFrameDefault",
+        "irregular_instructions_per_call": 157.0,
+        "module": "python3.12",
+        "share_of_irregular_instructions": 0.00017879713758765445
+      },
+      {
+        "function": "__free",
+        "irregular_instructions_per_call": 136.52,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 0.00015547379123227126
+      },
+      {
+        "function": "_int_malloc",
+        "irregular_instructions_per_call": 114.59,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 0.00013049913373356257
+      },
+      {
+        "function": "epoll_wait",
+        "irregular_instructions_per_call": 47.41666666666666,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 5.399977244552832e-05
+      },
+      {
+        "function": "___pthread_cond_broadcast",
+        "irregular_instructions_per_call": 43.623333333333335,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 4.967979064988607e-05
+      },
+      {
+        "function": "__GI___pthread_enable_asynccancel",
+        "irregular_instructions_per_call": 30.666666666666664,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 3.4924281651940993e-05
+      },
+      {
+        "function": "__GI___pthread_disable_asynccancel",
+        "irregular_instructions_per_call": 26.833333333333332,
+        "module": "libc.so.6",
+        "share_of_irregular_instructions": 3.055874644544837e-05
+      },
+      {
+        "function": "std::_Hash_bytes",
+        "irregular_instructions_per_call": 19.526666666666667,
+        "module": "libstdc++.so.6.0.33",
+        "share_of_irregular_instructions": 2.2237656730116344e-05
+      },
+      {
+        "function": "gloo::transport::tcp::Loop::run",
+        "irregular_instructions_per_call": 15.173333333333336,
+        "module": "libtorch_cpu.so",
+        "share_of_irregular_instructions": 1.727992718256907e-05
+      },
+      {
+        "function": "pybind11::detail::all_type_info_get_cache",
+        "irregular_instructions_per_call": 7.283333333333333,
+        "module": "libtorch_python.so",
+        "share_of_irregular_instructions": 8.294516892335986e-06
+      },
+      {
+        "function": "std::ostream::sentry::sentry",
+        "irregular_instructions_per_call": 4.713333333333333,
+        "module": "libstdc++.so.6.0.33",
+        "share_of_irregular_instructions": 5.367710245200496e-06
+      },
+      {
+        "function": "std::__ostream_insert<>",
+        "irregular_instructions_per_call": 3.8,
+        "module": "libstdc++.so.6.0.33",
+        "share_of_irregular_instructions": 4.327574030783992e-06
+      }
+    ],
+    "irregular_basic_blocks": 124,
+    "total_irregular_instructions_per_call": 878090.12
+  },
+  "max_unexplained_share": 0.7939984785243848,
+  "nested_calls_per_call": 0.0,
+  "pcv_names": [
+    "query_tokens",
+    "max_query_length",
+    "max_context_length",
+    "requests"
+  ],
+  "posthoc_remeasurement": {
+    "agent_rerun": false,
+    "candidate_sha256": "eab889bd49da4833bcf895caf9db9d9d925868c730fd31b72a9c235a956a799e",
+    "historical_agent_feedback_unchanged": true,
+    "purpose": "populate function-level irregularity breakdown"
+  },
+  "raw_files": [
+    "run.2665074.json"
+  ],
+  "required_states": 6,
+  "returncode": 0,
+  "states": [
+    {
+      "calls": 12,
+      "instructions_per_call": 124280.5,
+      "state": {
+        "max_context_length": 13,
+        "max_query_length": 1,
+        "query_tokens": 1,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 28682.333333333332,
+      "unexplained_share": 0.2307870770823527
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 123021.41666666667,
+      "state": {
+        "max_context_length": 24,
+        "max_query_length": 1,
+        "query_tokens": 1,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 27825.0,
+      "unexplained_share": 0.226180129882534
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 122983.25,
+      "state": {
+        "max_context_length": 25,
+        "max_query_length": 1,
+        "query_tokens": 1,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 27835.333333333332,
+      "unexplained_share": 0.22633434498871458
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 138617.41666666666,
+      "state": {
+        "max_context_length": 48,
+        "max_query_length": 1,
+        "query_tokens": 1,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 43380.166666666664,
+      "unexplained_share": 0.3129488899001989
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 138547.33333333334,
+      "state": {
+        "max_context_length": 49,
+        "max_query_length": 1,
+        "query_tokens": 1,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 43337.833333333336,
+      "unexplained_share": 0.3128016417975084
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 153426.33333333334,
+      "state": {
+        "max_context_length": 12,
+        "max_query_length": 1,
+        "query_tokens": 2,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 52683.666666666664,
+      "unexplained_share": 0.343380862476889
+    },
+    {
+      "calls": 24,
+      "instructions_per_call": 151884.08333333334,
+      "state": {
+        "max_context_length": 23,
+        "max_query_length": 1,
+        "query_tokens": 2,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 51364.791666666664,
+      "unexplained_share": 0.3381841634711559
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 151842.16666666666,
+      "state": {
+        "max_context_length": 24,
+        "max_query_length": 1,
+        "query_tokens": 2,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 51287.58333333333,
+      "unexplained_share": 0.33776904307433264
+    },
+    {
+      "calls": 24,
+      "instructions_per_call": 183010.41666666666,
+      "state": {
+        "max_context_length": 48,
+        "max_query_length": 1,
+        "query_tokens": 2,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 82736.0,
+      "unexplained_share": 0.4520835562638739
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 182874.0,
+      "state": {
+        "max_context_length": 49,
+        "max_query_length": 1,
+        "query_tokens": 2,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 82711.75,
+      "unexplained_share": 0.45228818749521527
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 180238.0,
+      "state": {
+        "max_context_length": 22,
+        "max_query_length": 1,
+        "query_tokens": 3,
+        "requests": 3
+      },
+      "unexplained_instructions_per_call": 75300.41666666667,
+      "unexplained_share": 0.4177832458564047
+    },
+    {
+      "calls": 24,
+      "instructions_per_call": 227391.54166666666,
+      "state": {
+        "max_context_length": 47,
+        "max_query_length": 1,
+        "query_tokens": 3,
+        "requests": 3
+      },
+      "unexplained_instructions_per_call": 122282.79166666667,
+      "unexplained_share": 0.5377631497213782
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 271227.25,
+      "state": {
+        "max_context_length": 48,
+        "max_query_length": 1,
+        "query_tokens": 4,
+        "requests": 4
+      },
+      "unexplained_instructions_per_call": 161455.75,
+      "unexplained_share": 0.5952784980122757
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 271385.3333333333,
+      "state": {
+        "max_context_length": 49,
+        "max_query_length": 1,
+        "query_tokens": 4,
+        "requests": 4
+      },
+      "unexplained_instructions_per_call": 161524.5,
+      "unexplained_share": 0.5951850750961732
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 314905.5,
+      "state": {
+        "max_context_length": 46,
+        "max_query_length": 1,
+        "query_tokens": 5,
+        "requests": 5
+      },
+      "unexplained_instructions_per_call": 200285.75,
+      "unexplained_share": 0.6360185833527836
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 314716.6666666667,
+      "state": {
+        "max_context_length": 47,
+        "max_query_length": 1,
+        "query_tokens": 5,
+        "requests": 5
+      },
+      "unexplained_instructions_per_call": 200091.25,
+      "unexplained_share": 0.6357821850341576
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 358823.8333333333,
+      "state": {
+        "max_context_length": 48,
+        "max_query_length": 1,
+        "query_tokens": 6,
+        "requests": 6
+      },
+      "unexplained_instructions_per_call": 239109.33333333334,
+      "unexplained_share": 0.6663697088125418
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 282309.0833333333,
+      "state": {
+        "max_context_length": 10,
+        "max_query_length": 10,
+        "query_tokens": 10,
+        "requests": 1
+      },
+      "unexplained_instructions_per_call": 136900.00000000003,
+      "unexplained_share": 0.48492949069710545
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 446482.0833333333,
+      "state": {
+        "max_context_length": 11,
+        "max_query_length": 11,
+        "query_tokens": 20,
+        "requests": 2
+      },
+      "unexplained_instructions_per_call": 279132.1666666667,
+      "unexplained_share": 0.6251811149570206
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 1149237.25,
+      "state": {
+        "max_context_length": 22,
+        "max_query_length": 22,
+        "query_tokens": 66,
+        "requests": 3
+      },
+      "unexplained_instructions_per_call": 809379.6666666666,
+      "unexplained_share": 0.7042755241936917
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 1478394.0,
+      "state": {
+        "max_context_length": 21,
+        "max_query_length": 21,
+        "query_tokens": 84,
+        "requests": 4
+      },
+      "unexplained_instructions_per_call": 1071334.8333333333,
+      "unexplained_share": 0.7246612427629802
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 4391098.083333333,
+      "state": {
+        "max_context_length": 46,
+        "max_query_length": 46,
+        "query_tokens": 230,
+        "requests": 5
+      },
+      "unexplained_instructions_per_call": 3443010.5,
+      "unexplained_share": 0.7840887255668795
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 5212657.25,
+      "state": {
+        "max_context_length": 45,
+        "max_query_length": 45,
+        "query_tokens": 270,
+        "requests": 6
+      },
+      "unexplained_instructions_per_call": 4115693.8333333335,
+      "unexplained_share": 0.7895577314877807
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 6103753.25,
+      "state": {
+        "max_context_length": 46,
+        "max_query_length": 46,
+        "query_tokens": 322,
+        "requests": 7
+      },
+      "unexplained_instructions_per_call": 4813681.833333332,
+      "unexplained_share": 0.7886429277483215
+    },
+    {
+      "calls": 12,
+      "instructions_per_call": 7092237.666666667,
+      "state": {
+        "max_context_length": 47,
+        "max_query_length": 47,
+        "query_tokens": 368,
+        "requests": 8
+      },
+      "unexplained_instructions_per_call": 5631225.916666666,
+      "unexplained_share": 0.7939984785243848
+    }
+  ],
+  "sufficient_points": true,
+  "threshold": 0.05,
+  "validity_warnings": []
+}
