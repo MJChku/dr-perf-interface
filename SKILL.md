@@ -10,7 +10,13 @@ implementing or reviewing performance-sensitive code, investigating unexpected
 library costs, or understanding the structure and dependencies of a system
 such as LMCache. It counts CPU instructions with DynamoRIO, including Python
 interpreter and native library execution inside marked regions. It does not
-measure GPU computation or predict end-to-end latency.
+measure GPU computation or predict end-to-end latency in its default CPU path.
+GPU work has a separate `drperf --gpu` command and `drperf_gpu.h` markers;
+see [gpu/README.md](gpu/README.md) for building the standalone translated-PTX
+runner, marking launch regions, fitting resources and reading GPU reports.
+Keep CPU instruction interfaces and GPU resource interfaces separate. GPU
+counts describe FLOPs, requested bytes and logical parallelism, not elapsed
+GPU time or physical memory transactions.
 
 The agent supplies the semantic vocabulary: region boundaries,
 performance-critical variables (PCVs), and claimed wait dependencies. DrPerf

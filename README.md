@@ -14,6 +14,12 @@ the checker supplies coefficients and feedback. The analogy to interactive
 theorem proving is this division of work, not an all-input proof of performance.
 drperf is an experimental execution-based checker.
 
+GPU resource interfaces use a separate `drperf --gpu` path and distinct
+`drperf_gpu.h` markers. It runs instrumented PTX-derived C++ with a standalone
+copy of GX's lane/barrier/matrix machinery, then fits FLOPs, requested bytes
+and logical parallelism features. See [the GPU build, example and scope](gpu/README.md).
+The CPU path below continues to use DynamoRIO and `perfmark`.
+
 ## Explain first, then optimize
 
 1. **State the cost model.** Mark the region and declare its PCVs. Coefficients
@@ -566,7 +572,7 @@ counter budget bound storage when a declared state has many values.
 
 - Instructions are not time. A change that removes instructions but adds cache
   misses passes; one that vectorizes and adds instructions looks worse.
-- GPU kernels are not instrumented. A CPU fixture can reveal source-level
+- In the CPU path, GPU kernels are not instrumented. A CPU fixture can reveal source-level
   redundant work, but its instruction coefficients do not transfer to GPU
   execution. The separate native Wan comparisons above measure latency and
   numerical differences directly; CPU savings alone establish neither.

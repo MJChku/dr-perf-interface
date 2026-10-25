@@ -1,5 +1,9 @@
 # drperf: what it computes
 
+This document specifies the default CPU path. The separate `drperf --gpu`
+collector uses GPU markers and resource-count reports; its counting, execution,
+parallelism and fitting scope are specified in [gpu/README.md](gpu/README.md).
+
 **Measurement.** `perfmark_begin(ρ, x, v)` (`perfmark_begin_v`: all declared
 states, with dynamically sized storage) … `perfmark_end(ρ)` around a code region yields a *trigger*
 $t$: region $\rho(t)$, declared state vector $v(t) \in \mathbb{Z}^k$, thread

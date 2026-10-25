@@ -1,0 +1,154 @@
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry async_copy(.param .u64 input,.param .u64 output)
+{
+ .shared .align 16 .b8 copied[16];
+ .reg .b64 %d<2>;
+ .reg .b32 %r<2>;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ mov.u32 %r0,copied;
+ cp.async.ca.shared.global [%r0],[%d0],16;
+ cp.async.commit_group;
+ cp.async.wait_group 0;
+ ld.shared.u32 %r1,[%r0];
+ st.global.u32 [%d1],%r1;
+ ret;
+}
+.visible .entry reduce(.param .u64 input, .param .u64 output, .param .u32 n)
+{
+ .shared .align 16 .b8 scratch[256];
+ .reg .b32 %r<12>;
+ .reg .b64 %d<8>;
+ .reg .f32 %f<5>;
+ .reg .pred %p<4>;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.param.u32 %r0,[n];
+ mov.u32 %r1,%tid.x;
+ mov.u32 %r2,%ctaid.x;
+ mad.lo.u32 %r3,%r2,64,%r1;
+ mov.f32 %f0,0f00000000;
+ setp.ge.u32 %p0,%r3,%r0;
+ @%p0 bra skip_load;
+ mul.wide.u32 %d2,%r3,4;
+ add.u64 %d3,%d0,%d2;
+ ld.global.f32 %f0,[%d3];
+skip_load:
+ mov.u32 %r8,scratch;
+ shl.b32 %r4,%r1,2;
+ add.u32 %r4,%r4,%r8;
+ st.shared.f32 [%r4],%f0;
+ bar.sync 0;
+ mov.u32 %r5,32;
+loop:
+ setp.ge.u32 %p1,%r1,%r5;
+ @%p1 bra skip_sum;
+ add.u32 %r6,%r1,%r5;
+ shl.b32 %r7,%r6,2;
+ add.u32 %r7,%r7,%r8;
+ ld.shared.f32 %f1,[%r4];
+ ld.shared.f32 %f2,[%r7];
+ add.f32 %f3,%f1,%f2;
+ st.shared.f32 [%r4],%f3;
+skip_sum:
+ bar.sync 0;
+ shr.u32 %r5,%r5,1;
+ setp.ne.u32 %p2,%r5,0;
+ @%p2 bra loop;
+ setp.ne.u32 %p3,%r1,0;
+ @%p3 ret;
+ ld.shared.f32 %f4,[scratch];
+ mul.wide.u32 %d4,%r2,4;
+ add.u64 %d5,%d1,%d4;
+ st.global.f32 [%d5],%f4;
+ ret;
+}
+.visible .entry shuffle(.param .u64 output)
+{
+ .reg .b32 %r<8>;
+ .reg .b64 %d<4>;
+ .reg .f32 %f<3>;
+ .reg .pred %p;
+ ld.param.u64 %d0,[output];
+ mov.u32 %r0,%tid.x;
+ and.b32 %r1,%r0,31;
+ add.u32 %r1,%r1,1;
+ cvt.rn.f32.u32 %f0,%r1;
+ mov.u32 %r2,16;
+again:
+ mov.b32 %r3,%f0;
+ shfl.sync.bfly.b32 %r4,%r3,%r2,31,-1;
+ mov.b32 %f1,%r4;
+ add.f32 %f0,%f0,%f1;
+ shr.u32 %r2,%r2,1;
+ setp.ne.u32 %p,%r2,0;
+ @%p bra again;
+ mul.wide.u32 %d1,%r0,4;
+ add.u64 %d2,%d0,%d1;
+ st.global.f32 [%d2],%f0;
+ ret;
+}
+.visible .entry triangular(.param .u64 output, .param .u32 n)
+{
+ .reg .b32 %r<5>;
+ .reg .b64 %d<4>;
+ .reg .f32 %f;
+ .reg .pred %p;
+ ld.param.u64 %d0,[output];
+ ld.param.u32 %r0,[n];
+ mov.u32 %r1,%tid.x;
+ setp.ge.u32 %p,%r1,%r0;
+ @%p ret;
+ mov.u32 %r2,0;
+ mov.f32 %f,0f00000000;
+check:
+ setp.ge.u32 %p,%r2,%r1;
+ @%p bra done;
+ add.f32 %f,%f,0f3f800000;
+ add.u32 %r2,%r2,1;
+ bra check;
+done:
+ mul.wide.u32 %d1,%r1,4;
+ add.u64 %d2,%d0,%d1;
+ st.global.f32 [%d2],%f;
+ ret;
+}
+.visible .entry conditional(.param .u64 input, .param .u64 output)
+{
+ .reg .b32 %r;
+ .reg .b64 %d<5>;
+ .reg .f32 %f<2>;
+ .reg .pred %p;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ mov.u32 %r,%tid.x;
+ mul.wide.u32 %d2,%r,4;
+ add.u64 %d3,%d0,%d2;
+ add.u64 %d4,%d1,%d2;
+ ld.global.f32 %f0,[%d3];
+ setp.gt.f32 %p,%f0,0f00000000;
+ @%p add.f32 %f0,%f0,0f3f800000;
+ st.global.f32 [%d4],%f0;
+ ret;
+}
+.visible .entry matrix(.param .u64 a, .param .u64 b, .param .u64 c, .param .u64 d)
+{
+ .reg .b64 %rd<7>;
+ .reg .b32 %r, %ra<4>, %rb<4>;
+ .reg .f32 %fc<8>, %fd<8>;
+ ld.param.u64 %rd0,[a];
+ ld.param.u64 %rd1,[b];
+ ld.param.u64 %rd2,[c];
+ ld.param.u64 %rd3,[d];
+ mov.u32 %r,%ctaid.x;
+ mul.wide.u32 %rd4,%r,1024;
+ add.u64 %rd5,%rd3,%rd4;
+ wmma.load.a.sync.aligned.row.m16n16k16.global.bf16 {%ra0,%ra1,%ra2,%ra3},[%rd0],16;
+ wmma.load.b.sync.aligned.row.m16n16k16.global.bf16 {%rb0,%rb1,%rb2,%rb3},[%rd1],16;
+ wmma.load.c.sync.aligned.row.m16n16k16.global.f32 {%fc0,%fc1,%fc2,%fc3,%fc4,%fc5,%fc6,%fc7},[%rd2],16;
+ wmma.mma.sync.aligned.row.row.m16n16k16.f32.bf16.bf16.f32 {%fd0,%fd1,%fd2,%fd3,%fd4,%fd5,%fd6,%fd7},{%ra0,%ra1,%ra2,%ra3},{%rb0,%rb1,%rb2,%rb3},{%fc0,%fc1,%fc2,%fc3,%fc4,%fc5,%fc6,%fc7};
+ wmma.store.d.sync.aligned.row.m16n16k16.global.f32 [%rd5],{%fd0,%fd1,%fd2,%fd3,%fd4,%fd5,%fd6,%fd7},16;
+ ret;
+}
