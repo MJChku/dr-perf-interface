@@ -1,0 +1,33 @@
+//
+// interleaved.ptx with nvcc -lineinfo style .loc directives (one inlined
+// helper) and the .file table after the function, as nvcc emits it.
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry interleaved(
+	.param .u64 interleaved_param_0,
+	.param .u64 interleaved_param_1
+)
+{
+	.reg .b64 	%rd<4>;
+	.reg .f32 	%f<9>;
+	.loc	1 10 0
+	ld.param.u64 	%rd1, [interleaved_param_0];
+	ld.param.u64 	%rd2, [interleaved_param_1];
+	.loc	1 12 3
+	ld.global.f32 	%f1, [%rd1];
+	.loc	2 5 1, function_name $L__info_string0, inlined_at 1 13 3
+	add.f32 	%f2, %f1, %f1;
+	.loc	1 14 3
+	ld.global.f32 	%f3, [%rd1+4];
+	add.f32 	%f4, %f3, %f2;
+	ld.global.f32 	%f5, [%rd1+8];
+	add.f32 	%f6, %f5, %f4;
+	ld.global.f32 	%f7, [%rd1+12];
+	add.f32 	%f8, %f7, %f6;
+	.loc	1 20 3
+	st.global.f32 	[%rd2], %f8;
+	ret;
+}
+	.file	1 "/src/kernel.cu"
+	.file	2 "/src/helper.cuh"

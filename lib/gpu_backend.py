@@ -8,6 +8,7 @@ from collections import defaultdict
 from fractions import Fraction
 import hashlib
 import json
+import re
 import math
 import os
 from pathlib import Path
@@ -32,6 +33,83 @@ def require_build():
     if not RUNTIME.is_file() or not TRANSLATOR.is_file():
         raise ValueError('GPU backend missing; run `drperf --gpu build`')
     native_fit.library()
+
+
+PTX_FUNC = re.compile(r'\.(?:entry|func)\s+(?:\([^)]*\)\s*)?([A-Za-z_$][\w$]*)')
+CPP_FUNC = re.compile(r'^\S.*?\b([A-Za-z_$][\w$]*__gxptx)\s*\(')
+CPP_SITE = re.compile(r'drperf_gpu_instruction\(__func__, "([^"]+)", __LINE__')
+
+
+def ptx_instructions(ptx_text):
+    """{function: [(ptx_line, opcode, 'file:line' or None)]} in PTX order."""
+    # nvcc emits the .file table after the functions that reference it.
+    files = dict(re.findall(r'^\s*\.file\s+(\d+)\s+"([^"]+)"', ptx_text, re.M))
+    out, func, loc, depth, inlined_at = {}, None, None, 0, {}
+    for number, raw in enumerate(ptx_text.splitlines(), 1):
+        line = raw.split('//')[0].strip()
+        if not line or line.startswith('.file'):
+            continue
+        m = PTX_FUNC.search(line)
+        if m and depth == 0:
+            func, loc = m.group(1), None
+            out.setdefault(func, [])
+        m = re.match(r'\.loc\s+(\d+)\s+(\d+)\s+(\d+)(?:.*inlined_at\s+(\d+)\s+(\d+)\s+(\d+))?', line)
+        if m:
+            # Inlined helper code: follow inlined_at to the nearest caller in another
+            # file and print "helper<caller" (e.g. barrier.h:424<sm100_mqa_logits.cuh:236).
+            frame = m.group(1, 2, 3)
+            if m.group(4):
+                inlined_at[frame] = m.group(4, 5, 6)
+            chain, seen = [frame], {frame}
+            while chain[-1] in inlined_at and inlined_at[chain[-1]] not in seen and len(chain) < 32:
+                chain.append(inlined_at[chain[-1]]); seen.add(chain[-1])
+            name = lambda f: f'{Path(files.get(f[0], "?")).name}:{f[1]}'
+            caller = next((f for f in chain[1:] if f[0] != chain[0][0]), None)
+            loc = name(chain[0]) + (f'<{name(caller)}' if caller else '')
+            continue
+        if func is None:
+            continue
+        for part in line.replace('{', ';').replace('}', ';').split(';'):
+            part = part.strip()
+            if depth == 0 and not part:
+                continue
+            if not part or part.startswith('.') or part.endswith(':') or part.startswith('('):
+                continue
+            part = re.sub(r'^[A-Za-z_$][\w$]*:\s*(?!:)', '', part)  # inline label (not 'shared::')
+            part = re.sub(r'^@!?\S+\s+', '', part)  # predicate guard
+            opcode = part.split()[0] if part.split() else ''
+            if opcode and re.match(r'^[a-z]', opcode):
+                out[func].append((number, opcode, loc))
+        depth += raw.count('{') - raw.count('}')
+        if depth <= 0:
+            depth = 0
+    return out
+
+
+def build_site_map(ptx_text, cpp_text):
+    """Align translated instruction sites (C++ lines) with PTX lines, in order.
+
+    Returns {cpp_function: {cpp_line: [ptx_line, 'file:line' or None]}}; sites the
+    alignment cannot place are omitted. The translator keeps PTX order within a
+    function, so a greedy opcode match with bounded lookahead suffices."""
+    ptx = ptx_instructions(ptx_text)
+    result, func, j, stream = {}, None, 0, []
+    for number, line in enumerate(cpp_text.splitlines(), 1):
+        m = CPP_FUNC.match(line)
+        if m and '{' in line or (m and line.rstrip().endswith(')')):
+            func = m.group(1)
+            stream, j = ptx.get(func[:-len('__gxptx')], []), 0
+            result.setdefault(func, {})
+        m = CPP_SITE.search(line)
+        if not m or func is None:
+            continue
+        op = m.group(1)
+        for k in range(j, min(len(stream), j + 64)):
+            if stream[k][1] == op:
+                result[func][number] = [stream[k][0], stream[k][2]]
+                j = k + 1
+                break
+    return {f: sites for f, sites in result.items() if sites}
 
 
 def translate(argv):
@@ -64,14 +142,18 @@ def translate(argv):
                         str(cpp), '-L'+str(RUNTIME.parent), '-ldrperf_gpu',
                         '-Wl,-rpath,'+str(RUNTIME.parent), '-o', str(scratch/'module.so')],
                        env=env, check=True)
+        site_map = build_site_map(source.read_text(errors='replace'), cpp.read_text())
         os.replace(cpp, cpp_output)
         os.replace(scratch/'module.so', output)
+    sites_output = Path(str(output)+'.sites.json')
+    sites_output.write_text(json.dumps({'schema': 'drperf.gpu.sites.v1', 'input': str(source),
+                                        'functions': site_map}, separators=(',', ':')))
     manifest = {
         'schema': SCHEMA, 'backend': 'gpu', 'instrumentationAbi': 3, 'input': str(source),
         'inputSha256': sha256(source), 'translatorSha256': sha256(TRANSLATOR),
         'preludeSha256': sha256(GPU/'vendor/gxptx/Gxptx/prelude.h'),
         'runtimeSha256': sha256(RUNTIME), 'moduleSha256': sha256(output),
-        'generatedCpp': str(cpp_output),
+        'generatedCpp': str(cpp_output), 'siteMap': str(sites_output),
         'counting': 'executed PTX operations; predication respected; FMA = 2; '
                     'tensor tile work counted once per collective; requested bytes',
     }
@@ -115,6 +197,28 @@ def read_capture(paths):
     if not rows:
         raise ValueError('no GPU marker invocations were recorded')
     return rows
+
+
+def capture_modules(paths):
+    """Translated modules the captured processes loaded, with their site maps."""
+    modules = set()
+    for path in paths:
+        lines = [line for line in path.read_text().splitlines() if line]
+        modules.update(json.loads(lines[-1]).get('modules', []) if lines else [])
+    return [{'module': m, 'siteMap': m+'.sites.json'} for m in sorted(modules)]
+
+
+def load_site_maps(provenance):
+    """{cpp_function: {cpp_line: [ptx_line, 'file:line' or None]}} from report provenance."""
+    merged = {}
+    for module in (provenance or {}).get('modules', []):
+        try:
+            data = json.loads(Path(module['siteMap']).read_text())
+        except (OSError, ValueError, KeyError):
+            continue
+        for func, sites in data.get('functions', {}).items():
+            merged.setdefault(func, {}).update(sites)
+    return merged
 
 
 def clean(value):
@@ -422,7 +526,7 @@ def formula(fit):
     return ' + '.join(terms).replace('+ -', '- ')
 
 
-def short_sites(names):
+def short_sites(names, provenance=None):
     # Site keys are MANGLED_gxptx:cppLINE:opcode. Demangle once (c++filt) and
     # drop template arguments so report lines name the kernel readably.
     funcs = sorted({n.split('_gxptx:')[0] for n in names if '_gxptx:' in n})
@@ -443,9 +547,15 @@ def short_sites(names):
         r = ''.join(r).split('(')[0]
         return r[5:] if r.startswith('void ') else r
     table = dict(zip(funcs, map(strip, out))) if len(out) == len(funcs) else {}
+    maps = load_site_maps(provenance)
     result = {}
     for n in names:
         f, _, rest = n.partition('_gxptx:')
+        # With a site map: CUDA source line (when compiled with -lineinfo) and PTX line.
+        line, _, op = rest.partition(':')
+        where = maps.get(f+'_gxptx', {}).get(line[3:]) if line.startswith('cpp') else None
+        if where:
+            rest = (f'{where[1]} ' if where[1] else '') + f'ptx{where[0]}:{op}'
         result[n] = f'{table.get(f, f)} @ {rest}' if rest else n
     return result
 
@@ -477,7 +587,7 @@ def text_report(model):
         dependent = sorted({p for fit in region['fits'].values() for p in fit['dependentPCVs']})
         if dependent:
             lines.append('  PCVs not independently identifiable: '+', '.join(dependent))
-        names = short_sites(list(region['sites']))
+        names = short_sites(list(region['sites']), model.get('provenance'))
         for site, fits in region['sites'].items():
             rejected = [m for m, f in fits.items() if not f['accepted']]
             if rejected:
@@ -546,7 +656,7 @@ def main(argv):
             paths = capture_paths(args.path, old.get('provenance', {}))
             model = build_model(read_capture(paths), args.absolute_tolerance, args.relative_tolerance)
             model['provenance'] = dict(old.get('provenance', {}), rawCaptures=[str(p) for p in paths],
-                                       refitFrom=str(args.path))
+                                       modules=capture_modules(paths), refitFrom=str(args.path))
             for name, content in [('profile.gpu.drperf.json', json.dumps(model, indent=2)+'\n'),
                                   ('report.txt', text_report(model))]:
                 with tempfile.NamedTemporaryFile(mode='w', dir=args.path, delete=False) as f:
@@ -584,6 +694,7 @@ def main(argv):
         paths = sorted(capture.glob('gpu.*.jsonl'))
         model = build_model(read_capture(paths), args.absolute_tolerance, args.relative_tolerance)
         model['provenance'] = {'command': command, 'rawCaptures': [str(p) for p in paths],
+                               'modules': capture_modules(paths),
                                'runtimeSha256': sha256(RUNTIME),
                                'vendoredGX': json.loads((GPU/'vendor/provenance.json').read_text())['revision']}
         for name, content in [('profile.gpu.drperf.json', json.dumps(model, indent=2)+'\n'),

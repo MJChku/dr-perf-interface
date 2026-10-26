@@ -189,10 +189,18 @@ void line(const std::string& value) {
     f<<value<<'\n';f.flush();
     if(!f)throw std::runtime_error("cannot write GPU capture");
 }
+// Translated modules loaded by this process (reported in the finish record so
+// reports can resolve sites through each module's <so>.sites.json map).
+std::mutex modules_mutex;std::set<std::string> loaded_modules;
+std::string modules_json() {
+    std::lock_guard<std::mutex> lock(modules_mutex);std::string out="[";
+    for(auto& m:loaded_modules){if(out.size()>1)out+=',';out+=quoted(m);}
+    return out+"]";
+}
 struct Lifecycle {
     Lifecycle() {line("{\"event\":\"start\",\"schema\":1,\"backend\":\"gpu\",\"pid\":"+std::to_string(getpid())+"}");}
     ~Lifecycle() {
-        try {line("{\"event\":\"finish\",\"pid\":"+std::to_string(getpid())+
+        try {line("{\"event\":\"finish\",\"pid\":"+std::to_string(getpid())+",\"modules\":"+modules_json()+
                   ",\"open_regions\":"+std::to_string(open_regions.load())+
                   ",\"regions_started\":"+std::to_string(next_token.load()-1)+
                   ",\"regions_completed\":"+std::to_string(completed_regions.load())+
@@ -446,6 +454,8 @@ extern "C" void* drperf_gpu_module_load(const char* path) {
         if(!latency||*latency!=1)
             throw std::runtime_error("GPU latency instrumentation ABI mismatch; retranslate with current drperf");
     } catch(...) {dlclose(module);throw;}
+    {std::lock_guard<std::mutex> lock(modules_mutex);
+     char* real=realpath(path,nullptr);loaded_modules.insert(real?real:path);std::free(real);}
     return module;
 }
 extern "C" void drperf_gpu_module_close(void* module) {if(module)dlclose(module);}

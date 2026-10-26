@@ -78,5 +78,22 @@ class LatencyAsyncTest(unittest.TestCase):
             self.assertTrue(any('tcgen05.mma' in s and s.endswith('[tensor pipe, thread 0]') for s, _ in lane['stalls']),
                             lane['stalls'][:4])
 
+    def test_site_map_names_ptx_and_source_lines(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'gpu/build') as tmp:
+            tmp = pathlib.Path(tmp)
+            build(tmp, TESTS/'latency_async/lineinfo.ptx', TESTS/'latency_schedule/driver.cc', 'li')
+            sites = json.loads((tmp/'li.so.sites.json').read_text())['functions']['interleaved__gxptx']
+            ptx_lines = sorted(v[0] for v in sites.values())
+            self.assertEqual(len(ptx_lines), 12)  # every translated instruction placed
+            self.assertIn([20, 'helper.cuh:5<kernel.cu:13'], sites.values())  # inlined helper add.f32
+            self.assertIn([29, 'kernel.cu:20'], sites.values())
+            capture(tmp, 'r', [tmp/'li-driver', tmp/'li.so'], DRPERF_GPU_LATENCY_SCHEDULE='block')
+            run = subprocess.run(['python3', ROOT/'gpu/tools/latency_report.py', tmp/'r', '--stalls', '3'],
+                                 capture_output=True, text=True, check=True)
+            # The first load's consumer is the inlined helper's add.f32.
+            self.assertIn('interleaved @ helper.cuh:5<kernel.cu:13 ptx20:add.f32', run.stdout)
+            model = json.loads((tmp/'r'/'profile.gpu.drperf.json').read_text())
+            self.assertEqual([m['module'] for m in model['provenance']['modules']], [str((tmp/'li.so').resolve())])
+
 if __name__ == '__main__':
     unittest.main()

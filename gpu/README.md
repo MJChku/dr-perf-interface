@@ -618,8 +618,19 @@ producer/consumer pipeline reads as a chain:
 ```
 
 `--warps` adds the slowest lane of every warp in the critical CTA. Lane totals
-cover the whole launch, not only the interval before the wait. Sites name the
-translated C++ line (`cppNNN:opcode`); retranslate the PTX to read it.
+cover the whole launch, not only the interval before the wait.
+
+### Site names: PTX and CUDA source lines
+
+Site keys name the translated C++ line (`KERNEL_gxptx:cppNNN:opcode`). At
+translation time `drperf --gpu translate` aligns those sites with the PTX
+instruction stream and writes `<module>.so.sites.json`; the capture's finish
+record lists the modules each process loaded (`provenance.modules` in the
+report). Reports (`report.txt`, `latency_report.py`) then print
+`kernel @ helper.cuh:424<caller.cuh:236 ptx1775:opcode`: the CUDA line when the
+PTX was compiled with `-lineinfo` (an inlined helper is shown with its nearest
+caller in another file) and the PTX line otherwise. The generated `.so.cpp` is
+no longer needed to read a report and can be deleted to save disk.
 
 ### Tensor pipe (`DRPERF_GPU_TENSOR_FLOPS_PER_UNIT`, default 8192)
 

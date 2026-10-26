@@ -99,20 +99,20 @@ def critical_lanes(report, region_pattern='*', top=12):
     return out
 
 
-def readable_sites(names):
+def readable_sites(names, provenance=None):
     try:
         sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]/'lib'))
         from gpu_backend import short_sites
-        return short_sites(names)
+        return short_sites(names, provenance)
     except Exception:  # noqa: BLE001 - names stay mangled without the backend
         return {n: n for n in names}
 
 
-def format_stalls(lanes, warps=False):
+def format_stalls(lanes, warps=False, provenance=None):
     raw = {part.rsplit(' [', 1)[0] for lane in lanes
            for item in [lane] + lane.get('chain', []) + (lane.get('warps', []) if warps else [])
            for site, _ in item['stalls'] for part in site.split(' <- ')}
-    short = readable_sites(raw)
+    short = readable_sites(raw, provenance)
     def name(site):
         parts = []
         for part in site.split(' <- '):
@@ -175,8 +175,10 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.stalls:
-            lanes = critical_lanes(read_report(args.report), args.region, args.stalls)
-            print(json.dumps(lanes, indent=2) if args.json else format_stalls(lanes, args.warps))
+            report = read_report(args.report)
+            lanes = critical_lanes(report, args.region, args.stalls)
+            print(json.dumps(lanes, indent=2) if args.json else
+                  format_stalls(lanes, args.warps, report.get('provenance')))
             return 0
         summary = rank_regions(read_report(args.report), args.sms, args.lanes_per_sm,
                                args.threshold, args.region)
