@@ -655,6 +655,21 @@ remain in `ptx_lane_instructions`; subtract them for work fits). In the FlashMLA
 decode core they were 18% of counted instructions and inflated the modeled
 critical path by 29%.
 
+### If-conversion of short forward branches
+
+ptxas predicates short forward hammocks (`@p bra L; ld; mul; L:`, small if/else
+or switch diamonds) instead of branching, and schedules across them. The block
+schedule resets its issue floor at every branch, so guarded loads of an unrolled,
+bounds-checked loop looked serialized: the FlashInfer MoE routing kernel modeled
+17 dependent global loads (8867 units) although vLLM runs it in 4.5 us. At
+translation, branches of a region that starts at a conditional forward branch and
+reaches its furthest target within 16 instrumented instructions (no backward
+branch, barrier, fence, call or return, and no jump into it from outside) are
+tagged `bra.ifconv` / `bra.uni.ifconv` and are not scheduling boundaries; the
+routing kernel then models 2763 units. In the block schedule the exposed-load
+count now starts from the last boundary instead of the lane clock, so a load
+issued ahead of an earlier stalled consumer no longer counts as behind it.
+
 ### Cache-hit latency for repeated lines (`DRPERF_GPU_LATENCY_GLOBAL_HIT`)
 
 When set, a global/generic load whose 128-byte lines were all touched earlier in

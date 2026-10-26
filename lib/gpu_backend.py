@@ -86,6 +86,63 @@ def ptx_instructions(ptx_text):
     return out
 
 
+IFCONV_MAX = 16
+IFCONV_STOP = re.compile(r'drperf_gpu_instruction\(__func__, "(brx|bar|barrier|mbarrier|ret|exit|call|'
+                         r'griddepcontrol|fence|membar|nanosleep|trap)')
+CPP_LABEL = re.compile(r'\s*(L_\w+): ;')
+CPP_BRANCH = re.compile(r'drperf_gpu_instruction\(__func__, "(bra(?:\.uni)?)", __LINE__')
+
+
+def mark_if_conversion(cpp_text):
+    """Tag branches of short forward regions as "<op>.ifconv".
+
+    ptxas predicates short forward hammocks (`@p bra L; ld; mul; L:`, small
+    if/else or switch diamonds) and schedules across them; the basic-block
+    latency schedule otherwise resets its issue floor at every branch and
+    serializes, e.g., guarded loads of an unrolled loop. A region starts at a
+    conditional forward branch and extends to the furthest label any branch
+    inside it targets; it qualifies with at most IFCONV_MAX instrumented
+    instructions, no backward branch, no barrier/fence/call/return, and no jump
+    into it from outside."""
+    lines = cpp_text.split('\n')
+    labels, gotos, branches = {}, defaultdict(list), {}
+    for i, line in enumerate(lines):
+        m = CPP_LABEL.match(line)
+        if m:
+            labels[m.group(1)] = i
+        for target in re.findall(r'goto (L_\w+);', line):
+            gotos[target].append(i)
+        if CPP_BRANCH.search(line):
+            m = re.search(r'goto (L_\w+);', ' '.join(lines[i:i+3]))
+            if m:
+                branches[i] = (m.group(1), line.lstrip().startswith('if ('))
+    count = [0]
+    for line in lines:
+        count.append(count[-1] + ('drperf_gpu_instruction(__func__' in line))
+    marked = set()
+    for start, (target, conditional) in sorted(branches.items()):
+        if not conditional or start in marked or labels.get(target, -1) <= start:
+            continue
+        end, ok = labels[target], True
+        while ok:
+            inner = [k for k in branches if start < k < end]
+            grown = max([labels.get(branches[k][0], -1) for k in inner] + [end])
+            ok = all(labels.get(branches[k][0], -1) > start for k in inner)
+            if grown == end:
+                break
+            end = grown
+        ok = ok and count[end] - count[start + 1] <= IFCONV_MAX
+        ok = ok and not any(IFCONV_STOP.search(lines[k]) for k in range(start, end))
+        # No jump from outside into a label strictly inside the region.
+        ok = ok and all(start <= g < end for name, at in labels.items() if start < at < end for g in gotos[name])
+        if ok:
+            marked.update(k for k in branches if start <= k < end)
+    for k in marked:
+        for j in range(k, min(k+3, len(lines))):
+            lines[j] = re.sub(r'"(bra(?:\.uni)?)", __LINE__', r'"\1.ifconv", __LINE__', lines[j])
+    return '\n'.join(lines), len(marked)
+
+
 def build_site_map(ptx_text, cpp_text):
     """Align translated instruction sites (C++ lines) with PTX lines, in order.
 
@@ -103,7 +160,7 @@ def build_site_map(ptx_text, cpp_text):
         m = CPP_SITE.search(line)
         if not m or func is None:
             continue
-        op = m.group(1)
+        op = m.group(1).removesuffix('.ifconv')
         for k in range(j, min(len(stream), j + 64)):
             if stream[k][1] == op:
                 result[func][number] = [stream[k][0], stream[k][2]]
@@ -135,8 +192,8 @@ def translate(argv):
         subprocess.run([str(TRANSLATOR), str(source), str(cpp)], env=env, check=True)
         if cpp.read_text().count('drperf_gpu_instruction(') <= 1:
             raise ValueError('translator emitted no GPU counters; rebuild the instrumented GPU translator')
-        with cpp.open('a') as f:
-            f.write('\nextern "C" const unsigned drperf_gpu_instrumented_abi = 3;\n')
+        text, _ = mark_if_conversion(cpp.read_text())
+        cpp.write_text(text + '\nextern "C" const unsigned drperf_gpu_instrumented_abi = 3;\n')
         subprocess.run([args.cxx, '-std=c++17', '-O1', '-fPIC', '-shared',
                         '-fno-strict-aliasing', '-fwrapv', '-Wl,-z,defs',
                         str(cpp), '-L'+str(RUNTIME.parent), '-ldrperf_gpu',

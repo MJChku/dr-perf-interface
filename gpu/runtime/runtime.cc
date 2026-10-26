@@ -350,7 +350,7 @@ void latency_join(ThreadContext* lane,const DrperfGpuReady& source,const std::st
     const uint64_t before=lane->latency_clock.time;
     drperf_latency::join(lane->latency_clock,source);latency_charge(lane,before,false,cause);latency_record(lane);
     // A join is a control boundary for the basic-block schedule.
-    lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+    lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;lane->latency_block_loads=lane->latency_clock.loads;
 }
 template<class Wait> void joined_wait(void* key,Wait wait) {
     auto& state=active->barrier_lanes[key];auto generation=state.generation;
@@ -621,15 +621,18 @@ extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t
     const uint64_t before=lane->latency_clock.time;
     DrperfGpuReady ready;
     if(active->latency.schedule) {
-        ready=drperf_latency::issue_block(lane->latency_clock,lane->latency_block_floor,lane->latency_block_issued,
+        ready=drperf_latency::issue_block(lane->latency_clock,lane->latency_block_floor,lane->latency_block_loads,lane->latency_block_issued,
                                           src,nsrc,op_latency,cls==2);
         // The instruction call precedes this one, so last_site names its opcode.
         const auto colon=lane->last_site.rfind(':');
         const std::string op=colon==std::string::npos?lane->last_site:lane->last_site.substr(colon+1);
         auto starts=[&](const char* p){return op.rfind(p,0)==0;};
-        if(starts("bra")||starts("bar")||starts("barrier")||starts("ret")||starts("exit")||starts("call")||
+        // "*.ifconv": a branch of a short forward region ptxas would predicate
+        // (tagged at translation); it is not a scheduling boundary.
+        const bool ifconv=op.size()>7&&op.compare(op.size()-7,7,".ifconv")==0;
+        if((starts("bra")&&!ifconv)||starts("bar")||starts("barrier")||starts("ret")||starts("exit")||starts("call")||
            starts("brx")||starts("mbarrier")||starts("griddepcontrol")||starts("fence")||starts("membar")) {
-            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;lane->latency_block_loads=lane->latency_clock.loads;
         }
     } else ready=drperf_latency::issue(lane->latency_clock,src,nsrc,op_latency,cls==2);
     latency_charge(lane,before,true);
@@ -794,7 +797,7 @@ extern "C" int gx_mbarrier_test(uint64_t a,uint64_t t,int p){
             lane->latency_clock=spin.clock;lane->latency_issue=spin.issue;
             for(auto& [site,cycles]:spin.stalls)
                 if((lane->latency_stalls[site]-=cycles)==0)lane->latency_stalls.erase(site);
-            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;lane->latency_block_loads=lane->latency_clock.loads;
             rolled=true;
         }
     }

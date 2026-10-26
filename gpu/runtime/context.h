@@ -14,7 +14,7 @@ struct ThreadContext {
     DrperfGpuReady latency_clock;
     // Basic-block schedule (DRPERF_GPU_LATENCY_SCHEDULE=block): issue floor at the
     // last control boundary and instructions issued since.
-    uint64_t latency_block_floor=0, latency_block_issued=0;
+    uint64_t latency_block_floor=0, latency_block_issued=0, latency_block_loads=0;
     bool latency_load_hit=false;  // set by the memory hook for the next latency issue
     DrperfGpuReady latency_async;  // completion of this lane's issued cp.async copies
     std::string last_site;

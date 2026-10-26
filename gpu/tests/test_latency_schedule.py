@@ -43,5 +43,24 @@ class ScheduleTest(unittest.TestCase):
             self.assertEqual(hit['latency_model_global_hit'], 100)
             self.assertEqual(got['inorder']['latency_critical_path'] - hit['latency_critical_path'], 3 * 300)
 
+    def test_short_forward_guards_are_predicated(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'gpu/build') as tmp:
+            tmp = pathlib.Path(tmp)
+            subprocess.run([ROOT/'bin/drperf', '--gpu', 'translate', HERE/'guarded.ptx', '-o', tmp/'k.so'], check=True, capture_output=True)
+            cpp = (tmp/'k.so.cpp').read_text()
+            self.assertEqual(cpp.count('"bra.ifconv", __LINE__'), 4*2)   # taken + not-taken hooks per guard
+            self.assertEqual(cpp.count('"bra", __LINE__'), 2)           # the guard over bar.sync stays a branch (both hooks)
+            subprocess.run(['g++', '-std=c++17', '-O2', '-I'+str(ROOT/'gpu/include'), HERE/'guarded_driver.cc', '-L'+str(ROOT/'gpu/build'),
+                            '-ldrperf_gpu', '-Wl,-rpath,'+str(ROOT/'gpu/build'), '-o', tmp/'driver'], check=True)
+            env = dict(os.environ, DRPERF_GPU_LATENCY_SCHEDULE='block')
+            run = subprocess.run([ROOT/'bin/drperf', '--gpu', '--output', tmp/'r', '--', tmp/'driver', tmp/'k.so'],
+                                 env=env, capture_output=True, text=True)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            m = launch_metrics(tmp/'r')
+            self.assertEqual(m['dependent_global_loads_on_critical_path'], 1)  # the four loads overlap
+            self.assertLess(m['latency_critical_path'], 2*400)
+            sites = json.loads((tmp/'k.so.sites.json').read_text())['functions']['guarded__gxptx']
+            self.assertEqual(len(sites), cpp.count('drperf_gpu_instruction(__func__'))  # tags do not break alignment
+
 if __name__ == '__main__':
     unittest.main()

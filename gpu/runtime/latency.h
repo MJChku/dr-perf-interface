@@ -37,11 +37,13 @@ inline DrperfGpuReady issue(DrperfGpuReady& clock,const DrperfGpuReady* src,size
 // order. Control boundaries (branches, barriers, returns, calls) reset the
 // floor to the latest issue; nothing is hoisted across them. Exposed loads
 // are counted against the issue slot the instruction would otherwise get.
-inline DrperfGpuReady issue_block(DrperfGpuReady& clock,uint64_t floor,uint64_t& issued,
+// The exposed-load count starts from the block entry (floor_loads), not from
+// the lane clock: an instruction issued ahead of an earlier stalled consumer is
+// not behind that consumer's loads.
+inline DrperfGpuReady issue_block(DrperfGpuReady& clock,uint64_t floor,uint64_t floor_loads,uint64_t& issued,
                                   const DrperfGpuReady* src,size_t n,uint64_t latency,bool global) {
     const uint64_t slot=floor+(++issued);
-    DrperfGpuReady next{slot,clock.loads,0};
-    if(clock.time>=slot) next.loads=clock.loads; // path count travels with the latest issue
+    DrperfGpuReady next{slot,floor_loads,0};
     for(size_t i=0;i<n;++i) {
         auto dependency=src[i];
         if(dependency.time>slot)dependency.loads+=dependency.global;

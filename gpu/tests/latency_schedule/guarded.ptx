@@ -1,0 +1,54 @@
+//
+// Four loads, each behind a short forward guard (`@p bra L; ld; mul; L:`), as
+// in unrolled bounds-checked loops. ptxas predicates such hammocks, so the
+// basic-block schedule must not serialize the loads (translate tags the
+// branches "bra.ifconv"). The last guard skips a bar.sync and stays a branch.
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry guarded(
+	.param .u64 guarded_param_0,
+	.param .u64 guarded_param_1,
+	.param .u32 guarded_param_2
+)
+{
+	.reg .pred 	%p<6>;
+	.reg .b32 	%r<4>;
+	.reg .b64 	%rd<4>;
+	.reg .f32 	%f<16>;
+	ld.param.u64 	%rd1, [guarded_param_0];
+	ld.param.u64 	%rd2, [guarded_param_1];
+	ld.param.u32 	%r1, [guarded_param_2];
+	setp.lt.u32 	%p1, %r1, 1;
+	setp.lt.u32 	%p2, %r1, 2;
+	setp.lt.u32 	%p3, %r1, 3;
+	setp.lt.u32 	%p4, %r1, 4;
+	mov.f32 	%f1, 0f00000000;
+	mov.f32 	%f2, 0f00000000;
+	mov.f32 	%f3, 0f00000000;
+	mov.f32 	%f4, 0f00000000;
+	@%p1 bra 	G1;
+	ld.global.f32 	%f5, [%rd1];
+	mul.f32 	%f1, %f5, 0f3F000000;
+G1:
+	@%p2 bra 	G2;
+	ld.global.f32 	%f6, [%rd1+4];
+	mul.f32 	%f2, %f6, 0f3F000000;
+G2:
+	@%p3 bra 	G3;
+	ld.global.f32 	%f7, [%rd1+8];
+	mul.f32 	%f3, %f7, 0f3F000000;
+G3:
+	@%p4 bra 	G4;
+	ld.global.f32 	%f8, [%rd1+12];
+	mul.f32 	%f4, %f8, 0f3F000000;
+G4:
+	add.f32 	%f9, %f1, %f2;
+	add.f32 	%f10, %f3, %f4;
+	add.f32 	%f11, %f9, %f10;
+	@%p1 bra 	G5;
+	bar.sync 	0;
+G5:
+	st.global.f32 	[%rd2], %f11;
+	ret;
+}
