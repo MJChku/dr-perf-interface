@@ -586,6 +586,23 @@ lookups) and is worth restructuring; a chain that disappears under it is a PTX
 ordering artifact that `ptxas` already removes (GLM-5.3 `attention_iw_prenorm`:
 58231 -> 8037 units, 132 -> 23 exposed loads per launch).
 
+### Cache-hit latency for repeated lines (`DRPERF_GPU_LATENCY_GLOBAL_HIT`)
+
+When set, a global/generic load whose 128-byte lines were all touched earlier in
+the same launch uses this latency instead of `DRPERF_GPU_LATENCY_GLOBAL`
+(`latency_model_global_hit` records it; unset means no distinction). It is a
+within-launch residency approximation: data reused across launches (per-layer
+metadata, weights shared by consecutive kernels) still looks cold.
+
+Calibration observed on B300 (GLM-5.3 decode, CUPTI): removing modeled exposed
+loads of hot view metadata saved ~75-110 ns each (`dc_selected_address`
+4.70 -> 4.25 us after 11 -> 5 exposed loads), while removing the FlashMLA
+combine's serialized loads of freshly written FP32 partials saved ~340 ns each
+(9.0 -> 5.6 us after 12 -> 2). Every small graph-launched kernel also kept a
+~3-4 us floor the model does not represent. Model units are therefore not
+convertible to time without residency information; use them to rank chains and
+to compare variants of the same kernel.
+
 The ranking helper accepts report directories, JSON and JSON.gz. It sorts
 regions by the sum of their inclusive launch paths, equivalent to mean path
 times launch count, without multiplying an already summed count again. It

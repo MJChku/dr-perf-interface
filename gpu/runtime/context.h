@@ -13,6 +13,7 @@ struct ThreadContext {
     // Basic-block schedule (DRPERF_GPU_LATENCY_SCHEDULE=block): issue floor at the
     // last control boundary and instructions issued since.
     uint64_t latency_block_floor=0, latency_block_issued=0;
+    bool latency_load_hit=false;  // set by the memory hook for the next latency issue
     std::string last_site;
     uint64_t linear_block=0, cluster_barrier_token=0;
     NamedBarrierManager* barriers=nullptr;

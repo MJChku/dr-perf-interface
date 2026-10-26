@@ -180,10 +180,19 @@ CASES = [
        'epochs as three rounds before any use. DrPerf: identical outputs and error codes on 80 A/B cases covering every '
        'failure path (null/wrong views, reserved limit, bad table entry, epoch mismatch, table/lease/page-token faults, '
        'bad row view); block schedule address 4906 -> 2470 (11 -> 5 exposed), gather 3507 -> 1504 (8 -> 4).'),
-  fix_status='Implemented; GPU microbenchmark requested (decode_step).',
-  timing='CUPTI b101: address 0.36, gather 0.35 (exclusive), tables ~0.06, iw 0.20 ms/step; candidate not yet timed.',
-  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b100'],
-  files=[EX+'/glm53_decode_glue/kernels.cu', EX+'/glm53_decode_glue/driver3.cc', EX+'/glm53_decode_glue/ab_driver.cc'],
+  fix_status='Implemented; address/gather token-exact; kv-post extension pending a hot-routing determinism check.',
+  timing=('B300 b105r CUPTI: dc_selected_address 4.70 -> 4.25 us/call, decode_gather_v32 5.82 -> 5.31 us/call '
+          '(-0.08 ms/step together); harness step w4 -0.02..+0.02 ms (noise), under tracer -0.06..-0.10 ms; hot-routing '
+          'tokens exact. Calibration: removing 6+4 modeled exposed loads saved ~0.45-0.5 us per kernel, i.e. ~75-110 ns '
+          'per load (L1/L2-resident view metadata), against 400 model units; the remaining ~4 us per call is launch/'
+          'dependency overhead the model does not represent. Extension to the kv-post body inside attention_qrank_kv_ik{,_pk} '
+          '(validation + page lookup once, eager; drperf 48 A/B cases identical incl. 44 faulted error cells; model 21 -> 11.5 '
+          'exposed loads per kv-post CTA): b106 CUPTI qrank_kv_ik 9.95 -> 9.15 us, pk 9.86 -> 9.26 us, step -0.05..-0.09 ms; '
+          'hot sorted tokens differ at step 28 of 32 (1 row), under investigation. Also tried and reverted: batched '
+          'activation loads in prenorm_dot (moe_front_prenorm/attention_iw_prenorm) - bitwise equal but the model got worse '
+          '(t < m ? load : 0 lowers to predicated loads/branches; no gain predicted).'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b100', PROF+'/glm53-gap-b105r', PROF+'/glm53-gap-b106'],
+  files=[EX+'/glm53_decode_glue/kernels.cu', EX+'/glm53_decode_glue/driver3.cc', EX+'/glm53_decode_glue/ab_driver.cc', EX+'/glm53_decode_glue/ab_kvpost.cc', EX+'/glm53_decode_glue/front_driver.cc', EX+'/glm53_decode_glue/ab_prenorm.cc'],
   reproduce=['see gpu/examples/glm53_decode_glue; DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu ...; python3 gpu/tools/latency_report.py <report>',
              'A/B: build/ab_driver build/kernels.so build/kernels_eager.so (kernels_eager = -DGLM53_ENABLE_DECODE_EAGER_CHECKS)'],
   credit=('DrPerf latency model with site attribution found the chains; the basic-block schedule (added for this case) '

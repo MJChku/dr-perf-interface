@@ -1,6 +1,7 @@
 // Standalone GPU collector. Scheduler/barriers and matrix arithmetic originate
 // in GX (vendor/provenance.json); no GX simulator or CPU collector is loaded.
 #include "context.h"
+#include <unordered_set>
 #include "footprint.h"
 #include "initcheck.h"
 #include <light/fiber_stack.hh>
@@ -85,6 +86,10 @@ struct LatencyConfig {
     uint64_t sfu=value("DRPERF_GPU_LATENCY_SFU",20);
     uint64_t sms=value("DRPERF_GPU_SM_COUNT",148,true);
     uint64_t lanes=value("DRPERF_GPU_LANES_PER_SM",128,true);
+    // Optional residency split: a global load whose 128-byte lines were all
+    // touched earlier in the same launch uses this (cache-hit) latency.
+    // Unset = same as global (no residency distinction).
+    uint64_t global_hit=value("DRPERF_GPU_LATENCY_GLOBAL_HIT",global);
     // 0 = PTX-order in-order issue (default), 1 = basic-block schedule.
     uint64_t schedule=[]{const char* v=std::getenv("DRPERF_GPU_LATENCY_SCHEDULE");
         return uint64_t(v&&std::string(v)=="block");}();
@@ -97,11 +102,12 @@ struct LatencyConfig {
             {"latency_model_global",global},{"latency_model_shared",shared},
             {"latency_model_mma",mma},{"latency_model_sfu",sfu},
             {"latency_model_sm_count",sms},{"latency_model_lanes_per_sm",lanes},
-            {"latency_model_schedule",schedule}};
+            {"latency_model_schedule",schedule},{"latency_model_global_hit",global_hit}};
     }
 };
 struct Launch {
     LatencyConfig latency;
+    std::unordered_set<uint64_t> touched_lines;  // residency classification only
     DrperfGpuReady latency_finish;
     Invocation* region;
     std::unique_ptr<Invocation> implicit_region;
@@ -492,6 +498,12 @@ extern "C" void drperf_gpu_memory(uint64_t address,uint64_t reads,uint64_t write
         const uint64_t bad=drperf_initcheck::tracker().access(address,reads,writes,gx_thread_context()->last_site);
         if(bad)drperf_gpu_resource("uninitialized_read_bytes",bad);
     }
+    if((reads||writes)&&space<=1&&active->latency.global_hit!=active->latency.global&&address) {
+        bool hit=true;
+        for(uint64_t l=address/128,e=(address+std::max(reads,writes)-1)/128;l<=e;++l)
+            hit&=!active->touched_lines.insert(l).second;
+        gx_thread_context()->latency_load_hit=hit&&reads;
+    }
     if(!active->footprint_available||(!reads&&!writes))return;
     if(space==0)for(auto& [id,state]:active->blocks) {
         auto base=reinterpret_cast<uint64_t>(state->shared);
@@ -515,10 +527,12 @@ extern "C" void drperf_gpu_memory(uint64_t address,uint64_t reads,uint64_t write
 extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t nsrc,
                                     DrperfGpuReady* const* dst,size_t ndst,bool record) {
     need_launch();if(device_registration())return;auto* lane=gx_thread_context();
+    const bool hit=(cls==2||cls==6)&&lane->latency_load_hit;lane->latency_load_hit=false;
+    const uint64_t op_latency=hit?active->latency.global_hit:active->latency.latency(cls);
     DrperfGpuReady ready;
     if(active->latency.schedule) {
         ready=drperf_latency::issue_block(lane->latency_clock,lane->latency_block_floor,lane->latency_block_issued,
-                                          src,nsrc,active->latency.latency(cls),cls==2);
+                                          src,nsrc,op_latency,cls==2);
         // The instruction call precedes this one, so last_site names its opcode.
         const auto colon=lane->last_site.rfind(':');
         const std::string op=colon==std::string::npos?lane->last_site:lane->last_site.substr(colon+1);
@@ -527,7 +541,7 @@ extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t
            starts("brx")||starts("mbarrier")||starts("griddepcontrol")||starts("fence")||starts("membar")) {
             lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
         }
-    } else ready=drperf_latency::issue(lane->latency_clock,src,nsrc,active->latency.latency(cls),cls==2);
+    } else ready=drperf_latency::issue(lane->latency_clock,src,nsrc,op_latency,cls==2);
     for(size_t i=0;i<ndst;++i)*dst[i]=ready;
     if(record)latency_record(lane);
 }

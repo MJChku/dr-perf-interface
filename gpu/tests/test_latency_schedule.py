@@ -33,6 +33,15 @@ class ScheduleTest(unittest.TestCase):
             self.assertEqual(got['block']['dependent_global_loads_on_critical_path'], 1)
             self.assertEqual(got['block']['latency_model_schedule'], 1)
             self.assertLess(got['block']['latency_critical_path'], got['inorder']['latency_critical_path'])
+            # Residency: the four loads share one 128-byte line, so with a hit
+            # latency the three repeats cost 100 instead of 400 each.
+            env = dict(os.environ, DRPERF_GPU_LATENCY_SCHEDULE='inorder', DRPERF_GPU_LATENCY_GLOBAL_HIT='100')
+            run = subprocess.run([ROOT/'bin/drperf', '--gpu', '--output', tmp/'hit', '--', tmp/'driver', tmp/'k.so'],
+                                 env=env, capture_output=True, text=True)
+            self.assertEqual(run.returncode, 0, run.stderr)
+            hit = launch_metrics(tmp/'hit')
+            self.assertEqual(hit['latency_model_global_hit'], 100)
+            self.assertEqual(got['inorder']['latency_critical_path'] - hit['latency_critical_path'], 3 * 300)
 
 if __name__ == '__main__':
     unittest.main()

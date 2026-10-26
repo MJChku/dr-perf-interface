@@ -16,11 +16,11 @@ Latency model, PTX-order schedule (uncalibrated units, 400 per exposed global lo
 
 GLM53_ENABLE_DECODE_EAGER_CHECKS (gen-glm53-decode-step branch glue-eager-checks ce81e1e6): bitwise view validation in checked_address; dc_selected_address issues view fields, the four page-table entries and the four epochs as three rounds before any use. DrPerf: identical outputs and error codes on 80 A/B cases covering every failure path (null/wrong views, reserved limit, bad table entry, epoch mismatch, table/lease/page-token faults, bad row view); block schedule address 4906 -> 2470 (11 -> 5 exposed), gather 3507 -> 1504 (8 -> 4).
 
-Fix status: **Implemented; GPU microbenchmark requested (decode_step).**
+Fix status: **Implemented; address/gather token-exact; kv-post extension pending a hot-routing determinism check.**
 
 ## Measured timing (not from DrPerf)
 
-CUPTI b101: address 0.36, gather 0.35 (exclusive), tables ~0.06, iw 0.20 ms/step; candidate not yet timed.
+B300 b105r CUPTI: dc_selected_address 4.70 -> 4.25 us/call, decode_gather_v32 5.82 -> 5.31 us/call (-0.08 ms/step together); harness step w4 -0.02..+0.02 ms (noise), under tracer -0.06..-0.10 ms; hot-routing tokens exact. Calibration: removing 6+4 modeled exposed loads saved ~0.45-0.5 us per kernel, i.e. ~75-110 ns per load (L1/L2-resident view metadata), against 400 model units; the remaining ~4 us per call is launch/dependency overhead the model does not represent. Extension to the kv-post body inside attention_qrank_kv_ik{,_pk} (validation + page lookup once, eager; drperf 48 A/B cases identical incl. 44 faulted error cells; model 21 -> 11.5 exposed loads per kv-post CTA): b106 CUPTI qrank_kv_ik 9.95 -> 9.15 us, pk 9.86 -> 9.26 us, step -0.05..-0.09 ms; hot sorted tokens differ at step 28 of 32 (1 row), under investigation. Also tried and reverted: batched activation loads in prenorm_dot (moe_front_prenorm/attention_iw_prenorm) - bitwise equal but the model got worse (t < m ? load : 0 lowers to predicated loads/branches; no gain predicted).
 
 ## Credit
 
@@ -35,11 +35,16 @@ DrPerf latency model with site attribution found the chains; the basic-block sch
 
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b100
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b105r
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b106
 
 ## Copied sources
 
 - `src/kernels.cu` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/kernels.cu
 - `src/driver3.cc` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/driver3.cc
 - `src/ab_driver.cc` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/ab_driver.cc
+- `src/ab_kvpost.cc` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/ab_kvpost.cc
+- `src/front_driver.cc` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/front_driver.cc
+- `src/ab_prenorm.cc` from /home/ubuntu/drperf/gpu/examples/glm53_decode_glue/ab_prenorm.cc
 
 Requested bytes are not HBM traffic; the latency model is an uncalibrated dependency model, not measured time.
