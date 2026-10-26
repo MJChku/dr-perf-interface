@@ -14,13 +14,13 @@ One CTA of 256 lanes. Exact: global_read_bytes = 260*TK, unique = 128*TK + 1024,
 
 ## Fix
 
-No kernel change from DrPerf. The CUPTI timeline shows our instance at 8..15 us when it overlaps the shared-expert GEMMs on the side stream (a single-CTA latency chain sharing SMs with GEMM CTAs); candidate fixes: higher priority for the main stream, or folding routing into the preceding MoE-front kernel.
+Scheduling (gen-glm53-decode-step): GLM53_DECODE_ROUTED_FIRST enqueues the routed path before the shared expert; GLM53_DECODE_ROUTED_PRIORITY gives the main decode streams the greatest priority, the shared-expert stream the least, and instantiates graphs with cudaGraphInstantiateFlagUseNodePriority (1654 high / 300 low priority kernel nodes captured).
 
-Fix status: **Open (scheduling, not kernel work).**
+Fix status: **Priority variant merge-ready (token-exact).**
 
 ## Measured timing (not from DrPerf)
 
-vLLM 4.5 us/call; ours 13.8 us exclusive / 18.4 us inclusive median, 8 us when overlap is small (b101).
+b114 B300 harness: routing 23.0 -> 17.0 us/call (routed first) / 16.6 us (priority); step -0.22..-0.24 ms (routed first) and -0.26..-0.32 ms (priority) uniform, -0.24..-0.32 ms hot; the deprioritized shared down GEMM slows 5.3 -> 24.9 us off the critical path. The rest of the gap to vLLM 4.5 us is likely PDL early launch (the kernel waits on its predecessor inside its CUPTI interval).
 
 ## Credit
 
@@ -34,6 +34,7 @@ DrPerf explained why the kernel has a fixed ~latency floor; the contention with 
 
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b54
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b114
 
 ## Copied sources
 
