@@ -130,19 +130,26 @@ CASES = [
   receipts=[EX+'/multirank_allreduce/README.md'], files=[], reproduce=['see gpu/examples/multirank_allreduce'],
   credit='DrPerf (also motivated ld.acquire/st.release host fences).'),
 
- dict(case='glm53-fused-a-gemm-sm-coverage', label='FOUND/POTENTIAL',
+ dict(case='glm53-fused-a-gemm-sm-coverage', label='NEGATIVE/FOUND',
   kernel='TRT-LLM dsv3FusedAGemm (vLLM csrc copy, src/lib_fused_a_gemm.cu)',
-  role='Small-M BF16 GEMM for the attention prefix (6144->2624/2752) and o_proj (8192->6144); 156 calls/step, ~1.1 ms exclusive.',
+  role='Small-M BF16 GEMM for the attention prefix (6144->2624/2752, 78 calls/step) and q_b (2048->8192/12288, 78 calls/step).',
   pcvs='M (hd_out) 64..256, K (hd_in) 512..2048, tile_m 16/32, tokens 1..4 (small instantiations; production extrapolated)',
-  finding=('Exact: global_unique_read_bytes = 2*M*K + 2*tokens*K (weights and activations once), tensor_float_flops = '
-           '16*M*K for any tokens (8 token columns always computed), blocks = M/tile_m with one CTA per SM. At production: '
-           'prefix 6144->2752 at tile 32 launches 86 CTAs on 148 SMs with 393 KB of weights each, 1.72x the balanced time; '
-           'o_proj 384 CTAs = 2.6 waves (1.16x).'),
-  fix='Proposed: split-K or tile choice giving ~148 equal CTAs for the prefix shapes (model: ~8 -> ~4.8 us/call).',
-  fix_status='Open.', timing='12.5 us/call inclusive average over both uses (b101).',
-  receipts=[PROF+'/glm53-gap-b101'], files=[EX+'/fused_a_gemm/kernels.cu', EX+'/fused_a_gemm/driver.cc'],
-  reproduce=['see gpu/examples/fused_a_gemm (results/small2)'],
-  credit='DrPerf (CTA counts and per-CTA bytes); the latency model does not yet see this kernel\'s cp.async/mbarrier pipeline (0 exposed loads).'),
+  finding=('Exact: global_unique_read_bytes = 2*M*K + 2*tokens*K, tensor_float_flops = 16*M*K for any tokens, blocks = '
+           'M/tile_m. Hypothesis from CTA counts: the prefix shapes launch 82/86 CTAs on 148 SMs (one CTA/SM), so they '
+           'should be 1.72x slower than balanced. A standalone B300 benchmark (HBM-resident weights) refuted it: tile_m 16 '
+           '(164/172 CTAs) is 0.68-0.97x of the current speed; current 7.3-7.9 us = 4.1-4.4 TB/s. The same sweep found '
+           'that the hd_in 2048 shapes run faster with 4 pipeline stages instead of 8 (98 KB -> 49 KB shared, 2 -> 4 '
+           'CTAs/SM, 512/768 CTAs from ~1.7/2.6 waves to one): 2048->8192 9.00 -> 7.65 us, 2048->12288 12.5 -> 11.4 us, '
+           'bitwise. The new latency_report residency columns (CTAs/SM from shared memory and threads, waves) expose '
+           'that wave structure directly.'),
+  fix='GLM53_FUSED_A_K2048_STAGE4 (gen-glm53-decode-step glue-eager-checks e74147cd).',
+  fix_status='Implemented; harness benchmark requested.',
+  timing='Standalone B300 (b108): see finding. In-graph b101 CUPTI (inclusive, PDL): 2624 7.8, 2752 11.8, 8192 14.2, 12288 17.9 us.',
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b108'],
+  files=[EX+'/fused_a_gemm/kernels.cu', EX+'/fused_a_gemm/driver.cc'],
+  reproduce=['see gpu/examples/fused_a_gemm (results/small2); python3 gpu/tools/latency_report.py gpu/examples/fused_a_gemm/results/small2'],
+  credit=('DrPerf supplied the exact work interface and the (wrong) coverage hypothesis; the GPU sweep found the stage '
+          'effect; the residency view in latency_report was added afterwards so DrPerf flags wave structure.')),
  dict(case='glm53-moe-routing-block-latency', label='EXPLAINED',
   kernel='FlashInfer 0.6.18 routingCustom::routingIndicesBlockKernel<float, bf16, 256, 8, SigmoidBias + ScaledSumNormalize>',
   role='DeepSeekV3-style MoE routing for <=4 tokens (top-8 of 256 experts, permutation/histogram outputs); 75 calls per decode step; identical kernel and launch (1x256) in vLLM.',
@@ -180,7 +187,7 @@ CASES = [
        'epochs as three rounds before any use. DrPerf: identical outputs and error codes on 80 A/B cases covering every '
        'failure path (null/wrong views, reserved limit, bad table entry, epoch mismatch, table/lease/page-token faults, '
        'bad row view); block schedule address 4906 -> 2470 (11 -> 5 exposed), gather 3507 -> 1504 (8 -> 4).'),
-  fix_status='Implemented; address/gather token-exact; kv-post extension pending a hot-routing determinism check.',
+  fix_status='Implemented and token-exact (address, gather, kv-post); decode_tables extension A/B-verified, untimed.',
   timing=('B300 b105r CUPTI: dc_selected_address 4.70 -> 4.25 us/call, decode_gather_v32 5.82 -> 5.31 us/call '
           '(-0.08 ms/step together); harness step w4 -0.02..+0.02 ms (noise), under tracer -0.06..-0.10 ms; hot-routing '
           'tokens exact. Calibration: removing 6+4 modeled exposed loads saved ~0.45-0.5 us per kernel, i.e. ~75-110 ns '
@@ -188,11 +195,13 @@ CASES = [
           'dependency overhead the model does not represent. Extension to the kv-post body inside attention_qrank_kv_ik{,_pk} '
           '(validation + page lookup once, eager; drperf 48 A/B cases identical incl. 44 faulted error cells; model 21 -> 11.5 '
           'exposed loads per kv-post CTA): b106 CUPTI qrank_kv_ik 9.95 -> 9.15 us, pk 9.86 -> 9.26 us, step -0.05..-0.09 ms; '
-          'hot sorted tokens differ at step 28 of 32 (1 row), under investigation. Also tried and reverted: batched '
+          'b106 hot tokens differed at step 28 once; b107 (e1s/e2s twice each, 32 steps) all equal, so that was run-to-run '
+          'nondeterminism and the change is token-exact. decode_tables_kernel: loop-invariant view fields read once (36 A/B '
+          'cases incl. 30 faulted error cells identical). Also tried and reverted: batched '
           'activation loads in prenorm_dot (moe_front_prenorm/attention_iw_prenorm) - bitwise equal but the model got worse '
           '(t < m ? load : 0 lowers to predicated loads/branches; no gain predicted).'),
-  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b100', PROF+'/glm53-gap-b105r', PROF+'/glm53-gap-b106'],
-  files=[EX+'/glm53_decode_glue/kernels.cu', EX+'/glm53_decode_glue/driver3.cc', EX+'/glm53_decode_glue/ab_driver.cc', EX+'/glm53_decode_glue/ab_kvpost.cc', EX+'/glm53_decode_glue/front_driver.cc', EX+'/glm53_decode_glue/ab_prenorm.cc'],
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b100', PROF+'/glm53-gap-b105r', PROF+'/glm53-gap-b106', PROF+'/glm53-gap-b107'],
+  files=[EX+'/glm53_decode_glue/kernels.cu', EX+'/glm53_decode_glue/driver3.cc', EX+'/glm53_decode_glue/ab_driver.cc', EX+'/glm53_decode_glue/ab_kvpost.cc', EX+'/glm53_decode_glue/front_driver.cc', EX+'/glm53_decode_glue/ab_prenorm.cc', EX+'/glm53_decode_glue/ab_tables.cc'],
   reproduce=['see gpu/examples/glm53_decode_glue; DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu ...; python3 gpu/tools/latency_report.py <report>',
              'A/B: build/ab_driver build/kernels.so build/kernels_eager.so (kernels_eager = -DGLM53_ENABLE_DECODE_EAGER_CHECKS)'],
   credit=('DrPerf latency model with site attribution found the chains; the basic-block schedule (added for this case) '

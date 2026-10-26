@@ -21,6 +21,11 @@ static inline void gx_latency_off(const char* fn, const char* op, unsigned site,
 // Address-coverage capability, separate from the unchanged work-counter ABI.
 extern "C" __attribute__((weak)) const unsigned drperf_gpu_footprint_abi = 1;
 extern "C" void drperf_gpu_memory(uint64_t, uint64_t, uint64_t, unsigned);
+// Latency model hooks for asynchronous copies (copies still complete at issue
+// functionally): cp.async.mbarrier.arrive joins the barrier with the lane's
+// async completion time; cp.async/bulk wait_group joins the lane with it.
+extern "C" void gx_cp_async_mbarrier_arrive(uint64_t, uint32_t);
+extern "C" void gx_cp_async_wait();
 #include <array>
 extern "C" void drperf_gpu_device_begin(const char*, unsigned);
 extern "C" void drperf_gpu_device_pcv(const char*, int64_t);

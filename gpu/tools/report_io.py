@@ -10,7 +10,10 @@ def read_report(path):
         status = path/'capture-status.json'
         if status.is_file() and json.loads(status.read_text()).get('status') != 'complete':
             raise ValueError('latest GPU capture did not complete; previous report is not the latest run')
-        path = path / 'profile.gpu.drperf.json'
+        plain = path / 'profile.gpu.drperf.json'
+        # Large reports are often kept gzip-compressed beside their report.txt.
+        path = plain if plain.exists() or not (path / 'profile.gpu.drperf.json.gz').exists() \
+            else path / 'profile.gpu.drperf.json.gz'
     opener = gzip.open if path.suffix == '.gz' else open
     with opener(path, 'rt', encoding='utf-8') as source:
         report = json.load(source)

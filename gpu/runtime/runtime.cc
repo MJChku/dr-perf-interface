@@ -552,6 +552,7 @@ extern "C" void drperf_gpu_latency_predicated_off(const char* fn,const char* op,
     drperf_gpu_latency(0,src,nsrc,nullptr,0,true);
 }
 
+static DrperfGpuReady async_ready_from_now();
 extern "C" void drperf_gpu_instruction(const char* fn,const char* op,
         unsigned site,unsigned long long flops,unsigned long long reads,unsigned long long writes,
         unsigned space,unsigned kind,unsigned long long address,unsigned unmodeled) {
@@ -588,6 +589,7 @@ extern "C" void drperf_gpu_instruction(const char* fn,const char* op,
     // WMMA helpers enumerate the actual strided tile; cp.async reads global
     // source bytes and zero-fills shared destination bytes separately.
     if(head!="wmma")drperf_gpu_memory(address,reads,space==6?0:writes,space==6?1:space);
+    if(space==6)drperf_latency::join(lane->latency_async,async_ready_from_now());
     add(active->metrics,event);add(active->sites[lane->last_site].metrics,event);
     device_event(event,lane->last_site);
 }
@@ -621,15 +623,32 @@ long gx_current_linear_block(){need_launch();return gx_thread_context()->linear_
 extern "C" void gx_mbarrier_init(uint64_t a,uint32_t n){
     need_launch();active->mbarriers.init(a,n);active->mbarrier_clocks.erase(a);
 }
-static void mbarrier_clock_arrival(uint64_t a,uint64_t phase) {
-    auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,gx_thread_context()->latency_clock);
+static void mbarrier_clock_arrival(uint64_t a,uint64_t phase,const DrperfGpuReady* at=nullptr) {
+    auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,at?*at:gx_thread_context()->latency_clock);
     if(active->mbarriers.phase(a)!=phase) {c.completed[phase]=c.pending;c.pending={};}
+}
+// Data delivered by an asynchronous copy is ready a global latency after issue.
+static DrperfGpuReady async_ready_from_now() {
+    auto* lane=gx_thread_context();DrperfGpuReady r=lane->latency_clock;
+    r.time+=active->latency.global;r.loads+=1;r.global=0;return r;
+}
+extern "C" void gx_cp_async_mbarrier_arrive(uint64_t a,uint32_t noinc) {
+    need_launch();auto* lane=gx_thread_context();
+    DrperfGpuReady at=lane->latency_clock;drperf_latency::join(at,lane->latency_async);
+    if(noinc) {auto phase=active->mbarriers.arrive(a,1,0);mbarrier_clock_arrival(a,phase,&at);}
+    else {auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,at);}
+}
+extern "C" void gx_cp_async_wait() {
+    need_launch();auto* lane=gx_thread_context();
+    if(drperf_latency::later(lane->latency_async,lane->latency_clock))latency_join(lane,lane->latency_async);
 }
 extern "C" uint64_t gx_mbarrier_arrive(uint64_t a,uint32_t n,uint32_t b){
     need_launch();auto phase=active->mbarriers.arrive(a,n,b);mbarrier_clock_arrival(a,phase);return phase;
 }
 extern "C" void gx_mbarrier_complete_tx(uint64_t a,uint32_t n){
-    need_launch();auto phase=active->mbarriers.phase(a);active->mbarriers.complete_tx(a,n);mbarrier_clock_arrival(a,phase);
+    // TMA / bulk copies: the transaction completes a global latency after issue.
+    need_launch();auto phase=active->mbarriers.phase(a);active->mbarriers.complete_tx(a,n);
+    auto at=async_ready_from_now();mbarrier_clock_arrival(a,phase,&at);
 }
 extern "C" void gx_mbarrier_expect_tx(uint64_t a,uint32_t n){need_launch();active->mbarriers.expect_tx(a,n);}
 static void mbarrier_clock_wait(uint64_t a,uint64_t phase) {

@@ -1983,17 +1983,17 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           match args with
           | [a] =>
             -- Prior copies have completed synchronously. Default arrival has
-            -- net zero pending-count change; noinc consumes one arrival.
-            if toks.contains "noinc" then
-              s!"    (void)gx_mbarrier_arrive({mkAddr a}, 1u, 0u);"
-            else ";"
+            -- net zero pending-count change; noinc consumes one arrival. The
+            -- latency model joins the barrier with the lane's async-copy
+            -- completion time either way.
+            s!"    gx_cp_async_mbarrier_arrive({mkAddr a}, {if toks.contains "noinc" then "1u" else "0u"});"
           | _ => trapOp
         else if (toks == ["cp", "async", "commit_group"] ||
             toks == ["cp", "async", "bulk", "commit_group"]) && args.isEmpty then ";"
-        else if toks == ["cp", "async", "wait_all"] && args.isEmpty then ";"
+        else if toks == ["cp", "async", "wait_all"] && args.isEmpty then "    gx_cp_async_wait();"
         else if (toks == ["cp", "async", "wait_group"] ||
                  toks == ["cp", "async", "bulk", "wait_group"] ||
-                 toks == ["cp", "async", "bulk", "wait_group", "read"]) && args.length == 1 then ";"
+                 toks == ["cp", "async", "bulk", "wait_group", "read"]) && args.length == 1 then "    gx_cp_async_wait();"
         else if toks.take 2 == ["cp", "async"] && (toks.getD 2 "" == "ca" || toks.getD 2 "" == "cg") then
           -- cp.async.{ca,cg}.shared{::cta}.global{.L2::cache_hint}{.L2::{64,128,256}B}
           --   [dst], [src], cp-size{, src-size | ignore-src}{, cache-policy}

@@ -9,6 +9,20 @@ import sys
 from report_io import read_report
 
 
+def residency(m, sm, smem_per_sm=233472, threads_per_sm=2048, ctas_per_sm_cap=32, smem_reserved=1024):
+    """Shared-memory/thread-limited CTAs per SM and waves for one launch.
+
+    Registers are unknown at PTX level, so this is an upper bound on residency."""
+    blocks = m.get('executed_blocks', m.get('blocks', 0))
+    if not blocks:
+        return None, None
+    threads = max(1, m.get('launched_lanes', 0) // max(1, m.get('blocks', 1)))
+    smem = m.get('dynamic_shared_bytes_per_launch', 0) + m.get('static_shared_bytes_per_launch', 0)
+    by_smem = smem_per_sm // (smem + smem_reserved) if smem else ctas_per_sm_cap
+    per_sm = max(1, min(ctas_per_sm_cap, threads_per_sm // threads, by_smem))
+    return per_sm, math.ceil(blocks / (sm * per_sm))
+
+
 def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_pattern='*'):
     for name, value in [('sms', sms), ('lanes_per_sm', lanes_per_sm), ('threshold', threshold)]:
         if value is not None and (not math.isfinite(value) or value <= 0):
@@ -24,6 +38,7 @@ def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_patter
             unavailable.append(region['name'])
             continue
         critical = exposed = work = blocks = underfilled = 0
+        per_sm_min, waves_max = None, 0
         throughput = 0.0
         configurations = set()
         for launch in modeled:
@@ -39,6 +54,10 @@ def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_patter
             b = m.get('executed_blocks', m['blocks'])
             blocks += b
             underfilled += b < sm
+            per_sm, waves = residency(m, sm)
+            if per_sm is not None:
+                per_sm_min = per_sm if per_sm_min is None else min(per_sm_min, per_sm)
+                waves_max = max(waves_max, waves)
             configurations.add(tuple(m.get('latency_model_' + k) for k in
                                      ('alu', 'global', 'shared', 'mma', 'sfu')) + (sm, lanes))
         ratio = critical / throughput if throughput else None
@@ -48,6 +67,7 @@ def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_patter
                         'meanCriticalPath': critical / len(modeled),
                         'exposedGlobalLoads': exposed, 'laneInstructions': work,
                         'blocks': blocks, 'underfilledLaunches': underfilled,
+                        'ctasPerSmUpperBound': per_sm_min, 'maxWaves': waves_max,
                         'throughputProxy': throughput, 'latencyToThroughputRatio': ratio,
                         'latencyBound': ratio is not None and ratio >= threshold,
                         'mixedModelConstants': len(configurations) > 1})
@@ -64,12 +84,15 @@ def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_patter
 def format_text(summary):
     lines = ['GPU LATENCY MODEL (not measured time)', summary['semantics'],
              f'Capture validity: {summary["captureValidity"]}',
-             'region launches path_x_launches mean_path exposed_loads blocks underfilled latency/throughput flag']
+             'Residency: CTAs/SM from shared memory and threads only (registers unknown); waves = '
+             'ceil(blocks / (SMs x CTAs/SM)), maximum over launches.',
+             'region launches path_x_launches mean_path exposed_loads blocks underfilled ctas_per_sm max_waves latency/throughput flag']
     for r in summary['records']:
         ratio = r['latencyToThroughputRatio']
         lines.append(f'{json.dumps(r["region"])} {r["launches"]} {r["criticalPathTimesLaunches"]} '
                      f'{r["meanCriticalPath"]:.6g} {r["exposedGlobalLoads"]} {r["blocks"]} '
-                     f'{r["underfilledLaunches"]} ' + ('n/a' if ratio is None else f'{ratio:.4g}') +
+                     f'{r["underfilledLaunches"]} {r["ctasPerSmUpperBound"]} {r["maxWaves"]} ' +
+                     ('n/a' if ratio is None else f'{ratio:.4g}') +
                      (' latency-bound' if r['latencyBound'] else ' throughput-bound-proxy') +
                      (' MIXED-CONSTANTS' if r['mixedModelConstants'] else ''))
     if summary['unavailableRegions']:
