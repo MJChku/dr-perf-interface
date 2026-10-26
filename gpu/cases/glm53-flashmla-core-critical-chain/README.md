@@ -1,0 +1,44 @@
+# glm53-flashmla-core-critical-chain
+
+**Contribution: FOUND/EXPLAINED.** Kernel: FlashMLA SM100 head64 V32 sparse decode core (flash_fwd_splitkv_mla_fp8_sparse_kernel).
+
+Attention core, 78 calls/step, ~14.4 us/call (b101); at w4 x top-k 2048 a CTA handles only 1-2 64-token blocks.
+
+## Declared PCVs
+
+w 1..4, K 64..256 selected tokens, parts 1..8 (33 states; examples/flashmla_decode grid)
+
+## DrPerf finding
+
+Four DrPerf gaps blocked this kernel and were fixed first: the translated kernel overflowed 128 KiB lane stacks (SIGSEGV); tcgen05.mma completion was free (commit arrived at issue); failed mbarrier try_wait probes counted as work (18% of instructions, path inflated 29%); and the per-site path maximum could not say what a lane waited on. With the critical-lane chain the core reads: consumer (thread 0) waits on the QK MMA [tensor pipe, thread 128]; the MMA issuer waits on the dequant warpgroup (thread 256), the KV gather TMA (thread 192) and the softmax arrive (thread 31); the index/scale warp (thread 224) feeds the gathers. Per task the path is exactly 5326 + 1787 per 64-token block: the steady-state recurrence is QK MMA (~576) -> softmax (~630) -> PV MMA (~512) on the attention loop, not the producers. The index/scale warp loads a block's indices, waits, then issues the dependent scale loads and waits again; its 4-buffer lookahead hides that in steady state, but a one-block CTA (the production case) pays it at start-up.
+
+## Fix
+
+GLM53_FLASHMLA_INDEX_PREFETCH prototype (gen-glm53-decode-step third_party/flashmla_glm53/decode_head64_kernel_glm53.cuh): indices two blocks ahead, scales one block ahead, same arithmetic. DrPerf: 33/33 reference states pass; one-block path 7113 -> 6756 (-5%), slope unchanged.
+
+Fix status: **Prototype; not wired into the build or GPU-timed (expected ~0.02-0.06 ms/step).**
+
+## Measured timing (not from DrPerf)
+
+Core 14.4 us/call (b101). No GPU measurement of the prototype.
+
+## Credit
+
+DrPerf (after four tool fixes) located the chain and checked the prototype before GPU time.
+
+## Reproduce
+
+- DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/core_driver build/flash_core{,_pf}.so build/flash_core{,_pf}.ptx build/flash_aux.so build/flash_aux.ptx grid
+- python3 gpu/tools/latency_report.py results/grid_lat --region flashmla.core.small --stalls 8
+
+## Receipts
+
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
+
+## Copied sources
+
+- `src/flash_core.cu` from /home/ubuntu/drperf/gpu/examples/flashmla_decode/drivers/flash_core.cu
+- `src/flash_core_prefetch.cu` from /home/ubuntu/drperf/gpu/examples/flashmla_decode/drivers/flash_core_prefetch.cu
+- `src/decode_head64_kernel_glm53.cuh` from /home/ubuntu/drperf/gpu/examples/flashmla_decode/drivers/decode_head64_kernel_glm53.cuh
+
+Requested bytes are not HBM traffic; the latency model is an uncalibrated dependency model, not measured time.
