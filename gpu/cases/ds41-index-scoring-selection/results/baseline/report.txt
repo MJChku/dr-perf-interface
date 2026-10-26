@@ -1,0 +1,1426 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_index_reduce"
+  1 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 3 [accepted; max error 0]
+  conversion_ops = 804 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 3 [accepted; max error 0]
+  executed_lanes = 384 [accepted; max error 0]
+  fp32_flops = 3216 [accepted; max error 0]
+  global_read_bytes = 3216 [accepted; max error 0]
+  global_unique_read_bytes = 1632 [accepted; max error 0]
+  global_unique_read_line_bytes = 1920 [accepted; max error 0]
+  global_unique_read_lines = 15 [accepted; max error 0]
+  global_unique_read_sector_bytes = 1728 [accepted; max error 0]
+  global_unique_read_sectors = 54 [accepted; max error 0]
+  global_unique_write_bytes = 402 [accepted; max error 0]
+  global_unique_write_line_bytes = 512 [accepted; max error 0]
+  global_unique_write_lines = 4 [accepted; max error 0]
+  global_unique_write_sector_bytes = 448 [accepted; max error 0]
+  global_unique_write_sectors = 14 [accepted; max error 0]
+  global_write_bytes = 402 [accepted; max error 0]
+  integer_ops = 21654 [accepted; max error 0]
+  launched_lanes = 384 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 19968 [accepted; max error 0]
+  ptx_lane_instructions = 45633 [accepted; max error 0]
+  sum_block_lane_sequence_span = 621 [accepted; max error 0]
+  sum_block_max_lane_bytes = 210 [accepted; max error 0]
+  sum_block_max_lane_flops = 48 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 207 [accepted; max error 0]
+  warps = 12 [accepted; max error 0]
+  PCVs not independently identifiable: arg_dot_stride, arg_heads, arg_keys, arg_rows, arg_score_stride, arg_weight_stride, blocks, launched_lanes
+
+REGION "ds41_index_select"
+  32 invocations, 11 states
+  block_barrier_lane_arrivals = 2747.54 * arg_candidate_stride + 2.18816 * arg_index_stride - 10.8946 * arg_keys + 6.44365 * arg_mask_stride + 1539.66 * arg_mode + 3056.61 [UNEXPLAINED; max error 10050.8]
+  blocks = 5 [accepted; max error 0]
+  collective_lane_arrivals = -1377.56 * arg_candidate_stride + 1.37482 * arg_index_stride + 5.28017 * arg_keys + 516.421 * arg_mask_stride + 941.56 * arg_mode + 1731.03 [UNEXPLAINED; max error 3778.97]
+  conversion_ops = -571.393 * arg_candidate_stride + 3.05375 * arg_index_stride + 11.9786 * arg_keys + 377.668 * arg_mask_stride + 785.038 * arg_mode + 1376.32 [UNEXPLAINED; max error 16285.1]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_barrier_generations = 10.7326 * arg_candidate_stride + 0.0085475 * arg_index_stride - 0.042557 * arg_keys + 0.0251705 * arg_mask_stride + 6.01429 * arg_mode + 11.9399 [UNEXPLAINED; max error 39.2608]
+  emulator_rendezvous_lane_arrivals = 1369.98 * arg_candidate_stride + 3.56298 * arg_index_stride - 5.61442 * arg_keys + 522.865 * arg_mask_stride + 2481.22 * arg_mode + 4787.65 [UNEXPLAINED; max error 13829.7]
+  executed_blocks = 5 [accepted; max error 0]
+  executed_lanes = 1280 [accepted; max error 0]
+  fp32_flops = 772.594 * arg_candidate_stride + 10.4369 * arg_index_stride + 6.1796 * arg_keys - 129.658 * arg_mask_stride + 751.173 * arg_mode - 1474.35 [UNEXPLAINED; max error 3537.33]
+  global_read_bytes = -20634.8 * arg_candidate_stride - 91.9005 * arg_index_stride + 100.509 * arg_keys + 3478.92 * arg_mask_stride - 1231.6 * arg_mode + 38321.1 [UNEXPLAINED; max error 35452.1]
+  global_unique_read_bytes = 405.642 * arg_candidate_stride + 5.03957 * arg_index_stride + 3.04188 * arg_keys - 63.8823 * arg_mask_stride + 392.423 * arg_mode - 770.608 [UNEXPLAINED; max error 1713.99]
+  global_unique_read_line_bytes = 20.9701 * arg_candidate_stride - 0.0891736 * arg_index_stride + 4.61951 * arg_keys + 4.11045 * arg_mask_stride + 238.77 * arg_mode + 280.511 [UNEXPLAINED; max error 1600.66]
+  global_unique_read_lines = 0.163829 * arg_candidate_stride - 0.000696669 * arg_index_stride + 0.0360899 * arg_keys + 0.0321129 * arg_mask_stride + 1.86539 * arg_mode + 2.1915 [UNEXPLAINED; max error 12.5052]
+  global_unique_read_sector_bytes = -156.007 * arg_candidate_stride - 0.0314696 * arg_index_stride + 5.29176 * arg_keys + 2.3815 * arg_mask_stride + 237.642 * arg_mode + 456.669 [UNEXPLAINED; max error 1221.11]
+  global_unique_read_sectors = -4.87522 * arg_candidate_stride - 0.000983424 * arg_index_stride + 0.165368 * arg_keys + 0.0744219 * arg_mask_stride + 7.42632 * arg_mode + 14.2709 [UNEXPLAINED; max error 38.1596]
+  global_unique_write_bytes = 3.19568 * arg_candidate_stride + 19.9989 * arg_index_stride + 0.0768469 * arg_keys - 2.87668 * arg_mask_stride + 19.2494 * arg_mode - 55.7457 [UNEXPLAINED; max error 14.2921]
+  global_unique_write_line_bytes = -6.96467 * arg_candidate_stride + 19.9668 * arg_index_stride + 0.120004 * arg_keys - 3.09131 * arg_mask_stride + 72.4367 * arg_mode + 131.54 [UNEXPLAINED; max error 157.328]
+  global_unique_write_lines = -0.0544115 * arg_candidate_stride + 0.155991 * arg_index_stride + 0.000937533 * arg_keys - 0.0241509 * arg_mask_stride + 0.565912 * arg_mode + 1.02766 [UNEXPLAINED; max error 1.22912]
+  global_unique_write_sector_bytes = -13.2145 * arg_candidate_stride + 19.9949 * arg_index_stride + 0.141363 * arg_keys - 2.81679 * arg_mask_stride + 98.5158 * arg_mode + 50.7443 [UNEXPLAINED; max error 60.3997]
+  global_unique_write_sectors = -0.412954 * arg_candidate_stride + 0.624841 * arg_index_stride + 0.0044176 * arg_keys - 0.0880248 * arg_mask_stride + 3.07862 * arg_mode + 1.58576 [UNEXPLAINED; max error 1.88749]
+  global_write_bytes = -190.895 * arg_candidate_stride + 32.0068 * arg_index_stride + 1.51381 * arg_keys - 29.7732 * arg_mask_stride - 471.219 * arg_mode + 455.874 [UNEXPLAINED; max error 2936.73]
+  integer_ops = 18065.7 * arg_candidate_stride + 108.068 * arg_index_stride - 10.8499 * arg_keys + 10266.6 * arg_mask_stride + 33510.9 * arg_mode + 11267.2 [UNEXPLAINED; max error 229102]
+  launched_lanes = 1280 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 2791.19 * arg_candidate_stride + 6.39718 * arg_index_stride - 11.1118 * arg_keys - 2.7071 * arg_mask_stride + 1625.91 * arg_mode + 102303 [UNEXPLAINED; max error 3078.45]
+  ptx_lane_instructions = 66515.9 * arg_candidate_stride + 371.084 * arg_index_stride - 136.112 * arg_keys + 19690.4 * arg_mask_stride + 75504.6 * arg_mode + 19922.2 [UNEXPLAINED; max error 442313]
+  shared_read_bytes = 60251.1 * arg_candidate_stride + 58.205 * arg_index_stride - 236.779 * arg_keys + 1942.14 * arg_mask_stride + 22065.7 * arg_mode - 41346.3 [UNEXPLAINED; max error 162286]
+  shared_write_bytes = 16089 * arg_candidate_stride + 33.2804 * arg_index_stride - 63.3197 * arg_keys + 202.834 * arg_mask_stride + 10775.4 * arg_mode + 29190.8 [UNEXPLAINED; max error 79767.3]
+  static_shared_bytes_per_launch = 8320 [accepted; max error 0]
+  sum_block_lane_sequence_span = 3775.03 * arg_candidate_stride + 4.84247 * arg_index_stride - 14.2988 * arg_keys + 80.1226 * arg_mask_stride + 603.629 * arg_mode - 1549.36 [UNEXPLAINED; max error 10662]
+  sum_block_max_lane_bytes = 4195.92 * arg_candidate_stride + 5.30722 * arg_index_stride - 16.4768 * arg_keys + 16.5689 * arg_mask_stride - 726.569 * arg_mode + 1448.37 [UNEXPLAINED; max error 13752.3]
+  sum_block_max_lane_flops = 12.6418 * arg_candidate_stride + 0.0379438 * arg_index_stride - 0.00799723 * arg_keys - 0.530014 * arg_mask_stride + 72.9401 * arg_mode - 22.0316 [UNEXPLAINED; max error 20.2339]
+  sum_launch_max_block_lane_sequence_span = 1400.83 * arg_candidate_stride + 0.999941 * arg_index_stride - 5.2436 * arg_keys + 20.6152 * arg_mask_stride - 151.267 * arg_mode - 1466.08 [UNEXPLAINED; max error 3002]
+  warps = 40 [accepted; max error 0]
+  PCVs not independently identifiable: arg_block_size, arg_rows, arg_score_stride, arg_topk, blocks, launched_lanes
+  Unexplained site ds41_index_select__gxptx:cpp4501:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4503:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4505:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4518:st.global.u32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site ds41_index_select__gxptx:cpp4525:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4536:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4538:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4540:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4542:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4544:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4546:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4548:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4550:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4552:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4556:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4559:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4561:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4563:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4565:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4567:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4569:st.global.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4571:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4573:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4575:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4581:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4583:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4657:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4659:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4661:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4663:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4665:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4667:setp.ne.s64: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4669:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4671:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4673:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4675:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4677:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4679:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4681:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4683:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4685:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4687:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4689:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4691:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4693:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4695:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4697:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4699:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4701:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4703:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4705:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4707:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4709:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4711:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4713:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4715:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4717:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4719:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4721:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4724:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4728:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4730:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4732:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4759:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4764:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4766:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4768:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4770:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp4772:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp4774:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp4776:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp4778:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4780:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4783:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4786:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4788:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4790:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4792:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4794:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp4796:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4798:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4800:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4803:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4805:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4808:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4810:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4812:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4814:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4816:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4818:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4820:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4822:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4824:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4826:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4828:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4830:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4832:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4834:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4836:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4838:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4840:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4842:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4844:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4846:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4848:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4850:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4852:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4854:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4856:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4860:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4862:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4864:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4866:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4868:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4870:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4872:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4874:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4876:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4878:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4880:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4882:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4884:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4888:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4890:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4892:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4894:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4896:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4898:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4900:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4902:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4904:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4906:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4908:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4911:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4913:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4915:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4918:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4920:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4923:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4925:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp4927:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5000:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5002:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5153:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5155:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5157:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5159:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5161:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5163:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5165:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5167:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5169:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5171:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5173:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5175:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5177:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5179:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5181:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5183:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5185:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5187:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5189:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5191:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5193:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5195:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5197:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5199:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5201:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5203:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5205:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5207:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5209:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5211:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5213:atom.shared.add.u32: ptx_lane_instructions, shared_read_bytes, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5216:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5218:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5220:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5223:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5225:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5228:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5230:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5233:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5235:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5237:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5239:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5241:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5243:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5245:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5247:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5249:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5251:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5253:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5255:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5257:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5261:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5263:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5265:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5267:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5269:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5271:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5273:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5275:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5277:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5279:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5281:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5283:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5285:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5287:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5289:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5291:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5293:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5295:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5297:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5299:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5301:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5303:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5305:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5307:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5310:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5312:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5314:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5317:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5319:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5322:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5324:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5326:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5328:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5330:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5332:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5334:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5336:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5338:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5340:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5342:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5344:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5348:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5356:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5359:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5361:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5365:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5367:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5369:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5371:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5373:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5375:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5377:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5379:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5381:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5385:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5393:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5396:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5399:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5401:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5404:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5406:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5408:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5410:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5412:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5414:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5416:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5418:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5420:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5422:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5424:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5427:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5429:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5432:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5435:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5437:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5439:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5441:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5443:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5445:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5447:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5449:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5451:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5453:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5455:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5457:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5460:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5462:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5465:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5468:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5470:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5472:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5474:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5476:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5478:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5480:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5482:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5484:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5486:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5488:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5490:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5493:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5495:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5498:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5501:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5503:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5505:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5507:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5509:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5511:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5513:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5515:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5517:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5519:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5521:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5523:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5526:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5528:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5531:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5534:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5536:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5538:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5540:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5542:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5544:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5546:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5549:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5552:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5554:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5556:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5558:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5560:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5562:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5564:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5567:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5569:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5571:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5573:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5575:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5577:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5579:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5581:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5583:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5585:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5587:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5589:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5591:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5593:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5595:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5597:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5599:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5601:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5603:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5605:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5607:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5609:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5611:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5613:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5615:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5617:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5619:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5621:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5623:atom.shared.add.u32: ptx_lane_instructions, shared_read_bytes, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5626:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5628:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5630:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5633:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5636:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5638:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5640:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5642:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5644:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5646:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5648:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5650:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5652:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5654:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5656:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5658:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5660:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5662:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5664:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5666:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5668:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5670:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5672:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5674:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5676:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5678:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5680:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5683:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5685:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5687:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5689:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5691:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5693:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5695:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5697:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5699:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5701:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5703:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5705:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5707:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5709:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5711:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5713:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5715:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5717:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5719:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5721:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5723:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5725:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5727:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5729:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5731:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5733:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5735:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5737:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5739:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5741:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5743:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5745:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5747:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5749:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5751:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5753:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5755:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5757:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5759:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5761:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5763:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5765:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5767:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5769:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5771:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5773:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5775:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5777:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5779:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5781:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5783:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5785:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5787:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5789:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5791:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5793:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5795:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5797:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5799:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5801:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5803:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5805:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5807:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5809:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5811:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5813:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5815:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5817:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5820:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5822:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5824:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5826:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5829:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5831:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5833:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5835:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5838:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5840:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5842:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5844:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5846:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5848:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5850:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5852:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5854:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5856:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5858:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5860:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5862:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5864:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5866:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5868:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5870:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5872:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5874:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5876:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5878:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5880:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5882:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5884:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5886:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5888:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5890:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5892:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5894:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5898:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5900:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5902:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5904:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5906:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5910:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5912:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5914:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5916:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5918:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5920:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5922:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5924:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5926:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5928:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5930:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5932:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5934:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5936:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5938:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5940:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5942:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5944:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5946:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5948:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5950:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5952:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5954:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5956:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5958:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5960:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5962:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5964:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5966:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5968:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5970:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5972:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5974:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5976:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5978:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5980:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5982:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5984:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5986:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5988:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5990:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5992:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5994:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp5996:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp5998:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6000:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6002:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6004:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6006:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6008:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6010:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6012:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6014:setp.le.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6016:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6018:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6020:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6022:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6024:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6026:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6028:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6030:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6033:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6035:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6037:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6039:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6042:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6047:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6049:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6051:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6053:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6056:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6058:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6060:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6062:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6064:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6066:setp.gt.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6068:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6071:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6073:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6075:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6077:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6080:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6082:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6084:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6086:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6088:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6090:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6092:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6094:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6096:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6098:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6100:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6102:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6104:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6106:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6108:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6110:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6112:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6114:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6116:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6118:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6120:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6122:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6124:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6127:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6129:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6131:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6133:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6136:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6138:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6140:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6142:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6144:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6146:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6148:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6150:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6152:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6154:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6156:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6158:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6160:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6162:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6164:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6166:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6168:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6170:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6172:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6174:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6176:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6178:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6180:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6182:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6184:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6186:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6188:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6192:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6194:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6196:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6198:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6200:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6202:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6204:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6206:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6208:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6210:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6212:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6214:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6218:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6220:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6222:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6224:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6226:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6228:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6230:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6232:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6234:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6236:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6238:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6241:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6243:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6245:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6248:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6250:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6253:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6255:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6257:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6330:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6332:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6473:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6475:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6477:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6479:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6481:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6483:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6485:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6487:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6489:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6491:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6493:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6495:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6497:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6499:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6501:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6503:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6505:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6507:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6509:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6511:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6514:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6516:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6518:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6520:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6522:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6524:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6526:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6528:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6530:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6532:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6534:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6536:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6538:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6540:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6542:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6544:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6547:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6549:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6552:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6554:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6556:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6558:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6561:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6563:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6565:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6567:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6569:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6571:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6573:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6575:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6577:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6579:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6581:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6583:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6585:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6587:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6591:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6593:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6595:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6597:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6599:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6601:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6603:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6605:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6607:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6609:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6611:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6613:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6615:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6617:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6619:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6621:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6623:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6625:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6627:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6629:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6631:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6633:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6635:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6637:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6640:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6642:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6644:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6647:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6649:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6652:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6654:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6656:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6658:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6660:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6662:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6664:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6666:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6668:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6670:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6672:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6674:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6678:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6686:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6689:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6691:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6695:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6697:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6699:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6701:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6703:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6705:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6707:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6709:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6711:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6715:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6723:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6726:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6729:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6731:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6734:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6736:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6738:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6740:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6742:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6744:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6746:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6748:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6750:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6752:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6754:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6757:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6759:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6762:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6765:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6767:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6769:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6771:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6773:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6775:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6777:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6779:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6781:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6783:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6785:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6787:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6790:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6792:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6795:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6798:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6800:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6802:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6804:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6806:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6808:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6810:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6812:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6814:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6816:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6818:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6820:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6823:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6825:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6828:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6831:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6833:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6835:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6837:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6839:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6841:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6843:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6845:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6847:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6849:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6851:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6853:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6856:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6858:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6861:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6864:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6866:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6869:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6872:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6874:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6876:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6878:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6880:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6883:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6885:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6887:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6889:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6891:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6893:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6895:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6897:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6899:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6901:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6903:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6905:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6907:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6909:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6911:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6913:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6915:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6917:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6919:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6921:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6924:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6926:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6928:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6930:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6932:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6934:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6936:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6938:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6940:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6942:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6944:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6946:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6948:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6950:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6952:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6954:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6957:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6960:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6962:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6964:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6966:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6968:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6970:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6972:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6974:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6976:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6978:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6981:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6983:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6985:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6987:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6989:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6991:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6993:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6995:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp6997:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp6999:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7001:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7003:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7005:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7007:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7009:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7011:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7013:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7015:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7017:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7019:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7021:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7023:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7025:mov.u64: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7027:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7029:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7031:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7033:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7035:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7037:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7039:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7041:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7043:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7045:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7047:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7049:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7052:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7054:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7056:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7058:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7060:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7062:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7064:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7066:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7068:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7070:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7072:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7074:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7076:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7078:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7080:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7082:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7084:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7086:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7088:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7090:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7092:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7094:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7096:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7098:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7100:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7102:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7104:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7106:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7108:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7110:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7112:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7114:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7116:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7118:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7120:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7122:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7124:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7126:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7128:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7130:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7136:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7138:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7141:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7143:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7145:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7147:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7149:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7151:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7153:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7155:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7157:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7159:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7161:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7163:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7165:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7167:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7169:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7171:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7174:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7177:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7180:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7182:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7184:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7186:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7188:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7190:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7192:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7194:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7196:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7198:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7200:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7202:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7204:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7206:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7208:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7210:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7212:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7214:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7216:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7218:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7220:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7222:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7224:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7227:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7229:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7231:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7234:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7236:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7238:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7240:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7242:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7244:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7246:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7248:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7250:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7252:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7254:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7256:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7258:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7260:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7262:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7264:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7266:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7268:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7270:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7272:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7274:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7276:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7278:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7280:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7282:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7284:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7286:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7288:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7290:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7294:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7296:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7298:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7300:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7302:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7304:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7306:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7308:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7310:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7312:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7314:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7316:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7320:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7322:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7324:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7326:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7328:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7330:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7332:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7334:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7336:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7338:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7340:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7343:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7345:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7347:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7350:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7352:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7355:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7357:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7359:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7432:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7434:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7575:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7577:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7579:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7581:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7583:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7585:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7587:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7589:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7591:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7593:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7595:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7597:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7599:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7601:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7603:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7605:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7607:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7609:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7611:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7613:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7615:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7618:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7620:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7622:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7624:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7626:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7628:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7630:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7632:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp7634:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7636:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7638:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7640:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7642:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7644:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7646:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7648:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7650:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7653:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7655:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7657:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7659:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7661:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7663:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7665:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7667:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7669:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7671:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7673:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7675:st.global.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7678:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7680:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7682:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7684:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7686:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7688:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7690:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7693:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7695:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7698:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7700:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7702:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7704:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7706:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7708:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7710:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7712:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7715:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7717:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7719:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7721:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7723:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7725:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7727:max.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7729:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7731:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7733:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7735:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7737:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7739:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7741:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7743:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7747:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7749:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7751:not.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7753:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7755:max.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7757:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7759:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7761:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7763:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7765:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7767:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7769:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7771:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7773:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7775:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7777:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7779:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7781:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7783:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7785:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7787:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7789:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7791:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7793:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7796:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7798:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7800:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7803:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7805:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7808:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7810:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7812:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7814:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7816:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7818:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7820:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7822:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7824:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7826:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7828:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7830:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7834:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7842:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7845:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7847:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7851:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7853:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7855:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7857:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7859:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7861:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7863:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7865:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7867:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7871:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7879:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7882:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7885:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7887:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7890:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7892:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7894:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7896:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7898:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7900:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7902:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7904:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7906:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7908:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7910:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7913:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7915:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7918:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7921:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7923:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7925:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7927:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7929:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7931:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7933:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7935:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7937:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7939:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7941:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7943:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7946:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7948:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7951:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7954:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7956:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7958:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7960:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7962:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7964:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7966:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7968:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7970:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7972:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7974:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7976:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7979:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7981:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7984:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7987:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7989:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7991:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7993:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7995:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7997:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp7999:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8001:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8003:abs.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8005:setp.gtu.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8007:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8009:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8012:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8014:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8017:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8020:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8022:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8025:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8028:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8030:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8032:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8034:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8036:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8039:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8041:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8043:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8045:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8047:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8049:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8051:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8053:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8055:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8057:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8059:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8061:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8063:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8065:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8067:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8069:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8071:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8073:setp.lt.s16: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8075:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8077:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8079:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8082:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp8084:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8086:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8088:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8090:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8092:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8094:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8096:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_index_select__gxptx:cpp8098:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8100:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8102:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8104:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8106:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8108:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8110:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8112:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8114:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8117:vote.sync.ballot.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8119:not.pred: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8121:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8123:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8125:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8127:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8129:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8131:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8133:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8135:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8137:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8139:st.global.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8141:bra: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8143:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8145:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8147:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8149:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8151:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8153:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8155:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8157:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8159:atom.global.or.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8162:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8164:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8166:popc.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8168:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8170:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8172:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8174:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_index_select__gxptx:cpp8177:bra: ptx_lane_instructions
+

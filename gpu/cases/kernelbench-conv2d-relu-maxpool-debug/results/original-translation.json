@@ -1,0 +1,35 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-std=c++17",
+        "--use_fast_math",
+        "-arch=sm_80",
+        "gpu/cases/kernelbench-conv2d-relu-maxpool-debug/before.cu",
+        "-o",
+        "/tmp/drperf-fused-original-lbzwhgli/before.ptx"
+      ],
+      "seconds": 0.8635822338983417,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-fused-original-lbzwhgli/before.ptx",
+        "-o",
+        "/tmp/drperf-fused-original-lbzwhgli/before.so"
+      ],
+      "seconds": 1.5011290246620774,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "/tmp/drperf-fused-original-lbzwhgli/.gpu-translate-2oe21o07/module.cpp: In function \u2018void _Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii__gxptx(void**)\u2019:\n/tmp/drperf-fused-original-lbzwhgli/.gpu-translate-2oe21o07/module.cpp:9635:34: error: \u2018WARP_SZ\u2019 was not declared in this scope\n 9635 |     R_r1 = ((uint64_t)(uintptr_t)WARP_SZ);\n      |                                  ^~~~~~~\ndrperf GPU: Command '['g++', '-std=c++17', '-O1', '-fPIC', '-shared', '-fno-strict-aliasing', '-fwrapv', '-Wl,-z,defs', '/tmp/drperf-fused-original-lbzwhgli/.gpu-translate-2oe21o07/module.cpp', '-L/home/ubuntu/drperf/gpu/build', '-ldrperf_gpu', '-Wl,-rpath,/home/ubuntu/drperf/gpu/build', '-o', '/tmp/drperf-fused-original-lbzwhgli/.gpu-translate-2oe21o07/module.so']' returned non-zero exit status 1.\n"
+    }
+  ],
+  "physical_gpu_used": false
+}

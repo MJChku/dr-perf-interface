@@ -1,0 +1,368 @@
+{
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.0042558275163173676,
+      "exit_code": 0,
+      "output": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n"
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-softmax-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/driver"
+      ],
+      "seconds": 0.7629601741209626,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-softmax-debug/before.cu",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/before.ptx"
+      ],
+      "seconds": 0.40749037452042103,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-softmax-_04dkw6a/before.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/before.cubin"
+      ],
+      "seconds": 0.07077388372272253,
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 48.491 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-softmax-_04dkw6a/before.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/before.so"
+      ],
+      "seconds": 1.730459500104189,
+      "exit_code": 0,
+      "output": "drperf GPU translated: /tmp/drperf-softmax-_04dkw6a/before.so\n"
+    },
+    {
+      "argv": [
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/before.so",
+        "before",
+        "train"
+      ],
+      "seconds": 0.2983340732753277,
+      "exit_code": 1,
+      "output": "rows=1 cols=256 pattern=0 index=0 expected=1.30587e-05 actual=6.10006e-10\nsoftmax numerical oracle failed\n"
+    },
+    {
+      "argv": [
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/before.so",
+        "before",
+        "original-width"
+      ],
+      "seconds": 1.4133361605927348,
+      "exit_code": 1,
+      "output": "rows=1 cols=65536 pattern=0 index=2 expected=3.71362e-05 actual=6.99741e-09\nsoftmax numerical oracle failed\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-softmax-debug/synchronized.cu",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.ptx"
+      ],
+      "seconds": 0.42316053435206413,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.cubin"
+      ],
+      "seconds": 0.07228884007781744,
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 48.758 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.so"
+      ],
+      "seconds": 1.7320519490167499,
+      "exit_code": 0,
+      "output": "drperf GPU translated: /tmp/drperf-softmax-_04dkw6a/synchronized.so\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized-train",
+        "--",
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.so",
+        "synchronized",
+        "train"
+      ],
+      "seconds": 9.555286147631705,
+      "exit_code": 0,
+      "output": "{\"suite\":\"train\",\"cases\":18,\"max_absolute_error\":6.36398e-09,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-softmax-_04dkw6a/synchronized-train/report.txt\n  /tmp/drperf-softmax-_04dkw6a/synchronized-train/profile.gpu.drperf.json\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized-heldout",
+        "--",
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/synchronized.so",
+        "synchronized",
+        "heldout"
+      ],
+      "seconds": 39.069605661556125,
+      "exit_code": 0,
+      "output": "{\"suite\":\"heldout\",\"cases\":36,\"max_absolute_error\":1.24277e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-softmax-_04dkw6a/synchronized-heldout/report.txt\n  /tmp/drperf-softmax-_04dkw6a/synchronized-heldout/profile.gpu.drperf.json\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-softmax-debug/after.cu",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/after.ptx"
+      ],
+      "seconds": 0.4780828021466732,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-softmax-_04dkw6a/after.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/after.cubin"
+      ],
+      "seconds": 0.18576911557465792,
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 64 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 148.732 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-softmax-_04dkw6a/after.ptx",
+        "-o",
+        "/tmp/drperf-softmax-_04dkw6a/after.so"
+      ],
+      "seconds": 6.69581326469779,
+      "exit_code": 0,
+      "output": "drperf GPU translated: /tmp/drperf-softmax-_04dkw6a/after.so\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-softmax-_04dkw6a/after-train",
+        "--",
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 9.872871707193553,
+      "exit_code": 0,
+      "output": "{\"suite\":\"train\",\"cases\":18,\"max_absolute_error\":6.36398e-09,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-softmax-_04dkw6a/after-train/report.txt\n  /tmp/drperf-softmax-_04dkw6a/after-train/profile.gpu.drperf.json\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-softmax-_04dkw6a/after-heldout",
+        "--",
+        "/tmp/drperf-softmax-_04dkw6a/driver",
+        "/tmp/drperf-softmax-_04dkw6a/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 38.45647120196372,
+      "exit_code": 0,
+      "output": "{\"suite\":\"heldout\",\"cases\":36,\"max_absolute_error\":1.24277e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-softmax-_04dkw6a/after-heldout/report.txt\n  /tmp/drperf-softmax-_04dkw6a/after-heldout/profile.gpu.drperf.json\n"
+    }
+  ],
+  "modules": {
+    "before": {
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 48.491 ms\n",
+      "metadata": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-softmax-_04dkw6a/before.ptx",
+        "inputSha256": "1fd577ced198fa390cd9fd9bef716dbbadc891e431eebb24c8cf8d7c0df03f59",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "43d8bec1ce7ca39d0588b161c18245c58122b6933f00c7b153e37bc1cde7d6fe",
+        "generatedCpp": "/tmp/drperf-softmax-_04dkw6a/before.so.cpp",
+        "siteMap": "/tmp/drperf-softmax-_04dkw6a/before.so.sites.json",
+        "instructionCoverage": {
+          "schema": "drperf.gpu.instruction-coverage.v1",
+          "scope": "statically emitted instruction traps; includes unexecuted paths; runtime helper validation and numerical correctness are not established",
+          "unsupportedSites": [],
+          "runtimeValidationSites": []
+        },
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "synchronized": {
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 48.758 ms\n",
+      "metadata": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-softmax-_04dkw6a/synchronized.ptx",
+        "inputSha256": "952411ab6cfc54868a0575c544aacae993b228d0c7c505b420fdf24fa1cd16b0",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "e661ec7ab45b50018e185071c103b8e082e5eabc9d3c53dfa5c4d942ccf8ca3d",
+        "generatedCpp": "/tmp/drperf-softmax-_04dkw6a/synchronized.so.cpp",
+        "siteMap": "/tmp/drperf-softmax-_04dkw6a/synchronized.so.sites.json",
+        "instructionCoverage": {
+          "schema": "drperf.gpu.instruction-coverage.v1",
+          "scope": "statically emitted instruction traps; includes unexecuted paths; runtime helper validation and numerical correctness are not established",
+          "unsupportedSites": [],
+          "runtimeValidationSites": []
+        },
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z27softmax_forward_kernel_vec4PKfPfi' for 'sm_80'\nptxas info    : Function properties for _Z27softmax_forward_kernel_vec4PKfPfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 64 registers, used 1 barriers, 372 bytes cmem[0]\nptxas info    : Compile time = 148.732 ms\n",
+      "metadata": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-softmax-_04dkw6a/after.ptx",
+        "inputSha256": "6170a6d99792dcd494a7c60ec6cf3b911023292728e11c307a89885dd1ad1e39",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "956daebb8021300532d16829556b48c5d116854591b067d82e0437ba3024b90c",
+        "generatedCpp": "/tmp/drperf-softmax-_04dkw6a/after.so.cpp",
+        "siteMap": "/tmp/drperf-softmax-_04dkw6a/after.so.sites.json",
+        "instructionCoverage": {
+          "schema": "drperf.gpu.instruction-coverage.v1",
+          "scope": "statically emitted instruction traps; includes unexecuted paths; runtime helper validation and numerical correctness are not established",
+          "unsupportedSites": [],
+          "runtimeValidationSites": []
+        },
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "runs": {
+    "before-train": {
+      "expected_failure": true,
+      "output": "rows=1 cols=256 pattern=0 index=0 expected=1.30587e-05 actual=6.10006e-10\nsoftmax numerical oracle failed\n"
+    },
+    "before-original-width": {
+      "expected_failure": true,
+      "output": "rows=1 cols=65536 pattern=0 index=2 expected=3.71362e-05 actual=6.99741e-09\nsoftmax numerical oracle failed\n"
+    },
+    "synchronized-train": {
+      "numerical_checks": {
+        "suite": "train",
+        "cases": 18,
+        "max_absolute_error": 6.36398e-09,
+        "passed": true
+      },
+      "resource_assertions": "passed",
+      "report": "synchronized-train.json"
+    },
+    "synchronized-heldout": {
+      "numerical_checks": {
+        "suite": "heldout",
+        "cases": 36,
+        "max_absolute_error": 1.24277e-07,
+        "passed": true
+      },
+      "resource_assertions": "passed",
+      "report": "synchronized-heldout.json"
+    },
+    "after-train": {
+      "numerical_checks": {
+        "suite": "train",
+        "cases": 18,
+        "max_absolute_error": 6.36398e-09,
+        "passed": true
+      },
+      "resource_assertions": "passed",
+      "report": "after-train.json"
+    },
+    "after-heldout": {
+      "numerical_checks": {
+        "suite": "heldout",
+        "cases": 36,
+        "max_absolute_error": 1.24277e-07,
+        "passed": true
+      },
+      "resource_assertions": "passed",
+      "report": "after-heldout.json"
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "9699e7d2f51604b14e8b30779367f0adea79fca0efea741f6ddd5ad152f8feee",
+    "driver.cc": "17a700ad4290a3dd2d036a2acf9bca5ad6c1a0b23050f64e34347850791847de",
+    "upstream_ref.py": "1008605e933ef92a34964aa4fee5e7a63125be65f0488edf732c5de2b890e439",
+    "before.cu": "08d437c66ce9f2825045e8e15403049c67a63033ccb95d2f7a24067b114e8719",
+    "run.py": "b3ba724e3526eabf62a488854231551a6b47e6bf7255aab02bf6f6724ef423f2",
+    "after.cu": "f47c952e2bb47c1fef8dc5855c20e58c3647561019e6ec09a3d143253c95419c",
+    "synchronized.cu": "426e48d8a8a630686669dcb1b4192cc07571ddb3c0700ba711869afa803228c6"
+  },
+  "elapsed_seconds": 111.45229056384414
+}

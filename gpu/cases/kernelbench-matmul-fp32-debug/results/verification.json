@@ -1,0 +1,302 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.004136401228606701,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-3z8put51/driver"
+      ],
+      "seconds": 0.7631434174254537,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/before.cu",
+        "-o",
+        "/tmp/drperf-public-3z8put51/before.ptx"
+      ],
+      "seconds": 0.6559638027101755,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/before.cu(34): warning #177-D: variable \"lane_id\" was declared but never referenced\n      const int lane_id = threadIdx.x & 31;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-3z8put51/before.ptx",
+        "-o",
+        "/tmp/drperf-public-3z8put51/before.cubin"
+      ],
+      "seconds": 0.07860590610653162,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 130 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 47.235 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-3z8put51/before.ptx",
+        "-o",
+        "/tmp/drperf-public-3z8put51/before.so"
+      ],
+      "seconds": 3.8542977096512914,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-3z8put51/before.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "450",
+        "--output",
+        "/tmp/drperf-public-3z8put51/before-train",
+        "--",
+        "/tmp/drperf-public-3z8put51/driver",
+        "/tmp/drperf-public-3z8put51/before.so",
+        "before",
+        "train"
+      ],
+      "seconds": 53.1036980766803,
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/before-train/report.txt\n  /tmp/drperf-public-3z8put51/before-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "450",
+        "--output",
+        "/tmp/drperf-public-3z8put51/before-heldout",
+        "--",
+        "/tmp/drperf-public-3z8put51/driver",
+        "/tmp/drperf-public-3z8put51/before.so",
+        "before",
+        "heldout"
+      ],
+      "seconds": 56.76086666993797,
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":3,\"failures\":0,\"max_error\":0}\n{\"N\":384,\"pattern\":0,\"failures\":0,\"max_error\":2.52832e-06}\n{\"cases\":2,\"failed_cases\":0,\"max_error\":2.52832e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/before-heldout/report.txt\n  /tmp/drperf-public-3z8put51/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/after.cu",
+        "-o",
+        "/tmp/drperf-public-3z8put51/after.ptx"
+      ],
+      "seconds": 0.6693580904975533,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/after.cu(34): warning #177-D: variable \"lane_id\" was declared but never referenced\n      const int lane_id = threadIdx.x & 31;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-3z8put51/after.ptx",
+        "-o",
+        "/tmp/drperf-public-3z8put51/after.cubin"
+      ],
+      "seconds": 0.0737739335745573,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 126 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 43.017 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-3z8put51/after.ptx",
+        "-o",
+        "/tmp/drperf-public-3z8put51/after.so"
+      ],
+      "seconds": 3.807317362166941,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-3z8put51/after.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "450",
+        "--output",
+        "/tmp/drperf-public-3z8put51/after-train",
+        "--",
+        "/tmp/drperf-public-3z8put51/driver",
+        "/tmp/drperf-public-3z8put51/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 51.39179729204625,
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/after-train/report.txt\n  /tmp/drperf-public-3z8put51/after-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "450",
+        "--output",
+        "/tmp/drperf-public-3z8put51/after-heldout",
+        "--",
+        "/tmp/drperf-public-3z8put51/driver",
+        "/tmp/drperf-public-3z8put51/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 53.905173684470356,
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":3,\"failures\":16384,\"max_error\":3.8147e-06}\n{\"N\":384,\"pattern\":0,\"failures\":0,\"max_error\":2.52832e-06}\n{\"cases\":2,\"failed_cases\":1,\"max_error\":3.8147e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/after-heldout/report.txt\n  /tmp/drperf-public-3z8put51/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "before-train": {
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/before-train/report.txt\n  /tmp/drperf-public-3z8put51/before-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "numerical_status": "passed",
+      "numerical_summary": {
+        "cases": 6,
+        "failed_cases": 0,
+        "max_error": 1.51753e-06
+      },
+      "resource_assertions": "passed"
+    },
+    "before-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":3,\"failures\":0,\"max_error\":0}\n{\"N\":384,\"pattern\":0,\"failures\":0,\"max_error\":2.52832e-06}\n{\"cases\":2,\"failed_cases\":0,\"max_error\":2.52832e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/before-heldout/report.txt\n  /tmp/drperf-public-3z8put51/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "numerical_status": "passed",
+      "numerical_summary": {
+        "cases": 2,
+        "failed_cases": 0,
+        "max_error": 2.52832e-06
+      },
+      "resource_assertions": "passed"
+    },
+    "after-train": {
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/after-train/report.txt\n  /tmp/drperf-public-3z8put51/after-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "numerical_status": "passed",
+      "numerical_summary": {
+        "cases": 6,
+        "failed_cases": 0,
+        "max_error": 1.51753e-06
+      },
+      "resource_assertions": "passed"
+    },
+    "after-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":3,\"failures\":16384,\"max_error\":3.8147e-06}\n{\"N\":384,\"pattern\":0,\"failures\":0,\"max_error\":2.52832e-06}\n{\"cases\":2,\"failed_cases\":1,\"max_error\":3.8147e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-3z8put51/after-heldout/report.txt\n  /tmp/drperf-public-3z8put51/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "numerical_status": "rejected",
+      "numerical_summary": {
+        "cases": 2,
+        "failed_cases": 1,
+        "max_error": 3.8147e-06
+      },
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "before": {
+      "ptx_sha256": "6ce3714a409170d57de300adc49a2e84682e56a25160cd8d37ee4a2a93b871c1",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 130 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 47.235 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-3z8put51/before.ptx",
+        "inputSha256": "6ce3714a409170d57de300adc49a2e84682e56a25160cd8d37ee4a2a93b871c1",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "aa1854b17432902b8300d9a6d7ebad5150c651a029815e3ae46fdfd06a43c9c2",
+        "generatedCpp": "/tmp/drperf-public-3z8put51/before.so.cpp",
+        "siteMap": "/tmp/drperf-public-3z8put51/before.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptx_sha256": "b84184230751481b871a7614d02d3cfd79da2320dc70d15de281a98b40baf187",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 126 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 43.017 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-3z8put51/after.ptx",
+        "inputSha256": "b84184230751481b871a7614d02d3cfd79da2320dc70d15de281a98b40baf187",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "3d42310f22e546577add68a23ee55f79dea9aac81b31f6a7210b346d8ad3f659",
+        "generatedCpp": "/tmp/drperf-public-3z8put51/after.so.cpp",
+        "siteMap": "/tmp/drperf-public-3z8put51/after.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "3002dd1560549336a517741c72fad06e9fde51197f34d74bf6258f7e36558285",
+    "driver.cc": "40c67b07880902d898010b292c5c3385be660be6591dbcb01c2d4ef8c0f2ae73",
+    "upstream_ref.py": "a0ea40f6928a7b0dc8378f203c7c8191d35196a8e4d800e692816b07f1e30dc1",
+    "before.cu": "4de4db44b440f4442cafe824fbde4724c792458e1f79f0bdf6685a8833b4032b",
+    "run.py": "84bfecfd32c6b4152327f31b474069bc09b05bc78a192b5568c55af6e6cbb2c6",
+    "after.cu": "61e5087528a660e0722917ed3f1a1196ac8a504a24bc5f7f912cbdd7487d4d39"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 225.1404431629926
+}

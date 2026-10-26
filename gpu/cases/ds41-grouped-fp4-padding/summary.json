@@ -1,0 +1,27 @@
+{
+  "case": "ds41-grouped-fp4-padding",
+  "contribution": "QUANTIFIED",
+  "status": "pass",
+  "variants": [
+    {
+      "name": "control",
+      "status": "pass",
+      "numerical_status": "pass"
+    },
+    {
+      "name": "tight",
+      "status": "pass",
+      "numerical_status": "pass"
+    }
+  ],
+  "region_records": 2,
+  "distinct_state_sum": 16,
+  "physical_gpu_used": false,
+  "full_receipts": [
+    "eval/drperf-gpu/grouped-tight-control32",
+    "eval/drperf-gpu/grouped-tight-tight16",
+    "eval/grouped-tight-source.json"
+  ],
+  "expected_interfaces": "expected_interfaces.json",
+  "measured_timing_not_from_drperf": "No H100 timing: exact production control fails CPU coverage preflight on dp2a.lo.u32.u32; it was excluded from the native batch."
+}

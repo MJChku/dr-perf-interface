@@ -1,0 +1,20 @@
+--- compatible.cu
++++ after.cu
+@@ -81,7 +81,7 @@
+     const float* __restrict__ input_ptr,    // Input: (N, Cin, Hin, Win)
+     const float* __restrict__ weight_ptr,   // Weights: (Cout, Cin, Kh, Kw)
+     const float* __restrict__ bias_ptr,     // Bias: (Cout) or nullptr
+-    float* __restrict__ output_final_ptr,   // Output: (N, Cout, H_pool_out, W_pool_out), PRE-INITIALIZED TO -std::numeric_limits<float>::max()
++    float* __restrict__ output_final_ptr,   // Output: (N, Cout, H_pool_out, W_pool_out), PRE-INITIALIZED TO 0.0f
+     const int N_batch, const int C_in, const int H_in, const int W_in,
+     const int C_out, const int K_h, const int K_w,
+     const int stride_h, const int stride_w,
+@@ -468,7 +468,7 @@
+                             (unsigned long long)oc_idx * H_pool_out * W_pool_out +
+                             (unsigned long long)hp * W_pool_out +
+                             wp;
+-                        atomicMax_float_optimized(&output_final_ptr[final_out_idx], relu_val);
++                        if (relu_val > 0.0f) atomicMax_float_optimized(&output_final_ptr[final_out_idx], relu_val);
+                     }
+                 }
+             }

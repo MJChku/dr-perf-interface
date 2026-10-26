@@ -1,0 +1,12 @@
+{
+  "pcvs": "Proposed full-kernel: real_rows,padded_rows,active_experts,N,K,chunk_size. Minimal failing instruction probe declares lanes=1.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "unsupported-probe",
+      "ptx": "probe.ptx",
+      "defines": [],
+      "expected_blocker": "unsupported GPU PTX operation: dp2a.lo.u32.u32"
+    }
+  ]
+}

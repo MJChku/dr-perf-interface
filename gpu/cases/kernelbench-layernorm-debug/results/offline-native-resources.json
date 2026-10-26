@@ -1,0 +1,40 @@
+{
+  "physical_gpu_used": false,
+  "source_sha256": "7db7f3d013dcd3426823dfe4f7b5c33b803766b5d56262b1d29365915f82f601",
+  "compilations": [
+    {
+      "target": "sm_80",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_80",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "gpu/cases/kernelbench-layernorm-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-resources-akfpzb_y/layernorm-sm_80.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 27 registers, used 1 barriers, 8 bytes smem, 408 bytes cmem[0]\nptxas info    : Compile time = 9.942 ms\nptxas info    : Compiling entry function '_ZN9optimized25layernorm_finalize_kernelEPKfPfS2_iif' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized25layernorm_finalize_kernelEPKfPfS2_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.123 ms\nptxas info    : Compiling entry function '_ZN9optimized28layernorm_partial_sum_kernelEPKfPfii' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized28layernorm_partial_sum_kernelEPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 7.706 ms\nptxas info    : Compiling entry function '_ZN8baseline22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 25 registers, used 0 barriers, 408 bytes cmem[0]\nptxas info    : Compile time = 7.616 ms\nptxas info    : Compiling entry function '_ZN8baseline25layernorm_finalize_kernelEPKfPfS2_iif' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline25layernorm_finalize_kernelEPKfPfS2_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.231 ms\nptxas info    : Compiling entry function '_ZN8baseline28layernorm_partial_sum_kernelEPKfPfii' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline28layernorm_partial_sum_kernelEPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 7.692 ms\n"
+    },
+    {
+      "target": "sm_103",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_103",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "gpu/cases/kernelbench-layernorm-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-resources-akfpzb_y/layernorm-sm_103.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 8 bytes smem\nptxas info    : Compile time = 13.854 ms\nptxas info    : Compiling entry function '_ZN9optimized25layernorm_finalize_kernelEPKfPfS2_iif' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized25layernorm_finalize_kernelEPKfPfS2_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers\nptxas info    : Compile time = 14.559 ms\nptxas info    : Compiling entry function '_ZN9optimized28layernorm_partial_sum_kernelEPKfPfii' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized28layernorm_partial_sum_kernelEPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 21 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 6.726 ms\nptxas info    : Compiling entry function '_ZN8baseline22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline22layernorm_apply_kernelEPKfS1_S1_S1_S1_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers\nptxas info    : Compile time = 10.305 ms\nptxas info    : Compiling entry function '_ZN8baseline25layernorm_finalize_kernelEPKfPfS2_iif' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline25layernorm_finalize_kernelEPKfPfS2_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers\nptxas info    : Compile time = 13.662 ms\nptxas info    : Compiling entry function '_ZN8baseline28layernorm_partial_sum_kernelEPKfPfii' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline28layernorm_partial_sum_kernelEPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 21 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 7.056 ms\n"
+    }
+  ]
+}

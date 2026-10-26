@@ -1,0 +1,62 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_hc_post_merge"
+  18 invocations, 18 states
+  blocks = 1 * blocks [accepted; max error 0]
+  conversion_ops = 1536 * blocks [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 128 * blocks [accepted; max error 0]
+  fp32_flops = 6.24641e-14 * arg_dim + 29013.3 * arg_kind + 1.194e-11 * arg_rows + 1216 * blocks - 14506.7 [UNEXPLAINED; max error 67413.3]
+  global_read_bytes = 6.87105e-13 * arg_dim + 116053 * arg_kind + 2.38801e-10 * arg_rows + 4352 * blocks - 58026.7 [UNEXPLAINED; max error 269653]
+  global_unique_read_bytes = 5.46561e-14 * arg_dim + 29013.3 * arg_kind + 80 * arg_rows + 448 * blocks - 14506.7 [UNEXPLAINED; max error 67413.3]
+  global_unique_read_line_bytes = 2.3424e-14 * arg_dim + 29013.3 * arg_kind + 88.6154 * arg_rows + 448 * blocks - 14434.5 [UNEXPLAINED; max error 67426.5]
+  global_unique_read_lines = 1.83e-16 * arg_dim + 226.667 * arg_kind + 0.692308 * arg_rows + 3.5 * blocks - 112.769 [UNEXPLAINED; max error 526.769]
+  global_unique_read_sector_bytes = 4.68481e-14 * arg_dim + 29013.3 * arg_kind + 96 * arg_rows + 448 * blocks - 14506.7 [UNEXPLAINED; max error 67413.3]
+  global_unique_read_sectors = 1.464e-15 * arg_dim + 906.667 * arg_kind + 3 * arg_rows + 14 * blocks - 453.333 [UNEXPLAINED; max error 2106.67]
+  global_unique_write_bytes = 256 * blocks [accepted; max error 0]
+  global_unique_write_line_bytes = 256 * blocks + 128 [accepted; max error 0]
+  global_unique_write_lines = 2 * blocks + 1 [accepted; max error 0]
+  global_unique_write_sector_bytes = 256 * blocks [accepted; max error 0]
+  global_unique_write_sectors = 8 * blocks [accepted; max error 0]
+  global_write_bytes = 256 * blocks [accepted; max error 0]
+  integer_ops = 1.24928e-13 * arg_dim + 261120 * arg_kind + 8512 * blocks - 130560 [UNEXPLAINED; max error 606720]
+  launched_lanes = 128 * blocks [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 6656 * blocks [accepted; max error 0]
+  ptx_lane_instructions = 1.49914e-12 * arg_dim + 406187 * arg_kind + 5.73122e-10 * arg_rows + 16640 * blocks - 203093 [UNEXPLAINED; max error 943787]
+  sum_block_lane_sequence_span = 1.1712e-14 * arg_dim + 3173.33 * arg_kind + 4.47751e-12 * arg_rows + 130 * blocks - 1586.67 [UNEXPLAINED; max error 7373.33]
+  sum_block_max_lane_bytes = 7.80801e-15 * arg_dim + 906.667 * arg_kind + 2.98501e-12 * arg_rows + 88 * blocks - 453.333 [UNEXPLAINED; max error 2106.67]
+  sum_block_max_lane_flops = 4.88001e-16 * arg_dim + 226.667 * arg_kind + 9.32815e-14 * arg_rows + 9.5 * blocks - 113.333 [UNEXPLAINED; max error 526.667]
+  sum_launch_max_block_lane_sequence_span = 14 * arg_kind + 123 [accepted; max error 0]
+  warps = 4 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: elements, launched_lanes, real_rows, scale_groups, width
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2043:bra: ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2045:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2047:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2049:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2051:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2053:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2055:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2057:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2059:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2061:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2063:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2065:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2067:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2069:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2071:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2073:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2118:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2136:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2142:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2158:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2164:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2176:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2182:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2194:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_hc_post_merge__gxptx:cpp2200:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines
+

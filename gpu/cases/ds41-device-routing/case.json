@@ -1,0 +1,36 @@
+{
+  "case": "ds41-device-routing",
+  "kernel": "Full384-way router/top6 and initializer",
+  "label": "POTENTIAL",
+  "role": "Chooses six experts from full logits while retaining route IDs and weights on device.",
+  "pcvs": "rows,expert_count384,selected_routes6,logit/input/output strides; initializer count/format.",
+  "finding": "Bounded independent fixture covers full384-score routing and deterministic payload initialization. Baseline resource interface only; no DrPerf-found routing fix is asserted.",
+  "fix_status": "Captured baseline; router/top-k/scatter fusion remains proposed.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": []
+    }
+  ],
+  "receipts": [
+    "eval/decode-one-token-launches.json"
+  ],
+  "timing": "No isolated native timing for this case.",
+  "expect": [],
+  "detail": "",
+  "proposed": false,
+  "input_hashes": {
+    "check_interfaces.py": "baca6825f9a379b9d191f220a948fdef575a584bac83e10a6af01f84ed9a07eb",
+    "driver.cpp": "d464db1cf4f6060222d214344215057e141d6e44a7539ee9d3f20f9d8215e830",
+    "expected_interfaces.json": "88e2edbe74151f88d45f6a1d03a87c038a13fe52983bfd9022f9d80bb6fbfb08",
+    "kernel.ptx": "7df809bc0276e6f059d6c993a542b504b3d1371b97c984ac9ce2eb442b6dedf8",
+    "support/ds41/decode_metadata.hpp": "bd731e2c0833e4c458645bfe8ced4b6c6d7588ac2664389d14118f16b82909b2",
+    "support/ds41/drperf_gpu_argument_pcvs.inc": "5eb2fefb2fadfbb3547ff8c57f45dac51e4646d41fd2e9a6ded7f83c4c723422",
+    "support/ds41/gx_fixture.hpp": "9f3f18251fe9d05d397698c69f15d2d8bd71a7d2d3552b8dca97c1ca3da3eaaf",
+    "support/ds41/synthetic.hpp": "c76f606ed05490b0b69aeac8a42f1d3861b3bd6fcaa7d2d0c4468acb2632003f",
+    "toolchain.json": "a988cc1a10cc697d04aaf2acee9917dcb8d15834a504f9289690daffda15628f"
+  },
+  "execution_timeout": 300,
+  "command_timeout": 360
+}

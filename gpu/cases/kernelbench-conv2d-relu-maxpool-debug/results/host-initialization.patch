@@ -1,0 +1,11 @@
+--- upstream_src.py
++++ zero-initialized_src.py
+@@ -513,7 +513,7 @@
+ 
+     auto output_final = torch::full(
+         {N_batch, C_out, H_pool_out_eff, W_pool_out_eff}, 
+-        -std::numeric_limits<float>::max(), 
++        0.0f, 
+         input.options()
+     );
+ 

@@ -1,0 +1,349 @@
+{
+  "assertions": [
+    "baseline global writes =4*pool_updates",
+    "candidate global writes =4*positive_updates",
+    "tensor work unchanged in every matched state"
+  ],
+  "states": {
+    "train": [
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 256,
+          "positive_updates": 0,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 2176.0,
+        "after_read_bytes": 1152.0,
+        "baseline_write_bytes": 1024.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 256,
+          "positive_updates": 186,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 2176.0,
+        "after_read_bytes": 1896.0,
+        "baseline_write_bytes": 1024.0,
+        "after_write_bytes": 744.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 256,
+          "positive_updates": 256,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 2176.0,
+        "after_read_bytes": 2176.0,
+        "baseline_write_bytes": 1024.0,
+        "after_write_bytes": 1024.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 576,
+          "positive_updates": 0,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 4480.0,
+        "after_read_bytes": 2176.0,
+        "baseline_write_bytes": 2304.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 576,
+          "positive_updates": 279,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 4480.0,
+        "after_read_bytes": 3292.0,
+        "baseline_write_bytes": 2304.0,
+        "after_write_bytes": 1116.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 256,
+          "pool_outputs": 64,
+          "pool_updates": 576,
+          "positive_updates": 576,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 4480.0,
+        "after_read_bytes": 4480.0,
+        "baseline_write_bytes": 2304.0,
+        "after_write_bytes": 2304.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 512.0,
+        "after_fp32_flops": 512.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1024,
+          "pool_outputs": 256,
+          "pool_updates": 1024,
+          "positive_updates": 0,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 8448.0,
+        "after_read_bytes": 4352.0,
+        "baseline_write_bytes": 4096.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 2048.0,
+        "after_fp32_flops": 2048.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1024,
+          "pool_outputs": 256,
+          "pool_updates": 1024,
+          "positive_updates": 570,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 8448.0,
+        "after_read_bytes": 6632.0,
+        "baseline_write_bytes": 4096.0,
+        "after_write_bytes": 2280.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 2048.0,
+        "after_fp32_flops": 2048.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1024,
+          "pool_outputs": 256,
+          "pool_updates": 1024,
+          "positive_updates": 1024,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 8448.0,
+        "after_read_bytes": 8448.0,
+        "baseline_write_bytes": 4096.0,
+        "after_write_bytes": 4096.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 2048.0,
+        "after_fp32_flops": 2048.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 192,
+          "pool_updates": 1728,
+          "positive_updates": 0,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 19712.0,
+        "after_read_bytes": 13824.0,
+        "baseline_write_bytes": 6912.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 1024.0,
+        "baseline_fp32_flops": 2560.0,
+        "after_fp32_flops": 3072.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 192,
+          "pool_updates": 1728,
+          "positive_updates": 1028,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 19712.0,
+        "after_read_bytes": 17936.0,
+        "baseline_write_bytes": 6912.0,
+        "after_write_bytes": 4112.0,
+        "extra_nonatomic_read_bytes": 1024.0,
+        "baseline_fp32_flops": 2560.0,
+        "after_fp32_flops": 3072.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 192,
+          "pool_updates": 1728,
+          "positive_updates": 1728,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 19712.0,
+        "after_read_bytes": 20736.0,
+        "baseline_write_bytes": 6912.0,
+        "after_write_bytes": 6912.0,
+        "extra_nonatomic_read_bytes": 1024.0,
+        "baseline_fp32_flops": 2560.0,
+        "after_fp32_flops": 3072.0
+      }
+    ],
+    "heldout": [
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 1120,
+          "pool_updates": 4480,
+          "positive_updates": 0,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 24512.0,
+        "after_read_bytes": 6592.0,
+        "baseline_write_bytes": 17920.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3072.0,
+        "after_fp32_flops": 3072.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 1120,
+          "pool_updates": 4480,
+          "positive_updates": 2240,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 24512.0,
+        "after_read_bytes": 15552.0,
+        "baseline_write_bytes": 17920.0,
+        "after_write_bytes": 8960.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3072.0,
+        "after_fp32_flops": 3072.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1536,
+          "pool_outputs": 1120,
+          "pool_updates": 4480,
+          "positive_updates": 4480,
+          "tile_products": 1
+        },
+        "baseline_read_bytes": 24512.0,
+        "after_read_bytes": 24512.0,
+        "baseline_write_bytes": 17920.0,
+        "after_write_bytes": 17920.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3072.0,
+        "after_fp32_flops": 3072.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1683,
+          "pool_outputs": 340,
+          "pool_updates": 3060,
+          "positive_updates": 0,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 30108.0,
+        "after_read_bytes": 17868.0,
+        "baseline_write_bytes": 12240.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3366.0,
+        "after_fp32_flops": 3366.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1683,
+          "pool_outputs": 340,
+          "pool_updates": 3060,
+          "positive_updates": 1388,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 30108.0,
+        "after_read_bytes": 23420.0,
+        "baseline_write_bytes": 12240.0,
+        "after_write_bytes": 5552.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3366.0,
+        "after_fp32_flops": 3366.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 1683,
+          "pool_outputs": 340,
+          "pool_updates": 3060,
+          "positive_updates": 3060,
+          "tile_products": 2
+        },
+        "baseline_read_bytes": 30108.0,
+        "after_read_bytes": 30108.0,
+        "baseline_write_bytes": 12240.0,
+        "after_write_bytes": 12240.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 3366.0,
+        "after_fp32_flops": 3366.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 4704,
+          "pool_outputs": 864,
+          "pool_updates": 7776,
+          "positive_updates": 0,
+          "tile_products": 23
+        },
+        "baseline_read_bytes": 255024.0,
+        "after_read_bytes": 223920.0,
+        "baseline_write_bytes": 31104.0,
+        "after_write_bytes": 0.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 9408.0,
+        "after_fp32_flops": 9408.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 4704,
+          "pool_outputs": 864,
+          "pool_updates": 7776,
+          "positive_updates": 4001,
+          "tile_products": 23
+        },
+        "baseline_read_bytes": 255024.0,
+        "after_read_bytes": 239924.0,
+        "baseline_write_bytes": 31104.0,
+        "after_write_bytes": 16004.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 9408.0,
+        "after_fp32_flops": 9408.0
+      },
+      {
+        "pcvs": {
+          "conv_outputs": 4704,
+          "pool_outputs": 864,
+          "pool_updates": 7776,
+          "positive_updates": 7776,
+          "tile_products": 23
+        },
+        "baseline_read_bytes": 255024.0,
+        "after_read_bytes": 255024.0,
+        "baseline_write_bytes": 31104.0,
+        "after_write_bytes": 31104.0,
+        "extra_nonatomic_read_bytes": 0.0,
+        "baseline_fp32_flops": 9408.0,
+        "after_fp32_flops": 9408.0
+      }
+    ]
+  }
+}

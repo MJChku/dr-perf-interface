@@ -1,0 +1,159 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.003944197669625282,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-x357hmwl/driver"
+      ],
+      "seconds": 0.7479024371132255,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/before.cu",
+        "-o",
+        "/tmp/drperf-public-x357hmwl/before.ptx"
+      ],
+      "seconds": 0.6519459802657366,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/home/ubuntu/drperf/gpu/cases/kernelbench-matmul-fp32-debug/before.cu(34): warning #177-D: variable \"lane_id\" was declared but never referenced\n      const int lane_id = threadIdx.x & 31;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-x357hmwl/before.ptx",
+        "-o",
+        "/tmp/drperf-public-x357hmwl/before.cubin"
+      ],
+      "seconds": 0.07627151533961296,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 130 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 46.881 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-x357hmwl/before.ptx",
+        "-o",
+        "/tmp/drperf-public-x357hmwl/before.so"
+      ],
+      "seconds": 3.871223483234644,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-x357hmwl/before.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-x357hmwl/before-train",
+        "--",
+        "/tmp/drperf-public-x357hmwl/driver",
+        "/tmp/drperf-public-x357hmwl/before.so",
+        "before",
+        "train"
+      ],
+      "seconds": 53.1102859871462,
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-x357hmwl/before-train/report.txt\n  /tmp/drperf-public-x357hmwl/before-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-x357hmwl/before-heldout",
+        "--",
+        "/tmp/drperf-public-x357hmwl/driver",
+        "/tmp/drperf-public-x357hmwl/before.so",
+        "before",
+        "heldout"
+      ],
+      "seconds": 120.06598652619869,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "drperf GPU: Command '['/tmp/drperf-public-x357hmwl/driver', '/tmp/drperf-public-x357hmwl/before.so', 'before', 'heldout']' timed out after 119.99999181460589 seconds\n"
+    }
+  ],
+  "runs": {
+    "before-train": {
+      "exit_code": 0,
+      "stdout": "{\"N\":128,\"pattern\":0,\"failures\":0,\"max_error\":8.06646e-07}\n{\"N\":128,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":128,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":0,\"failures\":0,\"max_error\":1.51753e-06}\n{\"N\":256,\"pattern\":1,\"failures\":0,\"max_error\":0}\n{\"N\":256,\"pattern\":2,\"failures\":0,\"max_error\":0}\n{\"cases\":6,\"failed_cases\":0,\"max_error\":1.51753e-06}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-x357hmwl/before-train/report.txt\n  /tmp/drperf-public-x357hmwl/before-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "before-heldout": {
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "drperf GPU: Command '['/tmp/drperf-public-x357hmwl/driver', '/tmp/drperf-public-x357hmwl/before.so', 'before', 'heldout']' timed out after 119.99999181460589 seconds\n"
+    }
+  },
+  "modules": {
+    "before": {
+      "ptx_sha256": "6ce3714a409170d57de300adc49a2e84682e56a25160cd8d37ee4a2a93b871c1",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z18matmul_kernel_wmmaPKfS0_Pfi' for 'sm_80'\nptxas info    : Function properties for _Z18matmul_kernel_wmmaPKfS0_Pfi\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 130 registers, used 1 barriers, 24576 bytes smem, 380 bytes cmem[0]\nptxas info    : Compile time = 46.881 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-x357hmwl/before.ptx",
+        "inputSha256": "6ce3714a409170d57de300adc49a2e84682e56a25160cd8d37ee4a2a93b871c1",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "aa1854b17432902b8300d9a6d7ebad5150c651a029815e3ae46fdfd06a43c9c2",
+        "generatedCpp": "/tmp/drperf-public-x357hmwl/before.so.cpp",
+        "siteMap": "/tmp/drperf-public-x357hmwl/before.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "3002dd1560549336a517741c72fad06e9fde51197f34d74bf6258f7e36558285",
+    "driver.cc": "8eeb38293ca756e43225904a0faa2b9a73ad88dac767d48c8cbf65c6327e5ded",
+    "upstream_ref.py": "a0ea40f6928a7b0dc8378f203c7c8191d35196a8e4d800e692816b07f1e30dc1",
+    "before.cu": "4de4db44b440f4442cafe824fbde4724c792458e1f79f0bdf6685a8833b4032b",
+    "run.py": "fd537976b3ece879ee84a6f9994a1edffeb751e757a56d53103e09d1a1e2bacb"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 178.55534715857357
+}

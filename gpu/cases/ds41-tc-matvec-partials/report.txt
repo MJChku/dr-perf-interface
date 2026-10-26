@@ -1,0 +1,7 @@
+Contribution: FOUND
+Control stores K32 FP32 partials globally, then launches a finish reduction. Fused kernel holds partials in shared memory; compute+finish becomes one launch. Tensor work stays 8192*tile_groups.
+Status: pass
+control: pass; see results/control/report.txt
+fused: pass; see results/fused/report.txt
+
+Measured timing (not from DrPerf): Actual H100 production shapes, separate from small-shape CPU resource fixtures: QA N1280/K5120 M1 23.2945→20.144 µs, M4 41.374→30.5755; KV N512/K5120 M1 19.807→19.904 (fused rejected), M4 26.7355→20.4. Receipt: /home/ubuntu/gen-deepseek41/eval/profiles/gpu/ds41-prof-20261026-002107. Summary: /home/ubuntu/gen-deepseek41/eval/tc-route-parallel-results.json. No new serving claim; identical-DB pair pending disk.

@@ -1,0 +1,19 @@
+--- compatible.cu
++++ after.cu
+@@ -17,14 +17,14 @@
+ #define CUDA_WARP_SIZE_CONST 32 
+ 
+ // Threadblock configuration
+-#define WARPS_PER_BLOCK 8
++#define WARPS_PER_BLOCK 6
+ // THREADS_PER_BLOCK must be evaluatable by host compiler for blockDim configuration
+ #define THREADS_PER_BLOCK (WARPS_PER_BLOCK * CUDA_WARP_SIZE_CONST) 
+ 
+ // Macro-tile dimensions computed by a threadblock
+ // BLOCK_M_TILES_WMMA * WMMA_M = output channels processed by a block
+ // BLOCK_N_TILES_WMMA * WMMA_N = output spatial elements processed by a block
+-#define BLOCK_M_TILES_WMMA 8
++#define BLOCK_M_TILES_WMMA 6
+ #define BLOCK_N_TILES_WMMA 8
+ 
+ #define TILE_M_PER_BLOCK (BLOCK_M_TILES_WMMA * WMMA_M) // e.g., 8 * 16 = 128 (for C_out dimension)

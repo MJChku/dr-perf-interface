@@ -1,0 +1,11 @@
+--- before.cu
++++ after.cu
+@@ -141,7 +141,7 @@
+             // 3) lo * hi
+             wmma::mma_sync(c_frag[n], a_lo_frag, b_hi_frag, c_frag[n]);
+             // 4) lo * lo
+-            wmma::mma_sync(c_frag[n], a_lo_frag, b_lo_frag, c_frag[n]);
++            // Candidate: omit low*low. Rejected unless independent oracle passes.
+         }
+ 
+         __syncthreads();

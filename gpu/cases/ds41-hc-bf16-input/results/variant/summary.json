@@ -1,0 +1,843 @@
+{
+  "validity": "complete",
+  "semantics": {
+    "work": "dynamic PTX operations, separate from CPU instructions",
+    "memory": "requested PTX bytes; unresolved generic addresses remain generic; not cache transactions or HBM traffic",
+    "parallelism": "logical launch geometry, per-block maximum lane work, and lane-sequence span with block-barrier joins; no GPU cycle estimate",
+    "spanLimitations": "lane instruction order serializes independent instructions; warp-exchange joins and cross-block dependency edges are not modeled",
+    "diagnostics": "emulator_* counters describe execution machinery, not GPU barriers; block_barrier_lane_arrivals and collective_lane_arrivals come from PTX",
+    "composition": "host and device region work is exclusive; device regions own the innermost annotated lane work; launches[].metrics are inclusive totals",
+    "deviceRegions": "lane scopes retain individual invocations and PCVs; warp/block scopes require complete physical membership and identical PCVs; no implicit synchronization; scoped span is not inferred",
+    "annotationOverhead": "marker calls and marker bodies are not work; ordinary PTX for PCV expressions and parameter staging is counted; annotations may affect compiler optimization",
+    "time": "no latency, occupancy, throughput or hardware calibration is inferred"
+  },
+  "provenance": {
+    "command": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-hc-bf16-input/.work/variant-oracle",
+      "/home/ubuntu/drperf/gpu/cases/ds41-hc-bf16-input/.work/variant.so"
+    ],
+    "rawCaptures": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-hc-bf16-input/results/variant/capture/capture-cajqwwrk/gpu.2562532.jsonl"
+    ],
+    "runtimeSha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+    "vendoredGX": "cc6dfacbe333c7a5892c1247ad2d7f9c9f464d68"
+  },
+  "regions": [
+    {
+      "name": "ds41_hc_bf16_splitk",
+      "pcvs": [
+        "arg_input_stride",
+        "arg_k",
+        "arg_n",
+        "arg_rows",
+        "arg_splits",
+        "arg_weight_stride",
+        "blocks",
+        "launched_lanes"
+      ],
+      "stateCount": 5,
+      "invocations": 5,
+      "singleState": false,
+      "fits": {
+        "blocks": {
+          "coefficients": {
+            "arg_splits": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "collective_lane_arrivals": {
+          "coefficients": {
+            "arg_splits": 3840
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 3840,
+          "observedMax": 491520,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "arg_input_stride": 16,
+            "arg_splits": 768
+          },
+          "constant": -112,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2816,
+          "observedMax": 425984,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "emulator_rendezvous_lane_arrivals": {
+          "coefficients": {
+            "arg_splits": 3840
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 3840,
+          "observedMax": 491520,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {
+            "arg_splits": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {
+            "arg_splits": 256
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "arg_input_stride": 48,
+            "arg_splits": 3840
+          },
+          "constant": -336,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 9984,
+          "observedMax": 1474560,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "arg_input_stride": 112
+          },
+          "constant": -784,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 14336,
+          "observedMax": 2293760,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "arg_input_stride": 98
+          },
+          "constant": -686,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 12544,
+          "observedMax": 2007040,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "arg_input_stride": 98
+          },
+          "constant": 338,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 13568,
+          "observedMax": 2008064,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "arg_input_stride": 0.7656249999999999
+          },
+          "constant": 2.640625000001819,
+          "maxAbsoluteError": 1.8047785488306545e-12,
+          "accepted": true,
+          "observedMin": 106,
+          "observedMax": 15688,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "arg_input_stride": 98
+          },
+          "constant": -14,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 13216,
+          "observedMax": 2007712,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "arg_input_stride": 3.0624999999999996
+          },
+          "constant": -0.43749999999272404,
+          "maxAbsoluteError": 7.219114195322618e-12,
+          "accepted": true,
+          "observedMin": 413,
+          "observedMax": 62741,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {
+            "arg_splits": 96
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 96,
+          "observedMax": 12288,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {
+            "arg_input_stride": -0.0004339282731028844,
+            "arg_splits": 95.91781977078462
+          },
+          "constant": 14.478144117704687,
+          "maxAbsoluteError": 17.66261642837958,
+          "accepted": false,
+          "observedMin": 128,
+          "observedMax": 12288,
+          "unexplainedMean": 5248.0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {
+            "arg_input_stride": -3.3900646336162845e-06,
+            "arg_splits": 0.7493579669592548
+          },
+          "constant": 0.11311050091956787,
+          "maxAbsoluteError": 0.13798919084671546,
+          "accepted": false,
+          "observedMin": 1,
+          "observedMax": 96,
+          "unexplainedMean": 41.0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {
+            "arg_splits": 96
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 96,
+          "observedMax": 12288,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {
+            "arg_splits": 3
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 3,
+          "observedMax": 384,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "arg_splits": 96
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 96,
+          "observedMax": 12288,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "arg_input_stride": 116.19491768742265,
+            "arg_splits": 4999.688144428686
+          },
+          "constant": -26320.072483378462,
+          "maxAbsoluteError": 53298.71133427881,
+          "accepted": false,
+          "observedMin": 20224,
+          "observedMax": 3047424,
+          "unexplainedMean": 1208268.8,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {
+            "arg_splits": 256
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {
+            "arg_splits": 12288
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 12288,
+          "observedMax": 1572864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "arg_input_stride": 236.89407063532641,
+            "arg_splits": 31987.636168500132
+          },
+          "constant": -31416.084563941695,
+          "maxAbsoluteError": 62181.82988999225,
+          "accepted": false,
+          "observedMin": 62720,
+          "observedMax": 8978432,
+          "unexplainedMean": 3675596.8,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "arg_input_stride": 0.827049080120275,
+            "arg_splits": 145.7715128981563
+          },
+          "constant": 475.78261850129456,
+          "maxAbsoluteError": 1006.2907738893846,
+          "accepted": false,
+          "observedMin": 245,
+          "observedMax": 35072,
+          "unexplainedMean": 15279.4,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "arg_input_stride": 0.39926507316151216,
+            "arg_splits": 68.09659243359269
+          },
+          "constant": 229.68816065579722,
+          "maxAbsoluteError": 485.79554601556083,
+          "accepted": false,
+          "observedMin": 116,
+          "observedMax": 16640,
+          "unexplainedMean": 7252.0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {
+            "arg_input_stride": 0.1711136027835052,
+            "arg_splits": 18.469968185825444
+          },
+          "constant": 98.43778313819848,
+          "maxAbsoluteError": 208.1980911495266,
+          "accepted": false,
+          "observedMin": 39,
+          "observedMax": 5760,
+          "unexplainedMean": 2523.0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {
+            "arg_input_stride": 0.06618811440778073,
+            "arg_splits": -7.726589750469547
+          },
+          "constant": 530.9122031597254,
+          "maxAbsoluteError": 623.9046149718273,
+          "accepted": false,
+          "observedMin": 158,
+          "observedMax": 2449,
+          "unexplainedMean": 656.8,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        },
+        "warps": {
+          "coefficients": {
+            "arg_splits": 8
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8,
+          "observedMax": 1024,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "arg_k",
+            "arg_n",
+            "arg_rows",
+            "arg_weight_stride",
+            "blocks",
+            "launched_lanes"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "arg_input_stride": 135,
+            "arg_k": 128,
+            "arg_n": 24,
+            "arg_rows": 1,
+            "arg_splits": 1,
+            "arg_weight_stride": 139,
+            "blocks": 1,
+            "launched_lanes": 256
+          },
+          "metrics": {
+            "blocks": 1,
+            "collective_lane_arrivals": 3840,
+            "conversion_ops": 2816,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 3840,
+            "executed_blocks": 1,
+            "executed_lanes": 256,
+            "fp32_flops": 9984,
+            "global_read_bytes": 14336,
+            "global_unique_read_bytes": 12544,
+            "global_unique_read_line_bytes": 13568,
+            "global_unique_read_lines": 106,
+            "global_unique_read_sector_bytes": 13216,
+            "global_unique_read_sectors": 413,
+            "global_unique_write_bytes": 96,
+            "global_unique_write_line_bytes": 128,
+            "global_unique_write_lines": 1,
+            "global_unique_write_sector_bytes": 96,
+            "global_unique_write_sectors": 3,
+            "global_write_bytes": 96,
+            "integer_ops": 20224,
+            "launched_lanes": 256,
+            "launches": 1,
+            "param_read_bytes": 12288,
+            "ptx_lane_instructions": 62720,
+            "sum_block_lane_sequence_span": 245,
+            "sum_block_max_lane_bytes": 116,
+            "sum_block_max_lane_flops": 39,
+            "sum_launch_max_block_lane_sequence_span": 245,
+            "warps": 8
+          }
+        },
+        {
+          "pcvs": {
+            "arg_input_stride": 135,
+            "arg_k": 128,
+            "arg_n": 24,
+            "arg_rows": 1,
+            "arg_splits": 8,
+            "arg_weight_stride": 139,
+            "blocks": 8,
+            "launched_lanes": 2048
+          },
+          "metrics": {
+            "blocks": 8,
+            "collective_lane_arrivals": 30720,
+            "conversion_ops": 8192,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 30720,
+            "executed_blocks": 8,
+            "executed_lanes": 2048,
+            "fp32_flops": 36864,
+            "global_read_bytes": 14336,
+            "global_unique_read_bytes": 12544,
+            "global_unique_read_line_bytes": 13568,
+            "global_unique_read_lines": 106,
+            "global_unique_read_sector_bytes": 13216,
+            "global_unique_read_sectors": 413,
+            "global_unique_write_bytes": 768,
+            "global_unique_write_line_bytes": 768,
+            "global_unique_write_lines": 6,
+            "global_unique_write_sector_bytes": 768,
+            "global_unique_write_sectors": 24,
+            "global_write_bytes": 768,
+            "integer_ops": 55296,
+            "launched_lanes": 2048,
+            "launches": 1,
+            "param_read_bytes": 98304,
+            "ptx_lane_instructions": 286720,
+            "sum_block_lane_sequence_span": 1264,
+            "sum_block_max_lane_bytes": 592,
+            "sum_block_max_lane_flops": 168,
+            "sum_launch_max_block_lane_sequence_span": 158,
+            "warps": 64
+          }
+        },
+        {
+          "pcvs": {
+            "arg_input_stride": 135,
+            "arg_k": 128,
+            "arg_n": 24,
+            "arg_rows": 1,
+            "arg_splits": 128,
+            "arg_weight_stride": 139,
+            "blocks": 128,
+            "launched_lanes": 32768
+          },
+          "metrics": {
+            "blocks": 128,
+            "collective_lane_arrivals": 491520,
+            "conversion_ops": 100352,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 491520,
+            "executed_blocks": 128,
+            "executed_lanes": 32768,
+            "fp32_flops": 497664,
+            "global_read_bytes": 14336,
+            "global_unique_read_bytes": 12544,
+            "global_unique_read_line_bytes": 13568,
+            "global_unique_read_lines": 106,
+            "global_unique_read_sector_bytes": 13216,
+            "global_unique_read_sectors": 413,
+            "global_unique_write_bytes": 12288,
+            "global_unique_write_line_bytes": 12288,
+            "global_unique_write_lines": 96,
+            "global_unique_write_sector_bytes": 12288,
+            "global_unique_write_sectors": 384,
+            "global_write_bytes": 12288,
+            "integer_ops": 577536,
+            "launched_lanes": 32768,
+            "launches": 1,
+            "param_read_bytes": 1572864,
+            "ptx_lane_instructions": 4034560,
+            "sum_block_lane_sequence_span": 20224,
+            "sum_block_max_lane_bytes": 9472,
+            "sum_block_max_lane_flops": 2688,
+            "sum_launch_max_block_lane_sequence_span": 158,
+            "warps": 1024
+          }
+        },
+        {
+          "pcvs": {
+            "arg_input_stride": 20487,
+            "arg_k": 20480,
+            "arg_n": 24,
+            "arg_rows": 1,
+            "arg_splits": 8,
+            "arg_weight_stride": 20491,
+            "blocks": 8,
+            "launched_lanes": 2048
+          },
+          "metrics": {
+            "blocks": 8,
+            "collective_lane_arrivals": 30720,
+            "conversion_ops": 333824,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 30720,
+            "executed_blocks": 8,
+            "executed_lanes": 2048,
+            "fp32_flops": 1013760,
+            "global_read_bytes": 2293760,
+            "global_unique_read_bytes": 2007040,
+            "global_unique_read_line_bytes": 2008064,
+            "global_unique_read_lines": 15688,
+            "global_unique_read_sector_bytes": 2007712,
+            "global_unique_read_sectors": 62741,
+            "global_unique_write_bytes": 768,
+            "global_unique_write_line_bytes": 768,
+            "global_unique_write_lines": 6,
+            "global_unique_write_sector_bytes": 768,
+            "global_unique_write_sectors": 24,
+            "global_write_bytes": 768,
+            "integer_ops": 2340864,
+            "launched_lanes": 2048,
+            "launches": 1,
+            "param_read_bytes": 98304,
+            "ptx_lane_instructions": 5015552,
+            "sum_block_lane_sequence_span": 19592,
+            "sum_block_max_lane_bytes": 9440,
+            "sum_block_max_lane_flops": 3960,
+            "sum_launch_max_block_lane_sequence_span": 2449,
+            "warps": 64
+          }
+        },
+        {
+          "pcvs": {
+            "arg_input_stride": 20487,
+            "arg_k": 20480,
+            "arg_n": 24,
+            "arg_rows": 1,
+            "arg_splits": 128,
+            "arg_weight_stride": 20491,
+            "blocks": 128,
+            "launched_lanes": 32768
+          },
+          "metrics": {
+            "blocks": 128,
+            "collective_lane_arrivals": 491520,
+            "conversion_ops": 425984,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 491520,
+            "executed_blocks": 128,
+            "executed_lanes": 32768,
+            "fp32_flops": 1474560,
+            "global_read_bytes": 2293760,
+            "global_unique_read_bytes": 2007040,
+            "global_unique_read_line_bytes": 2008064,
+            "global_unique_read_lines": 15688,
+            "global_unique_read_sector_bytes": 2007712,
+            "global_unique_read_sectors": 62741,
+            "global_unique_write_bytes": 12288,
+            "global_unique_write_line_bytes": 12288,
+            "global_unique_write_lines": 96,
+            "global_unique_write_sector_bytes": 12288,
+            "global_unique_write_sectors": 384,
+            "global_write_bytes": 12288,
+            "integer_ops": 3047424,
+            "launched_lanes": 32768,
+            "launches": 1,
+            "param_read_bytes": 1572864,
+            "ptx_lane_instructions": 8978432,
+            "sum_block_lane_sequence_span": 35072,
+            "sum_block_max_lane_bytes": 16640,
+            "sum_block_max_lane_flops": 5760,
+            "sum_launch_max_block_lane_sequence_span": 274,
+            "warps": 1024
+          }
+        }
+      ]
+    }
+  ]
+}

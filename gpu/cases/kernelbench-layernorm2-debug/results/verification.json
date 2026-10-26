@@ -1,0 +1,183 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.003909751772880554,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-fwch2dm6/driver"
+      ],
+      "seconds": 0.8143169600516558,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/compatible.cu",
+        "-o",
+        "/tmp/drperf-public-fwch2dm6/compatible.ptx"
+      ],
+      "seconds": 1.309439044445753,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/compatible.cu(87): warning #177-D: variable \"D_tail\" was declared but never referenced\n      const int D_tail = D & 3;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-fwch2dm6/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-fwch2dm6/compatible.cubin"
+      ],
+      "seconds": 0.05648328550159931,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22fused_layernorm_kernelPKfS0_S0_PfifS1_S1_S1_S1_' for 'sm_80'\nptxas info    : Function properties for _Z22fused_layernorm_kernelPKfS0_S0_PfifS1_S1_S1_S1_\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 41 registers, used 1 barriers, 424 bytes cmem[0]\nptxas info    : Compile time = 35.758 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-fwch2dm6/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-fwch2dm6/compatible.so"
+      ],
+      "seconds": 1.6649789167568088,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-fwch2dm6/compatible.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-fwch2dm6/compatible-train",
+        "--",
+        "/tmp/drperf-public-fwch2dm6/driver",
+        "/tmp/drperf-public-fwch2dm6/compatible.so",
+        "compatible",
+        "train"
+      ],
+      "seconds": 4.837036192417145,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"failures\":0,\"max_absolute_error\":2.6922e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-fwch2dm6/compatible-train/report.txt\n  /tmp/drperf-public-fwch2dm6/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-fwch2dm6/compatible-heldout",
+        "--",
+        "/tmp/drperf-public-fwch2dm6/driver",
+        "/tmp/drperf-public-fwch2dm6/compatible.so",
+        "compatible",
+        "heldout"
+      ],
+      "seconds": 8.44177004788071,
+      "exit_code": 1,
+      "stdout": "{\"cases\":12,\"failures\":5,\"max_absolute_error\":47.2374,\"passed\":false}\n",
+      "stderr": "numerical mismatch N=1 D=4096 pattern=2 max_error=46.6947\nnumerical mismatch N=1 D=8192 pattern=2 max_error=0.271616\nnumerical mismatch N=2 D=4096 pattern=0 max_error=0.00132078\nnumerical mismatch N=2 D=4096 pattern=2 max_error=47.2374\nnumerical mismatch N=2 D=8192 pattern=2 max_error=0.270386\ndrperf GPU: program failed (1); capture retained at /tmp/drperf-public-fwch2dm6/compatible-heldout/capture-z7_aen97\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-fwch2dm6/compatible-heldout-diagnostic",
+        "--",
+        "/tmp/drperf-public-fwch2dm6/driver",
+        "/tmp/drperf-public-fwch2dm6/compatible.so",
+        "compatible",
+        "heldout-diagnostic"
+      ],
+      "seconds": 8.897308064624667,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"failures\":5,\"max_absolute_error\":47.2374,\"passed\":false}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-fwch2dm6/compatible-heldout-diagnostic/report.txt\n  /tmp/drperf-public-fwch2dm6/compatible-heldout-diagnostic/profile.gpu.drperf.json\n",
+      "stderr": "numerical mismatch N=1 D=4096 pattern=2 max_error=46.6947\nnumerical mismatch N=1 D=8192 pattern=2 max_error=0.271616\nnumerical mismatch N=2 D=4096 pattern=0 max_error=0.00132078\nnumerical mismatch N=2 D=4096 pattern=2 max_error=47.2374\nnumerical mismatch N=2 D=8192 pattern=2 max_error=0.270386\n"
+    }
+  ],
+  "runs": {
+    "compatible-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"failures\":0,\"max_absolute_error\":2.6922e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-fwch2dm6/compatible-train/report.txt\n  /tmp/drperf-public-fwch2dm6/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "compatible-heldout": {
+      "exit_code": 1,
+      "stdout": "{\"cases\":12,\"failures\":5,\"max_absolute_error\":47.2374,\"passed\":false}\n",
+      "stderr": "numerical mismatch N=1 D=4096 pattern=2 max_error=46.6947\nnumerical mismatch N=1 D=8192 pattern=2 max_error=0.271616\nnumerical mismatch N=2 D=4096 pattern=0 max_error=0.00132078\nnumerical mismatch N=2 D=4096 pattern=2 max_error=47.2374\nnumerical mismatch N=2 D=8192 pattern=2 max_error=0.270386\ndrperf GPU: program failed (1); capture retained at /tmp/drperf-public-fwch2dm6/compatible-heldout/capture-z7_aen97\n"
+    },
+    "compatible-heldout-diagnostic": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"failures\":5,\"max_absolute_error\":47.2374,\"passed\":false}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-fwch2dm6/compatible-heldout-diagnostic/report.txt\n  /tmp/drperf-public-fwch2dm6/compatible-heldout-diagnostic/profile.gpu.drperf.json\n",
+      "stderr": "numerical mismatch N=1 D=4096 pattern=2 max_error=46.6947\nnumerical mismatch N=1 D=8192 pattern=2 max_error=0.271616\nnumerical mismatch N=2 D=4096 pattern=0 max_error=0.00132078\nnumerical mismatch N=2 D=4096 pattern=2 max_error=47.2374\nnumerical mismatch N=2 D=8192 pattern=2 max_error=0.270386\n",
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "compatible": {
+      "ptx_sha256": "c589471208e6b27a601f8f3a2d0382a35081fbb979505f0030130b3e70a417c0",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22fused_layernorm_kernelPKfS0_S0_PfifS1_S1_S1_S1_' for 'sm_80'\nptxas info    : Function properties for _Z22fused_layernorm_kernelPKfS0_S0_PfifS1_S1_S1_S1_\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 41 registers, used 1 barriers, 424 bytes cmem[0]\nptxas info    : Compile time = 35.758 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-fwch2dm6/compatible.ptx",
+        "inputSha256": "c589471208e6b27a601f8f3a2d0382a35081fbb979505f0030130b3e70a417c0",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "ae3a92d81e876e42250b2087a90f6eb07e565da772fecfc03ffaf5957a086b54",
+        "generatedCpp": "/tmp/drperf-public-fwch2dm6/compatible.so.cpp",
+        "siteMap": "/tmp/drperf-public-fwch2dm6/compatible.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "404bf4b9ca98ef1f3bb75f975e5ca7ae1e63e41ac596a8dc09615226770fc673",
+    "driver.cc": "9692f1b2c93bf407e21b4d5a91bbb84ce8c0706b1d75e8f045c535ab29f6f0be",
+    "compatible.cu": "f645fd3ccd0e6cc1459f629d620ca183a9eb5b5453a48f6c09fb32fd76aa28df",
+    "upstream_ref.py": "3aeeaf5a582dd0e7cdb662c0db6bebfb1598dcb08aa6729cbb08f1ffb8b51420",
+    "before.cu": "e5c5e8d5fc6c259a38fecd3538d766e1fb70229c848669da3c431b8666e48b56",
+    "run.py": "51c1daf0304c26236659f77c63d6f0a5332baa122e2f196072fb606ce9ee8527"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 26.083177311345935
+}

@@ -1,0 +1,36 @@
+{
+  "case": "ds41-hc-post-merge",
+  "kernel": "Fused HC coefficients + post/merge",
+  "label": "QUANTIFIED",
+  "role": "Folds HC post processing and expert-result merges to remove decode launches.",
+  "pcvs": "real_rows,width,elements,stream count,iterations and matrix scalars.",
+  "finding": "After-only resource fit for passing fusion. Original launch histogram, not DrPerf, identified it; no paired resource baseline is manufactured.",
+  "fix_status": "Validated but no new isolated serving claim.",
+  "variants": [
+    {
+      "name": "fused",
+      "ptx": "kernel.ptx",
+      "defines": []
+    }
+  ],
+  "receipts": [
+    "eval/drperf-gpu/post_merge-before-pinned"
+  ],
+  "timing": "No isolated native timing for this case.",
+  "expect": [],
+  "detail": "",
+  "proposed": false,
+  "input_hashes": {
+    "check_interfaces.py": "baca6825f9a379b9d191f220a948fdef575a584bac83e10a6af01f84ed9a07eb",
+    "driver.cpp": "0916aa94753e618b8e305d9992d0738a7a46555b7c2787d0187b8c9f5e17c2ed",
+    "expected_interfaces.json": "9b6ed445ee8cbe47b1e4f93557b6400e4106cfbc6bda33cfac67f539d054e3a0",
+    "kernel.ptx": "a9009b7766d662996d994b9ff7e59cd85d31114b9374e55493daea35cb35bf43",
+    "support/ds41/decode_metadata.hpp": "bd731e2c0833e4c458645bfe8ced4b6c6d7588ac2664389d14118f16b82909b2",
+    "support/ds41/drperf_gpu_argument_pcvs.inc": "5eb2fefb2fadfbb3547ff8c57f45dac51e4646d41fd2e9a6ded7f83c4c723422",
+    "support/ds41/gx_fixture.hpp": "9f3f18251fe9d05d397698c69f15d2d8bd71a7d2d3552b8dca97c1ca3da3eaaf",
+    "support/ds41/synthetic.hpp": "c76f606ed05490b0b69aeac8a42f1d3861b3bd6fcaa7d2d0c4468acb2632003f",
+    "toolchain.json": "a988cc1a10cc697d04aaf2acee9917dcb8d15834a504f9289690daffda15628f"
+  },
+  "execution_timeout": 300,
+  "command_timeout": 360
+}

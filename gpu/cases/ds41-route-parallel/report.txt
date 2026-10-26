@@ -1,0 +1,8 @@
+Contribution: EXPLAINED
+Serial fusion moves route work inside one CTA: maximum block lane span grows with R. Parallel variant puts (route,N-tile) in grid geometry; maximum block span is independent of R>0 while total work/aggregate spans still grow with R.
+Status: pass
+control: pass; see results/control/report.txt
+serial: pass; see results/serial/report.txt
+parallel: pass; see results/parallel/report.txt
+
+Measured timing (not from DrPerf): Separate H100: up N2304 K5120 R3 control50.288/serial53.568/parallel49.1835 µs; R6 84.895/119.84/80.991. Down N5120 K2304 R6 83.582/78.079/71.279 µs. Full table: /home/ubuntu/gen-deepseek41/eval/profiles/gpu/ds41-prof-20261026-002107 and /home/ubuntu/gen-deepseek41/eval/TC-ADOPTION.md.

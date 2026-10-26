@@ -1,0 +1,1764 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_initialize_matrix"
+  18 invocations, 9 states
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 102.675 * arg_kind + 1482.63 [UNEXPLAINED; max error 497.342]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 256 [accepted; max error 0]
+  global_unique_write_bytes = 111 [accepted; max error 0]
+  global_unique_write_line_bytes = 256 [accepted; max error 0]
+  global_unique_write_lines = 2 [accepted; max error 0]
+  global_unique_write_sector_bytes = 128 [accepted; max error 0]
+  global_unique_write_sectors = 4 [accepted; max error 0]
+  global_write_bytes = 111 [accepted; max error 0]
+  integer_ops = 81.4 * arg_kind + 4907.07 [UNEXPLAINED; max error 1107.53]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 13312 [accepted; max error 0]
+  ptx_lane_instructions = 407.925 * arg_kind + 11061 [UNEXPLAINED; max error 1872.82]
+  sum_block_lane_sequence_span = 3.675 * arg_kind + 73.5222 [UNEXPLAINED; max error 16.8722]
+  sum_block_max_lane_bytes = 53 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 3.675 * arg_kind + 73.5222 [UNEXPLAINED; max error 16.8722]
+  warps = 8 [accepted; max error 0]
+  PCVs not independently identifiable: arg_columns, arg_output_stride, arg_rows, blocks, launched_lanes
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2609:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2611:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2613:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2615:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2617:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2619:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2621:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2623:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2625:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2627:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2629:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2631:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2633:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2635:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2637:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2639:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2641:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2643:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2645:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2647:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2649:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2651:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2653:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2655:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2657:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2659:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2661:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2663:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2666:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2668:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2670:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2672:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2674:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2676:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2678:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2680:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2682:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2684:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2686:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2688:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2690:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2692:mul.hi.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2694:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2696:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2698:sub.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2700:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2702:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2704:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2706:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2708:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2710:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2712:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2714:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2716:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2718:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2721:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2723:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2725:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2727:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2729:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2731:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2733:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2735:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2737:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2739:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2741:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2743:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2745:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2747:mul.wide.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2749:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2751:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2753:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2755:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2757:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2759:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2761:mul.lo.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2763:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2765:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2767:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2769:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2771:mul.wide.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2773:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2775:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2777:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2779:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2781:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2783:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2785:mul.lo.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2787:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2789:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2791:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2793:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2795:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2797:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2799:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2801:shl.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2803:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2805:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2808:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2810:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2812:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2814:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2816:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2818:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2820:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2822:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2824:div.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2826:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2829:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2831:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2833:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2835:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2838:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2840:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2842:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2844:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2846:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2848:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2850:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2852:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2854:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2856:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2858:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2860:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2862:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2864:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2866:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2868:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2870:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2872:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2874:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2876:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2878:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2880:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2882:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2884:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2886:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2888:bfi.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2890:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2892:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2894:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2896:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2898:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2900:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2902:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2904:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2906:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2908:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2910:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2912:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2914:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2916:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2918:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2920:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2922:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_matrix__gxptx:cpp2924:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+
+REGION "ds41_initialize_payload"
+  18 invocations, 9 states
+  blocks = 2 [accepted; max error 0]
+  conversion_ops = 126.725 * arg_kind + 768.989 [UNEXPLAINED; max error 613.836]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 2 [accepted; max error 0]
+  executed_lanes = 256 [accepted; max error 0]
+  global_unique_write_bytes = 137 [accepted; max error 0]
+  global_unique_write_line_bytes = 256 [accepted; max error 0]
+  global_unique_write_lines = 2 [accepted; max error 0]
+  global_unique_write_sector_bytes = 160 [accepted; max error 0]
+  global_unique_write_sectors = 5 [accepted; max error 0]
+  global_write_bytes = 137 [accepted; max error 0]
+  integer_ops = 100.467 * arg_kind + 4524.58 [UNEXPLAINED; max error 1366.96]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 9216 [accepted; max error 0]
+  ptx_lane_instructions = 503.475 * arg_kind + 9117.54 [UNEXPLAINED; max error 2311.49]
+  sum_block_lane_sequence_span = 7.35 * arg_kind + 107.044 [UNEXPLAINED; max error 33.7444]
+  sum_block_max_lane_bytes = 74 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 3.675 * arg_kind + 53.5222 [UNEXPLAINED; max error 16.8722]
+  warps = 8 [accepted; max error 0]
+  PCVs not independently identifiable: arg_count, blocks, launched_lanes
+  Unexplained site ds41_initialize_payload__gxptx:cpp1991:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp1993:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp1995:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp1997:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp1999:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2001:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2003:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2005:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2007:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2009:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2011:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2013:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2015:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2017:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2019:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2021:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2023:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2025:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2027:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2029:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2031:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2033:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2035:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2037:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2039:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2041:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2043:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2045:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2048:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2050:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2052:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2054:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2056:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2058:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2060:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2062:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2064:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2066:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2068:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2070:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2072:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2074:mul.hi.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2076:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2078:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2080:sub.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2082:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2084:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2086:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2088:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2090:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2092:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2094:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2096:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2098:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2100:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2103:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2105:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2107:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2109:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2111:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2113:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2115:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2117:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2119:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2121:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2123:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2125:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2127:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2129:mul.wide.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2131:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2133:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2135:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2137:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2139:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2141:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2143:mul.lo.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2145:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2147:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2149:cvt.u16.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2151:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2153:mul.wide.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2155:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2157:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2159:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2161:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2163:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2165:shr.u16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2167:mul.lo.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2169:sub.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2171:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2173:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2175:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2177:add.s16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2179:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2181:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2183:shl.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2185:or.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2187:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2190:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2192:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2194:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2196:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2198:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2200:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2202:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2204:bra: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2206:div.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2208:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2211:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2213:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2215:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2217:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2220:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2222:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2224:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2226:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2228:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2230:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2232:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2234:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2236:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2238:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2240:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2242:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2244:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2246:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2248:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2250:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2252:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2254:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2256:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2258:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2260:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2262:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2264:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2266:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2268:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2270:bfi.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2272:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2274:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2276:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2278:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2280:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2282:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2284:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2286:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2288:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2290:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2292:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2294:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2296:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2298:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2300:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2302:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2304:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_initialize_payload__gxptx:cpp2306:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+
+REGION "ds41_route_from_logits"
+  2 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 2 [accepted; max error 0]
+  collective_lane_arrivals = 16320 [accepted; max error 0]
+  conversion_ops = 3774 [UNEXPLAINED; max error 546]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 16320 [accepted; max error 0]
+  executed_blocks = 2 [accepted; max error 0]
+  executed_lanes = 256 [accepted; max error 0]
+  fp32_flops = 64182 [UNEXPLAINED; max error 9828]
+  global_read_bytes = 15360 [accepted; max error 0]
+  global_unique_read_bytes = 9216 [accepted; max error 0]
+  global_unique_read_line_bytes = 9344 [accepted; max error 0]
+  global_unique_read_lines = 73 [accepted; max error 0]
+  global_unique_read_sector_bytes = 9312 [accepted; max error 0]
+  global_unique_read_sectors = 291 [accepted; max error 0]
+  global_unique_write_bytes = 240 [accepted; max error 0]
+  global_unique_write_line_bytes = 512 [accepted; max error 0]
+  global_unique_write_lines = 4 [accepted; max error 0]
+  global_unique_write_sector_bytes = 384 [accepted; max error 0]
+  global_unique_write_sectors = 12 [accepted; max error 0]
+  global_write_bytes = 240 [accepted; max error 0]
+  integer_ops = 25624 [UNEXPLAINED; max error 3360]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 9256 [accepted; max error 0]
+  ptx_lane_instructions = 273476 [UNEXPLAINED; max error 17189]
+  special_function_ops = 1647 [UNEXPLAINED; max error 273]
+  sum_block_lane_sequence_span = 3720.5 [UNEXPLAINED; max error 9.5]
+  sum_block_max_lane_bytes = 376 [accepted; max error 0]
+  sum_block_max_lane_flops = 960 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 1862 [UNEXPLAINED; max error 3]
+  warps = 8 [accepted; max error 0]
+  PCVs not independently identifiable: arg_input_stride, arg_output_stride, arg_rows, blocks, launched_lanes
+  Unexplained site ds41_route_from_logits__gxptx:cpp10001:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10003:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10005:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10007:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10095:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10097:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10099:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10101:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10103:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10106:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10108:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10110:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10115:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10117:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10119:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10121:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10123:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10126:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10128:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10130:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10135:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10137:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10139:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10141:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10143:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10146:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10148:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10150:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10155:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10157:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10159:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10161:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10163:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10166:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10168:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10170:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10175:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10177:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10179:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10181:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10183:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10186:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10188:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10190:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10195:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10197:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10199:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10201:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10203:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10206:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10208:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10210:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10215:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10217:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10219:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10221:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10223:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10226:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10228:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10230:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10235:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10237:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10239:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10241:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10243:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10246:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10248:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10250:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10255:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10257:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10259:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10261:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10263:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10266:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10268:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10270:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10275:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10277:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10279:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10281:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10283:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10286:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10288:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10290:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10295:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10297:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10299:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10301:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10303:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10306:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10308:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10310:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10353:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10355:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10357:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10359:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10402:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10404:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10406:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10408:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10459:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10461:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10463:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10465:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10508:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10510:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10512:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10514:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10559:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10561:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10563:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp10565:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5533:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5535:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5537:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5539:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5541:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5543:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5545:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5547:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5549:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5551:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5553:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5555:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5557:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5559:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5561:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5563:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5565:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5567:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp5569:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5571:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5573:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5575:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5577:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5579:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5581:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5583:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5585:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5587:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5589:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5591:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5593:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5595:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5597:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5599:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5601:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5603:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5605:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5607:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5609:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5611:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5613:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5615:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5617:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5619:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5621:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5623:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5625:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5627:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5629:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5631:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5633:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5635:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5637:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5639:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5641:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5643:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5645:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5647:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5649:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5683:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5685:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5687:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5689:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5691:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5693:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5695:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5697:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5699:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5701:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5703:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5705:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5707:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5709:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5711:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5713:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5715:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5717:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp5719:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5721:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5723:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5725:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5727:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5729:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5731:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5733:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5735:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5737:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5739:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5741:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5743:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5745:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5747:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5749:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5751:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5753:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5755:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5757:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5759:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5761:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5763:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5765:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5767:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5769:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5771:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5773:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5775:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5777:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5779:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5781:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5783:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5785:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5787:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5789:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5791:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5793:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5795:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5797:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5799:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5827:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5829:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5831:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5833:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5835:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5837:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5839:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5841:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5843:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5845:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5847:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5849:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5851:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5853:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5855:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5857:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5859:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5861:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp5863:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5865:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5867:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5869:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5871:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5873:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5875:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5877:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5879:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5881:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5883:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5885:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5887:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5889:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5891:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5893:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5895:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5897:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5899:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5901:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5903:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5905:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5907:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5909:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5911:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5913:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5915:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5917:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5919:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5921:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5923:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5925:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5927:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5929:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5931:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5933:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5935:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5937:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5939:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5941:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5943:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5971:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5973:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5975:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5977:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5979:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5981:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5983:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5985:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5987:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5989:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5991:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5993:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5995:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5997:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp5999:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6001:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6003:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6005:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6007:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6009:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6011:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6013:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6015:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6017:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6019:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6021:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6023:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6025:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6027:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6029:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6031:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6033:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6035:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6037:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6039:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6041:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6043:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6045:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6047:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6049:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6051:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6053:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6055:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6057:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6059:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6061:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6063:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6065:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6067:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6069:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6071:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6073:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6075:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6077:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6079:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6081:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6083:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6085:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6087:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6115:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6117:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6119:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6121:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6123:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6125:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6127:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6129:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6131:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6133:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6135:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6137:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6139:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6141:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6143:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6145:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6147:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6149:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6151:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6153:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6155:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6157:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6159:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6161:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6163:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6165:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6167:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6169:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6171:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6173:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6175:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6177:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6179:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6181:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6183:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6185:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6187:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6189:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6191:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6193:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6195:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6197:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6199:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6201:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6203:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6205:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6207:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6209:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6211:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6213:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6215:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6217:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6219:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6221:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6223:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6225:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6227:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6229:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6231:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6259:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6261:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6263:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6265:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6267:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6269:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6271:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6273:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6275:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6277:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6279:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6281:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6283:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6285:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6287:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6289:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6291:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6293:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6295:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6297:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6299:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6301:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6303:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6305:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6307:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6309:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6311:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6313:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6315:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6317:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6319:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6321:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6323:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6325:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6327:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6329:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6331:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6333:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6335:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6337:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6339:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6341:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6343:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6345:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6347:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6349:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6351:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6353:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6355:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6357:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6359:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6361:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6363:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6365:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6367:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6369:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6371:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6373:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6375:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6403:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6405:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6407:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6409:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6411:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6413:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6415:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6417:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6419:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6421:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6423:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6425:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6427:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6429:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6431:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6433:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6435:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6437:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6439:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6441:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6443:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6445:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6447:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6449:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6451:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6453:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6455:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6457:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6459:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6461:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6463:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6465:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6467:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6469:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6471:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6473:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6475:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6477:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6479:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6481:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6483:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6485:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6487:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6489:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6491:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6493:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6495:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6497:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6499:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6501:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6503:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6505:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6507:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6509:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6511:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6513:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6515:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6517:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6519:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6547:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6549:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6551:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6553:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6555:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6557:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6559:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6561:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6563:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6565:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6567:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6569:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6571:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6573:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6575:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6577:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6579:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6581:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6583:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6585:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6587:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6589:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6591:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6593:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6595:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6597:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6599:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6601:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6603:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6605:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6607:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6609:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6611:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6613:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6615:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6617:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6619:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6621:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6623:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6625:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6627:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6629:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6631:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6633:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6635:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6637:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6639:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6641:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6643:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6645:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6647:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6649:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6651:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6653:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6655:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6657:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6659:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6661:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6663:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6691:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6693:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6695:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6697:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6699:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6701:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6703:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6705:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6707:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6709:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6711:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6713:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6715:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6717:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6719:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6721:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6723:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6725:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6727:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6729:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6731:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6733:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6735:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6737:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6739:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6741:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6743:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6745:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6747:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6749:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6751:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6753:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6755:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6757:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6759:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6761:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6763:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6765:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6767:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6769:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6771:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6773:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6775:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6777:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6779:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6781:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6783:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6785:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6787:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6789:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6791:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6793:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6795:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6797:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6799:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6801:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6803:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6805:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6807:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6835:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6837:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6839:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6841:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6843:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6845:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6847:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6849:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6851:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6853:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6855:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6857:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6859:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6861:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6863:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6865:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6867:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6869:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp6871:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6873:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6875:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6877:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6879:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6881:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6883:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6885:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6887:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6889:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6891:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6893:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6895:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6897:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6899:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6901:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6903:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6905:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6907:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6909:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6911:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6913:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6915:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6917:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6919:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6921:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6923:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6925:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6927:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6929:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6931:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6933:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6935:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6937:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6939:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6941:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6943:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6945:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6947:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6949:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6951:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6979:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6981:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6983:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6985:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6987:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6989:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6991:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6993:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6995:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6997:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp6999:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7001:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7003:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7005:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7007:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7009:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7011:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7013:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp7015:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7017:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7019:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7021:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7023:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7025:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7027:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7029:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7031:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7033:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7035:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7037:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7039:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7041:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7043:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7045:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7047:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7049:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7051:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7053:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7055:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7057:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7059:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7061:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7063:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7065:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7067:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7069:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7071:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7073:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7075:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7077:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7079:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7081:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7083:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7085:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7087:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7089:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7091:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7093:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7095:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7123:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7125:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7127:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7129:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7131:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7133:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7135:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7137:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7139:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7141:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7143:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7145:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7147:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7149:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7151:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7153:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7155:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7157:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site ds41_route_from_logits__gxptx:cpp7159:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7161:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7163:add.rz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7165:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7167:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7169:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7171:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7173:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7175:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7177:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7179:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7181:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7183:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7185:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7187:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7189:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7191:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7193:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7195:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7197:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7199:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7201:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7203:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7205:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7207:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7209:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7211:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7213:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7215:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7217:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7219:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7221:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7223:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7225:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7227:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7229:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7231:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7233:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7235:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7237:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7239:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7269:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7271:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7273:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7275:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7277:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7279:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7282:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7284:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7286:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7291:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7293:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7295:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7297:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7299:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7302:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7304:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7306:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7311:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7313:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7315:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7317:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7319:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7322:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7324:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7326:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7331:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7333:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7335:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7337:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7339:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7342:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7344:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7346:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7351:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7353:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7355:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7357:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7359:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7362:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7364:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7366:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7371:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7373:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7375:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7377:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7379:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7382:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7384:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7386:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7391:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7393:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7395:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7397:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7399:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7402:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7404:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7406:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7411:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7413:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7415:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7417:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7419:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7422:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7424:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7426:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7431:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7433:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7435:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7437:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7439:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7442:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7444:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7446:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7451:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7453:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7455:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7457:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7459:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7462:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7464:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7466:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7471:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7473:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7475:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7477:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7479:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7482:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7484:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7486:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7533:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7535:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7537:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7539:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7586:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7588:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7590:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7592:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7647:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7649:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7651:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7653:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7700:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7702:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7704:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7706:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7755:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7757:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7759:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7761:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7861:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7863:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7865:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7867:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7869:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7871:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7874:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7876:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7878:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7883:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7885:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7887:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7889:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7891:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7894:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7896:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7898:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7903:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7905:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7907:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7909:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7911:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7914:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7916:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7918:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7923:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7925:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7927:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7929:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7931:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7934:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7936:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7938:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7943:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7945:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7947:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7949:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7951:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7954:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7956:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7958:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7963:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7965:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7967:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7969:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7971:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7974:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7976:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7978:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7983:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7985:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7987:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7989:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7991:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7994:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7996:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp7998:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8003:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8005:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8007:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8009:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8011:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8014:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8016:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8018:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8023:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8025:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8027:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8029:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8031:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8034:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8036:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8038:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8043:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8045:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8047:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8049:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8051:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8054:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8056:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8058:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8063:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8065:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8067:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8069:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8071:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8074:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8076:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8078:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8121:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8123:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8125:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8127:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8170:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8172:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8174:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8176:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8227:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8229:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8231:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8233:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8276:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8278:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8280:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8282:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8327:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8329:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8331:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8333:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8419:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8421:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8423:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8425:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8427:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8429:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8432:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8434:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8436:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8441:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8443:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8445:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8447:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8449:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8452:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8454:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8456:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8461:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8463:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8465:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8467:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8469:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8472:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8474:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8476:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8481:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8483:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8485:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8487:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8489:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8492:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8494:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8496:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8501:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8503:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8505:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8507:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8509:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8512:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8514:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8516:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8521:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8523:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8525:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8527:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8529:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8532:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8534:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8536:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8541:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8543:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8545:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8547:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8549:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8552:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8554:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8556:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8561:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8563:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8565:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8567:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8569:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8572:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8574:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8576:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8581:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8583:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8585:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8587:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8589:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8592:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8594:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8596:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8601:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8603:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8605:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8607:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8609:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8612:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8614:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8616:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8621:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8623:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8625:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8627:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8629:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8632:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8634:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8636:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8679:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8681:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8683:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8685:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8728:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8730:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8732:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8734:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8785:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8787:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8789:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8791:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8834:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8836:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8838:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8840:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8885:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8887:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8889:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8891:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8977:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8979:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8981:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8983:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8985:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8987:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8990:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8992:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8994:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp8999:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9001:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9003:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9005:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9007:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9010:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9012:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9014:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9019:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9021:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9023:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9025:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9027:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9030:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9032:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9034:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9039:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9041:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9043:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9045:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9047:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9050:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9052:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9054:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9059:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9061:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9063:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9065:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9067:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9070:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9072:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9074:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9079:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9081:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9083:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9085:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9087:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9090:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9092:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9094:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9099:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9101:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9103:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9105:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9107:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9110:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9112:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9114:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9119:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9121:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9123:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9125:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9127:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9130:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9132:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9134:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9139:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9141:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9143:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9145:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9147:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9150:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9152:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9154:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9159:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9161:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9163:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9165:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9167:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9170:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9172:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9174:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9179:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9181:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9183:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9185:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9187:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9190:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9192:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9194:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9237:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9239:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9241:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9243:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9286:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9288:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9290:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9292:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9343:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9345:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9347:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9349:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9392:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9394:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9396:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9398:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9443:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9445:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9447:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9449:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9535:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9537:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9539:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9541:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9543:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9545:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9548:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9550:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9552:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9557:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9559:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9561:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9563:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9565:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9568:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9570:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9572:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9577:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9579:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9581:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9583:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9585:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9588:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9590:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9592:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9597:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9599:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9601:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9603:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9605:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9608:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9610:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9612:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9617:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9619:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9621:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9623:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9625:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9628:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9630:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9632:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9637:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9639:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9641:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9643:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9645:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9648:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9650:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9652:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9657:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9659:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9661:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9663:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9665:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9668:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9670:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9672:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9677:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9679:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9681:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9683:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9685:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9688:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9690:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9692:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9697:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9699:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9701:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9703:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9705:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9708:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9710:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9712:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9717:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9719:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9721:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9723:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9725:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9728:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9730:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9732:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9737:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9739:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9741:setp.ge.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9743:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9745:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9748:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9750:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9752:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9795:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9797:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9799:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9801:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9844:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9846:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9848:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9850:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9901:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9903:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9905:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9907:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9950:bra: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9952:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9954:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_route_from_logits__gxptx:cpp9956:and.pred: integer_ops, ptx_lane_instructions
+

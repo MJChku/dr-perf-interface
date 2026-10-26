@@ -1,0 +1,67 @@
+{
+  "case": "ds41-fp8-k128-overfetch",
+  "status": "blocked",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "blocked",
+      "status": "blocked",
+      "reason": "unsupported GPU PTX operation: dp2a.lo.u32.u32",
+      "numerical_status": "not_assessed"
+    }
+  ],
+  "interface_checks": [],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/k128_fixture_deep_m32_n128.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/.work/k128_fixture_deep_m32_n128.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/.work/blocked-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/results/blocked/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/.work/blocked-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-fp8-k128-overfetch/.work/k128_fixture_deep_m32_n128.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Explicit expected coverage blocker or proposed status; no fitted interface/numerical pass fabricated",
+      "checked_observations": 1,
+      "status": "pass"
+    }
+  ]
+}

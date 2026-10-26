@@ -1,0 +1,271 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.003939848393201828,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-foeigbto/driver"
+      ],
+      "seconds": 0.8197039337828755,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm-debug/before.cu",
+        "-o",
+        "/tmp/drperf-public-foeigbto/before.ptx"
+      ],
+      "seconds": 0.4288174659013748,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-foeigbto/before.ptx",
+        "-o",
+        "/tmp/drperf-public-foeigbto/before.cubin"
+      ],
+      "seconds": 0.05286394339054823,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii' for 'sm_80'\nptxas info    : Function properties for _Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 25 registers, used 0 barriers, 408 bytes cmem[0]\nptxas info    : Compile time = 9.069 ms\nptxas info    : Compiling entry function '_Z25layernorm_finalize_kernelPKfPfS1_iif' for 'sm_80'\nptxas info    : Function properties for _Z25layernorm_finalize_kernelPKfPfS1_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.338 ms\nptxas info    : Compiling entry function '_Z28layernorm_partial_sum_kernelPKfPfii' for 'sm_80'\nptxas info    : Function properties for _Z28layernorm_partial_sum_kernelPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 8.422 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-foeigbto/before.ptx",
+        "-o",
+        "/tmp/drperf-public-foeigbto/before.so"
+      ],
+      "seconds": 1.4352191090583801,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-foeigbto/before.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-foeigbto/before-train",
+        "--",
+        "/tmp/drperf-public-foeigbto/driver",
+        "/tmp/drperf-public-foeigbto/before.so",
+        "before",
+        "train"
+      ],
+      "seconds": 20.163768215104938,
+      "exit_code": 0,
+      "stdout": "{\"cases\":18,\"failures\":0,\"max_absolute_error\":5.88377e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/before-train/report.txt\n  /tmp/drperf-public-foeigbto/before-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-foeigbto/before-heldout",
+        "--",
+        "/tmp/drperf-public-foeigbto/driver",
+        "/tmp/drperf-public-foeigbto/before.so",
+        "before",
+        "heldout"
+      ],
+      "seconds": 25.894949346780777,
+      "exit_code": 0,
+      "stdout": "{\"cases\":24,\"failures\":0,\"max_absolute_error\":4.58438e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/before-heldout/report.txt\n  /tmp/drperf-public-foeigbto/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm-debug/after.cu",
+        "-o",
+        "/tmp/drperf-public-foeigbto/after.ptx"
+      ],
+      "seconds": 0.43232614919543266,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-foeigbto/after.ptx",
+        "-o",
+        "/tmp/drperf-public-foeigbto/after.cubin"
+      ],
+      "seconds": 0.05567706096917391,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii' for 'sm_80'\nptxas info    : Function properties for _Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 27 registers, used 1 barriers, 8 bytes smem, 408 bytes cmem[0]\nptxas info    : Compile time = 9.945 ms\nptxas info    : Compiling entry function '_Z25layernorm_finalize_kernelPKfPfS1_iif' for 'sm_80'\nptxas info    : Function properties for _Z25layernorm_finalize_kernelPKfPfS1_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.109 ms\nptxas info    : Compiling entry function '_Z28layernorm_partial_sum_kernelPKfPfii' for 'sm_80'\nptxas info    : Function properties for _Z28layernorm_partial_sum_kernelPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 8.256 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-foeigbto/after.ptx",
+        "-o",
+        "/tmp/drperf-public-foeigbto/after.so"
+      ],
+      "seconds": 1.444940885528922,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-foeigbto/after.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-foeigbto/after-train",
+        "--",
+        "/tmp/drperf-public-foeigbto/driver",
+        "/tmp/drperf-public-foeigbto/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 19.717306113801897,
+      "exit_code": 0,
+      "stdout": "{\"cases\":18,\"failures\":0,\"max_absolute_error\":5.88377e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/after-train/report.txt\n  /tmp/drperf-public-foeigbto/after-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-foeigbto/after-heldout",
+        "--",
+        "/tmp/drperf-public-foeigbto/driver",
+        "/tmp/drperf-public-foeigbto/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 25.346388646401465,
+      "exit_code": 0,
+      "stdout": "{\"cases\":24,\"failures\":0,\"max_absolute_error\":4.58438e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/after-heldout/report.txt\n  /tmp/drperf-public-foeigbto/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "before-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":18,\"failures\":0,\"max_absolute_error\":5.88377e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/before-train/report.txt\n  /tmp/drperf-public-foeigbto/before-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "before-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":24,\"failures\":0,\"max_absolute_error\":4.58438e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/before-heldout/report.txt\n  /tmp/drperf-public-foeigbto/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":18,\"failures\":0,\"max_absolute_error\":5.88377e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/after-train/report.txt\n  /tmp/drperf-public-foeigbto/after-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":24,\"failures\":0,\"max_absolute_error\":4.58438e-07,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-foeigbto/after-heldout/report.txt\n  /tmp/drperf-public-foeigbto/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "before": {
+      "ptx_sha256": "f36d378bba6fef4d5a1e93a3feb9cc138f3f4f6b32d891611e50b4235b5463bf",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii' for 'sm_80'\nptxas info    : Function properties for _Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 25 registers, used 0 barriers, 408 bytes cmem[0]\nptxas info    : Compile time = 9.069 ms\nptxas info    : Compiling entry function '_Z25layernorm_finalize_kernelPKfPfS1_iif' for 'sm_80'\nptxas info    : Function properties for _Z25layernorm_finalize_kernelPKfPfS1_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.338 ms\nptxas info    : Compiling entry function '_Z28layernorm_partial_sum_kernelPKfPfii' for 'sm_80'\nptxas info    : Function properties for _Z28layernorm_partial_sum_kernelPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 8.422 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-foeigbto/before.ptx",
+        "inputSha256": "f36d378bba6fef4d5a1e93a3feb9cc138f3f4f6b32d891611e50b4235b5463bf",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "bd1f827d93b986afa9c864d3510073b3a2d7c34131f7bd1d752da67d74777e08",
+        "generatedCpp": "/tmp/drperf-public-foeigbto/before.so.cpp",
+        "siteMap": "/tmp/drperf-public-foeigbto/before.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptx_sha256": "cf535e8d8dd0c90549bb0f08059900e34b32f3b79feef220d968396f60091cc8",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii' for 'sm_80'\nptxas info    : Function properties for _Z22layernorm_apply_kernelPKfS0_S0_S0_S0_Pfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 27 registers, used 1 barriers, 8 bytes smem, 408 bytes cmem[0]\nptxas info    : Compile time = 9.945 ms\nptxas info    : Compiling entry function '_Z25layernorm_finalize_kernelPKfPfS1_iif' for 'sm_80'\nptxas info    : Function properties for _Z25layernorm_finalize_kernelPKfPfS1_iif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 388 bytes cmem[0]\nptxas info    : Compile time = 14.109 ms\nptxas info    : Compiling entry function '_Z28layernorm_partial_sum_kernelPKfPfii' for 'sm_80'\nptxas info    : Function properties for _Z28layernorm_partial_sum_kernelPKfPfii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 20 registers, used 1 barriers, 256 bytes smem, 376 bytes cmem[0]\nptxas info    : Compile time = 8.256 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-foeigbto/after.ptx",
+        "inputSha256": "cf535e8d8dd0c90549bb0f08059900e34b32f3b79feef220d968396f60091cc8",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "fd22a75fbe9de71e36dc996cfe8caa037e79215d2469d6a9d0f8801841160847",
+        "generatedCpp": "/tmp/drperf-public-foeigbto/after.so.cpp",
+        "siteMap": "/tmp/drperf-public-foeigbto/after.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "2a014ef18dcb2f110933fa1308ab259842c44eb4e8bc022e1af715f362f2d24f",
+    "native_benchmark.cu": "7db7f3d013dcd3426823dfe4f7b5c33b803766b5d56262b1d29365915f82f601",
+    "driver.cc": "4bd371e2deead7def0cdae13042cd26fcf85ce1f734fc22bad17a003b153ff70",
+    "upstream_ref.py": "7a72f96263fbd394a34cc215de7f2e200bfa674ddf7838b4483ee13285c29a91",
+    "before.cu": "e7f99a6fa768cc1e66d3c96c800330e520e7fa1aa65c075bf2a17285f6b5fe90",
+    "run.py": "898d897af9cc0bc6aa6249d2c055da269412b467ec7116122a9a6803a4243ad4",
+    "after.cu": "aa12f611ea0992a74a27553bc9e4acfefa7d129ca2cca017869d3c9c25174b3d"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 95.97347953077406
+}

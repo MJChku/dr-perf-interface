@@ -1,0 +1,539 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_scaled_matvec"
+  42 invocations, 22 states
+  blocks = 1 * blocks [accepted; max error 0]
+  collective_lane_arrivals = -23.7212 * K + 75.7017 * N + 3376.94 * activation_fp4 - 106.176 * arg_a_stride - 5.5674e-09 * arg_b_stride - 4.43139e-08 * arg_formats - 802.462 * arg_m - 634.757 * blocks + 57.2681 * minimum_activation_bytes + 3.6939e-10 * minimum_weight_bytes + 165.455 * outputs + 1 * row_weight_payload_bytes + 1364.53 [UNEXPLAINED; max error 33911.3]
+  conversion_ops = -120.57 * K + 365.751 * N + 10130.8 * activation_fp4 - 318.528 * arg_a_stride + 4.32936e-10 * arg_b_stride + 8.40866e-09 * arg_formats - 2469.42 * arg_m - 928.045 * blocks + 171.804 * minimum_activation_bytes - 2.78505e-11 * minimum_weight_bytes + 307.094 * outputs + 3 * row_weight_payload_bytes + 5245.17 [UNEXPLAINED; max error 101734]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = -23.7212 * K + 75.7017 * N + 3376.94 * activation_fp4 - 106.176 * arg_a_stride - 5.5674e-09 * arg_b_stride - 4.43139e-08 * arg_formats - 802.462 * arg_m - 634.757 * blocks + 57.2681 * minimum_activation_bytes + 3.6939e-10 * minimum_weight_bytes + 165.455 * outputs + 1 * row_weight_payload_bytes + 1364.53 [UNEXPLAINED; max error 33911.3]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = -1.17276e-08 * activation_fp4 + 3.66866e-08 * arg_m + 128 * blocks + 1.17494e-08 * outputs - 5.87333e-08 [accepted; max error 1.61053e-07]
+  fp32_flops = 6.375 * K - 17.8898 * N + 1.25116e-08 * activation_fp4 + 8.00408 * arg_m - 125.965 * blocks + 45.4544 * outputs - 148.592 [accepted; max error 6.72717e-08]
+  global_read_bytes = 105.187 * K + 327.757 * N + 5.62709e-07 * activation_fp4 - 4.03632e-08 * arg_b_stride - 2.82929e-07 * arg_formats + 5605.51 * arg_m - 8779.7 * blocks + 2391 * outputs - 12634.2 [accepted; max error 2.00996e-05]
+  global_unique_read_bytes = 1.12537 * K + 4.40702 * N + 0.251358 * activation_fp4 - 3.57631e-13 * arg_a_stride + 0.0312252 * arg_b_stride - 0.125679 * arg_formats + 26.7595 * arg_m - 34.5291 * blocks + 1 * minimum_activation_bytes + 0.939192 * minimum_weight_bytes + 8.72766 * outputs + 3.93792e-05 * row_weight_payload_bytes - 82.5596 [UNEXPLAINED; max error 0.0765232]
+  global_unique_read_line_bytes = 0.551961 * K + 37.9609 * N - 143.58 * activation_fp4 + 0.146966 * arg_a_stride + 6.98083 * arg_b_stride + 103.381 * arg_formats + 129.558 * arg_m - 151.17 * blocks + 1.03188 * minimum_activation_bytes + 0.513209 * minimum_weight_bytes + 37.1354 * outputs + 0.0136668 * row_weight_payload_bytes - 178.946 [UNEXPLAINED; max error 48.2838]
+  global_unique_read_lines = 0.0043122 * K + 0.29657 * N - 1.12172 * activation_fp4 + 0.00114817 * arg_a_stride + 0.0545378 * arg_b_stride + 0.807664 * arg_formats + 1.01217 * arg_m - 1.18102 * blocks + 0.00806157 * minimum_activation_bytes + 0.00400945 * minimum_weight_bytes + 0.29012 * outputs + 0.000106772 * row_weight_payload_bytes - 1.39802 [UNEXPLAINED; max error 0.377217]
+  global_unique_read_sector_bytes = 1.07504 * K + 23.2752 * N - 101.327 * activation_fp4 + 0.0765928 * arg_a_stride + 2.27702 * arg_b_stride + 54.682 * arg_formats + 103.305 * arg_m - 119.657 * blocks + 0.985101 * minimum_activation_bytes + 0.803352 * minimum_weight_bytes + 30.0412 * outputs + 0.000574044 * row_weight_payload_bytes - 241.594 [UNEXPLAINED; max error 10.1485]
+  global_unique_read_sectors = 0.033595 * K + 0.72735 * N - 3.16647 * activation_fp4 + 0.00239353 * arg_a_stride + 0.0711569 * arg_b_stride + 1.70881 * arg_formats + 3.22828 * arg_m - 3.73929 * blocks + 0.0307844 * minimum_activation_bytes + 0.0251048 * minimum_weight_bytes + 0.938786 * outputs + 1.79389e-05 * row_weight_payload_bytes - 7.54982 [UNEXPLAINED; max error 0.317142]
+  global_unique_write_bytes = 2 * outputs [accepted; max error 0]
+  global_unique_write_line_bytes = -0.827211 * N - 8.722 * arg_m + 28.7057 * blocks - 5.1229 * outputs + 126.912 [accepted; max error 1.14735e-08]
+  global_unique_write_lines = -0.00646259 * N - 0.0681406 * arg_m + 0.224263 * blocks - 0.0400227 * outputs + 0.991497 [accepted; max error 8.96367e-11]
+  global_unique_write_sector_bytes = -0.0285714 * N - 1.70476 * arg_m + 20.1143 * blocks - 3.01905 * outputs + 17.8571 [accepted; max error 8.81391e-09]
+  global_unique_write_sectors = -0.000892857 * N - 0.0532738 * arg_m + 0.628571 * blocks - 0.0943452 * outputs + 0.558036 [accepted; max error 2.75435e-10]
+  global_write_bytes = 2 * outputs [accepted; max error 0]
+  integer_ops = 1351.04 * K - 2213.06 * N + 1.75749e-06 * activation_fp4 - 1.4416e-07 * arg_b_stride - 8.80366e-07 * arg_formats + 14788.1 * arg_m - 39911.1 * blocks + 13884.8 * outputs - 55061.2 [accepted; max error 7.20597e-05]
+  launched_lanes = -1.17276e-08 * activation_fp4 + 3.66866e-08 * arg_m + 128 * blocks + 1.17494e-08 * outputs - 5.87333e-08 [accepted; max error 1.61053e-07]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 1.5805e-07 * N - 7.76289e-07 * activation_fp4 + 5.43403e-08 * arg_b_stride + 3.94422e-07 * arg_formats + 3.43168e-06 * arg_m + 9728 * blocks + 12 * outputs - 4.89713e-06 [accepted; max error 2.59726e-05]
+  ptx_lane_instructions = 3311.95 * K - 6903.62 * N - 12724.2 * activation_fp4 + 587.467 * arg_a_stride + 144.505 * arg_b_stride + 201.231 * arg_formats + 28586.7 * arg_m - 75375.1 * blocks - 312.402 * minimum_activation_bytes - 10.0789 * minimum_weight_bytes + 28490.2 * outputs - 5.20014 * row_weight_payload_bytes - 122884 [UNEXPLAINED; max error 62255.2]
+  sum_block_lane_sequence_span = 35.717 * K - 77.3393 * N - 81.9487 * activation_fp4 + 4.69847 * arg_a_stride - 1.56719 * arg_b_stride - 6.76616 * arg_formats + 218.665 * arg_m - 517.325 * blocks - 2.57286 * minimum_activation_bytes + 0.0899241 * minimum_weight_bytes + 223.262 * outputs - 0.0503196 * row_weight_payload_bytes - 1098.77 [UNEXPLAINED; max error 496.417]
+  sum_block_max_lane_bytes = 1.875 * K + 0.297449 * N + 45.5573 * arg_m + 8.02449 * blocks + 23.8114 * outputs - 126.477 [accepted; max error 2.83026e-08]
+  sum_block_max_lane_flops = 1.875 * K - 4.79388 * N + 0.822449 * arg_m - 27.2054 * blocks + 10.3993 * outputs - 43.2551 [accepted; max error 1.28738e-08]
+  sum_launch_max_block_lane_sequence_span = 2.35811 * K + 0.235918 * N + 0.0889051 * activation_fp4 - 0.171645 * arg_a_stride - 0.160463 * arg_b_stride - 0.0734847 * arg_formats + 7.44906 * arg_m - 9.38072 * blocks - 0.000162364 * minimum_activation_bytes - 0.000775727 * minimum_weight_bytes + 2.32272 * outputs + 2.91334e-05 * row_weight_payload_bytes + 121.474 [UNEXPLAINED; max error 2.00419]
+  warps = 4 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: arg_as_stride, arg_b_page_rows, arg_bs_stride, arg_k, arg_n, arg_out_stride, k_groups, launched_lanes, real_rows, tile_groups, useful_fmas, weight_fp4
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12671:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12679:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12685:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12704:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12714:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12720:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12737:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12745:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12751:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12768:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12776:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12782:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12787:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12791:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12793:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12795:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12797:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12799:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12801:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12803:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12805:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12807:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12810:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12812:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12814:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12816:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12818:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12820:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12822:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12824:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12826:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12828:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12833:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12835:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12837:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12839:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12841:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12843:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12845:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12847:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12849:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12851:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12853:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12855:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12857:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12859:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12861:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12863:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12865:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12867:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12869:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12871:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12873:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12875:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12877:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12879:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12881:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12883:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12885:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12887:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12889:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12891:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12893:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12895:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12897:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12899:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12901:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12903:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12905:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12907:cvt.rn.f32.s64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12909:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12911:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12913:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12915:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12917:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12919:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12921:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12923:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12925:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12927:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12929:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12932:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12934:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12936:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12938:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12940:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12942:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12944:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12946:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12948:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12950:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12952:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12954:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12956:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12958:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12960:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12962:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12964:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12966:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12968:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12970:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12972:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12974:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12976:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12978:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12980:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12982:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12984:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12986:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12988:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12990:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12992:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12994:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12996:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp12998:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13000:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13002:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13004:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13006:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13008:cvt.rn.f32.s64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13010:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13012:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13014:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13016:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13018:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13020:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13022:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13024:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13026:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13028:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13030:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13033:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13035:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13037:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13039:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13041:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13043:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13045:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13047:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13049:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13051:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13053:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13055:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13057:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13059:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13061:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13063:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13065:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13067:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13069:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13071:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13073:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13075:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13077:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13079:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13081:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13083:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13085:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13087:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13089:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13091:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13093:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13095:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13097:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13099:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13101:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13103:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13105:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13107:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13109:cvt.rn.f32.s64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13111:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13113:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13115:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13117:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13119:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13121:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13123:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13125:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13127:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13129:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13131:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13134:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13136:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13138:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13140:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13142:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13144:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13146:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13148:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13150:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13152:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13154:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13156:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13158:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13160:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13162:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13164:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13166:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13168:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13170:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13172:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13174:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13176:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13178:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13180:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13182:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13184:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13186:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13188:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13190:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13192:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13194:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13196:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13198:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13200:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13202:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13204:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13206:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13208:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13210:cvt.rn.f32.s64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13212:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13214:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13216:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13218:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13220:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13222:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13224:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13226:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13228:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13230:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13232:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13234:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13237:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13239:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13241:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13243:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13245:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13247:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13249:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13252:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13254:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13256:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13258:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13260:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13262:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13264:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13267:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13269:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13271:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13273:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13275:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13277:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13279:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13281:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13283:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13285:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13288:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13290:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13292:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13294:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13296:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13298:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13300:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13303:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13305:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13307:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13309:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13311:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13313:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13315:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13317:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13319:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13321:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13323:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13325:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13327:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13329:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13331:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13333:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13335:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13337:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13339:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13341:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13343:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13346:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13348:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13350:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13352:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13354:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13356:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13358:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13360:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13362:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13364:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13367:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13369:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13371:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13373:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13375:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13377:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13379:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13381:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13383:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13385:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13388:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13390:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13392:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13394:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13396:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13398:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13400:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13403:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13405:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13407:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13409:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13411:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13413:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13415:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13418:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13420:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13422:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13424:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13426:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13428:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13430:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13432:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13434:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13436:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13439:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13441:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13443:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13445:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13447:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13449:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13451:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13454:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13456:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13458:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13460:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13462:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13464:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13466:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13468:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13470:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13472:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13474:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13476:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13478:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13480:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13482:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13484:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13486:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13488:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13490:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13492:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13494:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13497:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13499:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13501:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13503:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13505:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13507:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13509:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13511:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13513:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13515:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13518:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13520:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13522:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13524:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13526:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13528:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13530:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13532:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13534:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13536:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13539:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13541:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13543:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13545:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13547:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13549:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13551:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13554:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13556:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13558:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13560:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13562:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13564:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13566:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13569:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13571:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13573:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13575:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13577:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13579:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13581:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13583:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13585:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13587:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13590:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13592:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13594:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13596:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13598:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13600:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13602:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13605:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13607:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13609:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13611:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13613:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13615:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13617:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13619:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13621:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13623:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13625:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13627:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13629:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13631:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13633:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13635:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13637:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13639:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13641:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13643:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13645:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13648:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13650:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13652:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13654:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13656:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13658:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13660:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13662:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13664:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13666:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13669:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13671:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13673:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13675:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13677:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13679:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13681:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13683:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13685:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13687:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13690:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13692:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13694:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13696:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13698:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13700:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13702:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13705:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13707:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13709:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13711:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13713:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13715:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13717:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13720:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13722:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13724:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13726:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13728:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13730:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13732:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13734:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13736:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13738:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13741:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13743:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13745:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13747:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13749:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13751:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13753:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13756:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13758:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13760:neg.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13762:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13764:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13766:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13768:redux.sync.add.s32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13770:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13772:bra: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13774:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13776:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13778:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13780:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13782:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13784:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13786:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13788:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13790:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13792:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13794:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_scaled_matvec__gxptx:cpp13796:fma.rn.f32: fp32_flops, ptx_lane_instructions
+

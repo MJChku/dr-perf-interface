@@ -1,0 +1,89 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "after"
+  18 invocations, 6 states
+  block_barrier_lane_arrivals = 23552 * rows
+  blocks = 1 * rows
+  conversion_ops = 1024 * rows
+  dynamic_shared_bytes_per_launch = 4096
+  executed_blocks = 1 * rows
+  executed_lanes = 1024 * rows
+  fp32_flops = 5 * elements + 2047 * rows
+  global_load_instructions = 0.25 * elements
+  global_read_bytes = 4 * elements
+  global_unique_read_bytes = 4 * elements
+  global_unique_read_line_bytes = 4 * elements
+  global_unique_read_lines = 0.03125 * elements
+  global_unique_read_sector_bytes = 4 * elements
+  global_unique_read_sectors = 0.125 * elements
+  global_unique_write_bytes = 4 * elements
+  global_unique_write_line_bytes = 4 * elements
+  global_unique_write_lines = 0.03125 * elements
+  global_unique_write_sector_bytes = 4 * elements
+  global_unique_write_sectors = 0.125 * elements
+  global_write_bytes = 4 * elements
+  integer_ops = 34816 * rows
+  launched_lanes = 1024 * rows
+  launches = 1
+  param_load_instructions = 3072 * rows
+  param_read_bytes = 20480 * rows
+  ptx_lane_instructions = 6 * elements + 190459 * rows + unexplained
+    unexplained own mean: 1534.5
+    unexplained including unfitted children: 1534.5
+  shared_load_instructions = 6140 * rows
+  shared_read_bytes = 24560 * rows
+  shared_write_bytes = 12284 * rows + unexplained
+    unexplained own mean: 442.2222222
+    unexplained including unfitted children: 442.2222222
+  special_function_ops = 1 * elements
+  static_shared_bytes_per_launch = 0
+  sum_block_lane_sequence_span = 265 * rows
+  sum_block_max_lane_bytes = 0 + unexplained
+    unexplained own mean: 411.7777778
+    unexplained including unfitted children: 411.7777778
+  sum_block_max_lane_flops = 31 * rows
+  sum_launch_max_block_lane_sequence_span = 265
+  warps = 32 * rows
+  Same-state invocation variation: shared_write_bytes, sum_block_max_lane_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx318:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx335:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+    ptx_lane_instructions at {'elements': 256, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=512, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=256, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=128, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=64, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=25.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=6.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=13.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=2.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=7, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=1, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=3.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=0.6666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=0.3333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=1
+    ptx_lane_instructions at {'elements': 512, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=1024, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=512, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=256, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=128, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=55.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=8.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=27, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=5, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=13.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=2.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=6.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=3, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=1, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=0.3333333333
+    ptx_lane_instructions at {'elements': 1024, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=512, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=256, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=107.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=20.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=53.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=10.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=27.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=4.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=14, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=2, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=6.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=3.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=0.6666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=0.3333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=1
+    ptx_lane_instructions at {'elements': 2048, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=1024, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=512, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=213.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=42.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=107.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=20.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=52.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=11.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=26.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=5.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=14, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=2, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=6.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=3, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=1, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=0.3333333333
+    ptx_lane_instructions at {'elements': 4096, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=424.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx318:st.shared.f32=87.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=211.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx335:st.shared.f32=44.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=107.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=20.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=54, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=10, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=26.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=5.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=13.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=2.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=7.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=0.3333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=3.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=0.3333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=1.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=0.3333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=0.6666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=0.3333333333
+    ptx_lane_instructions at {'elements': 8192, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx316:bra.ifconv=856, softmax_forward_kernel_vec4 @ after.cu:48 ptx318:st.shared.f32=168, softmax_forward_kernel_vec4 @ after.cu:48 ptx333:bra.ifconv=431.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx335:st.shared.f32=80.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx350:bra.ifconv=214.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=41.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx367:bra.ifconv=103.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=24.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx384:bra.ifconv=52.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=11.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx401:bra.ifconv=26.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=5.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx418:bra.ifconv=14, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=2, softmax_forward_kernel_vec4 @ after.cu:48 ptx435:bra.ifconv=6.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx452:bra.ifconv=4, softmax_forward_kernel_vec4 @ after.cu:48 ptx469:bra.ifconv=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=0.6666666667
+    shared_write_bytes at {'elements': 256, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=26.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=10.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=4, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=2.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=1.333333333
+    shared_write_bytes at {'elements': 512, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=34.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=20, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=10.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=5.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=4, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=1.333333333
+    shared_write_bytes at {'elements': 1024, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=82.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=42.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=17.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=8, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=6.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=2.666666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=1.333333333
+    shared_write_bytes at {'elements': 2048, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=169.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=82.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=46.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=21.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=8, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=5.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=4, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=1.333333333
+    shared_write_bytes at {'elements': 4096, 'rows': 1}: softmax_forward_kernel_vec4 @ after.cu:48 ptx318:st.shared.f32=349.3333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx335:st.shared.f32=178.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=82.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=40, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=22.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=10.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx454:st.shared.f32=1.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=1.333333333
+    shared_write_bytes at {'elements': 8192, 'rows': 2}: softmax_forward_kernel_vec4 @ after.cu:48 ptx318:st.shared.f32=672, softmax_forward_kernel_vec4 @ after.cu:48 ptx335:st.shared.f32=322.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx352:st.shared.f32=166.6666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx369:st.shared.f32=97.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx386:st.shared.f32=46.66666667, softmax_forward_kernel_vec4 @ after.cu:48 ptx403:st.shared.f32=21.33333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx420:st.shared.f32=8, softmax_forward_kernel_vec4 @ after.cu:48 ptx437:st.shared.f32=5.333333333, softmax_forward_kernel_vec4 @ after.cu:48 ptx471:st.shared.f32=2.666666667
+    sum_block_max_lane_bytes at {'elements': 256, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 512, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 1024, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 2048, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 4096, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 8192, 'rows': 2}: 
+

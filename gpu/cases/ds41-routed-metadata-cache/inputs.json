@@ -1,0 +1,20 @@
+{
+  "pcvs": "real_rows,N,K,active_routes,max_routes,active_experts,route_tile_visits,k_groups.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "uncached",
+      "ptx": "uncached.ptx",
+      "defines": [
+        "DS41_ROUTED_FUSED"
+      ]
+    },
+    {
+      "name": "cached",
+      "ptx": "cached.ptx",
+      "defines": [
+        "DS41_ROUTED_FUSED"
+      ]
+    }
+  ]
+}

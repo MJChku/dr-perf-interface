@@ -1,0 +1,119 @@
+{
+  "case": "ds41-scatter-merge-clear",
+  "status": "pass",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "scalar",
+      "status": "pass",
+      "numerical_status": "pass"
+    },
+    {
+      "name": "vector",
+      "status": "pass",
+      "numerical_status": "pass"
+    }
+  ],
+  "interface_checks": [],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/data.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/scalar.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_SCALAR_CAST",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/scalar-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/results/scalar/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/scalar-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/scalar.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/vector.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/vector.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/vector-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/results/vector/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/vector-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-scatter-merge-clear/.work/vector.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Finish writes2*rows*dim BF16 bytes; duplicate/invalid scatter and poisoned scratch checked by scalar oracle",
+      "checked_observations": 4,
+      "status": "pass"
+    },
+    {
+      "interface": "Pinned observed-state resource interfaces reproduce; requested/precision/span/geometry counts, excluding address-footprint placement",
+      "checked_observations": 46,
+      "status": "pass"
+    }
+  ]
+}

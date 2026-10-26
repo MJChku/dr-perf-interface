@@ -1,0 +1,57 @@
+{
+  "physical_gpu_used": false,
+  "source_sha256": "0547af9d75a8f894e46a8f6673fa50c7eaf96d4d073b1df277c7a1b915f2756a",
+  "compilations": [
+    {
+      "target": "sm_80",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_80",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "gpu/cases/llamacpp-rmsnorm-backward-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-llama-z61x06kn/rmsnorm-backward-sm_80.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 48 registers, used 1 barriers, 256 bytes smem, 384 bytes cmem[0]\nptxas info    : Compile time = 30.863 ms\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 48 registers, used 0 barriers, 384 bytes cmem[0]\nptxas info    : Compile time = 26.063 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 256 bytes smem, 384 bytes cmem[0]\nptxas info    : Compile time = 22.894 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 384 bytes cmem[0]\nptxas info    : Compile time = 20.361 ms\n"
+    },
+    {
+      "target": "sm_90",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_90",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "gpu/cases/llamacpp-rmsnorm-backward-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-llama-z61x06kn/rmsnorm-backward-sm_90.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_90'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 56 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 33.485 ms\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_90'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 54 registers, used 0 barriers\nptxas info    : Compile time = 28.892 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_90'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 23.999 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_90'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers\nptxas info    : Compile time = 21.808 ms\n"
+    },
+    {
+      "target": "sm_103",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_103",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "gpu/cases/llamacpp-rmsnorm-backward-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-llama-z61x06kn/rmsnorm-backward-sm_103.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 56 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 38.942 ms\nptxas info    : Compiling entry function '_ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 56 registers, used 0 barriers\nptxas info    : Compile time = 34.037 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi1024EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 256 bytes smem\nptxas info    : Compile time = 30.202 ms\nptxas info    : Compiling entry function '_ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline17rms_norm_back_f32ILi32EEEvPKfS2_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers\nptxas info    : Compile time = 28.059 ms\n"
+    }
+  ]
+}

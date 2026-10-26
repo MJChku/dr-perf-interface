@@ -1,0 +1,97 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_library_grouped_fp4"
+  8 invocations, 8 states
+  block_barrier_lane_arrivals = 1536 * active_tiles - 16 * padded_rows [accepted; max error 0]
+  blocks = 8 [accepted; max error 0]
+  conversion_ops = 7424 * active_tiles + 264 * padded_rows + 1024 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 10240 [accepted; max error 0]
+  emulator_barrier_generations = 12 * active_tiles + 3.875 * padded_rows [accepted; max error 1.78488e-11]
+  emulator_rendezvous_lane_arrivals = 3840 * active_tiles + 560 * padded_rows [accepted; max error 0]
+  executed_blocks = 8 [accepted; max error 0]
+  executed_lanes = 1024 [accepted; max error 0]
+  fp32_flops = 768 * padded_rows [accepted; max error 0]
+  generic_read_bytes = 128 * padded_rows [accepted; max error 0]
+  generic_unique_read_bytes = 256 * active_experts [accepted; max error 0]
+  generic_unique_read_line_bytes = 256 * active_experts [accepted; max error 0]
+  generic_unique_read_lines = 2 * active_experts [accepted; max error 0]
+  generic_unique_read_sector_bytes = 256 * active_experts [accepted; max error 0]
+  generic_unique_read_sectors = 8 * active_experts [accepted; max error 0]
+  global_read_bytes = 7168 * active_tiles + 64 * padded_rows + 4096 [accepted; max error 0]
+  global_unique_read_bytes = 4116 * active_experts + 66 * padded_rows + 16 [accepted; max error 0]
+  global_unique_read_line_bytes = 4276.6 * active_experts - 288.096 * active_tiles + 79.0552 * padded_rows - 6.87951 * real_rows + 175.124 [UNEXPLAINED; max error 83.8513]
+  global_unique_read_lines = 33.411 * active_experts - 2.25075 * active_tiles + 0.617619 * padded_rows - 0.0537462 * real_rows + 1.36816 [UNEXPLAINED; max error 0.655088]
+  global_unique_read_sector_bytes = 4146 * active_experts - 59.8066 * active_tiles + 68.5836 * padded_rows - 1.35071 * real_rows + 45.1241 [UNEXPLAINED; max error 22.5203]
+  global_unique_read_sectors = 129.562 * active_experts - 1.86896 * active_tiles + 2.14324 * padded_rows - 0.0422097 * real_rows + 1.41013 [UNEXPLAINED; max error 0.703761]
+  global_unique_write_bytes = 256 * padded_rows [accepted; max error 0]
+  global_unique_write_line_bytes = 66.6623 * active_experts - 79.7421 * active_tiles + 259.445 * padded_rows - 1.80095 * real_rows + 17.4988 [UNEXPLAINED; max error 30.0271]
+  global_unique_write_lines = 0.520799 * active_experts - 0.622985 * active_tiles + 2.02691 * padded_rows - 0.0140699 * real_rows + 0.136709 [UNEXPLAINED; max error 0.234587]
+  global_unique_write_sector_bytes = 256 * padded_rows [accepted; max error 0]
+  global_unique_write_sectors = 8 * padded_rows [accepted; max error 0]
+  global_write_bytes = 256 * padded_rows [accepted; max error 0]
+  integer_ops = 20736 * active_tiles + 616 * padded_rows + 20480 [accepted; max error 0]
+  launched_lanes = 1024 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = -1024 * active_tiles + 64 * padded_rows + 49152 [accepted; max error 0]
+  ptx_lane_instructions = 43392 * active_tiles + 2392 * padded_rows + 39936 [accepted; max error 0]
+  shared_read_bytes = 8192 * active_tiles + 768 * padded_rows [accepted; max error 0]
+  shared_write_bytes = 12288 * active_tiles + 320 * padded_rows [accepted; max error 0]
+  static_shared_bytes_per_launch = 0 [accepted; max error 0]
+  sum_block_lane_sequence_span = 339 * active_tiles + 18.6875 * padded_rows + 312 [accepted; max error 2.62844e-10]
+  sum_block_max_lane_bytes = 208 * active_tiles + 12.5 * padded_rows + 416 [accepted; max error 2.49202e-10]
+  sum_block_max_lane_flops = 134 * padded_rows [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 526.684 * active_experts - 823.918 * active_tiles + 35.666 * padded_rows - 16.275 * real_rows + 122.244 [UNEXPLAINED; max error 244.036]
+  tensor_float_flops = 1.41248e-08 * active_tiles + 16384 * padded_rows [accepted; max error 9.87202e-08]
+  warps = 32 [accepted; max error 0]
+  PCVs not independently identifiable: K, N, blocks, capacity_rows, launched_lanes, tiles16, tiles32
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4113:ld.global.nc.u32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4151:ld.global.nc.u64: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4153:ld.global.nc.u64: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4506:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4530:ld.global.nc.u64: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4532:ld.global.nc.u64: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4563:cp.async.cg.shared.global: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4631:cp.async.cg.shared.global: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4853:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4855:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4857:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4859:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4861:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4863:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4865:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4867:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4869:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4871:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4873:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4875:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4877:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4879:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4881:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4883:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4922:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp4975:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp5028:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp5575:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6309:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6311:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6313:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6315:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6317:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6319:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6321:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6323:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6325:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6327:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6329:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6331:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6333:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6335:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6337:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6339:ld.u8: generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6346:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6393:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site ds41_library_grouped_fp4__gxptx:cpp6440:ld.global.nc.u8: global_unique_read_line_bytes, global_unique_read_lines
+

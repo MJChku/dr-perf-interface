@@ -1,0 +1,38 @@
+{
+  "case": "ds41-hc-normalization",
+  "kernel": "HC coefficients/pre/post + RMS",
+  "label": "POTENTIAL",
+  "role": "HC stream mixing and normalization around attention and MoE.",
+  "pcvs": "rows,width,elements,streams,iterations,projection size; exact argument-derived vocabulary in support/ds41/drperf_gpu_argument_pcvs.inc.",
+  "finding": "Actual captures fit FP32 work and requested bytes vs shape. No new DrPerf-found defect or before/after optimization is asserted.",
+  "fix_status": "Measured baseline; fusion opportunities remain.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": [
+        "DS41_WIDE_NORMALIZATION"
+      ]
+    }
+  ],
+  "receipts": [
+    "eval/drperf-gpu/hc-before-pinned"
+  ],
+  "timing": "No isolated native timing for this case.",
+  "expect": [],
+  "detail": "",
+  "proposed": false,
+  "input_hashes": {
+    "check_interfaces.py": "baca6825f9a379b9d191f220a948fdef575a584bac83e10a6af01f84ed9a07eb",
+    "driver.cpp": "e6b59657b9afcb67c6bcf80c59653b925189820d00e84652ccd33a94a8cd5828",
+    "expected_interfaces.json": "22fce2b7892d5a1060c6ab5cf58f8ede49857e95c170ce08d01f9ae8062303de",
+    "kernel.ptx": "abac34a8e2b1cd84b0799b98e73a0963955dd1ee8fb001e932fe3dbcedc65d3d",
+    "support/ds41/decode_metadata.hpp": "bd731e2c0833e4c458645bfe8ced4b6c6d7588ac2664389d14118f16b82909b2",
+    "support/ds41/drperf_gpu_argument_pcvs.inc": "5eb2fefb2fadfbb3547ff8c57f45dac51e4646d41fd2e9a6ded7f83c4c723422",
+    "support/ds41/gx_fixture.hpp": "9f3f18251fe9d05d397698c69f15d2d8bd71a7d2d3552b8dca97c1ca3da3eaaf",
+    "support/ds41/synthetic.hpp": "c76f606ed05490b0b69aeac8a42f1d3861b3bd6fcaa7d2d0c4468acb2632003f",
+    "toolchain.json": "a988cc1a10cc697d04aaf2acee9917dcb8d15834a504f9289690daffda15628f"
+  },
+  "execution_timeout": 300,
+  "command_timeout": 360
+}

@@ -1,0 +1,142 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "compatible"
+  12 invocations, 4 states
+  block_barrier_lane_arrivals = 2304 * row_blocks
+  blocks = 1 * row_blocks
+  collective_lane_arrivals = 1536 * row_blocks
+  conversion_ops = 1 * elements + 768.25 * row_blocks
+  dynamic_shared_bytes_per_launch = 3072
+  executed_blocks = 1 * row_blocks
+  executed_lanes = 256 * row_blocks
+  fp32_flops = 13.75 * elements - 1 * row_blocks
+  generic_load_instructions = 64 * row_blocks - 64 + unexplained
+    unexplained own mean: 784.6666667
+    unexplained including unfitted children: 784.6666667
+  generic_read_bytes = 268 * row_blocks - 256 + unexplained
+    unexplained own mean: 3138.666667
+    unexplained including unfitted children: 3138.666667
+  generic_unique_read_bytes = 4
+  generic_unique_read_line_bytes = 128
+  generic_unique_read_lines = 1
+  generic_unique_read_sector_bytes = 32
+  generic_unique_read_sectors = 1
+  generic_unique_write_bytes = 4
+  generic_unique_write_line_bytes = 128
+  generic_unique_write_lines = 1
+  generic_unique_write_sector_bytes = 32
+  generic_unique_write_sectors = 1
+  generic_write_bytes = 12 * row_blocks
+  global_load_instructions = 1 * elements + 512.5 * row_blocks
+  global_read_bytes = 16 * elements + 2058 * row_blocks
+  global_unique_read_bytes = 0 + unexplained
+    unexplained own mean: 2712
+    unexplained including unfitted children: 2712
+  global_unique_read_line_bytes = 0 + unexplained
+    unexplained own mean: 3200
+    unexplained including unfitted children: 3200
+  global_unique_read_lines = 0 + unexplained
+    unexplained own mean: 25
+    unexplained including unfitted children: 25
+  global_unique_read_sector_bytes = 0 + unexplained
+    unexplained own mean: 2816
+    unexplained including unfitted children: 2816
+  global_unique_read_sectors = 0 + unexplained
+    unexplained own mean: 88
+    unexplained including unfitted children: 88
+  global_unique_write_bytes = 4 * elements + 4 * row_blocks
+  global_unique_write_line_bytes = 4 * elements + 512
+  global_unique_write_lines = 0.03125 * elements + 4
+  global_unique_write_sector_bytes = 4 * elements + 128
+  global_unique_write_sectors = 0.125 * elements + 4
+  global_write_bytes = 4 * elements + 12 * row_blocks
+  integer_ops = 5 * elements + 9547.5 * row_blocks - 64 + unexplained
+    unexplained own mean: 784.6666667
+    unexplained including unfitted children: 784.6666667
+  launched_lanes = 256 * row_blocks
+  launches = 1
+  param_load_instructions = 2560 * row_blocks
+  param_read_bytes = 18432 * row_blocks
+  ptx_lane_instructions = 23 * elements + 37666.25 * row_blocks - 256 + unexplained
+    unexplained own mean: 3126.666667
+    unexplained including unfitted children: 3126.666667
+  shared_load_instructions = 0.5 * elements + 1022.5 * row_blocks
+  shared_read_bytes = 2 * elements + 4090 * row_blocks
+  shared_write_bytes = 6132 * row_blocks
+  special_function_ops = 0.25 * row_blocks
+  static_shared_bytes_per_launch = 0
+  sum_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 6213.416667
+    unexplained including unfitted children: 6213.416667
+  sum_block_max_lane_bytes = 0 + unexplained
+    unexplained own mean: 6848.666667
+    unexplained including unfitted children: 6848.666667
+  sum_block_max_lane_flops = 0.0859375 * elements + 23.75 * row_blocks
+  sum_launch_max_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 1213.333333
+    unexplained including unfitted children: 1213.333333
+  warps = 8 * row_blocks
+  Same-state invocation variation: generic_load_instructions, generic_read_bytes, integer_ops, ptx_lane_instructions, sum_block_lane_sequence_span, sum_block_max_lane_bytes, sum_launch_max_block_lane_sequence_span
+  PCVs not independently identifiable: rows
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32: generic_load_instructions, generic_read_bytes, ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx163:setp.gt.s32: ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx164:bra: ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32: generic_load_instructions, generic_read_bytes, ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx445:setp.gt.s32: ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx446:bra: ptx_lane_instructions
+  Unexplained site fused_layernorm_kernel @ compatible.cu:204 ptx568:ld.global.nc.v4.f32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site fused_layernorm_kernel @ compatible.cu:208 ptx582:ld.global.nc.v4.f32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+    generic_load_instructions at {'elements': 128, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=172, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=160
+    generic_load_instructions at {'elements': 256, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=181.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=256
+    generic_load_instructions at {'elements': 256, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=449.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=768
+    generic_load_instructions at {'elements': 512, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=448, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=704
+    generic_read_bytes at {'elements': 128, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=688, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=640
+    generic_read_bytes at {'elements': 256, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=725.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=1024
+    generic_read_bytes at {'elements': 256, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=1797.333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=3072
+    generic_read_bytes at {'elements': 512, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=1792, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=2816
+    global_unique_read_bytes at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_bytes at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_bytes at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_bytes at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_line_bytes at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_line_bytes at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_line_bytes at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_line_bytes at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_lines at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_lines at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_lines at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_lines at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sector_bytes at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sector_bytes at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sector_bytes at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sector_bytes at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sectors at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sectors at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sectors at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sectors at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    integer_ops at {'elements': 128, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=172, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=160
+    integer_ops at {'elements': 256, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=181.3333333, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=256
+    integer_ops at {'elements': 256, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=449.3333333, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=768
+    integer_ops at {'elements': 512, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=448, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=704
+    ptx_lane_instructions at {'elements': 128, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=172, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=172, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx163:setp.gt.s32=172, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx164:bra=168, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=160, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=160, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx445:setp.gt.s32=160, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx446:bra=156
+    ptx_lane_instructions at {'elements': 256, 'row_blocks': 4, 'rows': 1}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=181.3333333, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=181.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx163:setp.gt.s32=181.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx164:bra=177.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=256, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=256, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx445:setp.gt.s32=256, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx446:bra=252
+    ptx_lane_instructions at {'elements': 256, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=449.3333333, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=449.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx163:setp.gt.s32=449.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx164:bra=441.3333333, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=768, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=768, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx445:setp.gt.s32=768, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx446:bra=760
+    ptx_lane_instructions at {'elements': 512, 'row_blocks': 8, 'rows': 2}: fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx157:ld.acquire.gpu.u32=448, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx161:xor.b32=448, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx163:setp.gt.s32=448, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx164:bra=440, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx439:ld.acquire.gpu.u32=704, fused_layernorm_kernel @ sync.h:61<helpers.h:378 ptx443:xor.b32=704, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx445:setp.gt.s32=704, fused_layernorm_kernel @ sync.h:98<helpers.h:378 ptx446:bra=696
+    sum_block_lane_sequence_span at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    sum_block_lane_sequence_span at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    sum_block_lane_sequence_span at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    sum_block_lane_sequence_span at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 128, 'row_blocks': 4, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 256, 'row_blocks': 4, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 256, 'row_blocks': 8, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 512, 'row_blocks': 8, 'rows': 2}: 
+

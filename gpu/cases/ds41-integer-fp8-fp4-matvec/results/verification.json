@@ -1,0 +1,72 @@
+{
+  "case": "ds41-integer-fp8-fp4-matvec",
+  "status": "pass",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "baseline",
+      "status": "pass",
+      "numerical_status": "pass"
+    }
+  ],
+  "interface_checks": [],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/kernel.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/.work/baseline.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_MATVEC",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/.work/baseline-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/results/baseline/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/.work/baseline-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-integer-fp8-fp4-matvec/.work/baseline.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Per-launch geometry interface blocks=declared blocks and launches=1; all independent numerical fixtures passed",
+      "checked_observations": 42,
+      "status": "pass"
+    },
+    {
+      "interface": "Pinned observed-state resource interfaces reproduce; requested/precision/span/geometry counts, excluding address-footprint placement",
+      "checked_observations": 42,
+      "status": "pass"
+    }
+  ]
+}

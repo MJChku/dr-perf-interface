@@ -1,0 +1,202 @@
+{
+  "job": "drperf-softmax-1026-151904",
+  "namespace": "runai-vca-jma",
+  "image": "vllm/vllm-openai@sha256:0674a3ea3c971706cea310bca71daadff68ea1717c758d2f54affa5def001b86",
+  "pool": "b300",
+  "gpu_count": 1,
+  "started_utc": "2026-10-26T15:19:04.399092+00:00",
+  "commands": [
+    {
+      "argv": [
+        "runai",
+        "submit",
+        "drperf-softmax-1026-151904",
+        "-p",
+        "vca-jma",
+        "--image",
+        "vllm/vllm-openai@sha256:0674a3ea3c971706cea310bca71daadff68ea1717c758d2f54affa5def001b86",
+        "--gpu",
+        "1",
+        "--cpu",
+        "8",
+        "--cpu-limit",
+        "8",
+        "--memory",
+        "16Gi",
+        "--memory-limit",
+        "16Gi",
+        "--node-pools",
+        "b300",
+        "--interactive",
+        "--preemptible",
+        "--run-as-uid",
+        "228407",
+        "--run-as-gid",
+        "83691",
+        "--backoff-limit",
+        "0",
+        "--auto-deletion-time-after-completion",
+        "1m",
+        "--command",
+        "--",
+        "/usr/bin/timeout",
+        "--signal=TERM",
+        "--kill-after=10",
+        "600",
+        "sleep",
+        "590"
+      ],
+      "seconds": 0.4837621171027422,
+      "exit_code": 0,
+      "output": "CLI v1 is now deprecated. It will remain available for two more releases (until version 2.22). \nHowever, we recommend migrating to CLI v2, which ensures full compatibility and ongoing feature development. \nContact your administrator for more details.\nCan be suppressed with --suppress-deprecation-message flag or set SUPPRESS_DEPRECATION_MESSAGE=true environment variable\n\nJob drperf-softmax-1026-151904 submitted successfully.\nYou can check the status of the job by running:\n\trunai describe job drperf-softmax-1026-151904 -p vca-jma\nwarning: Using the preemptible flag may lead to your resources being preempted without notice\n"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.1173913013190031,
+      "exit_code": 0,
+      "output": "[]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.13471501879394054,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-softmax-1026-151904-0-0\", \"phase\": \"Pending\", \"node\": \"gpu402.rcp.epfl.ch\"}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.19266571942716837,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-softmax-1026-151904-0-0\", \"phase\": \"Running\", \"node\": \"gpu402.rcp.epfl.ch\"}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "cp",
+        "-n",
+        "runai-vca-jma",
+        "/tmp/drperf-native-bundle-mzsh0o8t/bundle",
+        "drperf-softmax-1026-151904-0-0:/tmp/drperf-softmax-native"
+      ],
+      "seconds": 0.2869637170806527,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "kubectl",
+        "exec",
+        "-n",
+        "runai-vca-jma",
+        "drperf-softmax-1026-151904-0-0",
+        "--",
+        "bash",
+        "/tmp/drperf-softmax-native/run.sh"
+      ],
+      "seconds": 11.994313420727849,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "kubectl",
+        "cp",
+        "-n",
+        "runai-vca-jma",
+        "drperf-softmax-1026-151904-0-0:/tmp/drperf-softmax-native/results",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-softmax-debug/results/drperf-softmax-1026-151904/native"
+      ],
+      "seconds": 0.1852946514263749,
+      "exit_code": 0,
+      "output": "tar: Removing leading `/' from member names\n"
+    },
+    {
+      "argv": [
+        "runai",
+        "delete",
+        "job",
+        "drperf-softmax-1026-151904",
+        "-p",
+        "vca-jma"
+      ],
+      "seconds": 0.3330993764102459,
+      "exit_code": 0,
+      "output": "Job drperf-softmax-1026-151904 deleted successfully.\n"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.13138920161873102,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-softmax-1026-151904-0-0\", \"phase\": \"Running\", \"node\": \"gpu402.rcp.epfl.ch\"}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.1452632276341319,
+      "exit_code": 0,
+      "output": "[]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.11708722915500402,
+      "exit_code": 0,
+      "output": "[]"
+    }
+  ],
+  "sources": {
+    "synchronized.cu": "426e48d8a8a630686669dcb1b4192cc07571ddb3c0700ba711869afa803228c6",
+    "after.cu": "f47c952e2bb47c1fef8dc5855c20e58c3647561019e6ec09a3d143253c95419c",
+    "native_benchmark.cu": "1d0c61e9df94a2995089237e6aca3db3164d2294970a645bc9d30923a3fe0851"
+  },
+  "node": "gpu402.rcp.epfl.ch",
+  "pod": "drperf-softmax-1026-151904-0-0",
+  "result": "passed",
+  "job_removed": true,
+  "finished_utc": "2026-10-26T15:19:33.525039+00:00"
+}

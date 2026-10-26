@@ -1,0 +1,93 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.004063081927597523,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-iyfn5uv5/driver"
+      ],
+      "seconds": 0.798258712515235,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/before.cu",
+        "-o",
+        "/tmp/drperf-public-iyfn5uv5/before.ptx"
+      ],
+      "seconds": 1.31085698120296,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/home/ubuntu/drperf/gpu/cases/kernelbench-layernorm2-debug/before.cu(91): warning #177-D: variable \"D_tail\" was declared but never referenced\n      const int D_tail = D & 3;\n                ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-iyfn5uv5/before.ptx",
+        "-o",
+        "/tmp/drperf-public-iyfn5uv5/before.cubin"
+      ],
+      "seconds": 0.05873229540884495,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 2097152 bytes gmem, 32 bytes cmem[4]\nptxas info    : Compiling entry function '_Z22fused_layernorm_kernelPKfS0_S0_Pfif' for 'sm_80'\nptxas info    : Function properties for _Z22fused_layernorm_kernelPKfS0_S0_Pfif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 41 registers, used 1 barriers, 392 bytes cmem[0]\nptxas info    : Compile time = 36.174 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-iyfn5uv5/before.ptx",
+        "-o",
+        "/tmp/drperf-public-iyfn5uv5/before.so"
+      ],
+      "seconds": 0.5217970106750727,
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp: In function \u2018void _Z22fused_layernorm_kernelPKfS0_S0_Pfif__gxptx(void**)\u2019:\n/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp:2992:36: error: \u2018g_sum\u2019 was not declared in this scope; did you mean \u2018_gx_shm\u2019?\n 2992 |     R_rd36 = ((uint64_t)(uintptr_t)g_sum);\n      |                                    ^~~~~\n      |                                    _gx_shm\n/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp:2998:36: error: \u2018g_scratch\u2019 was not declared in this scope\n 2998 |     R_rd37 = ((uint64_t)(uintptr_t)g_scratch);\n      |                                    ^~~~~~~~~\n/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp:3579:36: error: \u2018g_mean\u2019 was not declared in this scope\n 3579 |     R_rd60 = ((uint64_t)(uintptr_t)g_mean);\n      |                                    ^~~~~~\n/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp:3585:36: error: \u2018g_inv_std\u2019 was not declared in this scope\n 3585 |     R_rd61 = ((uint64_t)(uintptr_t)g_inv_std);\n      |                                    ^~~~~~~~~\ndrperf GPU: Command '['g++', '-std=c++17', '-O1', '-fPIC', '-shared', '-fno-strict-aliasing', '-fwrapv', '-Wl,-z,defs', '/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.cpp', '-L/home/ubuntu/drperf/gpu/build', '-ldrperf_gpu', '-Wl,-rpath,/home/ubuntu/drperf/gpu/build', '-o', '/tmp/drperf-public-iyfn5uv5/.gpu-translate-dnyxnp63/module.so']' returned non-zero exit status 1.\n"
+    }
+  ],
+  "runs": {},
+  "modules": {},
+  "source_hashes": {
+    "upstream_src.py": "404bf4b9ca98ef1f3bb75f975e5ca7ae1e63e41ac596a8dc09615226770fc673",
+    "driver.cc": "62b7228c132a8c87004377f24d3439737ca6c6d049f2a11eaba28a72db9eb493",
+    "upstream_ref.py": "3aeeaf5a582dd0e7cdb662c0db6bebfb1598dcb08aa6729cbb08f1ffb8b51420",
+    "before.cu": "e5c5e8d5fc6c259a38fecd3538d766e1fb70229c848669da3c431b8666e48b56",
+    "run.py": "3332be3085f377a686f3321e0412341347305046e3fd522d937b60c8ee3e03a8"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 2.697128687053919
+}

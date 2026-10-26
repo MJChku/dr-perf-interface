@@ -1,0 +1,36 @@
+--- before.cu
++++ after.cu
+@@ -15,7 +15,18 @@
+     float sum_xg = 0.0f; // sum for x * gradient, needed because RMS norm mixes inputs
+ 
+     ggml_cuda_pdl_sync();
+-    for (int col = tid; col < ncols; col += block_size) {
++    float saved_x[8], saved_g[8];
++#pragma unroll
++    for (int k = 0; k < 8; ++k) {
++        const int col = tid + k * block_size;
++        if (col < ncols) {
++            const float xfi = xf[col], gi = grad[col];
++            saved_x[k] = xfi; saved_g[k] = gi;
++            sum_xx += xfi * xfi;
++            sum_xg += xfi * gi;
++        }
++    }
++    for (int col = tid + 8 * block_size; col < ncols; col += block_size) {
+         const float xfi = xf[col];
+         sum_xx += xfi * xfi;
+         sum_xg += xfi * grad[col];
+@@ -49,7 +60,12 @@
+     const float scale_grad = rsqrtf(mean_eps);
+     const float scale_x    = -scale_grad * sum_xg/sum_eps;
+ 
+-    for (int col = tid; col < ncols; col += block_size) {
++#pragma unroll
++    for (int k = 0; k < 8; ++k) {
++        const int col = tid + k * block_size;
++        if (col < ncols) dst[col] = scale_grad*saved_g[k] + scale_x*saved_x[k];
++    }
++    for (int col = tid + 8 * block_size; col < ncols; col += block_size) {
+         dst[col] = scale_grad*grad[col] + scale_x*xf[col];
+     }
+ }

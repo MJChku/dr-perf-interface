@@ -1,0 +1,1268 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_route_token_ids"
+  33 invocations, 2 states
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 12 * arg_rows [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 128 [accepted; max error 0]
+  global_read_bytes = 24.3529 * arg_rows - 0.352941 [UNEXPLAINED; max error 11.2941]
+  global_unique_read_bytes = 24.1176 * arg_rows - 0.117647 [UNEXPLAINED; max error 3.76471]
+  global_unique_read_line_bytes = 3.76471 * arg_rows + 124.235 [UNEXPLAINED; max error 120.471]
+  global_unique_read_lines = 0.0294118 * arg_rows + 0.970588 [UNEXPLAINED; max error 0.941176]
+  global_unique_read_sector_bytes = 32.9412 * arg_rows - 0.941176 [UNEXPLAINED; max error 30.1176]
+  global_unique_read_sectors = 1.02941 * arg_rows - 0.0294118 [UNEXPLAINED; max error 0.941176]
+  global_unique_write_bytes = 24.1176 * arg_rows - 0.117647 [UNEXPLAINED; max error 3.76471]
+  global_unique_write_line_bytes = 3.76471 * arg_rows + 124.235 [UNEXPLAINED; max error 120.471]
+  global_unique_write_lines = 0.0294118 * arg_rows + 0.970588 [UNEXPLAINED; max error 0.941176]
+  global_unique_write_sector_bytes = 32.9412 * arg_rows - 0.941176 [UNEXPLAINED; max error 30.1176]
+  global_unique_write_sectors = 1.02941 * arg_rows - 0.0294118 [UNEXPLAINED; max error 0.941176]
+  global_write_bytes = 24.3529 * arg_rows - 0.352941 [UNEXPLAINED; max error 11.2941]
+  integer_ops = 72 * arg_rows + 384 [accepted; max error 0]
+  launched_lanes = 128 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 5120 [accepted; max error 0]
+  ptx_lane_instructions = 132.088 * arg_rows + 1919.91 [UNEXPLAINED; max error 2.82353]
+  sum_block_lane_sequence_span = 0.0294118 * arg_rows + 36.9706 [UNEXPLAINED; max error 0.941176]
+  sum_block_max_lane_bytes = 0.235294 * arg_rows + 47.7647 [UNEXPLAINED; max error 7.52941]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 0.0294118 * arg_rows + 36.9706 [UNEXPLAINED; max error 0.941176]
+  warps = 4 [accepted; max error 0]
+  PCVs not independently identifiable: arg_first, arg_owned, arg_stride, blocks, launched_lanes
+  Unexplained site ds41_route_token_ids__gxptx:cpp15584:bra: ptx_lane_instructions
+  Unexplained site ds41_route_token_ids__gxptx:cpp15586:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_route_token_ids__gxptx:cpp15588:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+
+REGION "ds41_routed_tc_fused"
+  33 invocations, 17 states
+  block_barrier_lane_arrivals = 1536 * active_experts [accepted; max error 0]
+  blocks = 1 * blocks [accepted; max error 0]
+  conversion_ops = 102.4 * active_experts + 0.333824 * active_n_k + 921.6 * any_groups - 13824 * any_iters8 + 12902.4 * any_route + 512 * blocks [accepted; max error 9.47966e-09]
+  dynamic_shared_bytes_per_launch = 1 * K [accepted; max error 0]
+  emulator_barrier_generations = 6 * active_experts + 0.0110294 * active_n_k [accepted; max error 9.09495e-13]
+  emulator_rendezvous_lane_arrivals = 1536 * active_experts + 0.352941 * active_n_k [accepted; max error 5.82077e-10]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 256 * blocks [accepted; max error 0]
+  fp32_flops = 0.09375 * active_n_k [accepted; max error 8.91305e-11]
+  generic_read_bytes = 0.53125 * active_n_k [accepted; max error 5.23869e-10]
+  generic_unique_read_bytes = 0.53125 * active_n_k [accepted; max error 5.23869e-10]
+  generic_unique_read_line_bytes = -0.031746 * K + 256.203 * active_experts + 0.529038 * active_n_k - 64 * all_routes + 35.6464 * any_groups - 591.96 * any_iters8 + 1064.95 * any_route + 41.8201 * blocks - 77.7678 * max_routes + 1.97828 * route_groups + 0.141093 * route_tile_visits - 254.984 [UNEXPLAINED; max error 138.586]
+  generic_unique_read_lines = -0.000248016 * K + 2.00159 * active_experts + 0.00413311 * active_n_k - 0.5 * all_routes + 0.278488 * any_groups - 4.62469 * any_iters8 + 8.31988 * any_route + 0.32672 * blocks - 0.607561 * max_routes + 0.0154553 * route_groups + 0.00110229 * route_tile_visits - 1.99206 [UNEXPLAINED; max error 1.08271]
+  generic_unique_read_sector_bytes = -0.0380952 * K + 227.581 * active_experts + 0.530532 * active_n_k - 32 * all_routes + 0.537343 * any_groups - 26.5865 * any_iters8 + 83.3123 * any_route + 4.8254 * blocks - 8.81805 * max_routes + 0.858145 * route_groups + 0.169312 * route_tile_visits - 33.8286 [UNEXPLAINED; max error 30.3158]
+  generic_unique_read_sectors = -0.00119048 * K + 7.1119 * active_experts + 0.0165791 * active_n_k - 1 * all_routes + 0.016792 * any_groups - 0.830827 * any_iters8 + 2.60351 * any_route + 0.150794 * blocks - 0.275564 * max_routes + 0.026817 * route_groups + 0.00529101 * route_tile_visits - 1.05714 [UNEXPLAINED; max error 0.947368]
+  global_read_bytes = 6553.6 * active_experts + 0.857353 * active_n_k + 3686.4 * any_groups - 55296 * any_iters8 + 51609.6 * any_route + 6144 * blocks [accepted; max error 8.70932e-09]
+  global_unique_read_bytes = -0.466518 * K + 16 * active_experts + 0.0339417 * active_n_k - 1.62128e-11 * all_routes - 136.321 * any_groups + 2539.82 * any_iters8 - 2370.5 * any_route - 1.95238 * blocks - 2.06703e-12 * max_routes - 3.92857 * route_groups + 2.07341 * route_tile_visits - 1.92131e-11 [UNEXPLAINED; max error 4004]
+  global_unique_read_line_bytes = -0.552381 * K + 18.1333 * active_experts + 0.0338936 * active_n_k - 120 * all_routes - 223.419 * any_groups + 3896.96 * any_iters8 - 3202.39 * any_route + 8.12698 * blocks + 0.392982 * max_routes - 4.48321 * route_groups + 2.45503 * route_tile_visits + 8.53333 [UNEXPLAINED; max error 4130.53]
+  global_unique_read_lines = -0.00431548 * K + 0.141667 * active_experts + 0.000264793 * active_n_k - 0.9375 * all_routes - 1.74546 * any_groups + 30.445 * any_iters8 - 25.0186 * any_route + 0.0634921 * blocks + 0.00307018 * max_routes - 0.0350251 * route_groups + 0.0191799 * route_tile_visits + 0.0666667 [UNEXPLAINED; max error 32.2697]
+  global_unique_read_sector_bytes = -0.493651 * K + 24.4698 * active_experts + 0.0338002 * active_n_k - 24 * all_routes - 178.709 * any_groups + 3171.59 * any_iters8 - 2886.35 * any_route + 5.12169 * blocks - 5.05196 * max_routes - 3.82022 * route_groups + 2.194 * route_tile_visits - 29.9175 [UNEXPLAINED; max error 4101.75]
+  global_unique_read_sectors = -0.0154266 * K + 0.764683 * active_experts + 0.00105626 * active_n_k - 0.75 * all_routes - 5.58467 * any_groups + 99.1122 * any_iters8 - 90.1985 * any_route + 0.160053 * blocks - 0.157874 * max_routes - 0.119382 * route_groups + 0.0685626 * route_tile_visits - 0.934921 [UNEXPLAINED; max error 128.18]
+  global_unique_write_bytes = 68 * blocks [accepted; max error 0]
+  global_unique_write_line_bytes = 106.667 * blocks + 64 [accepted; max error 8.18545e-12]
+  global_unique_write_lines = 0.833333 * blocks + 0.5 [accepted; max error 3.55271e-14]
+  global_unique_write_sector_bytes = 96 * blocks [accepted; max error 0]
+  global_unique_write_sectors = 3 * blocks [accepted; max error 0]
+  global_write_bytes = 68 * blocks [accepted; max error 0]
+  integer_ops = 0.0472222 * K + 3962.58 * active_experts + 3.65212 * active_n_k - 7.5968e-10 * all_routes + 6256.72 * any_groups - 93901 * any_iters8 + 87669.3 * any_route + 15363.1 * blocks - 3.38012 * max_routes + 0.397661 * route_groups - 0.209877 * route_tile_visits - 12.8444 [UNEXPLAINED; max error 29.2281]
+  launched_lanes = 256 * blocks [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 13.3333 * K + 1019.12 * active_experts + 0.815686 * active_n_k + 2688 * all_routes + 332.094 * any_groups - 19128.8 * any_iters8 + 15502.4 * any_route + 27680.5 * blocks - 168.1 * max_routes + 112.281 * route_groups - 59.2593 * route_tile_visits + 1511.62 [UNEXPLAINED; max error 4374.14]
+  ptx_lane_instructions = 0.0662698 * K + 9652 * active_experts + 9.65818 * active_n_k + 1824 * all_routes + 8211.91 * any_groups - 123249 * any_iters8 + 113248 * any_route + 34444.2 * blocks - 91.6007 * max_routes + 0.558062 * route_groups - 0.294533 * route_tile_visits + 1111.12 [UNEXPLAINED; max error 1773.84]
+  shared_read_bytes = 0.125 * active_n_k [accepted; max error 4.00178e-11]
+  shared_write_bytes = 0.125 * active_n_k [accepted; max error 4.00178e-11]
+  static_shared_bytes_per_launch = 0 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.00267857 * K + 413.871 * active_experts + 0.0561712 * active_n_k - 6 * all_routes - 189.724 * any_groups + 2843.02 * any_iters8 - 2666.87 * any_route + 146.214 * blocks + 2.59398 * max_routes + 0.0225564 * route_groups - 0.0119048 * route_tile_visits + 5.05714 [UNEXPLAINED; max error 5.75188]
+  sum_block_max_lane_bytes = 5.49845e-14 * K + 139.448 * active_experts + 0.029902 * active_n_k - 1.68052e-11 * all_routes - 45.2571 * any_groups + 678.857 * any_iters8 - 705.6 * any_route + 138.571 * blocks + 8.57143 * max_routes + 2.08421e-14 * route_groups - 1.88678e-13 * route_tile_visits + 32.5714 [UNEXPLAINED; max error 16.2857]
+  sum_block_max_lane_flops = 726.133 * active_experts + 0.100858 * active_n_k - 466.8 * any_groups + 7002 * any_iters8 - 6535.2 * any_route [accepted; max error 2.89219e-09]
+  sum_launch_max_block_lane_sequence_span = 3.90581e-15 * K + 2.49923e-13 * active_experts - 5.44764e-17 * active_n_k - 1 * all_routes - 21.6421 * any_groups + 324.158 * any_iters8 - 304.779 * any_route + 2.89134e-13 * blocks + 141.189 * max_routes + 10.3895 * route_groups - 2.57151e-15 * route_tile_visits + 147 [UNEXPLAINED; max error 0.526316]
+  tensor_float_flops = 45.1765 * active_n_k + 2.27142e-08 * any_groups - 3.43807e-07 * any_iters8 + 3.22356e-07 * any_route [accepted; max error 4.00469e-08]
+  warps = 8 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: N, active_n, active_routes, capacity_rows, k_groups, launched_lanes, outputs, real_rows, route_iters4, route_iters8, tile_groups, useful_fmas
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18619:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18621:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18624:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18626:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18628:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18630:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18632:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18634:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18636:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18638:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18641:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18643:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18645:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18647:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18649:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18651:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18653:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18655:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18657:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18659:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18661:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18663:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18665:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18667:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18669:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18671:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18673:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18675:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18677:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18679:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18681:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18683:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18685:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18687:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18689:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18691:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18693:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18695:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18697:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18700:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18702:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18704:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18706:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18708:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18710:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18712:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18714:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18716:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18718:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18720:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18722:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18724:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18743:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18746:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18748:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18750:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18752:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18771:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18774:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18776:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18778:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18780:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18782:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18784:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18786:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18788:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18790:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18792:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18794:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18796:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18798:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18800:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18802:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18804:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18806:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18808:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18810:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18812:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18814:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18816:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18818:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18820:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18822:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18824:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18826:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18828:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18830:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18832:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18834:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18836:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18838:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18841:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18843:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18845:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18847:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18849:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18851:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18853:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18855:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18857:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18859:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18861:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18863:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18865:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18867:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18869:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18871:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18873:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18875:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18877:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18879:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18881:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18883:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18885:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18887:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18889:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18891:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18893:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18895:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18897:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18899:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18901:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18903:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18905:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18908:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18910:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18912:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18914:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18916:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18918:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18920:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18922:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18924:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18926:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18928:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18930:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18933:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18935:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18938:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18941:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18943:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18945:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18947:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18949:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18951:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18953:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18955:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18959:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18961:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18963:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18965:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18967:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18969:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18971:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18973:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18976:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18978:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18980:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18982:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18984:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18986:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18988:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18990:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18992:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18994:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18996:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp18998:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19000:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19002:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19004:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19006:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19009:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19012:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19014:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19016:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19018:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19020:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19022:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19024:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19026:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19028:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19030:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19032:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19047:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19049:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19051:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19053:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19055:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19057:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19059:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19061:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19063:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19065:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19067:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19070:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19093:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19095:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19098:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19100:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19102:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19104:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19106:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19108:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19110:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19112:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19115:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19117:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19119:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19121:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19123:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19125:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19127:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19129:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19131:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19133:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19135:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19137:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19139:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19141:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19143:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19145:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19147:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19149:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19151:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19153:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19155:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19157:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19159:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19161:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19163:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19165:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19167:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19169:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19171:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19173:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19175:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19177:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19179:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19182:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19184:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19186:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19188:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19190:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19192:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19194:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19196:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19198:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19200:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19202:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19204:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19206:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19225:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19228:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19230:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19232:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19234:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19253:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19256:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19258:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19260:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19262:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19264:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19266:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19268:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19270:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19272:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19274:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19276:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19278:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19280:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19282:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19284:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19286:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19288:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19290:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19292:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19294:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19296:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19298:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19300:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19302:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19304:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19306:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19308:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19310:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19312:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19314:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19316:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19318:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19320:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19323:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19325:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19327:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19329:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19331:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19333:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19335:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19337:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19339:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19341:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19343:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19345:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19347:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19349:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19351:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19353:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19355:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19357:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19359:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19361:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19363:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19365:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19367:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19369:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19371:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19373:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19375:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19377:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19379:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19381:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19383:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19385:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19388:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19390:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19392:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19394:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19396:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19398:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19400:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19402:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19404:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19406:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19408:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19410:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19413:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19415:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19418:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19421:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19423:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19425:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19427:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19429:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19431:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19433:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19435:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19439:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19441:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19443:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19445:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19447:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19449:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19451:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19453:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19456:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19458:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19460:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19462:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19464:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19466:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19468:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19470:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19472:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19474:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19476:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19478:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19480:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19482:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19484:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19486:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19489:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19492:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19494:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19496:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19498:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19500:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19502:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19504:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19506:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19508:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19510:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19512:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19527:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19529:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19531:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19533:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19535:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19537:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19539:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19541:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19543:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19545:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19547:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19550:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19573:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19575:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19578:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19580:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19582:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19584:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19586:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19588:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19590:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19592:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19595:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19597:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19599:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19601:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19603:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19605:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19607:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19609:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19611:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19613:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19615:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19617:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19619:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19621:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19623:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19625:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19627:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19629:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19631:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19633:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19635:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19637:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19639:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19641:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19643:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19645:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19647:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19649:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19651:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19653:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19655:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19657:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19659:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19662:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19664:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19666:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19668:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19670:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19672:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19674:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19676:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19678:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19680:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19682:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19684:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19686:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19705:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19708:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19710:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19712:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19714:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19733:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19736:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19738:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19740:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19742:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19744:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19746:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19748:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19750:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19752:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19754:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19756:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19758:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19760:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19762:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19764:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19766:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19768:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19770:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19772:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19774:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19776:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19778:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19780:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19782:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19784:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19786:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19788:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19790:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19792:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19794:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19796:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19798:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19800:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19803:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19805:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19807:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19809:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19811:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19813:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19815:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19817:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19819:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19821:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19823:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19825:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19827:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19829:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19831:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19833:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19835:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19837:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19839:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19841:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19843:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19845:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19847:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19849:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19851:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19853:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19855:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19857:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19859:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19861:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19863:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19865:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19868:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19870:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19872:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19874:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19876:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19878:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19880:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19882:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19884:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19886:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19888:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19890:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19893:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19895:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19898:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19901:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19903:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19905:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19907:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19909:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19911:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19913:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19915:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19919:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19921:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19923:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19925:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19927:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19929:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19931:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19933:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19936:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19938:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19940:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19942:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19944:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19946:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19948:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19950:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19952:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19954:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19956:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19958:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19960:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19962:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19964:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19966:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19969:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19972:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19974:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19976:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19978:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19980:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19982:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19984:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19986:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19988:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19990:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp19992:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20007:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20009:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20011:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20013:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20015:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20017:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20019:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20021:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20023:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20025:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20027:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20030:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20053:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20055:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20058:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20060:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20062:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20064:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20066:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20068:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20070:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20072:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20075:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20077:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20079:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20081:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20083:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20085:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20087:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20089:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20091:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20093:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20095:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20097:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20099:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20101:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20103:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20105:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20107:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20109:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20111:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20113:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20115:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20117:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20119:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20121:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20123:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20125:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20127:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20129:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20131:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20133:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20135:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20137:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20139:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20142:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20144:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20146:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20148:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20150:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20152:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20154:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20156:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20158:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20160:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20162:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20164:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20166:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20185:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20188:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20190:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20192:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20194:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20213:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20216:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20218:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20220:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20222:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20224:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20226:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20228:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20230:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20232:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20234:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20236:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20238:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20240:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20242:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20244:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20246:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20248:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20250:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20252:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20254:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20256:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20258:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20260:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20262:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20264:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20266:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20268:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20270:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20272:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20274:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20276:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20278:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20280:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20283:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20285:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20287:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20289:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20291:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20293:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20295:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20297:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20299:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20301:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20303:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20305:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20307:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20309:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20311:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20313:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20315:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20317:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20319:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20321:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20323:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20325:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20327:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20329:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20331:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20333:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20335:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20337:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20339:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20341:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20343:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20345:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20348:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20350:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20352:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20354:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20356:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20358:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20360:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20362:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20364:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20366:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20368:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20370:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20373:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20375:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20378:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20381:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20383:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20385:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20387:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20389:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20391:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20393:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20395:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20399:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20401:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20403:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20405:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20407:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20409:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20411:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20413:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20416:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20418:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20420:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20422:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20424:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20426:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20428:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20430:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20432:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20434:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20436:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20438:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20440:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20442:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20444:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20446:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20449:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20452:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20454:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20456:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20458:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20460:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20462:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20464:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20466:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20468:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20470:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20472:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20487:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20489:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20491:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20493:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20495:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20497:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20499:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20501:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20503:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20505:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20507:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20510:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20533:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20535:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20538:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20540:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20542:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20544:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20546:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20548:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20550:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20552:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20555:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20557:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20559:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20561:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20563:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20565:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20567:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20569:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20571:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20573:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20575:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20577:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20579:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20581:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20583:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20585:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20587:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20589:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20591:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20593:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20595:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20597:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20599:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20601:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20603:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20605:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20607:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20609:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20611:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20613:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20615:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20617:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20619:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20622:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20624:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20626:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20628:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20630:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20632:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20634:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20636:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20638:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20640:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20642:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20644:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20646:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20665:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20668:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20670:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20672:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20674:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20693:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20696:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20698:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20700:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20702:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20704:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20706:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20708:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20710:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20712:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20714:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20716:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20718:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20720:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20722:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20724:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20726:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20728:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20730:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20732:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20734:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20736:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20738:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20740:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20742:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20744:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20746:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20748:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20750:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20752:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20754:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20756:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20758:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20760:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20763:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20765:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20767:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20769:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20771:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20773:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20775:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20777:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20779:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20781:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20783:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20785:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20787:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20789:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20791:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20793:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20795:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20797:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20799:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20801:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20803:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20805:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20807:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20809:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20811:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20813:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20815:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20817:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20819:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20821:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20823:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20825:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20828:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20830:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20832:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20834:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20836:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20838:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20840:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20842:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20844:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20846:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20848:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20850:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20853:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20855:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20858:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20861:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20863:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20865:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20867:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20869:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20871:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20873:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20875:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20879:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20881:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20883:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20885:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20887:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20889:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20891:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20893:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20896:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20898:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20900:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20902:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20904:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20906:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20908:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20910:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20912:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20914:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20916:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20918:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20920:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20922:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20924:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20926:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20929:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20931:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20934:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20936:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20938:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20940:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20942:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20944:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20946:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20948:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20950:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20952:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20967:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20969:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20971:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20973:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20975:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20977:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20979:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20981:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20983:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20985:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20987:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp20990:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21013:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21015:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21018:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21020:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21022:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21024:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21026:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21028:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21030:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21032:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21035:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21037:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21039:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21041:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21043:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21045:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21047:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21049:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21051:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21053:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21055:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21057:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21059:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21061:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21063:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21065:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21067:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21069:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21071:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21073:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21075:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21077:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21079:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21081:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21083:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21085:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21087:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21089:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21091:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21093:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21095:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21097:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21100:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21102:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21104:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21106:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21108:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21110:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21112:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21114:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21116:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21118:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21120:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21122:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21124:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21143:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21146:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21148:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21150:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21152:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21171:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21174:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21176:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21178:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21180:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21182:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21184:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21186:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21188:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21190:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21192:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21194:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21196:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21198:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21200:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21202:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21204:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21206:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21208:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21210:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21212:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21214:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21216:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21218:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21220:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21222:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21224:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21226:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21228:prmt.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21230:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21232:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21234:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21236:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21238:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21241:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21243:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21245:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21247:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21249:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21251:mma.sync.aligned.m16n8k32.row.col.f32.e4m3.e4m3.f32: ptx_lane_instructions, tensor_float_flops
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21253:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21255:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21257:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21259:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21261:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21263:ld.global.u8: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21265:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21267:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21269:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21271:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21273:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21275:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21277:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21279:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21281:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21283:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21285:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21287:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21289:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21291:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21293:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21295:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21297:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21299:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21301:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21303:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21306:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21308:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21310:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21312:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21314:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21316:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21318:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21320:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21322:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21324:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21326:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21328:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21331:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21333:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21336:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21339:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21341:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21343:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21345:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21347:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21349:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21351:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21353:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21357:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21359:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21361:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21363:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21365:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21367:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21369:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21371:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21374:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21376:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21378:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21380:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21382:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21384:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21386:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21388:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21390:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21392:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21394:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21396:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21398:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21400:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21402:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21404:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21407:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21409:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21412:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21414:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21416:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21418:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21420:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21422:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21424:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21426:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21428:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21430:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21445:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21447:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21449:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21451:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21453:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21455:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21457:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21459:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21461:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21463:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21465:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_fused__gxptx:cpp21468:bar.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+

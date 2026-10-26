@@ -1,0 +1,330 @@
+{
+  "job": "drperf-public-1026-164544",
+  "namespace": "runai-vca-jma",
+  "context": "rcp-caas-prod",
+  "image": "vllm/vllm-openai@sha256:0674a3ea3c971706cea310bca71daadff68ea1717c758d2f54affa5def001b86",
+  "pool": "b300",
+  "gpu_count": 1,
+  "started_utc": "2026-10-26T16:45:44.820984+00:00",
+  "commands": [
+    {
+      "argv": [
+        "kubectl",
+        "config",
+        "current-context"
+      ],
+      "seconds": 0.06246565282344818,
+      "exit_code": 0,
+      "output": "rcp-caas-prod\n"
+    },
+    {
+      "argv": [
+        "runai",
+        "submit",
+        "drperf-public-1026-164544",
+        "-p",
+        "vca-jma",
+        "--image",
+        "vllm/vllm-openai@sha256:0674a3ea3c971706cea310bca71daadff68ea1717c758d2f54affa5def001b86",
+        "--gpu",
+        "1",
+        "--cpu",
+        "8",
+        "--cpu-limit",
+        "8",
+        "--memory",
+        "16Gi",
+        "--memory-limit",
+        "16Gi",
+        "--node-pools",
+        "b300",
+        "--interactive",
+        "--preemptible",
+        "--run-as-uid",
+        "228407",
+        "--run-as-gid",
+        "83691",
+        "--backoff-limit",
+        "0",
+        "--auto-deletion-time-after-completion",
+        "1m",
+        "--command",
+        "--",
+        "/usr/bin/timeout",
+        "--signal=TERM",
+        "--kill-after=10",
+        "660",
+        "sleep",
+        "650"
+      ],
+      "seconds": 0.23024881910532713,
+      "exit_code": 0,
+      "output": "Job drperf-public-1026-164544 submitted successfully.\nYou can check the status of the job by running:\n\trunai describe job drperf-public-1026-164544 -p vca-jma\nwarning: Using the preemptible flag may lead to your resources being preempted without notice\nCLI v1 is now deprecated. It will remain available for two more releases (until version 2.22). \nHowever, we recommend migrating to CLI v2, which ensures full compatibility and ongoing feature development. \nContact your administrator for more details.\nCan be suppressed with --suppress-deprecation-message flag or set SUPPRESS_DEPRECATION_MESSAGE=true environment variable\n\n"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.12672391068190336,
+      "exit_code": 0,
+      "output": "[]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.11628144606947899,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.13331047911196947,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.11122111603617668,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.10615726932883263,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.2068286957219243,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.1067511448636651,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.14408453088253736,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Pending\", \"node\": null}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.10994006972759962,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Running\", \"node\": \"gpu405.rcp.epfl.ch\"}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "cp",
+        "-n",
+        "runai-vca-jma",
+        "/tmp/drperf-public-native-amhf40z6/bundle",
+        "drperf-public-1026-164544-0-0:/tmp/drperf-public-native"
+      ],
+      "seconds": 0.3165662409737706,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "exec",
+        "-n",
+        "runai-vca-jma",
+        "drperf-public-1026-164544-0-0",
+        "--",
+        "bash",
+        "/tmp/drperf-public-native/run.sh"
+      ],
+      "seconds": 11.257381432689726,
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "cp",
+        "-n",
+        "runai-vca-jma",
+        "drperf-public-1026-164544-0-0:/tmp/drperf-public-native/results",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-debug/results/drperf-public-1026-164544/native"
+      ],
+      "seconds": 0.18528856337070465,
+      "exit_code": 0,
+      "output": "tar: Removing leading `/' from member names\n"
+    },
+    {
+      "argv": [
+        "runai",
+        "delete",
+        "job",
+        "drperf-public-1026-164544",
+        "-p",
+        "vca-jma"
+      ],
+      "seconds": 0.3332842905074358,
+      "exit_code": 0,
+      "output": "Job drperf-public-1026-164544 deleted successfully.\n"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.16396316047757864,
+      "exit_code": 0,
+      "output": "[{\"name\": \"drperf-public-1026-164544-0-0\", \"phase\": \"Running\", \"node\": \"gpu405.rcp.epfl.ch\"}]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.12070365995168686,
+      "exit_code": 0,
+      "output": "[]"
+    },
+    {
+      "argv": [
+        "kubectl",
+        "--context",
+        "rcp-caas-prod",
+        "get",
+        "pods",
+        "-n",
+        "runai-vca-jma",
+        "-o",
+        "json"
+      ],
+      "seconds": 0.10446023847907782,
+      "exit_code": 0,
+      "output": "[]"
+    }
+  ],
+  "sources": {
+    "layernorm/before.cu": "e7f99a6fa768cc1e66d3c96c800330e520e7fa1aa65c075bf2a17285f6b5fe90",
+    "layernorm/after.cu": "aa12f611ea0992a74a27553bc9e4acfefa7d129ca2cca017869d3c9c25174b3d",
+    "layernorm/native_benchmark.cu": "7db7f3d013dcd3426823dfe4f7b5c33b803766b5d56262b1d29365915f82f601",
+    "conv2d/compatible.cu": "15f23c73c8da12c68e766dac8eb4a3358bb1bbaf57b126988249f486e2417e18",
+    "conv2d/after.cu": "d3c02737ffc4e5e327a2cfae5435f9d920abfb39dde66e22af7eebe1b489884a",
+    "conv2d/native_benchmark.cu": "cc5e2e4edb41363655c9ba885fb85d85318b78954e17b1d2bf648c76048096a3"
+  },
+  "node": "gpu405.rcp.epfl.ch",
+  "pod": "drperf-public-1026-164544-0-0",
+  "result": "passed",
+  "job_removed": true,
+  "finished_utc": "2026-10-26T16:46:43.764446+00:00"
+}

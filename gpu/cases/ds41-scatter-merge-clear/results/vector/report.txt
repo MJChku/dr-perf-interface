@@ -1,0 +1,323 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_cast_rows"
+  10 invocations, 8 states
+  blocks = 1 * blocks [accepted; max error 0]
+  conversion_ops = -67.9375 * arg_dim + 35.0937 * arg_is + 1.89463e-06 * arg_mode + 35.0938 * arg_os + 512 * blocks - 8.07526e-07 [accepted; max error 1.42106e-06]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 64 * arg_dim - 32 * arg_is - 1.73249e-06 * arg_mode - 32 * arg_os + 256 * blocks + 7.37242e-07 [accepted; max error 1.29938e-06]
+  global_read_bytes = -40.5 * arg_dim - 12696.8 * arg_is + 51216 * arg_mode + 12746.3 * arg_os - 1.16378e-07 * blocks - 25608 [UNEXPLAINED; max error 35832]
+  global_unique_read_bytes = -40.5 * arg_dim - 12696.8 * arg_is + 51216 * arg_mode + 12746.3 * arg_os - 1.16378e-07 * blocks - 25608 [UNEXPLAINED; max error 35832]
+  global_unique_read_line_bytes = -68.7055 * arg_dim - 12675.8 * arg_is + 51114.7 * arg_mode + 12753.5 * arg_os - 24.8544 * blocks - 25476.8 [UNEXPLAINED; max error 35818.7]
+  global_unique_read_lines = -0.536762 * arg_dim - 99.0297 * arg_is + 399.333 * arg_mode + 99.637 * arg_os - 0.194175 * blocks - 199.037 [UNEXPLAINED; max error 279.833]
+  global_unique_read_sector_bytes = -52.7945 * arg_dim - 12675.8 * arg_is + 51210.7 * arg_mode + 12737.5 * arg_os + 24.8544 * blocks - 25621.9 [UNEXPLAINED; max error 35834.7]
+  global_unique_read_sectors = -1.64983 * arg_dim - 396.118 * arg_is + 1600.33 * arg_mode + 398.048 * arg_os + 0.776699 * blocks - 800.684 [UNEXPLAINED; max error 1119.83]
+  global_unique_write_bytes = -40.5 * arg_dim + 12746.3 * arg_is - 51216 * arg_mode - 12696.8 * arg_os - 1.16378e-07 * blocks + 25608 [UNEXPLAINED; max error 35832]
+  global_unique_write_line_bytes = -68.7055 * arg_dim + 12753.5 * arg_is - 51114.7 * arg_mode - 12675.8 * arg_os - 24.8544 * blocks + 25637.9 [UNEXPLAINED; max error 35818.7]
+  global_unique_write_lines = -0.536762 * arg_dim + 99.637 * arg_is - 399.333 * arg_mode - 99.0297 * arg_os - 0.194175 * blocks + 200.296 [UNEXPLAINED; max error 279.833]
+  global_unique_write_sector_bytes = -52.7945 * arg_dim + 12737.5 * arg_is - 51210.7 * arg_mode - 12675.8 * arg_os + 24.8544 * blocks + 25588.8 [UNEXPLAINED; max error 35834.7]
+  global_unique_write_sectors = -1.64983 * arg_dim + 398.048 * arg_is - 1600.33 * arg_mode - 396.118 * arg_os + 0.776699 * blocks + 799.649 [UNEXPLAINED; max error 1119.83]
+  global_write_bytes = -40.5 * arg_dim + 12746.3 * arg_is - 51216 * arg_mode - 12696.8 * arg_os - 1.16378e-07 * blocks + 25608 [UNEXPLAINED; max error 35832]
+  integer_ops = -359.656 * arg_dim - 44376.7 * arg_is + 179256 * arg_mode + 44756.3 * arg_os + 1024 * blocks - 89628 [UNEXPLAINED; max error 125412]
+  launched_lanes = 64 * arg_dim - 32 * arg_is - 1.73249e-06 * arg_mode - 32 * arg_os + 256 * blocks + 7.37242e-07 [accepted; max error 1.29938e-06]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 2304 * arg_dim - 1152 * arg_is - 6.2072e-05 * arg_mode - 1152 * arg_os + 9216 * blocks + 2.64075e-05 [accepted; max error 4.65558e-05]
+  ptx_lane_instructions = 240.328 * arg_dim - 56593.4 * arg_is + 227271 * arg_mode + 56382.1 * arg_os + 5376 * blocks - 113636 [UNEXPLAINED; max error 159004]
+  sum_block_lane_sequence_span = -27.75 * arg_dim - 200.875 * arg_is + 923 * arg_mode + 228.625 * arg_os + 98.5 * blocks - 461.5 [UNEXPLAINED; max error 603.5]
+  sum_block_max_lane_bytes = 12 * arg_dim - 6 * arg_is - 3.22255e-07 * arg_mode - 6 * arg_os + 84 * blocks + 1.36975e-07 [accepted; max error 0.000151219]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = -47.125 * arg_dim + 21.8125 * arg_is + 71 * arg_mode + 25.3125 * arg_os - 1.08809e-07 * blocks + 63 [accepted; max error 9.7731e-07]
+  warps = 2 * arg_dim - 1 * arg_is - 5.41404e-08 * arg_mode - 1 * arg_os + 8 * blocks + 2.30388e-08 [accepted; max error 2.537e-05]
+  PCVs not independently identifiable: arg_rows, launched_lanes
+  Unexplained site ds41_cast_rows__gxptx:cpp4300:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_sector_bytes
+  Unexplained site ds41_cast_rows__gxptx:cpp4312:st.global.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_sector_bytes, global_write_bytes
+  Unexplained site ds41_cast_rows__gxptx:cpp4377:bra: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4379:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4381:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4383:ld.global.v4.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4385:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4387:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4389:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4391:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4393:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4395:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4397:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4399:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4401:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4403:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4405:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4407:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4409:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4411:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4413:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4415:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4417:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4419:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4421:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4423:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4425:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4427:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4429:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4431:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4433:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4435:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4437:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4439:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4441:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4443:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4445:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4447:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4449:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4451:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4453:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4455:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4457:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4459:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4461:ld.global.v4.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4463:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4465:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4467:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4469:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4471:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4473:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4475:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4477:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4479:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4481:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4483:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4485:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4487:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4489:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4491:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4493:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4495:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4497:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4499:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4501:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4503:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4505:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4507:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4509:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4511:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4513:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4515:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4517:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4519:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4521:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4523:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4525:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4527:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4529:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4531:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4533:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4535:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4537:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4539:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4541:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4543:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4545:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4547:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4549:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4551:st.global.v4.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4554:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4557:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4559:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4561:ld.global.v4.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4563:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4565:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4567:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4569:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4571:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4573:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4575:st.global.v4.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4577:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4579:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4581:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4583:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4585:st.global.v4.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_cast_rows__gxptx:cpp4588:bra.uni: ptx_lane_instructions
+
+REGION "ds41_engram_gate"
+  6 invocations, 6 states
+  blocks = 12 [accepted; max error 0]
+  collective_lane_arrivals = 6912 [accepted; max error 0]
+  conversion_ops = 24 * arg_dim + 1920 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 6912 [accepted; max error 0]
+  executed_blocks = 12 [accepted; max error 0]
+  executed_lanes = 384 [accepted; max error 0]
+  fp32_flops = 120 * arg_dim + 13440 [accepted; max error 0]
+  global_read_bytes = 144 * arg_dim [accepted; max error 0]
+  global_unique_read_bytes = 70 * arg_dim [accepted; max error 0]
+  global_unique_read_line_bytes = 70.0071 * arg_dim + 3.75318e-10 * arg_output_stride + 508.559 [UNEXPLAINED; max error 2.98663]
+  global_unique_read_lines = 0.54693 * arg_dim + 2.93217e-12 * arg_output_stride + 3.97312 [UNEXPLAINED; max error 0.023333]
+  global_unique_read_sector_bytes = 69.9314 * arg_dim + 3.75318e-10 * arg_output_stride + 97.262 [UNEXPLAINED; max error 28.8707]
+  global_unique_read_sectors = 2.18536 * arg_dim + 1.17287e-11 * arg_output_stride + 3.03944 [UNEXPLAINED; max error 0.90221]
+  global_unique_write_bytes = 24 * arg_dim [accepted; max error 0]
+  global_unique_write_line_bytes = 24.0284 * arg_dim + 114.236 [UNEXPLAINED; max error 11.9465]
+  global_unique_write_lines = 0.187722 * arg_dim + 0.892472 [UNEXPLAINED; max error 0.093332]
+  global_unique_write_sector_bytes = 23.9905 * arg_dim + 1.87659e-10 * arg_output_stride + 36.5879 [UNEXPLAINED; max error 3.98217]
+  global_unique_write_sectors = 0.749704 * arg_dim + 5.86435e-12 * arg_output_stride + 1.14337 [UNEXPLAINED; max error 0.124443]
+  global_write_bytes = 24 * arg_dim [accepted; max error 0]
+  integer_ops = 408 * arg_dim + 6144 [accepted; max error 0]
+  launched_lanes = 384 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 23040 [accepted; max error 0]
+  ptx_lane_instructions = 744 * arg_dim + 60672 [accepted; max error 0]
+  special_function_ops = 1920 [accepted; max error 0]
+  sum_block_lane_sequence_span = 22.3974 * arg_dim + 2309.34 [UNEXPLAINED; max error 358.768]
+  sum_block_max_lane_bytes = 5.05747 * arg_dim + 813.334 [UNEXPLAINED; max error 81.0122]
+  sum_block_max_lane_flops = 3.61248 * arg_dim + 486.667 [UNEXPLAINED; max error 57.8659]
+  sum_launch_max_block_lane_sequence_span = 1.86645 * arg_dim + 192.445 [UNEXPLAINED; max error 29.8974]
+  warps = 12 [accepted; max error 0]
+  PCVs not independently identifiable: arg_kv_stride, arg_residual_stride, arg_rows, blocks, launched_lanes
+  Unexplained site ds41_engram_gate__gxptx:cpp2510:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2522:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2532:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2540:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2901:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2911:ld.global.u16: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_engram_gate__gxptx:cpp2943:st.global.u16: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+
+REGION "ds41_expand_hc"
+  1 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 4 [accepted; max error 0]
+  conversion_ops = 3796 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 4 [accepted; max error 0]
+  executed_lanes = 512 [accepted; max error 0]
+  global_read_bytes = 792 [accepted; max error 0]
+  global_unique_read_bytes = 198 [accepted; max error 0]
+  global_unique_read_line_bytes = 256 [accepted; max error 0]
+  global_unique_read_lines = 2 [accepted; max error 0]
+  global_unique_read_sector_bytes = 224 [accepted; max error 0]
+  global_unique_read_sectors = 7 [accepted; max error 0]
+  global_unique_write_bytes = 840 [accepted; max error 0]
+  global_unique_write_line_bytes = 1024 [accepted; max error 0]
+  global_unique_write_lines = 8 [accepted; max error 0]
+  global_unique_write_sector_bytes = 864 [accepted; max error 0]
+  global_unique_write_sectors = 27 [accepted; max error 0]
+  global_write_bytes = 840 [accepted; max error 0]
+  integer_ops = 6044 [accepted; max error 0]
+  launched_lanes = 512 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 16384 [accepted; max error 0]
+  ptx_lane_instructions = 18908 [accepted; max error 0]
+  sum_block_lane_sequence_span = 174 [accepted; max error 0]
+  sum_block_max_lane_bytes = 148 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 48 [accepted; max error 0]
+  warps = 16 [accepted; max error 0]
+  PCVs not independently identifiable: arg_dim, arg_rows, blocks, launched_lanes
+
+REGION "ds41_finish_moe"
+  2 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 949 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 128 [accepted; max error 0]
+  fp32_flops = 99 [accepted; max error 0]
+  global_read_bytes = 792 [accepted; max error 0]
+  global_unique_read_bytes = 792 [accepted; max error 0]
+  global_unique_read_line_bytes = 1024 [accepted; max error 0]
+  global_unique_read_lines = 8 [accepted; max error 0]
+  global_unique_read_sector_bytes = 928 [accepted; max error 0]
+  global_unique_read_sectors = 29 [accepted; max error 0]
+  global_unique_write_bytes = 198 [accepted; max error 0]
+  global_unique_write_line_bytes = 384 [accepted; max error 0]
+  global_unique_write_lines = 3 [accepted; max error 0]
+  global_unique_write_sector_bytes = 256 [accepted; max error 0]
+  global_unique_write_sectors = 8 [accepted; max error 0]
+  global_write_bytes = 198 [accepted; max error 0]
+  integer_ops = 3552 [accepted; max error 0]
+  launched_lanes = 128 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 5632 [accepted; max error 0]
+  ptx_lane_instructions = 7679 [accepted; max error 0]
+  sum_block_lane_sequence_span = 72 [accepted; max error 0]
+  sum_block_max_lane_bytes = 54 [accepted; max error 0]
+  sum_block_max_lane_flops = 1 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 72 [accepted; max error 0]
+  warps = 4 [accepted; max error 0]
+  PCVs not independently identifiable: arg_dim, arg_output_stride, arg_routed_stride, arg_rows, arg_shared_stride, blocks, launched_lanes
+
+REGION "ds41_scatter_add"
+  2 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 2 [accepted; max error 0]
+  conversion_ops = 1584.5 [UNEXPLAINED; max error 16.5]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 2 [accepted; max error 0]
+  executed_lanes = 256 [accepted; max error 0]
+  global_read_bytes = 1518 [UNEXPLAINED; max error 66]
+  global_unique_read_bytes = 682 [UNEXPLAINED; max error 2]
+  global_unique_read_line_bytes = 1088 [UNEXPLAINED; max error 64]
+  global_unique_read_lines = 8.5 [UNEXPLAINED; max error 0.5]
+  global_unique_read_sector_bytes = 784 [UNEXPLAINED; max error 16]
+  global_unique_read_sectors = 24.5 [UNEXPLAINED; max error 0.5]
+  global_unique_write_bytes = 398 [UNEXPLAINED; max error 2]
+  global_unique_write_line_bytes = 576 [UNEXPLAINED; max error 64]
+  global_unique_write_lines = 4.5 [UNEXPLAINED; max error 0.5]
+  global_unique_write_sector_bytes = 464 [UNEXPLAINED; max error 16]
+  global_unique_write_sectors = 14.5 [UNEXPLAINED; max error 0.5]
+  global_write_bytes = 594 [UNEXPLAINED; max error 66]
+  integer_ops = 3424.5 [UNEXPLAINED; max error 16.5]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 13312 [accepted; max error 0]
+  ptx_lane_instructions = 10680.5 [UNEXPLAINED; max error 115.5]
+  sum_block_lane_sequence_span = 114 [accepted; max error 0]
+  sum_block_max_lane_bytes = 132 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 57 [accepted; max error 0]
+  warps = 8 [accepted; max error 0]
+  PCVs not independently identifiable: arg_dim, arg_input_stride, arg_output_stride, arg_rows, arg_tokens, blocks, launched_lanes
+  Unexplained site ds41_scatter_add__gxptx:cpp3120:bra: ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3122:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3124:setp.lt.s32: ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3126:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3128:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3130:bra: ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3135:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3137:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_scatter_add__gxptx:cpp3139:bra.uni: ptx_lane_instructions
+
+REGION "ds41_table_lookup"
+  2 invocations, 2 states
+  blocks = 4 [accepted; max error 0]
+  conversion_ops = 384 * arg_mode + 3456 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 4 [accepted; max error 0]
+  executed_lanes = 512 [accepted; max error 0]
+  fp32_flops = 192 * arg_mode [accepted; max error 0]
+  global_read_bytes = 3968 [accepted; max error 0]
+  global_unique_read_bytes = -186 * arg_mode + 440 [accepted; max error 0]
+  global_unique_read_line_bytes = -128 * arg_mode + 768 [accepted; max error 0]
+  global_unique_read_lines = -1 * arg_mode + 6 [accepted; max error 0]
+  global_unique_read_sector_bytes = -160 * arg_mode + 512 [accepted; max error 0]
+  global_unique_read_sectors = -5 * arg_mode + 16 [accepted; max error 0]
+  global_unique_write_bytes = 896 [accepted; max error 0]
+  global_unique_write_line_bytes = 1024 [accepted; max error 0]
+  global_unique_write_lines = 8 [accepted; max error 0]
+  global_unique_write_sector_bytes = 960 [accepted; max error 0]
+  global_unique_write_sectors = 30 [accepted; max error 0]
+  global_write_bytes = 896 [accepted; max error 0]
+  integer_ops = 2112 * arg_mode + 12352 [accepted; max error 0]
+  launched_lanes = 512 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 36864 [accepted; max error 0]
+  ptx_lane_instructions = 4224 * arg_mode + 32128 [accepted; max error 0]
+  sum_block_lane_sequence_span = 44 * arg_mode + 276 [accepted; max error 0]
+  sum_block_max_lane_bytes = 332 [accepted; max error 0]
+  sum_block_max_lane_flops = 2 * arg_mode [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 22 * arg_mode + 74 [accepted; max error 0]
+  warps = 16 [accepted; max error 0]
+  PCVs not independently identifiable: arg_dim, arg_lookups, arg_output_stride, arg_scale_stride, arg_table_stride, blocks, launched_lanes
+

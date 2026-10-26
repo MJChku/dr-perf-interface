@@ -1,0 +1,281 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "after"
+  12 invocations, 12 states
+  block_barrier_lane_arrivals = 0.3333333333 * conv_outputs - 1.333333333 * pool_outputs + 768
+  blocks = 1
+  conversion_ops = 8.583333333 * conv_outputs - 15.93333333 * pool_outputs + 0.4 * pool_updates + 4864
+  dynamic_shared_bytes_per_launch = 0
+  executed_blocks = 1
+  executed_lanes = 256
+  fp32_flops = 2 * conv_outputs + 8.437694987e-15 * pool_outputs - 2.614797268e-12
+  global_load_instructions = 2.430555556 * conv_outputs - 8.755555556 * pool_outputs + 0.8 * pool_updates + 21.33333333
+  global_read_bytes = 9.722222222 * conv_outputs - 35.02222222 * pool_outputs + 3.2 * pool_updates + 85.33333333 + unexplained
+    unexplained own mean: 1882.333333
+    unexplained including unfitted children: 1882.333333
+  global_unique_read_bytes = 0 + unexplained
+    unexplained own mean: 1703.333333
+    unexplained including unfitted children: 1703.333333
+  global_unique_read_line_bytes = 0 + unexplained
+    unexplained own mean: 1888
+    unexplained including unfitted children: 1888
+  global_unique_read_lines = 0 + unexplained
+    unexplained own mean: 14.75
+    unexplained including unfitted children: 14.75
+  global_unique_read_sector_bytes = 0 + unexplained
+    unexplained own mean: 1722.666667
+    unexplained including unfitted children: 1722.666667
+  global_unique_read_sectors = 0 + unexplained
+    unexplained own mean: 53.83333333
+    unexplained including unfitted children: 53.83333333
+  global_unique_write_bytes = 0 + unexplained
+    unexplained own mean: 323.3333333
+    unexplained including unfitted children: 323.3333333
+  global_unique_write_line_bytes = 0 + unexplained
+    unexplained own mean: 384
+    unexplained including unfitted children: 384
+  global_unique_write_lines = 0 + unexplained
+    unexplained own mean: 3
+    unexplained including unfitted children: 3
+  global_unique_write_sector_bytes = 0 + unexplained
+    unexplained own mean: 338.6666667
+    unexplained including unfitted children: 338.6666667
+  global_unique_write_sectors = 0 + unexplained
+    unexplained own mean: 10.58333333
+    unexplained including unfitted children: 10.58333333
+  global_write_bytes = 0 + unexplained
+    unexplained own mean: 1882.333333
+    unexplained including unfitted children: 1882.333333
+  integer_ops = 61.16623264 * conv_outputs - 189.5482639 * pool_outputs + 21.2 * pool_updates + 89333.33333 + unexplained
+    unexplained own mean: 1411.75
+    unexplained including unfitted children: 1411.75
+  launched_lanes = 256
+  launches = 1
+  param_load_instructions = 6400
+  param_read_bytes = 30720
+  ptx_lane_instructions = 130.4027778 * conv_outputs - 388.1277778 * pool_outputs + 40.9 * pool_updates + 259338.6667 + unexplained
+    unexplained own mean: 2307.75
+    unexplained including unfitted children: 2307.75
+  shared_load_instructions = 4.555555556 * conv_outputs + 8.444444444 * pool_outputs + 3413.333333
+  shared_read_bytes = 63.55555556 * conv_outputs - 179.5555556 * pool_outputs + 44885.33333
+  shared_write_bytes = 10.66666667 * conv_outputs - 42.66666667 * pool_outputs + 76416
+  static_shared_bytes_per_launch = 35840
+  sum_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 2475.75
+    unexplained including unfitted children: 2475.75
+  sum_block_max_lane_bytes = 0 + unexplained
+    unexplained own mean: 1154
+    unexplained including unfitted children: 1154
+  sum_block_max_lane_flops = 2.694444444 * conv_outputs - 10.69444444 * pool_outputs + 2058.666667
+  sum_launch_max_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 2475.75
+    unexplained including unfitted children: 2475.75
+  tensor_float_flops = 682.6666667 * conv_outputs - 2730.666667 * pool_outputs + 524288
+  warps = 8
+  PCVs not independently identifiable: tile_products
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2099:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2576:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2594:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2597:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2599:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2600:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3071:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3074:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3076:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3077:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3089:bra.ifconv: ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3092:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3094:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3095:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+    global_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=744
+    global_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1024
+    global_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=764, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=352
+    global_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1536, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=768
+    global_read_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1140, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=1140
+    global_read_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=2048, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=2048
+    global_read_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1044, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=284, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=1608, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=464, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=552, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=160
+    global_read_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1792, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=512, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=2688, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=768, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=896, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=256
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_read_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    global_unique_read_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_read_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_read_line_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_read_lines at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    global_unique_read_lines at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_read_lines at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_read_sector_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_read_sectors at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    global_unique_read_sectors at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_read_sectors at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_write_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_write_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_write_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_write_line_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_write_line_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_write_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_write_lines at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_write_lines at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_write_sector_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_unique_write_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    global_unique_write_sectors at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    global_unique_write_sectors at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    global_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=744
+    global_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1024
+    global_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=764, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=352
+    global_write_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1536, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=768
+    global_write_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1140, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=1140
+    global_write_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=2048, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=2048
+    global_write_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1044, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=284, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=1608, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=464, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=552, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=160
+    global_write_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=1792, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=512, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=2688, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=768, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=896, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=256
+    integer_ops at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=186, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=186, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=186
+    integer_ops at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=256, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=256, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=256
+    integer_ops at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=88, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=88, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=88
+    integer_ops at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=192
+    integer_ops at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=285
+    integer_ops at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=512
+    integer_ops at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2597:add.s64=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2599:shl.b64=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2600:add.s64=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3074:add.s64=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3076:shl.b64=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3077:add.s64=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3092:add.s64=40, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3094:shl.b64=40, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3095:add.s64=40
+    integer_ops at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2597:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2599:shl.b64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2600:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3074:add.s64=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3076:shl.b64=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3077:add.s64=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3092:add.s64=64, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3094:shl.b64=64, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3095:add.s64=64
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=256
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=70, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=186, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=186, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=186, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=186
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=256, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=256, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=256, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=256
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2099:bra.ifconv=192
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=193, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=191, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=191, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2099:bra.ifconv=104, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=88, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=88, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=88, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=88
+    ptx_lane_instructions at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=384, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=384, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=192
+    ptx_lane_instructions at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2576:bra.ifconv=512
+    ptx_lane_instructions at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=227, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2576:bra.ifconv=227, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=285, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=285, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=285
+    ptx_lane_instructions at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=512, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=512, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=512
+    ptx_lane_instructions at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2099:bra.ifconv=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2576:bra.ifconv=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2594:bra.ifconv=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3071:bra.ifconv=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3089:bra.ifconv=64
+    ptx_lane_instructions at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2079:bra.ifconv=187, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=261, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=261, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2099:bra.ifconv=57, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=71, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=71, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2576:bra.ifconv=270, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=402, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=402, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2594:bra.ifconv=76, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2597:add.s64=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2599:shl.b64=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2600:add.s64=116, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=116, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3071:bra.ifconv=86, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3074:add.s64=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3076:shl.b64=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3077:add.s64=138, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=138, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3089:bra.ifconv=24, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3092:add.s64=40, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3094:shl.b64=40, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3095:add.s64=40, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=40
+    ptx_lane_instructions at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2082:add.s64=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2084:shl.b64=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2085:add.s64=448, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2089:atom.global.max.s32=448, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2102:add.s64=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2104:shl.b64=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2105:add.s64=128, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2107:atom.global.max.s32=128, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2579:add.s64=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2581:shl.b64=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2582:add.s64=672, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2584:atom.global.max.s32=672, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx2597:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2599:shl.b64=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx2600:add.s64=192, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx2602:atom.global.max.s32=192, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3074:add.s64=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3076:shl.b64=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3077:add.s64=224, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3079:atom.global.max.s32=224, fused_conv_relu_maxpool_wmma_kernel @ after.cu:470 ptx3092:add.s64=64, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3094:shl.b64=64, fused_conv_relu_maxpool_wmma_kernel @ after.cu:471 ptx3095:add.s64=64, fused_conv_relu_maxpool_wmma_kernel @ device_atomic_functions.hpp:152<after.cu:59 ptx3097:atom.global.max.s32=64
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    sum_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    sum_block_max_lane_bytes at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 186, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 256, 'positive_updates': 256, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 279, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 256, 'pool_outputs': 64, 'pool_updates': 576, 'positive_updates': 576, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 0, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 570, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1024, 'pool_outputs': 256, 'pool_updates': 1024, 'positive_updates': 1024, 'tile_products': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 0, 'tile_products': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1028, 'tile_products': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'conv_outputs': 1536, 'pool_outputs': 192, 'pool_updates': 1728, 'positive_updates': 1728, 'tile_products': 2}: 
+

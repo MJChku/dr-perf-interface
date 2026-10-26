@@ -1,0 +1,14 @@
+{
+  "pcvs": "real_rows=1,heads8,dim512,selected_keys64/128,valid_pairs,valid_pair_dim,selected_tiles.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": [
+        "DS41_ATTENTION_SPLIT",
+        "DS41_DRPERF_ATTENTION_SLICE"
+      ]
+    }
+  ]
+}

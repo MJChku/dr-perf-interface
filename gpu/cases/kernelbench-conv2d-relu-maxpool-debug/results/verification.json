@@ -1,0 +1,274 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.004165682941675186,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-relu-maxpool-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/driver"
+      ],
+      "seconds": 0.9372708750888705,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "--use_fast_math",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-relu-maxpool-debug/compatible.cu",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/compatible.ptx"
+      ],
+      "seconds": 0.8716285182163119,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-tfbq1mxs/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/compatible.cubin"
+      ],
+      "seconds": 0.2976337540894747,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 123 registers, used 1 barriers, 35840 bytes smem, 472 bytes cmem[0]\nptxas info    : Compile time = 238.768 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-tfbq1mxs/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/compatible.so"
+      ],
+      "seconds": 20.142537403851748,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-tfbq1mxs/compatible.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-tfbq1mxs/compatible-train",
+        "--",
+        "/tmp/drperf-public-tfbq1mxs/driver",
+        "/tmp/drperf-public-tfbq1mxs/compatible.so",
+        "compatible",
+        "train"
+      ],
+      "seconds": 6.885127365589142,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_error\":2.98023e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/compatible-train/report.txt\n  /tmp/drperf-public-tfbq1mxs/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-tfbq1mxs/compatible-heldout",
+        "--",
+        "/tmp/drperf-public-tfbq1mxs/driver",
+        "/tmp/drperf-public-tfbq1mxs/compatible.so",
+        "compatible",
+        "heldout"
+      ],
+      "seconds": 17.23118381202221,
+      "exit_code": 0,
+      "stdout": "{\"cases\":9,\"max_error\":5.96046e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/compatible-heldout/report.txt\n  /tmp/drperf-public-tfbq1mxs/compatible-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "--use_fast_math",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-relu-maxpool-debug/after.cu",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/after.ptx"
+      ],
+      "seconds": 0.8901160499081016,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-tfbq1mxs/after.ptx",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/after.cubin"
+      ],
+      "seconds": 0.32114874944090843,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 123 registers, used 1 barriers, 35840 bytes smem, 472 bytes cmem[0]\nptxas info    : Compile time = 259.439 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-tfbq1mxs/after.ptx",
+        "-o",
+        "/tmp/drperf-public-tfbq1mxs/after.so"
+      ],
+      "seconds": 21.421467622742057,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-tfbq1mxs/after.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-tfbq1mxs/after-train",
+        "--",
+        "/tmp/drperf-public-tfbq1mxs/driver",
+        "/tmp/drperf-public-tfbq1mxs/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 6.733696666546166,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_error\":2.98023e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/after-train/report.txt\n  /tmp/drperf-public-tfbq1mxs/after-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-tfbq1mxs/after-heldout",
+        "--",
+        "/tmp/drperf-public-tfbq1mxs/driver",
+        "/tmp/drperf-public-tfbq1mxs/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 16.93749372754246,
+      "exit_code": 0,
+      "stdout": "{\"cases\":9,\"max_error\":5.96046e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/after-heldout/report.txt\n  /tmp/drperf-public-tfbq1mxs/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "compatible-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_error\":2.98023e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/compatible-train/report.txt\n  /tmp/drperf-public-tfbq1mxs/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "compatible-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":9,\"max_error\":5.96046e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/compatible-heldout/report.txt\n  /tmp/drperf-public-tfbq1mxs/compatible-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_error\":2.98023e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/after-train/report.txt\n  /tmp/drperf-public-tfbq1mxs/after-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":9,\"max_error\":5.96046e-08,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-tfbq1mxs/after-heldout/report.txt\n  /tmp/drperf-public-tfbq1mxs/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "compatible": {
+      "ptx_sha256": "5b38881fa757a2a88cede47561fbad1a23b78e797a9e095defa6a4100194e3c2",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 123 registers, used 1 barriers, 35840 bytes smem, 472 bytes cmem[0]\nptxas info    : Compile time = 238.768 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-tfbq1mxs/compatible.ptx",
+        "inputSha256": "5b38881fa757a2a88cede47561fbad1a23b78e797a9e095defa6a4100194e3c2",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "a3cc5e25ace630946663cf686ce3cca0af056c53ba308eb28810b2480c5b09de",
+        "generatedCpp": "/tmp/drperf-public-tfbq1mxs/compatible.so.cpp",
+        "siteMap": "/tmp/drperf-public-tfbq1mxs/compatible.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptx_sha256": "3e0695dd2dc6feedf3a8432bf92ed39e72b32fbc62baa8ba73b0d52c6ddbfa83",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z35fused_conv_relu_maxpool_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 123 registers, used 1 barriers, 35840 bytes smem, 472 bytes cmem[0]\nptxas info    : Compile time = 259.439 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-tfbq1mxs/after.ptx",
+        "inputSha256": "3e0695dd2dc6feedf3a8432bf92ed39e72b32fbc62baa8ba73b0d52c6ddbfa83",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "34cc6d68224b71e5be8651d4b9c9724707143fda57a0678568605dd1894cc518",
+        "generatedCpp": "/tmp/drperf-public-tfbq1mxs/after.so.cpp",
+        "siteMap": "/tmp/drperf-public-tfbq1mxs/after.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "d974ad88bda9c5f0b6f02918dbe3d446b6c436644f94d0e8e4732c658c7778a2",
+    "native_benchmark.cu": "7a161ef9d43519c3e6a99b87b5071c596d3fc2bb2ee48aa8f7963c5d2ed7cf27",
+    "driver.cc": "9b201ecb2f5baab552307aa90fca4af4e2f9dd9e03b52cc4236a323d069c0fcd",
+    "compatible.cu": "7efcb28c0a2976fe379d2497779c1ecd0454583a16ba220f418069caff608b77",
+    "upstream_ref.py": "24027fe5b60a4b9d2070263b632d5e0f4b5e22be00824bf9f53ba7b198a95f91",
+    "before.cu": "bd04564dc50ebe3280bdc706e6750e50035116e846f38f1fd4fd3c0ffcea5ba8",
+    "run.py": "09284e341371b7b4262e4f56b3e252549a1238469119eedaec6e7c4031149f0d",
+    "after.cu": "600de5a43a78fa5e8093ce9403e4e11004c02f16261553362c6e4e2d428a33fe"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 92.98061331454664
+}

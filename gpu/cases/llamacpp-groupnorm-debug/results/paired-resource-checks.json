@@ -1,0 +1,738 @@
+{
+  "scope": "CPU-only measured PTX resource counts, not HBM traffic or latency",
+  "checks": "Every state: exact aggregate byte rules; unchanged SFUs; GroupNorm extra FLOPs3*(8*L-C) and read footprint8*E-4*C; RMS backward unchanged FLOPs/read footprint. Values below are means across three data patterns; primary extracts retain min/max.",
+  "states": [
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 1024,
+        "elements": 1024,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 28672.0,
+        "global_read_bytes": 12288.0,
+        "global_unique_read_bytes": 8192.0,
+        "global_unique_write_bytes": 4096.0,
+        "global_write_bytes": 8192.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 50176.0,
+        "global_read_bytes": 4096.0,
+        "global_unique_read_bytes": 4096.0,
+        "global_unique_write_bytes": 4096.0,
+        "global_write_bytes": 4096.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 2048,
+        "elements": 2048,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 57344.0,
+        "global_read_bytes": 24576.0,
+        "global_unique_read_bytes": 16384.0,
+        "global_unique_write_bytes": 8192.0,
+        "global_write_bytes": 16384.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 100352.0,
+        "global_read_bytes": 8192.0,
+        "global_unique_read_bytes": 8192.0,
+        "global_unique_write_bytes": 8192.0,
+        "global_write_bytes": 8192.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 4096,
+        "elements": 4096,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 44032.0,
+        "global_read_bytes": 49152.0,
+        "global_unique_read_bytes": 32768.0,
+        "global_unique_write_bytes": 16384.0,
+        "global_write_bytes": 32768.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 56320.0,
+        "global_read_bytes": 16384.0,
+        "global_unique_read_bytes": 16384.0,
+        "global_unique_write_bytes": 16384.0,
+        "global_write_bytes": 16384.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 8192,
+        "elements": 8192,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 88064.0,
+        "global_read_bytes": 98304.0,
+        "global_unique_read_bytes": 65536.0,
+        "global_unique_write_bytes": 32768.0,
+        "global_write_bytes": 65536.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 112640.0,
+        "global_read_bytes": 32768.0,
+        "global_unique_read_bytes": 32768.0,
+        "global_unique_write_bytes": 32768.0,
+        "global_write_bytes": 32768.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 8192,
+        "elements": 16384,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 105472.0,
+        "global_read_bytes": 196608.0,
+        "global_unique_read_bytes": 131072.0,
+        "global_unique_write_bytes": 65536.0,
+        "global_write_bytes": 131072.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 105472.0,
+        "global_read_bytes": 131072.0,
+        "global_unique_read_bytes": 98304.0,
+        "global_unique_write_bytes": 65536.0,
+        "global_write_bytes": 98304.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 16384,
+        "elements": 32768,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 210944.0,
+        "global_read_bytes": 393216.0,
+        "global_unique_read_bytes": 262144.0,
+        "global_unique_write_bytes": 131072.0,
+        "global_write_bytes": 262144.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 210944.0,
+        "global_read_bytes": 262144.0,
+        "global_unique_read_bytes": 196608.0,
+        "global_unique_write_bytes": 131072.0,
+        "global_write_bytes": 196608.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 64,
+        "elements": 64,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 736.0,
+        "global_read_bytes": 768.0,
+        "global_unique_read_bytes": 512.0,
+        "global_unique_write_bytes": 256.0,
+        "global_write_bytes": 512.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 1312.0,
+        "global_read_bytes": 256.0,
+        "global_unique_read_bytes": 256.0,
+        "global_unique_write_bytes": 256.0,
+        "global_write_bytes": 256.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 128,
+        "elements": 128,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 1472.0,
+        "global_read_bytes": 1536.0,
+        "global_unique_read_bytes": 1024.0,
+        "global_unique_write_bytes": 512.0,
+        "global_write_bytes": 1024.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 2624.0,
+        "global_read_bytes": 512.0,
+        "global_unique_read_bytes": 512.0,
+        "global_unique_write_bytes": 512.0,
+        "global_write_bytes": 512.0,
+        "special_function_ops": 64.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 256,
+        "elements": 256,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 1696.0,
+        "global_read_bytes": 3072.0,
+        "global_unique_read_bytes": 2048.0,
+        "global_unique_write_bytes": 1024.0,
+        "global_write_bytes": 2048.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 1696.0,
+        "global_read_bytes": 1024.0,
+        "global_unique_read_bytes": 1024.0,
+        "global_unique_write_bytes": 1024.0,
+        "global_write_bytes": 1024.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 256,
+        "elements": 768,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 4256.0,
+        "global_read_bytes": 9216.0,
+        "global_unique_read_bytes": 6144.0,
+        "global_unique_write_bytes": 3072.0,
+        "global_write_bytes": 6144.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 4256.0,
+        "global_read_bytes": 7168.0,
+        "global_unique_read_bytes": 5120.0,
+        "global_unique_write_bytes": 3072.0,
+        "global_write_bytes": 5120.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 512,
+        "elements": 512,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 3392.0,
+        "global_read_bytes": 6144.0,
+        "global_unique_read_bytes": 4096.0,
+        "global_unique_write_bytes": 2048.0,
+        "global_write_bytes": 4096.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 3392.0,
+        "global_read_bytes": 2048.0,
+        "global_unique_read_bytes": 2048.0,
+        "global_unique_write_bytes": 2048.0,
+        "global_write_bytes": 2048.0,
+        "special_function_ops": 64.0
+      }
+    },
+    {
+      "suite": "train",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 512,
+        "elements": 1536,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 8512.0,
+        "global_read_bytes": 18432.0,
+        "global_unique_read_bytes": 12288.0,
+        "global_unique_write_bytes": 6144.0,
+        "global_write_bytes": 12288.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 8512.0,
+        "global_read_bytes": 14336.0,
+        "global_unique_read_bytes": 10240.0,
+        "global_unique_write_bytes": 6144.0,
+        "global_write_bytes": 10240.0,
+        "special_function_ops": 64.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 1025,
+        "elements": 1025,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 28677.0,
+        "global_read_bytes": 12300.0,
+        "global_unique_read_bytes": 8200.0,
+        "global_unique_write_bytes": 4100.0,
+        "global_write_bytes": 8200.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 50178.0,
+        "global_read_bytes": 4100.0,
+        "global_unique_read_bytes": 4100.0,
+        "global_unique_write_bytes": 4100.0,
+        "global_write_bytes": 4100.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 2050,
+        "elements": 2050,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 57354.0,
+        "global_read_bytes": 24600.0,
+        "global_unique_read_bytes": 16400.0,
+        "global_unique_write_bytes": 8200.0,
+        "global_write_bytes": 16400.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 100356.0,
+        "global_read_bytes": 8200.0,
+        "global_unique_read_bytes": 8200.0,
+        "global_unique_write_bytes": 8200.0,
+        "global_write_bytes": 8200.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 4097,
+        "elements": 4097,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 44037.0,
+        "global_read_bytes": 49164.0,
+        "global_unique_read_bytes": 32776.0,
+        "global_unique_write_bytes": 16388.0,
+        "global_write_bytes": 32776.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 56322.0,
+        "global_read_bytes": 16388.0,
+        "global_unique_read_bytes": 16388.0,
+        "global_unique_write_bytes": 16388.0,
+        "global_write_bytes": 16388.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 8192,
+        "elements": 16380,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 105452.0,
+        "global_read_bytes": 196560.0,
+        "global_unique_read_bytes": 131040.0,
+        "global_unique_write_bytes": 65520.0,
+        "global_write_bytes": 131040.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 105452.0,
+        "global_read_bytes": 131024.0,
+        "global_unique_read_bytes": 98272.0,
+        "global_unique_write_bytes": 65520.0,
+        "global_write_bytes": 98272.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 8192,
+        "elements": 65536,
+        "launched_lanes": 1024,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 351232.0,
+        "global_read_bytes": 786432.0,
+        "global_unique_read_bytes": 524288.0,
+        "global_unique_write_bytes": 262144.0,
+        "global_write_bytes": 524288.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      },
+      "after": {
+        "fp32_flops": 351232.0,
+        "global_read_bytes": 720896.0,
+        "global_unique_read_bytes": 491520.0,
+        "global_unique_write_bytes": 262144.0,
+        "global_write_bytes": 491520.0,
+        "shared_read_bytes": 8192.0,
+        "shared_write_bytes": 256.0,
+        "special_function_ops": 1024.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 8194,
+        "elements": 8194,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 88074.0,
+        "global_read_bytes": 98328.0,
+        "global_unique_read_bytes": 65552.0,
+        "global_unique_write_bytes": 32776.0,
+        "global_write_bytes": 65552.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 112644.0,
+        "global_read_bytes": 32776.0,
+        "global_unique_read_bytes": 32776.0,
+        "global_unique_write_bytes": 32776.0,
+        "global_write_bytes": 32776.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 16384,
+        "elements": 32760,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 210904.0,
+        "global_read_bytes": 393120.0,
+        "global_unique_read_bytes": 262080.0,
+        "global_unique_write_bytes": 131040.0,
+        "global_write_bytes": 262080.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 210904.0,
+        "global_read_bytes": 262048.0,
+        "global_unique_read_bytes": 196544.0,
+        "global_unique_write_bytes": 131040.0,
+        "global_write_bytes": 196544.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "cta",
+      "pcvs": {
+        "cached_elements": 16384,
+        "elements": 131072,
+        "launched_lanes": 2048,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 702464.0,
+        "global_read_bytes": 1572864.0,
+        "global_unique_read_bytes": 1048576.0,
+        "global_unique_write_bytes": 524288.0,
+        "global_write_bytes": 1048576.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      },
+      "after": {
+        "fp32_flops": 702464.0,
+        "global_read_bytes": 1441792.0,
+        "global_unique_read_bytes": 983040.0,
+        "global_unique_write_bytes": 524288.0,
+        "global_write_bytes": 983040.0,
+        "shared_read_bytes": 16384.0,
+        "shared_write_bytes": 512.0,
+        "special_function_ops": 2048.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 33,
+        "elements": 33,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 581.0,
+        "global_read_bytes": 396.0,
+        "global_unique_read_bytes": 264.0,
+        "global_unique_write_bytes": 132.0,
+        "global_write_bytes": 264.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 1250.0,
+        "global_read_bytes": 132.0,
+        "global_unique_read_bytes": 132.0,
+        "global_unique_write_bytes": 132.0,
+        "global_write_bytes": 132.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 66,
+        "elements": 66,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 1162.0,
+        "global_read_bytes": 792.0,
+        "global_unique_read_bytes": 528.0,
+        "global_unique_write_bytes": 264.0,
+        "global_write_bytes": 528.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 2500.0,
+        "global_read_bytes": 264.0,
+        "global_unique_read_bytes": 264.0,
+        "global_unique_write_bytes": 264.0,
+        "global_write_bytes": 264.0,
+        "special_function_ops": 64.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 255,
+        "elements": 255,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 1691.0,
+        "global_read_bytes": 3060.0,
+        "global_unique_read_bytes": 2040.0,
+        "global_unique_write_bytes": 1020.0,
+        "global_write_bytes": 2040.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 1694.0,
+        "global_read_bytes": 1020.0,
+        "global_unique_read_bytes": 1020.0,
+        "global_unique_write_bytes": 1020.0,
+        "global_write_bytes": 1020.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 256,
+        "elements": 767,
+        "launched_lanes": 32,
+        "rows": 1
+      },
+      "before": {
+        "fp32_flops": 4251.0,
+        "global_read_bytes": 9204.0,
+        "global_unique_read_bytes": 6136.0,
+        "global_unique_write_bytes": 3068.0,
+        "global_write_bytes": 6136.0,
+        "special_function_ops": 32.0
+      },
+      "after": {
+        "fp32_flops": 4251.0,
+        "global_read_bytes": 7156.0,
+        "global_unique_read_bytes": 5112.0,
+        "global_unique_write_bytes": 3068.0,
+        "global_write_bytes": 5112.0,
+        "special_function_ops": 32.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 510,
+        "elements": 510,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 3382.0,
+        "global_read_bytes": 6120.0,
+        "global_unique_read_bytes": 4080.0,
+        "global_unique_write_bytes": 2040.0,
+        "global_write_bytes": 4080.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 3388.0,
+        "global_read_bytes": 2040.0,
+        "global_unique_read_bytes": 2040.0,
+        "global_unique_write_bytes": 2040.0,
+        "global_write_bytes": 2040.0,
+        "special_function_ops": 64.0
+      }
+    },
+    {
+      "suite": "heldout",
+      "dispatch": "warp",
+      "pcvs": {
+        "cached_elements": 512,
+        "elements": 1534,
+        "launched_lanes": 64,
+        "rows": 2
+      },
+      "before": {
+        "fp32_flops": 8502.0,
+        "global_read_bytes": 18408.0,
+        "global_unique_read_bytes": 12272.0,
+        "global_unique_write_bytes": 6136.0,
+        "global_write_bytes": 12272.0,
+        "special_function_ops": 64.0
+      },
+      "after": {
+        "fp32_flops": 8502.0,
+        "global_read_bytes": 14312.0,
+        "global_unique_read_bytes": 10224.0,
+        "global_unique_write_bytes": 6136.0,
+        "global_write_bytes": 10224.0,
+        "special_function_ops": 64.0
+      }
+    }
+  ]
+}

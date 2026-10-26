@@ -1,0 +1,13 @@
+{
+  "pcvs": "real_rows,heads,head_dim,selected_keys,context keys,valid pairs; argument-derived composite PCVs.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": [
+        "DS41_ATTENTION_PREPARE"
+      ]
+    }
+  ]
+}

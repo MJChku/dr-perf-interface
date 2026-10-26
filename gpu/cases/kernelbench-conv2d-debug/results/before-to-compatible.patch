@@ -1,0 +1,31 @@
+--- before.cu
++++ compatible.cu
+@@ -12,7 +12,7 @@
+ // Skew padding for shared memory to avoid bank conflicts
+ #define SKEW_HALF 8 // 8 half elements (16 bytes)
+ 
+-// CUDA built-in warpSize is 32 for supported architectures (sm_70+)
++// CUDA built-in 32 is 32 for supported architectures (sm_70+)
+ // This constant is used for host-side configuration (e.g. blockDim)
+ #define CUDA_WARP_SIZE_CONST 32 
+ 
+@@ -58,8 +58,8 @@
+     const int K_gemm  // C_in * K_h * K_w
+ ) {
+     // Thread identification
+-    const int warp_id = threadIdx.x / warpSize;        // 0 .. WARPS_PER_BLOCK-1
+-    const int lane_id = threadIdx.x % warpSize;        // 0 .. 31 (or warpSize-1)
++    const int warp_id = threadIdx.x / 32;        // 0 .. WARPS_PER_BLOCK-1
++    const int lane_id = threadIdx.x % 32;        // 0 .. 31 (or 32-1)
+ 
+     // Top-left corner of the macro-tile this block is responsible for in GEMM terms
+     const int block_row_gemm_start = TILE_M_PER_BLOCK * blockIdx.y;
+@@ -399,7 +399,7 @@
+     for (int n_tile = 0; n_tile < BLOCK_N_TILES_WMMA; ++n_tile) {
+         wmma::store_matrix_sync(&C_shmem_output_buffers[warp_id][0][0], acc_frag[n_tile], WMMA_N, wmma::mem_row_major);
+ 
+-        for (int elem_idx_in_frag = lane_id; elem_idx_in_frag < WMMA_M * WMMA_N; elem_idx_in_frag += warpSize) {
++        for (int elem_idx_in_frag = lane_id; elem_idx_in_frag < WMMA_M * WMMA_N; elem_idx_in_frag += 32) {
+             int r_frag = elem_idx_in_frag / WMMA_N;
+             int c_frag = elem_idx_in_frag % WMMA_N;
+ 

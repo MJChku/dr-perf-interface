@@ -1,0 +1,7 @@
+Contribution: QUANTIFIED
+tensor_flops=16384*padded_rows, zero real-row term at fixed N/K. M32→M16 tail packing: real53 padded128→96 (−25%); real26 padded128→64 (−50%); full tiles unchanged. Same8 launched CTAs; no added kernel launch.
+Status: pass
+control: pass; see results/control/report.txt
+tight: pass; see results/tight/report.txt
+
+Measured timing (not from DrPerf): No H100 timing: exact production control fails CPU coverage preflight on dp2a.lo.u32.u32; it was excluded from the native batch.

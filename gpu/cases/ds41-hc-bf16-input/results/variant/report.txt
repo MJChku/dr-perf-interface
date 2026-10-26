@@ -1,0 +1,59 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_hc_bf16_splitk"
+  5 invocations, 5 states
+  blocks = 1 * arg_splits [accepted; max error 0]
+  collective_lane_arrivals = 3840 * arg_splits [accepted; max error 0]
+  conversion_ops = 16 * arg_input_stride + 768 * arg_splits - 112 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 3840 * arg_splits [accepted; max error 0]
+  executed_blocks = 1 * arg_splits [accepted; max error 0]
+  executed_lanes = 256 * arg_splits [accepted; max error 0]
+  fp32_flops = 48 * arg_input_stride + 3840 * arg_splits - 336 [accepted; max error 0]
+  global_read_bytes = 112 * arg_input_stride - 784 [accepted; max error 0]
+  global_unique_read_bytes = 98 * arg_input_stride - 686 [accepted; max error 0]
+  global_unique_read_line_bytes = 98 * arg_input_stride + 338 [accepted; max error 0]
+  global_unique_read_lines = 0.765625 * arg_input_stride + 2.64063 [accepted; max error 1.80478e-12]
+  global_unique_read_sector_bytes = 98 * arg_input_stride - 14 [accepted; max error 0]
+  global_unique_read_sectors = 3.0625 * arg_input_stride - 0.4375 [accepted; max error 7.21911e-12]
+  global_unique_write_bytes = 96 * arg_splits [accepted; max error 0]
+  global_unique_write_line_bytes = -0.000433928 * arg_input_stride + 95.9178 * arg_splits + 14.4781 [UNEXPLAINED; max error 17.6626]
+  global_unique_write_lines = -3.39006e-06 * arg_input_stride + 0.749358 * arg_splits + 0.113111 [UNEXPLAINED; max error 0.137989]
+  global_unique_write_sector_bytes = 96 * arg_splits [accepted; max error 0]
+  global_unique_write_sectors = 3 * arg_splits [accepted; max error 0]
+  global_write_bytes = 96 * arg_splits [accepted; max error 0]
+  integer_ops = 116.195 * arg_input_stride + 4999.69 * arg_splits - 26320.1 [UNEXPLAINED; max error 53298.7]
+  launched_lanes = 256 * arg_splits [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 12288 * arg_splits [accepted; max error 0]
+  ptx_lane_instructions = 236.894 * arg_input_stride + 31987.6 * arg_splits - 31416.1 [UNEXPLAINED; max error 62181.8]
+  sum_block_lane_sequence_span = 0.827049 * arg_input_stride + 145.772 * arg_splits + 475.783 [UNEXPLAINED; max error 1006.29]
+  sum_block_max_lane_bytes = 0.399265 * arg_input_stride + 68.0966 * arg_splits + 229.688 [UNEXPLAINED; max error 485.796]
+  sum_block_max_lane_flops = 0.171114 * arg_input_stride + 18.47 * arg_splits + 98.4378 [UNEXPLAINED; max error 208.198]
+  sum_launch_max_block_lane_sequence_span = 0.0661881 * arg_input_stride - 7.72659 * arg_splits + 530.912 [UNEXPLAINED; max error 623.905]
+  warps = 8 * arg_splits [accepted; max error 0]
+  PCVs not independently identifiable: arg_k, arg_n, arg_rows, arg_weight_stride, blocks, launched_lanes
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2036:bra: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2038:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2041:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2043:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2045:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2047:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2049:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2051:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2053:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2055:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2057:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2059:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2128:bra: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2130:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2133:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2135:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2137:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2242:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2313:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site ds41_hc_bf16_splitk__gxptx:cpp2398:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines
+

@@ -1,0 +1,16 @@
+--- before.cu
++++ after.cu
+@@ -146,8 +146,11 @@
+     const int base  = n * D;
+     const int base4 = n * D4;
+ 
+-    const float  m     = mean[n];
+-    const float  inv_s = inv_std[n];
++    __shared__ float stats[2];
++    if (tid == 0) { stats[0] = mean[n]; stats[1] = inv_std[n]; }
++    __syncthreads();
++    const float m = stats[0];
++    const float inv_s = stats[1];
+ 
+     const float4* input4  = reinterpret_cast<const float4*>(input);
+     float4*       output4 = reinterpret_cast<float4*>(output);

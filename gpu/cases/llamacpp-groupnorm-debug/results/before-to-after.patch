@@ -1,0 +1,49 @@
+--- before.cu
++++ after.cu
+@@ -11,7 +11,13 @@
+     float tmp = 0.0f; // partial sum for thread in warp
+ 
+     ggml_cuda_pdl_sync();
+-    for (int j = start; j < end; j += block_size) {
++    float cached[8];
++#pragma unroll
++    for (int k = 0; k < 8; ++k) {
++        const int j = start + k * block_size;
++        if (j < end) { cached[k] = x[j]; tmp += cached[k]; }
++    }
++    for (int j = start + 8 * block_size; j < end; j += block_size) {
+         tmp += x[j];
+     }
+ 
+@@ -21,7 +27,16 @@
+     const float mean = tmp / group_size;
+     tmp = 0.0f;
+ 
+-    for (int j = start; j < end; j += block_size) {
++#pragma unroll
++    for (int k = 0; k < 8; ++k) {
++        const int j = start + k * block_size;
++        if (j < end) {
++            const float xi = cached[k] - mean;
++            cached[k] = xi;
++            tmp += xi * xi;
++        }
++    }
++    for (int j = start + 8 * block_size; j < end; j += block_size) {
+         const float xi = x[j] - mean;
+         dst[j] = xi;
+         tmp += xi * xi;
+@@ -31,7 +46,12 @@
+ 
+     const float variance = tmp / group_size;
+     const float scale = rsqrtf(variance + eps);
+-    for (int j = start; j < end; j += block_size) {
++#pragma unroll
++    for (int k = 0; k < 8; ++k) {
++        const int j = start + k * block_size;
++        if (j < end) dst[j] = cached[k] * scale;
++    }
++    for (int j = start + 8 * block_size; j < end; j += block_size) {
+         dst[j] *= scale;
+     }
+ }

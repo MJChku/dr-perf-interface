@@ -1,0 +1,22 @@
+--- before.cu
++++ compatible.cu
+@@ -25,10 +25,6 @@
+ // -----------------------------------------------------------------------------
+ // Small global buffers –  fp32 atomicAdd’s are fast on sm70+
+ // -----------------------------------------------------------------------------
+-__device__ float g_sum[MAX_N];        // running ∑x
+-__device__ float g_scratch[MAX_N];    // running M2 ( ∑(x-mean)^2 )
+-__device__ float g_mean[MAX_N];       // final mean
+-__device__ float g_inv_std[MAX_N];    // final inverse std
+ 
+ // -----------------------------------------------------------------------------
+ // Helper : combine two Welford tuples
+@@ -59,7 +55,7 @@
+                             const float* __restrict__ beta,
+                             float* __restrict__ output,
+                             int   D,
+-                            float eps)
++                            float eps, float* g_sum, float* g_scratch, float* g_mean, float* g_inv_std)
+ {
+     // Cooperative grid
+     cg::grid_group grid = cg::this_grid();

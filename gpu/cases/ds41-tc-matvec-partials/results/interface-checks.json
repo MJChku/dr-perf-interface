@@ -1,0 +1,22 @@
+{
+  "case": "ds41-tc-matvec-partials",
+  "status": "pass",
+  "checks": [
+    {
+      "interface": "Control tensor work8192*tile_groups; global FP32 partial writes4*outputs*k_groups",
+      "checked_observations": 44,
+      "status": "pass"
+    },
+    {
+      "interface": "Fused tensor coefficient unchanged, global output2*outputs; shared read/write4*outputs*k_groups; separate finish eliminated",
+      "checked_observations": 44,
+      "status": "pass"
+    },
+    {
+      "interface": "Pinned observed-state resource interfaces reproduce; requested/precision/span/geometry counts, excluding address-footprint placement",
+      "checked_observations": 132,
+      "status": "pass"
+    }
+  ],
+  "semantics": "Resource-interface assertions only; no elapsed-time prediction"
+}

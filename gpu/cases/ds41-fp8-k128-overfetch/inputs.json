@@ -1,0 +1,13 @@
+{
+  "pcvs": "Fixture M1/65/129,N128,K320,tile_M32,tile_N128,tile_K128; proposed production M,N,K,chunk,weight_reuse.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "blocked",
+      "ptx": "k128_fixture_deep_m32_n128.ptx",
+      "defines": [],
+      "module_name": "k128_fixture_deep_m32_n128",
+      "expected_blocker": "unsupported GPU PTX operation: dp2a.lo.u32.u32"
+    }
+  ]
+}

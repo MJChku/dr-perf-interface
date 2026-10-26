@@ -1,0 +1,142 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_head_global"
+  40 invocations, 5 states
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 13 * arg_rows + 3.42857 * arg_world - 27.4286 [accepted; max error 3.55271e-14]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 128 [accepted; max error 0]
+  global_read_bytes = 96 * arg_rows + 36 * arg_world - 288 [accepted; max error 0]
+  global_unique_read_bytes = 96 * arg_rows + 36 * arg_world - 288 [accepted; max error 0]
+  global_unique_read_line_bytes = 159.053 * arg_rows + 55.531 * arg_world - 404.69 [UNEXPLAINED; max error 57.3892]
+  global_unique_read_lines = 1.2426 * arg_rows + 0.433836 * arg_world - 3.16164 [UNEXPLAINED; max error 0.448353]
+  global_unique_read_sector_bytes = 160 * arg_rows + 59.4286 * arg_world - 475.429 [accepted; max error 5.11591e-13]
+  global_unique_read_sectors = 5 * arg_rows + 1.85714 * arg_world - 14.8571 [accepted; max error 1.59872e-14]
+  global_unique_write_bytes = 4 * arg_rows [accepted; max error 0]
+  global_unique_write_line_bytes = 2.823 * arg_rows + 0.0612587 * arg_world + 119.47 [UNEXPLAINED; max error 5.2172]
+  global_unique_write_lines = 0.0220547 * arg_rows + 0.000478583 * arg_world + 0.933357 [UNEXPLAINED; max error 0.0407594]
+  global_unique_write_sector_bytes = 3.52875 * arg_rows + 0.0765733 * arg_world + 21.3372 [UNEXPLAINED; max error 6.5215]
+  global_unique_write_sectors = 0.110274 * arg_rows + 0.00239292 * arg_world + 0.666786 [UNEXPLAINED; max error 0.203797]
+  global_write_bytes = 4 * arg_rows [accepted; max error 0]
+  integer_ops = 41.7119 * arg_rows + 11.2279 * arg_world + 168.136 [UNEXPLAINED; max error 5.09548]
+  launched_lanes = 128 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 3584 [accepted; max error 0]
+  ptx_lane_instructions = 159.424 * arg_rows + 49.4559 * arg_world + 1272.27 [UNEXPLAINED; max error 10.191]
+  sum_block_lane_sequence_span = 0.0156337 * arg_rows + 16.5585 * arg_world + 41.7279 [UNEXPLAINED; max error 3.24288]
+  sum_block_max_lane_bytes = 12 * arg_world + 32 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 0.0156337 * arg_rows + 16.5585 * arg_world + 41.7279 [UNEXPLAINED; max error 3.24288]
+  warps = 4 [accepted; max error 0]
+  PCVs not independently identifiable: arg_pair_stride, blocks, elements, launched_lanes, real_rows, scale_groups, width
+  Unexplained site ds41_head_global__gxptx:cpp2400:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2404:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2412:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2420:bra: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2422:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2424:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2426:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2433:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2437:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2445:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2451:bra: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2453:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2455:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2457:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2464:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2468:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2476:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2486:bra: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2488:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2490:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2492:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2499:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2503:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2511:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_global__gxptx:cpp2517:bra: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2519:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2521:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2523:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2581:bra: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2583:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2585:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2587:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_global__gxptx:cpp2626:st.global.u32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+
+REGION "ds41_head_local"
+  194 invocations, 48 states
+  block_barrier_lane_arrivals = 2304 * arg_rows [accepted; max error 0]
+  blocks = 1 * arg_rows [accepted; max error 0]
+  conversion_ops = 2 * arg_rows + 1 * elements [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_barrier_generations = 9 * arg_rows [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 2304 * arg_rows [accepted; max error 0]
+  executed_blocks = 1 * arg_rows [accepted; max error 0]
+  executed_lanes = 256 * arg_rows [accepted; max error 0]
+  global_read_bytes = 4 * elements + 1.21344e-08 * scale_groups - 1.10967e-08 [accepted; max error 6.11677e-06]
+  global_unique_read_bytes = 4 * elements + 1.21344e-08 * scale_groups - 1.10967e-08 [accepted; max error 6.11677e-06]
+  global_unique_read_line_bytes = -4.23679e-07 * arg_first - 0.008484 * arg_input_stride + 45.6838 * arg_rows + 5.32007 * elements - 42.2646 * scale_groups + 102.817 [UNEXPLAINED; max error 3.93259]
+  global_unique_read_lines = -3.30999e-09 * arg_first - 6.62813e-05 * arg_input_stride + 0.356905 * arg_rows + 0.041563 * elements - 0.330192 * scale_groups + 0.80326 [UNEXPLAINED; max error 0.0307233]
+  global_unique_read_sector_bytes = -1.68575e-08 * arg_first - 0.00239115 * arg_input_stride + 27.9811 * arg_rows + 4.00016 * elements + 0.0159981 * scale_groups + 0.0658877 [UNEXPLAINED; max error 0.156471]
+  global_unique_read_sectors = -5.26796e-10 * arg_first - 7.47235e-05 * arg_input_stride + 0.874409 * arg_rows + 0.125005 * elements + 0.000499941 * scale_groups + 0.00205899 [UNEXPLAINED; max error 0.00488971]
+  global_unique_write_bytes = 12 * arg_rows [accepted; max error 0]
+  global_unique_write_line_bytes = -7.56326e-07 * arg_first + 0.0131488 * arg_input_stride + 19.7451 * arg_rows - 0.0331083 * elements + 0.71777 * scale_groups + 68.3325 [UNEXPLAINED; max error 7.02021]
+  global_unique_write_lines = -5.9088e-09 * arg_first + 0.000102725 * arg_input_stride + 0.154259 * arg_rows - 0.000258659 * elements + 0.00560758 * scale_groups + 0.533847 [UNEXPLAINED; max error 0.0548454]
+  global_unique_write_sector_bytes = 4.78464e-07 * arg_first - 0.00525043 * arg_input_stride + 20.0335 * arg_rows + 0.0199223 * elements - 0.454073 * scale_groups + 4.15142 [UNEXPLAINED; max error 4.4411]
+  global_unique_write_sectors = 1.4952e-08 * arg_first - 0.000164076 * arg_input_stride + 0.626048 * arg_rows + 0.000622572 * elements - 0.0141898 * scale_groups + 0.129732 [UNEXPLAINED; max error 0.138784]
+  global_write_bytes = 12 * arg_rows [accepted; max error 0]
+  integer_ops = -1.29362e-05 * arg_first - 0.0844993 * arg_input_stride + 4606.4 * arg_rows + 5.00915 * elements + 0.440856 * scale_groups + 2.28132 [UNEXPLAINED; max error 628.39]
+  launched_lanes = 256 * arg_rows [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 9216 * arg_rows - 1.35345e-08 * scale_groups + 1.23255e-08 [accepted; max error 6.82259e-06]
+  ptx_lane_instructions = -4.21583e-06 * arg_first - 1.49028 * arg_input_stride + 23806.4 * arg_rows + 13.9443 * elements + 238.839 * scale_groups + 48.3644 [UNEXPLAINED; max error 1527.08]
+  shared_read_bytes = 0.000289979 * arg_first + 1.13217 * arg_input_stride + 5733.12 * arg_rows - 7.35322 * elements + 199.271 * scale_groups - 132.075 [UNEXPLAINED; max error 2677.23]
+  shared_write_bytes = -0.000191516 * arg_first - 1.43896 * arg_input_stride + 3971.54 * arg_rows - 9.66545 * elements + 357.286 * scale_groups + 165.927 [UNEXPLAINED; max error 3397.73]
+  static_shared_bytes_per_launch = 3072 [accepted; max error 0]
+  sum_block_lane_sequence_span = -2.49282e-05 * arg_first + 0.00223316 * arg_input_stride + 224.499 * arg_rows - 0.108602 * elements + 5.92263 * scale_groups + 2.48959 [UNEXPLAINED; max error 35.7097]
+  sum_block_max_lane_bytes = 2.03361e-06 * arg_first - 0.0930531 * arg_input_stride + 288.278 * arg_rows + 0.580028 * elements - 15.0487 * scale_groups + 4.95162 [UNEXPLAINED; max error 87.0396]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = -2.61475e-05 * arg_first + 0.0802804 * arg_input_stride - 0.82759 * arg_rows - 0.0588207 * elements + 1.831 * scale_groups + 228.012 [UNEXPLAINED; max error 12.2343]
+  warps = 8 * arg_rows [accepted; max error 0]
+  PCVs not independently identifiable: arg_pair_stride, arg_width, blocks, launched_lanes, real_rows, width
+  Unexplained site ds41_head_local__gxptx:cpp1923:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1925:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1928:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1930:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1932:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1934:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1936:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1938:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1940:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1951:ld.global.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_head_local__gxptx:cpp1959:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1961:setp.gt.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1963:mov.pred: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1965:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1967:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1969:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1971:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1974:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1976:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1978:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1988:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1990:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1993:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1995:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp1997:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2049:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2051:setp.neu.f32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2053:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2055:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_head_local__gxptx:cpp2057:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2059:bra: ptx_lane_instructions
+  Unexplained site ds41_head_local__gxptx:cpp2062:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_head_local__gxptx:cpp2064:st.shared.u32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site ds41_head_local__gxptx:cpp2102:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site ds41_head_local__gxptx:cpp2114:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site ds41_head_local__gxptx:cpp2120:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+

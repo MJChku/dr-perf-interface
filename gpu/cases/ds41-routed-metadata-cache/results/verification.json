@@ -1,0 +1,122 @@
+{
+  "case": "ds41-routed-metadata-cache",
+  "status": "pass",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "uncached",
+      "status": "pass",
+      "numerical_status": "pass"
+    },
+    {
+      "name": "cached",
+      "status": "pass",
+      "numerical_status": "pass"
+    }
+  ],
+  "interface_checks": [],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/uncached.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/uncached.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_ROUTED_FUSED",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/uncached-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/results/uncached/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/uncached-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/uncached.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/cached.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/cached.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_ROUTED_FUSED",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/cached-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/results/cached/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/cached-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-routed-metadata-cache/.work/cached.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Aligned tensor/output work unchanged; metadata cache decreases requested global/generic reads across fixed grid",
+      "checked_observations": 33,
+      "status": "pass",
+      "before_requested_reads": 3387130,
+      "after_requested_reads": 560002
+    },
+    {
+      "interface": "Pinned observed-state resource interfaces reproduce; requested/precision/span/geometry counts, excluding address-footprint placement",
+      "checked_observations": 132,
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_quantize_rows"
+  36 invocations, 6 states
+  blocks = 1 * blocks [accepted; max error 0]
+  collective_lane_arrivals = 4 * arg_input_stride - 224 * arg_scale_stride + 1792 * blocks - 1404 [accepted; max error 0]
+  conversion_ops = 6.94821 * arg_input_stride - 83.2 * arg_mode - 1.325 * arg_packed_stride - 262.6 * arg_scale_stride + 1075.2 * blocks - 424.498 [UNEXPLAINED; max error 787.2]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 4 * arg_input_stride - 224 * arg_scale_stride + 1792 * blocks - 1404 [accepted; max error 0]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 128 * blocks [accepted; max error 0]
+  fp32_flops = 9.57321 * arg_input_stride - 156.343 * arg_mode - 0.610714 * arg_packed_stride - 641.029 * arg_scale_stride + 4011.2 * blocks - 3398.02 [UNEXPLAINED; max error 691.2]
+  global_read_bytes = 1.42857 * arg_input_stride + 282.571 [accepted; max error 8.07177e-12]
+  global_unique_read_bytes = 1.42857 * arg_input_stride + 282.571 [accepted; max error 8.07177e-12]
+  global_unique_read_line_bytes = 1.42857 * arg_input_stride + 410.571 [accepted; max error 1.18234e-11]
+  global_unique_read_lines = 0.0111607 * arg_input_stride + 3.20759 [accepted; max error 9.23706e-14]
+  global_unique_read_sector_bytes = 1.35714 * arg_input_stride + 319.643 [accepted; max error 3.49019e-11]
+  global_unique_read_sectors = 0.0424107 * arg_input_stride + 9.98884 [accepted; max error 1.09068e-12]
+  global_unique_write_bytes = 1.01786 * arg_input_stride - 73.1429 * arg_mode + 0.714286 * arg_packed_stride - 28.4286 * arg_scale_stride + 136 * blocks + 138.589 [UNEXPLAINED; max error 512]
+  global_unique_write_line_bytes = 0.285714 * arg_input_stride + 36.5714 * arg_mode + 1.14286 * arg_packed_stride + 13.7143 * arg_scale_stride - 64 * blocks + 600.286 [UNEXPLAINED; max error 576]
+  global_unique_write_lines = 0.00223214 * arg_input_stride + 0.285714 * arg_mode + 0.00892857 * arg_packed_stride + 0.107143 * arg_scale_stride - 0.5 * blocks + 4.68973 [UNEXPLAINED; max error 4.5]
+  global_unique_write_sector_bytes = 0.857143 * arg_input_stride - 73.1429 * arg_mode + 0.714286 * arg_packed_stride - 27.4286 * arg_scale_stride + 128 * blocks + 251 [UNEXPLAINED; max error 512]
+  global_unique_write_sectors = 0.0267857 * arg_input_stride - 2.28571 * arg_mode + 0.0223214 * arg_packed_stride - 0.857143 * arg_scale_stride + 4 * blocks + 7.84375 [UNEXPLAINED; max error 16]
+  global_write_bytes = 1.01786 * arg_input_stride - 73.1429 * arg_mode + 0.714286 * arg_packed_stride - 28.4286 * arg_scale_stride + 136 * blocks + 138.589 [UNEXPLAINED; max error 512]
+  integer_ops = 7.50179 * arg_input_stride - 1098.06 * arg_mode + 15.7107 * arg_packed_stride - 997.171 * arg_scale_stride + 9523.2 * blocks - 6282.41 [UNEXPLAINED; max error 2816]
+  launched_lanes = 128 * blocks [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 7680 * blocks [accepted; max error 0]
+  ptx_lane_instructions = 76.6981 * arg_input_stride + 281.457 * arg_mode - 9.18571 * arg_packed_stride - 3281.5 * arg_scale_stride + 30547.1 * blocks - 19553.3 [UNEXPLAINED; max error 4096]
+  sum_block_lane_sequence_span = -0.0691964 * arg_input_stride + 13.6 * arg_mode - 0.15 * arg_packed_stride + 0.9 * arg_scale_stride + 194 * blocks - 71.6371 [UNEXPLAINED; max error 64]
+  sum_block_max_lane_bytes = -1.81019e-14 * arg_input_stride + 1.10845e-12 * arg_mode + 8.64254e-15 * arg_packed_stride + 8.81904e-13 * arg_scale_stride + 65 * blocks + 3.21165e-12 [UNEXPLAINED; max error 8]
+  sum_block_max_lane_flops = 0.0379464 * arg_input_stride - 2.74286 * arg_mode - 0.0107143 * arg_packed_stride - 3.32857 * arg_scale_stride + 26 * blocks - 14.9121 [UNEXPLAINED; max error 5.4]
+  sum_launch_max_block_lane_sequence_span = 0.036942 * arg_input_stride + 8.65714 * arg_mode - 0.0169643 * arg_packed_stride - 2.40357 * arg_scale_stride + 11.95 * blocks + 139.466 [UNEXPLAINED; max error 20]
+  warps = 4 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: arg_roundtrip_stride, arg_rows, arg_width, elements, launched_lanes, real_rows, scale_groups, width
+  Unexplained site ds41_quantize_rows__gxptx:cpp2303:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2305:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2308:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2310:cvt.rzi.u32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2312:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2314:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2316:setp.gt.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2318:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2320:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2322:setp.eq.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2324:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2326:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2328:selp.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2330:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2332:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2365:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2367:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2369:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2371:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2373:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2375:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2377:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2379:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2396:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2398:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2400:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2402:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2404:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2406:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2408:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2411:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2413:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2439:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2441:setp.lt.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2443:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2445:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2447:setp.le.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2449:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2451:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2453:setp.lt.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2455:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2457:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2459:setp.le.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2461:setp.le.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2463:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2465:setp.lt.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2467:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2469:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2491:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2493:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2496:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2498:cvt.rzi.u32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2500:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2502:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2504:setp.gt.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2506:setp.eq.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2508:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2510:setp.eq.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2512:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2514:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2516:selp.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2518:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2520:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2523:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2525:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2527:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2529:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2531:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2533:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2535:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2537:min.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2621:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2623:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2626:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2628:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2630:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2632:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2634:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2636:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2641:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2643:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2664:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2666:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2668:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2670:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2672:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2674:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2676:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2679:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2681:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2683:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2685:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2687:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2689:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2694:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2696:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2699:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2701:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2703:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2705:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2707:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2709:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2712:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2714:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2728:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2730:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2733:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2735:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2738:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2740:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2743:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2759:bra: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2761:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2763:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2765:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2767:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2769:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2771:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2773:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2775:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2777:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2779:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2781:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2783:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2785:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2787:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2789:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2791:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_quantize_rows__gxptx:cpp2793:st.global.u16: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+

@@ -1,0 +1,13 @@
+{
+  "pcvs": "M,N,K,tile_groups,useful_fmas. Source grid includes M1 N8 K32, eliminating N padding.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "control",
+      "ptx": "control.ptx",
+      "defines": [
+        "DS41_MATVEC_TC"
+      ]
+    }
+  ]
+}

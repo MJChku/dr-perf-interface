@@ -1,0 +1,12 @@
+{
+  "pcvs": "real_heads4/8/16,padded_heads16,selected_keys64/128,dim512,useful_head_keys.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "padded16",
+      "ptx": "kernel.ptx",
+      "defines": [],
+      "expected_blocker": "unsupported GPU PTX operation: ldmatrix.sync.aligned.x4.trans.m8n8.shared.b16"
+    }
+  ]
+}

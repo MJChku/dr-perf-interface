@@ -1,0 +1,67 @@
+{
+  "case": "ds41-sparse-attention-head-padding",
+  "status": "blocked",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "padded16",
+      "status": "blocked",
+      "reason": "unsupported GPU PTX operation: ldmatrix.sync.aligned.x4.trans.m8n8.shared.b16",
+      "numerical_status": "not_assessed"
+    }
+  ],
+  "interface_checks": [],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/kernel.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/.work/padded16.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/.work/padded16-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/results/padded16/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/.work/padded16-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-sparse-attention-head-padding/.work/padded16.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Explicit expected coverage blocker or proposed status; no fitted interface/numerical pass fabricated",
+      "checked_observations": 1,
+      "status": "pass"
+    }
+  ]
+}

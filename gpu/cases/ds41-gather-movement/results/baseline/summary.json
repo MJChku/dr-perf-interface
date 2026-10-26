@@ -1,0 +1,728 @@
+{
+  "validity": "complete",
+  "semantics": {
+    "work": "dynamic PTX operations, separate from CPU instructions",
+    "memory": "requested PTX bytes; unresolved generic addresses remain generic; not cache transactions or HBM traffic",
+    "parallelism": "logical launch geometry, per-block maximum lane work, and lane-sequence span with block-barrier joins; no GPU cycle estimate",
+    "spanLimitations": "lane instruction order serializes independent instructions; warp-exchange joins and cross-block dependency edges are not modeled",
+    "diagnostics": "emulator_* counters describe execution machinery, not GPU barriers; block_barrier_lane_arrivals and collective_lane_arrivals come from PTX",
+    "composition": "host and device region work is exclusive; device regions own the innermost annotated lane work; launches[].metrics are inclusive totals",
+    "deviceRegions": "lane scopes retain individual invocations and PCVs; warp/block scopes require complete physical membership and identical PCVs; no implicit synchronization; scoped span is not inferred",
+    "annotationOverhead": "marker calls and marker bodies are not work; ordinary PTX for PCV expressions and parameter staging is counted; annotations may affect compiler optimization",
+    "time": "no latency, occupancy, throughput or hardware calibration is inferred"
+  },
+  "provenance": {
+    "command": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-gather-movement/.work/baseline-oracle",
+      "/home/ubuntu/drperf/gpu/cases/ds41-gather-movement/.work/baseline.so"
+    ],
+    "rawCaptures": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-gather-movement/results/baseline/capture/capture-7jim1mci/gpu.2561844.jsonl"
+    ],
+    "runtimeSha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+    "vendoredGX": "cc6dfacbe333c7a5892c1247ad2d7f9c9f464d68"
+  },
+  "regions": [
+    {
+      "name": "ds41_gather_bytes",
+      "pcvs": [
+        "arg_cache_rows",
+        "arg_keys",
+        "arg_queries",
+        "arg_width",
+        "blocks",
+        "launched_lanes"
+      ],
+      "stateCount": 6,
+      "invocations": 6,
+      "singleState": false,
+      "fits": {
+        "blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 5360,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "arg_cache_rows": 429.9797296229579,
+            "arg_keys": -1427.0034727809045,
+            "arg_queries": 4454.99462165994,
+            "arg_width": 8.881689285805605,
+            "blocks": 301.83495097534205
+          },
+          "constant": -3497.6875187671976,
+          "maxAbsoluteError": 1.6845660866238177e-08,
+          "accepted": true,
+          "observedMin": 271,
+          "observedMax": 1629440,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 5360,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {
+            "arg_queries": 1.0794790054654044e-08,
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 3.238528734073043e-08,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 686080,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 363.77881800468384,
+            "arg_keys": -1214.4510248868396,
+            "arg_queries": 3416.733272282819,
+            "arg_width": 2.291625101282483,
+            "blocks": 144.22596737006464
+          },
+          "constant": -2704.5786578753905,
+          "maxAbsoluteError": 1.3959834177512676e-08,
+          "accepted": true,
+          "observedMin": 8,
+          "observedMax": 755200,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "arg_cache_rows": -1.726947011538972,
+            "arg_keys": -26.45437499217993,
+            "arg_queries": 55.33350093519303,
+            "arg_width": 1.189898722517692,
+            "blocks": 71.93059652910611
+          },
+          "constant": -96.27267418226984,
+          "maxAbsoluteError": 2.4025439415709116e-09,
+          "accepted": true,
+          "observedMin": 4,
+          "observedMax": 389656,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 70.28743114538652,
+            "arg_keys": -158.13224182359787,
+            "arg_queries": 292.73990284020664,
+            "arg_width": -1.7857327523307327,
+            "blocks": 75.34013584023093
+          },
+          "constant": -150.44949524989352,
+          "maxAbsoluteError": 4.656612873077393e-10,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 393728,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "arg_cache_rows": 0.5491205558233322,
+            "arg_keys": -1.2354081392468583,
+            "arg_queries": 2.2870304909391144,
+            "arg_width": -0.01395103712758385,
+            "blocks": 0.5885948112518041
+          },
+          "constant": -1.175386681639793,
+          "maxAbsoluteError": 3.637978807091713e-12,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 3076,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 28.82382376288028,
+            "arg_keys": -124.20562450903262,
+            "arg_queries": 347.75642062891376,
+            "arg_width": 0.07644633435946761,
+            "blocks": 73.40462566191587
+          },
+          "constant": -293.8556918799295,
+          "maxAbsoluteError": 3.727905095729511e-09,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 389696,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "arg_cache_rows": 0.9007444925900088,
+            "arg_keys": -3.8814257659072693,
+            "arg_queries": 10.867388144653555,
+            "arg_width": 0.002388947948733363,
+            "blocks": 2.293894551934871
+          },
+          "constant": -9.182990371247797,
+          "maxAbsoluteError": 1.1649703424154723e-10,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 12178,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 21.984232785995143,
+            "arg_keys": -65.83638488406808,
+            "arg_queries": 43.632030306929764,
+            "arg_width": -0.6993257681738188,
+            "blocks": 128.9610874635461
+          },
+          "constant": -127.04163990425877,
+          "maxAbsoluteError": 4.656612873077393e-10,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 686080,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 47.20328951472372,
+            "arg_keys": -143.63140407355732,
+            "arg_queries": 235.7464804323736,
+            "arg_width": -1.772994675060623,
+            "blocks": 130.2973424693312
+          },
+          "constant": -139.8427136705286,
+          "maxAbsoluteError": 9.837776815402322e-09,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 686208,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {
+            "arg_cache_rows": 0.3687756993337791,
+            "arg_keys": -1.1221203443246666,
+            "arg_queries": 1.8417693783779188,
+            "arg_width": -0.013851520898911117,
+            "blocks": 1.01794798804165
+          },
+          "constant": -1.0925212005510048,
+          "maxAbsoluteError": 7.685763137033064e-11,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 5361,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 26.97818151892957,
+            "arg_keys": -82.17830180861215,
+            "arg_queries": 91.37090858745194,
+            "arg_width": -0.9663387136418911,
+            "blocks": 129.28156769704262
+          },
+          "constant": -132.4860172800545,
+          "maxAbsoluteError": 2.514070729375817e-09,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 686080,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {
+            "arg_cache_rows": 0.8430681724665491,
+            "arg_keys": -2.5680719315191296,
+            "arg_queries": 2.855340893357873,
+            "arg_width": -0.030198084801309096,
+            "blocks": 4.040048990532582
+          },
+          "constant": -4.1401880400017035,
+          "maxAbsoluteError": 7.856471029299428e-11,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 21440,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 159.90272110679786,
+            "arg_keys": -475.8817460475945,
+            "arg_queries": 886.2929397655382,
+            "arg_width": -6.732538256106439,
+            "blocks": 136.27120953321509
+          },
+          "constant": -698.8525861016824,
+          "maxAbsoluteError": 1.1641532182693481e-09,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 686080,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "arg_cache_rows": 719.9267710811309,
+            "arg_keys": -2423.552776991836,
+            "arg_queries": 7895.147126846804,
+            "arg_width": 27.29256804618312,
+            "blocks": 792.8651241062989
+          },
+          "constant": -6337.678813091945,
+          "maxAbsoluteError": 6.41375663690269e-09,
+          "accepted": true,
+          "observedMin": 674,
+          "observedMax": 4330880,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {
+            "arg_queries": 1.0794790054654044e-08,
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 3.238528734073043e-08,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 686080,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 6.388153385195097e-08,
+            "arg_keys": -1.913661664262286e-07,
+            "arg_queries": 3.8011389980597587e-07,
+            "blocks": 9216
+          },
+          "constant": -2.998858690261841e-07,
+          "maxAbsoluteError": 3.993511199951172e-06,
+          "accepted": true,
+          "observedMin": 9216,
+          "observedMax": 49397760,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "arg_cache_rows": 1839.0341488332217,
+            "arg_keys": -6129.2300390742685,
+            "arg_queries": 19459.13427762628,
+            "arg_width": 51.66020980624791,
+            "blocks": 4014.71972288763
+          },
+          "constant": -15451.318320125807,
+          "maxAbsoluteError": 1.389853423461318e-07,
+          "accepted": true,
+          "observedMin": 3784,
+          "observedMax": 21637120,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "arg_cache_rows": 53.02580461392825,
+            "arg_keys": -218.11882872681696,
+            "arg_queries": 1285.3767900166777,
+            "arg_width": 0.12387554464435103,
+            "blocks": 32.581077139971505
+          },
+          "constant": -1051.9887185880107,
+          "maxAbsoluteError": 7.266862667165697e-10,
+          "accepted": true,
+          "observedMin": 101,
+          "observedMax": 169120,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "arg_cache_rows": 38.97832376990997,
+            "arg_keys": -128.41118130056395,
+            "arg_queries": 425.7971996444931,
+            "arg_width": -1.292541180253074,
+            "blocks": 75.92716495200995
+          },
+          "constant": -329.9989658873237,
+          "maxAbsoluteError": 5.8871592045761645e-09,
+          "accepted": true,
+          "observedMin": 81,
+          "observedMax": 397376,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {
+            "arg_cache_rows": 53.59361991430352,
+            "arg_keys": -180.90721862253656,
+            "arg_queries": 629.9093199842106,
+            "arg_width": -1.2215050434087453,
+            "blocks": 1.9719501469402647
+          },
+          "constant": -402.3461663794876,
+          "maxAbsoluteError": 3.070681486860849e-10,
+          "accepted": true,
+          "observedMin": 73,
+          "observedMax": 547,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        },
+        "warps": {
+          "coefficients": {
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4,
+          "observedMax": 21440,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "launched_lanes"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "arg_cache_rows": 1,
+            "arg_keys": 1,
+            "arg_queries": 1,
+            "arg_width": 1,
+            "blocks": 1,
+            "launched_lanes": 128
+          },
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 271,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 1,
+            "executed_lanes": 128,
+            "global_read_bytes": 8,
+            "global_unique_read_bytes": 4,
+            "global_unique_read_line_bytes": 128,
+            "global_unique_read_lines": 1,
+            "global_unique_read_sector_bytes": 32,
+            "global_unique_read_sectors": 1,
+            "global_unique_write_bytes": 1,
+            "global_unique_write_line_bytes": 128,
+            "global_unique_write_lines": 1,
+            "global_unique_write_sector_bytes": 32,
+            "global_unique_write_sectors": 1,
+            "global_write_bytes": 1,
+            "integer_ops": 674,
+            "launched_lanes": 128,
+            "launches": 1,
+            "param_read_bytes": 9216,
+            "ptx_lane_instructions": 3784,
+            "sum_block_lane_sequence_span": 101,
+            "sum_block_max_lane_bytes": 81,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 101,
+            "warps": 4
+          }
+        },
+        {
+          "pcvs": {
+            "arg_cache_rows": 13,
+            "arg_keys": 9,
+            "arg_queries": 3,
+            "arg_width": 17,
+            "blocks": 6,
+            "launched_lanes": 768
+          },
+          "metrics": {
+            "blocks": 6,
+            "conversion_ops": 4576,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 6,
+            "executed_lanes": 768,
+            "global_read_bytes": 2249,
+            "global_unique_read_bytes": 261,
+            "global_unique_read_line_bytes": 640,
+            "global_unique_read_lines": 5,
+            "global_unique_read_sector_bytes": 448,
+            "global_unique_read_sectors": 14,
+            "global_unique_write_bytes": 459,
+            "global_unique_write_line_bytes": 640,
+            "global_unique_write_lines": 5,
+            "global_unique_write_sector_bytes": 512,
+            "global_unique_write_sectors": 16,
+            "global_write_bytes": 459,
+            "integer_ops": 10116,
+            "launched_lanes": 768,
+            "launches": 1,
+            "param_read_bytes": 55296,
+            "ptx_lane_instructions": 36637,
+            "sum_block_lane_sequence_span": 1728,
+            "sum_block_max_lane_bytes": 732,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 547,
+            "warps": 24
+          }
+        },
+        {
+          "pcvs": {
+            "arg_cache_rows": 19,
+            "arg_keys": 7,
+            "arg_queries": 2,
+            "arg_width": 64,
+            "blocks": 8,
+            "launched_lanes": 1024
+          },
+          "metrics": {
+            "blocks": 8,
+            "conversion_ops": 6576,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 8,
+            "executed_lanes": 1024,
+            "global_read_bytes": 3840,
+            "global_unique_read_bytes": 448,
+            "global_unique_read_line_bytes": 1152,
+            "global_unique_read_lines": 9,
+            "global_unique_read_sector_bytes": 672,
+            "global_unique_read_sectors": 21,
+            "global_unique_write_bytes": 904,
+            "global_unique_write_line_bytes": 1152,
+            "global_unique_write_lines": 9,
+            "global_unique_write_sector_bytes": 960,
+            "global_unique_write_sectors": 30,
+            "global_write_bytes": 1440,
+            "integer_ops": 14256,
+            "launched_lanes": 1024,
+            "launches": 1,
+            "param_read_bytes": 73728,
+            "ptx_lane_instructions": 50928,
+            "sum_block_lane_sequence_span": 1268,
+            "sum_block_max_lane_bytes": 888,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 547,
+            "warps": 32
+          }
+        },
+        {
+          "pcvs": {
+            "arg_cache_rows": 37,
+            "arg_keys": 6,
+            "arg_queries": 1,
+            "arg_width": 512,
+            "blocks": 24,
+            "launched_lanes": 3072
+          },
+          "metrics": {
+            "blocks": 24,
+            "conversion_ops": 20096,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 24,
+            "executed_lanes": 3072,
+            "global_read_bytes": 11520,
+            "global_unique_read_bytes": 2072,
+            "global_unique_read_line_bytes": 2688,
+            "global_unique_read_lines": 21,
+            "global_unique_read_sector_bytes": 2176,
+            "global_unique_read_sectors": 68,
+            "global_unique_write_bytes": 3072,
+            "global_unique_write_line_bytes": 3200,
+            "global_unique_write_lines": 25,
+            "global_unique_write_sector_bytes": 3072,
+            "global_unique_write_sectors": 96,
+            "global_write_bytes": 3072,
+            "integer_ops": 46656,
+            "launched_lanes": 3072,
+            "launches": 1,
+            "param_read_bytes": 221184,
+            "ptx_lane_instructions": 158080,
+            "sum_block_lane_sequence_span": 1732,
+            "sum_block_max_lane_bytes": 1928,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 547,
+            "warps": 96
+          }
+        },
+        {
+          "pcvs": {
+            "arg_cache_rows": 97,
+            "arg_keys": 37,
+            "arg_queries": 3,
+            "arg_width": 160,
+            "blocks": 141,
+            "launched_lanes": 18048
+          },
+          "metrics": {
+            "blocks": 141,
+            "conversion_ops": 42756,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 141,
+            "executed_lanes": 18048,
+            "global_read_bytes": 18600,
+            "global_unique_read_bytes": 9256,
+            "global_unique_read_line_bytes": 12032,
+            "global_unique_read_lines": 94,
+            "global_unique_read_sector_bytes": 9312,
+            "global_unique_read_sectors": 291,
+            "global_unique_write_bytes": 17772,
+            "global_unique_write_line_bytes": 17920,
+            "global_unique_write_lines": 140,
+            "global_unique_write_sector_bytes": 17792,
+            "global_unique_write_sectors": 556,
+            "global_write_bytes": 18000,
+            "integer_ops": 113670,
+            "launched_lanes": 18048,
+            "launches": 1,
+            "param_read_bytes": 1299456,
+            "ptx_lane_instructions": 568872,
+            "sum_block_lane_sequence_span": 4491,
+            "sum_block_max_lane_bytes": 10476,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 75,
+            "warps": 564
+          }
+        },
+        {
+          "pcvs": {
+            "arg_cache_rows": 131,
+            "arg_keys": 67,
+            "arg_queries": 2,
+            "arg_width": 5120,
+            "blocks": 5360,
+            "launched_lanes": 686080
+          },
+          "metrics": {
+            "blocks": 5360,
+            "conversion_ops": 1629440,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 5360,
+            "executed_lanes": 686080,
+            "global_read_bytes": 755200,
+            "global_unique_read_bytes": 389656,
+            "global_unique_read_line_bytes": 393728,
+            "global_unique_read_lines": 3076,
+            "global_unique_read_sector_bytes": 389696,
+            "global_unique_read_sectors": 12178,
+            "global_unique_write_bytes": 686080,
+            "global_unique_write_line_bytes": 686208,
+            "global_unique_write_lines": 5361,
+            "global_unique_write_sector_bytes": 686080,
+            "global_unique_write_sectors": 21440,
+            "global_write_bytes": 686080,
+            "integer_ops": 4330880,
+            "launched_lanes": 686080,
+            "launches": 1,
+            "param_read_bytes": 49397760,
+            "ptx_lane_instructions": 21637120,
+            "sum_block_lane_sequence_span": 169120,
+            "sum_block_max_lane_bytes": 397376,
+            "sum_block_max_lane_flops": 0,
+            "sum_launch_max_block_lane_sequence_span": 73,
+            "warps": 21440
+          }
+        }
+      ]
+    }
+  ]
+}

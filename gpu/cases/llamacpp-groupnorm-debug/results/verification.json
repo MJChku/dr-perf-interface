@@ -1,0 +1,288 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "623c16393c7d53a37df8bb69c6ea8ed6e5171f62",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.004047932103276253,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/llamacpp-groupnorm-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/driver"
+      ],
+      "seconds": 0.7483672043308616,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-lineinfo",
+        "-ptx",
+        "-arch=sm_80",
+        "/home/ubuntu/drperf/gpu/cases/llamacpp-groupnorm-debug/before.cu",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/before.ptx"
+      ],
+      "seconds": 0.4757308391854167,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-llama-gv9mrp5l/before.ptx",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/before.cubin"
+      ],
+      "seconds": 0.07880028709769249,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi1024EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi1024EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 30.462 ms\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi32EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi32EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 25.778 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-llama-gv9mrp5l/before.ptx",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/before.so"
+      ],
+      "seconds": 1.600383578799665,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-llama-gv9mrp5l/before.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-llama-gv9mrp5l/before-train",
+        "--",
+        "/tmp/drperf-llama-gv9mrp5l/driver",
+        "/tmp/drperf-llama-gv9mrp5l/before.so",
+        "before",
+        "train"
+      ],
+      "seconds": 14.860813678242266,
+      "exit_code": 0,
+      "stdout": "{\"cases\":36,\"max_absolute_error\":3.47326e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/before-train/report.txt\n  /tmp/drperf-llama-gv9mrp5l/before-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-llama-gv9mrp5l/before-heldout",
+        "--",
+        "/tmp/drperf-llama-gv9mrp5l/driver",
+        "/tmp/drperf-llama-gv9mrp5l/before.so",
+        "before",
+        "heldout"
+      ],
+      "seconds": 35.358908573165536,
+      "exit_code": 0,
+      "stdout": "{\"cases\":42,\"max_absolute_error\":3.7408e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/before-heldout/report.txt\n  /tmp/drperf-llama-gv9mrp5l/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-lineinfo",
+        "-ptx",
+        "-arch=sm_80",
+        "/home/ubuntu/drperf/gpu/cases/llamacpp-groupnorm-debug/after.cu",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/after.ptx"
+      ],
+      "seconds": 0.5008239727467299,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-llama-gv9mrp5l/after.ptx",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/after.cubin"
+      ],
+      "seconds": 0.09406787436455488,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi1024EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi1024EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 36.867 ms\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi32EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi32EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 0 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 31.507 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-llama-gv9mrp5l/after.ptx",
+        "-o",
+        "/tmp/drperf-llama-gv9mrp5l/after.so"
+      ],
+      "seconds": 2.4416497806087136,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-llama-gv9mrp5l/after.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-llama-gv9mrp5l/after-train",
+        "--",
+        "/tmp/drperf-llama-gv9mrp5l/driver",
+        "/tmp/drperf-llama-gv9mrp5l/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 14.423454132862389,
+      "exit_code": 0,
+      "stdout": "{\"cases\":36,\"max_absolute_error\":3.47326e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/after-train/report.txt\n  /tmp/drperf-llama-gv9mrp5l/after-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-llama-gv9mrp5l/after-heldout",
+        "--",
+        "/tmp/drperf-llama-gv9mrp5l/driver",
+        "/tmp/drperf-llama-gv9mrp5l/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 35.79717690870166,
+      "exit_code": 0,
+      "stdout": "{\"cases\":42,\"max_absolute_error\":3.7408e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/after-heldout/report.txt\n  /tmp/drperf-llama-gv9mrp5l/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "before-train": {
+      "numerical_checks": {
+        "cases": 36,
+        "max_absolute_error": 3.47326e-06,
+        "passed": true
+      },
+      "stdout": "{\"cases\":36,\"max_absolute_error\":3.47326e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/before-train/report.txt\n  /tmp/drperf-llama-gv9mrp5l/before-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "before-heldout": {
+      "numerical_checks": {
+        "cases": 42,
+        "max_absolute_error": 3.7408e-06,
+        "passed": true
+      },
+      "stdout": "{\"cases\":42,\"max_absolute_error\":3.7408e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/before-heldout/report.txt\n  /tmp/drperf-llama-gv9mrp5l/before-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-train": {
+      "numerical_checks": {
+        "cases": 36,
+        "max_absolute_error": 3.47326e-06,
+        "passed": true
+      },
+      "stdout": "{\"cases\":36,\"max_absolute_error\":3.47326e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/after-train/report.txt\n  /tmp/drperf-llama-gv9mrp5l/after-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-heldout": {
+      "numerical_checks": {
+        "cases": 42,
+        "max_absolute_error": 3.7408e-06,
+        "passed": true
+      },
+      "stdout": "{\"cases\":42,\"max_absolute_error\":3.7408e-06,\"passed\":true}\ndrperf GPU: 2 regions; work capture complete\n  /tmp/drperf-llama-gv9mrp5l/after-heldout/report.txt\n  /tmp/drperf-llama-gv9mrp5l/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "before": {
+      "ptx_sha256": "a0d31388f31739a0eb67fa550e92f720343544adbe1346608a2e3c5f8f97e959",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi1024EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi1024EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 1 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 30.462 ms\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi32EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi32EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 32 registers, used 0 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 25.778 ms\n",
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-llama-gv9mrp5l/before.ptx",
+        "inputSha256": "a0d31388f31739a0eb67fa550e92f720343544adbe1346608a2e3c5f8f97e959",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "13236d33ac21ea2599dcf274cc8fde3209f3541dfe198647261ce944eed9574f",
+        "generatedCpp": "/tmp/drperf-llama-gv9mrp5l/before.so.cpp",
+        "siteMap": "/tmp/drperf-llama-gv9mrp5l/before.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptx_sha256": "d761522f4a0498fd2b669dc7f7e53c530ed6170a1c8c4bfa3e10aef54c9eae38",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi1024EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi1024EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 1 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 36.867 ms\nptxas info    : Compiling entry function '_Z14group_norm_f32ILi32EEvPKfPfiif' for 'sm_80'\nptxas info    : Function properties for _Z14group_norm_f32ILi32EEvPKfPfiif\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 40 registers, used 0 barriers, 380 bytes cmem[0], 8 bytes cmem[2]\nptxas info    : Compile time = 31.507 ms\n",
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-llama-gv9mrp5l/after.ptx",
+        "inputSha256": "d761522f4a0498fd2b669dc7f7e53c530ed6170a1c8c4bfa3e10aef54c9eae38",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "111191408d77f4755725eba268704a616dae399c42d42b8bcf171322e176f1e5",
+        "generatedCpp": "/tmp/drperf-llama-gv9mrp5l/after.so.cpp",
+        "siteMap": "/tmp/drperf-llama-gv9mrp5l/after.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "native_benchmark.cu": "f9ca8f62f76f5a8b0b9bd46ee910df4d8b58d20ecb0d4b3d24abdc755d39e0a1",
+    "upstream_cpu_reference.cc": "71295eccd4bc9be5ca4c8fcc90b465f172376f8bcf4ae3c246908ae95e38ac63",
+    "upstream_norm.cu": "6f613109716dae7e5e4dbbe56e7c442f796b7540ab07dc1eb9c43536da1c1c98",
+    "common_extracted.cuh": "06a19243cd62128f6516cccd121bc626778ff657f803a031d6e87ba982940fa6",
+    "driver.cc": "2a40027e94b5f14c5f55c48d0816a88e882bbc1b3cf57604d65a948b626ddd57",
+    "before.cu": "acc7abb84a36ea71667a4eae1a76f2cfe68c682c7b759367a18ed2a723419819",
+    "run.py": "e6ddbcd5965bdf771f4972b7e329e1e5bfbfca0bbb835acaef0938129dc7dc8a",
+    "run_native_rcp.py": "3ec969449569cc0f08e9bc9585a04ba6c1b937c0bc30b41fdfe0e71b04a8c6d7",
+    "after.cu": "37e8929ac1114b8817a601c23864ed8c8dc65681a9050b9dbcc8a07e537a4bbb",
+    "upstream_common.cuh": "01ec28a5866346886a5ddd74efc1703b86cacdc31990522733d79ea035ace86b"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 106.65014497563243
+}

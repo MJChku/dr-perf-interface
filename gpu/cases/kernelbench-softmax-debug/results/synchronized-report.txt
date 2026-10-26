@@ -1,0 +1,71 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "synchronized"
+  18 invocations, 6 states
+  block_barrier_lane_arrivals = 23552 * rows
+  blocks = 1 * rows
+  conversion_ops = 1024 * rows
+  dynamic_shared_bytes_per_launch = 4096
+  executed_blocks = 1 * rows
+  executed_lanes = 1024 * rows
+  fp32_flops = 5 * elements + 2047 * rows
+  global_load_instructions = 0.75 * elements
+  global_read_bytes = 12 * elements
+  global_unique_read_bytes = 8 * elements
+  global_unique_read_line_bytes = 8 * elements
+  global_unique_read_lines = 0.0625 * elements
+  global_unique_read_sector_bytes = 8 * elements
+  global_unique_read_sectors = 0.25 * elements
+  global_unique_write_bytes = 4 * elements
+  global_unique_write_line_bytes = 4 * elements
+  global_unique_write_lines = 0.03125 * elements
+  global_unique_write_sector_bytes = 4 * elements
+  global_unique_write_sectors = 0.125 * elements
+  global_write_bytes = 8 * elements
+  integer_ops = 9.5 * elements + 34812 * rows
+  launched_lanes = 1024 * rows
+  launches = 1
+  param_load_instructions = 3072 * rows
+  param_read_bytes = 20480 * rows
+  ptx_lane_instructions = 21.75 * elements + 195575 * rows + unexplained
+    unexplained own mean: 1534.5
+    unexplained including unfitted children: 1534.5
+  shared_load_instructions = 6140 * rows
+  shared_read_bytes = 24560 * rows
+  shared_write_bytes = 12284 * rows + unexplained
+    unexplained own mean: 442.2222222
+    unexplained including unfitted children: 442.2222222
+  special_function_ops = 1 * elements
+  static_shared_bytes_per_launch = 0
+  sum_block_lane_sequence_span = 369 * rows
+  sum_block_max_lane_bytes = 0 + unexplained
+    unexplained own mean: 483.7777778
+    unexplained including unfitted children: 483.7777778
+  sum_block_max_lane_flops = 31 * rows
+  sum_launch_max_block_lane_sequence_span = 369
+  warps = 32 * rows
+  Same-state invocation variation: shared_write_bytes, sum_block_max_lane_bytes
+  Unexplained site softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv: ptx_lane_instructions
+  Unexplained site softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+    ptx_lane_instructions at {'elements': 256, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=1011.666667, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=11.33333333
+    ptx_lane_instructions at {'elements': 512, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=2027, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=19
+    ptx_lane_instructions at {'elements': 1024, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=982.6666667, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=40.33333333
+    ptx_lane_instructions at {'elements': 2048, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=1961.333333, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=84.66666667
+    ptx_lane_instructions at {'elements': 4096, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=850.6666667, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=172.3333333
+    ptx_lane_instructions at {'elements': 8192, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:51 ptx218:bra.ifconv=1710.333333, softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=335.6666667
+    shared_write_bytes at {'elements': 256, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=45.33333333
+    shared_write_bytes at {'elements': 512, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=76
+    shared_write_bytes at {'elements': 1024, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=161.3333333
+    shared_write_bytes at {'elements': 2048, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=338.6666667
+    shared_write_bytes at {'elements': 4096, 'rows': 1}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=689.3333333
+    shared_write_bytes at {'elements': 8192, 'rows': 2}: softmax_forward_kernel_vec4 @ synchronized.cu:52 ptx221:st.shared.f32=1342.666667
+    sum_block_max_lane_bytes at {'elements': 256, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 512, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 1024, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 2048, 'rows': 2}: 
+    sum_block_max_lane_bytes at {'elements': 4096, 'rows': 1}: 
+    sum_block_max_lane_bytes at {'elements': 8192, 'rows': 2}: 
+

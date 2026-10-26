@@ -1,0 +1,901 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_prepare_decode_bf16"
+  24 invocations, 12 states
+  blocks = 1 * blocks [accepted; max error 0]
+  conversion_ops = 4.15112 * arg_dim - 76.4636 * arg_rows + 3987.12 * arg_selected + 5321.21 * blocks - 26226.1 [UNEXPLAINED; max error 23185.2]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 256 * blocks [accepted; max error 0]
+  fp32_flops = -0.97764 * arg_dim - 9.39511 * arg_rows + 594.125 * arg_selected + 565.07 * blocks - 3871.04 [UNEXPLAINED; max error 3568.88]
+  generic_read_bytes = -1.00637 * arg_dim - 12.0909 * arg_rows + 810.333 * arg_selected + 638.493 * blocks - 5206.89 [UNEXPLAINED; max error 6890.55]
+  generic_unique_read_bytes = -1.01789 * arg_dim - 7.63144 * arg_rows + 335 * arg_selected + 495.548 * blocks - 2278.27 [UNEXPLAINED; max error 2055.62]
+  generic_unique_read_line_bytes = -0.99163 * arg_dim + 397.405 * arg_rows + 760 * arg_selected + 506.297 * blocks - 4864.85 [UNEXPLAINED; max error 4113.24]
+  generic_unique_read_lines = -0.00774711 * arg_dim + 3.10473 * arg_rows + 5.9375 * arg_selected + 3.95544 * blocks - 38.0066 [UNEXPLAINED; max error 32.1347]
+  generic_unique_read_sector_bytes = -1.04512 * arg_dim + 90.4862 * arg_rows + 432 * arg_selected + 495.34 * blocks - 2877.56 [UNEXPLAINED; max error 2302.06]
+  generic_unique_read_sectors = -0.0326599 * arg_dim + 2.8277 * arg_rows + 13.5 * arg_selected + 15.4794 * blocks - 89.9238 [UNEXPLAINED; max error 71.9392]
+  global_read_bytes = 4.61129 * arg_dim - 107.998 * arg_rows + 7960.33 * arg_selected + 5746.38 * blocks - 50848.9 [UNEXPLAINED; max error 46391.1]
+  global_unique_read_bytes = 0.820181 * arg_dim + 55.2151 * arg_rows + 39 * arg_selected + 771.467 * blocks - 637.956 [UNEXPLAINED; max error 262.598]
+  global_unique_read_line_bytes = 0.886005 * arg_dim + 79.8114 * arg_rows + 85.3333 * arg_selected + 768.088 * blocks - 545.015 [UNEXPLAINED; max error 319.807]
+  global_unique_read_lines = 0.00692191 * arg_dim + 0.623526 * arg_rows + 0.666667 * arg_selected + 6.00069 * blocks - 4.25793 [UNEXPLAINED; max error 2.4985]
+  global_unique_read_sector_bytes = 0.820347 * arg_dim + 79.0721 * arg_rows + 42.6667 * arg_selected + 771.462 * blocks - 620 [UNEXPLAINED; max error 278.404]
+  global_unique_read_sectors = 0.0256358 * arg_dim + 2.471 * arg_rows + 1.33333 * arg_selected + 24.1082 * blocks - 19.375 [UNEXPLAINED; max error 8.70012]
+  global_unique_write_bytes = 6.01466 * arg_dim - 82.4227 * arg_rows + 2379 * arg_selected + 5657.42 * blocks - 17260.3 [UNEXPLAINED; max error 13795.4]
+  global_unique_write_line_bytes = 6.01266 * arg_dim - 82.7072 * arg_rows + 2400 * arg_selected + 5657.48 * blocks - 16921.8 [UNEXPLAINED; max error 13798.3]
+  global_unique_write_lines = 0.0469739 * arg_dim - 0.64615 * arg_rows + 18.75 * arg_selected + 44.1991 * blocks - 132.202 [UNEXPLAINED; max error 107.799]
+  global_unique_write_sector_bytes = 6.01449 * arg_dim - 82.2798 * arg_rows + 2381.33 * arg_selected + 5657.43 * blocks - 17254.3 [UNEXPLAINED; max error 13797.3]
+  global_unique_write_sectors = 0.187953 * arg_dim - 2.57124 * arg_rows + 74.4167 * arg_selected + 176.795 * blocks - 539.197 [UNEXPLAINED; max error 431.166]
+  global_write_bytes = 6.01466 * arg_dim - 82.4227 * arg_rows + 2379 * arg_selected + 5657.42 * blocks - 17260.3 [UNEXPLAINED; max error 13795.4]
+  integer_ops = -9.42275 * arg_dim - 226.658 * arg_rows + 14705.5 * arg_selected + 15310.6 * blocks - 95489.9 [UNEXPLAINED; max error 87673.8]
+  launched_lanes = 256 * blocks [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 25600 * blocks [accepted; max error 0]
+  ptx_lane_instructions = -10.87 * arg_dim - 566 * arg_rows + 34279.8 * arg_selected + 41324 * blocks - 222750 [UNEXPLAINED; max error 202694]
+  sum_block_lane_sequence_span = -0.525095 * arg_dim - 2.53278 * arg_rows + 246.271 * arg_selected + 198.444 * blocks - 1233 [UNEXPLAINED; max error 1356.48]
+  sum_block_max_lane_bytes = -0.125966 * arg_dim + 1.21832 * arg_rows + 52.5 * arg_selected + 151.051 * blocks - 257.5 [UNEXPLAINED; max error 314.198]
+  sum_block_max_lane_flops = -0.0238339 * arg_dim - 0.392485 * arg_rows + 5.47917 * arg_selected + 5.21427 * blocks - 20.602 [UNEXPLAINED; max error 29.7902]
+  sum_launch_max_block_lane_sequence_span = -0.00230268 * arg_dim + 1.86464 * arg_rows + 23.0833 * arg_selected + 0.0386352 * blocks + 279.679 [UNEXPLAINED; max error 11.8139]
+  warps = 8 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: arg_gs, arg_heads, arg_qs, arg_window, launched_lanes
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2687:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2689:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2691:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2693:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2695:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2697:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2704:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2706:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2708:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2710:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2713:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2724:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2726:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2728:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2730:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2732:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2734:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2736:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2739:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2741:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2743:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2750:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2752:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2754:rem.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2756:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2759:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2761:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2763:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2765:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2767:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2769:ld.global.u64: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2771:ld.global.u64: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2773:ld.global.u64: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2775:ld.global.v2.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2777:ld.global.v2.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2779:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2781:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2783:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2785:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2787:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2790:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2792:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2794:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2796:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2798:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2800:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2802:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2804:xor.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2806:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2808:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2810:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2812:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2814:ld.global.u64: global_read_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2816:rem.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2818:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2820:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2822:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2824:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2826:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2828:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2830:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2832:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2834:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2836:cvt.u32.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2838:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2840:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2842:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2844:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2847:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2849:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2851:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2853:sub.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2855:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2857:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2859:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2861:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2863:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2865:setp.gt.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2867:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2869:setp.lt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2871:and.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2873:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2875:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2878:ld.global.u64: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2880:ld.global.u32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2882:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2884:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2886:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2888:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2890:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2892:ld.u32: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2894:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2896:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2898:mad.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2901:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2903:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2905:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2907:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2909:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2911:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2913:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2915:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2917:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2919:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2921:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2923:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2925:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2927:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2929:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2932:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2934:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2936:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2938:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2940:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2942:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2944:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2946:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2948:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2950:atom.global.exch.b32: global_read_bytes, global_unique_read_bytes, global_unique_read_sector_bytes, global_unique_read_sectors, global_unique_write_bytes, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2952:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2955:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2957:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2960:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2962:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2964:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2966:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2968:mov.u16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2971:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2973:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2975:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2977:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2979:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2981:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2983:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2985:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2987:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2989:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2991:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2993:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2996:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp2998:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3000:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3002:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3004:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3006:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3008:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3010:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3012:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3014:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3016:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3019:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3021:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3023:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3025:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3027:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3029:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3031:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3033:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3035:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3037:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3039:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3041:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3043:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3045:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3047:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3050:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3052:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3054:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3056:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3058:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3060:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3065:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3067:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3070:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3072:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3074:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3076:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3078:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3080:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3085:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3087:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3090:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3092:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3095:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3097:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3099:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3101:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3103:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3106:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3108:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3110:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3112:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3114:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3116:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3119:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3121:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3124:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3126:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3129:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3131:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3134:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3137:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3139:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3141:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3143:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3146:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3148:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3151:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3153:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3155:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3157:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3159:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3161:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3163:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3165:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3167:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3169:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3171:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3174:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3176:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3178:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3180:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3182:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3184:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3186:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3188:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3190:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3192:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3194:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3196:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3198:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3200:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3202:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3204:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3206:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3209:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3211:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3213:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3215:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3217:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3219:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3224:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3226:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3229:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3231:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3233:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3235:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3237:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3239:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3244:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3246:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3249:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3251:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3254:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3256:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3258:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3260:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3262:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3265:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3267:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3269:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3271:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3273:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3275:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3278:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3280:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3283:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3285:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3288:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3290:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3293:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3296:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3298:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3300:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3302:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3305:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3307:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3309:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3311:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3313:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3315:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3317:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3319:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3321:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3323:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3325:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3327:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3329:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3331:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3333:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3335:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3337:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3339:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3341:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3343:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3345:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3347:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3349:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3351:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3353:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3355:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3358:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3360:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3362:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3364:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3366:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3368:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3370:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3372:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3374:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3376:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3378:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3381:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3383:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3385:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3387:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3389:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3391:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3393:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3395:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3397:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3399:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3401:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3403:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3405:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3407:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3409:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3411:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3413:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3416:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3418:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3420:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3422:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3424:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3426:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3431:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3433:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3436:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3438:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3440:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3442:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3444:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3446:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3451:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3453:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3456:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3458:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3461:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3463:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3465:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3467:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3469:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3472:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3474:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3476:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3478:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3480:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3482:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3485:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3487:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3490:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3492:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3495:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3497:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3500:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3503:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3505:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3507:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3509:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3512:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3514:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3517:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3519:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3521:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3523:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3525:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3527:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3529:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3531:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3533:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3535:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3537:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3540:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3542:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3544:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3546:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3548:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3550:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3552:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3554:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3556:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3558:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3560:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3562:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3564:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3566:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3568:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3570:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3572:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3575:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3577:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3579:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3581:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3583:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3585:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3590:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3592:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3595:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3597:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3599:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3601:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3603:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3605:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3610:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3612:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3615:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3617:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3620:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3622:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3624:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3626:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3628:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3631:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3633:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3635:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3637:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3639:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3641:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3644:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3646:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3649:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3651:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3654:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3656:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3659:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3662:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3664:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3666:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3668:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3671:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3673:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3675:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3677:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3679:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3681:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3683:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3685:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3687:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3689:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3691:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3693:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3695:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3697:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3699:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3701:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3703:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3705:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3707:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3709:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3711:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3713:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3715:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3717:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3719:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3721:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3724:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3726:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3728:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3730:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3732:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3734:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3736:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3738:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3740:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3742:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3744:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3747:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3749:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3751:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3753:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3755:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3757:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3759:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3761:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3763:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3765:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3767:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3769:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3771:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3773:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3775:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3777:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3779:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3782:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3784:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3786:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3788:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3790:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3792:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3797:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3799:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3802:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3804:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3806:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3808:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3810:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3812:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3817:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3819:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3822:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3824:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3827:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3829:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3831:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3833:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3835:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3838:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3840:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3842:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3844:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3846:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3848:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3851:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3853:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3856:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3858:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3861:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3863:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3866:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3869:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3871:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3873:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3875:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3878:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3880:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3883:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3885:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3887:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3889:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3891:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3893:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3895:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3897:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3899:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3901:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3903:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3906:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3908:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3910:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3912:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3914:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3916:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3918:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3920:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3922:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3924:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3926:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3928:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3930:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3932:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3934:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3936:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3938:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3941:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3943:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3945:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3947:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3949:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3951:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3956:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3958:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3961:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3963:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3965:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3967:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3969:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3971:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3976:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3978:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3981:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3983:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3986:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3988:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3990:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3992:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3994:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3997:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp3999:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4001:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4003:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4005:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4007:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4010:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4012:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4015:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4017:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4020:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4022:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4025:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4028:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4030:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4032:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4034:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4037:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4039:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4041:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4043:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4045:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4047:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4049:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4051:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4053:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4055:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4057:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4059:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4061:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4063:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4065:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4067:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4069:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4071:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4073:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4075:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4077:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4079:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4081:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4083:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4085:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4087:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4090:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4092:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4094:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4096:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4098:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4100:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4102:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4104:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4106:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4108:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4110:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4113:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4115:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4117:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4119:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4121:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4123:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4125:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4127:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4129:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4131:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4133:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4135:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4137:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4139:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4141:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4143:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4145:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4148:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4150:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4152:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4154:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4156:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4158:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4163:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4165:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4168:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4170:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4172:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4174:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4176:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4178:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4183:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4185:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4188:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4190:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4193:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4195:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4197:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4199:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4201:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4204:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4206:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4208:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4210:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4212:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4214:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4217:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4219:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4222:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4224:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4227:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4229:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4232:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4235:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4237:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4239:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4241:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4244:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4246:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4249:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4251:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4253:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4255:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4257:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4259:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4261:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4263:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4265:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4267:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4269:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4272:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4274:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4276:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4278:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4280:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4282:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4284:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4286:ld.u8: generic_read_bytes, generic_unique_read_bytes, generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4288:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4290:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4292:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4294:cvt.u16.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4296:and.b16: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4298:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4300:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4302:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4304:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4307:setp.gt.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4309:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4311:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4313:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4315:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4317:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4322:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4324:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4327:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4329:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4331:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4333:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4335:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4337:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4342:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4344:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4347:cvt.rn.f32.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4349:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4352:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4354:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4356:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4358:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4360:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4363:setp.eq.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4365:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4367:setp.ne.s16: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4369:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4371:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4373:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4376:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4378:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4381:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4383:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4386:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4388:bra.uni: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4391:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4394:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4396:setp.eq.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4398:neg.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4400:selp.f32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4403:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4405:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4407:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4409:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4411:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4413:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4415:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4417:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4419:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4421:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4423:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4425:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4427:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4429:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4431:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4433:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4435:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4437:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4439:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4441:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4443:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4445:setp.gt.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4447:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4449:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4452:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4454:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4456:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4458:st.global.v4.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4460:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4462:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4464:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4466:mad.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4468:selp.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4470:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4472:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4474:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4476:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4478:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4480:st.global.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4489:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4491:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4493:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4495:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4497:setp.eq.s64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4499:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4506:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4508:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4510:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4512:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4515:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4526:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4528:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4530:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4532:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4534:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4536:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4538:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4541:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4543:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4545:setp.ge.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4547:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4549:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4551:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4553:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4555:bra: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4557:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4559:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4561:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4563:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4565:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4567:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4569:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4571:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4573:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4575:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4577:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4579:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4581:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4583:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4585:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4587:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4589:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4591:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4593:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4595:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4597:ld.global.u16: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4599:mov.b32: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4602:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4604:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4606:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_prepare_decode_bf16__gxptx:cpp4608:st.global.v4.u32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+

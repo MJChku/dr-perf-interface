@@ -1,0 +1,11 @@
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry ds41_dp2a_probe(.param .u64 output) {
+.reg .u64 p;
+.reg .u32 r;
+ld.param.u64 p,[output];
+dp2a.lo.u32.u32 r, 0x00020001, 0x04030201, 5;
+st.global.u32 [p],r;
+ret;
+}

@@ -1,0 +1,79 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_hc_splitk"
+  1 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  block_barrier_lane_arrivals = 245760 [accepted; max error 0]
+  blocks = 128 [accepted; max error 0]
+  collective_lane_arrivals = 16384 [accepted; max error 0]
+  conversion_ops = 163840 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_barrier_generations = 247680 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 1.74162e+07 [accepted; max error 0]
+  executed_blocks = 128 [accepted; max error 0]
+  executed_lanes = 16384 [accepted; max error 0]
+  fp32_flops = 5.70163e+06 [accepted; max error 0]
+  global_read_bytes = 2.21184e+06 [accepted; max error 0]
+  global_unique_read_bytes = 2.21184e+06 [accepted; max error 0]
+  global_unique_read_line_bytes = 2.21261e+06 [accepted; max error 0]
+  global_unique_read_lines = 17286 [accepted; max error 0]
+  global_unique_read_sector_bytes = 2.21235e+06 [accepted; max error 0]
+  global_unique_read_sectors = 69136 [accepted; max error 0]
+  global_unique_write_bytes = 36864 [accepted; max error 0]
+  global_unique_write_line_bytes = 47616 [accepted; max error 0]
+  global_unique_write_lines = 372 [accepted; max error 0]
+  global_unique_write_sector_bytes = 47616 [accepted; max error 0]
+  global_unique_write_sectors = 1488 [accepted; max error 0]
+  global_write_bytes = 36864 [accepted; max error 0]
+  integer_ops = 2.8459e+07 [accepted; max error 0]
+  launched_lanes = 16384 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 983040 [accepted; max error 0]
+  ptx_lane_instructions = 7.25289e+07 [accepted; max error 0]
+  shared_read_bytes = 1.75636e+07 [accepted; max error 0]
+  shared_write_bytes = 5.52141e+06 [accepted; max error 0]
+  static_shared_bytes_per_launch = 73728 [accepted; max error 0]
+  sum_block_lane_sequence_span = 568960 [accepted; max error 0]
+  sum_block_max_lane_bytes = 228352 [accepted; max error 0]
+  sum_block_max_lane_flops = 2.01062e+06 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 4445 [accepted; max error 0]
+  tensor_float_flops = 2.51658e+08 [accepted; max error 0]
+  warps = 512 [accepted; max error 0]
+  PCVs not independently identifiable: arg_as, arg_bs, arg_cs, arg_flags, arg_k, arg_m, arg_n, arg_splits, blocks, launched_lanes
+
+REGION "ds41_hc_splitk_reduce"
+  1 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 2664 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 128 [accepted; max error 0]
+  fp32_flops = 9216 [accepted; max error 0]
+  global_read_bytes = 36864 [accepted; max error 0]
+  global_unique_read_bytes = 36864 [accepted; max error 0]
+  global_unique_read_line_bytes = 47616 [accepted; max error 0]
+  global_unique_read_lines = 372 [accepted; max error 0]
+  global_unique_read_sector_bytes = 47616 [accepted; max error 0]
+  global_unique_read_sectors = 1488 [accepted; max error 0]
+  global_unique_write_bytes = 288 [accepted; max error 0]
+  global_unique_write_line_bytes = 512 [accepted; max error 0]
+  global_unique_write_lines = 4 [accepted; max error 0]
+  global_unique_write_sector_bytes = 352 [accepted; max error 0]
+  global_unique_write_sectors = 11 [accepted; max error 0]
+  global_write_bytes = 288 [accepted; max error 0]
+  integer_ops = 26592 [accepted; max error 0]
+  launched_lanes = 128 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 4608 [accepted; max error 0]
+  ptx_lane_instructions = 54536 [accepted; max error 0]
+  sum_block_lane_sequence_span = 745 [accepted; max error 0]
+  sum_block_max_lane_bytes = 552 [accepted; max error 0]
+  sum_block_max_lane_flops = 128 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 745 [accepted; max error 0]
+  warps = 4 [accepted; max error 0]
+  PCVs not independently identifiable: arg_m, arg_n, arg_os, arg_ps, arg_splits, blocks, launched_lanes
+

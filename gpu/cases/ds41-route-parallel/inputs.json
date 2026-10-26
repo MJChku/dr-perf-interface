@@ -1,0 +1,62 @@
+{
+  "pcvs": "N=8/32/128,K=64/512/1280,R=0/1/3/6,M1 plus invalid-ID guard case; route_groups and route tile products.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "control",
+      "ptx": "control.ptx",
+      "defines": [
+        "DS41_DRPERF_FOCUSED"
+      ],
+      "grid_env": [
+        {
+          "DS41_TC_PROBE_N": "8"
+        },
+        {
+          "DS41_TC_PROBE_N": "32"
+        },
+        {
+          "DS41_TC_PROBE_N": "128"
+        }
+      ]
+    },
+    {
+      "name": "serial",
+      "ptx": "serial.ptx",
+      "defines": [
+        "DS41_DRPERF_FOCUSED",
+        "DS41_ROUTED_FUSED"
+      ],
+      "grid_env": [
+        {
+          "DS41_TC_PROBE_N": "8"
+        },
+        {
+          "DS41_TC_PROBE_N": "32"
+        },
+        {
+          "DS41_TC_PROBE_N": "128"
+        }
+      ]
+    },
+    {
+      "name": "parallel",
+      "ptx": "parallel.ptx",
+      "defines": [
+        "DS41_DRPERF_FOCUSED",
+        "DS41_ROUTED_PARALLEL"
+      ],
+      "grid_env": [
+        {
+          "DS41_TC_PROBE_N": "8"
+        },
+        {
+          "DS41_TC_PROBE_N": "32"
+        },
+        {
+          "DS41_TC_PROBE_N": "128"
+        }
+      ]
+    }
+  ]
+}

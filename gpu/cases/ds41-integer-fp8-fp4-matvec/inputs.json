@@ -1,0 +1,13 @@
+{
+  "pcvs": "M,N,K,weight_fp4,activation_fp4,minimum_weight_bytes,row_weight_payload_bytes,useful_fmas.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": [
+        "DS41_MATVEC"
+      ]
+    }
+  ]
+}

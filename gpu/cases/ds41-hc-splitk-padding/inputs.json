@@ -1,0 +1,14 @@
+{
+  "pcvs": "Observed M3,N24,K20480,split128; proposed broader grid M,N,K,split_k,padded_M,padded_N.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "baseline",
+      "ptx": "kernel.ptx",
+      "defines": [
+        "DS41_HC_SPLITK_ONLY",
+        "DS41_DRPERF_HC_SLICE"
+      ]
+    }
+  ]
+}

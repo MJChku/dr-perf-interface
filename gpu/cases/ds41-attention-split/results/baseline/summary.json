@@ -1,0 +1,3409 @@
+{
+  "validity": "complete",
+  "semantics": {
+    "work": "dynamic PTX operations, separate from CPU instructions",
+    "memory": "requested PTX bytes; unresolved generic addresses remain generic; not cache transactions or HBM traffic",
+    "parallelism": "logical launch geometry, per-block maximum lane work, and lane-sequence span with block-barrier joins; no GPU cycle estimate",
+    "spanLimitations": "lane instruction order serializes independent instructions; warp-exchange joins and cross-block dependency edges are not modeled",
+    "diagnostics": "emulator_* counters describe execution machinery, not GPU barriers; block_barrier_lane_arrivals and collective_lane_arrivals come from PTX",
+    "composition": "host and device region work is exclusive; device regions own the innermost annotated lane work; launches[].metrics are inclusive totals",
+    "deviceRegions": "lane scopes retain individual invocations and PCVs; warp/block scopes require complete physical membership and identical PCVs; no implicit synchronization; scoped span is not inferred",
+    "annotationOverhead": "marker calls and marker bodies are not work; ordinary PTX for PCV expressions and parameter staging is counted; annotations may affect compiler optimization",
+    "time": "no latency, occupancy, throughput or hardware calibration is inferred"
+  },
+  "provenance": {
+    "command": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-attention-split/.work/baseline-oracle",
+      "/home/ubuntu/drperf/gpu/cases/ds41-attention-split/.work/baseline.so"
+    ],
+    "rawCaptures": [
+      "/home/ubuntu/drperf/gpu/cases/ds41-attention-split/results/baseline/capture/capture-b0tftdr_/gpu.2560643.jsonl"
+    ],
+    "runtimeSha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+    "vendoredGX": "cc6dfacbe333c7a5892c1247ad2d7f9c9f464d68"
+  },
+  "regions": [
+    {
+      "name": "ds41_attention_split_finish",
+      "pcvs": [
+        "blocks",
+        "context_keys",
+        "dim",
+        "heads",
+        "launched_lanes",
+        "real_rows",
+        "selected_keys",
+        "selected_pair_dim",
+        "selected_tiles",
+        "valid_pair_dim",
+        "valid_pairs",
+        "valid_query_keys"
+      ],
+      "stateCount": 2,
+      "invocations": 2,
+      "singleState": false,
+      "fits": {
+        "blocks": {
+          "coefficients": {},
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "selected_keys": 64
+          },
+          "constant": 40960,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 45056,
+          "observedMax": 49152,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {},
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {},
+          "constant": 4096,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "selected_keys": 128
+          },
+          "constant": 4096,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 12288,
+          "observedMax": 20480,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "selected_keys": 512
+          },
+          "constant": 16384,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 49152,
+          "observedMax": 81920,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "selected_keys": 256.5
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 16448,
+          "observedMax": 32864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "selected_keys": 256
+          },
+          "constant": 128,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16512,
+          "observedMax": 32896,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "selected_keys": 2
+          },
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 129,
+          "observedMax": 257,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "selected_keys": 256.5
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 16448,
+          "observedMax": 32864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "selected_keys": 8.015625
+          },
+          "constant": 1,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 514,
+          "observedMax": 1027,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {},
+          "constant": 8192,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8192,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {},
+          "constant": 8320,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8320,
+          "observedMax": 8320,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {},
+          "constant": 65,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 65,
+          "observedMax": 65,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {},
+          "constant": 8192,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8192,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {},
+          "constant": 256,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {},
+          "constant": 8192,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8192,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "selected_keys": 384
+          },
+          "constant": 143360,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 167936,
+          "observedMax": 192512,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {},
+          "constant": 4096,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {},
+          "constant": 180224,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 180224,
+          "observedMax": 180224,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "selected_keys": 768
+          },
+          "constant": 311296,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 360448,
+          "observedMax": 409600,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "selected_keys": 6
+          },
+          "constant": 2432,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2816,
+          "observedMax": 3200,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "selected_keys": 4
+          },
+          "constant": 1600,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1856,
+          "observedMax": 2112,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {
+            "selected_keys": 1
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 96,
+          "observedMax": 160,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {
+            "selected_keys": 0.1875
+          },
+          "constant": 76,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 88,
+          "observedMax": 100,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "warps": {
+          "coefficients": {},
+          "constant": 128,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "blocks": 32,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 4096,
+            "real_rows": 1,
+            "selected_keys": 64,
+            "selected_pair_dim": 262144,
+            "selected_tiles": 1,
+            "valid_pair_dim": 237568,
+            "valid_pairs": 464,
+            "valid_query_keys": 58
+          },
+          "metrics": {
+            "blocks": 32,
+            "conversion_ops": 45056,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 32,
+            "executed_lanes": 4096,
+            "fp32_flops": 12288,
+            "global_read_bytes": 49152,
+            "global_unique_read_bytes": 16448,
+            "global_unique_read_line_bytes": 16512,
+            "global_unique_read_lines": 129,
+            "global_unique_read_sector_bytes": 16448,
+            "global_unique_read_sectors": 514,
+            "global_unique_write_bytes": 8192,
+            "global_unique_write_line_bytes": 8320,
+            "global_unique_write_lines": 65,
+            "global_unique_write_sector_bytes": 8192,
+            "global_unique_write_sectors": 256,
+            "global_write_bytes": 8192,
+            "integer_ops": 167936,
+            "launched_lanes": 4096,
+            "launches": 1,
+            "param_read_bytes": 180224,
+            "ptx_lane_instructions": 360448,
+            "sum_block_lane_sequence_span": 2816,
+            "sum_block_max_lane_bytes": 1856,
+            "sum_block_max_lane_flops": 96,
+            "sum_launch_max_block_lane_sequence_span": 88,
+            "warps": 128
+          }
+        },
+        {
+          "pcvs": {
+            "blocks": 32,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 4096,
+            "real_rows": 1,
+            "selected_keys": 128,
+            "selected_pair_dim": 524288,
+            "selected_tiles": 2,
+            "valid_pair_dim": 475136,
+            "valid_pairs": 928,
+            "valid_query_keys": 116
+          },
+          "metrics": {
+            "blocks": 32,
+            "conversion_ops": 49152,
+            "dynamic_shared_bytes_per_launch": 0,
+            "executed_blocks": 32,
+            "executed_lanes": 4096,
+            "fp32_flops": 20480,
+            "global_read_bytes": 81920,
+            "global_unique_read_bytes": 32864,
+            "global_unique_read_line_bytes": 32896,
+            "global_unique_read_lines": 257,
+            "global_unique_read_sector_bytes": 32864,
+            "global_unique_read_sectors": 1027,
+            "global_unique_write_bytes": 8192,
+            "global_unique_write_line_bytes": 8320,
+            "global_unique_write_lines": 65,
+            "global_unique_write_sector_bytes": 8192,
+            "global_unique_write_sectors": 256,
+            "global_write_bytes": 8192,
+            "integer_ops": 192512,
+            "launched_lanes": 4096,
+            "launches": 1,
+            "param_read_bytes": 180224,
+            "ptx_lane_instructions": 409600,
+            "sum_block_lane_sequence_span": 3200,
+            "sum_block_max_lane_bytes": 2112,
+            "sum_block_max_lane_flops": 160,
+            "sum_launch_max_block_lane_sequence_span": 100,
+            "warps": 128
+          }
+        }
+      ]
+    },
+    {
+      "name": "ds41_attention_split_probabilities",
+      "pcvs": [
+        "blocks",
+        "context_keys",
+        "dim",
+        "heads",
+        "launched_lanes",
+        "real_rows",
+        "selected_keys",
+        "selected_pair_dim",
+        "selected_tiles",
+        "valid_pair_dim",
+        "valid_pairs",
+        "valid_query_keys"
+      ],
+      "stateCount": 2,
+      "invocations": 2,
+      "singleState": false,
+      "fits": {
+        "blocks": {
+          "coefficients": {},
+          "constant": 8,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8,
+          "observedMax": 8,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "collective_lane_arrivals": {
+          "coefficients": {
+            "selected_keys": 48
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 3072,
+          "observedMax": 6144,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "selected_keys": 16
+          },
+          "constant": 808,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1832,
+          "observedMax": 2856,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "emulator_rendezvous_lane_arrivals": {
+          "coefficients": {
+            "selected_keys": 48
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 3072,
+          "observedMax": 6144,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {},
+          "constant": 8,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8,
+          "observedMax": 8,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {},
+          "constant": 256,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "selected_keys": 192
+          },
+          "constant": 96,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 12384,
+          "observedMax": 24672,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "selected_keys": 32
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2080,
+          "observedMax": 4128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "selected_keys": 32
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2080,
+          "observedMax": 4128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "selected_keys": 32
+          },
+          "constant": 128,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2176,
+          "observedMax": 4224,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "selected_keys": 0.25
+          },
+          "constant": 1,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 17,
+          "observedMax": 33,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "selected_keys": 32
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2080,
+          "observedMax": 4128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "selected_keys": 1
+          },
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 65,
+          "observedMax": 129,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {
+            "selected_keys": 16.5
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 1088,
+          "observedMax": 2144,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {
+            "selected_keys": 16
+          },
+          "constant": 256,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1280,
+          "observedMax": 2304,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {
+            "selected_keys": 0.125
+          },
+          "constant": 2,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 10,
+          "observedMax": 18,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {
+            "selected_keys": 16.5
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 1088,
+          "observedMax": 2144,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {
+            "selected_keys": 0.515625
+          },
+          "constant": 1,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 34,
+          "observedMax": 67,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "selected_keys": 16.5
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 1088,
+          "observedMax": 2144,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "selected_keys": 116
+          },
+          "constant": 2656,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 10080,
+          "observedMax": 17504,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {},
+          "constant": 256,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {},
+          "constant": 9376,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 9376,
+          "observedMax": 9376,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "selected_keys": 604
+          },
+          "constant": 9552,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 48208,
+          "observedMax": 86864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "selected_keys": 12
+          },
+          "constant": 8,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 776,
+          "observedMax": 1544,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "selected_keys": 18.875
+          },
+          "constant": 624,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 1832,
+          "observedMax": 3040,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "selected_keys": 2
+          },
+          "constant": 512,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 640,
+          "observedMax": 768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {
+            "selected_keys": 6
+          },
+          "constant": 96,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 480,
+          "observedMax": 864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {
+            "selected_keys": 2.359375
+          },
+          "constant": 78,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 229,
+          "observedMax": 380,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "warps": {
+          "coefficients": {},
+          "constant": 8,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8,
+          "observedMax": 8,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "blocks",
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "blocks": 8,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 256,
+            "real_rows": 1,
+            "selected_keys": 64,
+            "selected_pair_dim": 262144,
+            "selected_tiles": 1,
+            "valid_pair_dim": 237568,
+            "valid_pairs": 464,
+            "valid_query_keys": 58
+          },
+          "metrics": {
+            "blocks": 8,
+            "collective_lane_arrivals": 3072,
+            "conversion_ops": 1832,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 3072,
+            "executed_blocks": 8,
+            "executed_lanes": 256,
+            "fp32_flops": 12384,
+            "global_read_bytes": 2080,
+            "global_unique_read_bytes": 2080,
+            "global_unique_read_line_bytes": 2176,
+            "global_unique_read_lines": 17,
+            "global_unique_read_sector_bytes": 2080,
+            "global_unique_read_sectors": 65,
+            "global_unique_write_bytes": 1088,
+            "global_unique_write_line_bytes": 1280,
+            "global_unique_write_lines": 10,
+            "global_unique_write_sector_bytes": 1088,
+            "global_unique_write_sectors": 34,
+            "global_write_bytes": 1088,
+            "integer_ops": 10080,
+            "launched_lanes": 256,
+            "launches": 1,
+            "param_read_bytes": 9376,
+            "ptx_lane_instructions": 48208,
+            "special_function_ops": 776,
+            "sum_block_lane_sequence_span": 1832,
+            "sum_block_max_lane_bytes": 640,
+            "sum_block_max_lane_flops": 480,
+            "sum_launch_max_block_lane_sequence_span": 229,
+            "warps": 8
+          }
+        },
+        {
+          "pcvs": {
+            "blocks": 8,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 256,
+            "real_rows": 1,
+            "selected_keys": 128,
+            "selected_pair_dim": 524288,
+            "selected_tiles": 2,
+            "valid_pair_dim": 475136,
+            "valid_pairs": 928,
+            "valid_query_keys": 116
+          },
+          "metrics": {
+            "blocks": 8,
+            "collective_lane_arrivals": 6144,
+            "conversion_ops": 2856,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 6144,
+            "executed_blocks": 8,
+            "executed_lanes": 256,
+            "fp32_flops": 24672,
+            "global_read_bytes": 4128,
+            "global_unique_read_bytes": 4128,
+            "global_unique_read_line_bytes": 4224,
+            "global_unique_read_lines": 33,
+            "global_unique_read_sector_bytes": 4128,
+            "global_unique_read_sectors": 129,
+            "global_unique_write_bytes": 2144,
+            "global_unique_write_line_bytes": 2304,
+            "global_unique_write_lines": 18,
+            "global_unique_write_sector_bytes": 2144,
+            "global_unique_write_sectors": 67,
+            "global_write_bytes": 2144,
+            "integer_ops": 17504,
+            "launched_lanes": 256,
+            "launches": 1,
+            "param_read_bytes": 9376,
+            "ptx_lane_instructions": 86864,
+            "special_function_ops": 1544,
+            "sum_block_lane_sequence_span": 3040,
+            "sum_block_max_lane_bytes": 768,
+            "sum_block_max_lane_flops": 864,
+            "sum_launch_max_block_lane_sequence_span": 380,
+            "warps": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "ds41_attention_split_scores",
+      "pcvs": [
+        "blocks",
+        "context_keys",
+        "dim",
+        "heads",
+        "launched_lanes",
+        "real_rows",
+        "selected_keys",
+        "selected_pair_dim",
+        "selected_tiles",
+        "valid_pair_dim",
+        "valid_pairs",
+        "valid_query_keys"
+      ],
+      "stateCount": 2,
+      "invocations": 2,
+      "singleState": false,
+      "fits": {
+        "blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "collective_lane_arrivals": {
+          "coefficients": {
+            "blocks": 580
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 74240,
+          "observedMax": 148480,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "blocks": 13492
+          },
+          "constant": -69632,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1657344,
+          "observedMax": 3384320,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "emulator_rendezvous_lane_arrivals": {
+          "coefficients": {
+            "blocks": 580
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 74240,
+          "observedMax": 148480,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "blocks": 6152
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 787456,
+          "observedMax": 1574912,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "blocks": 7936
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1015808,
+          "observedMax": 2031616,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "blocks": 132.5
+          },
+          "constant": 12272,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 29232,
+          "observedMax": 46192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "blocks": 246
+          },
+          "constant": 12544,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 44032,
+          "observedMax": 75520,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "blocks": 1.921875
+          },
+          "constant": 98,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 344,
+          "observedMax": 590,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "blocks": 160.5
+          },
+          "constant": 12288,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 32832,
+          "observedMax": 53376,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "blocks": 5.015625
+          },
+          "constant": 384,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 1026,
+          "observedMax": 1668,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {
+            "blocks": 16
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2048,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {
+            "blocks": 16
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2048,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {
+            "blocks": 0.125
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {
+            "blocks": 16
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2048,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {
+            "blocks": 0.5
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 64,
+          "observedMax": 128,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "blocks": 16
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2048,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "blocks": 56432
+          },
+          "constant": -696320,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 6526976,
+          "observedMax": 13750272,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {
+            "blocks": 16384
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2097152,
+          "observedMax": 4194304,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "blocks": 118708
+          },
+          "constant": -835584,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 14359040,
+          "observedMax": 29553664,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "blocks": 1033
+          },
+          "constant": -6144,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 126080,
+          "observedMax": 258304,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "blocks": 200
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 25600,
+          "observedMax": 51200,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {
+            "blocks": 54
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 6912,
+          "observedMax": 13824,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {},
+          "constant": 1033,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1033,
+          "observedMax": 1033,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "warps": {
+          "coefficients": {
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 512,
+          "observedMax": 1024,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "blocks": 128,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 16384,
+            "real_rows": 1,
+            "selected_keys": 64,
+            "selected_pair_dim": 262144,
+            "selected_tiles": 1,
+            "valid_pair_dim": 237568,
+            "valid_pairs": 464,
+            "valid_query_keys": 58
+          },
+          "metrics": {
+            "blocks": 128,
+            "collective_lane_arrivals": 74240,
+            "conversion_ops": 1657344,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 74240,
+            "executed_blocks": 128,
+            "executed_lanes": 16384,
+            "fp32_flops": 787456,
+            "global_read_bytes": 1015808,
+            "global_unique_read_bytes": 29232,
+            "global_unique_read_line_bytes": 44032,
+            "global_unique_read_lines": 344,
+            "global_unique_read_sector_bytes": 32832,
+            "global_unique_read_sectors": 1026,
+            "global_unique_write_bytes": 2048,
+            "global_unique_write_line_bytes": 2048,
+            "global_unique_write_lines": 16,
+            "global_unique_write_sector_bytes": 2048,
+            "global_unique_write_sectors": 64,
+            "global_write_bytes": 2048,
+            "integer_ops": 6526976,
+            "launched_lanes": 16384,
+            "launches": 1,
+            "param_read_bytes": 2097152,
+            "ptx_lane_instructions": 14359040,
+            "sum_block_lane_sequence_span": 126080,
+            "sum_block_max_lane_bytes": 25600,
+            "sum_block_max_lane_flops": 6912,
+            "sum_launch_max_block_lane_sequence_span": 1033,
+            "warps": 512
+          }
+        },
+        {
+          "pcvs": {
+            "blocks": 256,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 32768,
+            "real_rows": 1,
+            "selected_keys": 128,
+            "selected_pair_dim": 524288,
+            "selected_tiles": 2,
+            "valid_pair_dim": 475136,
+            "valid_pairs": 928,
+            "valid_query_keys": 116
+          },
+          "metrics": {
+            "blocks": 256,
+            "collective_lane_arrivals": 148480,
+            "conversion_ops": 3384320,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_rendezvous_lane_arrivals": 148480,
+            "executed_blocks": 256,
+            "executed_lanes": 32768,
+            "fp32_flops": 1574912,
+            "global_read_bytes": 2031616,
+            "global_unique_read_bytes": 46192,
+            "global_unique_read_line_bytes": 75520,
+            "global_unique_read_lines": 590,
+            "global_unique_read_sector_bytes": 53376,
+            "global_unique_read_sectors": 1668,
+            "global_unique_write_bytes": 4096,
+            "global_unique_write_line_bytes": 4096,
+            "global_unique_write_lines": 32,
+            "global_unique_write_sector_bytes": 4096,
+            "global_unique_write_sectors": 128,
+            "global_write_bytes": 4096,
+            "integer_ops": 13750272,
+            "launched_lanes": 32768,
+            "launches": 1,
+            "param_read_bytes": 4194304,
+            "ptx_lane_instructions": 29553664,
+            "sum_block_lane_sequence_span": 258304,
+            "sum_block_max_lane_bytes": 51200,
+            "sum_block_max_lane_flops": 13824,
+            "sum_launch_max_block_lane_sequence_span": 1033,
+            "warps": 1024
+          }
+        }
+      ]
+    },
+    {
+      "name": "ds41_attention_split_values",
+      "pcvs": [
+        "blocks",
+        "context_keys",
+        "dim",
+        "heads",
+        "launched_lanes",
+        "real_rows",
+        "selected_keys",
+        "selected_pair_dim",
+        "selected_tiles",
+        "valid_pair_dim",
+        "valid_pairs",
+        "valid_query_keys"
+      ],
+      "stateCount": 2,
+      "invocations": 2,
+      "singleState": false,
+      "fits": {
+        "block_barrier_lane_arrivals": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 64,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "conversion_ops": {
+          "coefficients": {
+            "blocks": 29120
+          },
+          "constant": 69632,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1001472,
+          "observedMax": 1933312,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "emulator_barrier_generations": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 64,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "emulator_rendezvous_lane_arrivals": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_blocks": {
+          "coefficients": {
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 64,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "executed_lanes": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "blocks": 23808
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 761856,
+          "observedMax": 1523712,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_read_bytes": {
+          "coefficients": {
+            "blocks": 31488
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1007616,
+          "observedMax": 2015232,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_bytes": {
+          "coefficients": {
+            "blocks": 562
+          },
+          "constant": 4080,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 22064,
+          "observedMax": 40048,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_line_bytes": {
+          "coefficients": {
+            "blocks": 1016
+          },
+          "constant": 4352,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 36864,
+          "observedMax": 69376,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_lines": {
+          "coefficients": {
+            "blocks": 7.9375
+          },
+          "constant": 34,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 288,
+          "observedMax": 542,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sector_bytes": {
+          "coefficients": {
+            "blocks": 674
+          },
+          "constant": 4096,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 25664,
+          "observedMax": 47232,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_read_sectors": {
+          "coefficients": {
+            "blocks": 21.0625
+          },
+          "constant": 128,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 802,
+          "observedMax": 1476,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_bytes": {
+          "coefficients": {
+            "blocks": 512
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_line_bytes": {
+          "coefficients": {
+            "blocks": 512
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_lines": {
+          "coefficients": {
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sector_bytes": {
+          "coefficients": {
+            "blocks": 512
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_unique_write_sectors": {
+          "coefficients": {
+            "blocks": 16
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 512,
+          "observedMax": 1024,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "blocks": 512
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16384,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "integer_ops": {
+          "coefficients": {
+            "blocks": 204730
+          },
+          "constant": -417792,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 6133568,
+          "observedMax": 12684928,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launched_lanes": {
+          "coefficients": {
+            "blocks": 128
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 4096,
+          "observedMax": 8192,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "param_read_bytes": {
+          "coefficients": {
+            "blocks": 14336
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 458752,
+          "observedMax": 917504,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "blocks": 421672
+          },
+          "constant": -348160,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 13145344,
+          "observedMax": 26638848,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "shared_read_bytes": {
+          "coefficients": {
+            "blocks": 32768
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1048576,
+          "observedMax": 2097152,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "shared_write_bytes": {
+          "coefficients": {
+            "blocks": 256
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 8192,
+          "observedMax": 16384,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "static_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 256,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {
+            "blocks": 3306
+          },
+          "constant": -2720,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 103072,
+          "observedMax": 208864,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {
+            "blocks": 624
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 19968,
+          "observedMax": 39936,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {
+            "blocks": 186
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 5952,
+          "observedMax": 11904,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {
+            "blocks": 2.65625
+          },
+          "constant": 3136,
+          "maxAbsoluteError": 0.0,
+          "accepted": true,
+          "observedMin": 3221,
+          "observedMax": 3306,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        },
+        "warps": {
+          "coefficients": {
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 256,
+          "unexplainedMean": 0,
+          "dependentPCVs": [
+            "context_keys",
+            "dim",
+            "heads",
+            "launched_lanes",
+            "real_rows",
+            "selected_keys",
+            "selected_pair_dim",
+            "selected_tiles",
+            "valid_pair_dim",
+            "valid_pairs",
+            "valid_query_keys"
+          ]
+        }
+      },
+      "observations": [
+        {
+          "pcvs": {
+            "blocks": 32,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 4096,
+            "real_rows": 1,
+            "selected_keys": 64,
+            "selected_pair_dim": 262144,
+            "selected_tiles": 1,
+            "valid_pair_dim": 237568,
+            "valid_pairs": 464,
+            "valid_query_keys": 58
+          },
+          "metrics": {
+            "block_barrier_lane_arrivals": 4096,
+            "blocks": 32,
+            "conversion_ops": 1001472,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_barrier_generations": 32,
+            "emulator_rendezvous_lane_arrivals": 4096,
+            "executed_blocks": 32,
+            "executed_lanes": 4096,
+            "fp32_flops": 761856,
+            "global_read_bytes": 1007616,
+            "global_unique_read_bytes": 22064,
+            "global_unique_read_line_bytes": 36864,
+            "global_unique_read_lines": 288,
+            "global_unique_read_sector_bytes": 25664,
+            "global_unique_read_sectors": 802,
+            "global_unique_write_bytes": 16384,
+            "global_unique_write_line_bytes": 16384,
+            "global_unique_write_lines": 128,
+            "global_unique_write_sector_bytes": 16384,
+            "global_unique_write_sectors": 512,
+            "global_write_bytes": 16384,
+            "integer_ops": 6133568,
+            "launched_lanes": 4096,
+            "launches": 1,
+            "param_read_bytes": 458752,
+            "ptx_lane_instructions": 13145344,
+            "shared_read_bytes": 1048576,
+            "shared_write_bytes": 8192,
+            "static_shared_bytes_per_launch": 256,
+            "sum_block_lane_sequence_span": 103072,
+            "sum_block_max_lane_bytes": 19968,
+            "sum_block_max_lane_flops": 5952,
+            "sum_launch_max_block_lane_sequence_span": 3221,
+            "warps": 128
+          }
+        },
+        {
+          "pcvs": {
+            "blocks": 64,
+            "context_keys": 1152,
+            "dim": 512,
+            "heads": 8,
+            "launched_lanes": 8192,
+            "real_rows": 1,
+            "selected_keys": 128,
+            "selected_pair_dim": 524288,
+            "selected_tiles": 2,
+            "valid_pair_dim": 475136,
+            "valid_pairs": 928,
+            "valid_query_keys": 116
+          },
+          "metrics": {
+            "block_barrier_lane_arrivals": 8192,
+            "blocks": 64,
+            "conversion_ops": 1933312,
+            "dynamic_shared_bytes_per_launch": 0,
+            "emulator_barrier_generations": 64,
+            "emulator_rendezvous_lane_arrivals": 8192,
+            "executed_blocks": 64,
+            "executed_lanes": 8192,
+            "fp32_flops": 1523712,
+            "global_read_bytes": 2015232,
+            "global_unique_read_bytes": 40048,
+            "global_unique_read_line_bytes": 69376,
+            "global_unique_read_lines": 542,
+            "global_unique_read_sector_bytes": 47232,
+            "global_unique_read_sectors": 1476,
+            "global_unique_write_bytes": 32768,
+            "global_unique_write_line_bytes": 32768,
+            "global_unique_write_lines": 256,
+            "global_unique_write_sector_bytes": 32768,
+            "global_unique_write_sectors": 1024,
+            "global_write_bytes": 32768,
+            "integer_ops": 12684928,
+            "launched_lanes": 8192,
+            "launches": 1,
+            "param_read_bytes": 917504,
+            "ptx_lane_instructions": 26638848,
+            "shared_read_bytes": 2097152,
+            "shared_write_bytes": 16384,
+            "static_shared_bytes_per_launch": 256,
+            "sum_block_lane_sequence_span": 208864,
+            "sum_block_max_lane_bytes": 39936,
+            "sum_block_max_lane_flops": 11904,
+            "sum_launch_max_block_lane_sequence_span": 3306,
+            "warps": 256
+          }
+        }
+      ]
+    }
+  ]
+}

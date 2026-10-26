@@ -183,8 +183,9 @@ CASES = [
   fix_status='Priority variant merge-ready (token-exact).',
   timing=('b114 B300 harness: routing 23.0 -> 17.0 us/call (routed first) / 16.6 us (priority); step -0.22..-0.24 ms '
           '(routed first) and -0.26..-0.32 ms (priority) uniform, -0.24..-0.32 ms hot; the deprioritized shared down GEMM '
-          'slows 5.3 -> 24.9 us off the critical path. The rest of the gap to vLLM 4.5 us is likely PDL early launch '
-          '(the kernel waits on its predecessor inside its CUPTI interval).'),
+          'slows 5.3 -> 24.9 us off the critical path. CUPTI interval analysis: routing launches ~5 us before its '
+          'producer moe_front_prenorm ends (PDL); measured from the producer end it takes 14.4 us (control) -> 8.8 us '
+          '(either fix), still ~4.3 us over vLLM while sharing SMs with already-running GEMM CTAs.'),
   receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b54', PROF+'/glm53-gap-b114'],
   files=[EX+'/moe_routing/kernel.cu', EX+'/moe_routing/driver.cu', EX+'/moe_routing/routing_block_kernel.cuh'],
   reproduce=['see gpu/examples/moe_routing (results/run1); latency: python3 gpu/tools/latency_report.py results/run1'],

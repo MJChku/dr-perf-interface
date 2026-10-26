@@ -1,0 +1,146 @@
+{
+  "case": "ds41-tc-matvec-partials",
+  "status": "pass",
+  "toolchain_commit": "c8ca439f145c015be904b8a459ed0002b6f76394",
+  "toolchain_runtime_sha256": "7fdd0e73a3f7b33cb6834f64e88ece8e13b0daab064ec5b205d62533e8654699",
+  "variants": [
+    {
+      "name": "control",
+      "status": "pass",
+      "numerical_status": "pass"
+    },
+    {
+      "name": "fused",
+      "status": "pass",
+      "numerical_status": "pass"
+    }
+  ],
+  "interface_checks": [
+    {
+      "expectation": {
+        "region": "ds41_matvec_tc_partials",
+        "metric": "tensor_float_flops",
+        "pcv": "tile_groups",
+        "factor": 8192
+      },
+      "observations": 44,
+      "status": "pass"
+    },
+    {
+      "expectation": {
+        "region": "ds41_matvec_tc_fused",
+        "metric": "tensor_float_flops",
+        "pcv": "tile_groups",
+        "factor": 8192
+      },
+      "observations": 44,
+      "status": "pass"
+    }
+  ],
+  "physical_gpu_used": false,
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/control.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/control.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_MATVEC_TC",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/control-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/results/control/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/control-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/control.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "translate",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/fused.ptx",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/fused.so"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-DDS41_DRPERF_GPU",
+        "-I/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/support",
+        "-I/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/include",
+        "-DDS41_MATVEC_FUSED",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/driver.cpp",
+        "-L/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/gpu/build",
+        "-o",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/fused-oracle"
+      ],
+      "environment": {}
+    },
+    {
+      "argv": [
+        "/home/ubuntu/gen-deepseek41/build/drperf-gpu-toolchain/bin/drperf",
+        "--gpu",
+        "--timeout",
+        "300",
+        "--output",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/results/fused/capture",
+        "--",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/fused-oracle",
+        "/home/ubuntu/drperf/gpu/cases/ds41-tc-matvec-partials/.work/fused.so"
+      ],
+      "environment": {}
+    }
+  ],
+  "structural_interface_checks": [
+    {
+      "interface": "Control tensor work8192*tile_groups; global FP32 partial writes4*outputs*k_groups",
+      "checked_observations": 44,
+      "status": "pass"
+    },
+    {
+      "interface": "Fused tensor coefficient unchanged, global output2*outputs; shared read/write4*outputs*k_groups; separate finish eliminated",
+      "checked_observations": 44,
+      "status": "pass"
+    },
+    {
+      "interface": "Pinned observed-state resource interfaces reproduce; requested/precision/span/geometry counts, excluding address-footprint placement",
+      "checked_observations": 132,
+      "status": "pass"
+    }
+  ]
+}

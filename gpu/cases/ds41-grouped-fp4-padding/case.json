@@ -1,0 +1,57 @@
+{
+  "case": "ds41-grouped-fp4-padding",
+  "kernel": "Grouped FP4 M32/M16 tail",
+  "label": "QUANTIFIED",
+  "role": "Prefill groups real token rows by expert before FP4 GEMMs.",
+  "pcvs": "real_rows,padded_rows,active_experts,capacity_rows=256,N128,K64,tiles16,tiles32,active_tiles; eight expert histograms in inputs.json and driver.",
+  "finding": "tensor_flops=16384*padded_rows, zero real-row term at fixed N/K. M32\u2192M16 tail packing: real53 padded128\u219296 (\u221225%); real26 padded128\u219264 (\u221250%); full tiles unchanged. Same8 launched CTAs; no added kernel launch.",
+  "fix_status": "Custom full32/tail16 wrapper passes oracle; host production packing remains32; production preflight blocked on dp2a, so disabled in serving.",
+  "variants": [
+    {
+      "name": "control",
+      "ptx": "control.ptx",
+      "defines": [],
+      "env": {
+        "DS41_GROUP_TILE": "32"
+      }
+    },
+    {
+      "name": "tight",
+      "ptx": "tight.ptx",
+      "defines": [],
+      "env": {
+        "DS41_GROUP_TILE": "16"
+      }
+    }
+  ],
+  "receipts": [
+    "eval/drperf-gpu/grouped-tight-control32",
+    "eval/drperf-gpu/grouped-tight-tight16",
+    "eval/grouped-tight-source.json"
+  ],
+  "timing": "No H100 timing: exact production control fails CPU coverage preflight on dp2a.lo.u32.u32; it was excluded from the native batch.",
+  "expect": [
+    {
+      "region": "ds41_library_grouped_fp4",
+      "metric": "tensor_float_flops",
+      "pcv": "padded_rows",
+      "factor": 16384
+    }
+  ],
+  "detail": "",
+  "proposed": false,
+  "input_hashes": {
+    "check_interfaces.py": "baca6825f9a379b9d191f220a948fdef575a584bac83e10a6af01f84ed9a07eb",
+    "control.ptx": "57ff87a2fa8d7fc31e19666cad1b8518c5994d028592fd54336d9b1ef9c402d5",
+    "driver.cpp": "4b90b04afca73e0f9ec7e67d61b21f4083b34a922766b02791ede0f6ed8d385e",
+    "expected_interfaces.json": "9d4da8cec3b4522b302e52f12c62b194b8b6b7ea113fd7ecbd2573a8fa454b76",
+    "support/ds41/decode_metadata.hpp": "bd731e2c0833e4c458645bfe8ced4b6c6d7588ac2664389d14118f16b82909b2",
+    "support/ds41/drperf_gpu_argument_pcvs.inc": "5eb2fefb2fadfbb3547ff8c57f45dac51e4646d41fd2e9a6ded7f83c4c723422",
+    "support/ds41/gx_fixture.hpp": "9f3f18251fe9d05d397698c69f15d2d8bd71a7d2d3552b8dca97c1ca3da3eaaf",
+    "support/ds41/synthetic.hpp": "c76f606ed05490b0b69aeac8a42f1d3861b3bd6fcaa7d2d0c4468acb2632003f",
+    "tight.ptx": "3c66e475a0602b34e64865c831bd278cee4dc5a12243f36ed326121d8ebaf69c",
+    "toolchain.json": "a988cc1a10cc697d04aaf2acee9917dcb8d15834a504f9289690daffda15628f"
+  },
+  "execution_timeout": 300,
+  "command_timeout": 360
+}

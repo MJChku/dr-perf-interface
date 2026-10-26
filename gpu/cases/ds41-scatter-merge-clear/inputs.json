@@ -1,0 +1,18 @@
+{
+  "pcvs": "Proposed:real_rows,capacity_rows,active_routes,width,context_keys,clear_bytes,scatter_pairs.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "scalar",
+      "ptx": "data.ptx",
+      "defines": [
+        "DS41_SCALAR_CAST"
+      ]
+    },
+    {
+      "name": "vector",
+      "ptx": "vector.ptx",
+      "defines": []
+    }
+  ]
+}

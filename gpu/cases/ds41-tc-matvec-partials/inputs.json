@@ -1,0 +1,20 @@
+{
+  "pcvs": "M(real_rows), N, K, formats, tile_groups=M*ceil(N/8)*(K/32), outputs=M*N.",
+  "source_grid": "driver.cpp contains complete finite loops and deterministic input generation; scalar oracle is independent of GPU implementations.",
+  "variants": [
+    {
+      "name": "control",
+      "ptx": "control.ptx",
+      "defines": [
+        "DS41_MATVEC_TC"
+      ]
+    },
+    {
+      "name": "fused",
+      "ptx": "fused.ptx",
+      "defines": [
+        "DS41_MATVEC_FUSED"
+      ]
+    }
+  ]
+}

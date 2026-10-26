@@ -1,0 +1,42 @@
+{
+  "physical_gpu_used": false,
+  "source_sha256": "cc5e2e4edb41363655c9ba885fb85d85318b78954e17b1d2bf648c76048096a3",
+  "compilations": [
+    {
+      "target": "sm_80",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_80",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "--use_fast_math",
+        "gpu/cases/kernelbench-conv2d-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-resources-akfpzb_y/conv2d-sm_80.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _ZN9optimized32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 121 registers, used 1 barriers, 30720 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 145.511 ms\nptxas info    : Compiling entry function '_ZN8baseline32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _ZN8baseline32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 122 registers, used 1 barriers, 35840 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 139.813 ms\n"
+    },
+    {
+      "target": "sm_103",
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-std=c++17",
+        "-O3",
+        "-cubin",
+        "-arch=sm_103",
+        "-Xcompiler=-fopenmp",
+        "-Xptxas=-v",
+        "--use_fast_math",
+        "gpu/cases/kernelbench-conv2d-debug/native_benchmark.cu",
+        "-o",
+        "/tmp/drperf-offline-resources-akfpzb_y/conv2d-sm_103.cubin"
+      ],
+      "exit_code": 0,
+      "output": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_ZN9optimized32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii' for 'sm_103'\nptxas info    : Function properties for _ZN9optimized32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 94 registers, used 1 barriers, 30720 bytes smem\nptxas info    : Compile time = 169.449 ms\nptxas info    : Compiling entry function '_ZN8baseline32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii' for 'sm_103'\nptxas info    : Function properties for _ZN8baseline32conv2d_implicit_gemm_wmma_kernelEPKfS1_S1_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 94 registers, used 1 barriers, 35840 bytes smem\nptxas info    : Compile time = 158.923 ms\n"
+    }
+  ]
+}

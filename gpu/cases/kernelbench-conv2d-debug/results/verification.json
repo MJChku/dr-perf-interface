@@ -1,0 +1,275 @@
+{
+  "physical_gpu_used": false,
+  "source_revision": "5c94620c59ab9839a4ad4ccad309f3d91752d042",
+  "commands": [
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "--version"
+      ],
+      "seconds": 0.004130372777581215,
+      "exit_code": 0,
+      "stdout": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-I/home/ubuntu/drperf/gpu/include",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-debug/driver.cc",
+        "-L/home/ubuntu/drperf/gpu/build",
+        "-ldrperf_gpu",
+        "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+        "-o",
+        "/tmp/drperf-public-yslay79y/driver"
+      ],
+      "seconds": 0.7964201802387834,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "--use_fast_math",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-debug/compatible.cu",
+        "-o",
+        "/tmp/drperf-public-yslay79y/compatible.ptx"
+      ],
+      "seconds": 0.9076831759884953,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-yslay79y/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-yslay79y/compatible.cubin"
+      ],
+      "seconds": 0.18355055153369904,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 122 registers, used 1 barriers, 35840 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 142.813 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-yslay79y/compatible.ptx",
+        "-o",
+        "/tmp/drperf-public-yslay79y/compatible.so"
+      ],
+      "seconds": 13.20104424469173,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-yslay79y/compatible.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-yslay79y/compatible-train",
+        "--",
+        "/tmp/drperf-public-yslay79y/driver",
+        "/tmp/drperf-public-yslay79y/compatible.so",
+        "compatible",
+        "train"
+      ],
+      "seconds": 13.299449590966105,
+      "exit_code": 0,
+      "stdout": "{\"cases\":21,\"max_absolute_error\":0.000101427,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/compatible-train/report.txt\n  /tmp/drperf-public-yslay79y/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-yslay79y/compatible-heldout",
+        "--",
+        "/tmp/drperf-public-yslay79y/driver",
+        "/tmp/drperf-public-yslay79y/compatible.so",
+        "compatible",
+        "heldout"
+      ],
+      "seconds": 20.00886200647801,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_absolute_error\":0.000359294,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/compatible-heldout/report.txt\n  /tmp/drperf-public-yslay79y/compatible-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/nvcc",
+        "-ptx",
+        "-arch=sm_80",
+        "-std=c++17",
+        "-lineinfo",
+        "--use_fast_math",
+        "/home/ubuntu/drperf/gpu/cases/kernelbench-conv2d-debug/after.cu",
+        "-o",
+        "/tmp/drperf-public-yslay79y/after.ptx"
+      ],
+      "seconds": 0.9019300006330013,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/GX/toolchains/cuda13/bin/ptxas",
+        "-arch=sm_80",
+        "-v",
+        "/tmp/drperf-public-yslay79y/after.ptx",
+        "-o",
+        "/tmp/drperf-public-yslay79y/after.cubin"
+      ],
+      "seconds": 0.18374323565512896,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 121 registers, used 1 barriers, 30720 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 143.201 ms\n"
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "translate",
+        "/tmp/drperf-public-yslay79y/after.ptx",
+        "-o",
+        "/tmp/drperf-public-yslay79y/after.so"
+      ],
+      "seconds": 13.320723470300436,
+      "exit_code": 0,
+      "stdout": "drperf GPU translated: /tmp/drperf-public-yslay79y/after.so\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-yslay79y/after-train",
+        "--",
+        "/tmp/drperf-public-yslay79y/driver",
+        "/tmp/drperf-public-yslay79y/after.so",
+        "after",
+        "train"
+      ],
+      "seconds": 11.523825132288039,
+      "exit_code": 0,
+      "stdout": "{\"cases\":21,\"max_absolute_error\":0.000101427,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/after-train/report.txt\n  /tmp/drperf-public-yslay79y/after-train/profile.gpu.drperf.json\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/home/ubuntu/drperf/bin/drperf",
+        "--gpu",
+        "--output",
+        "/tmp/drperf-public-yslay79y/after-heldout",
+        "--",
+        "/tmp/drperf-public-yslay79y/driver",
+        "/tmp/drperf-public-yslay79y/after.so",
+        "after",
+        "heldout"
+      ],
+      "seconds": 17.492505869828165,
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_absolute_error\":0.000359294,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/after-heldout/report.txt\n  /tmp/drperf-public-yslay79y/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": ""
+    }
+  ],
+  "runs": {
+    "compatible-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":21,\"max_absolute_error\":0.000101427,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/compatible-train/report.txt\n  /tmp/drperf-public-yslay79y/compatible-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "compatible-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_absolute_error\":0.000359294,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/compatible-heldout/report.txt\n  /tmp/drperf-public-yslay79y/compatible-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-train": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":21,\"max_absolute_error\":0.000101427,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/after-train/report.txt\n  /tmp/drperf-public-yslay79y/after-train/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    },
+    "after-heldout": {
+      "exit_code": 0,
+      "stdout": "{\"cases\":12,\"max_absolute_error\":0.000359294,\"passed\":true}\ndrperf GPU: 1 regions; work capture complete\n  /tmp/drperf-public-yslay79y/after-heldout/report.txt\n  /tmp/drperf-public-yslay79y/after-heldout/profile.gpu.drperf.json\n",
+      "stderr": "",
+      "resource_assertions": "passed"
+    }
+  },
+  "modules": {
+    "compatible": {
+      "ptx_sha256": "a25b572b05504bc06c287482250150b44095c4b0ecc56d42dd3757e082e28d98",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 122 registers, used 1 barriers, 35840 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 142.813 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-yslay79y/compatible.ptx",
+        "inputSha256": "a25b572b05504bc06c287482250150b44095c4b0ecc56d42dd3757e082e28d98",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "92cb8d0af38284b1fa57617e1de6dde96161bca235a39c63a3bf165eec3cfb08",
+        "generatedCpp": "/tmp/drperf-public-yslay79y/compatible.so.cpp",
+        "siteMap": "/tmp/drperf-public-yslay79y/compatible.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    },
+    "after": {
+      "ptx_sha256": "8e490cbff75166fe5934de516b5fe65b8b1b32b0133ff4f1060591f355e8fba4",
+      "ptxas": "ptxas info    : 0 bytes gmem\nptxas info    : Compiling entry function '_Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii' for 'sm_80'\nptxas info    : Function properties for _Z32conv2d_implicit_gemm_wmma_kernelPKfS0_S0_Pfiiiiiiiiiiiiiiii\n    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads\nptxas info    : Used 121 registers, used 1 barriers, 30720 bytes smem, 448 bytes cmem[0]\nptxas info    : Compile time = 143.201 ms\n",
+      "unsupportedSites": [],
+      "manifest": {
+        "schema": "drperf.gpu.v1",
+        "backend": "gpu",
+        "instrumentationAbi": 3,
+        "input": "/tmp/drperf-public-yslay79y/after.ptx",
+        "inputSha256": "8e490cbff75166fe5934de516b5fe65b8b1b32b0133ff4f1060591f355e8fba4",
+        "translatorSha256": "8fa918cca91e027b5c916df29872a955628e7c9aa5bed0dc8ae704ead0538991",
+        "preludeSha256": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98",
+        "runtimeSha256": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+        "moduleSha256": "1755d13b6ded72cfc97d3db9ec46169b34266306c92a266e0a54e15b8ec440cb",
+        "generatedCpp": "/tmp/drperf-public-yslay79y/after.so.cpp",
+        "siteMap": "/tmp/drperf-public-yslay79y/after.so.sites.json",
+        "counting": "executed PTX operations; predication respected; FMA = 2; tensor tile work counted once per collective; requested bytes"
+      }
+    }
+  },
+  "source_hashes": {
+    "upstream_src.py": "fefab3894707faf393e952c5bb02e341beabe74f7f9b17ce7402c89e9443a699",
+    "native_benchmark.cu": "cc5e2e4edb41363655c9ba885fb85d85318b78954e17b1d2bf648c76048096a3",
+    "driver.cc": "44c987ed7692414263381853a3d979c1c81abe676aac3564923d76e4019450d5",
+    "compatible.cu": "15f23c73c8da12c68e766dac8eb4a3358bb1bbaf57b126988249f486e2417e18",
+    "upstream_ref.py": "d9cf8d5a263ce55172f8e771d74460c3f63854be9fd46d1a3ad0c289f8e94e78",
+    "before.cu": "758ce7587ac9d6b7807b976512c3832fa8bb3bd03ac1526287d9fd77e8fb433e",
+    "run.py": "ce613a3ef668b1c5b70875ab59d5b992b5dc4ae82824a3f41294fe626442d52a",
+    "run_native_rcp.py": "723520bee3db569d7c3e7fff268a7e424ece286437587ba232277b6b3b0c8f39",
+    "after.cu": "d3c02737ffc4e5e327a2cfae5435f9d920abfb39dde66e22af7eebe1b489884a"
+  },
+  "tool_hashes": {
+    "bin/drperf": "c8ba3e725a97ec58fdf6c33ad907f99b730ba01fd9f894161192e9abeb9014a3",
+    "gpu/build/libdrperf_gpu.so": "b5176dea8e253a9708799cd356878f0eeb9cfc423622f222f896d6c850365e80",
+    "gpu/vendor/gxptx/Gxptx/prelude.h": "d60b6f0ad0b8385589871151722fdb1f88723f293afd13e92f2597c9d31b3e98"
+  },
+  "elapsed_seconds": 92.25590906850994
+}

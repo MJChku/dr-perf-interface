@@ -1,0 +1,98 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "before.cta"
+  18 invocations, 6 states
+  block_barrier_lane_arrivals = 1 * launched_lanes
+  blocks = 0.0009765625 * launched_lanes
+  collective_lane_arrivals = 20 * launched_lanes
+  conversion_ops = -1 * cached_elements + 0.3333333333 * elements + 6.666666667 * launched_lanes
+  dynamic_shared_bytes_per_launch = 0
+  executed_blocks = 0.0009765625 * launched_lanes
+  executed_lanes = 1 * launched_lanes
+  fp32_flops = 3.697042672e-14 * cached_elements + 7 * elements + 26 * launched_lanes
+  global_load_instructions = 1.998401444e-14 * cached_elements + 4 * elements - 2.486899575e-14 * launched_lanes
+  global_read_bytes = 8.526512829e-14 * cached_elements + 16 * elements - 9.947598301e-14 * launched_lanes
+  global_unique_read_bytes = 8 * elements
+  global_unique_read_line_bytes = 8 * elements
+  global_unique_read_lines = 0.0625 * elements
+  global_unique_read_sector_bytes = 8 * elements
+  global_unique_read_sectors = 0.25 * elements
+  global_unique_write_bytes = 4 * elements
+  global_unique_write_line_bytes = 4 * elements
+  global_unique_write_lines = 0.03125 * elements
+  global_unique_write_sector_bytes = 4 * elements
+  global_unique_write_sectors = 0.125 * elements
+  global_write_bytes = 2.131628207e-14 * cached_elements + 4 * elements - 2.486899575e-14 * launched_lanes
+  integer_ops = -3.375 * cached_elements + 3.375 * elements + 34.125 * launched_lanes
+  launched_lanes = 1 * launched_lanes
+  launches = 1
+  param_load_instructions = 5 * launched_lanes
+  param_read_bytes = 32 * launched_lanes
+  ptx_lane_instructions = -6.875 * cached_elements + 14.54166667 * elements + 174.5520833 * launched_lanes
+  shared_load_instructions = 2 * launched_lanes
+  shared_read_bytes = 8 * launched_lanes
+  shared_write_bytes = 0.25 * launched_lanes
+  special_function_ops = 1 * launched_lanes
+  static_shared_bytes_per_launch = 256
+  sum_block_lane_sequence_span = -0.006713867188 * cached_elements + 0.01420084635 * elements + 0.1770833333 * launched_lanes
+  sum_block_max_lane_bytes = 0.01953125 * elements + 0.046875 * launched_lanes
+  sum_block_max_lane_flops = 0.0068359375 * elements + 0.025390625 * launched_lanes
+  sum_launch_max_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 253.3333333
+    unexplained including unfitted children: 253.3333333
+  warps = 0.03125 * launched_lanes
+  PCVs not independently identifiable: rows
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 1024, 'elements': 1024, 'launched_lanes': 1024, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 2048, 'elements': 2048, 'launched_lanes': 2048, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 4096, 'elements': 4096, 'launched_lanes': 1024, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 8192, 'elements': 8192, 'launched_lanes': 2048, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 8192, 'elements': 16384, 'launched_lanes': 1024, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 16384, 'elements': 32768, 'launched_lanes': 2048, 'rows': 2}: 
+
+REGION "before.warp"
+  18 invocations, 6 states
+  blocks = 0.03125 * launched_lanes
+  collective_lane_arrivals = 10 * launched_lanes
+  conversion_ops = -0.3333333333 * cached_elements + 6.666666667 * launched_lanes
+  dynamic_shared_bytes_per_launch = 0
+  executed_blocks = 0.03125 * launched_lanes
+  executed_lanes = 1 * launched_lanes
+  fp32_flops = 7.771561172e-16 * cached_elements + 7 * elements + 16 * launched_lanes
+  global_load_instructions = 4.440892099e-16 * cached_elements + 4 * elements + 1.243449788e-14 * launched_lanes
+  global_read_bytes = 1.776356839e-15 * cached_elements + 16 * elements + 4.97379915e-14 * launched_lanes
+  global_unique_read_bytes = 8 * elements
+  global_unique_read_line_bytes = 8 * elements
+  global_unique_read_lines = 0.0625 * elements
+  global_unique_read_sector_bytes = 8 * elements
+  global_unique_read_sectors = 0.25 * elements
+  global_unique_write_bytes = 4 * elements
+  global_unique_write_line_bytes = 4 * elements
+  global_unique_write_lines = 0.03125 * elements
+  global_unique_write_sector_bytes = 4 * elements
+  global_unique_write_sectors = 0.125 * elements
+  global_write_bytes = 4.440892099e-16 * cached_elements + 4 * elements + 1.243449788e-14 * launched_lanes
+  integer_ops = -2.25 * cached_elements + 2.25 * elements + 39 * launched_lanes
+  launched_lanes = 1 * launched_lanes
+  launches = 1
+  param_load_instructions = 5 * launched_lanes
+  param_read_bytes = 32 * launched_lanes
+  ptx_lane_instructions = -3.916666667 * cached_elements + 12.25 * elements + 136.3333333 * launched_lanes
+  special_function_ops = 1 * launched_lanes
+  sum_block_lane_sequence_span = -0.1223958333 * cached_elements + 0.3828125 * elements + 4.260416667 * launched_lanes
+  sum_block_max_lane_bytes = 0.625 * elements + 1 * launched_lanes
+  sum_block_max_lane_flops = 0.21875 * elements + 0.5 * launched_lanes
+  sum_launch_max_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 251.6666667
+    unexplained including unfitted children: 251.6666667
+  warps = 0.03125 * launched_lanes
+  PCVs not independently identifiable: rows
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 64, 'elements': 64, 'launched_lanes': 32, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 128, 'elements': 128, 'launched_lanes': 64, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 256, 'elements': 256, 'launched_lanes': 32, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 256, 'elements': 768, 'launched_lanes': 32, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 512, 'elements': 512, 'launched_lanes': 64, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'cached_elements': 512, 'elements': 1536, 'launched_lanes': 64, 'rows': 2}: 
+

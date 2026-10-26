@@ -1,0 +1,139 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "after"
+  18 invocations, 6 states
+  block_barrier_lane_arrivals = 512 * row_blocks
+  blocks = 2 * row_blocks + 1 * rows
+  collective_lane_arrivals = 2880 * row_blocks
+  conversion_ops = 0.75 * elements + 1 * rows
+  dynamic_shared_bytes_per_launch = 0
+  executed_blocks = 2 * row_blocks + 1 * rows
+  executed_lanes = 512 * row_blocks + 1 * rows
+  fp32_flops = 7 * elements + 2882 * row_blocks + 5 * rows
+  global_load_instructions = 1 * elements + 4 * row_blocks + 5.919709167e-13 * rows
+  global_read_bytes = 16 * elements + 16 * row_blocks + 2.367883667e-12 * rows
+  global_unique_read_bytes = 0 + unexplained
+    unexplained own mean: 82592
+    unexplained including unfitted children: 82592
+  global_unique_read_line_bytes = 0 + unexplained
+    unexplained own mean: 82901.33333
+    unexplained including unfitted children: 82901.33333
+  global_unique_read_lines = 0 + unexplained
+    unexplained own mean: 647.6666667
+    unexplained including unfitted children: 647.6666667
+  global_unique_read_sector_bytes = 0 + unexplained
+    unexplained own mean: 82650.66667
+    unexplained including unfitted children: 82650.66667
+  global_unique_read_sectors = 0 + unexplained
+    unexplained own mean: 2582.833333
+    unexplained including unfitted children: 2582.833333
+  global_unique_write_bytes = 4 * elements + 8 * row_blocks + 8 * rows
+  global_unique_write_line_bytes = 0 + unexplained
+    unexplained own mean: 35797.33333
+    unexplained including unfitted children: 35797.33333
+  global_unique_write_lines = 0 + unexplained
+    unexplained own mean: 279.6666667
+    unexplained including unfitted children: 279.6666667
+  global_unique_write_sector_bytes = 0 + unexplained
+    unexplained own mean: 35546.66667
+    unexplained including unfitted children: 35546.66667
+  global_unique_write_sectors = 0 + unexplained
+    unexplained own mean: 1110.833333
+    unexplained including unfitted children: 1110.833333
+  global_write_bytes = 4 * elements + 8 * row_blocks + 8 * rows
+  integer_ops = 4.249145508 * elements + 4970.21875 * row_blocks + 11 * rows
+  launched_lanes = 512 * row_blocks + 1 * rows
+  launches = 3
+  param_load_instructions = 3072 * row_blocks + 6 * rows
+  param_read_bytes = 20480 * row_blocks + 36 * rows
+  ptx_lane_instructions = 14.99743652 * elements + 28645.65625 * row_blocks + 41 * rows
+  shared_load_instructions = 520 * row_blocks
+  shared_read_bytes = 2112 * row_blocks
+  shared_write_bytes = 72 * row_blocks
+  special_function_ops = 1 * rows
+  static_shared_bytes_per_launch = 576
+  sum_block_lane_sequence_span = 0.1072998047 * elements + 157.53125 * row_blocks + 101 * rows
+  sum_block_max_lane_bytes = 0.146484375 * elements + 98.5 * row_blocks + 124 * rows
+  sum_block_max_lane_flops = 0.05126953125 * elements + 8.875 * row_blocks + 33 * rows
+  sum_launch_max_block_lane_sequence_span = 0 + unexplained
+    unexplained own mean: 358.3333333
+    unexplained including unfitted children: 358.3333333
+  warps = 16 * row_blocks + 1 * rows
+  Unexplained site layernorm_apply_kernel @ after.cu:178 ptx592:ld.global.nc.v4.f32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site layernorm_apply_kernel @ after.cu:182 ptx605:ld.global.nc.v4.f32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site layernorm_finalize_kernel @ after.cu:117 ptx392:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:118 ptx395:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:117 ptx401:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:118 ptx404:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:117 ptx407:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:118 ptx410:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:117 ptx413:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:118 ptx416:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site layernorm_finalize_kernel @ after.cu:117 ptx440:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site layernorm_finalize_kernel @ after.cu:118 ptx443:ld.global.nc.f32: global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site layernorm_partial_sum_kernel @ after.cu:94 ptx326:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site layernorm_partial_sum_kernel @ after.cu:95 ptx328:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+    global_unique_read_bytes at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_read_bytes at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_read_bytes at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_bytes at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_bytes at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_read_bytes at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_read_line_bytes at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_read_line_bytes at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_read_line_bytes at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_line_bytes at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_line_bytes at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_read_line_bytes at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_read_lines at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_read_lines at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_read_lines at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_lines at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_lines at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_read_lines at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_read_sector_bytes at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_read_sector_bytes at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_read_sector_bytes at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sector_bytes at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sector_bytes at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_read_sector_bytes at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_read_sectors at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_read_sectors at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_read_sectors at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_read_sectors at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_read_sectors at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_read_sectors at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_write_line_bytes at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_write_line_bytes at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_write_line_bytes at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_write_line_bytes at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_write_line_bytes at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_write_line_bytes at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_write_lines at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_write_lines at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_write_lines at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_write_lines at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_write_lines at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_write_lines at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_write_sector_bytes at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_write_sector_bytes at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_write_sector_bytes at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_write_sector_bytes at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_write_sector_bytes at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_write_sector_bytes at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    global_unique_write_sectors at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    global_unique_write_sectors at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    global_unique_write_sectors at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    global_unique_write_sectors at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    global_unique_write_sectors at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    global_unique_write_sectors at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 256, 'row_blocks': 1, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 512, 'row_blocks': 2, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 1024, 'row_blocks': 4, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 2048, 'row_blocks': 8, 'rows': 2}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 16384, 'row_blocks': 32, 'rows': 1}: 
+    sum_launch_max_block_lane_sequence_span at {'elements': 32768, 'row_blocks': 64, 'rows': 2}: 
+

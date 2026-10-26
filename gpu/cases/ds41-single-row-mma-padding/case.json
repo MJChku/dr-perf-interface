@@ -1,0 +1,45 @@
+{
+  "case": "ds41-single-row-mma-padding",
+  "kernel": "m16n8k32 MMA for one useful row",
+  "label": "FOUND",
+  "role": "Single-token projection uses tensor-core MMA whose row tile contains16 rows.",
+  "pcvs": "M,N,K,tile_groups,useful_fmas. Source grid includes M1 N8 K32, eliminating N padding.",
+  "finding": "tensor_flops=8192*tile_groups. At M1 N8 K32:8192 tensor FLOPs vs512 useful FLOPs, exactly16\u00d7 row expansion. No after kernel removes this expansion.",
+  "fix_status": "Open: same tensor row padding remains in fused and control.",
+  "variants": [
+    {
+      "name": "control",
+      "ptx": "control.ptx",
+      "defines": [
+        "DS41_MATVEC_TC"
+      ]
+    }
+  ],
+  "receipts": [
+    "eval/drperf-gpu/matvec-before-pinned"
+  ],
+  "timing": "Actual H100 production shapes, separate from small-shape CPU resource fixtures: QA N1280/K5120 M1 23.2945\u219220.144 \u00b5s, M4 41.374\u219230.5755; KV N512/K5120 M1 19.807\u219219.904 (fused rejected), M4 26.7355\u219220.4. Receipt: /home/ubuntu/gen-deepseek41/eval/profiles/gpu/ds41-prof-20261026-002107. Summary: /home/ubuntu/gen-deepseek41/eval/tc-route-parallel-results.json. No new serving claim; identical-DB pair pending disk.",
+  "expect": [
+    {
+      "region": "ds41_matvec_tc_partials",
+      "metric": "tensor_float_flops",
+      "pcv": "tile_groups",
+      "factor": 8192
+    }
+  ],
+  "detail": "",
+  "proposed": false,
+  "input_hashes": {
+    "check_interfaces.py": "baca6825f9a379b9d191f220a948fdef575a584bac83e10a6af01f84ed9a07eb",
+    "control.ptx": "16a3707588e2aadc53efae167d314c14cca8fd7fdee3775d71b109251c65a32d",
+    "driver.cpp": "d2e0fc5d9a7efbe40a5b277d3f04178bfa2ec3141b609fb04857844702a0b472",
+    "expected_interfaces.json": "72212cbf38bcdbda982deb0e24f47772cc3eaf22ac2c13995f976b323a9bed2a",
+    "support/ds41/decode_metadata.hpp": "bd731e2c0833e4c458645bfe8ced4b6c6d7588ac2664389d14118f16b82909b2",
+    "support/ds41/drperf_gpu_argument_pcvs.inc": "5eb2fefb2fadfbb3547ff8c57f45dac51e4646d41fd2e9a6ded7f83c4c723422",
+    "support/ds41/gx_fixture.hpp": "9f3f18251fe9d05d397698c69f15d2d8bd71a7d2d3552b8dca97c1ca3da3eaaf",
+    "support/ds41/synthetic.hpp": "c76f606ed05490b0b69aeac8a42f1d3861b3bd6fcaa7d2d0c4468acb2632003f",
+    "toolchain.json": "a988cc1a10cc697d04aaf2acee9917dcb8d15834a504f9289690daffda15628f"
+  },
+  "execution_timeout": 300,
+  "command_timeout": 360
+}

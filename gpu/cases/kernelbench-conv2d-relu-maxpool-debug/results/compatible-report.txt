@@ -1,0 +1,45 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "compatible"
+  12 invocations, 12 states
+  block_barrier_lane_arrivals = 0.3333333333 * conv_outputs - 1.333333333 * pool_outputs + 768
+  blocks = 1
+  conversion_ops = 8.25 * conv_outputs - 14.6 * pool_outputs + 0.4 * pool_updates + 4864
+  dynamic_shared_bytes_per_launch = 0
+  executed_blocks = 1
+  executed_lanes = 256
+  fp32_flops = 1.333333333 * conv_outputs + 2.666666667 * pool_outputs - 2.614797268e-12
+  global_load_instructions = 2.097222222 * conv_outputs - 7.422222222 * pool_outputs + 0.8 * pool_updates + 21.33333333
+  global_read_bytes = 8.388888889 * conv_outputs - 29.68888889 * pool_outputs + 7.2 * pool_updates + 85.33333333
+  global_unique_read_bytes = 2.6875 * conv_outputs - 13.15 * pool_outputs + 1.85 * pool_updates + 128
+  global_unique_read_line_bytes = 2.5 * conv_outputs - 14 * pool_outputs + 2 * pool_updates + 384
+  global_unique_read_lines = 0.01953125 * conv_outputs - 0.109375 * pool_outputs + 0.015625 * pool_updates + 3
+  global_unique_read_sector_bytes = 2.625 * conv_outputs - 13.1 * pool_outputs + 1.9 * pool_updates + 128
+  global_unique_read_sectors = 0.08203125 * conv_outputs - 0.409375 * pool_outputs + 0.059375 * pool_updates + 4
+  global_unique_write_bytes = 4 * pool_outputs
+  global_unique_write_line_bytes = 4 * pool_outputs
+  global_unique_write_lines = 0.03125 * pool_outputs
+  global_unique_write_sector_bytes = 4 * pool_outputs
+  global_unique_write_sectors = 0.125 * pool_outputs
+  global_write_bytes = 3.019806627e-14 * conv_outputs - 2.348121697e-14 * pool_outputs + 4 * pool_updates - 1.591615728e-12
+  integer_ops = 59.16623264 * conv_outputs - 181.5482639 * pool_outputs + 24.2 * pool_updates + 89333.33333
+  launched_lanes = 256
+  launches = 1
+  param_load_instructions = 6400
+  param_read_bytes = 30720
+  ptx_lane_instructions = 126.1527778 * conv_outputs - 373.5277778 * pool_outputs + 44.5 * pool_updates + 259338.6667
+  shared_load_instructions = 4.222222222 * conv_outputs + 9.777777778 * pool_outputs + 3413.333333
+  shared_read_bytes = 62.22222222 * conv_outputs - 174.2222222 * pool_outputs + 44885.33333
+  shared_write_bytes = 10.66666667 * conv_outputs - 42.66666667 * pool_outputs + 76416
+  static_shared_bytes_per_launch = 35840
+  sum_block_lane_sequence_span = 0.5277777778 * conv_outputs - 3.865277778 * pool_outputs + 1.115625 * pool_updates + 1646.666667
+  sum_block_max_lane_bytes = 0.2638888889 * conv_outputs - 2.588888889 * pool_outputs + 0.675 * pool_updates + 820.3333333
+  sum_block_max_lane_flops = 2.694444444 * conv_outputs - 10.69444444 * pool_outputs + 2058.666667
+  sum_launch_max_block_lane_sequence_span = 0.5277777778 * conv_outputs - 3.865277778 * pool_outputs + 1.115625 * pool_updates + 1646.666667
+  tensor_float_flops = 682.6666667 * conv_outputs - 2730.666667 * pool_outputs + 524288
+  warps = 8
+  PCVs not independently identifiable: tile_products
+

@@ -1,0 +1,10 @@
+--- before.cu
++++ synchronized.cu
+@@ -54,6 +54,7 @@
+         __syncthreads();
+     }
+     float row_max = sdata[0];
++    __syncthreads(); // All threads must read the maximum before sdata is reused.
+ 
+     // ------------------------------------------------------------------
+     // 2. Compute exponentials and their sum

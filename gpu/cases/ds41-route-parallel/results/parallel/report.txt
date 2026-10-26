@@ -1,0 +1,146 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "ds41_route_token_ids"
+  75 invocations, 2 states
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 12 * arg_rows [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 128 [accepted; max error 0]
+  global_read_bytes = 30 * arg_rows - 6 [accepted; max error 0]
+  global_unique_read_bytes = 26 * arg_rows - 2 [accepted; max error 0]
+  global_unique_read_line_bytes = 64 * arg_rows + 64 [accepted; max error 0]
+  global_unique_read_lines = 0.5 * arg_rows + 0.5 [accepted; max error 1.9984e-15]
+  global_unique_read_sector_bytes = 48 * arg_rows - 16 [accepted; max error 0]
+  global_unique_read_sectors = 1.5 * arg_rows - 0.5 [accepted; max error 3.9968e-15]
+  global_unique_write_bytes = 26 * arg_rows - 2 [accepted; max error 0]
+  global_unique_write_line_bytes = 64 * arg_rows + 64 [accepted; max error 0]
+  global_unique_write_lines = 0.5 * arg_rows + 0.5 [accepted; max error 1.9984e-15]
+  global_unique_write_sector_bytes = 48 * arg_rows - 16 [accepted; max error 0]
+  global_unique_write_sectors = 1.5 * arg_rows - 0.5 [accepted; max error 3.9968e-15]
+  global_write_bytes = 30 * arg_rows - 6 [accepted; max error 0]
+  integer_ops = 72 * arg_rows + 384 [accepted; max error 0]
+  launched_lanes = 128 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 5120 [accepted; max error 0]
+  ptx_lane_instructions = 133.5 * arg_rows + 1918.5 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.5 * arg_rows + 36.5 [accepted; max error 0]
+  sum_block_max_lane_bytes = 4 * arg_rows + 44 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 0.5 * arg_rows + 36.5 [accepted; max error 0]
+  warps = 4 [accepted; max error 0]
+  PCVs not independently identifiable: arg_first, arg_owned, arg_stride, blocks, launched_lanes
+
+REGION "ds41_routed_tc_parallel"
+  75 invocations, 39 states
+  block_barrier_lane_arrivals = 32 * active_n + 256 * blocks [accepted; max error 0]
+  blocks = 1 * blocks [accepted; max error 0]
+  conversion_ops = 0.338196 * K + 57.734 * N - 3215.05 * active_experts + 25.4116 * active_n + 0.192761 * active_n_k - 2.46252e-10 * all_routes - 3.25214 * any_groups + 30.2805 * any_iters8 - 17.8731 * any_route - 54.5714 * blocks + 1787.14 * capacity_rows - 65.4285 * route_groups + 1344 * route_iters4 - 1.08145 * route_tile_visits - 10932.1 [UNEXPLAINED; max error 8536.05]
+  dynamic_shared_bytes_per_launch = 1 * K [accepted; max error 0]
+  emulator_barrier_generations = 0.125 * active_n + 0.0078125 * active_n_k + 1 * blocks [accepted; max error 2.72848e-12]
+  emulator_rendezvous_lane_arrivals = 32 * active_n + 0.25 * active_n_k + 256 * blocks [accepted; max error 3.49246e-10]
+  executed_blocks = 1 * blocks [accepted; max error 0]
+  executed_lanes = 256 * blocks [accepted; max error 0]
+  fp32_flops = 0.09375 * active_n_k [accepted; max error 2.03727e-10]
+  generic_read_bytes = 0.53125 * active_n_k [accepted; max error 4.65661e-10]
+  generic_unique_read_bytes = 0.53125 * active_n_k [accepted; max error 4.65661e-10]
+  generic_unique_read_line_bytes = 0.00560483 * K + 0.126681 * N - 10.2079 * active_experts + 13.0344 * active_n + 0.531222 * active_n_k + 42.6667 * all_routes + 1.19367 * any_groups - 5.73599 * any_iters8 + 205.552 * any_route + 0.444766 * blocks + 41.7398 * capacity_rows - 0.0910241 * route_groups + 1.96491 * route_iters4 - 0.0179225 * route_tile_visits - 275.917 [UNEXPLAINED; max error 57.3638]
+  generic_unique_read_lines = 4.37877e-05 * K + 0.000989693 * N - 0.0797492 * active_experts + 0.101831 * active_n + 0.00415018 * active_n_k + 0.333333 * all_routes + 0.00932552 * any_groups - 0.0448124 * any_iters8 + 1.60587 * any_route + 0.00347474 * blocks + 0.326092 * capacity_rows - 0.000711126 * route_groups + 0.0153509 * route_iters4 - 0.00014002 * route_tile_visits - 2.1556 [UNEXPLAINED; max error 0.448155]
+  generic_unique_read_sector_bytes = 0.000927114 * K + 0.0965519 * N + 1.29477 * active_experts + 12.9861 * active_n + 0.531257 * active_n_k + 3.55556 * all_routes + 0.458921 * any_groups - 3.65968 * any_iters8 + 7.99779 * any_route - 0.176397 * blocks + 2.63155 * capacity_rows - 0.0118908 * route_groups - 0.421053 * route_iters4 - 0.00296462 * route_tile_visits - 13.7386 [UNEXPLAINED; max error 34.2857]
+  generic_unique_read_sectors = 2.89723e-05 * K + 0.00301725 * N + 0.0404617 * active_experts + 0.405815 * active_n + 0.0166018 * active_n_k + 0.111111 * all_routes + 0.0143413 * any_groups - 0.114365 * any_iters8 + 0.249931 * any_route - 0.0055124 * blocks + 0.0822361 * capacity_rows - 0.000371588 * route_groups - 0.0131579 * route_iters4 - 9.26445e-05 * route_tile_visits - 0.42933 [UNEXPLAINED; max error 1.07143]
+  global_read_bytes = 2 * active_n + 0.140625 * active_n_k + 4 * blocks [accepted; max error 1.45519e-10]
+  global_unique_read_bytes = 7.49094e-15 * K - 2.2319e-15 * N + 16 * active_experts - 1.7581e-14 * active_n + 2.4177e-17 * active_n_k - 1.45347e-11 * all_routes + 16.5 * any_groups - 3.89769e-11 * any_iters8 + 1.42736e-11 * any_route + 7.9291e-14 * blocks + 9.5 * capacity_rows + 16.5 * route_groups - 3.28549e-12 * route_iters4 - 1.30667e-14 * route_tile_visits - 33 [UNEXPLAINED; max error 3300]
+  global_unique_read_line_bytes = -1.05396e-15 * K - 2.32579e-14 * N + 1.40351 * active_experts + 5.00514e-15 * active_n - 4.10225e-18 * active_n_k + 21.3333 * all_routes + 24.5146 * any_groups - 66.9942 * any_iters8 + 366.035 * any_route + 4.40581e-15 * blocks + 25.731 * capacity_rows + 16.4912 * route_groups - 0.0701754 * route_iters4 + 3.05111e-15 * route_tile_visits - 26.386 [UNEXPLAINED; max error 3333.61]
+  global_unique_read_lines = -8.23407e-18 * K - 1.81703e-16 * N + 0.0109649 * active_experts + 3.91026e-17 * active_n - 3.20489e-20 * active_n_k + 0.166667 * all_routes + 0.19152 * any_groups - 0.523392 * any_iters8 + 2.85965 * any_route + 3.44204e-17 * blocks + 0.201023 * capacity_rows + 0.128838 * route_groups - 0.000548246 * route_iters4 + 2.38368e-17 * route_tile_visits - 0.20614 [UNEXPLAINED; max error 26.0439]
+  global_unique_read_sector_bytes = 2.4684e-15 * K - 7.10814e-15 * N + 17.4737 * active_experts + 1.31038e-14 * active_n - 1.36363e-17 * active_n_k - 16 * all_routes + 13.0058 * any_groups + 30.9708 * any_iters8 + 17.9649 * any_route - 3.14029e-14 * blocks + 14.1053 * capacity_rows + 16.4035 * route_groups + 2.01754 * route_iters4 + 4.86494e-15 * route_tile_visits - 52.6316 [UNEXPLAINED; max error 3328.84]
+  global_unique_read_sectors = 7.71375e-17 * K - 2.22129e-16 * N + 0.546053 * active_experts + 4.09495e-16 * active_n - 4.26135e-19 * active_n_k - 0.5 * all_routes + 0.406433 * any_groups + 0.967836 * any_iters8 + 0.561404 * any_route - 9.81341e-16 * blocks + 0.440789 * capacity_rows + 0.51261 * route_groups + 0.0630482 * route_iters4 + 1.52029e-16 * route_tile_visits - 1.64474 [UNEXPLAINED; max error 104.026]
+  global_unique_write_bytes = 16 * blocks [accepted; max error 0]
+  global_unique_write_line_bytes = 3.47358e-15 * K + 0.761905 * N + 1.33402e-12 * active_experts + 1.32772e-14 * active_n - 1.04263e-17 * active_n_k + 1.35073e-12 * all_routes + 1.29978e-12 * any_groups - 1.27705e-11 * any_iters8 + 9.49428e-12 * any_route + 15.746 * blocks + 14.2222 * capacity_rows + 7.73666e-14 * route_groups - 1.05967e-12 * route_iters4 - 7.28466e-15 * route_tile_visits + 106.667 [UNEXPLAINED; max error 45.7143]
+  global_unique_write_lines = 2.71374e-17 * K + 0.00595238 * N + 1.04221e-14 * active_experts + 1.03728e-16 * active_n - 8.14553e-20 * active_n_k + 1.05526e-14 * all_routes + 1.01545e-14 * any_groups - 9.97695e-14 * any_iters8 + 7.41741e-14 * any_route + 0.123016 * blocks + 0.111111 * capacity_rows + 6.04427e-16 * route_groups - 8.27867e-15 * route_iters4 - 5.69114e-17 * route_tile_visits + 0.833333 [UNEXPLAINED; max error 0.357143]
+  global_unique_write_sector_bytes = 16 * blocks + 13.3333 * capacity_rows + 16 [accepted; max error 1.84173e-11]
+  global_unique_write_sectors = 0.5 * blocks + 0.416667 * capacity_rows + 0.5 [accepted; max error 7.38964e-13]
+  global_write_bytes = 16 * blocks [accepted; max error 0]
+  integer_ops = 2.33919 * K + 399.327 * N - 22237.4 * active_experts + 319.597 * active_n + 2.61191 * active_n_k - 1.86652e-10 * all_routes - 22.494 * any_groups + 209.44 * any_iters8 - 123.622 * any_route + 1598.96 * blocks + 12361.1 * capacity_rows - 452.547 * route_groups + 9296 * route_iters4 - 7.48 * route_tile_visits - 75613.6 [UNEXPLAINED; max error 59041]
+  launched_lanes = 256 * blocks [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = -2.62378e-08 * any_iters8 + 1.59489e-08 * any_route + 22528 * blocks [accepted; max error 1.15251e-07]
+  ptx_lane_instructions = 2.83591 * K + 484.123 * N - 26959.5 * active_experts + 593.42 * active_n + 7.06398 * active_n_k + 1.57707e-09 * all_routes - 27.2706 * any_groups + 253.914 * any_iters8 - 149.874 * any_route + 10244.8 * blocks + 14985.9 * capacity_rows - 548.645 * route_groups + 11270 * route_iters4 - 9.06837 * route_tile_visits - 91670 [UNEXPLAINED; max error 71578.3]
+  shared_read_bytes = 1.35278 * K + 230.936 * N - 12860.2 * active_experts + 357.646 * active_n + 0.271046 * active_n_k + 1.68749e-10 * all_routes - 13.0086 * any_groups + 121.122 * any_iters8 - 71.4925 * any_route + 737.714 * blocks + 7148.57 * capacity_rows - 261.714 * route_groups + 5376 * route_iters4 - 4.32578 * route_tile_visits - 43728.3 [UNEXPLAINED; max error 34144.2]
+  shared_write_bytes = 2 * active_n + 0.125 * active_n_k + 4 * blocks [accepted; max error 2.91038e-11]
+  static_shared_bytes_per_launch = 1024 [accepted; max error 0]
+  sum_block_lane_sequence_span = -0.0675951 * K - 11.5393 * N + 642.591 * active_experts + 14.7127 * active_n + 0.0556907 * active_n_k + 7.1323e-11 * all_routes + 0.650005 * any_groups - 6.05215 * any_iters8 + 3.5723 * any_route + 79.305 * blocks - 357.196 * capacity_rows + 13.0772 * route_groups - 268.625 * route_iters4 + 0.216148 * route_tile_visits + 2184.99 [UNEXPLAINED; max error 1706.1]
+  sum_block_max_lane_bytes = -0.0151924 * K - 2.59352 * N + 144.426 * active_experts + 7.73346 * active_n + 0.0252153 * active_n_k + 1.24671e-11 * all_routes + 0.146092 * any_groups - 1.36026 * any_iters8 + 0.802894 * any_route + 105.215 * blocks - 80.2817 * capacity_rows + 2.93917 * route_groups - 60.375 * route_iters4 + 0.0485805 * route_tile_visits + 491.09 [UNEXPLAINED; max error 383.455]
+  sum_block_max_lane_flops = -0.17174 * K - 29.318 * N + 1632.64 * active_experts + 19.5957 * active_n + 0.112318 * active_n_k + 1.2584e-10 * all_routes + 1.65148 * any_groups - 15.3768 * any_iters8 + 9.0762 * any_route + 36.3449 * blocks - 907.533 * capacity_rows + 33.2254 * route_groups - 682.5 * route_iters4 + 0.549171 * route_tile_visits + 5551.45 [UNEXPLAINED; max error 4334.71]
+  sum_launch_max_block_lane_sequence_span = 3.33333 * any_groups + 102.333 * any_iters8 + 56 * any_route + 65 [accepted; max error 1.72236e-11]
+  tensor_float_flops = -5.4032e-08 * active_experts + 32 * active_n_k - 2.69742e-08 * any_groups + 2.35463e-07 * any_iters8 - 1.04688e-07 * any_route + 2.57464e-08 * capacity_rows + 2.02737e-08 * route_iters4 - 1.69966e-07 [accepted; max error 1.41561e-07]
+  warps = 8 * blocks [accepted; max error 0]
+  PCVs not independently identifiable: active_routes, k_groups, launched_lanes, max_routes, outputs, real_rows, route_iters8, tile_groups, useful_fmas
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16121:st.global.u16: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16149:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16151:ld.shared.u64: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16153:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16155:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16157:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16159:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16161:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16163:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16165:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16167:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16169:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16171:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16173:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16175:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16177:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16179:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16181:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16183:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16185:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16187:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16235:ld.global.u32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16263:ld.global.u32: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16280:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16282:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16310:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16312:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16355:ld.global.u8: global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16381:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16406:ld.u8: generic_unique_read_line_bytes, generic_unique_read_lines, generic_unique_read_sector_bytes, generic_unique_read_sectors
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16428:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16460:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16462:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16464:mov.f32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16466:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16469:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16471:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16473:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16475:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16477:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16479:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16481:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16483:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16485:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16487:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16489:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16491:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16493:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16495:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16497:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16499:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16502:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16507:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16509:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16511:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16513:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16515:mov.u32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16517:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16520:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16522:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16524:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16526:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16528:setp.ne.s32: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16531:bra: ptx_lane_instructions
+  Unexplained site ds41_routed_tc_parallel__gxptx:cpp16571:st.global.u16: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+

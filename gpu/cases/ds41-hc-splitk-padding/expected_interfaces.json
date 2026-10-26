@@ -1,0 +1,74 @@
+{
+  "description": "Observed pinned resource interfaces on the scalar-oracle fixture grid, for reproducibility checks; these are counted resource observations, not independently measured hardware quantities.",
+  "variants": {
+    "baseline": {
+      "ds41_hc_splitk": [
+        {
+          "pcvs": {
+            "arg_as": 20483,
+            "arg_bs": 20485,
+            "arg_cs": 31,
+            "arg_flags": 7,
+            "arg_k": 20480,
+            "arg_m": 3,
+            "arg_n": 24,
+            "arg_splits": 128,
+            "blocks": 128,
+            "launched_lanes": 16384
+          },
+          "metrics": {
+            "tensor_float_flops": 251658240,
+            "fp32_flops": 5701632,
+            "global_read_bytes": 2211840,
+            "global_write_bytes": 36864,
+            "generic_read_bytes": 0,
+            "generic_write_bytes": 0,
+            "shared_read_bytes": 17563648,
+            "shared_write_bytes": 5521408,
+            "launched_lanes": 16384,
+            "executed_lanes": 16384,
+            "blocks": 128,
+            "warps": 512,
+            "sum_block_max_lane_flops": 2010624,
+            "sum_block_max_lane_bytes": 228352,
+            "sum_block_lane_sequence_span": 568960,
+            "sum_launch_max_block_lane_sequence_span": 4445,
+            "launches": 1
+          }
+        }
+      ],
+      "ds41_hc_splitk_reduce": [
+        {
+          "pcvs": {
+            "arg_m": 3,
+            "arg_n": 24,
+            "arg_os": 31,
+            "arg_ps": 31,
+            "arg_splits": 128,
+            "blocks": 1,
+            "launched_lanes": 128
+          },
+          "metrics": {
+            "tensor_float_flops": 0,
+            "fp32_flops": 9216,
+            "global_read_bytes": 36864,
+            "global_write_bytes": 288,
+            "generic_read_bytes": 0,
+            "generic_write_bytes": 0,
+            "shared_read_bytes": 0,
+            "shared_write_bytes": 0,
+            "launched_lanes": 128,
+            "executed_lanes": 128,
+            "blocks": 1,
+            "warps": 4,
+            "sum_block_max_lane_flops": 128,
+            "sum_block_max_lane_bytes": 552,
+            "sum_block_lane_sequence_span": 745,
+            "sum_launch_max_block_lane_sequence_span": 745,
+            "launches": 1
+          }
+        }
+      ]
+    }
+  }
+}
