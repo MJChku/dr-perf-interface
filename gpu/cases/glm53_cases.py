@@ -73,18 +73,29 @@ CASES = [
   receipts=[CODEX+'/NOTES2.md'], files=[CODEX+'/drivers2/flash_unit_scale_kernel.cuh', CODEX+'/drivers2/make_flash_unit_scale.py'],
   reproduce=[CODEX+'/drivers2'], credit='DrPerf counts plus source reading.'),
 
- dict(case='glm53-deepgemm-paged-logits-bq1', label='FOUND/POTENTIAL',
+ dict(case='glm53-deepgemm-paged-logits-bq1', label='FOUND',
   kernel='DeepGEMM sm100_paged_mqa_logits (indexer scoring, pinned 8b1392b9)',
-  role='FP8 index-key scoring over ~100K history per request on 21 full-indexer layers; 12.8 us/call.',
+  role='FP8 index-key scoring over ~100K history per request on 21 full-indexer layers; 12.8 us/call in graph (b101).',
   pcvs='padded tokens L, splits S, pages, heads 1..32, dim 8..128, CTAs, in-bounds query rows',
   finding=('Exact: 132 B K+scale reads per padded token, 4 B logits writes; tensor_float_flops = 32768*L, i.e. 4x the '
-           'useful work, because BLOCK_Q = 128/heads = 4 at H32 while decode has one query per request.'),
-  fix=('BLOCK_Q=1 instantiation of the existing core (Codex dg_bq1.cu): 8192 tensor FLOPs per token (exactly 4x less), '
-       'identical KV/logit bytes, value oracles pass on 48 cases.'),
-  fix_status='Prototype passes on CPU; not integrated or timed.', timing='Logits kernel 12.8 us/call x21 = 0.27 ms/step (b101).',
-  receipts=[CODEX+'/NOTES2.md', PROF+'/glm53-gap-b101'], files=[CODEX+'/drivers2/dg_bq1.cu', CODEX+'/drivers2/dg_bq1_driver.cc'],
-  reproduce=[CODEX+'/run2.py dgbq1build / capture'], credit='DrPerf.'),
-
+           'useful work, because BLOCK_Q = 128/heads = 4 at H32 while decode has one query per request. Critical-lane '
+           'chain (latency model with tensor pipe, source lines via -lineinfo): the page loop is an MMA <-> epilogue '
+           'ping-pong - the epilogue waits at sm100_mqa_logits.cuh:423 on the MMA issued at :334 [tensor pipe], the '
+           'MMA warp waits for the epilogue to free the accumulator; with BLOCK_Q=1 the MMA wait vanishes (path -14% '
+           'at 2 pages/request, per-page cost 375 -> 219 units). Every warp role also starts with three dependent '
+           'scheduler loads (sm100_paged_mqa_logits.cuh:46 ceil_div on context_lens).'),
+  fix=('BLOCK_Q=1 instantiation of the existing core (dg_bq1.cu): 8192 tensor FLOPs per token (exactly 4x less), '
+       'identical KV/logit bytes; 40/40 drperf reference states pass.'),
+  fix_status='Standalone GPU win when L2-resident; harness A/B pending.',
+  timing=('B300 standalone b112 (bitwise, 400222 logits): batch 4 hot 12.48 -> 10.78 us (1.16x), cold HBM 17.06 -> '
+          '16.86 us (1.01x); batch 1 hot 10.14 -> 8.58 us. In-graph the upstream kernel runs 12.8 us (b101), close '
+          'to the hot figure.'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b112'],
+  files=[EX+'/deepgemm_paged_logits/drivers/dg_bq1.cu', EX+'/deepgemm_paged_logits/drivers/dg_scoring.cu',
+         EX+'/deepgemm_paged_logits/drivers/dg_bq4_driver.cc', EX+'/deepgemm_paged_logits/drivers/dg_bq1_driver.cc'],
+  reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/dg_bq{4,1}_driver build/dg_bq{4,1}.so',
+             'python3 gpu/tools/latency_report.py results/lat_bq4_li --region "deepgemm*" --stalls 6'],
+  credit='DrPerf found the 4x tensor work, the ping-pong chain and checked the prototype; GPU confirmed the L2-resident gain.'),
  dict(case='glm53-decode-redundant-requests', label='NEGATIVE',
   kernel='GLM decode glue: decode_gather_v32, attention_iw_prenorm, dc_selected_address, moe_front_prenorm',
   role='Custom decode kernels around attention and the MoE front.',
@@ -228,7 +239,7 @@ CASES = [
   files=[EX+'/glm53_decode_glue/front_driver.cc', EX+'/glm53_decode_glue/ab_prenorm.cc'],
   reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/front_driver build/kernels{,_sr}.so (kernels_sr = -DGLM53_ENABLE_DECODE_PRENORM_STATIC_ROWS)'],
   credit='DrPerf latency model + site attribution found it and checked the fix before GPU time.'),
- dict(case='glm53-flashmla-core-critical-chain', label='FOUND/EXPLAINED',
+ dict(case='glm53-flashmla-core-critical-chain', label='EXPLAINED/NEGATIVE',
   kernel='FlashMLA SM100 head64 V32 sparse decode core (flash_fwd_splitkv_mla_fp8_sparse_kernel)',
   role='Attention core, 78 calls/step, ~14.4 us/call (b101); at w4 x top-k 2048 a CTA handles only 1-2 64-token blocks.',
   pcvs='w 1..4, K 64..256 selected tokens, parts 1..8 (33 states; examples/flashmla_decode grid)',
@@ -245,9 +256,12 @@ CASES = [
   fix=('GLM53_FLASHMLA_INDEX_PREFETCH prototype (gen-glm53-decode-step third_party/flashmla_glm53/'
        'decode_head64_kernel_glm53.cuh): indices two blocks ahead, scales one block ahead, same arithmetic. DrPerf: '
        '33/33 reference states pass; one-block path 7113 -> 6756 (-5%), slope unchanged.'),
-  fix_status='Prototype; not wired into the build or GPU-timed (expected ~0.02-0.06 ms/step).',
-  timing='Core 14.4 us/call (b101). No GPU measurement of the prototype.',
-  receipts=[PROF+'/glm53-gap-b101'],
+  fix_status='Measured: no gain (not kept).',
+  timing=('B300 harness b112: core 14.46 -> 14.46/14.75 us/call (rank0/rank1), step unchanged, hot tokens exact. The '
+          'modeled start-up chain of a one-block CTA is not what bounds the real core: calibration note - the model '
+          'charges every global load 400 units on an otherwise idle SM, while the real core overlaps CTAs and is '
+          'bandwidth/occupancy bound.'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b112'],
   files=[EX+'/flashmla_decode/drivers/flash_core.cu', EX+'/flashmla_decode/drivers/flash_core_prefetch.cu',
          EX+'/flashmla_decode/drivers/decode_head64_kernel_glm53.cuh'],
   reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/core_driver build/flash_core{,_pf}.so build/flash_core{,_pf}.ptx build/flash_aux.so build/flash_aux.ptx grid',

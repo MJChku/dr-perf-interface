@@ -1,6 +1,6 @@
 # glm53-flashmla-core-critical-chain
 
-**Contribution: FOUND/EXPLAINED.** Kernel: FlashMLA SM100 head64 V32 sparse decode core (flash_fwd_splitkv_mla_fp8_sparse_kernel).
+**Contribution: EXPLAINED/NEGATIVE.** Kernel: FlashMLA SM100 head64 V32 sparse decode core (flash_fwd_splitkv_mla_fp8_sparse_kernel).
 
 Attention core, 78 calls/step, ~14.4 us/call (b101); at w4 x top-k 2048 a CTA handles only 1-2 64-token blocks.
 
@@ -16,11 +16,11 @@ Four DrPerf gaps blocked this kernel and were fixed first: the translated kernel
 
 GLM53_FLASHMLA_INDEX_PREFETCH prototype (gen-glm53-decode-step third_party/flashmla_glm53/decode_head64_kernel_glm53.cuh): indices two blocks ahead, scales one block ahead, same arithmetic. DrPerf: 33/33 reference states pass; one-block path 7113 -> 6756 (-5%), slope unchanged.
 
-Fix status: **Prototype; not wired into the build or GPU-timed (expected ~0.02-0.06 ms/step).**
+Fix status: **Measured: no gain (not kept).**
 
 ## Measured timing (not from DrPerf)
 
-Core 14.4 us/call (b101). No GPU measurement of the prototype.
+B300 harness b112: core 14.46 -> 14.46/14.75 us/call (rank0/rank1), step unchanged, hot tokens exact. The modeled start-up chain of a one-block CTA is not what bounds the real core: calibration note - the model charges every global load 400 units on an otherwise idle SM, while the real core overlaps CTAs and is bandwidth/occupancy bound.
 
 ## Credit
 
@@ -34,6 +34,7 @@ DrPerf (after four tool fixes) located the chain and checked the prototype befor
 ## Receipts
 
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b112
 
 ## Copied sources
 
