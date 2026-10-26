@@ -324,6 +324,17 @@ same kernel's sector/line counts shift with the host allocator. Line footprints
 of records whose size is not a multiple of 128 bytes (e.g. FlashMLA's 656-byte
 KV rows) are floor/ceil functions of the selection and need such PCVs to fit.
 
+### Lane stack size
+
+Each simulated lane runs on its own guard-page protected fiber stack. Translated
+kernels keep every PTX register and `.local` array as C locals (plus a shadow per
+register when the latency model is on), so large kernels such as the FlashMLA
+decode core (~6000 registers) overflowed boost's 128 KiB default and crashed with
+SIGSEGV inside the translated kernel. The default is now 512 KiB (committed
+lazily, so untouched pages cost no memory); `DRPERF_GPU_LANE_STACK_BYTES`
+(or `GX_FIBER_STACK_BYTES`) sets another size in [65536, 1073741824]. A SIGSEGV
+in a `*_gxptx` frame is the usual sign that the stack needs to grow.
+
 ### Uninitialized reads (initcheck)
 
 `drperf::gpu::Buffer<T>::uninitialized(n, "name")` allocates a 256-byte aligned

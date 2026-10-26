@@ -1,0 +1,23 @@
+//
+// A 192 KiB per-lane .local frame (translated as a C array on the lane's
+// fiber stack): overflowed the 128 KiB boost default stack before the lane
+// stack size became configurable (default 512 KiB).
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry big_local(
+	.param .u64 big_local_param_0
+)
+{
+	.local .align 4 .b8 	frame[196608];
+	.reg .b64 	%rd<4>;
+	.reg .f32 	%f<3>;
+	ld.param.u64 	%rd1, [big_local_param_0];
+	mov.u64 	%rd2, frame;
+	mov.f32 	%f1, 0f40400000;
+	st.local.f32 	[%rd2+196604], %f1;
+	st.local.f32 	[%rd2], %f1;
+	ld.local.f32 	%f2, [%rd2+196604];
+	st.global.f32 	[%rd1], %f2;
+	ret;
+}

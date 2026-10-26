@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/context/protected_fixedsize_stack.hpp>
+#include <algorithm>
 #include <memory>
 #include <vector>
 #include <sys/mman.h>
@@ -13,11 +14,28 @@ namespace gx {
 // make every unused backing page reclaimable by Linux. Unlike a malloc stack
 // cache, this does not pin the high-water resident footprint between launches.
 class FiberStack {
+    // Lane stack size: translated kernels keep every PTX register (and, with
+    // the latency model, a 24-byte shadow per register) as C locals, so large
+    // kernels (e.g. FlashMLA decode, ~6000 registers) overflow boost's 128 KiB
+    // default. DRPERF_GPU_LANE_STACK_BYTES (or GX_FIBER_STACK_BYTES) overrides;
+    // the default is 512 KiB of lazily committed, guard-page protected memory.
+    static size_t lane_stack_bytes() {
+        const char* text = std::getenv("DRPERF_GPU_LANE_STACK_BYTES");
+        if (!text || !*text) text = std::getenv("GX_FIBER_STACK_BYTES");
+        size_t value = size_t{512} * 1024u;
+        if (text && *text) {
+            auto end = text + std::strlen(text);
+            auto [ptr, ec] = std::from_chars(text, end, value);
+            if (ec != std::errc() || ptr != end || value < 65536 || value > (size_t{1} << 30))
+                throw std::invalid_argument("lane stack bytes must be decimal in [65536, 1073741824]");
+        }
+        return std::max(value, boost::context::stack_traits::default_size());
+    }
     struct Pool {
-        boost::context::protected_fixedsize_stack backing;
+        boost::context::protected_fixedsize_stack backing{FiberStack::lane_stack_bytes()};
         std::vector<boost::context::stack_context> available;
         size_t page = boost::context::stack_traits::page_size();
-        size_t mapping = ((boost::context::stack_traits::default_size() + page - 1) / page + 1) * page;
+        size_t mapping = ((FiberStack::lane_stack_bytes() + page - 1) / page + 1) * page;
         size_t limit;
         explicit Pool(size_t bytes) : limit(bytes / mapping) { available.reserve(limit); }
         ~Pool() { for (auto& s : available) backing.deallocate(s); }
