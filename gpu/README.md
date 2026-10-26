@@ -674,7 +674,13 @@ to compare variants of the same kernel. Further B300 observations: removing 26 m
 exposed waits from the 256-CTA MoE router (`moe_front_prenorm`, activations re-read by
 every CTA and therefore L2-resident, ~8 resident warps per SM) saved only ~0.4 us
 (10.4 -> 10.0 us); the per-lane model has no warp-level latency hiding, so chains in
-kernels with many resident warps over-predict their gain.
+kernels with many resident warps over-predict their gain. Likewise the FlashMLA decode
+core: removing a modeled 357-unit start-up chain (index -> scale loads on the producer
+warp of a one-block CTA, -5% of the modeled path) changed nothing on B300 (14.46 us/call
+before and after); the model runs one CTA on an idle SM and charges each global load
+its full latency, while the real core overlaps CTAs and is bandwidth/occupancy bound.
+Use the critical-lane chain to find which stage paces a pipeline, then check that the
+stage is also on the measured critical path before spending GPU time.
 
 The ranking helper accepts report directories, JSON and JSON.gz. It sorts
 regions by the sum of their inclusive launch paths, equivalent to mean path
