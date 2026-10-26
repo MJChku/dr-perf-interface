@@ -1,6 +1,6 @@
 # glm53-deepgemm-paged-logits-bq1
 
-**Contribution: FOUND.** Kernel: DeepGEMM sm100_paged_mqa_logits (indexer scoring, pinned 8b1392b9).
+**Contribution: FOUND/NEGATIVE.** Kernel: DeepGEMM sm100_paged_mqa_logits (indexer scoring, pinned 8b1392b9).
 
 FP8 index-key scoring over ~100K history per request on 21 full-indexer layers; 12.8 us/call in graph (b101).
 
@@ -16,11 +16,11 @@ Exact: 132 B K+scale reads per padded token, 4 B logits writes; tensor_float_flo
 
 BLOCK_Q=1 instantiation of the existing core (dg_bq1.cu): 8192 tensor FLOPs per token (exactly 4x less), identical KV/logit bytes; 40/40 drperf reference states pass.
 
-Fix status: **Standalone GPU win when L2-resident; harness A/B pending.**
+Fix status: **Measured in graph: -2%, not kept (HBM-bound in the step).**
 
 ## Measured timing (not from DrPerf)
 
-B300 standalone b112 (bitwise, 400222 logits): batch 4 hot 12.48 -> 10.78 us (1.16x), cold HBM 17.06 -> 16.86 us (1.01x); batch 1 hot 10.14 -> 8.58 us. In-graph the upstream kernel runs 12.8 us (b101), close to the hot figure.
+B300 standalone b112 (bitwise, 400222 logits): batch 4 hot 12.48 -> 10.78 us (1.16x), cold HBM 17.06 -> 16.86 us (1.01x); batch 1 hot 10.14 -> 8.58 us. In graph (b113 harness, GLM53_INDEXER_PAGED_BQ1): 12.83 -> 12.54 us/call (-2%), step unchanged, hot tokens exact - the step runs it in the HBM-bound regime, so the 4x tensor-work cut and the modeled MMA/epilogue chain are hidden behind KV traffic.
 
 ## Credit
 
@@ -35,6 +35,7 @@ DrPerf found the 4x tensor work, the ping-pong chain and checked the prototype; 
 
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b112
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b113
 
 ## Copied sources
 

@@ -73,7 +73,7 @@ CASES = [
   receipts=[CODEX+'/NOTES2.md'], files=[CODEX+'/drivers2/flash_unit_scale_kernel.cuh', CODEX+'/drivers2/make_flash_unit_scale.py'],
   reproduce=[CODEX+'/drivers2'], credit='DrPerf counts plus source reading.'),
 
- dict(case='glm53-deepgemm-paged-logits-bq1', label='FOUND',
+ dict(case='glm53-deepgemm-paged-logits-bq1', label='FOUND/NEGATIVE',
   kernel='DeepGEMM sm100_paged_mqa_logits (indexer scoring, pinned 8b1392b9)',
   role='FP8 index-key scoring over ~100K history per request on 21 full-indexer layers; 12.8 us/call in graph (b101).',
   pcvs='padded tokens L, splits S, pages, heads 1..32, dim 8..128, CTAs, in-bounds query rows',
@@ -86,11 +86,12 @@ CASES = [
            'scheduler loads (sm100_paged_mqa_logits.cuh:46 ceil_div on context_lens).'),
   fix=('BLOCK_Q=1 instantiation of the existing core (dg_bq1.cu): 8192 tensor FLOPs per token (exactly 4x less), '
        'identical KV/logit bytes; 40/40 drperf reference states pass.'),
-  fix_status='Standalone GPU win when L2-resident; harness A/B pending.',
+  fix_status='Measured in graph: -2%, not kept (HBM-bound in the step).',
   timing=('B300 standalone b112 (bitwise, 400222 logits): batch 4 hot 12.48 -> 10.78 us (1.16x), cold HBM 17.06 -> '
-          '16.86 us (1.01x); batch 1 hot 10.14 -> 8.58 us. In-graph the upstream kernel runs 12.8 us (b101), close '
-          'to the hot figure.'),
-  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b112'],
+          '16.86 us (1.01x); batch 1 hot 10.14 -> 8.58 us. In graph (b113 harness, GLM53_INDEXER_PAGED_BQ1): '
+          '12.83 -> 12.54 us/call (-2%), step unchanged, hot tokens exact - the step runs it in the HBM-bound regime, '
+          'so the 4x tensor-work cut and the modeled MMA/epilogue chain are hidden behind KV traffic.'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b112', PROF+'/glm53-gap-b113'],
   files=[EX+'/deepgemm_paged_logits/drivers/dg_bq1.cu', EX+'/deepgemm_paged_logits/drivers/dg_scoring.cu',
          EX+'/deepgemm_paged_logits/drivers/dg_bq4_driver.cc', EX+'/deepgemm_paged_logits/drivers/dg_bq1_driver.cc'],
   reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/dg_bq{4,1}_driver build/dg_bq{4,1}.so',
@@ -162,15 +163,19 @@ CASES = [
   reproduce=['see gpu/examples/fused_a_gemm (results/small2); python3 gpu/tools/latency_report.py gpu/examples/fused_a_gemm/results/small2'],
   credit=('DrPerf supplied the exact work interface and the (wrong) coverage hypothesis; the GPU sweep found the stage '
           'effect; the residency view in latency_report was added afterwards so DrPerf flags wave structure.')),
- dict(case='glm53-moe-routing-block-latency', label='EXPLAINED',
+ dict(case='glm53-moe-routing-block-latency', label='EXPLAINED (corrected)',
   kernel='FlashInfer 0.6.18 routingCustom::routingIndicesBlockKernel<float, bf16, 256, 8, SigmoidBias + ScaledSumNormalize>',
   role='DeepSeekV3-style MoE routing for <=4 tokens (top-8 of 256 experts, permutation/histogram outputs); 75 calls per decode step; identical kernel and launch (1x256) in vLLM.',
   pcvs='tokens 1..4, local experts 128/256, tile tokens 8/16, TK = tokens*8',
   finding=('One CTA of 256 lanes. Exact: global_read_bytes = 260*TK, unique = 128*TK + 1024, fp32_flops = 649*TK, '
-           'block barriers = 9 per launch (2304 lane arrivals), collective arrivals 84*TK + 608. Latency model: critical '
-           'path 10344..10596 units with 17 exposed global loads per launch, essentially constant in tokens: a fixed serial '
-           'chain of global round trips and block barriers on a single CTA. It is latency-bound by construction, which '
-           'explains the ~4.5 us floor seen in vLLM for 4 tokens.'),
+           'block barriers = 9 per launch (2304 lane arrivals), collective arrivals 84*TK + 608. The first latency model '
+           'reported a fixed chain of 17 dependent global loads (10344..10596 units); with the critical-lane chain and '
+           '-lineinfo source lines this turned out to be a model artifact: the loads are guarded by short forward branches '
+           '(RoutingKernel.cuh:127 score loads behind idx<numExperts, RoutingCustomPolicy.cuh:234 bias loads in a dtype '
+           'switch) that ptxas predicates. With if-conversion modeled the path is 2763 units (one exposed load plus '
+           'barriers): the kernel is short on its own, consistent with vLLM\'s 4.5 us, so our 22 us/call in graph '
+           '(1.57 ms/step) is queuing - the shared-expert GEMMs are enqueued first on the side stream and the 1-CTA '
+           'routing kernel waits for an SM.'),
   fix=('No kernel change from DrPerf. The CUPTI timeline shows our instance at 8..15 us when it overlaps the shared-expert '
        'GEMMs on the side stream (a single-CTA latency chain sharing SMs with GEMM CTAs); candidate fixes: higher priority '
        'for the main stream, or folding routing into the preceding MoE-front kernel.'),
