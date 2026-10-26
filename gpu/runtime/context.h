@@ -4,6 +4,8 @@
 #include <light/named_barrier.hh>
 #include <stdexcept>
 #include <string>
+#include <unordered_map>
+#include <vector>
 #include "latency.h"
 
 struct ThreadContext {
@@ -16,6 +18,18 @@ struct ThreadContext {
     bool latency_load_hit=false;  // set by the memory hook for the next latency issue
     DrperfGpuReady latency_async;  // completion of this lane's issued cp.async copies
     std::string last_site;
+    // Critical-lane breakdown: the lane clock advances by one per issue
+    // (latency_issue) or waits; waits beyond the issue slot are charged to the
+    // waiting site (dependency stalls and barrier/mbarrier/async joins), so
+    // latency_issue + sum(latency_stalls) == latency_clock.time exactly.
+    uint64_t latency_issue=0;
+    std::unordered_map<std::string,uint64_t> latency_stalls;
+    // Failed mbarrier try_wait loop: state after the first failed probe. On the
+    // eventual success the spin's issue slots are rolled back (hardware try_wait
+    // suspends the warp) and the lane joins the phase's completion instead.
+    struct Spin { uint64_t address=0, phase=0, failures=0, instructions=0, issue=0; DrperfGpuReady clock;
+                  std::vector<std::pair<std::string,uint64_t>> stalls; } latency_spin;  // stalls: undo log
+    DrperfGpuReady* const* latency_last_dst=nullptr; size_t latency_last_ndst=0;  // last issue's results
     uint64_t linear_block=0, cluster_barrier_token=0;
     NamedBarrierManager* barriers=nullptr;
 };

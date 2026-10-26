@@ -597,6 +597,53 @@ lookups) and is worth restructuring; a chain that disappears under it is a PTX
 ordering artifact that `ptxas` already removes (GLM-5.3 `attention_iw_prenorm`:
 58231 -> 8037 units, 132 -> 23 exposed loads per launch).
 
+### Where the critical path waits (`latency_report.py --stalls N [--warps]`)
+
+Every launch records `criticalLane`: the lane that finished last, with
+`path = issue + stalled` exactly. The lane clock advances one unit per issued
+instruction; any further advance is a stall charged to the waiting site:
+dependency stalls at the consumer, and barrier/mbarrier/async joins at the wait
+instruction. A cross-lane wait names what released it,
+`wait-site <- releasing-site [thread N]`, where the releasing site is an
+`mbarrier.arrive`, an async copy (`[async copy, thread N]`, TMA/cp.async
+completion) or a tensor-core MMA (`[tensor pipe, thread N]`). `chain` repeats the
+breakdown for the threads named that way, recursively (up to nine lanes), so a
+producer/consumer pipeline reads as a chain:
+
+```
+"flashmla.core.small" block 1 thread 0: path 12752 = issue 1092 + stalled 11660
+   5467  42.9%  K @ try_wait <- tcgen05.mma.ws.kind::f16 [tensor pipe, thread 128]
+  waited-on thread 128: ... 3171 24.9%  K @ try_wait <- mbarrier.arrive [thread 256]
+  waited-on thread 256: ... (dequant warpgroup) ...
+```
+
+`--warps` adds the slowest lane of every warp in the critical CTA. Lane totals
+cover the whole launch, not only the interval before the wait. Sites name the
+translated C++ line (`cppNNN:opcode`); retranslate the PTX to read it.
+
+### Tensor pipe (`DRPERF_GPU_TENSOR_FLOPS_PER_UNIT`, default 8192)
+
+`tcgen05.mma` used to be issue-only and `tcgen05.commit` arrived at the issuing
+lane's clock, so MMA completion cost nothing. Each CTA now has an in-order
+tensor pipe: an MMA starts at max(pipe free, issue) and occupies it for
+`FLOPs / rate` units (rate = 16-bit dense FLOPs per SM per unit, x2 for 8-bit
+operands, x4 for 4-bit, /2 for tf32, x2 per CTA for `cta_group::2`); the commit
+arrives `DRPERF_GPU_LATENCY_MMA` units after the pipe drains. B300 runs ~8192 dense
+BF16 FLOP/clock/SM. Small-M shapes (M=64) run below peak on hardware; the model
+does not distinguish them.
+
+### mbarrier spin loops
+
+Translated `try_wait` loops really spin on the CPU until another fiber arrives,
+and each probe used to count as issued work. A failed probe now snapshots the
+lane; when the same barrier phase completes after a tight retry loop (at most
+eight instructions per probe), the spin's issue slots and stalls are rolled back
+and the lane joins the phase completion instead, as a suspended warp would.
+The spun instructions are reported as `mbarrier_spin_lane_instructions` (they
+remain in `ptx_lane_instructions`; subtract them for work fits). In the FlashMLA
+decode core they were 18% of counted instructions and inflated the modeled
+critical path by 29%.
+
 ### Cache-hit latency for repeated lines (`DRPERF_GPU_LATENCY_GLOBAL_HIT`)
 
 When set, a global/generic load whose 128-byte lines were all touched earlier in

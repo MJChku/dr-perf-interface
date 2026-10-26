@@ -81,6 +81,68 @@ def rank_regions(report, sms=None, lanes_per_sm=None, threshold=4, region_patter
             'threshold': threshold, 'records': records, 'unavailableRegions': unavailable}
 
 
+def critical_lanes(report, region_pattern='*', top=12):
+    """Per region: the stall breakdown of the slowest modeled launch's critical lane.
+
+    path == issue + stalled exactly; each stall is the wait beyond the lane's own
+    issue slot charged to the waiting site (dependency, barrier, mbarrier or async
+    join), so the top sites say where the critical path waits."""
+    out = []
+    for region in report['regions']:
+        if not fnmatch.fnmatchcase(region['name'], region_pattern):
+            continue
+        lanes = [launch['criticalLane'] for row in region['observations']
+                 for launch in row.get('launches', []) if launch.get('criticalLane')]
+        if lanes:
+            lane = max(lanes, key=lambda c: c['path'])
+            out.append({'region': region['name'], **lane, 'stalls': lane['stalls'][:top]})
+    return out
+
+
+def readable_sites(names):
+    try:
+        sys.path.insert(0, str(__import__('pathlib').Path(__file__).resolve().parents[2]/'lib'))
+        from gpu_backend import short_sites
+        return short_sites(names)
+    except Exception:  # noqa: BLE001 - names stay mangled without the backend
+        return {n: n for n in names}
+
+
+def format_stalls(lanes, warps=False):
+    raw = {part.rsplit(' [', 1)[0] for lane in lanes
+           for item in [lane] + lane.get('chain', []) + (lane.get('warps', []) if warps else [])
+           for site, _ in item['stalls'] for part in site.split(' <- ')}
+    short = readable_sites(raw)
+    def name(site):
+        parts = []
+        for part in site.split(' <- '):
+            tag = ''
+            if part.endswith(']') and ' [' in part:
+                part, tag = part.rsplit(' [', 1)
+                tag = ' [' + tag
+            parts.append(short.get(part, part) + tag)
+        if len(parts) == 2 and parts[1].split(' @ ')[0] == parts[0].split(' @ ')[0]:
+            parts[1] = parts[1].split(' @ ', 1)[-1]  # same kernel: keep the site only
+        return ' <- '.join(parts)
+    lines = ['CRITICAL LANE STALLS (model units; path = issue + stalled; slowest launch per region)']
+    for lane in lanes:
+        lines.append(f'{json.dumps(lane["region"])} block {lane["block"]} thread {lane["thread"]}: path {lane["path"]} = '
+                     f'issue {lane["issue"]} + stalled {lane["stalled"]} over {lane["stallSites"]} sites')
+        for site, cycles in lane['stalls']:
+            lines.append(f'  {cycles:>8} {100*cycles/max(1, lane["path"]):5.1f}%  {name(site)}')
+        for cause in lane.get('chain', []):
+            lines.append(f'  waited-on thread {cause["thread"]}: path {cause["path"]} = issue {cause["issue"]} + '
+                         f'stalled {cause["stalled"]}')
+            for site, cycles in cause['stalls'][:8]:
+                lines.append(f'    {cycles:>8} {100*cycles/max(1, cause["path"]):5.1f}%  {name(site)}')
+        for w, warp in enumerate(lane.get('warps', []) if warps else []):
+            lines.append(f'  warp {w} (slowest thread {warp["thread"]}): path {warp["path"]} = issue {warp["issue"]} + '
+                         f'stalled {warp["stalled"]}')
+            for site, cycles in warp['stalls'][:6]:
+                lines.append(f'    {cycles:>8} {100*cycles/max(1, warp["path"]):5.1f}%  {name(site)}')
+    return '\n'.join(lines)
+
+
 def format_text(summary):
     lines = ['GPU LATENCY MODEL (not measured time)', summary['semantics'],
              f'Capture validity: {summary["captureValidity"]}',
@@ -108,8 +170,14 @@ def main(argv=None):
     parser.add_argument('--sms', type=int, help='override captured SM count')
     parser.add_argument('--lanes-per-sm', type=int, help='override captured lane proxy')
     parser.add_argument('--threshold', type=float, default=4)
+    parser.add_argument('--stalls', type=int, metavar='N', help='show the top N critical-lane stall sites per region')
+    parser.add_argument('--warps', action='store_true', help='with --stalls: also each warp of the critical CTA')
     args = parser.parse_args(argv)
     try:
+        if args.stalls:
+            lanes = critical_lanes(read_report(args.report), args.region, args.stalls)
+            print(json.dumps(lanes, indent=2) if args.json else format_stalls(lanes, args.warps))
+            return 0
         summary = rank_regions(read_report(args.report), args.sms, args.lanes_per_sm,
                                args.threshold, args.region)
         print(json.dumps(summary, indent=2, allow_nan=False) if args.json else format_text(summary))

@@ -1,0 +1,49 @@
+//
+// Thread 0 spins in a try_wait loop on an mbarrier; thread 1 runs a
+// 200-iteration loop (its back-edges yield to the other fiber, so thread 0
+// really spins), performs three dependent global loads (pointer chase) and
+// then arrives. The spinning
+// probes must not advance thread 0's modeled clock: it resumes when the
+// arrival completes the phase, and its stall names thread 1's arrive site.
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry spin(
+	.param .u64 spin_param_0,
+	.param .u64 spin_param_1
+)
+{
+	.reg .pred 	%p<4>;
+	.reg .b32 	%r<8>;
+	.reg .b64 	%rd<10>;
+	.shared .align 8 .b64 bar;
+	ld.param.u64 	%rd1, [spin_param_0];
+	ld.param.u64 	%rd2, [spin_param_1];
+	mov.u32 	%r1, %tid.x;
+	mov.u32 	%r2, bar;
+	setp.ne.u32 	%p1, %r1, 0;
+	@%p1 bra 	SKIP_INIT;
+	mbarrier.init.shared::cta.b64 [%r2], 1;
+SKIP_INIT:
+	bar.sync 	0;
+	@%p1 bra 	ARRIVER;
+	mov.u32 	%r3, 0;
+WAIT:
+	mbarrier.try_wait.parity.shared::cta.b64 %p2, [%r2], %r3;
+	@!%p2 bra 	WAIT;
+	ld.global.u64 	%rd8, [%rd1+24];
+	st.global.u64 	[%rd2], %rd8;
+	ret;
+ARRIVER:
+	mov.u32 	%r4, 0;
+BUSY:
+	add.u32 	%r4, %r4, 1;
+	setp.lt.u32 	%p3, %r4, 200;
+	@%p3 bra 	BUSY;
+	ld.global.u64 	%rd3, [%rd1];
+	ld.global.u64 	%rd4, [%rd3];
+	ld.global.u64 	%rd5, [%rd4];
+	st.global.u64 	[%rd2+8], %rd5;
+	mbarrier.arrive.shared::cta.b64 %rd6, [%r2];
+	ret;
+}

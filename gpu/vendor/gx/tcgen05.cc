@@ -29,6 +29,8 @@ extern "C" void drperf_gpu_resource(const char*, uint64_t);
 
 extern "C" uint64_t gx_cluster_shared_ptr(uint32_t address);
 extern "C" uint64_t gx_mbarrier_arrive(uint64_t address, uint32_t count, uint32_t expected_bytes);
+extern "C" uint64_t gx_mbarrier_arrive_tensor(uint64_t address);
+extern "C" void drperf_gpu_tensor_issue(uint64_t flops, uint32_t operand_bits, uint32_t cta_group);
 extern "C" uint32_t gx_dev_cluster_ctarank(void);
 extern "C" dim3 gx_dev_threadIdx(void);
 extern "C" dim3 gx_dev_blockDim(void);
@@ -475,9 +477,10 @@ extern "C" void gx_tcgen05_cp(uint32_t shape, uint32_t decompress, uint32_t cta_
 // issue, so the arrival is immediate. Multicast arrives on the mbarrier at the
 // same offset in every CTA of the mask.
 extern "C" void gx_tcgen05_commit(uint32_t mbar, uint32_t multicast, uint32_t mask) {
-    if (!multicast) { gx_mbarrier_arrive(gx_cluster_shared_ptr(mbar), 1, 0); return; }
+    // The latency model times the arrival at the issuing CTA's tensor-pipe drain.
+    if (!multicast) { gx_mbarrier_arrive_tensor(gx_cluster_shared_ptr(mbar)); return; }
     for (uint32_t rank = 0; rank < 16; ++rank)
-        if (mask & (1u << rank)) gx_mbarrier_arrive(gx_cluster_shared_ptr((rank << 24) | (mbar & 0xffffff)), 1, 0);
+        if (mask & (1u << rank)) gx_mbarrier_arrive_tensor(gx_cluster_shared_ptr((rank << 24) | (mbar & 0xffffff)));
 }
 
 // ---- tcgen05.mma ------------------------------------------------------------
@@ -1425,6 +1428,7 @@ extern "C" void gx_tcgen05_mma(uint32_t kind_code, uint32_t cta_group, uint32_t 
     const auto& in=op.in;
     drperf_gpu_resource(kind_code==3 ? "tensor_integer_ops" : "tensor_float_flops", uint64_t(2)*in.m*in.n*in.k);
     drperf_gpu_resource("tensor_mma_instructions",1);
+    drperf_gpu_tensor_issue(uint64_t(2)*in.m*in.n*in.k, format_bits(in.a), cta_group);
     const uint64_t ab=(uint64_t(in.m)*op.kc*format_bits(in.a)+7)/8;
     const uint64_t bb=(uint64_t(in.n)*in.k*format_bits(in.b)+7)/8;
     drperf_gpu_resource(a_is_tmem ? "tmem_read_bytes" : "shared_read_bytes",ab);

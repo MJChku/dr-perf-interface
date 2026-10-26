@@ -427,12 +427,12 @@ def short_sites(names):
     # drop template arguments so report lines name the kernel readably.
     funcs = sorted({n.split('_gxptx:')[0] for n in names if '_gxptx:' in n})
     # The translator appends '_' to the symbol before the _gxptx: suffix.
-    plain = [f[:-1] if f.startswith('_Z') and f.endswith('_') else f for f in funcs]
+    plain = [f[:-1] if f.endswith('_') else f for f in funcs]
     try:
         out = subprocess.run(['c++filt'], input='\n'.join(plain), capture_output=True,
                              text=True, timeout=30, check=True).stdout.splitlines()
     except (OSError, subprocess.SubprocessError):
-        out = funcs
+        out = plain
     def strip(d):
         r, depth = [], 0
         for c in d:

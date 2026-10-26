@@ -9,6 +9,7 @@
 #include "../vendor/gx/tcgen05.h"
 #include "../vendor/gx/mbarrier.h"
 #include <algorithm>
+#include <cmath>
 #include <atomic>
 #include <cstring>
 #include <dlfcn.h>
@@ -64,6 +65,8 @@ struct BlockState {
     size_t legacy_static_end=0;
     NamedBarrierManager barriers;
     GxTmemState tmem;
+    // Latency model: the CTA's tensor pipe executes tcgen05.mma in issue order.
+    uint64_t tensor_free=0;DrperfGpuReady tensor_ready;std::string tensor_site;
     explicit BlockState(unsigned threads):lanes(threads),device_lanes(threads),barriers(threads) {}
     ~BlockState() { if(shared){std::memset(shared,0,cap);arena_pool.put(shared,cap,mapping);} }
 };
@@ -84,6 +87,11 @@ struct LatencyConfig {
     uint64_t shared=value("DRPERF_GPU_LATENCY_SHARED",30);
     uint64_t mma=value("DRPERF_GPU_LATENCY_MMA",32);
     uint64_t sfu=value("DRPERF_GPU_LATENCY_SFU",20);
+    // Dense 16-bit tensor FLOPs per SM per model unit (8-bit operands 2x,
+    // 4-bit 4x, tf32 0.5x). One tcgen05.mma occupies the CTA's tensor pipe for
+    // flops / rate units; its commit arrives a further `mma` units after the pipe
+    // drains. B300: ~8192 dense BF16 FLOP/clock/SM.
+    uint64_t tensor_rate=value("DRPERF_GPU_TENSOR_FLOPS_PER_UNIT",8192,true);
     uint64_t sms=value("DRPERF_GPU_SM_COUNT",148,true);
     uint64_t lanes=value("DRPERF_GPU_LANES_PER_SM",128,true);
     // Optional residency split: a global load whose 128-byte lines were all
@@ -102,13 +110,15 @@ struct LatencyConfig {
             {"latency_model_global",global},{"latency_model_shared",shared},
             {"latency_model_mma",mma},{"latency_model_sfu",sfu},
             {"latency_model_sm_count",sms},{"latency_model_lanes_per_sm",lanes},
-            {"latency_model_schedule",schedule},{"latency_model_global_hit",global_hit}};
+            {"latency_model_schedule",schedule},{"latency_model_global_hit",global_hit},
+            {"latency_model_tensor_rate",tensor_rate}};
     }
 };
 struct Launch {
     LatencyConfig latency;
     std::unordered_set<uint64_t> touched_lines;  // residency classification only
     DrperfGpuReady latency_finish;
+    std::string critical_lane;  // JSON breakdown of the lane that set latency_finish
     Invocation* region;
     std::unique_ptr<Invocation> implicit_region;
     std::string kernel;
@@ -125,7 +135,9 @@ struct Launch {
     std::vector<unsigned char> cluster_launch; // 0 pending, 1 resident, 2 cancelled
     struct BarrierClock { uint64_t generation=0; std::vector<ThreadContext*> lanes; };
     std::map<void*,BarrierClock> barrier_lanes;
-    struct MbarrierClock { DrperfGpuReady pending; std::map<uint64_t,DrperfGpuReady> completed; };
+    // site: the arrival (or async completion) that set the phase's ready time.
+    struct MbarrierClock { DrperfGpuReady pending; std::string site;
+        std::map<uint64_t,std::pair<DrperfGpuReady,std::string>> completed; };
     std::map<uint64_t,MbarrierClock> mbarrier_clocks;
     GxMbarriers mbarriers;
     std::map<uint64_t,SplitBarrier> cluster_barriers;
@@ -255,6 +267,57 @@ void* symbol(void* module,const std::string& name) {
     if(error||!p)throw std::runtime_error("GPU module missing symbol "+name);
     return p;
 }
+std::string lane_breakdown_json(const ThreadContext& lane,uint64_t block,size_t top) {
+    std::vector<std::pair<uint64_t,std::string>> rows;
+    uint64_t stalled=0;
+    for(auto& [site,cycles]:lane.latency_stalls){rows.push_back({cycles,site});stalled+=cycles;}
+    std::sort(rows.begin(),rows.end(),[](auto& a,auto& b){return a.first!=b.first?a.first>b.first:a.second<b.second;});
+    std::ostringstream o;
+    o<<"{\"block\":"<<block<<",\"thread\":"<<(lane.threadIdx.x+lane.blockDim.x*(lane.threadIdx.y+lane.blockDim.y*lane.threadIdx.z))
+     <<",\"path\":"<<lane.latency_clock.time<<",\"issue\":"<<lane.latency_issue<<",\"stalled\":"<<stalled
+     <<",\"stallSites\":"<<rows.size()<<",\"stalls\":[";
+    for(size_t i=0;i<rows.size()&&i<top;++i){if(i)o<<',';o<<"["<<quoted(rows[i].second)<<","<<rows[i].first<<"]";}
+    o<<"]}";
+    return o.str();
+}
+// The critical lane plus the slowest lane of every warp in its CTA, so a wait
+// on another warp's arrival (named in the stall's "<- site") can be followed.
+// Threads named in "[... thread N]" cause tags of a lane's top stalls.
+static std::vector<unsigned> cause_threads(const ThreadContext& lane,size_t top) {
+    std::vector<std::pair<uint64_t,std::string>> rows;
+    for(auto& [site,cycles]:lane.latency_stalls)rows.push_back({cycles,site});
+    std::sort(rows.begin(),rows.end(),[](auto& a,auto& b){return a.first>b.first;});
+    std::vector<unsigned> out;
+    for(size_t i=0;i<rows.size()&&i<top;++i) {
+        auto at=rows[i].second.rfind("thread ");
+        if(rows[i].second.find(" <- ")==std::string::npos||at==std::string::npos)continue;
+        out.push_back(unsigned(std::stoul(rows[i].second.substr(at+7))));
+    }
+    return out;
+}
+std::string critical_lane_json(const BlockState& state,const ThreadContext& lane,uint64_t block) {
+    std::string out=lane_breakdown_json(lane,block,48);out.pop_back();
+    // Follow cross-lane waits: breakdowns of the threads whose arrivals (or
+    // tensor-pipe / async-copy issues) the critical lane waited on, recursively.
+    out+=",\"chain\":[";
+    std::vector<unsigned> todo=cause_threads(lane,4);std::set<unsigned> seen;
+    seen.insert(lane.threadIdx.x+lane.blockDim.x*(lane.threadIdx.y+lane.blockDim.y*lane.threadIdx.z));
+    bool first=true;
+    for(size_t i=0;i<todo.size()&&seen.size()<10;++i) {
+        if(!seen.insert(todo[i]).second||todo[i]>=state.lanes.size())continue;
+        const auto& cause=state.lanes[todo[i]];
+        if(!first)out+=',';first=false;out+=lane_breakdown_json(cause,block,12);
+        for(auto t:cause_threads(cause,4))todo.push_back(t);
+    }
+    out+="],\"warps\":[";
+    for(size_t w=0;w*32<state.lanes.size();++w) {
+        const ThreadContext* slow=&state.lanes[w*32];
+        for(size_t t=w*32;t<std::min(state.lanes.size(),w*32+32);++t)
+            if(drperf_latency::later(state.lanes[t].latency_clock,slow->latency_clock))slow=&state.lanes[t];
+        if(w)out+=',';out+=lane_breakdown_json(*slow,block,12);
+    }
+    return out+"]}";
+}
 void latency_record(ThreadContext* lane) {
     latency_metrics(active->sites[lane->last_site].metrics,lane->latency_clock);
     auto& b=*active->blocks.at(lane->linear_block);
@@ -266,8 +329,18 @@ void latency_record(ThreadContext* lane) {
             {clock.time-start.time,clock.loads>start.loads?clock.loads-start.loads:0,0});
     }
 }
-void latency_join(ThreadContext* lane,const DrperfGpuReady& source) {
-    drperf_latency::join(lane->latency_clock,source);latency_record(lane);
+void latency_charge(ThreadContext* lane,uint64_t before,bool issue,const std::string* cause=nullptr) {
+    const uint64_t delta=lane->latency_clock.time-before,own=issue&&delta?1:0;
+    lane->latency_issue+=own;
+    if(delta>own) {
+        const std::string site=cause&&!cause->empty()?lane->last_site+" <- "+*cause:lane->last_site;
+        lane->latency_stalls[site]+=delta-own;
+        if(lane->latency_spin.failures)lane->latency_spin.stalls.push_back({site,delta-own});
+    }
+}
+void latency_join(ThreadContext* lane,const DrperfGpuReady& source,const std::string* cause=nullptr) {
+    const uint64_t before=lane->latency_clock.time;
+    drperf_latency::join(lane->latency_clock,source);latency_charge(lane,before,false,cause);latency_record(lane);
     // A join is a control boundary for the basic-block schedule.
     lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
 }
@@ -435,11 +508,15 @@ extern "C" void drperf_gpu_launch_cluster(void* module,const char* kernel,dim3 g
             for(auto& [b,state]:l.blocks) {
                 finish_device_block(*state);
                 uint64_t max_f=0,max_b=0,max_i=0;
+                const ThreadContext* slowest=nullptr;
                 for(auto& lane:state->lanes) {
                     max_f=std::max(max_f,lane.flops);max_b=std::max(max_b,lane.bytes);
                     max_i=std::max(max_i,lane.instructions);
-                    drperf_latency::join(l.latency_finish,lane.latency_clock);
+                    if(!slowest||drperf_latency::later(lane.latency_clock,slowest->latency_clock))slowest=&lane;
                 }
+                if(slowest&&drperf_latency::later(slowest->latency_clock,l.latency_finish))
+                    l.critical_lane=critical_lane_json(*state,*slowest,b);
+                if(slowest)drperf_latency::join(l.latency_finish,slowest->latency_clock);
                 l.metrics["sum_block_max_lane_flops"]+=max_f;
                 l.metrics["sum_block_max_lane_bytes"]+=max_b;
                 l.metrics["sum_block_lane_sequence_span"]+=max_i;
@@ -462,7 +539,9 @@ extern "C" void drperf_gpu_launch_cluster(void* module,const char* kernel,dim3 g
             std::ostringstream shape;
             shape<<"{\"kernel\":"<<quoted(kernel)<<",\"grid\":["<<grid.x<<','<<grid.y<<','<<grid.z
                  <<"],\"block\":["<<block.x<<','<<block.y<<','<<block.z<<"],\"metricScope\":\"inclusive\",\"footprintVersion\":"<<(l.footprint_available?1:0)
-                 <<",\"metrics\":"<<object(l.footprint.counts(l.metrics))<<",\"sites\":"<<sites_json(l.sites)<<'}';
+                 <<",\"metrics\":"<<object(l.footprint.counts(l.metrics))<<",\"sites\":"<<sites_json(l.sites);
+            if(!l.critical_lane.empty())shape<<",\"criticalLane\":"<<l.critical_lane;
+            shape<<'}';
             l.region->launches.push_back(shape.str());
             if(l.implicit_region){emit(*l.region);--open_regions;++completed_regions;}
         } else if(std::getenv("DRPERF_GPU_CAPTURE")) {
@@ -529,6 +608,7 @@ extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t
     need_launch();if(device_registration())return;auto* lane=gx_thread_context();
     const bool hit=(cls==2||cls==6)&&lane->latency_load_hit;lane->latency_load_hit=false;
     const uint64_t op_latency=hit?active->latency.global_hit:active->latency.latency(cls);
+    const uint64_t before=lane->latency_clock.time;
     DrperfGpuReady ready;
     if(active->latency.schedule) {
         ready=drperf_latency::issue_block(lane->latency_clock,lane->latency_block_floor,lane->latency_block_issued,
@@ -542,7 +622,9 @@ extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t
             lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
         }
     } else ready=drperf_latency::issue(lane->latency_clock,src,nsrc,op_latency,cls==2);
+    latency_charge(lane,before,true);
     for(size_t i=0;i<ndst;++i)*dst[i]=ready;
+    lane->latency_last_dst=dst;lane->latency_last_ndst=ndst;
     if(record)latency_record(lane);
 }
 extern "C" void drperf_gpu_latency_predicated_off(const char* fn,const char* op,unsigned site,
@@ -623,9 +705,19 @@ long gx_current_linear_block(){need_launch();return gx_thread_context()->linear_
 extern "C" void gx_mbarrier_init(uint64_t a,uint32_t n){
     need_launch();active->mbarriers.init(a,n);active->mbarrier_clocks.erase(a);
 }
-static void mbarrier_clock_arrival(uint64_t a,uint64_t phase,const DrperfGpuReady* at=nullptr) {
-    auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,at?*at:gx_thread_context()->latency_clock);
-    if(active->mbarriers.phase(a)!=phase) {c.completed[phase]=c.pending;c.pending={};}
+static std::string by_thread(const ThreadContext* lane,const char* what) {
+    return std::string(" [")+what+"thread "+std::to_string(lane->threadIdx.x+lane->blockDim.x*(lane->threadIdx.y+lane->blockDim.y*lane->threadIdx.z))+"]";
+}
+static void mbarrier_clock_pending(uint64_t a,const DrperfGpuReady& at,const std::string& site) {
+    auto& c=active->mbarrier_clocks[a];
+    if(drperf_latency::later(at,c.pending)||c.site.empty())c.site=site;
+    drperf_latency::join(c.pending,at);
+}
+static void mbarrier_clock_arrival(uint64_t a,uint64_t phase,const DrperfGpuReady* at=nullptr,const std::string* site=nullptr) {
+    auto* lane=gx_thread_context();
+    mbarrier_clock_pending(a,at?*at:lane->latency_clock,site?*site:lane->last_site+by_thread(lane,""));
+    auto& c=active->mbarrier_clocks[a];
+    if(active->mbarriers.phase(a)!=phase) {c.completed[phase]={c.pending,c.site};c.pending={};c.site.clear();}
 }
 // Data delivered by an asynchronous copy is ready a global latency after issue.
 static DrperfGpuReady async_ready_from_now() {
@@ -635,8 +727,9 @@ static DrperfGpuReady async_ready_from_now() {
 extern "C" void gx_cp_async_mbarrier_arrive(uint64_t a,uint32_t noinc) {
     need_launch();auto* lane=gx_thread_context();
     DrperfGpuReady at=lane->latency_clock;drperf_latency::join(at,lane->latency_async);
-    if(noinc) {auto phase=active->mbarriers.arrive(a,1,0);mbarrier_clock_arrival(a,phase,&at);}
-    else {auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,at);}
+    if(noinc) {auto phase=active->mbarriers.arrive(a,1,0);const auto site=lane->last_site+by_thread(lane,"async copy, ");
+        mbarrier_clock_arrival(a,phase,&at,&site);}
+    else mbarrier_clock_pending(a,at,lane->last_site+by_thread(lane,"async copy, "));
 }
 extern "C" void gx_cp_async_wait() {
     need_launch();auto* lane=gx_thread_context();
@@ -648,16 +741,59 @@ extern "C" uint64_t gx_mbarrier_arrive(uint64_t a,uint32_t n,uint32_t b){
 extern "C" void gx_mbarrier_complete_tx(uint64_t a,uint32_t n){
     // TMA / bulk copies: the transaction completes a global latency after issue.
     need_launch();auto phase=active->mbarriers.phase(a);active->mbarriers.complete_tx(a,n);
-    auto at=async_ready_from_now();mbarrier_clock_arrival(a,phase,&at);
+    auto at=async_ready_from_now();const std::string site=gx_thread_context()->last_site+by_thread(gx_thread_context(),"async copy, ");
+    mbarrier_clock_arrival(a,phase,&at,&site);
+}
+// tcgen05.mma: occupy the CTA's tensor pipe (see LatencyConfig::tensor_rate).
+extern "C" void drperf_gpu_tensor_issue(uint64_t flops,uint32_t operand_bits,uint32_t cta_group) {
+    need_launch();if(device_registration())return;auto* lane=gx_thread_context();
+    auto& b=current_block();const auto& cfg=active->latency;
+    const long double rate=(long double)cfg.tensor_rate*16/std::max<uint32_t>(operand_bits,1)*std::max<uint32_t>(cta_group,1);
+    const uint64_t cost=std::max<uint64_t>(1,(uint64_t)std::ceil((long double)flops/rate));
+    b.tensor_free=std::max(b.tensor_free,lane->latency_clock.time)+cost;
+    b.tensor_ready={b.tensor_free+cfg.mma,lane->latency_clock.loads,0};b.tensor_site=lane->last_site+by_thread(lane,"tensor pipe, ");
+}
+// tcgen05.commit: the arrival happens when the CTA's tensor pipe has drained.
+extern "C" uint64_t gx_mbarrier_arrive_tensor(uint64_t a){
+    need_launch();auto* lane=gx_thread_context();auto& b=current_block();
+    DrperfGpuReady at=lane->latency_clock;std::string site=lane->last_site+by_thread(lane,"");
+    if(drperf_latency::later(b.tensor_ready,at)){at=b.tensor_ready;site=b.tensor_site;}
+    auto phase=active->mbarriers.arrive(a,1,0);mbarrier_clock_arrival(a,phase,&at,&site);return phase;
 }
 extern "C" void gx_mbarrier_expect_tx(uint64_t a,uint32_t n){need_launch();active->mbarriers.expect_tx(a,n);}
 static void mbarrier_clock_wait(uint64_t a,uint64_t phase) {
     auto& completed=active->mbarrier_clocks[a].completed;auto it=completed.find(phase);
-    if(it!=completed.end())latency_join(gx_thread_context(),it->second);
+    if(it!=completed.end())latency_join(gx_thread_context(),it->second.first,&it->second.second);
 }
 extern "C" int gx_mbarrier_test(uint64_t a,uint64_t t,int p){
     need_launch();bool done=active->mbarriers.test(a,t,p);
-    if(done)mbarrier_clock_wait(a,p?active->mbarriers.phase(a)-1:t);
+    auto* lane=gx_thread_context();auto& spin=lane->latency_spin;
+    if(!done) {
+        if(!spin.failures||spin.address!=a||spin.phase!=t)
+            spin={a,t,0,lane->instructions,lane->latency_issue,lane->latency_clock,{}};
+        ++spin.failures;
+        return done;
+    }
+    bool rolled=false;
+    if(spin.failures&&spin.address==a&&spin.phase==t) {
+        // Only a tight retry loop (a few instructions per probe) is rolled back;
+        // work done between probes keeps its issue time.
+        const uint64_t spun=lane->instructions-spin.instructions;
+        if(spun<=8*spin.failures+8&&!device_registration()) {
+            active->metrics["mbarrier_spin_lane_instructions"]+=spun;
+            lane->latency_clock=spin.clock;lane->latency_issue=spin.issue;
+            for(auto& [site,cycles]:spin.stalls)
+                if((lane->latency_stalls[site]-=cycles)==0)lane->latency_stalls.erase(site);
+            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+            rolled=true;
+        }
+    }
+    spin.failures=0;spin.stalls.clear();
+    mbarrier_clock_wait(a,p?active->mbarriers.phase(a)-1:t);
+    // The probe's predicate was timed at the last spin iteration; after a
+    // rollback it is ready one ALU latency after the (joined) lane clock.
+    if(rolled)for(size_t i=0;i<lane->latency_last_ndst;++i)
+        *lane->latency_last_dst[i]={lane->latency_clock.time+active->latency.alu,lane->latency_clock.loads,0};
     return done;
 }
 extern "C" void gx_mbarrier_wait(uint64_t a,uint64_t t,uint32_t p){
