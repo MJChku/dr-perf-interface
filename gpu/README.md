@@ -601,7 +601,11 @@ combine's serialized loads of freshly written FP32 partials saved ~340 ns each
 (9.0 -> 5.6 us after 12 -> 2). Every small graph-launched kernel also kept a
 ~3-4 us floor the model does not represent. Model units are therefore not
 convertible to time without residency information; use them to rank chains and
-to compare variants of the same kernel.
+to compare variants of the same kernel. Further B300 observations: removing 26 modeled
+exposed waits from the 256-CTA MoE router (`moe_front_prenorm`, activations re-read by
+every CTA and therefore L2-resident, ~8 resident warps per SM) saved only ~0.4 us
+(10.4 -> 10.0 us); the per-lane model has no warp-level latency hiding, so chains in
+kernels with many resident warps over-predict their gain.
 
 The ranking helper accepts report directories, JSON and JSON.gz. It sorts
 regions by the sum of their inclusive launch paths, equivalent to mean path

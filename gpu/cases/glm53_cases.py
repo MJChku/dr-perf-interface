@@ -143,9 +143,10 @@ CASES = [
            'bitwise. The new latency_report residency columns (CTAs/SM from shared memory and threads, waves) expose '
            'that wave structure directly.'),
   fix='GLM53_FUSED_A_K2048_STAGE4 (gen-glm53-decode-step glue-eager-checks e74147cd).',
-  fix_status='Implemented; harness benchmark requested.',
-  timing='Standalone B300 (b108): see finding. In-graph b101 CUPTI (inclusive, PDL): 2624 7.8, 2752 11.8, 8192 14.2, 12288 17.9 us.',
-  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b108'],
+  fix_status='Implemented, token-exact, merge-ready.',
+  timing=('Standalone B300 (b108): see finding. In-graph (b109 CUPTI): 2048->8192 13.38 -> 12.1 us, 2048->12288 17.4 -> 16.4 us '
+          '(-0.095 ms/step), harness step -0.05..-0.13 ms uniform, hot tokens exact.'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b108', PROF+'/glm53-gap-b109'],
   files=[EX+'/fused_a_gemm/kernels.cu', EX+'/fused_a_gemm/driver.cc'],
   reproduce=['see gpu/examples/fused_a_gemm (results/small2); python3 gpu/tools/latency_report.py gpu/examples/fused_a_gemm/results/small2'],
   credit=('DrPerf supplied the exact work interface and the (wrong) coverage hypothesis; the GPU sweep found the stage '
@@ -206,6 +207,27 @@ CASES = [
              'A/B: build/ab_driver build/kernels.so build/kernels_eager.so (kernels_eager = -DGLM53_ENABLE_DECODE_EAGER_CHECKS)'],
   credit=('DrPerf latency model with site attribution found the chains; the basic-block schedule (added for this case) '
           'separates real dependence chains from PTX-order artifacts.')),
+ dict(case='glm53-prenorm-dot-row-branches', label='FOUND',
+  kernel='GLM prenorm_dot (moe_front_prenorm router CTAs, attention_iw_prenorm)',
+  role='BF16 activation x FP32 weight-row dots: 256 router CTAs per MoE layer (75/step, ~10.8 us/call) and 32 indexer-weight CTAs (21/step).',
+  pcvs='rows 1..4 at production width 6144 (front_driver; one launch per width)',
+  finding=('Latency model (basic-block schedule) with site attribution: the router CTA critical path at w4 is 11945 units with '
+           '32 exposed global loads, one per (activation step, row): the activation loop loads one row, branches on '
+           '`if (t < m)`, consumes it, then loads the next row, so the four rows\' loads never overlap. A first attempt '
+           '(branch-free `t < m ? load : 0` selects) lowered to predicated loads and did not help in the model; a '
+           'compile-time row count (switch on m once, template body) removes the per-row branches.'),
+  fix=('GLM53_ENABLE_DECODE_PRENORM_STATIC_ROWS (gen-glm53-decode-step glue-eager-checks d55406d8): bitwise outputs '
+       '(drperf A/B: packed NVFP4, scales, router logits and indexer weights identical for rows 1..4); model w4 6625 / 6 '
+       'exposed, constant across widths.'),
+  fix_status='Implemented, token-exact; small measured gain.',
+  timing=('b110 CUPTI: moe_front_prenorm 10.4 -> 10.0 us/call (-0.03 ms/step), attention_iw_prenorm 11.1 -> 10.7-11.0 us; '
+          'harness step -0.03..-0.18 ms (noisy); hot tokens exact. The model over-predicts: removing 26 exposed waits '
+          'saved ~0.4 us, because the activations are L2-resident (re-read by 256 CTAs) and ~8 warps per SM hide much of '
+          'the per-lane chain - the per-lane model has no warp-level latency hiding.'),
+  receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b110'],
+  files=[EX+'/glm53_decode_glue/front_driver.cc', EX+'/glm53_decode_glue/ab_prenorm.cc'],
+  reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/front_driver build/kernels{,_sr}.so (kernels_sr = -DGLM53_ENABLE_DECODE_PRENORM_STATIC_ROWS)'],
+  credit='DrPerf latency model + site attribution found it and checked the fix before GPU time.'),
 ]
 
 def write_case(c):

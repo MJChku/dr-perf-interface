@@ -16,11 +16,11 @@ Exact: global_unique_read_bytes = 2*M*K + 2*tokens*K, tensor_float_flops = 16*M*
 
 GLM53_FUSED_A_K2048_STAGE4 (gen-glm53-decode-step glue-eager-checks e74147cd).
 
-Fix status: **Implemented; harness benchmark requested.**
+Fix status: **Implemented, token-exact, merge-ready.**
 
 ## Measured timing (not from DrPerf)
 
-Standalone B300 (b108): see finding. In-graph b101 CUPTI (inclusive, PDL): 2624 7.8, 2752 11.8, 8192 14.2, 12288 17.9 us.
+Standalone B300 (b108): see finding. In-graph (b109 CUPTI): 2048->8192 13.38 -> 12.1 us, 2048->12288 17.4 -> 16.4 us (-0.095 ms/step), harness step -0.05..-0.13 ms uniform, hot tokens exact.
 
 ## Credit
 
@@ -34,6 +34,7 @@ DrPerf supplied the exact work interface and the (wrong) coverage hypothesis; th
 
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b101
 - /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b108
+- /home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b109
 
 ## Copied sources
 

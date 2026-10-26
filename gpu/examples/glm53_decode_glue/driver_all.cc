@@ -4,6 +4,7 @@
 // PCVs: rows (w), history (T), selected (K), blocks (ceil(T/128)) where meaningful.
 #include "drperf_gpu.h"
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
@@ -41,6 +42,7 @@ struct Cache {  // 4 requests, histories up to MAXT, 256-token pages
   }
   void set_history(int t) { for (int r = 0; r < REQ; ++r) { views[r].logical_length = t + r + 1; views[r].reserved_tokens = t + 512; } }
 };
+static bool want(char k) { const char* only = std::getenv("DRIVER_ONLY"); return !only || std::strchr(only, k); }
 int main(int argc, char** argv) { try {
   if (argc != 2) return 2;
   drperf::gpu::Module mod(argv[1]); Cache c;
@@ -70,46 +72,46 @@ int main(int argc, char** argv) { try {
     for (int r = 0; r < 4; ++r) for (int j = 0; j < k; ++j) ids[size_t(r) * k + j] = (lens[r] > k) ? int(int64_t(j) * (lens[r] - 1) / (k - 1)) : (j < lens[r] ? j : -1);
     const long long kk = k, tt = t, ww = w, bb = (t + 127) / 128;
     // A. q-rank norm + kv post (+ KV cache write) + indexer-K preparation (FUSE_PREPK).
-    { int stride = N1, qrank = QR, latent = LAT, rope = ROPE, idim = IK, rows = w, qs = 4; float eps = 1e-5f;
+    if (want('A')) { int stride = N1, qrank = QR, latent = LAT, rope = ROPE, idim = IK, rows = w, qs = 4; float eps = 1e-5f;
       auto* m = merged.data(); auto *pqa = qa.data(), *pqr = qr.data(), *pka = ka.data(), *pklr = klr.data(), *pkl = kl.data(), *pkr = kr.data(), *pik = ik.data();
       const float *pqw = qw.data(), *pklw = klw.data(), *pf = freq.data(), *pikw = ikw.data(), *pikb = ikb.data(); auto* pqrb = qrb.data(); const int* ppos = pos.data();
       PagedFp8LayerView* pv = views; const int* prv = rv.data(); int* perr = errors.data();
       void* a[] = {&m, &stride, &qrank, &latent, &rope, &idim, &pqa, &pqw, &pqr, &pqrb, &pka, &pklr, &pkl, &pkr, &pklw, &ppos, &pf, &pv, &prv, &perr, &pik, &rows, &qs, &eps, &eps, &pikw, &pikb, &eps};
       drperf::gpu::Region rg("qrank_kv_ik_pk", {{"rows", ww}, {"history", tt}}); mod.launch(K_QRANK, dim3(w, qs + 2), dim3(128), a); }
     // B. q post + indexer-Q copy + FlashMLA query layout (CORE_GLUE).
-    { int stride = HQ * QW + IQW, tokens = w, heads = HQ, nope = NOPE, rope = ROPE, iqw = IQW, latent = LAT; auto* m = merged2.data();
+    if (want('B')) { int stride = HQ * QW + IQW, tokens = w, heads = HQ, nope = NOPE, rope = ROPE, iqw = IQW, latent = LAT; auto* m = merged2.data();
       float *pq = q.data(), *pqn = qn.data(), *pqro = qrope.data(), *pqj = qj.data(), *piq = iq.data(); const int* ppos = pos.data(); const float* pf = freq.data();
       auto *pa = qnope_bf.data(), *pb = qbq.data(); void* a[] = {&m, &stride, &pq, &pqn, &pqro, &pqj, &ppos, &pf, &tokens, &heads, &nope, &rope, &piq, &iqw, &pa, &pb, &latent};
       const unsigned blocks = unsigned((size_t(w) * HQ * QW + size_t(w) * IQW + 127) / 128);
       drperf::gpu::Region rg("q_post_iq_flash", {{"rows", ww}, {"history", tt}}); mod.launch(K_QPOST, dim3(blocks), dim3(128), a); }
     // C. indexer Q preparation.
-    { const float *piq = iq.data(), *piw = iw.data(), *pf = freq.data(); const int* ppos = pos.data(); int rows = w; auto* pq8 = q8.data(); auto* pw = wout.data();
+    if (want('C')) { const float *piq = iq.data(), *piw = iw.data(), *pf = freq.data(); const int* ppos = pos.data(); int rows = w; auto* pq8 = q8.data(); auto* pw = wout.data();
       void* a[] = {&piq, &piw, &ppos, &pf, &rows, &pq8, &pw};
       drperf::gpu::Region rg("indexer_prepare_q", {{"rows", ww}, {"history", tt}}); mod.launch(K_PREPQ, dim3((w * 32 + 3) / 4), dim3(128), a); }
     // D. decode tables (DeepGEMM block table + context lengths), once per step.
-    { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *ppos = pos.data(); int rows = w, mb = max_blocks; int *pbt = block_table.data(), *pc = ctx.data(), *perr = errors.data();
+    if (want('D')) { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *ppos = pos.data(); int rows = w, mb = max_blocks; int *pbt = block_table.data(), *pc = ctx.data(), *perr = errors.data();
       void* a[] = {&pv, &prv, &ppos, &rows, &mb, &pbt, &pc, &perr};
       drperf::gpu::Region rg("indexer_decode_tables", {{"rows", ww}, {"history", tt}, {"blocks", bb * ww}}); mod.launch(K_TABLES, dim3(w), dim3(256), a); }
     // E. selected address (CORE_GLUE dense-short + physical rows).
-    { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *ppos = pos.data(), *pl = lens.data(); int *pid = ids.data(), *pph = phys.data(), *perr = errors.data();
+    if (want('E')) { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *ppos = pos.data(), *pl = lens.data(); int *pid = ids.data(), *pph = phys.data(), *perr = errors.data();
       int rows = w, req = REQ, cnt = k, ld = LAT, rd = ROPE; bool dense = true;
       void* a[] = {&pv, &prv, &ppos, &pl, &pid, &pph, &perr, &rows, &req, &cnt, &ld, &rd, &dense};
       drperf::gpu::Region rg("dc_selected_address", {{"rows", ww}, {"history", tt}, {"selected", kk * ww}}); mod.launch(K_ADDR, dim3(unsigned((size_t(w) * k / 4 + 255) / 256)), dim3(256), a); }
     // F. FlashMLA V32 gather of the selected rows.
-    { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *pph = phys.data(); auto* pkv = kv.data(); int* pidx = idx.data(); auto* perr = reinterpret_cast<unsigned*>(errors.data());
+    if (want('F')) { const PagedFp8LayerView* pv = views; const int *prv = rv.data(), *pph = phys.data(); auto* pkv = kv.data(); int* pidx = idx.data(); auto* perr = reinterpret_cast<unsigned*>(errors.data());
       int rows = w, req = REQ, selected = k, topk = k, latent = LAT, rot = ROPE;
       void* a[] = {&pv, &prv, &pph, &pkv, &pidx, &perr, &rows, &req, &selected, &topk, &latent, &rot};
       drperf::gpu::Region rg("decode_gather_v32", {{"rows", ww}, {"history", tt}, {"selected", kk * ww}}); mod.launch(K_GATHER, dim3(unsigned((size_t(w) * k * 32 + 255) / 256)), dim3(256), a); }
     if (t != 32 && !(pass && t == 100000)) continue;  // width-only kernels: one training history (+ one held-out check at T=100000)
     // G. MoE front (pre-normalized input): NVFP4 quant + router.
-    { auto* px = xb.data(); const float* pr = router.data(); auto *pp = packed.data(), *ps = scales.data(); float* pl = logits.data(); int rows = w, width = H, ex = E, sl = 8; float ts = 1.f / 448.f;
+    if (want('G')) { auto* px = xb.data(); const float* pr = router.data(); auto *pp = packed.data(), *ps = scales.data(); float* pl = logits.data(); int rows = w, width = H, ex = E, sl = 8; float ts = 1.f / 448.f;
       void* a[] = {&px, &pr, &pp, &ps, &pl, &rows, &width, &ex, &sl, &ts};
       drperf::gpu::Region rg("moe_front_prenorm", {{"rows", ww}}); mod.launch(K_FRONT, dim3(w * 8 + E), dim3(128), a, H * 4); }
     // H. indexer weights from the pre-normalized input.
-    { auto* px = xb.data(); const float* pw = iwm.data(); float* po = iwo.data(); int rows = w, heads = IH, width = H; void* a[] = {&px, &pw, &po, &rows, &heads, &width};
+    if (want('H')) { auto* px = xb.data(); const float* pw = iwm.data(); float* po = iwo.data(); int rows = w, heads = IH, width = H; void* a[] = {&px, &pw, &po, &rows, &heads, &width};
       drperf::gpu::Region rg("attention_iw_prenorm", {{"rows", ww}}); mod.launch(K_IW, dim3(w * IH), dim3(128), a, H * 4); }
     // I. BF16 combine, SwiGLU, casts.
-    { auto *pr = routed.data(), *ps = shared.data(), *po = bcast.data(); size_t n = size_t(w) * H; void* a[] = {&pr, &ps, &po, &n};
+    if (want('I')) { auto *pr = routed.data(), *ps = shared.data(), *po = bcast.data(); size_t n = size_t(w) * H; void* a[] = {&pr, &ps, &po, &n};
       drperf::gpu::Region rg("combine_shared_bf16", {{"rows", ww}}); mod.launch(K_COMBINE, dim3(unsigned((n + 127) / 128)), dim3(128), a); }
     { auto* pg = gate_up.data(); auto* pa = act.data(); int rows = w, half = F; void* a[] = {&pg, &pa, &rows, &half};
       drperf::gpu::Region rg("gate_up_swiglu_rows", {{"rows", ww}}); mod.launch(K_SWIGLU, dim3((F + 127) / 128, w), dim3(128), a); }
