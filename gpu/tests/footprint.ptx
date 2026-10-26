@@ -1,0 +1,114 @@
+// Hand-written CPU-only fixtures; all global buffers are 128-byte aligned.
+.version 8.0
+.target sm_90
+.address_size 64
+
+.extern .func __drperf_gpu_device_begin_v2(.param .b64 name, .param .b32 scope);
+.extern .func __drperf_gpu_device_end_v1();
+.extern .func __drperf_gpu_device_ready_v2();
+.global .align 1 .b8 outer_name[6] = {111,117,116,101,114,0};
+.global .align 1 .b8 inner_name[6] = {105,110,110,101,114,0};
+
+.visible .entry footprint(.param .u64 input, .param .u64 output,
+                          .param .u32 stride, .param .u32 store_stride, .param .u32 offset)
+{
+ .reg .b64 %d<6>;
+ .reg .b32 %r<8>;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.param.u32 %r0,[stride];
+ ld.param.u32 %r1,[store_stride];
+ ld.param.u32 %r2,[offset];
+ mov.u32 %r3,%tid.x;
+ mad.lo.u32 %r4,%r3,%r0,%r2;
+ mul.wide.u32 %d2,%r4,4;
+ add.u64 %d3,%d0,%d2;
+ ld.global.u32 %r5,[%d3];
+ mul.lo.u32 %r6,%r3,%r1;
+ mul.wide.u32 %d4,%r6,4;
+ add.u64 %d5,%d1,%d4;
+ st.global.u32 [%d5],%r5;
+ ret;
+}
+
+.visible .entry generic_footprint(.param .u64 input, .param .u64 output)
+{
+ .reg .b64 %d<2>;
+ .reg .b32 %r;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.u32 %r,[%d0];
+ st.u32 [%d1],%r;
+ ret;
+}
+
+.visible .entry atomic_footprint(.param .u64 input)
+{
+ .reg .b64 %d;
+ .reg .b32 %r;
+ ld.param.u64 %d,[input];
+ atom.global.add.u32 %r,[%d],1;
+ ret;
+}
+
+// The host and outer device region both read the same word. Subtracting
+// device unique counts from inclusive unique counts would be incorrect.
+.visible .entry scoped_footprint(.param .u64 input, .param .u32 scope)
+{
+ .reg .b64 %d<4>;
+ .reg .b32 %r<4>;
+ ld.param.u64 %d0,[input];
+ ld.param.u32 %r0,[scope];
+ ld.global.u32 %r1,[%d0];
+ mov.u64 %d1,outer_name;
+ {
+  .param .b64 arg_name;
+  .param .b32 arg_scope;
+  st.param.b64 [arg_name],%d1;
+  st.param.b32 [arg_scope],%r0;
+  call.uni __drperf_gpu_device_begin_v2,(arg_name,arg_scope);
+  call.uni __drperf_gpu_device_ready_v2,();
+ }
+ ld.global.u32 %r2,[%d0];
+ mov.u64 %d2,inner_name;
+ {
+  .param .b64 arg_name;
+  .param .b32 arg_scope;
+  st.param.b64 [arg_name],%d2;
+  st.param.b32 [arg_scope],%r0;
+  call.uni __drperf_gpu_device_begin_v2,(arg_name,arg_scope);
+  call.uni __drperf_gpu_device_ready_v2,();
+ }
+ add.u64 %d3,%d0,32;
+ ld.global.u32 %r3,[%d3];
+ call.uni __drperf_gpu_device_end_v1,();
+ call.uni __drperf_gpu_device_end_v1,();
+ ret;
+}
+
+.visible .entry vector_footprint(.param .u64 input, .param .u64 output)
+{
+ .reg .b64 %d<3>;
+ .reg .b32 %r<5>;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ mov.u32 %r0,%tid.x;
+ mul.wide.u32 %d2,%r0,16;
+ add.u64 %d0,%d0,%d2;
+ add.u64 %d1,%d1,%d2;
+ ld.global.v4.u32 {%r1,%r2,%r3,%r4},[%d0];
+ st.global.v4.u32 [%d1],{%r1,%r2,%r3,%r4};
+ ret;
+}
+
+// Stride is twice the logical row width: holes must stay out of the union.
+.visible .entry wmma_footprint(.param .u64 input, .param .u64 output)
+{
+ .reg .b64 %d<2>;
+ .reg .f32 %f<8>;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ wmma.load.c.sync.aligned.row.m16n16k16.global.f32 {%f0,%f1,%f2,%f3,%f4,%f5,%f6,%f7},[%d0],32;
+ wmma.store.d.sync.aligned.row.m16n16k16.global.f32 [%d1],{%f0,%f1,%f2,%f3,%f4,%f5,%f6,%f7},32;
+ ret;
+}

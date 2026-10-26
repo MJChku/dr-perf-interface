@@ -1,0 +1,848 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "flashmla.core.fixture_combine"
+  30 invocations, 30 states
+  block_barrier_lane_arrivals = 15.08571429 * K + 353.6130081 * parts - 153.1837398 * w - 2510.465041 [UNEXPLAINED; max error 4624.35]
+  blocks = 8 * w [accepted; max error 0]
+  collective_lane_arrivals = 150.8571429 * K + 3536.130081 * parts - 1531.837398 * w - 25104.65041 [UNEXPLAINED; max error 46243.5]
+  conversion_ops = 608.9 * K + 14277.05366 * parts - 6204.149593 * w - 101308.735 [UNEXPLAINED; max error 186527]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 165.9428571 * K + 3889.743089 * parts - 1685.021138 * w - 27615.11545 [UNEXPLAINED; max error 50867.9]
+  executed_blocks = 8 * w [accepted; max error 0]
+  executed_lanes = 2048 * w [accepted; max error 0]
+  fp32_flops = 1702.871429 * K + 41011.8439 * parts - 22729.26179 * w - 278161.8862 [UNEXPLAINED; max error 490041]
+  global_read_bytes = 2081.314286 * K + 50983.02439 * parts - 15647.21951 * w - 335900.722 [UNEXPLAINED; max error 573969]
+  global_unique_read_bytes = 2081.314286 * K + 50983.02439 * parts - 32027.21951 * w - 335896.722 [UNEXPLAINED; max error 573969]
+  global_unique_read_line_bytes = 2081.314286 * K + 50983.02439 * parts - 32031.21951 * w - 335772.722 [UNEXPLAINED; max error 573969]
+  global_unique_read_lines = 16.26026786 * K + 398.304878 * parts - 250.2439024 * w - 2623.22439 [UNEXPLAINED; max error 4484.13]
+  global_unique_read_sector_bytes = 2081.314286 * K + 50983.02439 * parts - 32031.21951 * w - 335868.722 [UNEXPLAINED; max error 573969]
+  global_unique_read_sectors = 65.04107143 * K + 1593.219512 * parts - 1000.97561 * w - 10495.89756 [UNEXPLAINED; max error 17936.5]
+  global_unique_write_bytes = 484.6285714 * K + 11359.81789 * parts - 4921.027642 * w - 80648.68943 [UNEXPLAINED; max error 148557]
+  global_unique_write_line_bytes = 485.5428571 * K + 11379.72033 * parts - 4966.81626 * w - 80698.06829 [UNEXPLAINED; max error 148653]
+  global_unique_write_lines = 3.793303571 * K + 88.90406504 * parts - 38.80325203 * w - 630.4536585 [UNEXPLAINED; max error 1161.35]
+  global_unique_write_sector_bytes = 484.8571429 * K + 11364.7935 * parts - 4932.474797 * w - 80661.03415 [UNEXPLAINED; max error 148581]
+  global_unique_write_sectors = 15.15178571 * K + 355.1497967 * parts - 154.1398374 * w - 2520.657317 [UNEXPLAINED; max error 4643.16]
+  global_write_bytes = 484.6285714 * K + 11359.81789 * parts - 4921.027642 * w - 80648.68943 [UNEXPLAINED; max error 148557]
+  integer_ops = 1032.285714 * K + 24583.46016 * parts + 6032.858537 * w - 169946.3675 [UNEXPLAINED; max error 305170]
+  launched_lanes = 2048 * w [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 1206.857143 * K + 28289.04065 * parts + 12321.30081 * w - 200837.2033 [UNEXPLAINED; max error 369948]
+  ptx_lane_instructions = 4383.728571 * K + 103969.5675 * parts + 664.5593496 * w - 723731.8374 [UNEXPLAINED; max error 1.30839e+06]
+  shared_read_bytes = 129.8285714 * K + 3180.227642 * parts - 1998.04878 * w - 20952.87154 [UNEXPLAINED; max error 35803.1]
+  shared_write_bytes = 60.34285714 * K + 1414.452033 * parts - 612.7349593 * w - 10041.86016 [UNEXPLAINED; max error 18497.4]
+  special_function_ops = 30.17142857 * K + 707.2260163 * parts - 306.3674797 * w - 5020.930081 [UNEXPLAINED; max error 9248.71]
+  static_shared_bytes_per_launch = 3072 [accepted; max error 0]
+  sum_block_lane_sequence_span = 18.52142857 * K + 438.8300813 * parts - 11.30406504 * w - 3059.917073 [UNEXPLAINED; max error 5541.01]
+  sum_block_max_lane_bytes = 15.92857143 * K + 382.4682927 * parts - 46.88130081 * w - 2607.40813 [UNEXPLAINED; max error 4617.47]
+  sum_block_max_lane_flops = 6.708928571 * K + 161.5406504 * parts - 89.36585366 * w - 1096.069919 [UNEXPLAINED; max error 1931.72]
+  sum_launch_max_block_lane_sequence_span = 1.142633929 * K + 25.52388211 * parts - 58.56910569 * w - 38.3152439 [UNEXPLAINED; max error 182.532]
+  warps = 64 * w [accepted; max error 0]
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3779:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3781:setp.lt.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3783:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3820:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3822:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3824:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3826:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3828:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3830:griddepcontrol.wait: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3832:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3834:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3836:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3838:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3840:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3842:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3844:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3846:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3848:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3850:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3852:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3854:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3856:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3858:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3860:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3862:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3864:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3866:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3868:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3870:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3872:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3874:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3876:setp.ge.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3878:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3880:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3882:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3884:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3886:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3888:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3890:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3892:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3894:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3896:mad.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3898:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3900:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3902:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3904:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3906:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3908:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3910:ld.global.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3913:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3915:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3917:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3923:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3925:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3927:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3929:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3935:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3937:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3939:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3941:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3947:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3949:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3951:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3953:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3959:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3961:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3963:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3965:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3971:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3973:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3975:setp.eq.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3977:selp.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3979:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3981:ex2.approx.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3983:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3985:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3987:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3993:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3995:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3997:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp3999:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4005:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4007:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4009:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4011:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4017:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4019:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4021:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4023:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4029:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4031:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4033:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4035:shfl.sync.bfly.b32: collective_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4041:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4043:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4045:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4047:setp.eq.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4049:setp.eq.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4051:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4053:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4057:setp.lt.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4059:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4061:selp.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4063:selp.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4065:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4067:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4069:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4071:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4073:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4075:cvt.rn.f32.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4077:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4079:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4081:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4083:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4085:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4087:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4089:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4091:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4093:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4095:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4097:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4099:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4101:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4103:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4105:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4107:setp.gt.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4109:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4111:selp.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4113:setp.eq.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4115:selp.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4117:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4120:setp.ne.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4122:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4124:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4126:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4128:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4130:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4132:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4134:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4136:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4138:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4140:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4142:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4144:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4146:st.global.f32: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4149:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4151:setp.eq.s64: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4153:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4245:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4247:ex2.approx.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4249:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4251:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4253:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4255:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4257:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4259:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4261:bar.warp.sync: block_barrier_lane_arrivals, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4263:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4265:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4267:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4269:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4271:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4273:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4275:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4277:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4279:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4281:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4283:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4285:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4287:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4289:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4291:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4293:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4295:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4297:mov.f32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4300:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4302:setp.eq.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4304:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4306:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4308:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4310:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4312:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4314:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4316:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4318:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4321:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4323:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4325:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4327:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4329:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4331:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4333:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4335:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4338:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4340:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4342:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4344:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4346:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4348:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4350:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4352:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4355:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4357:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4359:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4361:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4363:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4365:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4367:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4369:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4372:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4374:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4376:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4378:setp.ne.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4381:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4383:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4385:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4387:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4389:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4391:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4393:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4395:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4397:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4399:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4401:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4403:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4405:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4407:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4409:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4411:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4413:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4415:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4417:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4419:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4421:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4423:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4425:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4427:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4429:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4431:cvt.u32.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4433:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4435:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4437:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4439:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4441:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4443:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4445:st.global.u64: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4447:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4449:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4451:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4453:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4455:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4457:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4459:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4461:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4463:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4465:cvt.u32.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4467:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4469:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4471:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4473:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4475:st.global.u64: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4477:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4479:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4481:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4483:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4485:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4487:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4489:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4491:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4493:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4495:cvt.u32.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4497:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4499:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4501:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4503:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4505:st.global.u64: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4507:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4509:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4511:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4513:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4515:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4517:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4519:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4521:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4523:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4525:cvt.u32.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4527:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4529:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4531:cvt.u64.u16: conversion_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4533:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::flash_fwd_mla_combine_kernel @ cpp4535:st.global.u64: global_unique_write_bytes, global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors, global_write_bytes, ptx_lane_instructions
+
+REGION "flashmla.core.fixture_schedule"
+  33 invocations, 33 states
+  block_barrier_lane_arrivals = 64 [accepted; max error 0]
+  blocks = 1 [accepted; max error 0]
+  collective_lane_arrivals = 160 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 20 * w + 4 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 224 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 32 [accepted; max error 0]
+  global_unique_write_bytes = 28 * parts + 4 * w + 4 [accepted; max error 0]
+  global_unique_write_line_bytes = -0.06493506494 * K + 26.5974026 * parts - 13.63116883 * w + 279.7714286 [UNEXPLAINED; max error 98.7429]
+  global_unique_write_lines = -0.0005073051948 * K + 0.2077922078 * parts - 0.1064935065 * w + 2.185714286 [UNEXPLAINED; max error 0.771429]
+  global_unique_write_sector_bytes = 32 * parts + 32 [accepted; max error 0]
+  global_unique_write_sectors = 1 * parts + 1 [accepted; max error 0]
+  global_write_bytes = 28 * parts + 4 * w + 4 [accepted; max error 0]
+  integer_ops = 0.04332386364 * K + 16.40606061 * parts + 58.29939394 * w + 301.0721212 [UNEXPLAINED; max error 9.6903]
+  launched_lanes = 32 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 24 * w + 1280 [accepted; max error 0]
+  ptx_lane_instructions = 0.1036931818 * K + 47.4008658 * parts + 105.7970563 * w + 1173.965887 [UNEXPLAINED; max error 23.8906]
+  shared_read_bytes = 0.02475649351 * K + 16.8034632 * parts + 11.02822511 * w - 3.387359307 [UNEXPLAINED; max error 5.53732]
+  shared_write_bytes = 20 * w + 4 [accepted; max error 0]
+  static_shared_bytes_per_launch = 3072 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.1036931818 * K + 47.4008658 * parts + 31.79705628 * w + 108.9658874 [UNEXPLAINED; max error 23.8906]
+  sum_block_max_lane_bytes = 0.02475649351 * K + 44.8034632 * parts + 11.02822511 * w + 84.61264069 [UNEXPLAINED; max error 5.53732]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 0.1036931818 * K + 47.4008658 * parts + 31.79705628 * w + 108.9658874 [UNEXPLAINED; max error 23.8906]
+  warps = 1 [accepted; max error 0]
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2586:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2588:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2590:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2592:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2594:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2597:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2599:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2601:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2603:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2605:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2607:setp.lt.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2609:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2935:setp.gt.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2937:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2939:selp.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2941:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2943:selp.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2945:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2947:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2949:mov.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2958:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2960:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2962:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2964:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2966:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2968:bra.uni: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2971:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2973:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2975:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2977:setp.eq.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2979:mov.b32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2983:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2985:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp2987:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3002:bra: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3004:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3006:ld.shared.u32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3008:setp.ne.s32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3010:selp.u32: ptx_lane_instructions
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3035:st.global.v4.u32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3037:st.global.v2.u32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3039:st.global.u32: global_unique_write_line_bytes, global_unique_write_lines
+
+REGION "flashmla.core.fixture_tma"
+  33 invocations, 4 states
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 1408 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 1 [accepted; max error 0]
+  global_read_bytes = 640 [accepted; max error 0]
+  global_unique_read_bytes = 640 [accepted; max error 0]
+  global_unique_read_line_bytes = 640 [accepted; max error 0]
+  global_unique_read_lines = 5 [accepted; max error 0]
+  global_unique_read_sector_bytes = 640 [accepted; max error 0]
+  global_unique_read_sectors = 20 [accepted; max error 0]
+  global_unique_write_bytes = 1408 [accepted; max error 0]
+  global_unique_write_line_bytes = 7.964444444 * w + 1506.986667 [UNEXPLAINED; max error 114.916]
+  global_unique_write_lines = 0.06222222222 * w + 11.77333333 [UNEXPLAINED; max error 0.897778]
+  global_unique_write_sector_bytes = 0.1422222222 * w + 1428.053333 [UNEXPLAINED; max error 20.6222]
+  global_unique_write_sectors = 0.004444444444 * w + 44.62666667 [UNEXPLAINED; max error 0.644444]
+  global_write_bytes = 1408 [accepted; max error 0]
+  integer_ops = 5294 [accepted; max error 0]
+  launched_lanes = 1 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  local_read_bytes = 1408 [accepted; max error 0]
+  local_write_bytes = 2080 [accepted; max error 0]
+  param_read_bytes = 24 [accepted; max error 0]
+  ptx_lane_instructions = 10392 [accepted; max error 0]
+  sum_block_lane_sequence_span = 10392 [accepted; max error 0]
+  sum_block_max_lane_bytes = 5560 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 10392 [accepted; max error 0]
+  warps = 1 [accepted; max error 0]
+  Unexplained site flash_tma_init_ @ cpp2384:st.global.u8: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site flash_tma_init_ @ cpp2396:st.global.u8: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site flash_tma_init_ @ cpp2408:st.global.u8: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site flash_tma_init_ @ cpp2420:st.global.u8: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+
+REGION "flashmla.core.size_probe"
+  1 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 1 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 1 [accepted; max error 0]
+  global_unique_write_bytes = 4 [accepted; max error 0]
+  global_unique_write_line_bytes = 128 [accepted; max error 0]
+  global_unique_write_lines = 1 [accepted; max error 0]
+  global_unique_write_sector_bytes = 32 [accepted; max error 0]
+  global_unique_write_sectors = 1 [accepted; max error 0]
+  global_write_bytes = 4 [accepted; max error 0]
+  launched_lanes = 1 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 8 [accepted; max error 0]
+  ptx_lane_instructions = 5 [accepted; max error 0]
+  static_shared_bytes_per_launch = 0 [accepted; max error 0]
+  sum_block_lane_sequence_span = 5 [accepted; max error 0]
+  sum_block_max_lane_bytes = 12 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 5 [accepted; max error 0]
+  warps = 1 [accepted; max error 0]
+
+REGION "flashmla.core.small"
+  33 invocations, 33 states
+  bf16_flops = 32768 * blocks64 [accepted; max error 0]
+  block_barrier_lane_arrivals = 384 * blocks64 + 384 * parts - 384 * split_tasks + 640 * tasks [accepted; max error 0]
+  blocks = 1 * parts [accepted; max error 0]
+  bulk_copy_instructions = 64 * split_tasks [accepted; max error 0]
+  collective_lane_arrivals = 192 * blocks64 + 896 * parts + 384 * tasks [accepted; max error 0]
+  conversion_ops = 1.328319193 * K + 87083.12896 * blocks64 + 153.2366542 * parts - 16432.37822 * split_tasks + 17763.59818 * tasks - 57.94193589 * w - 137.3967216 [UNEXPLAINED; max error 456.412]
+  dynamic_shared_bytes_per_launch = 232240 [accepted; max error 0]
+  emulator_barrier_generations = 4 * blocks64 + 1 * parts - 3 * split_tasks + 6 * tasks [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 576 * blocks64 + 1440 * parts - 512 * split_tasks + 1280 * tasks [accepted; max error 0]
+  executed_blocks = 1 * parts [accepted; max error 0]
+  executed_lanes = 384 * parts [accepted; max error 0]
+  fp32_flops = 21376 * blocks64 - 192 * split_tasks + 35392 * tasks [accepted; max error 0]
+  global_read_bytes = 42240 * blocks64 + 12288 * parts + 75264 * tasks [accepted; max error 0]
+  global_unique_read_bytes = 42240 * blocks64 + 32 * parts + 73732 * w [accepted; max error 0]
+  global_unique_read_line_bytes = -0.1034748429 * K + 42243.34488 * blocks64 + 28.0643365 * parts - 42.23675668 * split_tasks + 69.12614849 * tasks + 73638.79228 * w + 282.2454932 [UNEXPLAINED; max error 98.4071]
+  global_unique_read_lines = -0.00080839721 * K + 330.0261319 * blocks64 + 0.2192526289 * parts - 0.3299746615 * split_tasks + 0.540048035 * tasks + 575.3030647 * w + 2.205042916 [UNEXPLAINED; max error 0.768805]
+  global_unique_read_sector_bytes = 42240 * blocks64 + 32 * parts + 73728 * w + 32 [accepted; max error 0]
+  global_unique_read_sectors = 1320 * blocks64 + 1 * parts + 2304 * w + 1 [accepted; max error 0]
+  global_unique_write_bytes = 65536 * split_tasks + 65792 * tasks [accepted; max error 0]
+  global_unique_write_line_bytes = -0.8571098767 * K + 19.18582987 * blocks64 - 6.39170738 * parts + 65451.25643 * split_tasks + 65868.87926 * tasks - 86.70696314 * w + 311.9746919 [UNEXPLAINED; max error 112.634]
+  global_unique_write_lines = -0.006696170911 * K + 0.1498892958 * blocks64 - 0.0499352139 * parts + 511.3379408 * split_tasks + 514.6006192 * tasks - 0.6773981496 * w + 2.43730228 [UNEXPLAINED; max error 0.879952]
+  global_unique_write_sector_bytes = -0.2142774692 * K + 4.796457467 * blocks64 - 1.597926845 * parts + 65514.81411 * split_tasks + 65811.21981 * tasks - 21.67674079 * w + 77.99367297 [UNEXPLAINED; max error 28.1585]
+  global_unique_write_sectors = -0.006696170912 * K + 0.1498892958 * blocks64 - 0.0499352139 * parts + 2047.337941 * split_tasks + 2056.600619 * tasks - 0.6773981496 * w + 2.43730228 [UNEXPLAINED; max error 0.879952]
+  global_write_bytes = 65536 * split_tasks + 65792 * tasks [accepted; max error 0]
+  integer_ops = 16.81161148 * K + 28599.25566 * blocks64 + 8577.402767 * parts - 1230.543324 * split_tasks + 16669.60535 * tasks - 733.3307532 * w - 1738.934674 [UNEXPLAINED; max error 5776.49]
+  launched_lanes = 384 * parts [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 25.30918366 * K - 531.0419663 * blocks64 + 7392.847615 * parts - 2213.63127 * split_tasks + 15277.66351 * tasks - 1103.999027 * w - 2617.894012 [UNEXPLAINED; max error 8696.27]
+  ptx_lane_instructions = 150.4016736 * K + 331182.7204 * blocks64 + 24909.18907 * parts - 106543.7252 * split_tasks + 285548.9479 * tasks - 74515.90887 * w - 3620.204336 [UNEXPLAINED; max error 93767.3]
+  shared_read_bytes = 208384 * blocks64 + 128 * parts + 65536 * split_tasks + 139776 * tasks [accepted; max error 0]
+  shared_write_bytes = 132104 * blocks64 + 4 * parts + 65536 * split_tasks + 139776 * tasks [accepted; max error 0]
+  special_function_ops = 4096 * blocks64 - 128 * split_tasks + 256 * tasks [accepted; max error 0]
+  static_shared_bytes_per_launch = 0 [accepted; max error 0]
+  sum_block_lane_sequence_span = -0.1513097209 * K + 2071.421961 * blocks64 + 190.3754626 * parts - 316.7140526 * split_tasks + 548.3016459 * tasks - 497.3700606 * w + 161.0634302 [UNEXPLAINED; max error 478.002]
+  sum_block_max_lane_bytes = -601.3729995 * K + 2400586.119 * blocks64 + 250782.5516 * parts + 54499.10733 * split_tasks - 52447.48764 * tasks + 26232.18573 * w + 62203.93339 [UNEXPLAINED; max error 206633]
+  sum_block_max_lane_flops = 8912896 * blocks64 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 19.23537221 * K + 253.9193106 * blocks64 - 110.4345947 * parts + 606.8374917 * split_tasks - 2146.482115 * tasks + 1951.698005 * w + 1606.424716 [UNEXPLAINED; max error 1606.03]
+  tensor_float_flops = 8912896 * blocks64 [accepted; max error 0]
+  tensor_memory_allocated_bytes = 262144 * parts [accepted; max error 0]
+  tensor_mma_instructions = 26 * blocks64 [accepted; max error 0]
+  tma_destination_ctas = 48 * blocks64 + 9 * tasks [accepted; max error 0]
+  tma_load_instructions = 48 * blocks64 + 9 * tasks [accepted; max error 0]
+  tma_oob_fill_bytes = 0 [accepted; max error 0]
+  tma_store_instructions = -8 * split_tasks + 8 * tasks [accepted; max error 0]
+  tma_transaction_bytes = 40960 * blocks64 + 73728 * tasks [accepted; max error 0]
+  tmem_read_bytes = 1150976 * blocks64 [accepted; max error 0]
+  tmem_write_bytes = 1114112 * blocks64 + 73728 * tasks [accepted; max error 0]
+  warpgroup_collective_lane_arrivals = 384 * parts [accepted; max error 0]
+  warps = 12 * parts [accepted; max error 0]
+  PCVs not independently identifiable: heads, unsplit_tasks, wK
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11817:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11825:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11827:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11831:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11833:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11835:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11837:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11839:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11841:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11843:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11845:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11847:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11849:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11851:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11853:setp.gt.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11855:selp.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11857:mul.wide.u16: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11859:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11861:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11863:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11865:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11867:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11869:xor.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11871:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11873:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11875:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11877:mad.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11879:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11881:cvta.param.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11883:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11885:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11887:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11889:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11891:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11893:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11895:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11897:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11899:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11901:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11903:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11905:or.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11907:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11909:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11911:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11913:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11915:mad.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11917:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11919:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11921:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11923:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11925:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11927:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11929:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11931:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11933:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11935:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11937:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11939:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11941:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11943:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11945:mov.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11947:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11949:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp11951:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12038:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12040:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12042:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12044:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12046:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12048:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12050:mov.pred: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12052:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12055:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12057:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12059:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12061:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12063:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12065:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12067:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12118:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12123:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12137:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp12142:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp14074:st.global.f32: global_unique_write_line_bytes, global_unique_write_lines, global_unique_write_sector_bytes, global_unique_write_sectors
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp14217:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp14219:griddepcontrol.launch_dependents: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17361:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17422:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17430:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17432:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17436:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17438:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17440:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17442:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17444:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17446:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17448:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17450:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17452:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17454:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17456:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17458:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17460:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17462:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17537:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17539:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17541:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17569:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17577:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17579:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17583:mul.hi.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17585:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17587:shr.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17589:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17591:mul.hi.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17593:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17595:shr.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17597:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17599:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17601:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17603:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17605:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17607:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17609:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17611:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17613:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17615:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17617:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17619:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17621:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17623:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17625:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17627:ld.param.v2.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17629:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17631:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17633:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17635:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17637:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17639:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17641:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17643:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17645:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17647:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17649:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17651:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17653:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17655:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17657:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17659:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17661:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17663:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17665:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17740:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17742:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17744:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17769:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17777:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17779:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17783:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17785:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17787:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17789:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17791:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17793:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17795:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17797:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17799:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17801:cvta.param.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17803:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17805:cvta.param.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17807:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17809:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17811:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17813:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17815:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17817:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17819:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17821:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17823:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17825:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17827:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17829:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17831:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17833:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17835:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17837:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17839:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17841:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17843:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17845:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17847:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17849:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17851:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17853:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17855:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17857:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17859:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17861:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17863:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17865:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17867:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17869:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17871:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17873:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17875:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17877:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17879:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17881:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17883:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17885:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17887:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17889:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17964:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17966:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17968:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17971:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17973:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp17975:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18163:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18168:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18397:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18402:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18513:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18516:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18519:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18521:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18523:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18537:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18542:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18548:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18553:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18578:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18583:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18787:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18790:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18815:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18823:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18825:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18829:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18831:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18833:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18835:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18837:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18839:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18841:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18843:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18845:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18847:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18849:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18851:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18853:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18855:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18930:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18932:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18934:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18937:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18939:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18941:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18955:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18960:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18966:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18971:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp18996:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19001:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19269:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19272:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19275:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19277:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19279:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19740:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19743:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19752:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19760:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19762:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19766:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19768:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19770:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19772:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19774:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19776:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19803:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19805:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19807:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19810:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19812:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19814:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19829:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19832:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19853:ld.global.nc.L1::no_allocate.L2::evict_normal.L2::256B.v4.u64: global_unique_read_line_bytes, global_unique_read_lines
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19861:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19863:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19867:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19869:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19871:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19873:cvta.shared.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19875:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19877:shr.u64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19879:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19881:xor.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19883:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19885:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19887:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19889:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19891:mov.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19893:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19895:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19897:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19899:cvta.to.shared.u64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19901:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19903:mov.b32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19905:mov.b16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19907:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19909:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19911:mov.u16: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19913:mov.u32: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19988:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19990:ld.global.nc.s32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19992:bra.uni: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19995:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19997:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp19999:ld.global.nc.s32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20011:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20016:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20041:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20046:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20064:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20069:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20081:mbarrier.try_wait.parity.shared::cta.b64: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp20086:bra: ptx_lane_instructions
+  Unexplained site sm100::decode::head64::flash_fwd_splitkv_mla_fp8_sparse_kernel @ cpp23378:bra: ptx_lane_instructions
+

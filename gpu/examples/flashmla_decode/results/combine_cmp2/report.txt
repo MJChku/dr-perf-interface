@@ -1,0 +1,212 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "combine.original_h64_m64"
+  24 invocations, 20 states
+  block_barrier_lane_arrivals = 2048 * w [accepted; max error 0]
+  blocks = 8 * w [accepted; max error 0]
+  collective_lane_arrivals = 20480 * w [accepted; max error 0]
+  conversion_ops = 86208 * w + 64 * wsplits [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 22528 * w [accepted; max error 0]
+  executed_blocks = 8 * w [accepted; max error 0]
+  executed_lanes = 2048 * w [accepted; max error 0]
+  fp32_flops = 38976 * w + 65536 * wsplits [accepted; max error 0]
+  global_read_bytes = 16384 * w + 131328 * wsplits [accepted; max error 0]
+  global_unique_read_bytes = 4 * w + 131328 * wsplits + 4 [accepted; max error 0]
+  global_unique_read_line_bytes = 131328 * wsplits + 128 [accepted; max error 0]
+  global_unique_read_lines = 1026 * wsplits + 1 [accepted; max error 0]
+  global_unique_read_sector_bytes = 131328 * wsplits + 32 [accepted; max error 0]
+  global_unique_read_sectors = 4104 * wsplits + 1 [accepted; max error 0]
+  global_unique_write_bytes = 65792 * w [accepted; max error 0]
+  global_unique_write_line_bytes = 65792 * w [accepted; max error 0]
+  global_unique_write_lines = 514 * w [accepted; max error 0]
+  global_unique_write_sector_bytes = 65792 * w [accepted; max error 0]
+  global_unique_write_sectors = 2056 * w [accepted; max error 0]
+  global_write_bytes = 65792 * w [accepted; max error 0]
+  integer_ops = 129344 * w + 10560 * wsplits [accepted; max error 0]
+  launched_lanes = 2048 * w [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 188416 * w [accepted; max error 0]
+  ptx_lane_instructions = 486080 * w + 59712 * wsplits [accepted; max error 0]
+  shared_read_bytes = 8192 * wsplits [accepted; max error 0]
+  shared_write_bytes = 16384 * w [accepted; max error 0]
+  special_function_ops = 10240 * w [accepted; max error 0]
+  static_shared_bytes_per_launch = 4096 [accepted; max error 0]
+  sum_block_lane_sequence_span = 2024 * w + 232 * wsplits [accepted; max error 0]
+  sum_block_max_lane_bytes = 1184 * w + 544 * wsplits [accepted; max error 0]
+  sum_block_max_lane_flops = 160 * w + 256 * wsplits [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 29 * splits + 253 [accepted; max error 0]
+  warps = 64 * w [accepted; max error 0]
+
+REGION "combine.schedule"
+  4 invocations, 4 states
+  block_barrier_lane_arrivals = 64 [accepted; max error 0]
+  blocks = 1 [accepted; max error 0]
+  collective_lane_arrivals = 160 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 20 * w + 4 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 224 [accepted; max error 0]
+  executed_blocks = 1 [accepted; max error 0]
+  executed_lanes = 32 [accepted; max error 0]
+  global_unique_write_bytes = 28 * parts + 4 * w + 4 [accepted; max error 0]
+  global_unique_write_line_bytes = 42.66666667 * parts - 153.6 * w + 213.3333333 [UNEXPLAINED; max error 34.1333]
+  global_unique_write_lines = 0.3333333333 * parts - 1.2 * w + 1.666666667 [UNEXPLAINED; max error 0.266667]
+  global_unique_write_sector_bytes = 32 * parts + 32 [accepted; max error 0]
+  global_unique_write_sectors = 1 * parts + 1 [accepted; max error 0]
+  global_write_bytes = 28 * parts + 4 * w + 4 [accepted; max error 0]
+  integer_ops = 15 * parts + 130 * w + 307 [accepted; max error 0]
+  launched_lanes = 32 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 24 * w + 1280 [accepted; max error 0]
+  ptx_lane_instructions = 44 * parts + 280 * w + 1188 [accepted; max error 0]
+  shared_read_bytes = 16 * parts + 52 * w [accepted; max error 0]
+  shared_write_bytes = 20 * w + 4 [accepted; max error 0]
+  static_shared_bytes_per_launch = 4096 [accepted; max error 0]
+  sum_block_lane_sequence_span = 44 * parts + 206 * w + 123 [accepted; max error 0]
+  sum_block_max_lane_bytes = 44 * parts + 52 * w + 88 [accepted; max error 0]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 44 * parts + 206 * w + 123 [accepted; max error 0]
+  warps = 1 [accepted; max error 0]
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3042:st.global.v4.u32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3044:st.global.v2.u32: global_unique_write_line_bytes, global_unique_write_lines
+  Unexplained site smxx::decode::get_mla_metadata_kernel @ cpp3046:st.global.u32: global_unique_write_line_bytes, global_unique_write_lines
+
+REGION "combine.wide_h32"
+  24 invocations, 20 states
+  block_barrier_lane_arrivals = 4096 * w [accepted; max error 0]
+  blocks = 16 * w [accepted; max error 0]
+  collective_lane_arrivals = 40960 * w [accepted; max error 0]
+  conversion_ops = 61440 * w + 512 * wsplits [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 45056 * w [accepted; max error 0]
+  executed_blocks = 16 * w [accepted; max error 0]
+  executed_lanes = 4096 * w [accepted; max error 0]
+  fp32_flops = 61472 * w + 32768 * wsplits [accepted; max error 0]
+  global_read_bytes = 32768 * w + 66048 * wsplits [accepted; max error 0]
+  global_unique_read_bytes = 4 * w + 65664 * wsplits + 4 [accepted; max error 0]
+  global_unique_read_line_bytes = 65664 * wsplits + 128 [accepted; max error 0]
+  global_unique_read_lines = 513 * wsplits + 1 [accepted; max error 0]
+  global_unique_read_sector_bytes = 65664 * wsplits + 32 [accepted; max error 0]
+  global_unique_read_sectors = 2052 * wsplits + 1 [accepted; max error 0]
+  global_unique_write_bytes = 32896 * w [accepted; max error 0]
+  global_unique_write_line_bytes = 32896 * w [accepted; max error 0]
+  global_unique_write_lines = 257 * w [accepted; max error 0]
+  global_unique_write_sector_bytes = 32896 * w [accepted; max error 0]
+  global_unique_write_sectors = 1028 * w [accepted; max error 0]
+  global_write_bytes = 32896 * w [accepted; max error 0]
+  integer_ops = 172224 * w + 13312 * wsplits [accepted; max error 0]
+  launched_lanes = 4096 * w [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 262656 * w + 1536 * wsplits [accepted; max error 0]
+  ptx_lane_instructions = 860512 * w + 30848 * wsplits [accepted; max error 0]
+  shared_read_bytes = 16384 * wsplits [accepted; max error 0]
+  shared_write_bytes = 16384 * w [accepted; max error 0]
+  special_function_ops = 12288 * w [accepted; max error 0]
+  static_shared_bytes_per_launch = 4096 [accepted; max error 0]
+  sum_block_lane_sequence_span = 3808 * w + 112 * wsplits [accepted; max error 0]
+  sum_block_max_lane_bytes = 1920 * w + 320 * wsplits [accepted; max error 0]
+  sum_block_max_lane_flops = 256 * w + 128 * wsplits [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 7 * splits + 238 [accepted; max error 0]
+  warps = 128 * w [accepted; max error 0]
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6341:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6343:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6345:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6347:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6349:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6354:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6356:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6358:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6360:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6362:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6367:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6369:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6371:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6373:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6375:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6380:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6382:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6384:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6386:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6388:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6393:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6395:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6397:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6399:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6401:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6406:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6408:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6410:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6412:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6414:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6419:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6421:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6423:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6425:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6427:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6432:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6434:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6436:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6438:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6440:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6445:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6447:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6449:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6451:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6453:ld.global.v4.f32: global_read_bytes, global_unique_read_bytes, global_unique_read_line_bytes, global_unique_read_lines, global_unique_read_sector_bytes, global_unique_read_sectors, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6834:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6836:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6838:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6840:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6842:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6844:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6849:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6851:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6853:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6855:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6857:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6859:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6864:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6866:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6868:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6870:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6872:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6874:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6879:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6881:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6883:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6885:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6887:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6889:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6894:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6896:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6898:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6900:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6902:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6904:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6909:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6911:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6913:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6915:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6917:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6919:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6924:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6926:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6928:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6930:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6932:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6934:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6939:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6941:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6943:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6945:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6947:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6949:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6954:bra: ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6956:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6958:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6960:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6962:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site glm53_flashmla::combine_wide_kernel @ cpp6964:fma.rn.ftz.f32: fp32_flops, ptx_lane_instructions
+

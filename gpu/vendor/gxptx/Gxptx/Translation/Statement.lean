@@ -9,6 +9,7 @@ import Gxptx.Translation.C.Expression
 import Gxptx.Translation.C.Operands
 import Gxptx.Translation.C.Templates
 import Gxptx.Semantics.C.Memory
+import Gxptx.Translation.Latency
 set_option linter.deprecated false
 namespace Gxptx
 
@@ -95,7 +96,8 @@ private def wmmaVectorSyntax (stmt : String) : Bool :=
 /- Lean modeling: dispatch selects value-model-backed templates or explicit traps; theorems are shallow value equalities while printing, compilation, and inventoried limitations remain separate boundaries. -/
 partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
     (regs : Std.HashSet String := {}) (movVector : Option Bool := none)
-    (ldmatrixVector : Bool := false) (wgmmaShape : Option (Nat × Nat) := none) (wmmaVector : Bool := false) (profile : Bool := true) : String :=
+    (ldmatrixVector : Bool := false) (wgmmaShape : Option (Nat × Nat) := none) (wmmaVector : Bool := false) (profile : Bool := true)
+    (latencyPredicates : List String := []) : String :=
   let movVector := movVector.orElse fun _ => movVectorPack? stmt
   let ldmatrixVector := ldmatrixVector || matrixVectorSyntax stmt true || matrixVectorSyntax stmt false
   let wgmmaShape := wgmmaShape.orElse fun _ => wgmmaVectorSyntax stmt
@@ -106,7 +108,16 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
   -- normalise whitespace; strip inline-asm block braces. (Vector `{a,b,c,d}`
   -- operands are recovered by splitArgs/operand from the comma-separated
   -- remainder — ld/st reconstruct the element offsets.)
-  let s := strim ((((stmt.replace "\t" " ").replace "\n" " ").replace "{" " ").replace "}" " ")
+  let s0 := strim ((((stmt.replace "\t" " ").replace "\n" " ").replace "{" " ").replace "}" " ")
+  -- ptxas accepts an opcode directly followed by its memory operand
+  -- (`tcgen05.st...b32[%r1], ...`); separate them so the opcode is one token.
+  -- Predicated/labelled statements reach this split through recursion.
+  let s := match s0.splitOn "[" with
+    | op :: rest@(_ :: _) =>
+      if !op.isEmpty && !op.contains ' ' && !(op.replace "::" "").contains ':' && !op.startsWith "@" then
+        op ++ " [" ++ "[".intercalate rest
+      else s0
+    | _ => s0
   -- A colon is a delimiter, including `name :` and `name:instruction`.
   -- Address-space qualifiers such as shared::cta are not label prefixes.
   let labelPrefix := (s.splitOn ":").headD ""
@@ -122,7 +133,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
     if afterColon.startsWith ".callprototype" || afterColon.startsWith ".calltargets" then ""
     else
       let lbl := label.replace "$" ""
-      let rest := translateStmtScoped afterColon guardGlobal regs movVector ldmatrixVector wgmmaShape wmmaVector profile
+      let rest := translateStmtScoped afterColon guardGlobal regs movVector ldmatrixVector wgmmaShape wmmaVector profile latencyPredicates
       if rest.isEmpty then s!"  L_{lbl}: ;" else s!"  L_{lbl}: ;\n{rest}"
   else if s.startsWith "@" then
     -- predicated: `@[!]%p <instr>` → `if ([!]R_p) { <instr> }`
@@ -134,8 +145,19 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       let inner := strim (r1.drop pred.length)
       let g := (operand pred).toC
       let gg := if neg then s!"(!{g})" else g
-      let line := strim (translateStmtScoped inner guardGlobal regs movVector ldmatrixVector wgmmaShape wmmaVector profile)
-      if line.isEmpty then "" else "    if (" ++ gg ++ ") { " ++ line ++ " }"
+      let deps := latencyPredicates ++ latencyRegisters regs pred
+      let line := strim (translateStmtScoped inner guardGlobal regs movVector ldmatrixVector wgmmaShape wmmaVector profile deps)
+      -- A disabled instruction issues and consumes its predicate, but neither
+      -- waits on data operands nor writes any destination shadow/value.
+      -- Keep disabled issue attribution at the same static site as the
+      -- instruction counter in the enabled arm, despite emitted newlines.
+      let offOp := (inner.splitOn " ").headD ""
+      let offLineDelta := (line.splitOn "\n").length - 1
+      let offDeps := String.intercalate ", " (deps.eraseDups.map latencyShadow)
+      let disabled := if profile && !line.startsWith "drperf_gpu_device_" then
+        " else { gx_latency_off(__func__, " ++ s!"\"{offOp}\", __LINE__ - {offLineDelta}, " ++
+        "{" ++ offDeps ++ "}); }" else ""
+      if line.isEmpty then "" else "    if (" ++ gg ++ ") { " ++ line ++ " }" ++ disabled
     | _ => ""
   else
     let parts := s.splitOn " " |>.filter (! ·.isEmpty)
@@ -148,7 +170,10 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       let head := toks.headD ""
       -- the type tag carried by the instruction, if any
       let ty : Ty := (toks.filterMap parseTy?).headD .b32
-      let tyTok := (toks.filter (parseTy? · |>.isSome)).getLastD "b32"
+      -- parseTy? has no 128-bit Ty; keep b128 visible to mov/accounting so
+      -- 16-byte moves and stores are neither mis-typed nor charged as 4 bytes.
+      let tyTok := if toks.contains "b128" then "b128"
+                   else (toks.filter (parseTy? · |>.isSome)).getLastD "b32"
       let isShared := toks.any (fun t => t == "shared" || t.startsWith "shared::")
       -- generic/global space may hit fake device buffers → guard; shared,
       -- local, param, const are real host memory → direct access.
@@ -357,11 +382,13 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         -- selects the helper. Actual C local sizes validate vector fields.
         let movTypes := ["pred", "b16", "b32", "b64", "b128", "u16", "u32", "u64",
                          "s16", "s32", "s64", "f32", "f64"]
-        if toks.length != 2 || !movTypes.contains (toks.getLastD "") || toks.contains "b128" then trapOp
+        -- b128 (PTX 8.3+): copy, or pack/unpack two b64 fields only.
+        if toks.length != 2 || !movTypes.contains (toks.getLastD "") then trapOp
         else if let some pack := movVector then
           let count := args.length - 1
           let valid := (tyTok == "b16" && count == 2) ||
-            ((tyTok == "b32" || tyTok == "b64") && (count == 2 || count == 4))
+            ((tyTok == "b32" || tyTok == "b64") && (count == 2 || count == 4)) ||
+            (tyTok == "b128" && count == 2)
           if !valid then trapOp
           else if pack then
             let d := args.headD "_"
@@ -369,7 +396,8 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             -- An immediate field has no C register width: give an integer
             -- literal the lane's unsigned type. A float literal (0f = 32-bit,
             -- 0d = 64-bit) must already match the lane width.
-            let laneBits := (if tyTok == "b16" then 16 else if tyTok == "b32" then 32 else 64) / count
+            let laneBits := (if tyTok == "b16" then 16 else if tyTok == "b32" then 32
+                             else if tyTok == "b128" then 128 else 64) / count
             let immediate (x : String) : Bool :=
               match x.toList.head? with
               | some c => c.isDigit || c == '-'
@@ -383,7 +411,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
               else some s!"(uint{laneBits}_t)({oC x})"
             let typed := fields.filterMap field
             if d == "_" || fields.contains "_" || typed.length != fields.length then trapOp
-            else s!"    gx_movpack{count}<{ctypeOf tyTok}>({dest d}, {String.intercalate ", " typed});"
+            else s!"    gx_movpack{count}<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}>({dest d}, {String.intercalate ", " typed});"
           else
             let fields := args.take count
             let src := args.getLastD "_"
@@ -391,11 +419,12 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             else
               let assigns := String.intercalate " " (fields.enum.filterMap (fun (i, d) =>
                 if d == "_" then none
-                else some s!"gx_movunpack_lane<{ctypeOf tyTok}, {count}, {i}>({dest d}, _gx_mov_src);"))
-              s!"    \{ auto _gx_mov_src = gx_movread<{ctypeOf tyTok}>({oC src}); {assigns} }"
+                else some s!"gx_movunpack_lane<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}, {count}, {i}>({dest d}, _gx_mov_src);"))
+              s!"    \{ auto _gx_mov_src = gx_movread<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}>({oC src}); {assigns} }"
         else match args with
         | [d, a] =>
           if d == "_" then trapOp
+          else if tyTok == "b128" then s!"    memcpy(&{dest d}, &{oC a}, 16);"
           else if tyTok == "b32" || tyTok == "b64" then
             s!"    {printMovB (dest d) (bitOperand regs tyTok a)}"
           else if tyTok == "f32" || tyTok == "f64" then
@@ -477,6 +506,11 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           binPrint (fun a b => s!"(uint16_t)gx_f16x2_mul((uint16_t)({a}), (uint16_t)({b}))")
         else if toks == ["mul", "bf16x2"] then
           binPrint (fun a b => CTemplate.mulBF16x2.print a b "")
+        -- Scalar mul{.rn}.bf16 is the low lane of the proved packed lane model
+        -- (independent lanes; the zero high lane cannot affect the low lane).
+        else if toks == ["mul", "bf16"] || toks == ["mul", "rn", "bf16"] then
+          binPrint (fun a b =>
+            s!"(uint16_t)({CTemplate.mulBF16x2.print s!"(uint32_t)(uint16_t)({a})" s!"(uint32_t)(uint16_t)({b})" ""})")
         else if rawFloat then bin .mul
         else if toks.contains "f32" || toks.contains "f64" then floatArith.getD trapOp
         else
@@ -512,6 +546,10 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let rawFloat := toks == ["div", "rn", "f32"] || toks == ["div", "rn", "f64"]
         if toks == ["div", "full", "f32"] then
           binPrint (fun a b => s!"gx_div_full_f32({a}, {b})")
+        -- PTX defines div.approx.f32 as d = a * (1/b) (hardware reciprocal is
+        -- approximate, max 2 ulp); modelled with an RN reciprocal then RN product.
+        else if toks == ["div", "approx", "f32"] || toks == ["div", "approx", "ftz", "f32"] then
+          binPrint (fun a b => s!"gx_div_approx_f32({a}, {b}, {if toks.contains "ftz" then "true" else "false"})")
         else if tyTok == "u16" && toks.length == 2 then binPrint printDivU16
         else if tyTok == "s16" && toks.length == 2 then binPrint printDivS16
         else if plainScalarInt || rawFloat then bin (emitDiv ty)
@@ -530,11 +568,16 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         if tyTok == "u16" && toks.length == 2 then binPrint printMinU16
         else if tyTok == "s16" && toks.length == 2 then binPrint printMinS16
         else if plainScalarInt then bin (emitMin ty)
-        else if toks == ["min", "f32"] || toks == ["min", "NaN", "f32"] || toks == ["min", "xorsign", "abs", "f32"] then
+        else if [["min", "f32"], ["min", "NaN", "f32"], ["min", "xorsign", "abs", "f32"],
+                  ["min", "ftz", "f32"], ["min", "ftz", "NaN", "f32"]].contains toks then
+          -- .ftz flushes subnormal sources and the result (sign preserved).
           match args with
           | [d, a, b] =>
             if d == "_" then trapOp else
-              fWrite d s!"gx_bits_to_f32(gx_minmax_f32_bits({floatBitsOperand regs "f32" a}, {floatBitsOperand regs "f32" b}, false, {if toks.contains "NaN" then "true" else "false"}, {if toks.length == 4 then "true" else "false"}))"
+              let ftz := toks.contains "ftz"
+              let src (x : String) := if ftz then s!"gx_ftz_f32_bits({floatBitsOperand regs "f32" x})" else floatBitsOperand regs "f32" x
+              let r := s!"gx_minmax_f32_bits({src a}, {src b}, false, {if toks.contains "NaN" then "true" else "false"}, {if toks.contains "xorsign" then "true" else "false"})"
+              fWrite d s!"gx_bits_to_f32({if ftz then s!"gx_ftz_f32_bits({r})" else r})"
           | _ => trapOp
         else if toks == ["min", "f64"] then binPrint (fun a b => s!"fmin({a}, {b})")
         else trapOp
@@ -552,11 +595,14 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
               let v := (CTemplate.smax .w32).print (oC a) (oC b) ""
               s!"    {dest d} = {(CTemplate.smax .w32).print v "0" ""};"
           | _ => trapOp
-        else if toks == ["max", "f32"] || toks == ["max", "NaN", "f32"] then
+        else if [["max", "f32"], ["max", "NaN", "f32"], ["max", "ftz", "f32"], ["max", "ftz", "NaN", "f32"]].contains toks then
           match args with
           | [d, a, b] =>
             if d == "_" then trapOp else
-              fWrite d s!"gx_bits_to_f32(gx_minmax_f32_bits({floatBitsOperand regs "f32" a}, {floatBitsOperand regs "f32" b}, true, {if toks.length == 3 then "true" else "false"}, false))"
+              let ftz := toks.contains "ftz"
+              let src (x : String) := if ftz then s!"gx_ftz_f32_bits({floatBitsOperand regs "f32" x})" else floatBitsOperand regs "f32" x
+              let r := s!"gx_minmax_f32_bits({src a}, {src b}, true, {if toks.contains "NaN" then "true" else "false"}, false)"
+              fWrite d s!"gx_bits_to_f32({if ftz then s!"gx_ftz_f32_bits({r})" else r})"
           | _ => trapOp
         else if toks == ["max", "f64"] then binPrint (fun a b => s!"fmax({a}, {b})")
         else trapOp
@@ -621,7 +667,12 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       /- PTX definition: `lg2.approx` computes an approximate base-two logarithm for a floating operand. -/
       /- Lean modeling: only exact `lg2.approx.f32` selects trusted `log2f`; FTZ and every other spelling trap until modeled. -/
       | "lg2"  =>
-        if toks == ["lg2", "approx", "f32"] then
+        -- .ftz: subnormal source flushes to zero (log2 -> -inf), result flushed.
+        if toks == ["lg2", "approx", "ftz", "f32"] then
+          match args with
+          | [d, a] => if d == "_" then trapOp else fWrite d s!"gx_ftz_f32(log2f(gx_ftz_f32({fC a})))"
+          | _ => trapOp
+        else if toks == ["lg2", "approx", "f32"] then
           match args with
           | [d, a] => if d == "_" then trapOp else fWrite d s!"log2f({fC a})"
           | _ => trapOp
@@ -919,6 +970,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let mmaTypes := if bf then "f32.bf16.bf16.f32" else "f32.f32"
         let mmaOps := (["row", "col"].flatMap fun al => ["row", "col"].map fun bl =>
           s!"wmma.mma.sync.aligned.{al}.{bl}.{shape}.{mmaTypes}")
+        let memSpace := if isShared then 2 else if toks.contains "global" then 1 else 0
         let column := if toks.contains "col" then "true" else "false"
         let guard := if guarded then "true" else "false"
         let uvals (xs : List String) := String.intercalate ", " (xs.map (fun x => s!"(uint32_t)({oC x})"))
@@ -932,13 +984,13 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let stride (idx fallback : Nat) := if args.length > idx then oC (args.getD idx "") else toString fallback
         if !wmmaVector then trapOp
         else if loadOps.contains op && (bf || (m == 16 && n == 16)) && (args.length == nr + 1 || args.length == nr + 2) && validD nr (args.take nr) then
-          "    { uint32_t _gx_wd[" ++ toString nr ++ s!"]; gx_wmma_load_16<{guard}, {column}, {rows}, {cols}, {nr}>(" ++
+          "    { uint32_t _gx_wd[" ++ toString nr ++ s!"]; gx_wmma_load_16<{guard}, {column}, {rows}, {cols}, {nr}, {memSpace}>(" ++
             mkAddr (args.getD nr "") ++ ", " ++ stride (nr+1) (if column == "true" then rows else cols) ++ ", _gx_wd); " ++ writes (args.take nr) ++ " }"
         else if accLoadOps.contains op && (args.length == 9 || args.length == 10) && validD 8 (args.take 8) then
-          "    { float _gx_wd[8]; " ++ s!"gx_wmma_load_f32<{guard}, {column}, {m}, {n}>(" ++
+          "    { float _gx_wd[8]; " ++ s!"gx_wmma_load_f32<{guard}, {column}, {m}, {n}, {memSpace}>(" ++
             mkAddr (args.getD 8 "") ++ ", " ++ stride 9 (if column == "true" then m else n) ++ ", _gx_wd); " ++ writes (args.take 8) ++ " }"
         else if storeOps.contains op && (args.length == 9 || args.length == 10) then
-          "    { float _gx_ws[8] = {" ++ fvals ((args.drop 1).take 8) ++ "}; " ++ s!"gx_wmma_store_f32<{guard}, {column}, {m}, {n}>(" ++
+          "    { float _gx_ws[8] = {" ++ fvals ((args.drop 1).take 8) ++ "}; " ++ s!"gx_wmma_store_f32<{guard}, {column}, {m}, {n}, {memSpace}>(" ++
             mkAddr (args.headD "") ++ ", " ++ stride 9 (if column == "true" then m else n) ++ ", _gx_ws); }"
         else if mmaOps.contains op && (bf || (m == 16 && n == 16)) && args.length == 16 + na + nb && validD 8 (args.take 8) then
           "    { uint32_t _gx_wa[" ++ toString na ++ "] = {" ++ uvals ((args.drop 8).take na) ++ "}; uint32_t _gx_wb[" ++ toString nb ++ "] = {" ++
@@ -1131,7 +1183,12 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let spaceQ := q.filter (fun t => spaces.contains t)
         let cacheQ := q.filter (fun t => cacheOps.contains t)
         let l1Q := q.filter (fun t => l1Hints.contains t)
-        let l2Q := q.filter (fun t => l2Hints.contains t)
+        -- PTX ld grammar has separate optional L2 slots: eviction priority,
+        -- cache_hint and prefetch_size (e.g. .L2::evict_normal.L2::256B).
+        let l2Prefetch := ["L2::64B", "L2::128B", "L2::256B"]
+        let l2EvictQ := q.filter (fun t => l2Hints.contains t && !l2Prefetch.contains t && t != "L2::cache_hint")
+        let l2HintQ := q.filter (· == "L2::cache_hint")
+        let l2SizeQ := q.filter (fun t => l2Prefetch.contains t)
         let vecQ := q.filter (fun t => t == "v2" || t == "v4" || t == "v8")
         let semScopeOK :=
           if toks.contains "relaxed" || toks.contains "acquire" then scopeQ.length == 1
@@ -1149,7 +1206,8 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             -- PTX §9.7.9.8 examples permute space/sem/scope and even L2/L1
             -- policy order. Validate category membership and uniqueness without
             -- imposing a canonical order absent from the documented examples.
-            l1Q.length ≤ 1 && l2Q.length ≤ 1 && vecQ.length ≤ 1 && semScopeOK
+            l1Q.length ≤ 1 && l2EvictQ.length ≤ 1 && l2HintQ.length ≤ 1 &&
+              l2SizeQ.length ≤ 1 && vecQ.length ≤ 1 && semScopeOK
         let n := if toks.contains "v8" then 8 else if toks.contains "v4" then 4
                  else if toks.contains "v2" then 2 else 1
         let expectedArgs := n + 1 + (if head == "ld" && toks.contains "L2::cache_hint" then 1 else 0)
@@ -1529,7 +1587,25 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           let inputs := match tail.find? (fun a => (strim a).startsWith "(") with
             | some group => callInputParams group
             | none => []
-          if (c.splitOn "gx_ptx_uniform_load64").length > 1 then
+          if c == "__drperf_gpu_device_begin_v1" then
+            "    gx_ptx_trap_op(\"legacy device PCVs: regenerate with entry-PCV constructor\");"
+          else if c == "__drperf_gpu_device_ready_v2" then
+            if outputs.isEmpty && inputs.isEmpty then "    drperf_gpu_device_ready();"
+            else "    gx_ptx_trap_op(\"drperf_gpu_device_ready.abi\");"
+          else if c == "__drperf_gpu_device_begin_v2" then
+            match outputs, inputs with
+            | [], [name, scope] =>
+                s!"    drperf_gpu_device_begin((const char*)(uintptr_t)(*(const uint64_t*)(uintptr_t)({oC name})), *(const uint32_t*)(uintptr_t)({oC scope}));"
+            | _, _ => "    gx_ptx_trap_op(\"drperf_gpu_device_begin.abi\");"
+          else if c == "__drperf_gpu_device_pcv_v1" then
+            match outputs, inputs with
+            | [], [name, value] =>
+                s!"    drperf_gpu_device_pcv((const char*)(uintptr_t)(*(const uint64_t*)(uintptr_t)({oC name})), *(const int64_t*)(uintptr_t)({oC value}));"
+            | _, _ => "    gx_ptx_trap_op(\"drperf_gpu_device_pcv.abi\");"
+          else if c == "__drperf_gpu_device_end_v1" then
+            if outputs.isEmpty && inputs.isEmpty then "    drperf_gpu_device_end();"
+            else "    gx_ptx_trap_op(\"drperf_gpu_device_end.abi\");"
+          else if (c.splitOn "gx_ptx_uniform_load64").length > 1 then
             emitUniformLoad64Call outputs inputs
           else if (c.splitOn "gx_ptx_counted_load32").length > 1 then
             emitCountedLoad32Call outputs inputs
@@ -1611,17 +1687,6 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       | "griddepcontrol" => ";"
       /- PTX definition: `bar` synchronizes participating threads and `bar.warp.sync` carries a member mask. -/
       /- Lean modeling: helper selection preserves the runtime route but synchronization semantics are structural and explicitly limited by `gap:sync-runtime-limits`. -/
-      | "bar"  => if toks.contains "warp" then
-                    match args with | m :: _ => s!"    __syncwarp_mask((unsigned){oC m});" | _ => "    __syncthreads();"
-                  else
-                    -- `bar.sync id, count` waits for exactly `count`
-                    -- participating CTA threads.  Routing it through the
-                    -- full-block helper deadlocks warp-specialized kernels
-                    -- whenever the explicit count is smaller than blockDim.
-                    match args with
-                    | id :: cnt :: _ =>
-                      s!"    barrier_sync((int){oC id}, (int){oC cnt});"
-                    | _ => "    __syncthreads();"
 
       /- PTX definition: `cvta` converts addresses between named state spaces and the generic address space. -/
       /- Lean modeling: addition/subtraction against `_gx_shm` matches GX's shared-window representation; that representation is the explicit `trusted:shared-window` boundary. -/
@@ -1816,7 +1881,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           | tmap :: coords =>
             if coords.length == want then
               let elems := String.intercalate ", " (coords.map (fun c => s!"(int32_t)({oC c})"))
-              some ("(uint64_t)(" ++ oC tmap ++ "), (const int32_t[]){" ++ elems ++ "}, " ++ toString want ++ "u")
+              some ("(uint64_t)(" ++ oC tmap ++ "), std::array<int32_t, " ++ toString want ++ ">{" ++ elems ++ "}.data(), " ++ toString want ++ "u")
             else none
           | _ => none
         if toks.take 4 == ["cp", "async", "bulk", "tensor"] || toks.take 5 == ["cp", "reduce", "async", "bulk", "tensor"] then
@@ -2031,7 +2096,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
                   let byteMask := if cpMask then oC (more.getLastD "0") else "0xffffu"
                   s!"    gx_bulk_s2g((uint64_t)({parseAddr d regs}), (uint32_t)({parseAddr src regs}), (uint32_t)({oC n}), (uint32_t)({byteMask}));"
               | _, _ => trapOp
-          if !syntaxOK then bulkRoute
+          if !syntaxOK || bulk then bulkRoute
           else match spaces, args with
           | [dstSpace, "global"], [d, a, n] =>
             if !bulk && (dstSpace == "shared" || dstSpace == "shared::cta") &&
@@ -2424,8 +2489,10 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       | "nanosleep" => "    gx_cpu_kernel_yield();"
       /- PTX definition: barrier instructions synchronize named participants and optional reductions combine predicates. -/
       /- Lean modeling: helper selection and predicate negation preserve operand intent, but runtime synchronization/reduction correspondence remains structural and `gap:sync-runtime-limits`. -/
-      | "barrier" =>
-        if toks.contains "cluster" then
+      | "barrier" | "bar" =>
+        if toks.contains "warp" then
+          match args with | [m] => s!"    __syncwarp_mask((unsigned){oC m});" | _ => trapOp
+        else if toks.contains "cluster" then
           -- barrier.cluster.arrive[.release|.relaxed][.aligned] /
           -- barrier.cluster.wait[.acquire][.aligned]: split-phase barrier over
           -- every thread of every CTA in the cluster.
@@ -2438,18 +2505,20 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             "    gx_cluster_barrier_wait();"
           else trapOp
         else if toks.contains "red" then
-          -- barrier.red.{or,and}.pred dst, name, count, [!]src
-          let fn := if toks.contains "or" then "gx_barrier_red_or" else "gx_barrier_red_and"
-          match args with
-          | d :: nm :: cnt :: p :: _ =>
-            let neg := p.startsWith "!"
+          let fn := if toks.contains "or" then "gx_barrier_red_or" else if toks.contains "and" then "gx_barrier_red_and" else "gx_barrier_red_popc"
+          let emit (d nm cnt p : String) :=
             let pv := oC (p.replace "!" "")
-            let pp := if neg then s!"(!{pv})" else pv
+            let pp := if p.startsWith "!" then s!"(!{pv})" else pv
             s!"    {dest d} = {fn}((int){oC nm}, (int){oC cnt}, (int){pp});"
-          | _ => s!"    /* malformed: {s} */"
+          if !toks.any (fun t => ["or", "and", "popc"].contains t) then trapOp
+          else match args with
+            | [d, nm, p] => emit d nm "0" p
+            | [d, nm, cnt, p] => emit d nm cnt p
+            | _ => trapOp
         else match args with
-             | id :: cnt :: _ => s!"    barrier_sync((int){oC id}, (int){oC cnt});"
-             | _ => "    __syncthreads();"
+             | [id, cnt] => s!"    barrier_sync((int){oC id}, (int){oC cnt});"
+             | [id] => s!"    barrier_sync((int){oC id});"
+             | _ => trapOp
       -- ==================================================================
       -- BIT MANIPULATION: FUNNEL, EXTRACT, INSERT, AND PERMUTE
       -- ==================================================================
@@ -2540,10 +2609,34 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       -- Predicate and label recursion place these counters on executed paths.
       let resultType := (toks.filter (fun t => ["f16", "f16x2", "bf16", "bf16x2", "f32", "f32x2", "f64"].contains t)).headD ""
       let kind := if tensor then (if floating then 2 else 3) else if scalarFlops > 0 then (if resultType == "f64" then 4 else if resultType.startsWith "bf16" then 6 else if resultType.startsWith "f16" then 5 else 1) else 0
-      let unmodeled := ["cp", "tcgen05", "multimem"].contains head || (wmmaMemory && matrixBytes == 0) || (head == "wgmma" && tensor && tensorWork == 0)
+      -- Supported async-copy forms have semantic byte counters in the runtime.
+      -- Ordinary cp.async has an immediate destination size and optional
+      -- dynamic source size / ignore-source predicate; count zero-fill writes.
+      let simpleCopy := head == "cp" && toks.getD 1 "" == "async" && ["ca", "cg"].contains (toks.getD 2 "")
+      let copyBytes := if simpleCopy then (args.getD 2 "0").toNat?.getD 0 else 0
+      let copyExtra := if toks.contains "L2::cache_hint" then (args.drop 3).dropLast else args.drop 3
+      let copyReads := match copyExtra with
+        | [x] => if regs.contains (x ++ "#pred") then s!"(({oC x}) ? 0u : {copyBytes}u)" else s!"(uint32_t)({oC x})"
+        | _ => toString copyBytes
+      let reads := if simpleCopy then copyReads else toString reads
+      let writes := if simpleCopy then copyBytes else writes
+      let space := if simpleCopy then 6 else space
+      let addr := if simpleCopy then mkAddr (args.getD 1 "0") else addr
+      let unmodeled := head == "multimem" || (wmmaMemory && matrixBytes == 0) || (head == "wgmma" && tensor && tensorWork == 0)
       let emitted := if (emitted.splitOn "/* malformed:").length > 1 then trapOp else emitted
-      if !profile then emitted else
-      s!"    drperf_gpu_instruction(__func__, \"{op}\", __LINE__, {scalarFlops + tensorWork}, {reads}, {writes}, {space}, {kind}, {addr}, {if unmodeled then 1 else 0});\n" ++ emitted
+      -- ld.acquire / st.release: host acquire/release fences give the ordering a
+      -- cross-thread (multi-rank) poll/publish handshake needs; the access
+      -- helpers are opaque calls, so polling loops re-read memory.
+      let emitted :=
+        if emitted.startsWith "    gx_ptx_trap" then emitted
+        else if head == "ld" && toks.contains "acquire" then emitted ++ "\n    __atomic_thread_fence(__ATOMIC_ACQUIRE);"
+        else if head == "st" && toks.contains "release" then "    __atomic_thread_fence(__ATOMIC_RELEASE);\n" ++ emitted
+        else emitted
+      -- Annotation calls are collector metadata, not kernel work. Parameter
+      -- staging and PCV expression evaluation remain ordinary PTX operations.
+      if !profile || emitted.startsWith "    drperf_gpu_device_" then emitted else
+      s!"    drperf_gpu_instruction(__func__, \"{op}\", __LINE__, {scalarFlops + tensorWork}, {reads}, {writes}, {space}, {kind}, {addr}, {if unmodeled then 1 else 0});\n" ++
+      latencyInstrumentation op args regs movVector wgmmaShape latencyPredicates ++ emitted
 
 /- Standalone statement tests and generic callers retain fake-address guards.
    Whole-module translation supplies the statically inferred payload scope. -/

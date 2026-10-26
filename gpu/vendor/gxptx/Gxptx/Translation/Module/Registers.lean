@@ -248,6 +248,10 @@ def regLocals (src : String) : String := Id.run do
                 seen := seen.insert cname
                 out := out.push s!"    {ct} {cname} = 0;\n"
       | _ => pure ()
+  -- Hoisted alongside value locals; zero readiness means an entry value.
+  for r in (bodyRegisters noc).toArray do
+    if !r.endsWith "#pred" then
+      out := out.push (s!"    DrperfGpuReady {latencyShadow r} = " ++ "{0, 0, 0};\n")
   return String.join out.toList
 
 end Gxptx

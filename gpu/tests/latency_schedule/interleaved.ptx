@@ -1,0 +1,27 @@
+//
+// Four independent loads, each consumed right after it in PTX order (no
+// branches). PTX-order in-order issue exposes all four load latencies; a
+// ptxas-like basic-block schedule issues the loads first and exposes one.
+.version 8.0
+.target sm_90
+.address_size 64
+.visible .entry interleaved(
+	.param .u64 interleaved_param_0,
+	.param .u64 interleaved_param_1
+)
+{
+	.reg .b64 	%rd<4>;
+	.reg .f32 	%f<9>;
+	ld.param.u64 	%rd1, [interleaved_param_0];
+	ld.param.u64 	%rd2, [interleaved_param_1];
+	ld.global.f32 	%f1, [%rd1];
+	add.f32 	%f2, %f1, %f1;
+	ld.global.f32 	%f3, [%rd1+4];
+	add.f32 	%f4, %f3, %f2;
+	ld.global.f32 	%f5, [%rd1+8];
+	add.f32 	%f6, %f5, %f4;
+	ld.global.f32 	%f7, [%rd1+12];
+	add.f32 	%f8, %f7, %f6;
+	st.global.f32 	[%rd2], %f8;
+	ret;
+}

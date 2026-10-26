@@ -1,0 +1,4319 @@
+{
+  "schema": "drperf.gpu.v1",
+  "backend": "gpu",
+  "regions": [
+    {
+      "name": "device.block.dense_clear",
+      "scope": "block",
+      "metricScope": "exclusive",
+      "pcvs": [
+        "selected"
+      ],
+      "invocations": 6,
+      "stateCount": 3,
+      "singleState": false,
+      "fits": {
+        "conversion_ops": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "selected": 0.0
+          },
+          "constant": 204096.0,
+          "maxAbsoluteError": 195904.0,
+          "accepted": false,
+          "observedMin": 8192,
+          "observedMax": 400000,
+          "unexplainedMean": 204096.0,
+          "dependentPCVs": []
+        },
+        "integer_ops": {
+          "coefficients": {
+            "selected": 0.0
+          },
+          "constant": 153072.0,
+          "maxAbsoluteError": 146928.0,
+          "accepted": false,
+          "observedMin": 6144,
+          "observedMax": 300000,
+          "unexplainedMean": 153072.0,
+          "dependentPCVs": []
+        },
+        "param_write_bytes": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 512,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 512,
+          "observedMax": 512,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "selected": 0.0
+          },
+          "constant": 357456.0,
+          "maxAbsoluteError": 342832.0,
+          "accepted": false,
+          "observedMin": 14624,
+          "observedMax": 700288,
+          "unexplainedMean": 357456.0,
+          "dependentPCVs": []
+        },
+        "region_lane_participants": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "sites": {
+        "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+          "conversion_ops": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2589:mov.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2593:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2595:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2600:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2618:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2620:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2625:add.s64": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2627:mov.b32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2629:st.global.u32": {
+          "global_write_bytes": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 204096.0,
+            "maxAbsoluteError": 195904.0,
+            "accepted": false,
+            "observedMin": 8192,
+            "observedMax": 400000,
+            "unexplainedMean": 204096.0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2631:add.s32": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 51024.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2048,
+            "observedMax": 100000,
+            "unexplainedMean": 51024.0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2636:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.0
+            },
+            "constant": 50992.0,
+            "maxAbsoluteError": 48976.0,
+            "accepted": false,
+            "observedMin": 2016,
+            "observedMax": 99968,
+            "unexplainedMean": 50992.0,
+            "dependentPCVs": []
+          }
+        }
+      },
+      "observations": [
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 2,
+          "parent": 1,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 16
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 8192,
+            "integer_ops": 6144,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 14624,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 8192,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 2016
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 5,
+          "parent": 4,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 32
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 8192,
+            "integer_ops": 6144,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 14624,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 8192,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 2016
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 8,
+          "parent": 7,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 64
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 8192,
+            "integer_ops": 6144,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 14624,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 8192,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 2048,
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 2048
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 2016
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 11,
+          "parent": 10,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 16
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 400000,
+            "integer_ops": 300000,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 700288,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 400000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 99968
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 14,
+          "parent": 13,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 32
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 400000,
+            "integer_ops": 300000,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 700288,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 400000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 99968
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 17,
+          "parent": 16,
+          "region": "device.block.dense_clear",
+          "pcvs": {
+            "selected": 64
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "conversion_ops": 32,
+            "global_write_bytes": 400000,
+            "integer_ops": 300000,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 700288,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 400000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 100000,
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 100000
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 99968
+            }
+          },
+          "launches": []
+        }
+      ],
+      "unmodeledWorkEvents": 0,
+      "validity": "observed-work-counts"
+    },
+    {
+      "name": "device.block.selected_math",
+      "scope": "block",
+      "metricScope": "exclusive",
+      "pcvs": [
+        "selected"
+      ],
+      "invocations": 6,
+      "stateCount": 3,
+      "singleState": false,
+      "fits": {
+        "fp32_flops": {
+          "coefficients": {
+            "selected": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 64,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "global_write_bytes": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 128,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 128,
+          "observedMax": 128,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "integer_ops": {
+          "coefficients": {
+            "selected": 1
+          },
+          "constant": 96,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 112,
+          "observedMax": 160,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "param_write_bytes": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 512,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 512,
+          "observedMax": 512,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {
+            "selected": 5.285714285714286
+          },
+          "constant": 336.0,
+          "maxAbsoluteError": 6.85714285714289,
+          "accepted": false,
+          "observedMin": 416,
+          "observedMax": 672,
+          "unexplainedMean": 533.3333333333334,
+          "dependentPCVs": []
+        },
+        "region_lane_participants": {
+          "coefficients": {
+            "selected": 0
+          },
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "sites": {
+        "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2651:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2653:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2658:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2660:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": -0.28571428571428575
+            },
+            "constant": 16.000000000000004,
+            "maxAbsoluteError": 6.857142857142859,
+            "accepted": false,
+            "observedMin": 0,
+            "observedMax": 16,
+            "unexplainedMean": 5.333333333333333,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2662:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.28571428571428575
+            },
+            "constant": 15.999999999999998,
+            "maxAbsoluteError": 6.857142857142858,
+            "accepted": false,
+            "observedMin": 16,
+            "observedMax": 32,
+            "unexplainedMean": 26.666666666666668,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2664:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.28571428571428575
+            },
+            "constant": 15.999999999999998,
+            "maxAbsoluteError": 6.857142857142858,
+            "accepted": false,
+            "observedMin": 16,
+            "observedMax": 32,
+            "unexplainedMean": 26.666666666666668,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2666:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.28571428571428575
+            },
+            "constant": 15.999999999999998,
+            "maxAbsoluteError": 6.857142857142858,
+            "accepted": false,
+            "observedMin": 16,
+            "observedMax": 32,
+            "unexplainedMean": 26.666666666666668,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2669:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+          "fp32_flops": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2673:add.s32": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 1
+            },
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 16,
+            "observedMax": 64,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2678:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0.7142857142857145
+            },
+            "constant": -16.000000000000014,
+            "maxAbsoluteError": 6.8571428571428505,
+            "accepted": false,
+            "observedMin": 0,
+            "observedMax": 32,
+            "unexplainedMean": 10.666666666666666,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2681:add.s32": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2685:add.s64": {
+          "integer_ops": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2687:st.global.f32": {
+          "global_write_bytes": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {
+              "selected": 0
+            },
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        }
+      },
+      "observations": [
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 3,
+          "parent": 1,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 16
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 16,
+            "global_write_bytes": 128,
+            "integer_ops": 112,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 416,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2660:bra": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 16,
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 16,
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 6,
+          "parent": 4,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 32
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 32,
+            "global_write_bytes": 128,
+            "integer_ops": 128,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 512,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 9,
+          "parent": 7,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 64
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 64,
+            "global_write_bytes": 128,
+            "integer_ops": 160,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 672,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 64,
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 64,
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2678:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 12,
+          "parent": 10,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 16
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 16,
+            "global_write_bytes": 128,
+            "integer_ops": 112,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 416,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2660:bra": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 16,
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 16,
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 16
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 15,
+          "parent": 13,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 32
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 32,
+            "global_write_bytes": 128,
+            "integer_ops": 128,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 512,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 18,
+          "parent": 16,
+          "region": "device.block.selected_math",
+          "pcvs": {
+            "selected": 64
+          },
+          "scope": "block",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "fp32_flops": 64,
+            "global_write_bytes": 128,
+            "integer_ops": 160,
+            "param_write_bytes": 512,
+            "ptx_lane_instructions": 672,
+            "region_lane_participants": 32
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 64,
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 64,
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 64
+            },
+            "sparse_regions__gxptx:cpp2678:bra": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 32,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": []
+        }
+      ],
+      "unmodeledWorkEvents": 0,
+      "validity": "observed-work-counts"
+    },
+    {
+      "name": "kernel.sparse_regions",
+      "scope": "kernel",
+      "metricScope": "exclusive",
+      "pcvs": [],
+      "invocations": 6,
+      "stateCount": 1,
+      "singleState": true,
+      "fits": {
+        "blocks": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "conversion_ops": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "dynamic_shared_bytes_per_launch": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "global_write_bytes": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "integer_ops": {
+          "coefficients": {},
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "launched_lanes": {
+          "coefficients": {},
+          "constant": 32,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 32,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "launches": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "param_read_bytes": {
+          "coefficients": {},
+          "constant": 640,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 640,
+          "observedMax": 640,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "param_write_bytes": {
+          "coefficients": {},
+          "constant": 768,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 768,
+          "observedMax": 768,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "ptx_lane_instructions": {
+          "coefficients": {},
+          "constant": 480,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 480,
+          "observedMax": 480,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "sum_block_lane_sequence_span": {
+          "coefficients": {},
+          "constant": 11203.166666666666,
+          "maxAbsoluteError": 10716.833333333334,
+          "accepted": false,
+          "observedMin": 488,
+          "observedMax": 21920,
+          "unexplainedMean": 11203.166666666666,
+          "dependentPCVs": []
+        },
+        "sum_block_max_lane_bytes": {
+          "coefficients": {},
+          "constant": 6458.0,
+          "maxAbsoluteError": 6122.0,
+          "accepted": false,
+          "observedMin": 336,
+          "observedMax": 12580,
+          "unexplainedMean": 6458.0,
+          "dependentPCVs": []
+        },
+        "sum_block_max_lane_flops": {
+          "coefficients": {},
+          "constant": 1.3333333333333333,
+          "maxAbsoluteError": 0.6666666666666667,
+          "accepted": false,
+          "observedMin": 1,
+          "observedMax": 2,
+          "unexplainedMean": 1.3333333333333333,
+          "dependentPCVs": []
+        },
+        "sum_launch_max_block_lane_sequence_span": {
+          "coefficients": {},
+          "constant": 11203.166666666666,
+          "maxAbsoluteError": 10716.833333333334,
+          "accepted": false,
+          "observedMin": 488,
+          "observedMax": 21920,
+          "unexplainedMean": 11203.166666666666,
+          "dependentPCVs": []
+        },
+        "warps": {
+          "coefficients": {},
+          "constant": 1,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 1,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "sites": {
+        "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+          "param_read_bytes": {
+            "coefficients": {},
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+          "param_read_bytes": {
+            "coefficients": {},
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+          "param_read_bytes": {
+            "coefficients": {},
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+          "param_read_bytes": {
+            "coefficients": {},
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2576:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2578:mov.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2582:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2584:st.param.b32": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+          "conversion_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2589:mov.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2593:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2595:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2600:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2618:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2620:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2625:add.s64": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2627:mov.b32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2629:st.global.u32": {
+          "global_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2631:add.s32": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2636:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2640:mov.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2644:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 256,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 256,
+            "observedMax": 256,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2646:st.param.b32": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 128,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 128,
+            "observedMax": 128,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2651:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2653:st.param.b64": {
+          "param_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2658:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2660:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2662:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2664:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2666:mov.u32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2669:mov.f32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+          "fp32_flops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2673:add.s32": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2678:bra": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2681:add.s32": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2685:add.s64": {
+          "integer_ops": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2687:st.global.f32": {
+          "global_write_bytes": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          },
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 0,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 0,
+            "observedMax": 0,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        },
+        "sparse_regions__gxptx:cpp2690:ret": {
+          "ptx_lane_instructions": {
+            "coefficients": {},
+            "constant": 32,
+            "maxAbsoluteError": 0,
+            "accepted": true,
+            "observedMin": 32,
+            "observedMax": 32,
+            "unexplainedMean": 0,
+            "dependentPCVs": []
+          }
+        }
+      },
+      "observations": [
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 1,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 488,
+            "sum_block_max_lane_bytes": 336,
+            "sum_block_max_lane_flops": 1,
+            "sum_launch_max_block_lane_sequence_span": 488,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2660:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 16,
+                "global_write_bytes": 8320,
+                "integer_ops": 6256,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 15520,
+                "sum_block_lane_sequence_span": 488,
+                "sum_block_max_lane_bytes": 336,
+                "sum_block_max_lane_flops": 1,
+                "sum_launch_max_block_lane_sequence_span": 488,
+                "warps": 1
+              }
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 4,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 488,
+            "sum_block_max_lane_bytes": 336,
+            "sum_block_max_lane_flops": 1,
+            "sum_launch_max_block_lane_sequence_span": 488,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 32,
+                "global_write_bytes": 8320,
+                "integer_ops": 6272,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 15616,
+                "sum_block_lane_sequence_span": 488,
+                "sum_block_max_lane_bytes": 336,
+                "sum_block_max_lane_flops": 1,
+                "sum_launch_max_block_lane_sequence_span": 488,
+                "warps": 1
+              }
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 7,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 493,
+            "sum_block_max_lane_bytes": 336,
+            "sum_block_max_lane_flops": 2,
+            "sum_launch_max_block_lane_sequence_span": 493,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2678:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 64,
+                "global_write_bytes": 8320,
+                "integer_ops": 6304,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 15776,
+                "sum_block_lane_sequence_span": 493,
+                "sum_block_max_lane_bytes": 336,
+                "sum_block_max_lane_flops": 2,
+                "sum_launch_max_block_lane_sequence_span": 493,
+                "warps": 1
+              }
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 10,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 21915,
+            "sum_block_max_lane_bytes": 12580,
+            "sum_block_max_lane_flops": 1,
+            "sum_launch_max_block_lane_sequence_span": 21915,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2660:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 16,
+                "global_write_bytes": 400128,
+                "integer_ops": 300112,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 701184,
+                "sum_block_lane_sequence_span": 21915,
+                "sum_block_max_lane_bytes": 12580,
+                "sum_block_max_lane_flops": 1,
+                "sum_launch_max_block_lane_sequence_span": 21915,
+                "warps": 1
+              }
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 13,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 21915,
+            "sum_block_max_lane_bytes": 12580,
+            "sum_block_max_lane_flops": 1,
+            "sum_launch_max_block_lane_sequence_span": 21915,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 32,
+                "global_write_bytes": 400128,
+                "integer_ops": 300128,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 701280,
+                "sum_block_lane_sequence_span": 21915,
+                "sum_block_max_lane_bytes": 12580,
+                "sum_block_max_lane_flops": 1,
+                "sum_launch_max_block_lane_sequence_span": 21915,
+                "warps": 1
+              }
+            }
+          ]
+        },
+        {
+          "schema": 1,
+          "backend": "gpu",
+          "pid": 2113864,
+          "token": 16,
+          "parent": 0,
+          "region": "kernel.sparse_regions",
+          "pcvs": {},
+          "scope": "kernel",
+          "kernel": "sparse_regions",
+          "linear_block": 0,
+          "group": 0,
+          "metrics": {
+            "blocks": 1,
+            "conversion_ops": 0,
+            "dynamic_shared_bytes_per_launch": 0,
+            "fp32_flops": 0,
+            "global_write_bytes": 0,
+            "integer_ops": 0,
+            "launched_lanes": 32,
+            "launches": 1,
+            "param_read_bytes": 640,
+            "param_write_bytes": 768,
+            "ptx_lane_instructions": 480,
+            "sum_block_lane_sequence_span": 21920,
+            "sum_block_max_lane_bytes": 12580,
+            "sum_block_max_lane_flops": 2,
+            "sum_launch_max_block_lane_sequence_span": 21920,
+            "warps": 1
+          },
+          "sites": {
+            "sparse_regions__gxptx:cpp2566:ld.param.u64": {
+              "param_read_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2568:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2570:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2572:ld.param.u32": {
+              "param_read_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2574:cvta.to.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2576:mov.u32": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2578:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2580:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2582:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2584:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2587:cvt.s64.s32": {
+              "conversion_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2589:mov.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2591:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2593:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2595:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2598:setp.eq.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2600:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2614:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2618:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2620:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2623:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2625:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2627:mov.b32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2629:st.global.u32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2631:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2633:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2636:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2640:mov.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2642:cvta.global.u64": {
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2644:st.param.b64": {
+              "param_write_bytes": 256,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2646:st.param.b32": {
+              "param_write_bytes": 128,
+              "ptx_lane_instructions": 32
+            },
+            "sparse_regions__gxptx:cpp2649:cvta.global.u64": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2651:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2653:st.param.b64": {
+              "param_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2656:setp.ge.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2658:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2662:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2664:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2666:mov.u32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2669:mov.f32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2671:add.rn.f32": {
+              "fp32_flops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2673:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2675:setp.lt.s32": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2678:bra": {
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2681:add.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2683:mul.wide.s32": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2685:add.s64": {
+              "integer_ops": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2687:st.global.f32": {
+              "global_write_bytes": 0,
+              "ptx_lane_instructions": 0
+            },
+            "sparse_regions__gxptx:cpp2690:ret": {
+              "ptx_lane_instructions": 32
+            }
+          },
+          "launches": [
+            {
+              "kernel": "sparse_regions",
+              "grid": [
+                1,
+                1,
+                1
+              ],
+              "block": [
+                32,
+                1,
+                1
+              ],
+              "metricScope": "inclusive",
+              "metrics": {
+                "blocks": 1,
+                "conversion_ops": 32,
+                "dynamic_shared_bytes_per_launch": 0,
+                "fp32_flops": 64,
+                "global_write_bytes": 400128,
+                "integer_ops": 300160,
+                "launched_lanes": 32,
+                "launches": 1,
+                "param_read_bytes": 640,
+                "param_write_bytes": 1792,
+                "ptx_lane_instructions": 701440,
+                "sum_block_lane_sequence_span": 21920,
+                "sum_block_max_lane_bytes": 12580,
+                "sum_block_max_lane_flops": 2,
+                "sum_launch_max_block_lane_sequence_span": 21920,
+                "warps": 1
+              }
+            }
+          ]
+        }
+      ],
+      "unmodeledWorkEvents": 0,
+      "validity": "observed-work-counts"
+    }
+  ],
+  "validity": "complete",
+  "fit": {
+    "absoluteTolerance": 1e-06,
+    "relativeTolerance": 1e-06,
+    "unitOfObservation": "individual GPU region invocation",
+    "scope": "observed states only; same-state invocation variation is retained"
+  },
+  "semantics": {
+    "work": "dynamic PTX operations, separate from CPU instructions",
+    "memory": "requested PTX bytes; unresolved generic addresses remain generic; not cache transactions or HBM traffic",
+    "parallelism": "logical launch geometry, per-block maximum lane work, and lane-sequence span with block-barrier joins; no GPU cycle estimate",
+    "spanLimitations": "lane instruction order serializes independent instructions; warp-exchange joins and cross-block dependency edges are not modeled",
+    "diagnostics": "emulator_* counters describe execution machinery, not GPU barriers; block_barrier_lane_arrivals and collective_lane_arrivals come from PTX",
+    "composition": "host and device region work is exclusive; device regions own the innermost annotated lane work; launches[].metrics are inclusive totals",
+    "deviceRegions": "lane scopes retain individual invocations and PCVs; warp/block scopes require complete physical membership and identical PCVs; no implicit synchronization; scoped span is not inferred",
+    "annotationOverhead": "marker calls and marker bodies are not work; ordinary PTX for PCV expressions and parameter staging is counted; annotations may affect compiler optimization",
+    "time": "no latency, occupancy, throughput or hardware calibration is inferred"
+  },
+  "provenance": {
+    "command": [
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/driver",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/kernels.so",
+      "sparse"
+    ],
+    "rawCaptures": [
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/before/capture-o8lon_mk/gpu.2113864.jsonl"
+    ],
+    "runtimeSha256": "ece21c41b30d390066e00063af6ef32d9fd0943b5fbdd796690a544448fb917d",
+    "vendoredGX": "cc6dfacbe333c7a5892c1247ad2d7f9c9f464d68"
+  }
+}

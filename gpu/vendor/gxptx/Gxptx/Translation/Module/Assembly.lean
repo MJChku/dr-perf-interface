@@ -137,6 +137,8 @@ def kernelMeta (fns : Array (String × String × String × Bool × Nat)) : Strin
       let blockCohort := independent || ((stripComments body).splitOn "gx_ptx_block_cohort_width").length > 1
       let warpCohort := ((stripComments body).splitOn "gx_ptx_warp_cohort_width").length > 1
       some (s!"extern \"C\" const unsigned {nm}__gxptx_nparams = {sizes.length};\n" ++
+            s!"extern \"C\" const unsigned {nm}__gxptx_footprint_abi = 1;\n" ++
+            s!"extern \"C\" const unsigned {nm}__gxptx_latency_abi = 1;\n" ++
             s!"extern \"C\" const unsigned {nm}__gxptx_psizes[] = " ++ "{ " ++
             String.intercalate ", " (sizes.map toString) ++ " };\n" ++
             s!"extern \"C\" const unsigned {nm}__gxptx_paligns[] = " ++ "{ " ++

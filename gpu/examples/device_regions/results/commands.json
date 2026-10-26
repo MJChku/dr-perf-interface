@@ -1,0 +1,74 @@
+[
+  {
+    "label": "build",
+    "argv": [
+      "g++",
+      "-std=c++17",
+      "-O2",
+      "-I/home/ubuntu/drperf/gpu/include",
+      "/home/ubuntu/drperf/gpu/tests/device_regions_driver.cc",
+      "-L/home/ubuntu/drperf/gpu/build",
+      "-ldrperf_gpu",
+      "-Wl,-rpath,/home/ubuntu/drperf/gpu/build",
+      "-o",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/driver"
+    ],
+    "cwd": "/home/ubuntu/drperf",
+    "startedUtc": "2026-10-25T19:06:48.937418+00:00",
+    "finishedUtc": "2026-10-25T19:06:49.511010+00:00",
+    "durationSeconds": 0.5735898572020233,
+    "exitCode": 0
+  },
+  {
+    "label": "translate",
+    "argv": [
+      "/home/ubuntu/drperf/bin/drperf",
+      "--gpu",
+      "translate",
+      "/home/ubuntu/drperf/gpu/tests/device_regions.ptx",
+      "-o",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/kernels.so"
+    ],
+    "cwd": "/home/ubuntu/drperf",
+    "startedUtc": "2026-10-25T19:06:49.511387+00:00",
+    "finishedUtc": "2026-10-25T19:06:50.212436+00:00",
+    "durationSeconds": 0.7010621321387589,
+    "exitCode": 0
+  },
+  {
+    "label": "before",
+    "argv": [
+      "/home/ubuntu/drperf/bin/drperf",
+      "--gpu",
+      "--output",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/before",
+      "--",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/driver",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/kernels.so",
+      "sparse"
+    ],
+    "cwd": "/home/ubuntu/drperf",
+    "startedUtc": "2026-10-25T19:06:50.212925+00:00",
+    "finishedUtc": "2026-10-25T19:06:52.348445+00:00",
+    "durationSeconds": 2.1355307060293853,
+    "exitCode": 0
+  },
+  {
+    "label": "refined",
+    "argv": [
+      "/home/ubuntu/drperf/bin/drperf",
+      "--gpu",
+      "--output",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/refined",
+      "--",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/driver",
+      "/home/ubuntu/drperf/gpu/examples/device_regions/results/kernels.so",
+      "sparse-refined"
+    ],
+    "cwd": "/home/ubuntu/drperf",
+    "startedUtc": "2026-10-25T19:06:52.351970+00:00",
+    "finishedUtc": "2026-10-25T19:06:54.437560+00:00",
+    "durationSeconds": 2.0855970648117363,
+    "exitCode": 0
+  }
+]

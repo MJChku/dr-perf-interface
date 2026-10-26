@@ -1,0 +1,34 @@
+{
+  "case": "glm53-cooperative-topk",
+  "label": "QUANTIFIED",
+  "kernel": "vLLM cooperative_topk_cs16<2048> (indexer top-k)",
+  "role": "Top-2048 over indexer scores per request; 14.1 us/call x21.",
+  "pcvs": "T (scaled RF and large/TMA branches), w, K, tie populations",
+  "finding": "One global score pass at 4 B/token (not 8), shared rescan, bounded tie refinement; fallback per-row kernel has a bounded quadratic insertion sort.",
+  "fix": "None needed.",
+  "fix_status": "Closed.",
+  "timing": "14.1 us/call (b101).",
+  "receipts": [
+    "/home/ubuntu/gen-glm53-codex-audit/NOTES.md",
+    "/home/ubuntu/gen-glm53-codex-audit/NOTES2.md"
+  ],
+  "files": [
+    "/home/ubuntu/gen-glm53-codex-audit/drivers2/topk2048.cu",
+    "/home/ubuntu/gen-glm53-codex-audit/drivers2/topk2048_driver.cc"
+  ],
+  "reproduce": [
+    "/home/ubuntu/gen-glm53-codex-audit/run2.py topkbuild"
+  ],
+  "credit": "DrPerf.",
+  "copied": [
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/drivers2/topk2048.cu",
+      "copy": "src/topk2048.cu"
+    },
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/drivers2/topk2048_driver.cc",
+      "copy": "src/topk2048_driver.cc"
+    }
+  ],
+  "study": "GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26"
+}

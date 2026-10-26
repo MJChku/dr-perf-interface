@@ -1,0 +1,416 @@
+{
+  "scope": "Standalone PTX resource-count experiments on frozen GLM kernels and a compact-output demonstration; not GPU timing or serving integration.",
+  "physical_gpu_use_seconds": 0,
+  "training_histories": [
+    32,
+    64,
+    96,
+    128,
+    128,
+    256,
+    512
+  ],
+  "heldout_histories": [
+    2048,
+    100000
+  ],
+  "dimensions": {
+    "queries": 1,
+    "heads": 1,
+    "materialize_nope": 1,
+    "materialize_rope": 1,
+    "materialize_value": 1
+  },
+  "points": [
+    {
+      "history": 32,
+      "selected": 16,
+      "materialize_read_bytes": 384,
+      "materialize_write_bytes": 384,
+      "sparse_write_bytes": 96,
+      "compact_write_bytes": 32,
+      "sparse_fp32_flops": 750,
+      "compact_fp32_flops": 750,
+      "sparse_special_ops": 16,
+      "held_out": false
+    },
+    {
+      "history": 64,
+      "selected": 16,
+      "materialize_read_bytes": 768,
+      "materialize_write_bytes": 768,
+      "sparse_write_bytes": 160,
+      "compact_write_bytes": 32,
+      "sparse_fp32_flops": 750,
+      "compact_fp32_flops": 750,
+      "sparse_special_ops": 16,
+      "held_out": false
+    },
+    {
+      "history": 96,
+      "selected": 32,
+      "materialize_read_bytes": 1152,
+      "materialize_write_bytes": 1152,
+      "sparse_write_bytes": 256,
+      "compact_write_bytes": 64,
+      "sparse_fp32_flops": 990,
+      "compact_fp32_flops": 990,
+      "sparse_special_ops": 32,
+      "held_out": false
+    },
+    {
+      "history": 128,
+      "selected": 16,
+      "materialize_read_bytes": 1536,
+      "materialize_write_bytes": 1536,
+      "sparse_write_bytes": 288,
+      "compact_write_bytes": 32,
+      "sparse_fp32_flops": 750,
+      "compact_fp32_flops": 750,
+      "sparse_special_ops": 16,
+      "held_out": false
+    },
+    {
+      "history": 128,
+      "selected": 32,
+      "materialize_read_bytes": 1536,
+      "materialize_write_bytes": 1536,
+      "sparse_write_bytes": 320,
+      "compact_write_bytes": 64,
+      "sparse_fp32_flops": 990,
+      "compact_fp32_flops": 990,
+      "sparse_special_ops": 32,
+      "held_out": false
+    },
+    {
+      "history": 256,
+      "selected": 32,
+      "materialize_read_bytes": 3072,
+      "materialize_write_bytes": 3072,
+      "sparse_write_bytes": 576,
+      "compact_write_bytes": 64,
+      "sparse_fp32_flops": 990,
+      "compact_fp32_flops": 990,
+      "sparse_special_ops": 32,
+      "held_out": false
+    },
+    {
+      "history": 512,
+      "selected": 64,
+      "materialize_read_bytes": 6144,
+      "materialize_write_bytes": 6144,
+      "sparse_write_bytes": 1152,
+      "compact_write_bytes": 128,
+      "sparse_fp32_flops": 1470,
+      "compact_fp32_flops": 1470,
+      "sparse_special_ops": 64,
+      "held_out": false
+    },
+    {
+      "history": 2048,
+      "selected": 2048,
+      "materialize_read_bytes": 24576,
+      "materialize_write_bytes": 24576,
+      "sparse_write_bytes": 8192,
+      "compact_write_bytes": 4096,
+      "sparse_fp32_flops": 31230,
+      "compact_fp32_flops": 31230,
+      "sparse_special_ops": 2048,
+      "held_out": true
+    },
+    {
+      "history": 100000,
+      "selected": 2048,
+      "materialize_read_bytes": 1200000,
+      "materialize_write_bytes": 1200000,
+      "sparse_write_bytes": 204096,
+      "compact_write_bytes": 4096,
+      "sparse_fp32_flops": 31230,
+      "compact_fp32_flops": 31230,
+      "sparse_special_ops": 2048,
+      "held_out": true
+    }
+  ],
+  "heldout_checks": [
+    {
+      "region": "history-pack-refined",
+      "metric": "global_read_bytes",
+      "pcvs": {
+        "history": 2048,
+        "queries": 1
+      },
+      "predicted": 24576,
+      "observed": 24576,
+      "absolute_error": 0
+    },
+    {
+      "region": "history-pack-refined",
+      "metric": "global_read_bytes",
+      "pcvs": {
+        "history": 100000,
+        "queries": 1
+      },
+      "predicted": 1200000,
+      "observed": 1200000,
+      "absolute_error": 0
+    },
+    {
+      "region": "history-pack-refined",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "history": 2048,
+        "queries": 1
+      },
+      "predicted": 24576,
+      "observed": 24576,
+      "absolute_error": 0
+    },
+    {
+      "region": "history-pack-refined",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "history": 100000,
+        "queries": 1
+      },
+      "predicted": 1200000,
+      "observed": 1200000,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "history": 2048,
+        "selected": 2048
+      },
+      "predicted": 8192,
+      "observed": 8192,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "history": 100000,
+        "selected": 2048
+      },
+      "predicted": 204096,
+      "observed": 204096,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "global_read_bytes",
+      "pcvs": {
+        "history": 2048,
+        "selected": 2048
+      },
+      "predicted": 53248,
+      "observed": 53248,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "global_read_bytes",
+      "pcvs": {
+        "history": 100000,
+        "selected": 2048
+      },
+      "predicted": 53248,
+      "observed": 53248,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "special_function_ops",
+      "pcvs": {
+        "history": 2048,
+        "selected": 2048
+      },
+      "predicted": 2048,
+      "observed": 2048,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-refined",
+      "metric": "special_function_ops",
+      "pcvs": {
+        "history": 100000,
+        "selected": 2048
+      },
+      "predicted": 2048,
+      "observed": 2048,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-compact",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "selected": 2048
+      },
+      "predicted": 4096,
+      "observed": 4096,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-compact",
+      "metric": "global_write_bytes",
+      "pcvs": {
+        "selected": 2048
+      },
+      "predicted": 4096,
+      "observed": 4096,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-compact",
+      "metric": "special_function_ops",
+      "pcvs": {
+        "selected": 2048
+      },
+      "predicted": 2048,
+      "observed": 2048,
+      "absolute_error": 0
+    },
+    {
+      "region": "selected-softmax-compact",
+      "metric": "special_function_ops",
+      "pcvs": {
+        "selected": 2048
+      },
+      "predicted": 2048,
+      "observed": 2048,
+      "absolute_error": 0
+    }
+  ],
+  "training_fits": {
+    "history-pack-refined": {
+      "global_read_bytes": {
+        "coefficients": {
+          "history": 12,
+          "queries": 0
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 384,
+        "observedMax": 6144,
+        "unexplainedMean": 0,
+        "dependentPCVs": [
+          "queries"
+        ]
+      },
+      "global_write_bytes": {
+        "coefficients": {
+          "history": 12,
+          "queries": 0
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 384,
+        "observedMax": 6144,
+        "unexplainedMean": 0,
+        "dependentPCVs": [
+          "queries"
+        ]
+      }
+    },
+    "selected-softmax-refined": {
+      "global_write_bytes": {
+        "coefficients": {
+          "history": 2,
+          "selected": 2
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 96,
+        "observedMax": 1152,
+        "unexplainedMean": 0,
+        "dependentPCVs": []
+      },
+      "global_read_bytes": {
+        "coefficients": {
+          "history": 0,
+          "selected": 26
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 416,
+        "observedMax": 1664,
+        "unexplainedMean": 0,
+        "dependentPCVs": []
+      },
+      "special_function_ops": {
+        "coefficients": {
+          "history": 0,
+          "selected": 1
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 16,
+        "observedMax": 64,
+        "unexplainedMean": 0,
+        "dependentPCVs": []
+      }
+    },
+    "selected-softmax-compact": {
+      "global_write_bytes": {
+        "coefficients": {
+          "selected": 2
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 32,
+        "observedMax": 128,
+        "unexplainedMean": 0,
+        "dependentPCVs": []
+      },
+      "special_function_ops": {
+        "coefficients": {
+          "selected": 1
+        },
+        "constant": 0,
+        "maxAbsoluteError": 0,
+        "accepted": true,
+        "observedMin": 16,
+        "observedMax": 64,
+        "unexplainedMean": 0,
+        "dependentPCVs": []
+      }
+    }
+  },
+  "initial_models_rejected": {
+    "pack_queries_only": true,
+    "softmax_selected_only_write_bytes": true
+  },
+  "refined_site_residuals": {
+    "history-pack-refined": 49,
+    "selected-softmax-refined": 58,
+    "selected-softmax-compact": 0
+  },
+  "ratios_100k_over_2k": {
+    "materialize_write_bytes": 48.828125,
+    "sparse_write_bytes": 24.9140625,
+    "compact_write_bytes": 1.0,
+    "sparse_fp32_flops": 1.0
+  },
+  "limitations": [
+    "Requested PTX bytes are not cache transactions or HBM traffic.",
+    "Reduced width and one query/head isolate history scaling; full production width not emulated.",
+    "Softmax fixtures use uniform finite scores and valid unique IDs; acceptance is empirical, not all-input proof.",
+    "The compact output needs a compatible downstream selected-ID consumer; it is not a drop-in replacement for dense PV.",
+    "No native timing, E2E speedup, or attribution of the complete 2K/100K serving gap is claimed.",
+    "These historical materialization/softmax paths do not assert that the latest FlashMLA integration still uses them.",
+    "Some statement/integer/parallelism fits retain residuals; accepted byte fits are not acceptance of every metric."
+  ],
+  "provenance": {
+    "sources": "/home/ubuntu/drperf/gpu/examples/glm53_scaling/sources.json",
+    "profile": "/home/ubuntu/drperf/gpu/examples/glm53_scaling/results/capture-report/profile.gpu.drperf.json",
+    "profile_sha256": "d797f2b8fd86d190eb0c4537b847431671cb28858af08005ed803aef3947db0f"
+  }
+}

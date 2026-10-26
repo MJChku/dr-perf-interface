@@ -1,0 +1,1712 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "history-pack-initial"
+  9 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 179.444 [UNEXPLAINED; max error 1383.56]
+  conversion_ops = 527836 [UNEXPLAINED; max error 4.07229e+06]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  global_read_bytes = 137685 [UNEXPLAINED; max error 1.06231e+06]
+  global_write_bytes = 137685 [UNEXPLAINED; max error 1.06231e+06]
+  integer_ops = 1.11313e+06 [UNEXPLAINED; max error 8.58738e+06]
+  launched_lanes = 22968.9 [UNEXPLAINED; max error 177095]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 1.28626e+06 [UNEXPLAINED; max error 9.91733e+06]
+  ptx_lane_instructions = 2.38716e+06 [UNEXPLAINED; max error 1.84147e+07]
+  sum_block_lane_sequence_span = 18760.1 [UNEXPLAINED; max error 144598]
+  sum_block_max_lane_bytes = 12203.6 [UNEXPLAINED; max error 94084.4]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 129 [accepted; max error 0]
+  warps = 717.778 [UNEXPLAINED; max error 5534.22]
+  PCVs not independently identifiable: queries
+  Unexplained site materialize_kv_head_major__gxptx:cpp1943:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1945:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1947:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1949:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1951:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1953:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1955:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1957:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1959:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1961:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1963:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1965:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1967:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1969:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1971:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1973:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1975:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1977:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1979:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1981:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1983:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1985:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1987:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1989:setp.ge.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1991:bra: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1993:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1995:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1997:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2001:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2003:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2005:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2007:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2009:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2011:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2013:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2015:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2025:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2027:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2029:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2033:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2035:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2037:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2039:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2041:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2043:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2045:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2047:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2057:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2059:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2061:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2065:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2067:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2069:rem.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2071:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2073:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2079:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2081:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2083:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2085:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2089:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2091:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2093:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2095:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2097:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2103:setp.ge.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2105:bra: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2107:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2109:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2111:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2113:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2115:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2117:ld.global.f32: global_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2119:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2122:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2124:sub.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2126:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2128:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2130:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2132:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2134:ld.global.f32: global_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2137:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2139:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2141:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2143:st.global.f32: global_write_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2146:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2148:setp.ge.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2150:bra: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2152:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2154:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2156:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2160:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2162:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2164:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2166:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2168:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2170:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2172:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2174:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2184:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2186:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2188:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2192:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2194:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2196:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2198:mul.lo.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2200:sub.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2202:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2204:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2206:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2216:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2218:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2220:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2224:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2226:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2228:rem.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2230:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2232:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2238:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2240:or.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2242:and.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2244:setp.ne.s64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2248:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2250:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2252:div.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2254:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2256:bra.uni: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2262:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2264:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2266:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2268:mad.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2270:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2272:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2274:ld.global.f32: global_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2276:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2278:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2280:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2282:st.global.f32: global_write_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2285:ret: ptx_lane_instructions
+
+REGION "history-pack-refined"
+  9 invocations, 8 states
+  blocks = 0.0156287 * history + 0.123927 [UNEXPLAINED; max error 0.375954]
+  conversion_ops = 46.001 * history + 31.7253 [UNEXPLAINED; max error 96.2441]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  global_read_bytes = 12 * history [accepted; max error 0]
+  global_write_bytes = 12 * history [accepted; max error 0]
+  integer_ops = 97.0038 * history + 126.901 [UNEXPLAINED; max error 384.977]
+  launched_lanes = 2.00048 * history + 15.8627 [UNEXPLAINED; max error 48.1221]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 112.027 * history + 888.31 [UNEXPLAINED; max error 2694.84]
+  ptx_lane_instructions = 208.014 * history + 460.017 [UNEXPLAINED; max error 1395.54]
+  sum_block_lane_sequence_span = 1.63338 * history + 19.0238 [UNEXPLAINED; max error 57.7079]
+  sum_block_max_lane_bytes = 1.06278 * history + 9.41863 [UNEXPLAINED; max error 28.5723]
+  sum_block_max_lane_flops = 0 [accepted; max error 0]
+  sum_launch_max_block_lane_sequence_span = 129 [accepted; max error 0]
+  warps = 0.0625149 * history + 0.495708 [UNEXPLAINED; max error 1.50381]
+  PCVs not independently identifiable: queries
+  Unexplained site materialize_kv_head_major__gxptx:cpp1943:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1945:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1947:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1949:ld.param.u64: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1951:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1953:ld.param.u32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1955:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1957:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1959:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1961:ld.param.s32: param_read_bytes, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1963:cvta.to.global.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1965:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1967:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1969:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1971:mov.u32: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1973:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1975:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1977:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1979:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1981:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1983:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1985:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1987:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1989:setp.ge.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp1991:bra: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2146:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2148:setp.ge.u64: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2150:bra: ptx_lane_instructions
+  Unexplained site materialize_kv_head_major__gxptx:cpp2285:ret: ptx_lane_instructions
+
+REGION "selected-softmax-compact"
+  9 invocations, 4 states
+  block_barrier_lane_arrivals = 5120 [accepted; max error 0]
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 7.44945 * selected + 617.061 [UNEXPLAINED; max error 122.174]
+  dynamic_shared_bytes_per_launch = 4 * selected [accepted; max error 0]
+  emulator_barrier_generations = 20 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 5120 [accepted; max error 0]
+  fp32_flops = 15 * selected + 510 [accepted; max error 0]
+  global_read_bytes = 26 * selected [accepted; max error 0]
+  global_write_bytes = 2 * selected [accepted; max error 0]
+  integer_ops = 14.7739 * selected + 4321.47 [UNEXPLAINED; max error 1453]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 16384 [accepted; max error 0]
+  ptx_lane_instructions = 67.2571 * selected + 28937.7 [UNEXPLAINED; max error 2399.85]
+  shared_read_bytes = 8 * selected + 6128 [accepted; max error 0]
+  shared_write_bytes = 8 * selected + 4088 [accepted; max error 0]
+  special_function_ops = 1 * selected [accepted; max error 0]
+  static_shared_bytes_per_launch = 2048 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.202591 * selected + 278.005 [UNEXPLAINED; max error 6.97115]
+  sum_block_max_lane_bytes = 0.152562 * selected + 311.486 [UNEXPLAINED; max error 5.24967]
+  sum_block_max_lane_flops = 0.0520099 * selected + 29.461 [UNEXPLAINED; max error 1.78966]
+  sum_launch_max_block_lane_sequence_span = 0.202591 * selected + 278.005 [UNEXPLAINED; max error 6.97115]
+  warps = 8 [accepted; max error 0]
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5699:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5701:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5703:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5705:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5707:not.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5709:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5711:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5713:setp.eq.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5715:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5717:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5719:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5721:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5723:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5725:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5727:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5729:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5731:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5733:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5735:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5737:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5739:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5741:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5743:neg.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5745:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5747:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5750:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5752:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5754:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5756:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5758:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5760:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5764:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5766:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5768:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5772:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5774:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5776:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5780:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5782:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5784:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5786:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5788:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5790:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5792:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5794:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5797:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5799:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5801:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5803:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5805:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5807:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5809:setp.ne.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5815:setp.lt.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5817:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5819:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5821:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5823:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5825:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5827:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5829:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5831:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5833:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5835:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5837:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5840:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5842:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5844:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5846:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5848:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5850:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5854:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5856:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5858:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5862:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5864:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5866:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5870:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5872:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5874:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5876:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5878:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5880:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5882:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5884:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5887:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5889:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5891:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5893:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5895:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5897:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5899:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5901:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5905:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5907:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5909:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5913:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5915:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5917:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5921:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5923:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5925:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5927:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5929:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5931:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5933:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5935:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5938:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5940:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5942:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5944:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5946:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5948:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5950:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5952:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5956:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5958:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5960:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5964:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5966:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5968:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5972:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5974:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5976:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5978:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5980:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5982:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5984:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5986:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5989:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5991:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5993:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5995:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5997:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp5999:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6001:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6003:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6007:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6009:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6011:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6015:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6017:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6019:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6023:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6025:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6027:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6029:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6031:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6033:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6035:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6037:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6040:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6042:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6044:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6046:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6048:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6050:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6053:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6194:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6196:not.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6198:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6200:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6202:setp.eq.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6204:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6206:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6208:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6210:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6212:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6214:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6216:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6218:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6220:neg.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6222:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6224:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6227:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6229:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6231:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6233:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6235:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6239:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6241:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6243:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6245:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6247:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6249:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6251:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6253:neg.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6255:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6257:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6259:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6261:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6263:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6265:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6267:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6270:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6272:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6274:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6276:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6278:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6280:setp.ne.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6286:setp.lt.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6288:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6290:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6292:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6294:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6296:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6299:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6301:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6303:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6305:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6307:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6311:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6313:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6315:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6317:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6319:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6321:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6323:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6325:neg.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6327:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6329:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6331:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6333:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6335:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6337:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6339:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6342:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6344:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6346:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6348:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6350:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6352:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6354:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6358:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6360:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6362:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6364:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6366:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6368:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6370:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6372:neg.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6374:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6376:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6378:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6380:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6382:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6384:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6386:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6389:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6391:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6393:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6395:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6397:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6399:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6401:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6405:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6407:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6409:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6411:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6413:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6415:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6417:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6419:neg.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6421:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6423:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6425:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6427:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6429:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6431:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6433:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6436:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6438:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6440:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6442:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6444:setp.eq.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6446:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6448:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6452:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6454:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6456:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6458:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6460:mov.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6462:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6464:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6466:neg.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6468:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6470:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6472:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6474:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6476:mov.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6478:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6480:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6483:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6485:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6487:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6489:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6491:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6494:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6627:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6629:setp.leu.f32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6631:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6633:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6637:not.b32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6639:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6641:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6643:setp.eq.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6645:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6647:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6649:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6651:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6653:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6655:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6657:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6659:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6661:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6663:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6665:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6667:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6669:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6671:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6673:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6675:neg.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6677:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6679:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6681:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6684:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6686:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6688:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6690:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6694:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6696:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6700:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6702:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6704:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6708:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6710:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6712:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6714:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6716:bra.uni: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6726:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6728:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6730:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6732:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6734:setp.ne.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6740:setp.lt.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6742:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6744:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6746:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6748:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6750:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6752:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6754:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6756:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6758:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6760:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6762:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6764:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6766:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6768:mov.u32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6770:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6772:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6775:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6777:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6779:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6781:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6785:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6787:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6791:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6793:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6795:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6799:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6801:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6803:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6805:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6807:bra.uni: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6817:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6819:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6821:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6823:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6827:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6829:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6833:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6835:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6837:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6841:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6843:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6845:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6847:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6849:bra.uni: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6859:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6861:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6863:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6865:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6869:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6871:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6875:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6877:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6879:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6883:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6885:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6887:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6889:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6891:bra.uni: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6901:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6903:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6905:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6907:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6911:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6913:setp.ge.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6917:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6919:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6921:setp.gt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6925:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6927:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6929:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6931:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6933:bra.uni: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6943:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6945:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6947:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6949:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6951:setp.lt.s32: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6954:bra: ptx_lane_instructions
+  Unexplained site compact_selected_softmax_bf16__gxptx:cpp6956:bra.uni: ptx_lane_instructions
+
+REGION "selected-softmax-initial"
+  9 invocations, 4 states
+  block_barrier_lane_arrivals = 5120 [accepted; max error 0]
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 9.85567 * selected + 1151.69 [UNEXPLAINED; max error 585.551]
+  dynamic_shared_bytes_per_launch = 4 * selected [accepted; max error 0]
+  emulator_barrier_generations = 20 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 5120 [accepted; max error 0]
+  fp32_flops = 15 * selected + 510 [accepted; max error 0]
+  global_read_bytes = 26 * selected [accepted; max error 0]
+  global_write_bytes = 52.3805 * selected - 1145.54 [UNEXPLAINED; max error 97966.2]
+  integer_ops = 27.7266 * selected + 5311.17 [UNEXPLAINED; max error 19599.3]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 16384 [accepted; max error 0]
+  ptx_lane_instructions = 113.259 * selected + 31713.6 [UNEXPLAINED; max error 81402.5]
+  shared_read_bytes = 8 * selected + 6128 [accepted; max error 0]
+  shared_write_bytes = 8 * selected + 4088 [accepted; max error 0]
+  special_function_ops = 1 * selected [accepted; max error 0]
+  static_shared_bytes_per_launch = 2048 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.37657 * selected + 301.138 [UNEXPLAINED; max error 318.647]
+  sum_block_max_lane_bytes = 0.349079 * selected + 307.952 [UNEXPLAINED; max error 383.135]
+  sum_block_max_lane_flops = 0.0520099 * selected + 29.461 [UNEXPLAINED; max error 1.78966]
+  sum_launch_max_block_lane_sequence_span = 0.37657 * selected + 301.138 [UNEXPLAINED; max error 318.647]
+  warps = 8 [accepted; max error 0]
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3193:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3195:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3197:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3199:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3201:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3203:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3205:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3207:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3209:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3211:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3213:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3215:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3217:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3219:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3221:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3223:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3225:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3227:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3229:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3231:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3233:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3235:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3237:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3239:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3241:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3244:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3246:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3248:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3250:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3252:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3254:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3258:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3260:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3262:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3266:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3268:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3270:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3274:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3276:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3278:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3280:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3282:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3284:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3286:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3288:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3291:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3293:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3295:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3297:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3299:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3301:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3303:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3309:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3311:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3313:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3315:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3317:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3319:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3321:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3323:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3325:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3327:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3329:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3331:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3334:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3336:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3338:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3340:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3342:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3344:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3348:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3350:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3352:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3356:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3358:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3360:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3364:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3366:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3368:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3370:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3372:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3374:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3376:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3378:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3381:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3383:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3385:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3387:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3389:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3391:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3393:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3395:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3399:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3401:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3403:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3407:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3409:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3411:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3415:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3417:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3419:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3421:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3423:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3425:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3427:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3429:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3432:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3434:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3436:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3438:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3440:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3442:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3444:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3446:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3450:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3452:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3454:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3458:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3460:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3462:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3466:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3468:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3470:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3472:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3474:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3476:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3478:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3480:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3483:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3485:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3487:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3489:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3491:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3493:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3495:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3497:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3501:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3503:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3505:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3509:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3511:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3513:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3517:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3519:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3521:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3523:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3525:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3527:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3529:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3531:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3534:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3536:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3538:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3540:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3542:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3544:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3547:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3688:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3690:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3692:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3694:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3696:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3698:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3700:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3702:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3704:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3706:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3708:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3710:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3712:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3714:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3716:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3718:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3721:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3723:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3725:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3727:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3729:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3733:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3735:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3737:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3739:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3741:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3743:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3745:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3747:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3749:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3751:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3753:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3755:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3757:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3759:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3761:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3764:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3766:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3768:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3770:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3772:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3774:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3780:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3782:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3784:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3786:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3788:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3790:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3793:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3795:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3797:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3799:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3801:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3805:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3807:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3809:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3811:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3813:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3815:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3817:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3819:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3821:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3823:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3825:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3827:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3829:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3831:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3833:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3836:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3838:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3840:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3842:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3844:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3846:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3848:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3852:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3854:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3856:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3858:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3860:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3862:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3864:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3866:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3868:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3870:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3872:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3874:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3876:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3878:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3880:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3883:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3885:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3887:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3889:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3891:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3893:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3895:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3899:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3901:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3903:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3905:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3907:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3909:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3911:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3913:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3915:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3917:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3919:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3921:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3923:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3925:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3927:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3930:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3932:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3934:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3936:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3938:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3940:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3942:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3946:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3948:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3950:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3952:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3954:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3956:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3958:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3960:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3962:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3964:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3966:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3968:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3970:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3972:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3974:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3977:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3979:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3981:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3983:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3985:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3988:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4119:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4121:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4123:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4125:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4127:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4129:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4131:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4133:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4135:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4137:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4139:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4141:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4143:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4145:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4147:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4149:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4151:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4153:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4155:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4157:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4159:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4161:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4164:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4166:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4168:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4170:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4172:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4174:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4176:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4178:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4180:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4182:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4184:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4186:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4189:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4192:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4194:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4196:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4198:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4200:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4202:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4204:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4206:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4208:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4210:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4212:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4214:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4216:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4219:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4221:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4225:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4227:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4229:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4231:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4233:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4235:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4237:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4239:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4241:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4244:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4246:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4248:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4250:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4252:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4254:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4256:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4258:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4265:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4267:setp.leu.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4269:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4271:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4273:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4277:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4279:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4281:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4283:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4285:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4287:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4289:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4291:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4293:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4295:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4297:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4299:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4301:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4303:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4305:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4307:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4309:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4311:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4313:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4316:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4318:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4320:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4322:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4324:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4328:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4330:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4332:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4336:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4338:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4340:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4344:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4346:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4348:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4350:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4352:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4354:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4356:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4359:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4361:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4363:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4365:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4371:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4373:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4375:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4377:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4379:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4381:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4383:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4385:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4387:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4389:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4391:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4393:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4396:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4398:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4400:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4402:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4404:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4408:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4410:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4412:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4416:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4418:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4420:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4424:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4426:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4428:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4430:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4432:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4434:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4436:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4439:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4441:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4443:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4445:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4447:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4451:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4453:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4455:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4459:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4461:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4463:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4467:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4469:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4471:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4473:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4475:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4477:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4479:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4482:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4484:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4486:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4488:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4490:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4494:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4496:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4498:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4502:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4504:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4506:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4510:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4512:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4514:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4516:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4518:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4520:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4522:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4525:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4527:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4529:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4531:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4533:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4537:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4539:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4541:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4545:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4547:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4549:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4553:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4555:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4557:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4559:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4561:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4563:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4565:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4568:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4570:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4572:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4574:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4577:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4579:bra.uni: ptx_lane_instructions
+
+REGION "selected-softmax-refined"
+  9 invocations, 9 states
+  block_barrier_lane_arrivals = 5120 [accepted; max error 0]
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 0.00676229 * history + 9.68533 * selected + 1155.56 [UNEXPLAINED; max error 589.117]
+  dynamic_shared_bytes_per_launch = 4 * selected [accepted; max error 0]
+  emulator_barrier_generations = 20 [accepted; max error 0]
+  emulator_rendezvous_lane_arrivals = 5120 [accepted; max error 0]
+  fp32_flops = 15 * selected + 510 [accepted; max error 0]
+  global_read_bytes = 26 * selected [accepted; max error 0]
+  global_write_bytes = 2 * history + 2 * selected [accepted; max error 0]
+  integer_ops = 0.399108 * history + 17.673 * selected + 5539.77 [UNEXPLAINED; max error 2596.81]
+  launched_lanes = 256 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 16384 [accepted; max error 0]
+  ptx_lane_instructions = 1.66001 * history + 71.443 * selected + 32664.4 [UNEXPLAINED; max error 5235.33]
+  shared_read_bytes = 8 * selected + 6128 [accepted; max error 0]
+  shared_write_bytes = 8 * selected + 4088 [accepted; max error 0]
+  special_function_ops = 1 * selected [accepted; max error 0]
+  static_shared_bytes_per_launch = 2048 [accepted; max error 0]
+  sum_block_lane_sequence_span = 0.00650455 * history + 0.212719 * selected + 304.864 [UNEXPLAINED; max error 7.80807]
+  sum_block_max_lane_bytes = 0.00782122 * history + 0.15206 * selected + 312.431 [UNEXPLAINED; max error 6.16768]
+  sum_block_max_lane_flops = 3.10558e-07 * history + 0.0520021 * selected + 29.4612 [UNEXPLAINED; max error 1.7895]
+  sum_launch_max_block_lane_sequence_span = 0.00650455 * history + 0.212719 * selected + 304.864 [UNEXPLAINED; max error 7.80807]
+  warps = 8 [accepted; max error 0]
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3193:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3195:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3197:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3199:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3201:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3203:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3205:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3207:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3209:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3211:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3213:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3215:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3217:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3219:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3221:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3223:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3225:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3227:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3229:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3231:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3233:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3235:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3237:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3239:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3241:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3244:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3246:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3248:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3250:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3252:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3254:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3258:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3260:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3262:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3266:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3268:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3270:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3274:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3276:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3278:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3280:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3282:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3284:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3286:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3288:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3291:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3293:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3295:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3297:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3299:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3301:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3303:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3309:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3311:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3313:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3315:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3317:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3319:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3321:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3323:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3325:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3327:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3329:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3331:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3334:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3336:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3338:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3340:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3342:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3344:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3348:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3350:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3352:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3356:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3358:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3360:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3364:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3366:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3368:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3370:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3372:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3374:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3376:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3378:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3381:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3383:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3385:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3387:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3389:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3391:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3393:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3395:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3399:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3401:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3403:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3407:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3409:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3411:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3415:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3417:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3419:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3421:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3423:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3425:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3427:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3429:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3432:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3434:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3436:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3438:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3440:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3442:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3444:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3446:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3450:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3452:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3454:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3458:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3460:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3462:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3466:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3468:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3470:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3472:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3474:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3476:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3478:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3480:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3483:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3485:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3487:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3489:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3491:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3493:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3495:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3497:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3501:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3503:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3505:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3509:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3511:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3513:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3517:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3519:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3521:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3523:ld.global.u16: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3525:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3527:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3529:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3531:cvt.f32.bf16: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3534:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3536:max.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3538:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3540:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3542:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3544:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3547:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3688:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3690:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3692:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3694:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3696:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3698:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3700:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3702:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3704:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3706:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3708:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3710:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3712:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3714:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3716:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3718:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3721:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3723:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3725:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3727:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3729:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3733:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3735:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3737:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3739:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3741:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3743:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3745:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3747:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3749:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3751:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3753:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3755:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3757:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3759:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3761:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3764:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3766:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3768:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3770:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3772:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3774:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3780:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3782:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3784:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3786:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3788:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3790:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3793:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3795:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3797:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3799:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3801:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3805:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3807:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3809:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3811:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3813:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3815:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3817:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3819:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3821:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3823:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3825:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3827:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3829:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3831:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3833:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3836:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3838:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3840:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3842:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3844:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3846:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3848:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3852:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3854:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3856:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3858:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3860:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3862:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3864:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3866:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3868:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3870:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3872:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3874:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3876:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3878:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3880:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3883:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3885:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3887:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3889:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3891:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3893:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3895:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3899:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3901:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3903:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3905:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3907:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3909:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3911:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3913:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3915:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3917:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3919:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3921:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3923:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3925:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3927:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3930:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3932:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3934:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3936:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3938:setp.eq.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3940:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3942:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3946:sub.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3948:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3950:cvt.sat.f32.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3952:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3954:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3956:fma.rm.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3958:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3960:neg.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3962:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3964:fma.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3966:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3968:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3970:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3972:ex2.approx.ftz.f32: ptx_lane_instructions, special_function_ops
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3974:mul.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3977:st.shared.f32: ptx_lane_instructions, shared_write_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3979:add.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3981:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3983:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3985:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp3988:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4119:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4121:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4123:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4125:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4127:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4129:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4131:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4133:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4135:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4137:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4139:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4141:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4143:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4145:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4147:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4149:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4151:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4153:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4155:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4157:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4159:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4161:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4164:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4166:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4168:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4170:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4172:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4174:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4176:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4178:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4180:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4182:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4184:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4186:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4189:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4192:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4194:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4196:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4198:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4200:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4202:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4204:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4206:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4208:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4210:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4212:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4214:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4216:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4219:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4221:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4225:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4227:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4229:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4231:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4233:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4235:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4237:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4239:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4241:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4244:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4246:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4248:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4250:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4252:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4254:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4256:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4258:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4265:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4267:setp.leu.f32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4269:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4271:cvt.s64.s32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4273:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4277:not.b32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4279:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4281:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4283:setp.eq.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4285:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4287:shr.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4289:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4291:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4293:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4295:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4297:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4299:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4301:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4303:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4305:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4307:neg.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4309:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4311:and.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4313:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4316:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4318:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4320:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4322:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4324:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4328:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4330:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4332:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4336:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4338:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4340:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4344:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4346:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4348:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4350:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4352:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4354:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4356:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4359:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4361:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4363:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4365:setp.ne.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4371:setp.lt.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4373:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4375:mul.lo.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4377:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4379:mul.wide.u32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4381:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4383:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4385:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4387:shl.b32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4389:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4391:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4393:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4396:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4398:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4400:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4402:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4404:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4408:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4410:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4412:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4416:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4418:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4420:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4424:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4426:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4428:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4430:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4432:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4434:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4436:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4439:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4441:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4443:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4445:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4447:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4451:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4453:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4455:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4459:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4461:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4463:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4467:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4469:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4471:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4473:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4475:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4477:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4479:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4482:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4484:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4486:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4488:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4490:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4494:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4496:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4498:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4502:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4504:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4506:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4510:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4512:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4514:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4516:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4518:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4520:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4522:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4525:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4527:cvt.u64.u32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4529:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4531:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4533:or.pred: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4537:cvt.u32.u64: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4539:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4541:setp.ge.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4545:ld.global.u32: global_read_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4547:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4549:setp.gt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4553:ld.shared.f32: ptx_lane_instructions, shared_read_bytes
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4555:div.rn.f32: fp32_flops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4557:cvt.rn.bf16.f32: conversion_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4559:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4561:shl.b64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4563:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4565:st.global.u16: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4568:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4570:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4572:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4574:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4577:bra: ptx_lane_instructions
+  Unexplained site sparse_selected_softmax_bf16__gxptx:cpp4579:bra.uni: ptx_lane_instructions
+

@@ -1,8 +1,12 @@
 // Standalone GPU collector. Scheduler/barriers and matrix arithmetic originate
 // in GX (vendor/provenance.json); no GX simulator or CPU collector is loaded.
 #include "context.h"
+#include "footprint.h"
+#include "initcheck.h"
 #include <light/fiber_stack.hh>
 #include "../vendor/gx/shared_arena.h"
+#include "../vendor/gx/tcgen05.h"
+#include "../vendor/gx/mbarrier.h"
 #include <algorithm>
 #include <atomic>
 #include <cstring>
@@ -16,34 +20,111 @@
 #include <sstream>
 #include <string>
 #include <sys/mman.h>
+#include <tuple>
 #include <unistd.h>
 
 thread_local int waiting_revive_count=0;
-thread_local NamedBarrierManager* current_named_barrier_manager=nullptr;
 namespace {
 using Counts=std::map<std::string,uint64_t>;
 thread_local gx::SharedArenaPool arena_pool;
-struct Site { Counts metrics; };
+using drperf_footprint::Footprint;
+struct Site { Counts metrics; Footprint footprint; };
 struct Invocation {
     uint64_t token, parent;
     std::string name;
     std::map<std::string,int64_t> pcvs;
     Counts metrics;
+    Footprint footprint;
+    bool footprint_available=true;
     std::map<std::string,Site> sites;
     std::vector<std::string> launches;
+    std::string scope="host", kernel;
+    uint64_t linear_block=0, group=0;
+};
+struct DeviceInvocation {
+    Invocation row;
+    unsigned expected=0;
+    std::set<unsigned> entered, exited;
+    std::set<unsigned> ready;
+    std::map<unsigned,std::map<std::string,int64_t>> member_pcvs;
+    std::map<unsigned,DrperfGpuReady> latency_entry;
+};
+struct DeviceLane {
+    std::vector<DeviceInvocation*> stack;
+    std::map<std::pair<unsigned,std::string>,uint64_t> ordinals;
+};
+struct BlockState {
+    std::vector<ThreadContext> lanes;
+    std::vector<DeviceLane> device_lanes;
+    std::map<std::tuple<unsigned,unsigned,uint64_t,std::string>,std::unique_ptr<DeviceInvocation>> device_regions;
+    char* shared=nullptr;
+    size_t cap=0, mapping=0, static_bytes=0;
+    std::map<unsigned,size_t> static_offsets;
+    size_t legacy_static_end=0;
+    NamedBarrierManager barriers;
+    GxTmemState tmem;
+    explicit BlockState(unsigned threads):lanes(threads),device_lanes(threads),barriers(threads) {}
+    ~BlockState() { if(shared){std::memset(shared,0,cap);arena_pool.put(shared,cap,mapping);} }
+};
+struct SplitBarrier {
+    uint64_t phase=0,arrived=0;std::vector<gx::FiberRef> waiters;
+    DrperfGpuReady pending;std::map<uint64_t,DrperfGpuReady> completed;
+};
+struct LatencyConfig {
+    static uint64_t value(const char* name,uint64_t fallback,bool nonzero=false) {
+        const char* s=std::getenv(name);if(!s)return fallback;
+        char* end=nullptr;auto v=std::strtoull(s,&end,10);
+        if(!*s||*s=='-'||*end||v>1000000000||(!v&&nonzero))
+            throw std::invalid_argument(std::string("invalid latency model setting ")+name);
+        return v;
+    }
+    uint64_t alu=value("DRPERF_GPU_LATENCY_ALU",4);
+    uint64_t global=value("DRPERF_GPU_LATENCY_GLOBAL",400);
+    uint64_t shared=value("DRPERF_GPU_LATENCY_SHARED",30);
+    uint64_t mma=value("DRPERF_GPU_LATENCY_MMA",32);
+    uint64_t sfu=value("DRPERF_GPU_LATENCY_SFU",20);
+    uint64_t sms=value("DRPERF_GPU_SM_COUNT",148,true);
+    uint64_t lanes=value("DRPERF_GPU_LANES_PER_SM",128,true);
+    // 0 = PTX-order in-order issue (default), 1 = basic-block schedule.
+    uint64_t schedule=[]{const char* v=std::getenv("DRPERF_GPU_LATENCY_SCHEDULE");
+        return uint64_t(v&&std::string(v)=="block");}();
+    uint64_t latency(unsigned cls) const {
+        switch(cls) {case 0:return 0;case 2:case 6:return global;
+            case 3:return shared;case 4:return mma;case 5:return sfu;default:return alu;}
+    }
+    Counts counts() const {
+        return {{"latency_model_version",1},{"latency_model_alu",alu},
+            {"latency_model_global",global},{"latency_model_shared",shared},
+            {"latency_model_mma",mma},{"latency_model_sfu",sfu},
+            {"latency_model_sm_count",sms},{"latency_model_lanes_per_sm",lanes},
+            {"latency_model_schedule",schedule}};
+    }
 };
 struct Launch {
+    LatencyConfig latency;
+    DrperfGpuReady latency_finish;
     Invocation* region;
+    std::unique_ptr<Invocation> implicit_region;
+    std::string kernel;
     Counts metrics;
+    Footprint footprint, host_footprint;
+    bool footprint_available=false;
+    std::map<std::string,Footprint> host_site_footprints;
     std::map<std::string,Site> sites;
-    std::vector<ThreadContext> lanes;
-    dim3 grid, block;
-    char* shared=nullptr;
-    size_t cap=0, mapping=0, dynamic=0, static_bytes=0;
-    uint64_t barrier_arrivals=0;
+    Counts device_metrics;
+    std::map<std::string,Site> device_sites;
+    dim3 grid, block, cluster;
+    size_t dynamic=0;
+    std::map<uint64_t,std::unique_ptr<BlockState>> blocks;
+    std::vector<unsigned char> cluster_launch; // 0 pending, 1 resident, 2 cancelled
     struct BarrierClock { uint64_t generation=0; std::vector<ThreadContext*> lanes; };
     std::map<void*,BarrierClock> barrier_lanes;
-    ~Launch() { if(shared) arena_pool.put(shared,cap,mapping); }
+    struct MbarrierClock { DrperfGpuReady pending; std::map<uint64_t,DrperfGpuReady> completed; };
+    std::map<uint64_t,MbarrierClock> mbarrier_clocks;
+    GxMbarriers mbarriers;
+    std::map<uint64_t,SplitBarrier> cluster_barriers;
+    std::unique_ptr<gx::LocalFiberBarrier> grid_barrier;
+    alignas(8) unsigned grid_bar[16]={0};
 };
 thread_local Launch* active=nullptr;
 thread_local std::vector<std::unique_ptr<Invocation>> regions;
@@ -66,10 +147,23 @@ template<class T> std::string object(const std::map<std::string,T>& m) {
 }
 std::string sites_json(const std::map<std::string,Site>& sites) {
     std::ostringstream o; o << '{'; bool comma=false;
-    for(auto& [k,v]:sites) {if(comma)o<<',';comma=true;o<<quoted(k)<<':'<<object(v.metrics);}
+    for(auto& [k,v]:sites) {if(comma)o<<',';comma=true;o<<quoted(k)<<':'<<object(v.footprint.counts(v.metrics));}
     return o.str()+'}';
 }
 void add(Counts& dst,const Counts& src) { for(auto& [k,v]:src)dst[k]+=v; }
+void latency_metrics(Counts& dst,const DrperfGpuReady& clock) {
+    const auto old=DrperfGpuReady{dst["latency_critical_path"],dst["dependent_global_loads_on_critical_path"],0};
+    if(drperf_latency::later(clock,old)) {
+        dst["latency_critical_path"]=clock.time;
+        dst["dependent_global_loads_on_critical_path"]=clock.loads;
+    }
+}
+void subtract(Counts& dst,const Counts& src) {
+    for(auto& [k,v]:src) {
+        if(dst[k]<v)throw std::runtime_error("device region accounting underflow");
+        dst[k]-=v;
+    }
+}
 void line(const std::string& value) {
     const char* path=std::getenv("DRPERF_GPU_CAPTURE");if(!path)return;
     std::lock_guard<std::mutex> lock(output_mutex);
@@ -94,7 +188,11 @@ void emit(const Invocation& r) {
     std::ostringstream o;
     o<<"{\"schema\":1,\"backend\":\"gpu\",\"pid\":"<<getpid()<<",\"token\":"<<r.token
      <<",\"parent\":"<<r.parent<<",\"region\":"<<quoted(r.name)<<",\"pcvs\":"<<object(r.pcvs)
-     <<",\"metrics\":"<<object(r.metrics)<<",\"sites\":"<<sites_json(r.sites)<<",\"launches\":[";
+     <<",\"scope\":"<<quoted(r.scope)<<",\"kernel\":"<<quoted(r.kernel)
+     <<",\"linear_block\":"<<r.linear_block<<",\"group\":"<<r.group
+     <<",\"latencyModelVersion\":1,\"latencyMetricScope\":\"inclusive-envelope\""
+     <<",\"footprintVersion\":"<<(r.footprint_available?1:0)
+     <<",\"metrics\":"<<object(r.footprint.counts(r.metrics))<<",\"sites\":"<<sites_json(r.sites)<<",\"launches\":[";
     for(size_t i=0;i<r.launches.size();++i) {if(i)o<<',';o<<r.launches[i];}
     o<<"]}";line(o.str());
 }
@@ -105,12 +203,142 @@ uint64_t volume(dim3 d) {
     return xy*d.z;
 }
 dim3 coordinates(uint64_t i,dim3 d) {return dim3(i%d.x,(i/d.x)%d.y,i/(uint64_t(d.x)*d.y));}
+uint64_t cluster_major_block(uint64_t ordinal,dim3 grid,dim3 cluster) {
+    auto cid=coordinates(ordinal/volume(cluster),dim3(grid.x/cluster.x,grid.y/cluster.y,grid.z/cluster.z));
+    auto rank=coordinates(ordinal%volume(cluster),cluster);
+    return cid.x*cluster.x+rank.x+uint64_t(grid.x)*(cid.y*cluster.y+rank.y+uint64_t(grid.y)*(cid.z*cluster.z+rank.z));
+}
 void need_launch() {if(!active)throw std::runtime_error("GPU operation outside a launch");}
+BlockState& current_block() {
+    need_launch();return *active->blocks.at(gx_thread_context()->linear_block);
+}
+unsigned thread_index() {
+    auto* c=gx_thread_context();
+    return c->threadIdx.x+c->blockDim.x*(c->threadIdx.y+c->blockDim.y*c->threadIdx.z);
+}
+bool device_registration() {
+    auto& stack=current_block().device_lanes[thread_index()].stack;
+    return !stack.empty() && !stack.back()->ready.count(thread_index());
+}
+void device_event(const Counts& event,const std::string& site,ThreadContext* lane=nullptr) {
+    if(!lane)lane=gx_thread_context();
+    auto& b=*active->blocks.at(lane->linear_block);
+    unsigned tid=lane->threadIdx.x+lane->blockDim.x*(lane->threadIdx.y+lane->blockDim.y*lane->threadIdx.z);
+    auto& stack=b.device_lanes[tid].stack;
+    if(stack.empty())return;
+    auto& row=stack.back()->row;
+    add(row.metrics,event);add(row.sites[site].metrics,event);
+    add(active->device_metrics,event);add(active->device_sites[site].metrics,event);
+}
+void finish_device_block(BlockState& block) {
+    for(auto& [key,ptr]:block.device_regions) {
+        auto& r=*ptr;
+        if(r.entered.size()!=r.expected||r.exited!=r.entered)
+            throw std::runtime_error("incomplete cooperative device region participation: "+r.row.name);
+        for(auto& [lane,pcvs]:r.member_pcvs)
+            if(pcvs!=r.row.pcvs)
+                throw std::runtime_error("inconsistent cooperative device PCVs: "+r.row.name);
+        r.row.metrics["region_lane_participants"]=r.expected;
+        if(!r.row.footprint_available)r.row.metrics["footprint_unavailable_invocations"]=1;
+        emit(r.row);--open_regions;++completed_regions;
+    }
+    block.device_regions.clear();
+}
 void* symbol(void* module,const std::string& name) {
     dlerror();void* p=dlsym(module,name.c_str());const char* error=dlerror();
     if(error||!p)throw std::runtime_error("GPU module missing symbol "+name);
     return p;
 }
+void latency_record(ThreadContext* lane) {
+    latency_metrics(active->sites[lane->last_site].metrics,lane->latency_clock);
+    auto& b=*active->blocks.at(lane->linear_block);
+    auto tid=lane->threadIdx.x+lane->blockDim.x*(lane->threadIdx.y+lane->blockDim.y*lane->threadIdx.z);
+    // Timing envelopes are inclusive, as are the existing host launch spans.
+    for(auto* r:b.device_lanes[tid].stack) {
+        auto start=r->latency_entry.at(tid),clock=lane->latency_clock;
+        latency_metrics(r->row.sites[lane->last_site].metrics,
+            {clock.time-start.time,clock.loads>start.loads?clock.loads-start.loads:0,0});
+    }
+}
+void latency_join(ThreadContext* lane,const DrperfGpuReady& source) {
+    drperf_latency::join(lane->latency_clock,source);latency_record(lane);
+    // A join is a control boundary for the basic-block schedule.
+    lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+}
+template<class Wait> void joined_wait(void* key,Wait wait) {
+    auto& state=active->barrier_lanes[key];auto generation=state.generation;
+    state.lanes.push_back(gx_thread_context());wait();
+    if(generation==state.generation) {
+        DrperfGpuReady clock;uint64_t depth=0;
+        for(auto* lane:state.lanes) {
+            depth=std::max(depth,lane->instructions);
+            drperf_latency::join(clock,lane->latency_clock);
+        }
+        for(auto* lane:state.lanes) {lane->instructions=depth;latency_join(lane,clock);}
+        state.lanes.clear();++state.generation;active->metrics["emulator_barrier_generations"]++;
+    }
+}
+}
+
+extern "C" void drperf_gpu_device_begin(const char* name,unsigned scope) {
+    need_launch();
+    if(device_registration())throw std::runtime_error("nested GPU region during PCV registration");
+    if(!name||!*name||std::strlen(name)>256||scope>2)
+        throw std::invalid_argument("invalid GPU device region name or scope");
+    auto& l=*active;
+    if(!l.region) {
+        l.implicit_region=std::make_unique<Invocation>();l.region=l.implicit_region.get();
+        l.region->token=next_token++;l.region->parent=0;
+        l.region->name="kernel."+l.kernel;l.region->scope="kernel";l.region->kernel=l.kernel;
+        ++open_regions;
+    }
+    unsigned tid=thread_index(), group=scope==0?tid:scope==1?tid/32:0;
+    auto& lane=current_block().device_lanes[tid];
+    if(lane.stack.size()>=128)throw std::runtime_error("GPU device region nesting exceeds 128");
+    auto ordinal=lane.ordinals[{scope,name}]++;
+    auto key=std::make_tuple(scope,group,ordinal,std::string(name));
+    auto& ptr=current_block().device_regions[key];
+    uint64_t parent=lane.stack.empty()?l.region->token:lane.stack.back()->row.token;
+    if(!ptr) {
+        ptr=std::make_unique<DeviceInvocation>();auto& r=ptr->row;
+        r.footprint_available=l.footprint_available;
+        r.token=next_token++;r.parent=parent;
+        r.scope=scope==0?"lane":scope==1?"warp":"block";
+        r.name="device."+r.scope+"."+name;r.kernel=l.kernel;r.linear_block=gx_thread_context()->linear_block;r.group=group;
+        ptr->expected=scope==0?1:scope==1?std::min(32u,unsigned(volume(l.block))-32*group):unsigned(volume(l.block));
+        ++open_regions;
+    }
+    if(ptr->row.parent!=parent||!ptr->entered.insert(tid).second)
+        throw std::runtime_error("inconsistent cooperative device region nesting: "+ptr->row.name);
+    ptr->member_pcvs[tid];ptr->latency_entry[tid]=gx_thread_context()->latency_clock;
+    lane.stack.push_back(ptr.get());
+}
+extern "C" void drperf_gpu_device_pcv(const char* name,int64_t value) {
+    need_launch();auto tid=thread_index();auto& stack=current_block().device_lanes[tid].stack;
+    if(stack.empty()||!name||!*name||std::strlen(name)>256)
+        throw std::invalid_argument("GPU device PCV outside a region or empty name");
+    auto& r=*stack.back();auto& pcvs=r.member_pcvs[tid];
+    if(r.ready.count(tid))throw std::runtime_error("GPU PCV registered after region entry");
+    if(pcvs.size()>=256||!pcvs.emplace(name,value).second)
+        throw std::invalid_argument("duplicate or excessive GPU device PCV");
+    auto [it,inserted]=r.row.pcvs.emplace(name,value);
+    if(!inserted&&it->second!=value)
+        throw std::runtime_error("inconsistent cooperative device PCV value: "+r.row.name);
+}
+extern "C" void drperf_gpu_device_ready() {
+    need_launch();auto tid=thread_index();auto& stack=current_block().device_lanes[tid].stack;
+    if(stack.empty()||!stack.back()->ready.insert(tid).second)
+        throw std::runtime_error("invalid GPU PCV registration completion");
+    stack.back()->latency_entry[tid]=gx_thread_context()->latency_clock;
+}
+extern "C" void drperf_gpu_device_end() {
+    need_launch();auto tid=thread_index();auto& stack=current_block().device_lanes[tid].stack;
+    if(stack.empty())throw std::runtime_error("unbalanced GPU device markers");
+    if(!stack.back()->ready.count(tid))throw std::runtime_error("GPU region missing entry PCV completion; regenerate device annotations");
+    auto& r=*stack.back();auto clock=gx_thread_context()->latency_clock;
+    auto start=r.latency_entry.at(tid);
+    latency_metrics(r.row.metrics,{clock.time-start.time,clock.loads>start.loads?clock.loads-start.loads:0,0});
+    r.exited.insert(tid);stack.pop_back();
 }
 
 extern "C" uint64_t drperf_gpu_region_begin(const char* name,size_t n,
@@ -134,72 +362,186 @@ extern "C" void* drperf_gpu_module_load(const char* path) {
     if(!module)throw std::runtime_error(std::string("cannot load translated GPU module: ")+dlerror());
     try {
         auto abi=static_cast<const unsigned*>(symbol(module,"drperf_gpu_instrumented_abi"));
-        if(*abi!=2)throw std::runtime_error("GPU instrumentation ABI mismatch");
+        if(*abi!=3)throw std::runtime_error("GPU instrumentation ABI mismatch; retranslate with current drperf");
+        auto latency=static_cast<const unsigned*>(dlsym(module,"drperf_gpu_latency_abi"));
+        if(!latency||*latency!=1)
+            throw std::runtime_error("GPU latency instrumentation ABI mismatch; retranslate with current drperf");
     } catch(...) {dlclose(module);throw;}
     return module;
 }
 extern "C" void drperf_gpu_module_close(void* module) {if(module)dlclose(module);}
-extern "C" void drperf_gpu_launch(void* module,const char* kernel,dim3 grid,dim3 block,
-                                  void** args,size_t dynamic) {
+extern "C" void drperf_gpu_launch_cluster(void* module,const char* kernel,dim3 grid,dim3 block,
+                                  void** args,size_t dynamic,dim3 cluster) {
     if(active||!module||!kernel||!*kernel||!volume(grid)||!volume(block)||
-       volume(block)>1024||volume(grid)>(1u<<24)||dynamic>(16u<<20))
+       volume(block)>1024||volume(grid)>(1u<<24)||dynamic>(16u<<20)||
+       !volume(cluster)||volume(cluster)>16||grid.x%cluster.x||grid.y%cluster.y||grid.z%cluster.z)
         throw std::invalid_argument("invalid or recursive GPU launch");
     auto fn=reinterpret_cast<void(*)(void**)>(symbol(module,std::string(kernel)+"__gxptx"));
+    auto latency_abi=static_cast<const unsigned*>(dlsym(module,(std::string(kernel)+"__gxptx_latency_abi").c_str()));
+    if(!latency_abi||*latency_abi!=1)
+        throw std::runtime_error("GPU kernel latency instrumentation ABI mismatch; retranslate with current drperf");
     unsigned n=*static_cast<unsigned*>(symbol(module,std::string(kernel)+"__gxptx_nparams"));
     if(n&&!args)throw std::invalid_argument("GPU launch missing arguments");
     for(unsigned i=0;i<n;++i)if(!args[i])throw std::invalid_argument("null GPU launch argument");
-    Launch l;l.region=regions.empty()?nullptr:regions.back().get();l.grid=grid;l.block=block;l.dynamic=dynamic;
+    Launch l;l.region=regions.empty()?nullptr:regions.back().get();l.grid=grid;l.block=block;l.dynamic=dynamic;l.kernel=kernel;l.cluster=cluster;
     l.metrics={{"launches",1},{"blocks",volume(grid)},{"launched_lanes",volume(grid)*volume(block)},
                {"warps",volume(grid)*((volume(block)+31)/32)},{"dynamic_shared_bytes_per_launch",dynamic}};
+    add(l.metrics,l.latency.counts());
+    // A separate capability marker preserves work-counter ABI 3. Older
+    // modules execute, but never claim complete address coverage.
+    auto fpabi=static_cast<const unsigned*>(dlsym(module,"drperf_gpu_footprint_abi"));
+    auto kernel_fpabi=static_cast<const unsigned*>(dlsym(module,(std::string(kernel)+"__gxptx_footprint_abi").c_str()));
+    l.footprint_available=fpabi&&*fpabi==1&&kernel_fpabi&&*kernel_fpabi==1;
+    if(!l.footprint_available)l.metrics["footprint_unavailable_launches"]=1;
     active=&l;
     try {
         gx::FiberStack stacks;
-        for(uint64_t b=0;b<volume(grid);++b) {
-            NamedBarrierManager barriers(volume(block));current_named_barrier_manager=&barriers;
-            l.lanes.assign(volume(block),ThreadContext{});
+        const auto mode=*static_cast<unsigned*>(symbol(module,std::string(kernel)+"__gxptx_syncfree"));
+        const bool resident=mode==2;
+        if(resident&&volume(grid)>uint64_t(INT32_MAX)/volume(block))
+            throw std::invalid_argument("cooperative launch exceeds supported participant count");
+        const uint64_t batch=resident?volume(grid):volume(cluster);
+        l.cluster_launch.assign(volume(grid)/volume(cluster),0);
+        for(uint64_t first=0;first<volume(grid);first+=batch) {
+            if(!resident&&l.cluster_launch[first/volume(cluster)]==2)continue;
+            for(uint64_t ordinal=first;ordinal<first+batch;++ordinal) {
+                uint64_t b=cluster_major_block(ordinal,grid,cluster);
+                l.cluster_launch[ordinal/volume(cluster)]=1;
+                ++l.metrics["executed_blocks"];l.metrics["executed_lanes"]+=volume(block);
+                auto state=std::make_unique<BlockState>(volume(block));
+                for(unsigned t=0;t<volume(block);++t) {
+                    auto& lane=state->lanes[t];lane.threadIdx=coordinates(t,block);lane.blockIdx=coordinates(b,grid);
+                    lane.blockDim=block;lane.gridDim=grid;lane.linear_block=b;lane.barriers=&state->barriers;
+                }
+                l.blocks.emplace(b,std::move(state));
+            }
             gx::KernelFibers fibers;
-            for(unsigned t=0;t<volume(block);++t) {
-                auto& lane=l.lanes[t];lane.threadIdx=coordinates(t,block);lane.blockIdx=coordinates(b,grid);
-                lane.blockDim=block;lane.gridDim=grid;
-                fibers.add(stacks,[&,t] {
-                    gx::KernelFibers::active()->data=&l.lanes[t];fn(args);
-                    barriers.lane_exited(0,t);
+            for(uint64_t ordinal=first;ordinal<first+batch;++ordinal)for(unsigned t=0;t<volume(block);++t) {
+                uint64_t b=cluster_major_block(ordinal,grid,cluster);
+                fibers.add(stacks,[&,b,t] {
+                    auto& state=*l.blocks.at(b);
+                    gx::KernelFibers::active()->data=&state.lanes[t];fn(args);
+                    if(!state.device_lanes[t].stack.empty())throw std::runtime_error("unclosed GPU device region at kernel exit");
+                    state.barriers.lane_exited(0,t);
                 });
             }
             fibers.run();
-            uint64_t max_f=0,max_b=0,max_i=0;
-            for(auto& lane:l.lanes) {
-                max_f=std::max(max_f,lane.flops);max_b=std::max(max_b,lane.bytes);
-                max_i=std::max(max_i,lane.instructions);
+            for(auto& [b,state]:l.blocks) {
+                finish_device_block(*state);
+                uint64_t max_f=0,max_b=0,max_i=0;
+                for(auto& lane:state->lanes) {
+                    max_f=std::max(max_f,lane.flops);max_b=std::max(max_b,lane.bytes);
+                    max_i=std::max(max_i,lane.instructions);
+                    drperf_latency::join(l.latency_finish,lane.latency_clock);
+                }
+                l.metrics["sum_block_max_lane_flops"]+=max_f;
+                l.metrics["sum_block_max_lane_bytes"]+=max_b;
+                l.metrics["sum_block_lane_sequence_span"]+=max_i;
+                l.metrics["sum_launch_max_block_lane_sequence_span"]=std::max(l.metrics["sum_launch_max_block_lane_sequence_span"],max_i);
             }
-            l.metrics["sum_block_max_lane_flops"]+=max_f;
-            l.metrics["sum_block_max_lane_bytes"]+=max_b;
-            l.metrics["sum_block_lane_sequence_span"]+=max_i;
-            l.metrics["sum_launch_max_block_lane_sequence_span"]=std::max(l.metrics["sum_launch_max_block_lane_sequence_span"],max_i);
-            if(l.shared)std::memset(l.shared,0,l.cap);
-            l.barrier_lanes.clear();
-            current_named_barrier_manager=nullptr;
+            l.blocks.clear();l.barrier_lanes.clear();
         }
+        latency_metrics(l.metrics,l.latency_finish);
         if(!l.metrics["ptx_lane_instructions"])
             throw std::runtime_error("GPU kernel executed without instrumentation");
         if(l.region) {
-            add(l.region->metrics,l.metrics);
-            for(auto& [site,c]:l.sites)add(l.region->sites[site].metrics,c.metrics);
+            auto own=l.metrics;subtract(own,l.device_metrics);add(l.region->metrics,own);
+            l.region->footprint_available&=l.footprint_available;
+            l.region->footprint.merge(l.host_footprint);
+            for(auto& [site,c]:l.sites) {
+                auto counts=c.metrics;subtract(counts,l.device_sites[site].metrics);
+                add(l.region->sites[site].metrics,counts);
+                l.region->sites[site].footprint.merge(l.host_site_footprints[site]);
+            }
             std::ostringstream shape;
             shape<<"{\"kernel\":"<<quoted(kernel)<<",\"grid\":["<<grid.x<<','<<grid.y<<','<<grid.z
-                 <<"],\"block\":["<<block.x<<','<<block.y<<','<<block.z<<"],\"metrics\":"<<object(l.metrics)<<'}';
+                 <<"],\"block\":["<<block.x<<','<<block.y<<','<<block.z<<"],\"metricScope\":\"inclusive\",\"footprintVersion\":"<<(l.footprint_available?1:0)
+                 <<",\"metrics\":"<<object(l.footprint.counts(l.metrics))<<",\"sites\":"<<sites_json(l.sites)<<'}';
             l.region->launches.push_back(shape.str());
+            if(l.implicit_region){emit(*l.region);--open_regions;++completed_regions;}
         } else if(std::getenv("DRPERF_GPU_CAPTURE")) {
             throw std::runtime_error("GPU launch has no enclosing GPU region");
         }
-    } catch(...) {++launch_failures;active=nullptr;current_named_barrier_manager=nullptr;throw;}
+    } catch(...) {++launch_failures;active=nullptr;throw;}
     active=nullptr;
+}
+
+extern "C" void drperf_gpu_launch(void* module,const char* kernel,dim3 grid,dim3 block,void** args,size_t dynamic) {
+    drperf_gpu_launch_cluster(module,kernel,grid,block,args,dynamic,dim3(1));
+}
+
+// Semantic address hooks describe logical ranges, excluding implementation
+// loops except when those loops enumerate descriptor/stride-selected elements.
+extern "C" void drperf_gpu_resource(const char* metric,uint64_t amount);
+extern "C" void drperf_gpu_mark_uninitialized(const void* p,size_t n,const char* name) {
+    drperf_initcheck::tracker().mark(reinterpret_cast<uint64_t>(p),n,false,name);
+}
+extern "C" void drperf_gpu_mark_initialized(const void* p,size_t n) {
+    drperf_initcheck::tracker().mark(reinterpret_cast<uint64_t>(p),n,true,nullptr);
+}
+extern "C" void drperf_gpu_forget_buffer(const void* p) {
+    drperf_initcheck::tracker().forget(reinterpret_cast<uint64_t>(p));
+}
+
+extern "C" void drperf_gpu_memory(uint64_t address,uint64_t reads,uint64_t writes,unsigned space) {
+    need_launch();
+    if(device_registration())return;
+    // Read-before-write check on buffers the driver marked uninitialized; shared
+    // addresses never match a registered global range.
+    if((reads||writes)&&space<=1&&!drperf_initcheck::tracker().empty()) {
+        const uint64_t bad=drperf_initcheck::tracker().access(address,reads,writes,gx_thread_context()->last_site);
+        if(bad)drperf_gpu_resource("uninitialized_read_bytes",bad);
+    }
+    if(!active->footprint_available||(!reads&&!writes))return;
+    if(space==0)for(auto& [id,state]:active->blocks) {
+        auto base=reinterpret_cast<uint64_t>(state->shared);
+        if(state->shared&&address>=base&&address-base<state->cap)return;
+    }
+    if(space!=0&&space!=1)return;
+    auto* lane=gx_thread_context();
+    const std::string category=space==1?"global":"generic";
+    auto touch=[&](Footprint& fp) {
+        fp.touch(address,reads,category,"read");fp.touch(address,writes,category,"write");
+    };
+    touch(active->footprint);touch(active->sites[lane->last_site].footprint);
+    auto& stack=current_block().device_lanes[thread_index()].stack;
+    if(stack.empty()) {
+        touch(active->host_footprint);touch(active->host_site_footprints[lane->last_site]);
+    } else {
+        auto& row=stack.back()->row;touch(row.footprint);touch(row.sites[lane->last_site].footprint);
+    }
+}
+
+extern "C" void drperf_gpu_latency(unsigned cls,const DrperfGpuReady* src,size_t nsrc,
+                                    DrperfGpuReady* const* dst,size_t ndst,bool record) {
+    need_launch();if(device_registration())return;auto* lane=gx_thread_context();
+    DrperfGpuReady ready;
+    if(active->latency.schedule) {
+        ready=drperf_latency::issue_block(lane->latency_clock,lane->latency_block_floor,lane->latency_block_issued,
+                                          src,nsrc,active->latency.latency(cls),cls==2);
+        // The instruction call precedes this one, so last_site names its opcode.
+        const auto colon=lane->last_site.rfind(':');
+        const std::string op=colon==std::string::npos?lane->last_site:lane->last_site.substr(colon+1);
+        auto starts=[&](const char* p){return op.rfind(p,0)==0;};
+        if(starts("bra")||starts("bar")||starts("barrier")||starts("ret")||starts("exit")||starts("call")||
+           starts("brx")||starts("mbarrier")||starts("griddepcontrol")||starts("fence")||starts("membar")) {
+            lane->latency_block_floor=lane->latency_clock.time;lane->latency_block_issued=0;
+        }
+    } else ready=drperf_latency::issue(lane->latency_clock,src,nsrc,active->latency.latency(cls),cls==2);
+    for(size_t i=0;i<ndst;++i)*dst[i]=ready;
+    if(record)latency_record(lane);
+}
+extern "C" void drperf_gpu_latency_predicated_off(const char* fn,const char* op,unsigned site,
+                                                   const DrperfGpuReady* src,size_t nsrc) {
+    need_launch();auto* lane=gx_thread_context();
+    lane->last_site=std::string(fn)+":cpp"+std::to_string(site)+":"+op;
+    drperf_gpu_latency(0,src,nsrc,nullptr,0,true);
 }
 
 extern "C" void drperf_gpu_instruction(const char* fn,const char* op,
         unsigned site,unsigned long long flops,unsigned long long reads,unsigned long long writes,
         unsigned space,unsigned kind,unsigned long long address,unsigned unmodeled) {
-    need_launch();auto* lane=gx_thread_context();lane->instructions++;
+    need_launch();if(device_registration())return;auto* lane=gx_thread_context();lane->instructions++;
     lane->flops+=flops;lane->bytes+=reads+writes;
     Counts event{{"ptx_lane_instructions",1}};
     static const char* kinds[]={"none","fp32_flops","tensor_float_flops","tensor_integer_ops","fp64_flops","fp16_flops","bf16_flops"};
@@ -214,16 +556,81 @@ extern "C" void drperf_gpu_instruction(const char* fn,const char* op,
         event["special_function_ops"]=1;
     if(head=="bar")event["block_barrier_lane_arrivals"]=1;
     if(head=="shfl"||head=="vote"||head=="redux"||head=="barrier")event["collective_lane_arrivals"]=1;
-    if(!space) {
-        uint64_t base=reinterpret_cast<uint64_t>(active->shared);
-        if(active->shared&&address>=base&&address-base<active->cap)space=2;
+    if(!space&&(reads||writes)) {
+        uint64_t base=reinterpret_cast<uint64_t>(current_block().shared);
+        if(current_block().shared&&address>=base&&address-base<current_block().cap)space=2;
+        else for(auto& [id,state]:active->blocks) {
+            uint64_t peer=reinterpret_cast<uint64_t>(state->shared);
+            if(state->shared&&address>=peer&&address-peer<state->cap){space=2;break;}
+        }
     }
     static const char* spaces[]={"generic","global","shared","local","param","const"};
     std::string s=spaces[std::min(space,5u)];
-    if(reads)event[s+"_read_bytes"]=reads;
-    if(writes)event[s+"_write_bytes"]=writes;
+    if(head=="ld"||head=="ldu")event[s+"_load_instructions"]=1;
+    if(reads)event[(space==6?"global":s)+"_read_bytes"]=reads;
+    if(writes)event[(space==6?"shared":s)+"_write_bytes"]=writes;
     if(unmodeled)event["unmodeled_work_events"]=1;
-    add(active->metrics,event);add(active->sites[std::string(fn)+":cpp"+std::to_string(site)+":"+op].metrics,event);
+    lane->last_site=std::string(fn)+":cpp"+std::to_string(site)+":"+op;
+    // WMMA helpers enumerate the actual strided tile; cp.async reads global
+    // source bytes and zero-fills shared destination bytes separately.
+    if(head!="wmma")drperf_gpu_memory(address,reads,space==6?0:writes,space==6?1:space);
+    add(active->metrics,event);add(active->sites[lane->last_site].metrics,event);
+    device_event(event,lane->last_site);
+}
+
+// Dynamic tensor descriptors determine work at runtime. Attribute these counts
+// to the original instruction, excluding the reference interpreter's loops.
+extern "C" void drperf_gpu_resource_at(ThreadContext* lane,const char* metric,uint64_t amount) {
+    need_launch();
+    // Semantic helpers can attribute to a different lane; inspect that lane.
+    auto& stack=active->blocks.at(lane->linear_block)->device_lanes[
+        lane->threadIdx.x+lane->blockDim.x*(lane->threadIdx.y+lane->blockDim.y*lane->threadIdx.z)].stack;
+    unsigned tid=lane->threadIdx.x+lane->blockDim.x*(lane->threadIdx.y+lane->blockDim.y*lane->threadIdx.z);
+    if(!stack.empty()&&!stack.back()->ready.count(tid))return;
+    active->metrics[metric]+=amount;
+    active->sites[lane->last_site].metrics[metric]+=amount;
+    device_event(Counts{{metric,amount}},lane->last_site,lane);
+    const std::string name(metric);
+    if(name.find("flops")!=std::string::npos||name=="tensor_integer_ops")lane->flops+=amount;
+    if(name.find("_bytes")!=std::string::npos)lane->bytes+=amount;
+}
+extern "C" void drperf_gpu_resource(const char* metric,uint64_t amount) {
+    drperf_gpu_resource_at(gx_thread_context(),metric,amount);
+}
+
+GxTmemState& gx_cta_tmem(long block) {
+    need_launch();auto it=active->blocks.find(block);
+    if(it==active->blocks.end())throw std::runtime_error("tensor operation on nonresident CTA");
+    return it->second->tmem;
+}
+long gx_current_linear_block(){need_launch();return gx_thread_context()->linear_block;}
+extern "C" void gx_mbarrier_init(uint64_t a,uint32_t n){
+    need_launch();active->mbarriers.init(a,n);active->mbarrier_clocks.erase(a);
+}
+static void mbarrier_clock_arrival(uint64_t a,uint64_t phase) {
+    auto& c=active->mbarrier_clocks[a];drperf_latency::join(c.pending,gx_thread_context()->latency_clock);
+    if(active->mbarriers.phase(a)!=phase) {c.completed[phase]=c.pending;c.pending={};}
+}
+extern "C" uint64_t gx_mbarrier_arrive(uint64_t a,uint32_t n,uint32_t b){
+    need_launch();auto phase=active->mbarriers.arrive(a,n,b);mbarrier_clock_arrival(a,phase);return phase;
+}
+extern "C" void gx_mbarrier_complete_tx(uint64_t a,uint32_t n){
+    need_launch();auto phase=active->mbarriers.phase(a);active->mbarriers.complete_tx(a,n);mbarrier_clock_arrival(a,phase);
+}
+extern "C" void gx_mbarrier_expect_tx(uint64_t a,uint32_t n){need_launch();active->mbarriers.expect_tx(a,n);}
+static void mbarrier_clock_wait(uint64_t a,uint64_t phase) {
+    auto& completed=active->mbarrier_clocks[a].completed;auto it=completed.find(phase);
+    if(it!=completed.end())latency_join(gx_thread_context(),it->second);
+}
+extern "C" int gx_mbarrier_test(uint64_t a,uint64_t t,int p){
+    need_launch();bool done=active->mbarriers.test(a,t,p);
+    if(done)mbarrier_clock_wait(a,p?active->mbarriers.phase(a)-1:t);
+    return done;
+}
+extern "C" void gx_mbarrier_wait(uint64_t a,uint64_t t,uint32_t p){
+    need_launch();auto phase=active->mbarriers.phase(a);
+    auto target=p?(active->mbarriers.test(a,t,true)?phase-1:phase):t;
+    active->mbarriers.wait(a,t,p);mbarrier_clock_wait(a,target);
 }
 
 int get_block_id(){return 0;} // A fresh manager is owned by each block.
@@ -231,16 +638,7 @@ int get_lane_id(){auto* c=gx_thread_context();return (c->threadIdx.x+c->blockDim
 int get_warp_id_in_block(){auto* c=gx_thread_context();return (c->threadIdx.x+c->blockDim.x*(c->threadIdx.y+c->blockDim.y*c->threadIdx.z))/32;}
 void record_barrier_call(){need_launch();active->metrics["emulator_rendezvous_lane_arrivals"]++;}
 void gpu_barrier_wait(NamedBarrierManager::BarrierIface* barrier) {
-    auto& state=active->barrier_lanes[barrier];
-    const auto generation=state.generation;
-    state.lanes.push_back(gx_thread_context());barrier->wait();
-    // The first returning participant has the complete generation's lane
-    // clocks. Merge before any of these lanes executes its following work.
-    if(generation==state.generation) {
-        uint64_t depth=0;for(auto* c:state.lanes)depth=std::max(depth,c->instructions);
-        for(auto* c:state.lanes)c->instructions=depth;
-        state.lanes.clear();++state.generation;active->metrics["emulator_barrier_generations"]++;
-    }
+    joined_wait(barrier,[&]{barrier->wait();});
 }
 void barrier_sync(int name,int count) {
     record_barrier_call();auto* b=current_named_barrier_manager->get_barrier(name,count);BARRIER_WAIT(b->barrier);
@@ -253,28 +651,26 @@ extern "C" dim3 gx_dev_blockDim(){return gx_thread_context()->blockDim;}
 extern "C" dim3 gx_dev_gridDim(){return gx_thread_context()->gridDim;}
 extern "C" void gx_cpu_kernel_yield(){gx::kernel_fiber_yield();}
 extern "C" void* gx_ptx_shared_window(size_t statics) {
-    need_launch();active->static_bytes=std::max(active->static_bytes,statics);
-    if(statics>(16u<<20))throw std::invalid_argument("GPU shared declaration exceeds standalone limit");
-    size_t needed=statics+active->dynamic;
-    if(active->shared) {
-        if(needed>active->cap)throw std::runtime_error("shared arena grew during a kernel");
-        return active->shared;
+    need_launch();
+    if(statics>(16u<<20)||active->dynamic>(16u<<20)-statics)
+        throw std::invalid_argument("GPU shared declaration exceeds 24-bit cluster address space");
+    const size_t needed=statics+active->dynamic,page=sysconf(_SC_PAGESIZE);
+    // The module layout is uniform. Allocate peers before a cluster operation
+    // can address a CTA whose first lane has not yet run.
+    for(auto& [id,ptr]:active->blocks) {
+        auto& b=*ptr;b.static_bytes=std::max(b.static_bytes,statics);
+        if(b.shared) {
+            if(needed>b.cap)throw std::runtime_error("shared arena grew during a kernel");
+            continue;
+        }
+        b.cap=((std::max(needed,size_t(1024))+page-1)/page)*page;b.mapping=b.cap+page;
+        b.shared=arena_pool.take(b.cap,b.mapping);
+        if(!b.shared)b.shared=static_cast<char*>(mmap(nullptr,b.mapping,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0));
+        if(b.shared==MAP_FAILED){b.shared=nullptr;throw std::bad_alloc();}
+        if(mprotect(b.shared+b.cap,page,PROT_NONE))throw std::runtime_error("GPU shared guard failed");
     }
-    const size_t page=sysconf(_SC_PAGESIZE);
-    active->cap=((std::max(needed,size_t(1024))+page-1)/page)*page;
-    active->mapping=active->cap+page;
-    active->shared=arena_pool.take(active->cap,active->mapping);
-    if(!active->shared)
-        active->shared=static_cast<char*>(mmap(nullptr,active->mapping,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0));
-    if(active->shared==MAP_FAILED){active->shared=nullptr;throw std::bad_alloc();}
-    if(mprotect(active->shared+active->cap,page,PROT_NONE))throw std::runtime_error("GPU shared guard failed");
-    active->metrics["static_shared_bytes_per_launch"]=statics;
-    return active->shared;
-}
-extern "C" uint32_t gx_shared_rank_bits(){return 0;}
-extern "C" uint64_t gx_cluster_shared_ptr(uint32_t offset) {
-    need_launch();if(!active->shared||offset>=active->cap)throw std::runtime_error("shared offset out of range");
-    return reinterpret_cast<uint64_t>(active->shared+offset);
+    active->metrics["static_shared_bytes_per_launch"]=std::max<uint64_t>(active->metrics["static_shared_bytes_per_launch"],statics);
+    return current_block().shared;
 }
 extern "C" int memory_mg_is_fake(void*){return 0;}
 void global_memcpy(void* dst,const void* src,size_t size,int){std::memcpy(dst,src,size);}
@@ -282,7 +678,7 @@ extern "C" void gx_ptx_trap(){throw std::runtime_error("GPU PTX trap executed");
 extern "C" void gx_ptx_trap_op(const char* op){throw std::runtime_error(std::string("unsupported GPU PTX operation: ")+op);}
 
 extern "C" void __syncwarp_mask(unsigned mask) {
-    const unsigned threads=active->lanes.size(),warp=get_warp_id_in_block(),lane=get_lane_id();
+    const unsigned threads=current_block().lanes.size(),warp=get_warp_id_in_block(),lane=get_lane_id();
     unsigned lanes=std::min(32u,threads-warp*32);
     mask&=lanes==32?~0u:(1u<<lanes)-1;
     if(mask&(1u<<lane)){record_barrier_call();current_named_barrier_manager->warp_sync(0,warp,lane,mask);}
@@ -290,7 +686,7 @@ extern "C" void __syncwarp_mask(unsigned mask) {
 extern "C" uint32_t gx_shfl_sync(uint32_t value,uint32_t offset,uint32_t clamp,
                                   uint32_t mask,int mode,int* predicate) {
     const unsigned lane=get_lane_id(),warp=get_warp_id_in_block();
-    unsigned lanes=std::min(32u,unsigned(active->lanes.size())-warp*32);
+    unsigned lanes=std::min(32u,unsigned(current_block().lanes.size())-warp*32);
     mask&=lanes==32?~0u:(1u<<lanes)-1;
     if(!(mask&(1u<<lane))){if(predicate)*predicate=0;return value;}
     if(mode<0||mode>3)throw std::runtime_error("invalid shuffle mode");
@@ -303,7 +699,7 @@ extern "C" uint32_t gx_shfl_sync(uint32_t value,uint32_t offset,uint32_t clamp,
 }
 extern "C" uint32_t gx_redux_sync(uint32_t value,uint32_t mask,unsigned op) {
     unsigned lane=get_lane_id(),warp=get_warp_id_in_block();
-    unsigned count=std::min(32u,unsigned(active->lanes.size())-warp*32);
+    unsigned count=std::min(32u,unsigned(current_block().lanes.size())-warp*32);
     mask&=count==32?~0u:(1u<<count)-1;
     if(!(mask&(1u<<lane)))return value;
     record_barrier_call();return current_named_barrier_manager->get_warp_exchange(0,warp,mask)->reduce(lane,value,op);
@@ -311,7 +707,7 @@ extern "C" uint32_t gx_redux_sync(uint32_t value,uint32_t mask,unsigned op) {
 extern "C" uint32_t gx_redux_add_sync(uint32_t v,uint32_t m){return gx_redux_sync(v,m,0);}
 static uint32_t vote(unsigned mask,int p) {
     unsigned lane=get_lane_id(),warp=get_warp_id_in_block();
-    unsigned count=std::min(32u,unsigned(active->lanes.size())-warp*32);
+    unsigned count=std::min(32u,unsigned(current_block().lanes.size())-warp*32);
     mask&=count==32?~0u:(1u<<count)-1;
     if(!(mask&(1u<<lane)))return 0;
     record_barrier_call();return current_named_barrier_manager->get_warp_exchange(0,warp,mask)->ballot(lane,p);
@@ -319,10 +715,147 @@ static uint32_t vote(unsigned mask,int p) {
 unsigned __ballot_sync(unsigned m,int p){return vote(m,p);}
 int __any_sync(unsigned m,int p){return vote(m,p)!=0;}
 int __all_sync(unsigned m,int p){
-    unsigned count=std::min(32u,unsigned(active->lanes.size())-unsigned(get_warp_id_in_block())*32);
+    unsigned count=std::min(32u,unsigned(current_block().lanes.size())-unsigned(get_warp_id_in_block())*32);
     return vote(m,p)==(m&(count==32?~0u:(1u<<count)-1));
 }
 extern "C" uint64_t gx_block_scan_u32(uint32_t v,uint32_t exclusive) {
     auto* c=gx_thread_context();unsigned t=c->threadIdx.x+c->blockDim.x*(c->threadIdx.y+c->blockDim.y*c->threadIdx.z);
-    record_barrier_call();return current_named_barrier_manager->get_block_scan(0,active->lanes.size())->scan(t,v,exclusive);
+    record_barrier_call();return current_named_barrier_manager->get_block_scan(0,current_block().lanes.size())->scan(t,v,exclusive);
+}
+
+// Runtime adapters shared by standard PTX and GX's explicit semantic helpers.
+// Geometry and shared addresses follow GX's rank<<24 | offset representation.
+extern "C" dim3 gx_dev_clusterDim(){need_launch();return active->cluster;}
+extern "C" dim3 gx_dev_cluster_nctaid(){return gx_dev_clusterDim();}
+extern "C" dim3 gx_dev_cluster_ctaid(){auto b=gx_thread_context()->blockIdx,c=active->cluster;return dim3(b.x%c.x,b.y%c.y,b.z%c.z);}
+extern "C" dim3 gx_dev_clusterid(){auto b=gx_thread_context()->blockIdx,c=active->cluster;return dim3(b.x/c.x,b.y/c.y,b.z/c.z);}
+extern "C" dim3 gx_dev_nclusterid(){auto g=active->grid,c=active->cluster;return dim3(g.x/c.x,g.y/c.y,g.z/c.z);}
+extern "C" uint32_t gx_dev_cluster_ctarank(){auto b=gx_dev_cluster_ctaid(),c=active->cluster;return b.x+c.x*(b.y+c.y*b.z);}
+extern "C" uint32_t gx_dev_cluster_nctarank(){need_launch();return volume(active->cluster);}
+extern "C" uint32_t gx_dev_is_explicit_cluster(){return gx_dev_cluster_nctarank()>1;}
+extern "C" uint32_t gx_shared_rank_bits(){return gx_dev_cluster_ctarank()<<24;}
+long gx_cluster_rank_linear_block(uint32_t rank){
+    need_launch();if(rank>=volume(active->cluster))throw std::runtime_error("cluster rank outside launch geometry");
+    auto c=active->cluster,b=gx_thread_context()->blockIdx,r=coordinates(rank,c),g=active->grid;
+    return b.x/c.x*c.x+r.x+uint64_t(g.x)*(b.y/c.y*c.y+r.y+uint64_t(g.y)*(b.z/c.z*c.z+r.z));
+}
+extern "C" uint32_t gx_cluster_mapa(uint32_t address,uint32_t rank){
+    if(rank>=gx_dev_cluster_nctarank())throw std::runtime_error("invalid mapa rank");
+    return (rank<<24)|(address&0xffffff);
+}
+extern "C" uint64_t gx_cluster_shared_ptr(uint32_t address){
+    auto block=gx_cluster_rank_linear_block(address>>24);auto it=active->blocks.find(block);
+    if(it==active->blocks.end())throw std::runtime_error("shared access to nonresident CTA");
+    auto& state=*it->second;uint32_t offset=address&0xffffff;
+    if(!state.shared||offset>=state.cap)throw std::runtime_error("shared offset out of range");
+    return reinterpret_cast<uint64_t>(state.shared+offset);
+}
+extern "C" uint64_t gx_cluster_mapa_generic(uint64_t address,uint32_t rank){
+    auto& b=current_block();uint64_t base=reinterpret_cast<uint64_t>(b.shared);
+    if(address<base||address-base>=b.cap)throw std::runtime_error("generic mapa outside own shared window");
+    return gx_cluster_shared_ptr(gx_cluster_mapa(address-base,rank));
+}
+static uint64_t cluster_id(){auto b=gx_dev_clusterid(),g=gx_dev_nclusterid();return b.x+uint64_t(g.x)*(b.y+uint64_t(g.y)*b.z);}
+extern "C" void gx_cluster_barrier_arrive(){
+    auto& barrier=active->cluster_barriers[cluster_id()];
+    gx_thread_context()->cluster_barrier_token=barrier.phase;
+    drperf_latency::join(barrier.pending,gx_thread_context()->latency_clock);
+    if(++barrier.arrived==volume(active->cluster)*volume(active->block)){
+        barrier.completed[barrier.phase]=barrier.pending;barrier.pending={};
+        barrier.arrived=0;++barrier.phase;auto self=gx::FiberRef::active();
+        for(auto waiter:barrier.waiters)self.schedule(waiter);
+        barrier.waiters.clear();
+    }
+}
+extern "C" void gx_cluster_barrier_wait(){
+    auto& barrier=active->cluster_barriers[cluster_id()];
+    auto phase=gx_thread_context()->cluster_barrier_token;
+    if(barrier.phase<=phase) {
+        auto self=gx::FiberRef::active();barrier.waiters.push_back(self);self.suspend();
+    }
+    latency_join(gx_thread_context(),barrier.completed.at(phase));
+}
+extern "C" void gx_grid_sync(){
+    need_launch();if(!active->grid_barrier)active->grid_barrier=std::make_unique<gx::LocalFiberBarrier>(volume(active->grid)*volume(active->block));
+    record_barrier_call();joined_wait(active->grid_barrier.get(),[&]{active->grid_barrier->wait();});
+}
+extern "C" uint64_t gx_grid_barrier_ptr(){need_launch();return reinterpret_cast<uint64_t>(active->grid_bar);}
+extern "C" uint32_t gx_dev_envreg(unsigned index){
+    if(index!=1&&index!=2)throw std::runtime_error("invalid cooperative grid environment register");
+    auto a=gx_grid_barrier_ptr();return index==1?a>>32:a;
+}
+extern "C" void gx_cpu_kernel_poll(){need_launch();gx::kernel_fiber_yield();}
+extern "C" void gx_nccl_abort_poll(uint64_t a){if(!a)throw std::runtime_error("null abort poll");gx_cpu_kernel_poll();}
+extern "C" void gx_nccl_payload_scope(uint32_t){need_launch();}
+extern "C" void gx_nccl_payload_event_v2(uint64_t,uint64_t bytes,uint32_t load,uint64_t instructions){
+    drperf_gpu_resource(load?"annotated_global_read_bytes":"annotated_global_write_bytes",bytes);
+    drperf_gpu_resource("annotated_memory_lane_instructions",instructions);
+}
+extern "C" void gx_global_memcpy_counted(void* dst,const void* src,size_t size,int load,uint64_t instructions){
+    std::memcpy(dst,src,size);
+    drperf_gpu_memory(reinterpret_cast<uint64_t>(load?src:dst),load?size:0,load?0:size,1);
+    drperf_gpu_resource(load?"global_read_bytes":"global_write_bytes",size);
+    drperf_gpu_resource("annotated_memory_lane_instructions",instructions);
+}
+extern "C" uint32_t gx_global_load_u32_repeated(uint64_t a,uint32_t n){
+    if(!a||a%4||!n)throw std::runtime_error("invalid repeated word load");uint32_t v;std::memcpy(&v,reinterpret_cast<void*>(a),4);
+    drperf_gpu_memory(a,4,0,1);
+    drperf_gpu_resource("global_read_bytes",uint64_t(n)*4);drperf_gpu_resource("annotated_memory_lane_instructions",n);return v;
+}
+extern "C" uint32_t gx_global_load_u8_repeated(uint64_t a,uint32_t n){
+    if(!a||!n)throw std::runtime_error("invalid repeated byte load");
+    drperf_gpu_memory(a,1,0,1);
+    drperf_gpu_resource("global_read_bytes",n);drperf_gpu_resource("annotated_memory_lane_instructions",n);return *reinterpret_cast<uint8_t*>(a);
+}
+extern "C" void gx_warp_ballot_columns(uint32_t predicates,uint32_t columns,uint32_t* out){
+    unsigned lanes=std::min(32u,unsigned(current_block().lanes.size())-get_warp_id_in_block()*32);
+    unsigned mask=lanes==32?~0u:(1u<<lanes)-1;
+    record_barrier_call();current_named_barrier_manager->get_warp_exchange(0,get_warp_id_in_block(),mask)->ballot_columns(get_lane_id(),predicates,columns,out);
+}
+static int barrier_red(int name,int count,int pred,bool is_or){
+    if(!count)count=current_block().lanes.size();
+    if(count<1||count>int(current_block().lanes.size()))throw std::runtime_error("invalid reduction barrier participant count");
+    auto* b=current_named_barrier_manager->get_barrier(60000000+(name&15)*1024+(count&1023),count);
+    if(!b->vote_count)b->result=!is_or;
+    if(is_or?pred!=0:pred==0)b->result=is_or;
+    if(++b->vote_count==count)b->vote_count=0;
+    record_barrier_call();BARRIER_WAIT(b->barrier);bool result=b->result;BARRIER_WAIT(b->barrier);return result;
+}
+extern "C" int gx_barrier_red_or(int b,int n,int p){return barrier_red(b,n,p,true);}
+extern "C" int gx_barrier_red_and(int b,int n,int p){return barrier_red(b,n,p,false);}
+extern "C" int gx_barrier_red_popc(int name,int count,int pred){
+    if(!count)count=current_block().lanes.size();
+    if(count<1||count>int(current_block().lanes.size()))throw std::runtime_error("invalid reduction barrier participant count");
+    auto* b=current_named_barrier_manager->get_barrier(61000000+(name&15)*1024+(count&1023),count);
+    if(!b->vote_count)b->barrier_result_uint=0;
+    b->barrier_result_uint+=pred!=0;
+    if(++b->vote_count==count)b->vote_count=0;
+    record_barrier_call();BARRIER_WAIT(b->barrier);auto result=b->barrier_result_uint;BARRIER_WAIT(b->barrier);return result;
+}
+extern "C" void* gx_shared_dynamic_ptr(){gx_ptx_shared_window(current_block().static_bytes);return current_block().shared+current_block().static_bytes;}
+extern "C" void* gx_shared_static_alloc(unsigned key,size_t size,size_t align){
+    if(!align||(align&(align-1)))throw std::runtime_error("invalid shared alignment");
+    auto& b=current_block();auto it=b.static_offsets.find(key);
+    if(it!=b.static_offsets.end())return b.shared+it->second;
+    size_t offset=(b.legacy_static_end+align-1)&~(align-1);
+    gx_ptx_shared_window(offset+size);b.legacy_static_end=offset+size;b.static_offsets[key]=offset;return b.shared+offset;
+}
+extern "C" void gx_clc_try_cancel(uint32_t response,uint32_t mbar,uint32_t multicast){
+    uint32_t words[4]={0,0,0,0};unsigned n=multicast?gx_dev_cluster_nctarank():1;
+    for(size_t k=0;k<active->cluster_launch.size();++k){
+        if(active->cluster_launch[k])continue;
+        active->cluster_launch[k]=2;
+        auto b=coordinates(cluster_major_block(k*volume(active->cluster),active->grid,active->cluster),active->grid);
+        words[0]=1;words[1]=b.x;words[2]=b.y;words[3]=b.z;
+        drperf_gpu_resource("cancelled_clusters",1);drperf_gpu_resource("cancelled_blocks",volume(active->cluster));
+        break;
+    }
+    for(unsigned i=0;i<n;++i){unsigned r=multicast?i:gx_dev_cluster_ctarank();
+        std::memcpy(reinterpret_cast<void*>(gx_cluster_shared_ptr((r<<24)|(response&0xffffff))),words,16);
+        gx_mbarrier_complete_tx(gx_cluster_shared_ptr((r<<24)|(mbar&0xffffff)),16);
+    }
+}
+extern "C" uint32_t gx_clc_query(uint64_t lo,uint64_t hi,uint32_t word){
+    uint32_t words[4]={uint32_t(lo),uint32_t(lo>>32),uint32_t(hi),uint32_t(hi>>32)};
+    if(word>4)throw std::runtime_error("invalid clusterlaunchcontrol query");return word==4?0:word==0?words[0]&1:words[word];
 }

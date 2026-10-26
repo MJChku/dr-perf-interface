@@ -1,0 +1,21 @@
+{
+  "case": "glm53-lamport-allreduce-multirank",
+  "label": "QUANTIFIED",
+  "kernel": "Lamport one-shot all-reduce (+residual, +RMSNorm): GLM ar_residual_oneshot, FlashInfer allreduce_fusion_kernel_oneshot_lamport",
+  "role": "Decode tensor-parallel exchange, 150 calls per step.",
+  "pcvs": "hidden 32..512, w 1..4, ranks 2/4, previous-call size C",
+  "finding": "Executed as concurrent ranks on host threads with peer-mapped buffers (gpu/examples/multirank_allreduce). Compulsory payload 12N+2C (all-reduce) and 18N+2C (fused residual/norm) where C = 2*hidden*previous_w: the clear size follows the previous call. Polling retries reported separately (timing-dependent).",
+  "fix": "None needed.",
+  "fix_status": "Closed.",
+  "timing": "7.8 us/call exclusive in b101 (vLLM 6.4).",
+  "receipts": [
+    "/home/ubuntu/drperf/gpu/examples/multirank_allreduce/README.md"
+  ],
+  "files": [],
+  "reproduce": [
+    "see gpu/examples/multirank_allreduce"
+  ],
+  "credit": "DrPerf (also motivated ld.acquire/st.release host fences).",
+  "copied": [],
+  "study": "GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26"
+}

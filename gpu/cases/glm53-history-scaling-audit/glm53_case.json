@@ -1,0 +1,34 @@
+{
+  "case": "glm53-history-scaling-audit",
+  "label": "QUANTIFIED",
+  "kernel": "All custom GLM decode kernels at integration-18 (12 kernels + paged cache/metadata helpers)",
+  "role": "Check for hidden O(history) work, the class found by the glm53_scaling example.",
+  "pcvs": "T 32..512 (small states only), w, K; extrapolated analytically to T=100K",
+  "finding": "Every interface is O(w), O(K) or O(pages) as designed; no history term. Paged FP8 append requests 77 B per appended byte (per-scalar metadata), ids_to_slots 4wK+28V, decode tables O(T/128) once per step.",
+  "fix": "None needed.",
+  "fix_status": "Closed.",
+  "timing": "None.",
+  "receipts": [
+    "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit/NOTES.md",
+    "/home/ubuntu/gen-glm53-codex-audit/NOTES.md"
+  ],
+  "files": [
+    "/home/ubuntu/gen-glm53-codex-audit/metadata_driver.cc",
+    "/home/ubuntu/gen-glm53-codex-audit/driver.cc"
+  ],
+  "reproduce": [
+    "/home/ubuntu/gen-glm53-codex-audit/run.py"
+  ],
+  "credit": "DrPerf.",
+  "copied": [
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/metadata_driver.cc",
+      "copy": "src/metadata_driver.cc"
+    },
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/driver.cc",
+      "copy": "src/driver.cc"
+    }
+  ],
+  "study": "GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26"
+}

@@ -1,0 +1,34 @@
+{
+  "case": "glm53-decode-redundant-requests",
+  "label": "NEGATIVE",
+  "kernel": "GLM decode glue: decode_gather_v32, attention_iw_prenorm, dc_selected_address, moe_front_prenorm",
+  "role": "Custom decode kernels around attention and the MoE front.",
+  "pcvs": "rows w 1..4, history T 32..512, selected K 16..64",
+  "finding": "No custom decode kernel scales with history T. Requested-byte waste: gather 2368 B per selected id vs 576 B needed (every lane recomputes the address), iw_prenorm re-reads its weight row per input row (4.7 MB at w4), selected-address re-reads view metadata (90 B/id), MoE front re-reads input rows per expert CTA.",
+  "fix": "Fixed the first three (bitwise under GXPTX): 2368 -> 616 B/id, 4.7 -> 2.4 MB, 90 -> 40 B/id.",
+  "fix_status": "Kept as bitwise cleanups; no time effect.",
+  "timing": "B300 harness w4 at chunk 4096: kernel fixes -0.00..-0.08 ms (noise). The repeats were cache hits.",
+  "receipts": [
+    "/home/ubuntu/gen-glm53/eval/profiles/gpu/glm53-gap-b98",
+    "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit/NOTES.md"
+  ],
+  "files": [
+    "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit2/driver3.cc",
+    "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit2/kernels.cu"
+  ],
+  "reproduce": [
+    "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit2"
+  ],
+  "credit": "DrPerf found the redundancy; footprint metrics (added later) show requested >> unique, i.e. cache-resident.",
+  "copied": [
+    {
+      "source": "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit2/driver3.cc",
+      "copy": "src/driver3.cc"
+    },
+    {
+      "source": "/home/ubuntu/gen-glm53-decode-step/build/drperf-audit2/kernels.cu",
+      "copy": "src/kernels.cu"
+    }
+  ],
+  "study": "GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26"
+}

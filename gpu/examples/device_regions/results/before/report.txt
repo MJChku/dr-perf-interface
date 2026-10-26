@@ -1,0 +1,55 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: standalone translated PTX; CPU instruction collector disabled.
+Bytes are requested accesses. Parallelism is logical. No latency prediction.
+Fits check every individual invocation at observed states only.
+
+REGION "device.block.dense_clear"
+  6 invocations, 3 states
+  conversion_ops = 32 [accepted; max error 0]
+  global_write_bytes = 204096 [UNEXPLAINED; max error 195904]
+  integer_ops = 153072 [UNEXPLAINED; max error 146928]
+  param_write_bytes = 512 [accepted; max error 0]
+  ptx_lane_instructions = 357456 [UNEXPLAINED; max error 342832]
+  region_lane_participants = 32 [accepted; max error 0]
+  Unexplained site sparse_regions__gxptx:cpp2623:mul.wide.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2625:add.s64: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2627:mov.b32: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2629:st.global.u32: global_write_bytes, ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2631:add.s32: integer_ops, ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2633:setp.lt.s32: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2636:bra: ptx_lane_instructions
+
+REGION "device.block.selected_math"
+  6 invocations, 3 states
+  fp32_flops = 1 * selected [accepted; max error 0]
+  global_write_bytes = 128 [accepted; max error 0]
+  integer_ops = 1 * selected + 96 [accepted; max error 0]
+  param_write_bytes = 512 [accepted; max error 0]
+  ptx_lane_instructions = 5.28571 * selected + 336 [UNEXPLAINED; max error 6.85714]
+  region_lane_participants = 32 [accepted; max error 0]
+  Unexplained site sparse_regions__gxptx:cpp2660:bra: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2662:mov.f32: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2664:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2666:mov.u32: ptx_lane_instructions
+  Unexplained site sparse_regions__gxptx:cpp2678:bra: ptx_lane_instructions
+
+REGION "kernel.sparse_regions"
+  6 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  blocks = 1 [accepted; max error 0]
+  conversion_ops = 0 [accepted; max error 0]
+  dynamic_shared_bytes_per_launch = 0 [accepted; max error 0]
+  fp32_flops = 0 [accepted; max error 0]
+  global_write_bytes = 0 [accepted; max error 0]
+  integer_ops = 0 [accepted; max error 0]
+  launched_lanes = 32 [accepted; max error 0]
+  launches = 1 [accepted; max error 0]
+  param_read_bytes = 640 [accepted; max error 0]
+  param_write_bytes = 768 [accepted; max error 0]
+  ptx_lane_instructions = 480 [accepted; max error 0]
+  sum_block_lane_sequence_span = 11203.2 [UNEXPLAINED; max error 10716.8]
+  sum_block_max_lane_bytes = 6458 [UNEXPLAINED; max error 6122]
+  sum_block_max_lane_flops = 1.33333 [UNEXPLAINED; max error 0.666667]
+  sum_launch_max_block_lane_sequence_span = 11203.2 [UNEXPLAINED; max error 10716.8]
+  warps = 1 [accepted; max error 0]
+

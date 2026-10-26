@@ -1,0 +1,33 @@
+{
+  "case": "glm53-flashmla-unit-scale",
+  "label": "POTENTIAL",
+  "kernel": "FlashMLA V32 decode core dequant producer",
+  "role": "The GLM gather writes literal 1.0f scales; the core still loads 16 B of scales and does 512 BF16 multiplies per token.",
+  "pcvs": "as glm53-flashmla-core-interface",
+  "finding": "Unit-scale variant (Codex workspace, diagnostic lowering at the time): global_read_bytes 660N -> 644N, BF16 scaling FLOPs -> 0, tensor work unchanged; value/LSE oracles pass on 33 states.",
+  "fix": "Prototype only.",
+  "fix_status": "Untimed on GPU; small expected gain (dequant producer).",
+  "timing": "None.",
+  "receipts": [
+    "/home/ubuntu/gen-glm53-codex-audit/NOTES2.md"
+  ],
+  "files": [
+    "/home/ubuntu/gen-glm53-codex-audit/drivers2/flash_unit_scale_kernel.cuh",
+    "/home/ubuntu/gen-glm53-codex-audit/drivers2/make_flash_unit_scale.py"
+  ],
+  "reproduce": [
+    "/home/ubuntu/gen-glm53-codex-audit/drivers2"
+  ],
+  "credit": "DrPerf counts plus source reading.",
+  "copied": [
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/drivers2/flash_unit_scale_kernel.cuh",
+      "copy": "src/flash_unit_scale_kernel.cuh"
+    },
+    {
+      "source": "/home/ubuntu/gen-glm53-codex-audit/drivers2/make_flash_unit_scale.py",
+      "copy": "src/make_flash_unit_scale.py"
+    }
+  ],
+  "study": "GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26"
+}

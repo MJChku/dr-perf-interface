@@ -1,0 +1,1895 @@
+{
+  "full-initial": {
+    "validity": "complete",
+    "regions": {
+      "allreduce.launcher.r2": 120,
+      "norm.launcher.r2": 120,
+      "residual.launcher.r2": 120
+    }
+  },
+  "smoke-residual": {
+    "validity": "complete",
+    "regions": {
+      "residual.launcher.r2": 8
+    }
+  },
+  "smoke-norm": {
+    "validity": "complete",
+    "regions": {
+      "norm.launcher.r2": 8
+    }
+  },
+  "smoke-norm-cluster": {
+    "validity": "complete",
+    "regions": {
+      "norm.cluster.r2": 8
+    }
+  },
+  "validated": {
+    "status": "pass",
+    "physical_gpu_seconds": 0,
+    "small_state_rank_launches": 1560,
+    "collective_calls": 600,
+    "checked_elements": 773760,
+    "norm_ulp1": 0,
+    "widths": [
+      32,
+      64,
+      128,
+      256,
+      512
+    ],
+    "rows": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ranks": [
+      2,
+      4
+    ],
+    "clusters": [
+      1,
+      2
+    ],
+    "consecutive_rows": [
+      1,
+      4,
+      2,
+      1,
+      3,
+      4,
+      1,
+      2,
+      4,
+      3,
+      1,
+      4
+    ],
+    "source_payloads_at_ranks2": {
+      "allreduce": "12*N + 2*C",
+      "residual": "18*N + 2*C",
+      "norm": "18*N + 2*C"
+    },
+    "learned_interfaces": {
+      "allreduce.launcher.r2": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 6,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 192,
+          "observedMax": 12288,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 6,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 192,
+          "observedMax": 18432,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 12,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 384,
+          "observedMax": 30720,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 5.499999999999986,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 2.9103830456733704e-11,
+          "accepted": true,
+          "observedMin": 184,
+          "observedMax": 11284,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 28,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 17.499999999999936,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 1.3096723705530167e-10,
+          "accepted": true,
+          "observedMin": 584,
+          "observedMax": 42032,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 1,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 32,
+          "observedMax": 2048,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "allreduce.launcher.r4": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 10,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 320,
+          "observedMax": 20480,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 10,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 320,
+          "observedMax": 32768,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 20,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 640,
+          "observedMax": 53248,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 7.499999999999977,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 4.729372449219227e-11,
+          "accepted": true,
+          "observedMin": 248,
+          "observedMax": 15380,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 28,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 27.49999999999993,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 1.4551915228366852e-10,
+          "accepted": true,
+          "observedMin": 904,
+          "observedMax": 68656,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 3,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 96,
+          "observedMax": 6144,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "norm.cluster.r2": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 10,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 320,
+          "observedMax": 20480,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 8,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 22528,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 18,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 576,
+          "observedMax": 43008,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 5.500000000000001,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 1.8189894035458565e-12,
+          "accepted": true,
+          "observedMin": 188,
+          "observedMax": 11300,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 20,
+          "observedMax": 44,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 23.499999999999986,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 2.9103830456733704e-11,
+          "accepted": true,
+          "observedMin": 784,
+          "observedMax": 54352,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 8.249999999999991,
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 1.8189894035458565e-11,
+          "accepted": true,
+          "observedMin": 272,
+          "observedMax": 16928,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2,
+          "observedMax": 8,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "norm.cluster.r4": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 14,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 448,
+          "observedMax": 28672,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 12,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 384,
+          "observedMax": 36864,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 26,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 832,
+          "observedMax": 65536,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 7.499999999999993,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 1.4551915228366852e-11,
+          "accepted": true,
+          "observedMin": 252,
+          "observedMax": 15396,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 20,
+          "observedMax": 44,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 33.49999999999991,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 1.8917489796876907e-10,
+          "accepted": true,
+          "observedMin": 1104,
+          "observedMax": 80976,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 10.24999999999999,
+            "blocks": 4
+          },
+          "constant": 0,
+          "maxAbsoluteError": 2.1827872842550278e-11,
+          "accepted": true,
+          "observedMin": 336,
+          "observedMax": 21024,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 2,
+          "observedMax": 8,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "norm.launcher.r2": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 10,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 320,
+          "observedMax": 20480,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 8,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 22528,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 18,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 576,
+          "observedMax": 43008,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 5.499999999999986,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 2.9103830456733704e-11,
+          "accepted": true,
+          "observedMin": 184,
+          "observedMax": 11284,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 28,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 23.499999999999872,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 2.6193447411060333e-10,
+          "accepted": true,
+          "observedMin": 776,
+          "observedMax": 54320,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 8.24999999999996,
+            "blocks": 2
+          },
+          "constant": 0,
+          "maxAbsoluteError": 8.36735125631094e-11,
+          "accepted": true,
+          "observedMin": 266,
+          "observedMax": 16904,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 4,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "norm.launcher.r4": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 14,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 448,
+          "observedMax": 28672,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 12,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 384,
+          "observedMax": 36864,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 26,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 832,
+          "observedMax": 65536,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 7.499999999999977,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 4.729372449219227e-11,
+          "accepted": true,
+          "observedMin": 248,
+          "observedMax": 15380,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 28,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 33.500000000000036,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 7.275957614183426e-11,
+          "accepted": true,
+          "observedMin": 1096,
+          "observedMax": 80944,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 10.249999999999991,
+            "blocks": 2
+          },
+          "constant": 0,
+          "maxAbsoluteError": 1.8189894035458565e-11,
+          "accepted": true,
+          "observedMin": 330,
+          "observedMax": 21000,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 1
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 1,
+          "observedMax": 4,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      },
+      "residual.launcher.r2": {
+        "payload_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 10,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 320,
+          "observedMax": 20480,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_write_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 8,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 256,
+          "observedMax": 22528,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "payload_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 18,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 576,
+          "observedMax": 43008,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_read_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 5.499999999999986,
+            "blocks": 4
+          },
+          "constant": 4,
+          "maxAbsoluteError": 2.9103830456733704e-11,
+          "accepted": true,
+          "observedMin": 184,
+          "observedMax": 11284,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "control_write_bytes": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 4
+          },
+          "constant": 12,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 16,
+          "observedMax": 28,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "compulsory_requested_bytes": {
+          "coefficients": {
+            "C": 2,
+            "N": 23.499999999999872,
+            "blocks": 8
+          },
+          "constant": 16,
+          "maxAbsoluteError": 2.6193447411060333e-10,
+          "accepted": true,
+          "observedMin": 776,
+          "observedMax": 54320,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "fp32_flops": {
+          "coefficients": {
+            "C": 0,
+            "N": 2,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 64,
+          "observedMax": 4096,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        },
+        "special_function_ops": {
+          "coefficients": {
+            "C": 0,
+            "N": 0,
+            "blocks": 0
+          },
+          "constant": 0,
+          "maxAbsoluteError": 0,
+          "accepted": true,
+          "observedMin": 0,
+          "observedMax": 0,
+          "unexplainedMean": 0,
+          "dependentPCVs": []
+        }
+      }
+    },
+    "current_shape_only_payload_fit": {
+      "coefficients": {
+        "N": 17.368421052631327,
+        "hidden": 10.245614035088371,
+        "ranks": 0.0,
+        "w": 5.3396912622508986e-11
+      },
+      "constant": -1.3642420526593924e-10,
+      "maxAbsoluteError": 4922.385964912402,
+      "accepted": false,
+      "observedMin": 576,
+      "observedMax": 43008,
+      "unexplainedMean": 10647.466666666667,
+      "dependentPCVs": [
+        "ranks"
+      ]
+    },
+    "spin": {
+      "vector_retry_rounds": 30296,
+      "counter_retry_polls": 15207,
+      "retry_read_bytes": 1533884,
+      "same_state_variation_groups": 368,
+      "same_state_variation_examples": [
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 0,
+            "N": 32,
+            "blocks": 1,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 0,
+            "rank_N": 64,
+            "ranks": 2,
+            "threads": 4,
+            "w": 1
+          },
+          "observations": 4,
+          "min_retry_bytes": 0,
+          "max_retry_bytes": 1056
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 64,
+            "N": 128,
+            "blocks": 4,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 1,
+            "rank_N": 256,
+            "ranks": 2,
+            "threads": 4,
+            "w": 4
+          },
+          "observations": 8,
+          "min_retry_bytes": 112,
+          "max_retry_bytes": 2504
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 256,
+            "N": 64,
+            "blocks": 2,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 4,
+            "rank_N": 128,
+            "ranks": 2,
+            "threads": 4,
+            "w": 2
+          },
+          "observations": 4,
+          "min_retry_bytes": 36,
+          "max_retry_bytes": 1056
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 128,
+            "N": 32,
+            "blocks": 1,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 2,
+            "rank_N": 64,
+            "ranks": 2,
+            "threads": 4,
+            "w": 1
+          },
+          "observations": 4,
+          "min_retry_bytes": 0,
+          "max_retry_bytes": 1312
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 64,
+            "N": 96,
+            "blocks": 3,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 1,
+            "rank_N": 192,
+            "ranks": 2,
+            "threads": 4,
+            "w": 3
+          },
+          "observations": 4,
+          "min_retry_bytes": 96,
+          "max_retry_bytes": 3172
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 192,
+            "N": 128,
+            "blocks": 4,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 3,
+            "rank_N": 256,
+            "ranks": 2,
+            "threads": 4,
+            "w": 4
+          },
+          "observations": 4,
+          "min_retry_bytes": 96,
+          "max_retry_bytes": 1104
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 256,
+            "N": 32,
+            "blocks": 1,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 4,
+            "rank_N": 64,
+            "ranks": 2,
+            "threads": 4,
+            "w": 1
+          },
+          "observations": 4,
+          "min_retry_bytes": 0,
+          "max_retry_bytes": 960
+        },
+        {
+          "region": "allreduce.launcher.r2",
+          "pcvs": {
+            "C": 64,
+            "N": 64,
+            "blocks": 2,
+            "cluster": 1,
+            "hidden": 32,
+            "previous_w": 1,
+            "rank_N": 128,
+            "ranks": 2,
+            "threads": 4,
+            "w": 2
+          },
+          "observations": 4,
+          "min_retry_bytes": 0,
+          "max_retry_bytes": 1224
+        }
+      ],
+      "max_vector_rounds_per_launch": 428,
+      "max_counter_polls_per_launch": 62
+    },
+    "raw_profiles": {
+      "r2": {
+        "profile": "r2/profile.gpu.drperf.json",
+        "invocations": 360,
+        "rejected_metric_fits": {
+          "allreduce.launcher.r2": [
+            "conversion_ops",
+            "generic_read_bytes",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ],
+          "norm.launcher.r2": [
+            "conversion_ops",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "shared_read_bytes",
+            "shared_write_bytes",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ],
+          "residual.launcher.r2": [
+            "conversion_ops",
+            "generic_read_bytes",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ]
+        }
+      },
+      "r2-skew": {
+        "profile": "r2-skew/profile.gpu.drperf.json",
+        "invocations": 360,
+        "rejected_metric_fits": {
+          "allreduce.launcher.r2": [
+            "conversion_ops",
+            "generic_read_bytes",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ],
+          "norm.launcher.r2": [
+            "conversion_ops",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "shared_read_bytes",
+            "shared_write_bytes",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ],
+          "residual.launcher.r2": [
+            "conversion_ops",
+            "generic_read_bytes",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ]
+        }
+      },
+      "r2-cluster": {
+        "profile": "r2-cluster/profile.gpu.drperf.json",
+        "invocations": 120,
+        "rejected_metric_fits": {
+          "norm.cluster.r2": [
+            "conversion_ops",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span"
+          ]
+        }
+      },
+      "r4": {
+        "profile": "r4/profile.gpu.drperf.json",
+        "invocations": 480,
+        "rejected_metric_fits": {
+          "allreduce.launcher.r4": [
+            "conversion_ops",
+            "generic_read_bytes",
+            "generic_unique_read_line_bytes",
+            "generic_unique_read_lines",
+            "generic_unique_read_sector_bytes",
+            "generic_unique_read_sectors",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ],
+          "norm.launcher.r4": [
+            "conversion_ops",
+            "generic_unique_read_line_bytes",
+            "generic_unique_read_lines",
+            "generic_unique_read_sector_bytes",
+            "generic_unique_read_sectors",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "shared_read_bytes",
+            "shared_write_bytes",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span",
+            "warps"
+          ]
+        }
+      },
+      "r4-cluster": {
+        "profile": "r4-cluster/profile.gpu.drperf.json",
+        "invocations": 240,
+        "rejected_metric_fits": {
+          "norm.cluster.r4": [
+            "conversion_ops",
+            "generic_unique_read_sector_bytes",
+            "generic_unique_read_sectors",
+            "generic_unique_write_line_bytes",
+            "generic_unique_write_lines",
+            "generic_unique_write_sector_bytes",
+            "generic_unique_write_sectors",
+            "global_read_bytes",
+            "global_unique_read_line_bytes",
+            "global_unique_read_lines",
+            "global_unique_read_sector_bytes",
+            "global_unique_read_sectors",
+            "global_unique_write_line_bytes",
+            "global_unique_write_lines",
+            "global_unique_write_sector_bytes",
+            "global_unique_write_sectors",
+            "integer_ops",
+            "ptx_lane_instructions",
+            "sum_block_lane_sequence_span",
+            "sum_block_max_lane_bytes",
+            "sum_launch_max_block_lane_sequence_span"
+          ]
+        }
+      }
+    },
+    "numerical_scenarios": [
+      {
+        "mode": "residual",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "residual",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 32,
+        "ranks": 2,
+        "cluster": 2,
+        "threads": 2,
+        "calls": 12,
+        "checked_elements": 1920,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 64,
+        "ranks": 2,
+        "cluster": 2,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 128,
+        "ranks": 2,
+        "cluster": 2,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 256,
+        "ranks": 2,
+        "cluster": 2,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 512,
+        "ranks": 2,
+        "cluster": 2,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 32,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 64,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 128,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 256,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "allreduce",
+        "hidden": 512,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 61440,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 32,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 64,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 128,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 256,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 512,
+        "ranks": 4,
+        "cluster": 1,
+        "threads": 64,
+        "calls": 12,
+        "checked_elements": 61440,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 32,
+        "ranks": 4,
+        "cluster": 2,
+        "threads": 2,
+        "calls": 12,
+        "checked_elements": 3840,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 64,
+        "ranks": 4,
+        "cluster": 2,
+        "threads": 4,
+        "calls": 12,
+        "checked_elements": 7680,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 128,
+        "ranks": 4,
+        "cluster": 2,
+        "threads": 8,
+        "calls": 12,
+        "checked_elements": 15360,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 256,
+        "ranks": 4,
+        "cluster": 2,
+        "threads": 16,
+        "calls": 12,
+        "checked_elements": 30720,
+        "norm_ulp1": 0,
+        "status": "pass"
+      },
+      {
+        "mode": "norm",
+        "hidden": 512,
+        "ranks": 4,
+        "cluster": 2,
+        "threads": 32,
+        "calls": 12,
+        "checked_elements": 61440,
+        "norm_ulp1": 0,
+        "status": "pass"
+      }
+    ],
+    "normalized_rejected_fits": {
+      "allreduce.launcher": [
+        "conversion_ops",
+        "integer_ops",
+        "ptx_lane_instructions"
+      ],
+      "norm.cluster": [
+        "conversion_ops",
+        "integer_ops",
+        "ptx_lane_instructions"
+      ],
+      "norm.launcher": [
+        "conversion_ops",
+        "integer_ops",
+        "ptx_lane_instructions",
+        "shared_read_bytes",
+        "shared_write_bytes"
+      ],
+      "residual.launcher": [
+        "conversion_ops",
+        "integer_ops",
+        "ptx_lane_instructions"
+      ]
+    },
+    "normalization": "Only retry-loop work beyond one successful vector round per N/8 and one successful counter read is removed. Original raw reports retain every iteration. Payload uses executed 16-byte vector load/store sites; scalar workspace/flag traffic stays in control metrics."
+  }
+}
