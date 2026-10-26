@@ -20,7 +20,7 @@ Fix status: **Priority variant merge-ready (token-exact).**
 
 ## Measured timing (not from DrPerf)
 
-b114 B300 harness: routing 23.0 -> 17.0 us/call (routed first) / 16.6 us (priority); step -0.22..-0.24 ms (routed first) and -0.26..-0.32 ms (priority) uniform, -0.24..-0.32 ms hot; the deprioritized shared down GEMM slows 5.3 -> 24.9 us off the critical path. CUPTI interval analysis: routing launches ~5 us before its producer moe_front_prenorm ends (PDL); measured from the producer end it takes 14.4 us (control) -> 8.8 us (either fix), still ~4.3 us over vLLM while sharing SMs with already-running GEMM CTAs.
+b114 B300 harness: routing 23.0 -> 17.0 us/call (routed first) / 16.6 us (priority); step -0.22..-0.24 ms (routed first) and -0.26..-0.32 ms (priority) uniform, -0.24..-0.32 ms hot; the deprioritized shared down GEMM slows 5.3 -> 24.9 us off the critical path. CUPTI interval analysis: routing launches ~5 us before its producer moe_front_prenorm ends (PDL); measured from the producer end it takes 14.4 us (control) -> 8.8 us (either fix), still ~4.3 us over vLLM while sharing SMs with already-running GEMM CTAs. Forking the shared expert only after routing (b115) trimmed routing to 7.7 us but cost +0.36..+0.50 ms/step (the shared expert then contends with the routed GEMMs): dropped.
 
 ## Credit
 

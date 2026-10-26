@@ -185,7 +185,9 @@ CASES = [
           '(routed first) and -0.26..-0.32 ms (priority) uniform, -0.24..-0.32 ms hot; the deprioritized shared down GEMM '
           'slows 5.3 -> 24.9 us off the critical path. CUPTI interval analysis: routing launches ~5 us before its '
           'producer moe_front_prenorm ends (PDL); measured from the producer end it takes 14.4 us (control) -> 8.8 us '
-          '(either fix), still ~4.3 us over vLLM while sharing SMs with already-running GEMM CTAs.'),
+          '(either fix), still ~4.3 us over vLLM while sharing SMs with already-running GEMM CTAs. Forking the shared '
+          'expert only after routing (b115) trimmed routing to 7.7 us but cost +0.36..+0.50 ms/step (the shared expert '
+          'then contends with the routed GEMMs): dropped.'),
   receipts=[PROF+'/glm53-gap-b101', PROF+'/glm53-gap-b54', PROF+'/glm53-gap-b114'],
   files=[EX+'/moe_routing/kernel.cu', EX+'/moe_routing/driver.cu', EX+'/moe_routing/routing_block_kernel.cuh'],
   reproduce=['see gpu/examples/moe_routing (results/run1); latency: python3 gpu/tools/latency_report.py results/run1'],
