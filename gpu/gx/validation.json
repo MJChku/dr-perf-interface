@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-27",
+  "physicalGpuUsed": false,
+  "gxBuild": "gx_cuda.so, gxptx and gxcheck built successfully",
+  "regressionSuite": {
+    "tests": 50,
+    "passed": 48,
+    "skipped": 2,
+    "reason": "optional NVCC and separately run GX application"
+  },
+  "cpuMarkerTestsPassed": 8,
+  "gxApplication": {
+    "passed": true,
+    "regionNames": [
+      "request",
+      "transform",
+      "replay",
+      "same_symbol",
+      "threaded"
+    ],
+    "features": [
+      "numerical outputs",
+      "host scopes close before delayed kernels execute",
+      "nested regions",
+      "state-mean fitting",
+      "two streams",
+      "concurrent submitters",
+      "graph replay attribution",
+      "same kernel symbol in different modules",
+      "skipped kernels remain incomplete",
+      "existing perfmark ABI"
+    ],
+    "checkedFormulas": {
+      "transform.global_read_bytes": "8*n",
+      "transform.global_write_bytes": "8*n",
+      "transform.fp32_flops": "4*n",
+      "replay.global_read_bytes": "52*repeats",
+      "same_symbol.global_read_bytes": "12*n",
+      "threaded.global_read_bytes": "4*n"
+    }
+  },
+  "captureDisabledGXNumericalCasesPassed": 16,
+  "publicCommand": "drperf --gpu --gx GX_ROOT --gx-library GX_LIBRARY --output OUT -- python3 gpu/tests/gx_application.py",
+  "scope": "Small real CUDA application through GX; not a serving-model validation. Dynamic helper accounting limits are documented in README.md."
+}

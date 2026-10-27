@@ -730,6 +730,54 @@ def write_status(directory, status, **metadata):
     os.replace(f.name, directory/'capture-status.json')
 
 
+def gx_environment(root, library=None, inherited=None):
+    """Reusable by GX's future `explain gpu` launcher; no standalone emulator.
+
+    GX owns the CUDA path. The optional observer library only collects markers
+    and executed resource counts. Existing GX selection/configuration is kept.
+    """
+    root = Path(root).resolve()
+    library = Path(library).resolve() if library else root/'src/sims/gpu/gx_cuda.so'
+    collector = GPU/'build/libdrperf_gpu_gx.so'
+    for path in (library, collector, ROOT/'build/libdrperf_fit.so'):
+        if not path.is_file():
+            raise ValueError(f'missing GX capture component: {path}; build GX and run gpu/gx/build.sh')
+    env = dict(os.environ if inherited is None else inherited)
+    # Refuse a second GPU emulator: both export execution/context symbols.
+    if 'libdrperf_gpu.so' in env.get('LD_PRELOAD', ''):
+        raise ValueError('GX capture cannot preload the standalone DrPerf GPU runtime')
+    env['GX_HOME'] = str(root)
+    env['GX_EXPLAIN_GPU_LIBRARY'] = str(collector)
+    preload = env.get('LD_PRELOAD', '').split(':')
+    env['LD_PRELOAD'] = ':'.join(dict.fromkeys([str(library)] + [p for p in preload if p]))
+    for key, value in dict(GX_KERNEL_CHECK='1', GX_ALLOC_ALL_REAL='1', GX_COMM_ONLY='0',
+                           GX_PTX_LIBS='1', GX_CHROME_TRACE='0').items():
+        env.setdefault(key, value)
+    return env
+
+
+def report_capture(paths, output, *, absolute=1e-6, relative=1e-6, provenance=None):
+    """Fit all captured invocations and write the same report from either runtime."""
+    paths = [Path(p) for p in paths]
+    model = build_model(read_capture(paths), absolute, relative)
+    model['provenance'] = dict(provenance or {}, rawCaptures=[str(p) for p in paths],
+                               modules=capture_modules(paths))
+    if model['provenance'].get('execution') == 'gx':
+        model['semantics'].update(
+            parallelism='not collected by the GX observer; these are additive resource counts, not latency',
+            spanLimitations='no lane span or critical-path estimate in this capture',
+            deviceRegions='host perfmark/GPU regions own launches at submission; device markers are not connected',
+            captureCoverage='prediction-only launches, omitted lanes/payloads, and unconnected dynamic resource operations are explicitly incomplete')
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=True)
+    for name, content in [('profile.gpu.drperf.json', json.dumps(model, indent=2)+'\n'),
+                          ('report.txt', text_report(model))]:
+        with tempfile.NamedTemporaryFile(mode='w', dir=output, delete=False) as f:
+            f.write(content)
+        os.replace(f.name, output/name)
+    return model
+
+
 def main(argv):
     try:
         if argv[:1] == ['build']:
@@ -773,6 +821,8 @@ def main(argv):
             return 0 if model['validity'] == 'complete' else 2
         parser = argparse.ArgumentParser(prog='drperf --gpu',
                     description='Run GPU markers, execute translated PTX, and fit GPU resource interfaces. No DynamoRIO.')
+        parser.add_argument('--gx', type=Path, help='GX checkout: run the application through GX, with resource capture')
+        parser.add_argument('--gx-library', type=Path, help='override the GX runtime shared library')
         parser.add_argument('--output', type=Path, default=Path('drperf-gpu-report'))
         parser.add_argument('--absolute-tolerance', type=float, default=1e-6)
         parser.add_argument('--relative-tolerance', type=float, default=1e-6)
@@ -785,13 +835,18 @@ def main(argv):
         if any(not math.isfinite(v) or v < 0 for v in
                (args.absolute_tolerance, args.relative_tolerance)) or not math.isfinite(args.timeout) or args.timeout <= 0:
             parser.error('tolerances must be finite and nonnegative; timeout must be positive')
-        require_build()
+        if args.gx:
+            env = gx_environment(args.gx, args.gx_library)
+        else:
+            if args.gx_library:
+                parser.error('--gx-library requires --gx')
+            require_build()
+            env = {k: v for k, v in os.environ.items()
+                   if k != 'LD_PRELOAD' and (k.startswith('DRPERF_GPU_') or
+                       not k.startswith(('DRPERF_', 'DYNAMORIO_', 'GX_', 'NEX_')))}
         args.output.mkdir(parents=True, exist_ok=True)
         capture = Path(tempfile.mkdtemp(prefix='capture-', dir=args.output.resolve()))
         write_status(args.output, 'running', capture=str(capture))
-        env = {k: v for k, v in os.environ.items()
-               if k != 'LD_PRELOAD' and (k.startswith('DRPERF_GPU_') or
-                   not k.startswith(('DRPERF_', 'DYNAMORIO_', 'GX_', 'NEX_')))}
         env['DRPERF_GPU_CAPTURE'] = str(capture/'gpu')
         result = subprocess.run(command, env=env, timeout=args.timeout)
         if result.returncode:
@@ -799,17 +854,16 @@ def main(argv):
             print(f'drperf GPU: program failed ({result.returncode}); capture retained at {capture}', file=sys.stderr)
             return result.returncode if result.returncode > 0 else 128-result.returncode
         paths = sorted(capture.glob('gpu.*.jsonl'))
-        model = build_model(read_capture(paths), args.absolute_tolerance, args.relative_tolerance)
-        model['provenance'] = {'command': command, 'rawCaptures': [str(p) for p in paths],
-                               'modules': capture_modules(paths),
-                               'runtimeSha256': sha256(RUNTIME),
-                               'vendoredGX': json.loads((GPU/'vendor/provenance.json').read_text())['revision']}
-        for name, content in [('profile.gpu.drperf.json', json.dumps(model, indent=2)+'\n'),
-                              ('report.txt', text_report(model))]:
-            target = args.output/name
-            with tempfile.NamedTemporaryFile(mode='w', dir=args.output, delete=False) as f:
-                f.write(content)
-            os.replace(f.name, target)
+        provenance = {'command': command, 'execution': 'gx' if args.gx else 'standalone'}
+        if args.gx:
+            library = args.gx_library or args.gx/'src/sims/gpu/gx_cuda.so'
+            provenance.update(gxRoot=str(args.gx.resolve()), gxRuntimeSha256=sha256(library),
+                              collectorSha256=sha256(GPU/'build/libdrperf_gpu_gx.so'))
+        else:
+            provenance.update(runtimeSha256=sha256(RUNTIME),
+                              vendoredGX=json.loads((GPU/'vendor/provenance.json').read_text())['revision'])
+        model = report_capture(paths, args.output, absolute=args.absolute_tolerance,
+                               relative=args.relative_tolerance, provenance=provenance)
         write_status(args.output, 'complete', capture=str(capture))
         print(f'drperf GPU: {len(model["regions"])} regions; work capture {model["validity"]}')
         print('  '+str(args.output/'report.txt'))

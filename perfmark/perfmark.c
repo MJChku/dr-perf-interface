@@ -38,6 +38,35 @@ late_attach(void)
     attach_state = 2;
     return 1;                   /* now under DynamoRIO: re-enter so it is seen */
 }
+/* Optional GX observer, not another CUDA interceptor. Resolve on each host
+ * thread before its first annotation, so entry PCVs precede kernel submission.
+ * The ordinary CPU-only marker path retains an empty body apart from this
+ * cached disabled check; drwrap still excludes the entire marker body. */
+struct gpu_marker_hooks {
+    void (*begin)(const char *, int, const char *const *, const int64_t *);
+    void (*end)(const char *);
+};
+static struct gpu_marker_hooks *gpu_markers(void)
+{
+    static __thread int initialized;
+    static __thread struct gpu_marker_hooks hooks;
+    if (!initialized) {
+        const char *path = getenv("GX_EXPLAIN_GPU_LIBRARY");
+        if (path && *path) {
+            void *library = dlopen(path, RTLD_NOW | RTLD_GLOBAL);
+            if (library) {
+                hooks.begin = dlsym(library, "drperf_gpu_perfmark_begin");
+                hooks.end = dlsym(library, "drperf_gpu_perfmark_end");
+            }
+            if (!hooks.begin || !hooks.end) {
+                fprintf(stderr, "perfmark: incompatible GX GPU collector: %s\n", path);
+                abort();
+            }
+        }
+        initialized = 1;
+    }
+    return &hooks;
+}
 EXPORT void perfmark_begin(const char *region, const char *state_name, int64_t state_value)
 {
     if (attach_state == 0 && late_attach()) {
@@ -46,7 +75,8 @@ EXPORT void perfmark_begin(const char *region, const char *state_name, int64_t s
         again(region, state_name, state_value);
         return;
     }
-    (void)region; (void)state_name; (void)state_value;
+    struct gpu_marker_hooks *gpu = gpu_markers();
+    if (gpu->begin) gpu->begin(region, state_name && *state_name ? 1 : 0, &state_name, &state_value);
     __asm__ __volatile__("" ::: "memory");
 }
 EXPORT void perfmark_begin_v(const char *region, int n, const char *const *names, const int64_t *values)
@@ -57,12 +87,14 @@ EXPORT void perfmark_begin_v(const char *region, int n, const char *const *names
         again(region, n, names, values);
         return;
     }
-    (void)region; (void)n; (void)names; (void)values;
+    struct gpu_marker_hooks *gpu = gpu_markers();
+    if (gpu->begin) gpu->begin(region, n, names, values);
     __asm__ __volatile__("" ::: "memory");
 }
 EXPORT void perfmark_end(const char *region)
 {
-    (void)region;
+    struct gpu_marker_hooks *gpu = gpu_markers();
+    if (gpu->end) gpu->end(region);
     __asm__ __volatile__("" ::: "memory");
 }
 EXPORT void perfmark_state(const char *name, const char *value)

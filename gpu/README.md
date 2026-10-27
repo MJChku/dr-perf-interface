@@ -1,17 +1,19 @@
 # GPU resource interfaces
 
-`drperf --gpu` is a separate execution and fitting path. GPU markers use
-`drperf_gpu.h`; CPU markers continue to use `perfmark`. The GPU command does
-not import the CPU collector, start DynamoRIO, or count instructions executed
-by the C++ emulator. Only `analysis/affine.cpp` / `lib/native_fit.py`, the
-numerical affine checker, are shared.
+`drperf --gpu` fits executed GPU resource counts against region-entry PCVs.
+It supports [ordinary applications running through GX](gx/README.md), using
+existing `perfmark` annotations or `drperf_gpu.h` regions. GX owns CUDA dispatch,
+streams, graph replay and PTX execution; an optional collector receives counts.
+There is no second CUDA interceptor and no standalone kernel harness required.
+GX exposes this path as `gx explain gpu`; its command uses the same observer and report API.
 
-The GPU path translates PTX to instrumented C++, executes that code on CPU
-using its own copied GX lane/fiber, barrier, warp-exchange and matrix runtime,
-and fits work counts against entry PCVs. WGMMA, TMA, bulk operations and
-`tcgen05` use GX's canonical implementations, with descriptor-derived resource
-counts and cluster/grid coordination. It needs no physical GPU, CUDA
-toolkit, running GX process, installed `gx_cuda.so`, or GX checkout.
+The standalone path below remains available for isolated kernel tests. It
+translates PTX to instrumented C++ and uses a copied GX lane/fiber and matrix
+runtime. That path has more extensive dynamic-operation counters than the
+initial GX observer; see the integration document for explicit coverage limits.
+Neither path fits GPU latency or counts the CPU instructions used to emulate
+kernels. Both use the same state-mean, per-basic-block resource fitter, backed by
+`analysis/affine.cpp` / `lib/native_fit.py`.
 
 ## Build and run
 
