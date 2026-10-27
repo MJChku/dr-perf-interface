@@ -236,7 +236,8 @@ def emitFn (nm sig body : String) (isKernel : Bool) (shTotal : Nat)
       "      if (mask && !(mask & 1u)) gx_ptx_trap_op(\"warp_cohort.elect.mask\");\n" ++
       "      return mask != 0;\n    };\n"
     else ""
-  let stmts := String.intercalate "\n" (translateBodyScoped body payloadAnnotated)
+  let profileName := nm ++ (if isKernel then "__gxptx" else "")
+  let stmts := String.intercalate "\n" (translateBodyScoped body payloadAnnotated profileName)
   cSig ++ "\n" ++ locals ++ aliases ++ pre ++ election ++ stmts ++ "\n}\n"
 
 end Gxptx

@@ -60,7 +60,7 @@ class ScheduleTest(unittest.TestCase):
             self.assertEqual(m['dependent_global_loads_on_critical_path'], 1)  # the four loads overlap
             self.assertLess(m['latency_critical_path'], 2*400)
             sites = json.loads((tmp/'k.so.sites.json').read_text())['functions']['guarded__gxptx']
-            self.assertEqual(len(sites), cpp.count('drperf_gpu_instruction(__func__'))  # tags do not break alignment
+            self.assertEqual(len(sites), cpp.count('drperf_gpu_instruction("guarded__gxptx:bb'))  # tags do not break alignment
 
 if __name__ == '__main__':
     unittest.main()

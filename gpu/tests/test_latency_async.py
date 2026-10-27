@@ -91,7 +91,7 @@ class LatencyAsyncTest(unittest.TestCase):
             run = subprocess.run(['python3', ROOT/'gpu/tools/latency_report.py', tmp/'r', '--stalls', '3'],
                                  capture_output=True, text=True, check=True)
             # The first load's consumer is the inlined helper's add.f32.
-            self.assertIn('interleaved @ helper.cuh:5<kernel.cu:13 ptx20:add.f32', run.stdout)
+            self.assertIn('interleaved @ bb0 helper.cuh:5<kernel.cu:13 ptx20:add.f32', run.stdout)
             model = json.loads((tmp/'r'/'profile.gpu.drperf.json').read_text())
             self.assertEqual([m['module'] for m in model['provenance']['modules']], [str((tmp/'li.so').resolve())])
 

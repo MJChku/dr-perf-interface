@@ -26,6 +26,30 @@ def model(rows):
 
 
 class Interfaces(unittest.TestCase):
+    def test_one_fit_for_complementary_instructions_in_same_block(self):
+        rows = [row(n, {'k__gxptx:bb0:cpp10:ld.global': {'global_read_bytes': 4*min(n, 32)},
+                        'k__gxptx:bb0:cpp20:ld.global': {'global_read_bytes': 4*max(n-32, 0)}})
+                for n in (8, 16, 32, 48, 64)]
+        r = model(rows)['R']
+        self.assertEqual(len(r['sites']), 1)
+        self.assertEqual(len(r['basicBlockMembers']['k__gxptx:bb0']), 2)
+        self.assertEqual(len(r['observations'][0]['sites']), 2)
+        self.assertTrue(r['fits']['global_read_bytes']['accepted'])
+        self.assertEqual(r['fits']['global_read_bytes']['coefficients'], {'n': 4})
+        self.assertEqual(r['legacyInstructionSites'], [])
+
+    def test_complementary_blocks_are_never_grouped_again(self):
+        rows = [row(n, {'k__gxptx:bb0:cpp10:ld.global': {'global_read_bytes': 4*min(n, 32)},
+                        'k__gxptx:bb1:cpp20:ld.global': {'global_read_bytes': 4*max(n-32, 0)}})
+                for n in (8, 16, 32, 48, 64)]
+        r = model(rows)['R']; f = r['fits']['global_read_bytes']
+        self.assertFalse(f['accepted'])
+        self.assertEqual(len(r['sites']), 2)
+        self.assertEqual(f['coefficients'], {'n': 0})
+        self.assertEqual(f['rejectedSites'], ['k__gxptx:bb0', 'k__gxptx:bb1'])
+        for state in f['unexplainedByState']:
+            self.assertEqual(state['mean'], 4*state['pcvs']['n'])
+
     def test_cancellation_cannot_hide_unexplained_statements(self):
         rows = [row(n, {'A': {'fp32_flops': n*n}, 'B': {'fp32_flops': 100-n*n}}) for n in range(1, 5)]
         r = model(rows)['R']; f = r['fits']['fp32_flops']
@@ -34,6 +58,8 @@ class Interfaces(unittest.TestCase):
         self.assertEqual(f['unexplainedMean'], 100)
         self.assertEqual(f['rejectedSites'], ['A', 'B'])
         self.assertTrue(all(s['mean'] == 100 for s in f['unexplainedByState']))
+        self.assertEqual(r['legacyInstructionSites'], ['A', 'B'])
+        self.assertEqual(r['fitSemantics'], 'state-means/legacy-or-mixed-units-v3')
 
     def test_keep_explained_portion_and_function_site_breakdown(self):
         r = model([row(n, {'copy:1': {'global_read_bytes': 8*n}, 'hidden:2': {'global_read_bytes': n*n}})

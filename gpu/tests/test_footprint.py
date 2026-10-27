@@ -65,8 +65,9 @@ class FootprintIntegration(unittest.TestCase):
                 fit = region['fits'][f'global_unique_{direction}_{suffix}']
                 self.assertTrue(fit['accepted'], fit)
                 self.assertEqual(fit['coefficients']['lanes'], 0)
-        fitted_sites = [s for s in region['sites'].values() if 'global_unique_read_bytes' in s]
-        self.assertEqual(fitted_sites[0]['global_unique_read_bytes']['constant'], 4)
+        # Address unions cannot be added across the instructions of a block.
+        # Keep their exact observations and region fit, not a fabricated sum.
+        self.assertTrue(all('global_unique_read_bytes' not in b for b in region['sites'].values()))
 
     def test_streaming_unique_equals_requested_and_fits(self):
         region = self.regions['streaming']
@@ -266,14 +267,14 @@ loaded:'''
         candidate = json.loads((dest / 'profile.gpu.drperf.json').read_text())
         before = self.regions['broadcast']
         after = next(r for r in candidate['regions'] if r['name'] == 'broadcast')
-        old_site = next(site for site, fits in before['sites'].items() if 'global_read_bytes' in fits)
-        new_site = next(site for site, fits in after['sites'].items() if 'global_read_bytes' in fits)
-        old_store = next(site for site, fits in before['sites'].items() if 'global_write_bytes' in fits)
-        new_store = next(site for site, fits in after['sites'].items() if 'global_write_bytes' in fits)
+        # The edit splits the old load/store block. Do not fabricate a
+        # one-to-one instruction mapping between differently structured blocks.
         changes = diff_reports(self.report, candidate, region_pattern='broadcast', metric_pattern='global_*',
-                               site_map={old_site: new_site, old_store: new_store})
-        self.assertEqual(changes['changedMetrics'], 4)
-        for change in changes['changes']:
+                               include_unchanged=False)
+        region_changes = [c for c in changes['changes'] if c['site'] is None and c['afterSite'] is None]
+        self.assertEqual(len(region_changes), 2)
+        self.assertTrue(any(c['site'] or c['afterSite'] for c in changes['changes']))
+        for change in region_changes:
             self.assertIn(change['metric'], ('global_read_bytes', 'global_load_instructions'))
             scale = 4 if change['metric'] == 'global_read_bytes' else 1
             self.assertEqual(change['coefficientChanges']['lanes']['before'], scale)

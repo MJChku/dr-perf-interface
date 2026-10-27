@@ -1,0 +1,56 @@
+.version 8.0
+.target sm_90
+.address_size 64
+
+// Two complementary predicated loads share one PTX basic block.
+.visible .entry predicated_pair(.param .u64 input, .param .u64 output, .param .u32 count)
+{
+ .reg .u32 %tid, %n;
+ .reg .u64 %in, %out, %offset, %ip, %op;
+ .reg .pred %active, %low, %high, %a, %b;
+ .reg .f32 %value;
+ ld.param.u64 %in, [input];
+ ld.param.u64 %out, [output];
+ ld.param.u32 %n, [count];
+ mov.u32 %tid, %tid.x;
+ mul.wide.u32 %offset, %tid, 4;
+ add.u64 %ip, %in, %offset;
+ add.u64 %op, %out, %offset;
+ setp.lt.u32 %active, %tid, %n;
+ setp.lt.u32 %low, %tid, 32;
+ not.pred %high, %low;
+ and.pred %a, %active, %low;
+ and.pred %b, %active, %high;
+ mov.f32 %value, 0f00000000;
+ @%a ld.global.f32 %value, [%ip];
+ @%b ld.global.f32 %value, [%ip];
+ st.global.f32 [%op], %value;
+ ret;
+}
+
+// Same counts and outputs, but the loads now belong to different blocks.
+.visible .entry branched_pair(.param .u64 input, .param .u64 output, .param .u32 count)
+{
+ .reg .u32 %tid, %n;
+ .reg .u64 %in, %out, %offset, %ip, %op;
+ .reg .pred %active, %high;
+ .reg .f32 %value;
+ ld.param.u64 %in, [input];
+ ld.param.u64 %out, [output];
+ ld.param.u32 %n, [count];
+ mov.u32 %tid, %tid.x;
+ mul.wide.u32 %offset, %tid, 4;
+ add.u64 %ip, %in, %offset;
+ add.u64 %op, %out, %offset;
+ setp.lt.u32 %active, %tid, %n;
+ setp.ge.u32 %high, %tid, 32;
+ mov.f32 %value, 0f00000000;
+ @%high bra high;
+ @%active ld.global.f32 %value, [%ip];
+ bra done;
+high:
+ @%active ld.global.f32 %value, [%ip];
+done:
+ st.global.f32 [%op], %value;
+ ret;
+}

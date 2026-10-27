@@ -86,7 +86,41 @@ def bodyRegisters (body : String) : Std.HashSet String := Id.run do
     | _ => pure ()
   return regs
 
-def translateBodyScoped (body : String) (payloadAnnotated : Bool) : List String := Id.run do
+/- Assign profiling blocks while the translator still owns the control-flow
+   structure. Labels start blocks; transfers/calls end them. Ordinary predicated
+   instructions stay in their block: executed-lane counters supply their cost.
+   The block ID is embedded in the counter's static name, so raw captures retain
+   it without a source-map file or a second control-flow parser in the reporter. -/
+def profileBasicBlocks (lines : List String) (fn : String) : List String := Id.run do
+  if fn.isEmpty then return lines
+  let counterPrefix := "drperf_gpu_instruction(__func__, \""
+  let mut block : Nat := 0
+  let mut seen := false
+  let mut leader := false
+  let mut result : Array String := #[]
+  for chunk in lines do
+    let mut annotated : Array String := #[]
+    for line in chunk.splitOn "\n" do
+      if (labelDef line).isSome then leader := true
+      match line.splitOn counterPrefix with
+      | _ :: rest :: _ =>
+        if leader && seen then block := block + 1
+        leader := false
+        seen := true
+        let op := ((rest.splitOn "\"").headD "").splitOn "." |>.headD ""
+        annotated := annotated.push (line.replace "drperf_gpu_instruction(__func__,"
+          s!"drperf_gpu_instruction(\"{fn}:bb{block}\",")
+        if ["bra", "brx", "ret", "exit", "call", "trap"].contains op then
+          leader := true
+      | _ =>
+        -- Marker calls have no instruction counter but still delimit regions.
+        if (line.splitOn "drperf_gpu_device_").length > 1 then leader := true
+        annotated := annotated.push line
+    result := result.push (String.intercalate "\n" annotated.toList)
+  return result.toList
+
+def translateBodyScoped (body : String) (payloadAnnotated : Bool)
+    (profileName : String := "") : List String := Id.run do
   let source := stripLineDirectives (stripComments body)
   let stmts := source.splitOn ";"
   let regs := bodyRegisters source
@@ -118,7 +152,7 @@ def translateBodyScoped (body : String) (payloadAnnotated : Bool) : List String 
       -- risking a host dereference of fake device memory.
       inPayload := pendingScope.getD true
       pendingScope := none
-  return out.toList
+  return profileBasicBlocks out.toList profileName
 
 def translateBody (body : String) : List String :=
   translateBodyScoped body false

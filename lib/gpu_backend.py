@@ -36,8 +36,9 @@ def require_build():
 
 
 PTX_FUNC = re.compile(r'\.(?:entry|func)\s+(?:\([^)]*\)\s*)?([A-Za-z_$][\w$]*)')
-CPP_FUNC = re.compile(r'^\S.*?\b([A-Za-z_$][\w$]*__gxptx)\s*\(')
-CPP_SITE = re.compile(r'drperf_gpu_instruction\(__func__, "([^"]+)", __LINE__')
+CPP_FUNC = re.compile(r'^extern "C".*?\bvoid\s+([A-Za-z_$][\w$]*)\(void\*\* args\)')
+CPP_COUNTER = r'drperf_gpu_instruction\((?:__func__|"[^"]+"), "'
+CPP_SITE = re.compile(CPP_COUNTER + r'([^"]+)", __LINE__')
 
 
 def ptx_instructions(ptx_text):
@@ -87,10 +88,10 @@ def ptx_instructions(ptx_text):
 
 
 IFCONV_MAX = 16
-IFCONV_STOP = re.compile(r'drperf_gpu_instruction\(__func__, "(brx|bar|barrier|mbarrier|ret|exit|call|'
+IFCONV_STOP = re.compile(CPP_COUNTER + r'(brx|bar|barrier|mbarrier|ret|exit|call|'
                          r'griddepcontrol|fence|membar|nanosleep|trap)')
 CPP_LABEL = re.compile(r'\s*(L_\w+): ;')
-CPP_BRANCH = re.compile(r'drperf_gpu_instruction\(__func__, "(bra(?:\.uni)?)", __LINE__')
+CPP_BRANCH = re.compile(CPP_COUNTER + r'(bra(?:\.uni)?)", __LINE__')
 
 
 def mark_if_conversion(cpp_text):
@@ -118,7 +119,7 @@ def mark_if_conversion(cpp_text):
                 branches[i] = (m.group(1), line.lstrip().startswith('if ('))
     count = [0]
     for line in lines:
-        count.append(count[-1] + ('drperf_gpu_instruction(__func__' in line))
+        count.append(count[-1] + bool(CPP_SITE.search(line)))
     marked = set()
     for start, (target, conditional) in sorted(branches.items()):
         if not conditional or start in marked or labels.get(target, -1) <= start:
@@ -155,7 +156,7 @@ def build_site_map(ptx_text, cpp_text):
         m = CPP_FUNC.match(line)
         if m and '{' in line or (m and line.rstrip().endswith(')')):
             func = m.group(1)
-            stream, j = ptx.get(func[:-len('__gxptx')], []), 0
+            stream, j = ptx.get(func.removesuffix('__gxptx'), []), 0
             result.setdefault(func, {})
         m = CPP_SITE.search(line)
         if not m or func is None:
@@ -192,6 +193,8 @@ def translate(argv):
         subprocess.run([str(TRANSLATOR), str(source), str(cpp)], env=env, check=True)
         if cpp.read_text().count('drperf_gpu_instruction(') <= 1:
             raise ValueError('translator emitted no GPU counters; rebuild the instrumented GPU translator')
+        if not re.search(r'drperf_gpu_instruction\("[^"]+:bb[0-9]+",', cpp.read_text()):
+            raise ValueError('translator has no PTX basic-block IDs; run `drperf --gpu build`')
         text, _ = mark_if_conversion(cpp.read_text())
         cpp.write_text(text + '\nextern "C" const unsigned drperf_gpu_instrumented_abi = 3;\n')
         subprocess.run([args.cxx, '-std=c++17', '-O1', '-fPIC', '-shared',
@@ -211,6 +214,7 @@ def translate(argv):
         'preludeSha256': sha256(GPU/'vendor/gxptx/Gxptx/prelude.h'),
         'runtimeSha256': sha256(RUNTIME), 'moduleSha256': sha256(output),
         'generatedCpp': str(cpp_output), 'siteMap': str(sites_output),
+        'fittingUnit': 'PTX basic block; IDs emitted by Lean translation',
         'counting': 'executed PTX operations; predication respected; FMA = 2; '
                     'tensor tile work counted once per collective; requested bytes',
     }
@@ -354,9 +358,15 @@ def fit_metrics(rows, pcvs, get_counts, absolute, relative, *, means=True):
 
 
 def own_interfaces(rows, pcvs, site_fits, absolute, relative):
-    """Only accepted additive contributions enter the region's affine part."""
-    totals = fit_metrics(rows, pcvs, lambda r: r['metrics'], absolute, relative)
+    """Sum accepted block fits; never fit a second grouping of rejected blocks."""
+    # Unions and maximum-lane metrics are not additive. Keep their separately
+    # measured region-aggregate interfaces, never add instruction footprints.
+    totals = fit_metrics(rows, pcvs, lambda r: {
+        m: v for m, v in r['metrics'].items() if not additive_metric(m)}, absolute, relative)
     grouped = state_groups(rows, pcvs)
+    for metric in sorted({m for r in rows for m in r['metrics'] if additive_metric(m)}):
+        means = [sum(r['metrics'].get(metric, 0) for r in group)/len(group) for _, group in grouped]
+        totals[metric] = {'observedMin': min(means), 'observedMax': max(means)}
     for metric, total in totals.items():
         if not additive_metric(metric):
             total['aggregation'] = 'observed-region-aggregate; not additive across sites or children'
@@ -383,6 +393,7 @@ def own_interfaces(rows, pcvs, site_fits, absolute, relative):
                 remainder, pcvs, lambda r: r['remainder'], absolute, relative)[metric]
         accepted = {s: f for s, f in parts.items() if f['accepted']}
         rejected = {s: f for s, f in parts.items() if not f['accepted']}
+        total['dependentPCVs'] = sorted({p for f in parts.values() for p in f['dependentPCVs']})
         # Individual fits were already snapped and checked. Do not round the
         # sum again: tiny slopes can matter at large PCV values.
         coefficients = {p: math.fsum(f['coefficients'][p] for f in accepted.values()) for p in pcvs}
@@ -399,10 +410,36 @@ def own_interfaces(rows, pcvs, site_fits, absolute, relative):
             errors.append(abs(measured - unexplained - constant - sum(coefficients[p]*v for p, v in zip(pcvs, state))))
             breakdown.append({'pcvs': dict(zip(pcvs, state)), 'mean': unexplained, 'sites': contributions})
         total.update(coefficients=coefficients, constant=constant, accepted=not rejected,
-                     maxAbsoluteError=max(errors), aggregation='sum of accepted statement fits and region overhead',
+                     maxAbsoluteError=max(errors), aggregation='sum of accepted basic-block fits and region overhead',
                      unexplainedMean=sum(r['mean'] for r in breakdown)/len(breakdown),
                      unexplainedByState=breakdown, rejectedSites=sorted(rejected))
     return totals
+
+
+def basic_block_rows(rows):
+    """Use IDs supplied by Lean, not inferred paths or data-dependent groups.
+
+    Preserve raw instruction observations for attribution. Old modules without
+    IDs retain conservative singleton units and are explicitly marked legacy.
+    """
+    result, members, legacy = [], defaultdict(set), set()
+    for row in rows:
+        blocks = defaultdict(lambda: defaultdict(int))
+        for site, metrics in row['sites'].items():
+            additive = {m: v for m, v in metrics.items() if additive_metric(m)}
+            if not additive:
+                continue
+            prefix, sep, _ = site.partition(':cpp')
+            if sep and re.fullmatch(r'.+:bb[0-9]+', prefix):
+                block = prefix
+            else:
+                block = site
+                legacy.add(site)
+            members[block].add(site)
+            for metric, count in additive.items():
+                blocks[block][metric] += count
+        result.append(dict(row, sites={b: dict(ms) for b, ms in blocks.items()}))
+    return result, {b: sorted(s) for b, s in sorted(members.items())}, sorted(legacy)
 
 
 def compose_regions(rows, regions):
@@ -519,14 +556,17 @@ def build_model(rows, absolute=1e-6, relative=1e-6):
         if len(scopes)!=1:
             raise ValueError('GPU observation scope changed for region '+name)
         pcvs = list(schemas[name])
-        sites = sorted(set().union(*(r['sites'] for r in invocations)))
-        site_fits = {site: fit_metrics(invocations, pcvs,
+        block_rows, block_members, legacy_sites = basic_block_rows(invocations)
+        sites = sorted(block_members)
+        site_fits = {site: fit_metrics(block_rows, pcvs,
                     lambda r, s=site: r['sites'].get(s, {}), absolute, relative) for site in sites}
-        fits = own_interfaces(invocations, pcvs, site_fits, absolute, relative)
+        fits = own_interfaces(block_rows, pcvs, site_fits, absolute, relative)
         states = sorted({tuple(r['pcvs'][p] for p in pcvs) for r in invocations})
         unmodeled = sum(r['metrics'].get('unmodeled_work_events', 0) for r in invocations)
         regions.append({'name': name, 'scope': next(iter(scopes)),
-                        'fitSemantics': 'state-means/statement-sum-v2',
+                        'fitSemantics': ('state-means/legacy-or-mixed-units-v3' if legacy_sites
+                                         else 'state-means/basic-block-sum-v3'),
+                        'basicBlockMembers': block_members, 'legacyInstructionSites': legacy_sites,
                         'metricScope': 'exclusive', 'pcvs': pcvs, 'invocations': len(invocations),
                         'stateCount': len(states), 'singleState': len(states) == 1,
                         'fits': fits, 'sites': site_fits, 'observations': invocations,
@@ -546,6 +586,7 @@ def build_model(rows, absolute=1e-6, relative=1e-6):
         'validity': 'incomplete' if any(r['unmodeledWorkEvents'] for r in regions) else 'complete',
         'fit': {'absoluteTolerance': absolute, 'relativeTolerance': relative,
                 'unitOfObservation': 'mean at each distinct PCV state',
+                'unitOfFitting': 'PTX basic block; no grouping across blocks',
                 'scope': 'observed states only; same-state invocation variation is retained'},
         'semantics': {
             'work': 'dynamic PTX operations, separate from CPU instructions',
@@ -584,7 +625,8 @@ def formula(fit):
 
 
 def short_sites(names, provenance=None):
-    # Site keys are MANGLED_gxptx:cppLINE:opcode. Demangle once (c++filt) and
+    # Site keys include :bbID:cppLINE:opcode; older ones omit :bbID.
+    # Demangle once (c++filt) and
     # drop template arguments so report lines name the kernel readably.
     funcs = sorted({n.split('_gxptx:')[0] for n in names if '_gxptx:' in n})
     # The translator appends '_' to the symbol before the _gxptx: suffix.
@@ -609,10 +651,14 @@ def short_sites(names, provenance=None):
     for n in names:
         f, _, rest = n.partition('_gxptx:')
         # With a site map: CUDA source line (when compiled with -lineinfo) and PTX line.
-        line, _, op = rest.partition(':')
+        block = ''
+        location = rest
+        if re.match(r'^bb[0-9]+:', rest):
+            block, _, location = rest.partition(':')
+        line, _, op = location.partition(':')
         where = maps.get(f+'_gxptx', {}).get(line[3:]) if line.startswith('cpp') else None
         if where:
-            rest = (f'{where[1]} ' if where[1] else '') + f'ptx{where[0]}:{op}'
+            rest = (block+' ' if block else '') + (f'{where[1]} ' if where[1] else '') + f'ptx{where[0]}:{op}'
         result[n] = f'{table.get(f, f)} @ {rest}' if rest else n
     return result
 
@@ -621,12 +667,15 @@ def text_report(model):
     lines = ['DRPERF GPU RESOURCE INTERFACES',
              'Collector: standalone translated PTX; CPU instruction collector disabled.',
              'Bytes are requested accesses. Parallelism is logical. No latency prediction.',
+             'Fitting unit: '+model.get('fit', {}).get('unitOfFitting', 'legacy instruction sites')+'.',
              'Fits check means at each observed PCV state; invocation variation is retained.', '']
     for region in model['regions']:
         lines += [f'REGION "{region["name"]}"',
                   f'  {region["invocations"]} invocations, {region["stateCount"]} states']
         if region['singleState']:
             lines.append('  SINGLE STATE: a constant fit does not establish scaling.')
+        if region.get('legacyInstructionSites'):
+            lines.append('  LEGACY: instruction sites without block IDs remain separate; retranslate for basic-block fitting.')
         if region['unmodeledWorkEvents']:
             lines.append(f'  INCOMPLETE: {region["unmodeledWorkEvents"]} unmodeled work events')
         for metric in sorted(set(region['fits']) | set(region.get('interfaces', {}))):
@@ -648,7 +697,8 @@ def text_report(model):
         for site, fits in region['sites'].items():
             rejected = [m for m, f in fits.items() if not f['accepted']]
             if rejected:
-                lines.append('  Unexplained site '+names[site]+': '+', '.join(rejected))
+                label = 'basic block' if ':bb' in site else 'site'
+                lines.append('  Unexplained '+label+' '+names[site]+': '+', '.join(rejected))
         for metric, fit in region['fits'].items():
             for state in fit.get('unexplainedByState', []):
                 if state['mean']:

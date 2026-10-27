@@ -255,20 +255,33 @@ bin/drperf --gpu --report drperf-gpu-report --json
 GPU reports currently use the CLI/text and JSON views; the CPU architecture
 graph viewer is not used by this path.
 
-The C++ affine checker fits each statement site's resource counts against all
-declared PCVs plus a constant. Repeated invocations with the same PCV values
+Lean translation assigns each PTX instruction a basic-block ID, carried in its
+generated counter name. Function entry and labels start blocks; branches,
+returns and calls end them. Predicated instructions stay in their block, and
+their counters still respect active lanes and predicates. Marker boundaries
+also split blocks. The reporter does not reconstruct control flow.
+
+The C++ affine checker fits each basic block's summed resource counts against
+all declared PCVs plus a constant. Repeated invocations with the same PCV values
 are averaged first; every distinct state mean must meet the tolerance. States
 receive equal weight regardless of invocation frequency. `stateStatistics`
 retains the mean, minimum, maximum and invocation count; raw observations remain
 available. A single state can yield a constant without establishing scaling.
 
 For additive metrics (FLOPs, actual load instructions, requested bytes), the
-region's affine part sums only accepted statement fits. Rejected statements'
-entire observed costs remain in `unexplainedByState`, with a site breakdown.
-Their costs cannot cancel into an accepted fit of the region total. Geometry
+region's affine part sums only accepted basic-block fits. Rejected blocks'
+entire observed costs remain in `unexplainedByState`, with a block breakdown.
+There is one fitting step: no further grouping by function, path, kernel or
+region, even if rejected blocks would cancel into an affine total. Geometry
 and runtime counters without a statement site form a separate contribution.
 Unique-address footprints and maximum-span metrics are fitted as region
 aggregates; they are not sums of statement costs or child footprints.
+
+Raw `observations[].sites` retain instruction counts. The report's historical
+`sites` fit table now contains block fits, with `basicBlockMembers` mapping each
+block to its instructions and `fitSemantics=state-means/basic-block-sum-v3`.
+Old modules without block IDs retain separate instruction units and an explicit
+legacy notice; rebuild/retranslate and capture again to use basic-block fitting.
 
 The report composes additive resources with `(a*PCVs + d)*F[child]`. It checks
 the child-call multiplicity exactly for **every parent invocation**, including
@@ -473,7 +486,11 @@ CPU-only regression tests:
 python3 gpu/tests/test_footprint.py
 python3 gpu/tests/test_report_tools.py
 python3 gpu/tests/test_interfaces.py
+python3 gpu/tests/test_basic_blocks.py
 ```
+
+`gpu/tests/BasicBlocks.lean` also checks the translator's block boundaries
+(predication, labels, branches, calls, returns and markers) with Lean `#guard`.
 
 ## Comparing fitted interfaces
 
@@ -486,7 +503,7 @@ python3 gpu/tools/diff_reports.py before.json.gz after.json.gz \
     --region 'attention*' --metric 'global_*' --fail-on-change
 ```
 
-The tool compares region totals and each statement site's metric coefficients,
+The tool compares region totals and each fitting unit's metric coefficients,
 constants, fit acceptance and dependent-PCV disclosures. Deltas are **after
 minus before**, with relative change where the old coefficient is nonzero.
 Added/removed regions, metrics and sites are explicit. The JSON retains both
