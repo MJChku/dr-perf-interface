@@ -279,6 +279,25 @@ CASES = [
   reproduce=['DRPERF_GPU_LATENCY_SCHEDULE=block bin/drperf --gpu -- build/core_driver build/flash_core{,_pf}.so build/flash_core{,_pf}.ptx build/flash_aux.so build/flash_aux.ptx grid',
              'python3 gpu/tools/latency_report.py results/grid_lat --region flashmla.core.small --stalls 8'],
   credit='DrPerf (after four tool fixes) located the chain and checked the prototype before GPU time.'),
+
+ dict(case='glm53v2-own-decode-moe-fp4-dequant', label='QUANTIFIED/NEGATIVE',
+  study='GLM-5.3 GX study v2 (/home/ubuntu/gen-glm53-v2, gx-only agent), 2026-10-28',
+  kernel='Own decode NVFP4 MoE (glm_moe_dec_gemm1_k: routed gemm1 + SwiGLU + NVFP4 requant; glm_moe_dec_gemm2_k: gemm2 + weighted finalize)',
+  role='Replacement attempt for TRT-LLM-gen fused NVFP4 block-scale MoE in decode (T=4 rows, 8 of 256 experts per row); 78 calls per step.',
+  pcvs='None declared: one fixture state (T=4, C4 routing). The report flags SINGLE STATE, so no scaling was learned.',
+  finding=('gx explain gpu (drperf-gpu) on the gx check fixture: gemm1 21.1M PTX lane instructions for 3.17 MB of requested '
+           'global reads (6.7 lane instructions per weight byte): 5.05M conversion ops + 6.31M integer ops (E2M1 nibble '
+           'extraction) + 4.28M fp16 flops (block-scale multiplies) vs 58.7M tensor flops on mma.sync. The FP4->f16 dequant '
+           'path is issue-bound; block scales cannot be factored out of mma.sync k-tiles (4 lanes hold different blocks).'),
+  fix=('None: matching TRT-LLM-gen needs tcgen05 block-scaled FP4 MMA (kind::mxf4nvf4). Kernel kept behind GLM_MOE_DEC=1, '
+       'default off (commit f9a0743 in gen-glm53-v2).'),
+  fix_status='Shelved (negative result).',
+  timing='Native cold A/B on B300 (agent batch 18, C4 routing, T=4): own 57.2 us vs TRT-LLM-gen 29.9 us per call.',
+  receipts=['receipts-v2/glm53v2-own-decode-moe/drperf-gpu-report.txt', 'receipts-v2/glm53v2-own-decode-moe/result.json',
+            '/home/ubuntu/gen-glm53-v2/eval/WORKLOG.md (2026-10-28 17:05)', '/home/ubuntu/gen-glm53-v2/eval/GX-FEEDBACK.md'],
+  files=['/home/ubuntu/gen-glm53-v2/src/kernels/moe_decode.cu', '/home/ubuntu/gen-glm53-v2/src/tests/t_moedec.cu'],
+  reproduce=['cd /home/ubuntu/gen-glm53-v2 && gx explain gpu --gpu B300 -q --out RUN -- build/t_moedec'],
+  credit='Instruction mix and the issue-bound diagnosis: DrPerf GPU resource interface (found by the study agent). Timing: native B300 A/B.'),
 ]
 
 def write_case(c):
@@ -291,7 +310,7 @@ def write_case(c):
             (d / 'src').mkdir(exist_ok=True)
             shutil.copy2(p, d / 'src' / p.name)
             copied.append({'source': f, 'copy': 'src/' + p.name})
-    meta = dict(c, copied=copied, study='GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26')
+    meta = dict(c, copied=copied, study=c.get('study', 'GLM-5.3 serving (/home/ubuntu/gen-glm53), integration-18 era, 2026-10-25/26'))
     (d / 'glm53_case.json').write_text(json.dumps(meta, indent=2) + '\n')
     lines = [f"# {c['case']}", '', f"**Contribution: {c['label']}.** Kernel: {c['kernel']}.", '', c['role'], '',
              '## Declared PCVs', '', c['pcvs'], '', '## DrPerf finding', '', c['finding'], '',

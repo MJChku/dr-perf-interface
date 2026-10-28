@@ -1,0 +1,69 @@
+DRPERF GPU RESOURCE INTERFACES
+Collector: GX application execution (translated PTX); CPU instruction collector disabled.
+Bytes are requested PTX accesses, not HBM traffic. No latency prediction.
+Fitting unit: PTX basic block; no grouping across blocks.
+Fits check means at each observed PCV state; invocation variation is retained.
+
+REGION "kernel:glm_moe_dec_gemm1_k"
+  8 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  block_barrier_lane_arrivals = 75776
+  collective_lane_arrivals = 69632
+  conversion_ops = 5050240
+  fp16_flops = 4276224
+  fp32_flops = 272640
+  global_load_instructions = 401152
+  global_read_bytes = 3165952
+  global_write_bytes = 433600
+  integer_ops = 6314304
+  param_load_instructions = 612864
+  param_read_bytes = 3993600
+  ptx_lane_instructions = 21129136
+  shared_load_instructions = 70656
+  shared_read_bytes = 1130496
+  shared_write_bytes = 1212416
+  special_function_ops = 22528
+  tensor_float_flops = 58720256
+  Same-state invocation variation: collective_lane_arrivals, conversion_ops, fp16_flops, fp32_flops, global_load_instructions, global_read_bytes, global_write_bytes, integer_ops, param_load_instructions, param_read_bytes, ptx_lane_instructions, shared_load_instructions, shared_read_bytes, shared_write_bytes, special_function_ops, tensor_float_flops
+
+REGION "kernel:glm_moe_dec_gemm2_k"
+  8 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  block_barrier_lane_arrivals = 75776
+  collective_lane_arrivals = 28672
+  conversion_ops = 2652384
+  fp16_flops = 1835008
+  fp32_flops = 74752
+  global_load_instructions = 247152
+  global_read_bytes = 1948160
+  global_write_bytes = 192512
+  integer_ops = 5275408
+  param_load_instructions = 537728
+  param_read_bytes = 3392512
+  ptx_lane_instructions = 14509824
+  shared_load_instructions = 70656
+  shared_read_bytes = 1130496
+  shared_write_bytes = 313088
+  tensor_float_flops = 29360128
+  Same-state invocation variation: collective_lane_arrivals, conversion_ops, fp16_flops, fp32_flops, global_load_instructions, global_read_bytes, global_write_bytes, integer_ops, param_load_instructions, param_read_bytes, ptx_lane_instructions, shared_load_instructions, shared_read_bytes, shared_write_bytes, tensor_float_flops
+
+REGION "kernel:glm_moe_dec_route_k"
+  8 invocations, 1 states
+  SINGLE STATE: a constant fit does not establish scaling.
+  block_barrier_lane_arrivals = 512
+  collective_lane_arrivals = 11392
+  conversion_ops = 1280
+  fp32_flops = 13523.5
+  global_load_instructions = 2101.75
+  global_read_bytes = 8407
+  global_write_bytes = 295
+  integer_ops = 9853.75
+  param_load_instructions = 3329
+  param_read_bytes = 19464
+  ptx_lane_instructions = 144089
+  shared_load_instructions = 329.75
+  shared_read_bytes = 1319
+  shared_write_bytes = 388
+  special_function_ops = 2048
+  Same-state invocation variation: collective_lane_arrivals, conversion_ops, fp32_flops, global_load_instructions, global_read_bytes, global_write_bytes, integer_ops, ptx_lane_instructions, shared_load_instructions, shared_read_bytes, shared_write_bytes, special_function_ops
+
