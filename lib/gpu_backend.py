@@ -170,6 +170,41 @@ def build_site_map(ptx_text, cpp_text):
     return {f: sites for f, sites in result.items() if sites}
 
 
+def instruction_coverage(cpp_text, site_map):
+    """Report statically emitted traps, not a promise that all runtime forms work.
+
+    Inspect the translator output rather than maintaining a second opcode
+    allowlist. Cold/unexecuted instructions are included; dynamic helper
+    checks (geometry, descriptors, external calls) still run at execution.
+    """
+    unsupported, checks, func, site, opcode = [], [], None, None, None
+    for number, line in enumerate(cpp_text.splitlines(), 1):
+        m = CPP_FUNC.match(line)
+        if m and ('{' in line or line.rstrip().endswith(')')):
+            func, site, opcode = m.group(1), None, None
+        m = CPP_SITE.search(line)
+        if m and func:
+            site, opcode = number, m.group(1)
+        if func and site is not None:
+            for reason in re.findall(r'gx_ptx_trap_op\("([^"]*)"\)', line):
+                mapped = site_map.get(func, {}).get(site)
+                # A runtime assertion inside a supported instruction (e.g.
+                # cp.async's source-size check) is not an unsupported opcode.
+                # The generic translator rejection names the opcode itself;
+                # specialized standalone rejection lines may name a reason.
+                rejected = reason == opcode or line.lstrip().startswith('gx_ptx_trap_op(')
+                target = unsupported if rejected else checks
+                target.append({'function': func.removesuffix('__gxptx'),
+                               'opcode': opcode, 'reason': reason,
+                               'cppLine': number, 'instructionCppLine': site,
+                               'ptxLine': mapped[0] if mapped else None,
+                               'sourceLocation': mapped[1] if mapped else None})
+    return {'schema': 'drperf.gpu.instruction-coverage.v1',
+            'scope': 'statically emitted instruction traps; includes unexecuted paths; '
+                     'runtime helper validation and numerical correctness are not established',
+            'unsupportedSites': unsupported, 'runtimeValidationSites': checks}
+
+
 def translate(argv):
     parser = argparse.ArgumentParser(prog='drperf --gpu translate')
     parser.add_argument('ptx', type=Path)
@@ -181,7 +216,8 @@ def translate(argv):
     output = args.output.resolve()
     cpp_output = Path(str(output)+'.cpp')
     manifest_output = Path(str(output)+'.gpu.json')
-    if source in (output, cpp_output, manifest_output):
+    sites_output = Path(str(output)+'.sites.json')
+    if source in (output, cpp_output, manifest_output, sites_output):
         raise ValueError('GPU outputs must differ from their PTX input')
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.gpu-translate-', dir=output.parent) as scratch:
@@ -197,15 +233,23 @@ def translate(argv):
             raise ValueError('translator has no PTX basic-block IDs; run `drperf --gpu build`')
         text, _ = mark_if_conversion(cpp.read_text())
         cpp.write_text(text + '\nextern "C" const unsigned drperf_gpu_instrumented_abi = 3;\n')
+        site_map = build_site_map(source.read_text(errors='replace'), cpp.read_text())
+        coverage = instruction_coverage(cpp.read_text(), site_map)
+        unsupported = coverage['unsupportedSites']
+        if unsupported:
+            print(f'warning: {len(unsupported)} unsupported GPU instruction site(s); '
+                  'execution will fail if reached:', file=sys.stderr)
+            for site in unsupported[:5]:
+                print(f'  {source}:{site["ptxLine"] or "?"}: {site["function"]}: '
+                      f'{site["opcode"]} ({site["reason"]})', file=sys.stderr)
+            print(f'  Full instructionCoverage will be written to {manifest_output}', file=sys.stderr)
         subprocess.run([args.cxx, '-std=c++17', '-O1', '-fPIC', '-shared',
                         '-fno-strict-aliasing', '-fwrapv', '-Wl,-z,defs',
                         str(cpp), '-L'+str(RUNTIME.parent), '-ldrperf_gpu',
                         '-Wl,-rpath,'+str(RUNTIME.parent), '-o', str(scratch/'module.so')],
                        env=env, check=True)
-        site_map = build_site_map(source.read_text(errors='replace'), cpp.read_text())
         os.replace(cpp, cpp_output)
         os.replace(scratch/'module.so', output)
-    sites_output = Path(str(output)+'.sites.json')
     sites_output.write_text(json.dumps({'schema': 'drperf.gpu.sites.v1', 'input': str(source),
                                         'functions': site_map}, separators=(',', ':')))
     manifest = {
@@ -215,6 +259,7 @@ def translate(argv):
         'runtimeSha256': sha256(RUNTIME), 'moduleSha256': sha256(output),
         'generatedCpp': str(cpp_output), 'siteMap': str(sites_output),
         'fittingUnit': 'PTX basic block; IDs emitted by Lean translation',
+        'instructionCoverage': coverage,
         'counting': 'executed PTX operations; predication respected; FMA = 2; '
                     'tensor tile work counted once per collective; requested bytes',
     }
@@ -328,7 +373,9 @@ def fit_metrics(rows, pcvs, get_counts, absolute, relative, *, means=True):
                 return [abs(y-(sum(v*x for v, x in zip(a, state))+c))
                         for state, y in zip(values, ys)]
             def exact(a, c):
-                return all(e <= max(absolute, relative*y) for e, y in zip(errors(a, c), ys))
+                return (all(math.isfinite(v) for v in [*a, c]) and
+                        all(math.isfinite(e) and e <= max(absolute, relative*y)
+                            for e, y in zip(errors(a, c), ys)))
             # Least squares on large integer counts leaves float noise (e.g.
             # 2e-07 * pcv beside an 8.9e+06 term). Prefer the all-integer
             # rounding, then scale-aware snapping; each candidate must still
@@ -343,8 +390,10 @@ def fit_metrics(rows, pcvs, get_counts, absolute, relative, *, means=True):
                 if exact(coefficients, constant):
                     break
             deviations = errors(coefficients, constant)
-            accepted = bool(fit[k+4]) and all(e <= max(absolute, relative*y)
-                                             for e, y in zip(deviations, ys))
+            # The native flag validates its raw coefficients. Snapping can
+            # recover an exact integer formula after that raw fit failed;
+            # acceptance must validate the coefficients we actually publish.
+            accepted = exact(coefficients, constant)
             result[metric] = {
                 'coefficients': dict(zip(pcvs, coefficients)),
                 'constant': constant, 'maxAbsoluteError': max(deviations),
@@ -447,6 +496,8 @@ def compose_regions(rows, regions):
     if not all('token' in r and 'pid' in r and 'parent' in r for r in rows):
         for region in regions:
             region['composition'] = {'status': 'unavailable', 'reason': 'invocation identities missing', 'children': []}
+            region['inclusiveUnmodeledWorkEvents'] = None
+            region['inclusiveValidity'] = 'unavailable'
         return
     def key(r, token=None):
         return (r.get('captureId', ''), r['pid'], r['token'] if token is None else token)
@@ -480,6 +531,12 @@ def compose_regions(rows, regions):
         total(k)
     for region in regions:
         parents, pcvs = region['observations'], region['pcvs']
+        # F[child] includes descendants even when the child's own resource
+        # interface is incomplete. Keep exclusive counts unchanged, but make
+        # that capture limitation visible on the composed parent interface.
+        unmodeled = sum(inclusive[key(p)].get('unmodeled_work_events', 0) for p in parents)
+        region['inclusiveUnmodeledWorkEvents'] = unmodeled
+        region['inclusiveValidity'] = 'incomplete' if unmodeled else 'observed-work-counts'
         names = sorted({c['region'] for p in parents for c in children[key(p)]})
         terms = []
         for name in names:
@@ -664,9 +721,12 @@ def short_sites(names, provenance=None):
 
 
 def text_report(model):
+    execution = ('GX application execution (translated PTX)'
+                 if model.get('provenance', {}).get('execution') == 'gx'
+                 else 'standalone translated PTX')
     lines = ['DRPERF GPU RESOURCE INTERFACES',
-             'Collector: standalone translated PTX; CPU instruction collector disabled.',
-             'Bytes are requested accesses. Parallelism is logical. No latency prediction.',
+             f'Collector: {execution}; CPU instruction collector disabled.',
+             'Bytes are requested PTX accesses, not HBM traffic. No latency prediction.',
              'Fitting unit: '+model.get('fit', {}).get('unitOfFitting', 'legacy instruction sites')+'.',
              'Fits check means at each observed PCV state; invocation variation is retained.', '']
     for region in model['regions']:
@@ -678,6 +738,10 @@ def text_report(model):
             lines.append('  LEGACY: instruction sites without block IDs remain separate; retranslate for basic-block fitting.')
         if region['unmodeledWorkEvents']:
             lines.append(f'  INCOMPLETE: {region["unmodeledWorkEvents"]} unmodeled work events')
+        inclusive_unmodeled = region.get('inclusiveUnmodeledWorkEvents')
+        if inclusive_unmodeled is not None and inclusive_unmodeled > region['unmodeledWorkEvents']:
+            descendants = inclusive_unmodeled - region['unmodeledWorkEvents']
+            lines.append(f'  INCOMPLETE: {descendants} descendant unmodeled work events; composed resource capture is incomplete')
         for metric in sorted(set(region['fits']) | set(region.get('interfaces', {}))):
             fit = region['fits'].get(metric)
             interface = region.get('interfaces', {}).get(metric)
@@ -688,7 +752,16 @@ def text_report(model):
             if interface and interface['unexplainedMean']:
                 lines.append(f'    unexplained including unfitted children: {number(interface["unexplainedMean"])}')
         varying = sorted({m for state in region.get('stateStatistics', []) for m, s in state['metrics'].items() if s['min'] != s['max']})
-        if varying:
+        selected_metric = model.get('selection', {}).get('metric')
+        if selected_metric in varying:
+            state = max((s for s in region['stateStatistics'] if selected_metric in s['metrics']),
+                        key=lambda s: s['metrics'][selected_metric]['max'] - s['metrics'][selected_metric]['min'])
+            stats = state['metrics'][selected_metric]
+            lines.append(f'  Same-state invocation variation: {selected_metric} '
+                         f'{number(stats["min"])}..{number(stats["max"])}; '
+                         f'mean {number(stats["mean"])} at PCVs {state["pcvs"]} '
+                         '(largest observed within-state range)')
+        elif varying:
             lines.append('  Same-state invocation variation: '+', '.join(varying))
         dependent = sorted({p for fit in region['fits'].values() for p in fit['dependentPCVs']})
         if dependent:
@@ -788,6 +861,10 @@ def main(argv):
             parser = argparse.ArgumentParser(prog='drperf --gpu --report')
             parser.add_argument('path', nargs='?', type=Path, default=Path('drperf-gpu-report/profile.gpu.drperf.json'))
             parser.add_argument('--json', action='store_true')
+            parser.add_argument('--region')
+            parser.add_argument('--metric', help='select a GPU resource, required for ranking')
+            parser.add_argument('--top', choices=['costly','unexplained'])
+            parser.add_argument('--topk', type=int, default=10)
             args = parser.parse_args(argv[1:])
             path = args.path/'profile.gpu.drperf.json' if args.path.is_dir() else args.path
             status = path.parent/'capture-status.json'
@@ -796,7 +873,9 @@ def main(argv):
             model = json.loads(path.read_text())
             if model.get('schema') != SCHEMA:
                 raise ValueError('this is not a GPU report; CPU and GPU schemas are separate')
-            print(json.dumps(model, indent=2) if args.json else text_report(model), end='\n' if args.json else '')
+            from gpu_queries import render
+            print(render(model,region=args.region,metric=args.metric,top=args.top,
+                         topk=args.topk,as_json=args.json),end='')
             return 0
         if argv[:1] == ['--refit']:
             # Re-fit retained raw captures (new tolerances/fitter) without re-emulating.

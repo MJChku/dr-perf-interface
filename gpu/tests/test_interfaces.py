@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Resource interfaces: state means, unexplained sites and child composition."""
 import copy
+import contextlib
+import io
 import json
 from pathlib import Path
-import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT/'lib'))
@@ -26,6 +28,32 @@ def model(rows):
 
 
 class Interfaces(unittest.TestCase):
+    def test_published_integer_candidate_can_recover_raw_solver_rejection(self):
+        rows=[row(n, {'A': {'ptx_instructions': 15*n}}) for n in (0,1,7,31)]
+        # Deterministic raw least-squares noise: the native candidate fails
+        # zero tolerance, while independently checked integer rounding is exact.
+        with mock.patch.object(gpu.native_fit.Plan, 'fit',
+                               return_value=[[15.00000001, -0.00000001, 3e-7, 0, 465, 0]]):
+            fit=gpu.fit_metrics(rows,['n'],lambda r:r['metrics'],0,0)['ptx_instructions']
+        self.assertTrue(fit['accepted'])
+        self.assertEqual(fit['coefficients'],{'n':15})
+        self.assertEqual(fit['constant'],0)
+        self.assertEqual(fit['maxAbsoluteError'],0)
+        self.assertEqual(fit['unexplainedMean'],0)
+
+    def test_published_candidate_still_requires_every_state_within_tolerance(self):
+        rows=[row(n, {'A': {'ptx_instructions': 15*n+(n==31)}}) for n in (0,1,7,31)]
+        # Even a positive native flag cannot approve invalid published counts.
+        with mock.patch.object(gpu.native_fit.Plan, 'fit',
+                               return_value=[[15, 0, 0, 0, 466, 1]]):
+            fit=gpu.fit_metrics(rows,['n'],lambda r:r['metrics'],0,0)['ptx_instructions']
+        self.assertFalse(fit['accepted'])
+        self.assertEqual(fit['maxAbsoluteError'],1)
+        self.assertGreater(fit['unexplainedMean'],0)
+        # The actual solver also rejects a non-affine relationship.
+        fit=gpu.fit_metrics(rows,['n'],lambda r:r['metrics'],1e-6,1e-6)['ptx_instructions']
+        self.assertFalse(fit['accepted'])
+
     def test_one_fit_for_complementary_instructions_in_same_block(self):
         rows = [row(n, {'k__gxptx:bb0:cpp10:ld.global': {'global_read_bytes': 4*min(n, 32)},
                         'k__gxptx:bb0:cpp20:ld.global': {'global_read_bytes': 4*max(n-32, 0)}})
@@ -197,11 +225,19 @@ class Interfaces(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root/'profile.gpu.drperf.json').write_text(json.dumps(gpu.build_model([row(1, {})])))
-            p = subprocess.run([ROOT/'bin/drperf', '--gpu', '--output', root, '--', '/bin/false'], capture_output=True)
-            self.assertEqual(p.returncode, 1)
-            p = subprocess.run([ROOT/'bin/drperf', '--gpu', '--report', root], capture_output=True)
-            self.assertEqual(p.returncode, 2)
-            self.assertIn(b'latest GPU capture did not complete', p.stderr)
+            # This command fails before executing any PTX. Exercise the real
+            # subprocess and persisted lifecycle without requiring the optional
+            # standalone translation/runtime build in GX-only installations.
+            with mock.patch.object(gpu, 'require_build') as prerequisite, contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(gpu.main(['--output',str(root),'--','/bin/false']),1)
+            prerequisite.assert_called_once_with()
+            status=json.loads((root/'capture-status.json').read_text())
+            self.assertEqual(status['status'],'failed')
+            self.assertEqual(status['exitCode'],1)
+            error=io.StringIO()
+            with contextlib.redirect_stderr(error):
+                self.assertEqual(gpu.main(['--report',str(root)]),2)
+            self.assertIn('latest GPU capture did not complete',error.getvalue())
 
 
 if __name__ == '__main__': unittest.main()
