@@ -661,11 +661,19 @@ extern "C" void drperf_gpu_instruction(const char* fn,const char* op,
                head=="min"||head=="max"||head=="and"||head=="or"||head=="xor"||
                head=="shl"||head=="shr"||head=="popc"||head=="clz"||head=="bfind"))
         event["integer_ops"]=(head=="mad"?2:1);
+    if(head=="dp2a"||head=="dp4a")event["integer_ops"]=(head=="dp2a"?4:8);
     if(head=="cvt")event["conversion_ops"]=1;
     if(head=="sin"||head=="cos"||head=="ex2"||head=="lg2"||head=="rcp"||head=="rsqrt")
         event["special_function_ops"]=1;
-    if(head=="bar")event["block_barrier_lane_arrivals"]=1;
-    if(head=="shfl"||head=="vote"||head=="redux"||head=="barrier")event["collective_lane_arrivals"]=1;
+    // bar{.cta} and barrier{.cta} name CTA barriers; warp/cluster
+    // synchronization must not be charged as a CTA barrier arrival.
+    const std::string opcode(op);
+    const bool warp_barrier=opcode.rfind("bar.warp.",0)==0;
+    const bool cluster_barrier=opcode.rfind("barrier.cluster.",0)==0;
+    if((head=="bar"||head=="barrier")&&!warp_barrier&&!cluster_barrier)
+        event["block_barrier_lane_arrivals"]=1;
+    if(head=="shfl"||head=="vote"||head=="redux"||warp_barrier||cluster_barrier)
+        event["collective_lane_arrivals"]=1;
     if(!space&&(reads||writes)) {
         uint64_t base=reinterpret_cast<uint64_t>(current_block().shared);
         if(current_block().shared&&address>=base&&address-base<current_block().cap)space=2;
