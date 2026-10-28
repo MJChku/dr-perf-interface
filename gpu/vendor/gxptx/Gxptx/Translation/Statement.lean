@@ -452,6 +452,19 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         else if toks == ["add", "bf16"] then
           binPrint (fun a b => s!"(uint16_t)gx_bf16x2_add((uint16_t)({a}), (uint16_t)({b}))")
         else if plainScalarInt || rawFloat then bin .add else floatArith.getD trapOp
+      /- PTX definition: dp2a multiplies two packed 16-bit values by the selected pair of bytes; dp4a multiplies four byte pairs, accumulating modulo 2^32. -/
+      /- Lean modeling: exact opcode/arity validation; independently tested C++ packed-integer helper, not a new Lean value proof. -/
+      | "dp2a" | "dp4a" =>
+        let modes := if head == "dp2a" then toks.drop 2 else toks.drop 1
+        let high := toks.getD 1 "" == "hi"
+        let validMode := head == "dp4a" || ["lo", "hi"].contains (toks.getD 1 "")
+        match modes, args with
+        | [atype, btype], [d, a, b, c] =>
+          if !validMode || !["s32", "u32"].contains atype || !["s32", "u32"].contains btype ||
+              d == "_" || !(d.startsWith "%" || regs.contains d) then trapOp
+          else
+            s!"    gx_movb({dest d}, gx_dp_packed<{if head == "dp2a" then 16 else 8}, {if high then 2 else 0}, {if atype == "s32" then "true" else "false"}, {if btype == "s32" then "true" else "false"}>((uint32_t)({oC a}), (uint32_t)({oC b}), (uint32_t)({oC c})));"
+        | _, _ => trapOp
       /- PTX definition: `abs` returns the magnitude of a signed integer or floating operand for supported types. -/
       /- Lean modeling: signed integers use modular `printAbsS`; floating forms use trusted sign-bit helpers (gx_absneg_*), not a floating-value theorem. -/
       | "abs"  =>
@@ -1121,7 +1134,10 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         -- nvcc/library PTX also places the matrix count before the shape.
         let countFirst := s!"ldmatrix.sync.aligned.x{count}.m8n8" ++
           (if trans then ".trans" else "") ++ ".shared.b16"
-        if (op != expected && op != countFirst) || !ldmatrixVector || args.length != count + 1 then trapOp
+        let transFirst := s!"ldmatrix.sync.aligned.x{count}" ++
+          (if trans then ".trans" else "") ++ ".m8n8.shared.b16"
+        let canonicalSpace := op.replace ".shared::cta." ".shared."
+        if ![expected, countFirst, transFirst].contains canonicalSpace || !ldmatrixVector || args.length != count + 1 then trapOp
         else
             let rawAddr := args.getLastD ""
             let a := if rawAddr.endsWith ";" then strim (rawAddr.dropRight 1) else rawAddr
@@ -1143,7 +1159,10 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let tail := (if trans then ".trans" else "") ++ ".shared.b16"
         let shapeFirst := s!"stmatrix.sync.aligned.m8n8.x{count}" ++ tail
         let countFirst := s!"stmatrix.sync.aligned.x{count}.m8n8" ++ tail
-        if (op != shapeFirst && op != countFirst) || !ldmatrixVector || args.length != count + 1 then trapOp
+        let transFirst := s!"stmatrix.sync.aligned.x{count}" ++
+          (if trans then ".trans" else "") ++ ".m8n8.shared.b16"
+        let canonicalSpace := op.replace ".shared::cta." ".shared."
+        if ![shapeFirst, countFirst, transFirst].contains canonicalSpace || !ldmatrixVector || args.length != count + 1 then trapOp
         else
           let a := args.headD ""
           let vals := args.drop 1
@@ -1514,6 +1533,14 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           | [d, a, b] =>
             if d == "_" then trapOp
             else s!"    {dest d} = gx_cvt_rn_bf16x2_f32({floatSrc "f32" a}, {floatSrc "f32" b});"
+          | _ => trapOp
+        else if toks.length == 4 && toks.drop 2 == ["bf16", "f32"] &&
+            ["rn", "rz", "rm", "rp"].contains (toks.getD 1 "") then
+          match args with
+          | [d, a] =>
+            let mode := match toks.getD 1 "" with | "rz" => 1 | "rm" => 2 | "rp" => 3 | _ => 0
+            if d == "_" then trapOp
+            else s!"    gx_movb({dest d}, gx_f32_to_bf16_bits((uint32_t)({floatBitsOperand regs "f32" a}), {mode}u));"
           | _ => trapOp
         else if tys.length != 2 || !routeModeled then trapOp
         else match args with

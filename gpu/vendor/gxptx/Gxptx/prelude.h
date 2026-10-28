@@ -490,6 +490,16 @@ static inline uint16_t gx_f32_to_bf16_rn_bits(uint32_t u) {
     if ((u & 0x7fffffffu) > 0x7f800000u) return 0x7fffu;
     return (uint16_t)((u + 0x7fffu + ((u >> 16) & 1u)) >> 16);
 }
+// Scalar cvt.{rn,rz,rm,rp}.bf16.f32. The exponent ranges coincide;
+// round the discarded fraction, retaining signed zeros and subnormals.
+static inline uint16_t gx_f32_to_bf16_bits(uint32_t u, unsigned mode) {
+    if ((u & 0x7fffffffu) > 0x7f800000u) return 0x7fffu;
+    if (mode == 0) return gx_f32_to_bf16_rn_bits(u);
+    uint32_t hi = u >> 16;
+    const bool negative = (u >> 31) != 0;
+    if ((u & 0xffffu) && ((mode == 2 && negative) || (mode == 3 && !negative))) ++hi;
+    return uint16_t(hi);
+}
 static inline uint32_t gx_cvt_rn_bf16x2_f32(float a, float b) {
     uint32_t ua, ub;
     memcpy(&ua, &a, 4); memcpy(&ub, &b, 4);
@@ -985,6 +995,23 @@ static inline uint32_t gx_ptx_cluster_ctarank() {
     dim3 c = gx_ptx_cluster_dim(), b = gx_dev_blockIdx();
     return (b.x % c.x) + c.x * ((b.y % c.y) + c.y * (b.z % c.z));
 }
+// Packed integer dot products, PTX ISA dp2a/dp4a. Use wide signed products
+// and unsigned accumulation so all sign combinations and overflow have the
+// specified low-32-bit result without C++ signed-overflow or narrowing UB.
+template<unsigned ABits, unsigned BStart, bool SignedA, bool SignedB>
+static inline uint32_t gx_dp_packed(uint32_t a, uint32_t b, uint32_t c) {
+    static_assert(ABits == 8 || ABits == 16, "packed dot operand width");
+    static_assert(BStart == 0 || (ABits == 16 && BStart == 2), "packed dot byte half");
+    for (unsigned i = 0; i < 32 / ABits; ++i) {
+        int64_t av = (a >> (i * ABits)) & ((1u << ABits) - 1);
+        int64_t bv = (b >> ((i + BStart) * 8)) & 255u;
+        if (SignedA && (av & (1u << (ABits - 1)))) av -= 1u << ABits;
+        if (SignedB && (bv & 128)) bv -= 256;
+        c += static_cast<uint32_t>(av * bv);
+    }
+    return c;
+}
+
 // ldmatrix.sync.aligned.m8n8.x1/x2/x4[.trans].shared.b16.
 // NVIDIA PTX ISA: each lane supplies a 16-byte-aligned row address; lanes
 // 0..7/8..15/16..23/24..31 supply matrices 0/1/2/3. Destination lane L

@@ -14,6 +14,8 @@ namespace Gxptx
 /- PTX definition: PTX does not define this trusted-boundary inventory; host C, runtime, parsing, and machine integration are external. -/
 /- Lean modeling: this checked key/value inventory names every such unproved boundary separately from theorem-backed models and known incorrect behavior. -/
 def trustedInventory : List (String × String) := [
+  ("packed-integer-dot",
+   "dp2a lo/hi and dp4a with independently signed or unsigned packed operands use a tested integer C++ helper with wide products and modulo-2^32 accumulation; all sign pairs, byte selection, overflow and per-lane resource counts have CPU oracle tests, not a Lean value or compiler proof"),
   ("template-print",
    "manual link from each theorem-backed Lean C-value model to its emitted ISO-C string; integer selp casts both alternatives to the instruction type before the host conditional, with bit-size destinations written by memcpy; reviewed one shape at a time and exercised by semantics_test at -O0/-O2, plain/RN sub.f16x2 composes the exact add helper with tested lane-sign negation without a separate subtraction theorem; forms named in knownGapInventory are explicitly outside the claim"),
   ("float-compare",
@@ -25,7 +27,7 @@ def trustedInventory : List (String × String) := [
   ("cvt-float",
    "cvt{.rn,.rz,.rm,.rp}{.ftz}{.sat}.f32.f64 uses tested binary64 significand decoding, integer rounding and binary32 encoding in gx_cvt_f64_f32 without changing the host FP mode; no Lean narrowing theorem; float→int rounding (nearbyint/trunc/floor/ceil + C conversion, UB-on-overflow inherited from the reference translator) and int→float / float→float value conversions — IEEE, trusted; same-type cvt{.rni,.rzi,.rmi,.rpi}{.ftz}{.sat}.f32.f32 and {.sat}.f64.f64 (gx_cvt_irnd_f32/f64) use tested binary32 significand masking for rni/rzi/rmi and trusted ceilf/libm roundeven/trunc/floor/ceil otherwise, .ftz flushing signed subnormal inputs and .sat clamping to [+0,1] with NaN to +0, not a Lean floating-value theorem, NaN payloads unspecified; the int-source inner cast IS the proven CCvt reading"),
   ("cvt-f16",
-   "gx_cvt_tf32_f32 implements tested binary32-to-TF32 RN-even/RZ/RNA rounding, satfinite and relu with integer encodings, not a Lean floating-value theorem; gx_h2f/gx_f2h/gx_bf2f/gx_f2bf: bit-reinterpret then native _Float16/__bf16 value conversion — hardware half formats trusted; cvt.rn.bf16x2.f32 uses a tested integer RN-even conversion and high-a/low-b packing in gx_cvt_rn_bf16x2_f32, not yet formally proved"),
+   "scalar cvt.{rn,rz,rm,rp}.bf16.f32 uses a tested bit-level rounding helper with independent adjacent-value oracles, including subnormals and overflow, not a Lean conversion proof; gx_cvt_tf32_f32 implements tested binary32-to-TF32 RN-even/RZ/RNA rounding, satfinite and relu with integer encodings, not a Lean floating-value theorem; gx_h2f/gx_f2h/gx_bf2f/gx_f2bf: bit-reinterpret then native _Float16/__bf16 value conversion — hardware half formats trusted; cvt.rn.bf16x2.f32 uses a tested integer RN-even conversion and high-a/low-b packing in gx_cvt_rn_bf16x2_f32, not yet formally proved"),
   ("cvt-fp8",
    "exact cvt.rn.f16x2.e4m3x2 and cvt.rn.satfinite.e4m3x2.f32 use tested integer encoding helpers; finite E4M3 widening magnitude/sign is kernel-proved for the Lean model, not the C implementation or printer; binary32 encoding, tie rounding, saturation, chosen canonical NaNs, and emitted lane/register correspondence remain tested boundaries"),
   ("mem-deref",

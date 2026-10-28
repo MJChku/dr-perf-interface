@@ -95,7 +95,8 @@ def parseDispatchOpcodes (src : String) : List String := Id.run do
   let mut out : List String := []
   let mut inMatch := false
   for line in src.splitOn "\n" do
-    if (line.trimLeft).startsWith "match head with" then
+    if (line.trimLeft).startsWith "match head with" ||
+        line.trim == "let emitted := match head with" then
       inMatch := true
     else if inMatch && line.startsWith "      | \"" then
       -- take every "quoted" token before =>
@@ -109,6 +110,9 @@ def parseDispatchOpcodes (src : String) : List String := Id.run do
     else if inMatch && line.startsWith "def " then
       inMatch := false
   return out
+
+#guard parseDispatchOpcodes "      let emitted := match head with\n      | \"dp2a\" | \"dp4a\" => x\n        | \"not_an_opcode\" => y\n" == ["dp2a", "dp4a"]
+#guard parseDispatchOpcodes "      match head with\n      | \"ld\" | \"ldu\" => x\n" == ["ld", "ldu"]
 
 /- PTX definition: this command checks the project's accounting of modeled ISA rules and explicitly does not assert full ISA conformance. -/
 /- Lean modeling: loading all four aggregate modules makes theorem discovery explicit instead of relying on accidental translator import paths. -/

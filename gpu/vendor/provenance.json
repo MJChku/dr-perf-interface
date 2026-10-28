@@ -45,7 +45,7 @@
     "vendor/gxptx/Gxptx/Check.lean": {
       "source": "tools/gxptx/lean/Gxptx/Check.lean",
       "sha256": "7623e1e8cac53b686466b4ccb72a19f3cf0c78c2af2c111caae2503dda4e6efb",
-      "vendoredSha256": "7623e1e8cac53b686466b4ccb72a19f3cf0c78c2af2c111caae2503dda4e6efb"
+      "vendoredSha256": "f8bea261a7e1a9ae586300ef0ef849bb7fb0363b84bb2cfd36a05bce9c9804a6"
     },
     "vendor/gxptx/Gxptx/Core.lean": {
       "source": "tools/gxptx/lean/Gxptx/Core.lean",
@@ -190,7 +190,7 @@
     "vendor/gxptx/Gxptx/Translation/Coverage.lean": {
       "source": "tools/gxptx/lean/Gxptx/Translation/Coverage.lean",
       "sha256": "9b27384c76953cace300e44d0e16f4f5f3eb0443064eac528cac9b781179a24b",
-      "vendoredSha256": "9b27384c76953cace300e44d0e16f4f5f3eb0443064eac528cac9b781179a24b"
+      "vendoredSha256": "3c4771c442d68769fcc2d08e73b562862614d455211ca7bf4ee9ea84a2cddb76"
     },
     "vendor/gxptx/Gxptx/Translation/Module/Assembly.lean": {
       "source": "tools/gxptx/lean/Gxptx/Translation/Module/Assembly.lean",
@@ -220,7 +220,7 @@
     "vendor/gxptx/Gxptx/Translation/Statement.lean": {
       "source": "tools/gxptx/lean/Gxptx/Translation/Statement.lean",
       "sha256": "f3fb5a8ef8145c012f9ef2117dc9db162deebe4ea50c5e4a446cd260ef4bb8c2",
-      "vendoredSha256": "16009dd4051f30e4fbaef120afa2104ebcef9496f12db28bf501a09c1d6641f3"
+      "vendoredSha256": "15c363b59a3f75a3b2637dd28b81ed9dba974bc4eacea37b415c736640f5ee5c"
     },
     "vendor/gxptx/Gxptx/Translation.lean": {
       "source": "tools/gxptx/lean/Gxptx/Translation.lean",
@@ -240,7 +240,7 @@
     "vendor/gxptx/Gxptx/Validation/Trusted.lean": {
       "source": "tools/gxptx/lean/Gxptx/Validation/Trusted.lean",
       "sha256": "f20c9bc362c24ab93a08ab36a97284884d02760e9a233c7366450f56184f57c5",
-      "vendoredSha256": "f20c9bc362c24ab93a08ab36a97284884d02760e9a233c7366450f56184f57c5"
+      "vendoredSha256": "d40c2f5648da97785d40bf2cf0cef5dce4acd0d407e006e6099b620fc849124e"
     },
     "vendor/gxptx/Gxptx/Validation.lean": {
       "source": "tools/gxptx/lean/Gxptx/Validation.lean",
@@ -315,7 +315,7 @@
     "vendor/gxptx/Gxptx/prelude.h": {
       "source": "tools/gxptx/lean/Gxptx/prelude.h",
       "sha256": "916b029701a405bb7824a03501e8e9024c9e08316c9797d08290555087d7ea3d",
-      "vendoredSha256": "70e0bad565956bb6d12b0c9301dc9bdb1804220083ba2814ee830d0fee2dd338"
+      "vendoredSha256": "60546d3f4bb18eefcf694debf25f75d02f54e4538f9dee0e8ba9262c552a3514"
     },
     "vendor/gxptx/Gxptx.lean": {
       "source": "tools/gxptx/lean/Gxptx.lean",
@@ -521,5 +521,10 @@
         "tcgen05.shift and .ashift as measured on B300 (lane r <- r+1 within each subpartition; .ashift after the MMA)"
       ]
     }
-  ]
+  ],
+  "packed_integer_and_matrix_extensions": {
+    "scope": "dp2a lo/hi and dp4a s32/u32 pairs; m8n8 b16 ldmatrix/stmatrix modifier spellings and shared::cta; ldu request accounting; scalar f32-to-bf16 rn/rz/rm/rp rounding",
+    "validation": "gpu/tests/test_instruction_coverage.py: independent CPU numerical oracles and resource counts; no new Lean value proof",
+    "preflight": "module.gpu.json instructionCoverage lists statically emitted traps and source locations; runtime helper checks remain separate"
+  }
 }

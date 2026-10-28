@@ -9,6 +9,8 @@ namespace Gxptx
 /- PTX definition: opcode definitions combine value rules, modifiers, state-space effects, synchronization, and control-flow behavior. -/
 /- Lean modeling: each `proven:` name denotes shallow Lean value equality only and therefore also carries `trusted:template-print`; `gxcheck` cross-checks dispatch coverage and validates every trust/gap key without claiming end-to-end C semantics. -/
 def opcodeStatus : List (String × String) := [
+  ("dp2a", "trusted:packed-integer-dot;gap:bit-float-register-class"),
+  ("dp4a", "trusted:packed-integer-dot;gap:bit-float-register-class"),
   ("redux", "structural:sreg-ctrl;trusted:template-print;trusted:warp-data"),
   ("red", "proven:Gxptx.CComm.atomic_equiv;trusted:template-print;trusted:atom-runtime"),
   ("ret",  "structural:sreg-ctrl"),
