@@ -1,0 +1,99 @@
+.version 8.6
+.target sm_90
+.address_size 64
+
+.visible .entry bulk_g2s(
+    .param .u64 input, .param .u64 output, .param .u32 nbytes) {
+ .shared .align 16 .b8 buf[128];
+ .shared .align 8 .b64 bar;
+ .reg .b32 %r<8>;
+ .reg .b64 %d<5>;
+ .reg .pred %p;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.param.u32 %r0,[nbytes];
+ mov.u32 %r1,buf;
+ mov.u32 %r2,bar;
+ mbarrier.init.shared::cta.b64 [%r2],1;
+ mbarrier.arrive.expect_tx.shared::cta.b64 %d2,[%r2],%r0;
+ cp.async.bulk.shared::cta.global.mbarrier::complete_tx::bytes [%r1],[%d0],%r0,[%r2];
+wait:
+ mbarrier.try_wait.parity.shared::cta.b64 %p,[%r2],0;
+ @!%p bra wait;
+ mov.u32 %r3,0;
+loop:
+ add.u32 %r4,%r1,%r3;
+ ld.shared.u32 %r5,[%r4];
+ cvt.u64.u32 %d3,%r3;
+ add.u64 %d4,%d1,%d3;
+ st.global.u32 [%d4],%r5;
+ add.u32 %r3,%r3,4;
+ setp.lt.u32 %p,%r3,%r0;
+ @%p bra loop;
+ // The barrier storage is not reused before this CTA exits.
+ ret;
+}
+
+.visible .entry simple_copy(
+    .param .u64 input, .param .u64 output, .param .u32 nbytes) {
+ .shared .align 16 .b8 buf[128];
+ .reg .b32 %r<8>;
+ .reg .b64 %d<5>;
+ .reg .pred %p;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.param.u32 %r0,[nbytes];
+ mov.u32 %r1,buf;
+ mov.u32 %r3,0;
+issue:
+ add.u32 %r4,%r1,%r3;
+ cvt.u64.u32 %d3,%r3;
+ add.u64 %d4,%d0,%d3;
+ cp.async.ca.shared.global [%r4],[%d4],16;
+ add.u32 %r3,%r3,16;
+ setp.lt.u32 %p,%r3,%r0;
+ @%p bra issue;
+ cp.async.commit_group;
+ cp.async.wait_group 0;
+ cp.async.wait_all;
+ mov.u32 %r3,0;
+loop:
+ add.u32 %r4,%r1,%r3;
+ ld.shared.u32 %r5,[%r4];
+ cvt.u64.u32 %d3,%r3;
+ add.u64 %d4,%d1,%d3;
+ st.global.u32 [%d4],%r5;
+ add.u32 %r3,%r3,4;
+ setp.lt.u32 %p,%r3,%r0;
+ @%p bra loop;
+ ret;
+}
+
+// GX can execute this direction, but its resource observer does not yet
+// account the bulk shared-to-global transfer. It must stay incomplete.
+.visible .entry bulk_s2g(
+    .param .u64 input, .param .u64 output, .param .u32 nbytes) {
+ .shared .align 16 .b8 buf[128];
+ .reg .b32 %r<8>;
+ .reg .b64 %d<5>;
+ .reg .pred %p;
+ ld.param.u64 %d0,[input];
+ ld.param.u64 %d1,[output];
+ ld.param.u32 %r0,[nbytes];
+ mov.u32 %r1,buf;
+ mov.u32 %r3,0;
+loop:
+ cvt.u64.u32 %d3,%r3;
+ add.u64 %d4,%d0,%d3;
+ ld.global.u32 %r5,[%d4];
+ add.u32 %r4,%r1,%r3;
+ st.shared.u32 [%r4],%r5;
+ add.u32 %r3,%r3,4;
+ setp.lt.u32 %p,%r3,%r0;
+ @%p bra loop;
+ fence.proxy.async.shared::cta;
+ cp.async.bulk.global.shared::cta.bulk_group [%d1],[%r1],%r0;
+ cp.async.bulk.commit_group;
+ cp.async.bulk.wait_group.read 0;
+ ret;
+}

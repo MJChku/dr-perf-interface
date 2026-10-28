@@ -1,0 +1,78 @@
+.version 8.0
+.target sm_80
+.address_size 64
+.visible .entry div_cases(.param .u64 pa,.param .u64 pb,.param .u64 po,.param .u32 pn){
+.reg .pred %p;
+.reg .b32 %r<4>;
+.reg .b64 %rd<8>;
+.reg .f32 %f<5>;
+ld.param.u64 %rd1,[pa];
+ld.param.u64 %rd2,[pb];
+ld.param.u64 %rd3,[po];
+ld.param.u32 %r1,[pn];
+mov.u32 %r2,%tid.x;
+setp.ge.u32 %p,%r2,%r1;
+@%p bra DONE;
+mul.wide.u32 %rd4,%r2,4;
+add.u64 %rd5,%rd1,%rd4;
+add.u64 %rd6,%rd2,%rd4;
+ld.global.f32 %f1,[%rd5];
+ld.global.f32 %f2,[%rd6];
+div.approx.f32 %f3,%f1,%f2;
+div.approx.ftz.f32 %f4,%f1,%f2;
+mul.wide.u32 %rd7,%r2,8;
+add.u64 %rd7,%rd3,%rd7;
+st.global.f32 [%rd7],%f3;
+st.global.f32 [%rd7+4],%f4;
+DONE:
+ret;
+}
+.visible .entry shfl_cases(.param .u64 pa,.param .u64 po){
+.reg .pred %p<6>;
+.reg .b32 %r<12>;
+.reg .b64 %rd<8>;
+.reg .f32 %f<12>;
+ld.param.u64 %rd1,[pa];
+ld.param.u64 %rd2,[po];
+mov.u32 %r1,%tid.x;
+mov.u32 %r2,%ctaid.x;
+mad.lo.u32 %r3,%r2,32,%r1;
+mul.wide.u32 %rd3,%r3,4;
+add.u64 %rd4,%rd1,%rd3;
+ld.global.f32 %f1,[%rd4];
+shfl.sync.idx.b32 %f2|%p1,%f1,0,31,-1;
+shfl.sync.idx.b32 %f3,%f1,0,31,-1;
+shfl.sync.bfly.b32 %f4|%p2,%f1,1,31,-1;
+shfl.sync.bfly.b32 %f5,%f1,1,31,-1;
+shfl.sync.up.b32 %f6|%p3,%f1,1,0,-1;
+shfl.sync.up.b32 %f7,%f1,1,0,-1;
+shfl.sync.down.b32 %f8|%p4,%f1,1,31,-1;
+shfl.sync.down.b32 %f9,%f1,1,31,-1;
+mov.b32 %f10,%f1;
+setp.eq.u32 %p5,%r1,255;
+@%p5 shfl.sync.idx.b32 %f10,%f1,0,31,-1;
+max.ftz.f32 %f11,%f1,%f1;
+shfl.sync.idx.b32 %f1,%f1,0,31,-1;
+selp.u32 %r4,1,0,%p1;
+selp.u32 %r5,2,0,%p2;
+selp.u32 %r6,4,0,%p3;
+selp.u32 %r7,8,0,%p4;
+or.b32 %r8,%r4,%r5;
+or.b32 %r8,%r8,%r6;
+or.b32 %r8,%r8,%r7;
+mul.wide.u32 %rd5,%r3,48;
+add.u64 %rd6,%rd2,%rd5;
+st.global.f32 [%rd6],%f2;
+st.global.f32 [%rd6+4],%f3;
+st.global.f32 [%rd6+8],%f4;
+st.global.f32 [%rd6+12],%f5;
+st.global.f32 [%rd6+16],%f6;
+st.global.f32 [%rd6+20],%f7;
+st.global.f32 [%rd6+24],%f8;
+st.global.f32 [%rd6+28],%f9;
+st.global.f32 [%rd6+32],%f1;
+st.global.f32 [%rd6+36],%f10;
+st.global.f32 [%rd6+40],%f11;
+st.global.u32 [%rd6+44],%r8;
+ret;
+}
