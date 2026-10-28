@@ -384,13 +384,29 @@ extern "C" void gx_tcgen05_dealloc(uint32_t address, uint32_t columns, uint32_t 
 }
 
 // ---- tcgen05.ld / tcgen05.st -----------------------------------------------
+// PTX 9.7.17.8.1: with tcgen05.ld/st, warp w%4 of a warpgroup can access only
+// lanes 32*(w%4) .. 32*(w%4)+31. The access is placed in the executing warp's
+// quarter. CUTLASS puts 32*(w%4) in the lane field; FlashMLA passes lane 0 from
+// all four warps, which reaches each warp's own quarter on B300 (its outputs
+// match an fp64 reference). Other lane fields outside the quarter are
+// undefined in PTX and fail; so does an access running past the quarter.
+// `span`: lanes of one access, 32 for .32x32b and 16 for the .16x* shapes.
+static unsigned warp_quarter_lane(unsigned l0, unsigned span) {
+    const unsigned quarter = (linear_thread() / 32) % 4;
+    if (l0 != 0 && l0 / 32 != quarter)
+        fail("tcgen05.ld/st lane " + std::to_string(l0) + " is outside warp quarter " + std::to_string(quarter));
+    if (l0 % 32 + span > 32) fail("tcgen05.ld/st access crosses the warp's 32-lane quarter");
+    return 32 * quarter + l0 % 32;
+}
+static unsigned ld_span(unsigned shape) { return shape == 0 ? 32 : 16; }
+
 // shape: 0 .32x32b, 1 .16x64b, 2 .16x128b, 3 .16x256b, 4 .16x32bx2; `regs`
 // registers per thread. pack (ld .pack::16b / st .unpack::16b) moves the low
 // 16 bits of two adjacent columns per register; st keeps the high halves.
 extern "C" void gx_tcgen05_ld(uint32_t shape, uint32_t address, uint32_t regs, uint32_t pack,
                               uint32_t imm, uint32_t* out) {
     GxTmemState& t = own_tmem();
-    const unsigned l0 = tmem_lane(address), c0 = tmem_col(address), lane = lane_id();
+    const unsigned l0 = warp_quarter_lane(tmem_lane(address), ld_span(shape)), c0 = tmem_col(address), lane = lane_id();
     drperf_gpu_resource("tmem_read_bytes", uint64_t(regs)*4);
     for (unsigned j = 0; j < regs; ++j) {
         const Placement p = ld_physical(shape, lane, j, pack, imm);
@@ -403,7 +419,7 @@ extern "C" void gx_tcgen05_ld(uint32_t shape, uint32_t address, uint32_t regs, u
 extern "C" void gx_tcgen05_st(uint32_t shape, uint32_t address, uint32_t regs, uint32_t pack,
                               uint32_t imm, const uint32_t* in) {
     GxTmemState& t = own_tmem();
-    const unsigned l0 = tmem_lane(address), c0 = tmem_col(address), lane = lane_id();
+    const unsigned l0 = warp_quarter_lane(tmem_lane(address), ld_span(shape)), c0 = tmem_col(address), lane = lane_id();
     drperf_gpu_resource("tmem_write_bytes", uint64_t(regs)*4);
     for (unsigned j = 0; j < regs; ++j) {
         const Placement p = ld_physical(shape, lane, j, pack, imm);
@@ -591,6 +607,17 @@ MmaOp prepare_mma(uint32_t kind_code, uint32_t cta_group, uint32_t a_is_tmem, ui
     return MmaOp{kind, in, cta_group, members, rows, cols, vs, nsf, kc, shift, sp, ws, ashift, std::move(zero_col)};
 }
 
+// tcgen05.shift / .ashift ("shift down", measured on B300): within each 32-lane
+// subpartition, lane r takes the cells of lane r + 1 and the subpartition's
+// last lane keeps its contents. Lanes [l0, l0 + lanes), columns [c0, c0 + ncols).
+void shift_rows_down(GxTmemState& t, unsigned l0, unsigned lanes, unsigned c0, unsigned ncols) {
+    for (unsigned r = 0; r + 1 < lanes; ++r) {
+        const unsigned lane = l0 + r;
+        if (lane % 32 == 31) continue;
+        for (unsigned c = 0; c < ncols; ++c) cell(t, lane, c0 + c) = cell(t, lane + 1, c0 + c);
+    }
+}
+
 // The instruction element by element, straight from shared and tensor
 // memory. It defines the results: the fast path below must match it bit for
 // bit (GX_MMA_CHECK=1 compares the two on every instruction;
@@ -629,60 +656,65 @@ void mma_reference(const MmaOp& op, uint32_t d_address, uint64_t a_operand, uint
         const MatrixDesc ad = a_is_tmem ? MatrixDesc{} : decode_desc(a_operand, rank);
         const unsigned a_bits = in.padded ? 8 : format_bits(in.a);
         const unsigned al = tmem_lane(uint32_t(a_operand)), ac = tmem_col(uint32_t(a_operand));
-        if (ashift) {
-            // Rows of A in tensor memory move down by one (the last row is
-            // overwritten, row 0 keeps its contents) before use.
-            const unsigned ncols = (kc * a_bits + 31) / 32;
-            for (unsigned r = rows - 1; r > 0; --r)
-                for (unsigned c = 0; c < ncols; ++c) cell(t, al + r, ac + c) = cell(t, al + r - 1, ac + c);
-        }
         for (unsigned ml = 0; ml < rows; ++ml) {
             const Placement row = ws ? place_ws(in.m, in.n, ml, 0) : place(cta_group, in.m, in.n, ml, 0);
-            for (unsigned k = 0; k < kc; ++k) {
-                if (!a_is_tmem) { abits[k] = read_element(ad, in.a_mn, in.a, in.padded, ml, k); continue; }
-                // A in tensor memory: K-major, packed into 32-bit cells; f8f6f4
-                // sub-byte formats use 8-bit containers (e2m1 in bits 5:2).
-                const uint32_t c = cell(t, al + (ws ? ml : row.lane), ac + (k * a_bits) / 32);
-                uint32_t bits = a_bits == 32 ? c : (c >> ((k * a_bits) % 32)) & ((1u << a_bits) - 1);
-                if (in.padded && in.a == Format::e2m1) bits >>= 2;
-                abits[k] = bits;
-            }
-            if (!sp) {
-                for (unsigned k = 0; k < in.k; ++k) dense[k] = abits[k];
-            } else {
-                // Decompress: each metadata nibble names the two kept units
-                // (idx0 = bits 1:0, idx1 = bits 3:2) of a group of four.
-                std::fill(dense.begin(), dense.end(), 0u);
-                if (kind == Kind::tf32) {           // unit = 16-bit half of a tf32
-                    for (unsigned g = 0; g < in.k / 2; ++g) {
-                        const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
-                        const unsigned idx[2] = {nib & 3, nib >> 2};
-                        for (unsigned u = 0; u < 2; ++u) {
-                            const unsigned cu = 2 * g + u;
-                            const uint32_t half = (abits[cu / 2] >> (16 * (cu % 2))) & 0xffff;
-                            dense[2 * g + idx[u] / 2] |= half << (16 * (idx[u] % 2));
+            // A in tensor memory is read by the datapath that computes the
+            // output: lane al + row lane, which for .ws M=64/32 (Layouts E/G,
+            // 2x2 and 1x4 datapaths) depends on the N group of the output.
+            unsigned loaded_lane = ~0u;
+            auto load_a = [&](unsigned a_lane) {
+                if (a_lane == loaded_lane) return;
+                loaded_lane = a_lane;
+                for (unsigned k = 0; k < kc; ++k) {
+                    if (!a_is_tmem) { abits[k] = read_element(ad, in.a_mn, in.a, in.padded, ml, k); continue; }
+                    // A in tensor memory: K-major, packed into 32-bit cells; f8f6f4
+                    // sub-byte formats use 8-bit containers (e2m1 in bits 5:2).
+                    const uint32_t c = cell(t, a_lane, ac + (k * a_bits) / 32);
+                    uint32_t bits = a_bits == 32 ? c : (c >> ((k * a_bits) % 32)) & ((1u << a_bits) - 1);
+                    if (in.padded && in.a == Format::e2m1) bits >>= 2;
+                    abits[k] = bits;
+                }
+                if (!sp) {
+                    for (unsigned k = 0; k < in.k; ++k) dense[k] = abits[k];
+                } else {
+                    // Decompress: each metadata nibble names the two kept units
+                    // (idx0 = bits 1:0, idx1 = bits 3:2) of a group of four.
+                    std::fill(dense.begin(), dense.end(), 0u);
+                    if (kind == Kind::tf32) {           // unit = 16-bit half of a tf32
+                        for (unsigned g = 0; g < in.k / 2; ++g) {
+                            const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
+                            const unsigned idx[2] = {nib & 3, nib >> 2};
+                            for (unsigned u = 0; u < 2; ++u) {
+                                const unsigned cu = 2 * g + u;
+                                const uint32_t half = (abits[cu / 2] >> (16 * (cu % 2))) & 0xffff;
+                                dense[2 * g + idx[u] / 2] |= half << (16 * (idx[u] % 2));
+                            }
+                        }
+                    } else if (in.a == Format::e2m1 && !in.padded) {   // unit = pair of e2m1
+                        for (unsigned g = 0; g < in.k / 8; ++g) {
+                            const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
+                            const unsigned idx[2] = {nib & 3, nib >> 2};
+                            for (unsigned u = 0; u < 2; ++u)
+                                for (unsigned e = 0; e < 2; ++e)
+                                    dense[8 * g + 2 * idx[u] + e] = abits[2 * (2 * g + u) + e];
+                        }
+                    } else {                                         // unit = one element
+                        for (unsigned g = 0; g < in.k / 4; ++g) {
+                            const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
+                            dense[4 * g + (nib & 3)] = abits[2 * g];
+                            dense[4 * g + (nib >> 2)] = abits[2 * g + 1];
                         }
                     }
-                } else if (in.a == Format::e2m1 && !in.padded) {   // unit = pair of e2m1
-                    for (unsigned g = 0; g < in.k / 8; ++g) {
-                        const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
-                        const unsigned idx[2] = {nib & 3, nib >> 2};
-                        for (unsigned u = 0; u < 2; ++u)
-                            for (unsigned e = 0; e < 2; ++e)
-                                dense[8 * g + 2 * idx[u] + e] = abits[2 * (2 * g + u) + e];
-                    }
-                } else {                                         // unit = one element
-                    for (unsigned g = 0; g < in.k / 4; ++g) {
-                        const unsigned nib = sparse_nibble(t, sp_meta, in, ml, g);
-                        dense[4 * g + (nib & 3)] = abits[2 * g];
-                        dense[4 * g + (nib >> 2)] = abits[2 * g + 1];
-                    }
                 }
-            }
-            for (unsigned k = 0; k < in.k; ++k) {
-                const double x = decode(in.a, dense[k]);
-                avals[k] = in.a_neg ? -x : x;
-            }
+                for (unsigned k = 0; k < in.k; ++k) {
+                    const double x = decode(in.a, dense[k]);
+                    avals[k] = in.a_neg ? -x : x;
+                }
+            };
+            auto a_lane_of = [&](unsigned n) {
+                return a_is_tmem ? al + (ws ? place_ws(in.m, in.n, ml, n).lane : row.lane) : 0u;
+            };
+            load_a(a_lane_of(0));
             const unsigned replica = 32 * ((row.lane / 32) % 4);
             for (unsigned j = 0; j < nsf; ++j) {
                 const unsigned sid = in.a_sf_id + j;
@@ -694,6 +726,7 @@ void mma_reference(const MmaOp& op, uint32_t d_address, uint64_t a_operand, uint
                 const Placement p = ws ? place_ws(in.m, in.n, ml, n) : place(cta_group, in.m, in.n, ml, n);
                 const unsigned lane = dl + p.lane;
                 if (lane_mask && ((lane_mask[4 * v + lane / 32] >> (lane % 32)) & 1)) continue;
+                load_a(a_lane_of(n));
                 const double* b = &bvals[size_t(n) * in.k];
                 double sum = 0;
                 if (nsf) {
@@ -722,6 +755,8 @@ void mma_reference(const MmaOp& op, uint32_t d_address, uint64_t a_operand, uint
                 }
             }
         }
+        // .ashift: A moves after this MMA has used it (B300-measured).
+        if (ashift) shift_rows_down(t, al, rows, ac, (kc * a_bits + 31) / 32);
     }
 }
 
@@ -1204,13 +1239,6 @@ void mma_fast(const MmaOp& op, uint32_t d_address, uint64_t a_operand, uint32_t 
         const MatrixDesc ad = a_is_tmem ? MatrixDesc{} : decode_desc(a_operand, rank);
         const unsigned a_bits = in.padded ? 8 : format_bits(in.a);
         const unsigned al = tmem_lane(uint32_t(a_operand)), ac = tmem_col(uint32_t(a_operand));
-        if (op.ashift) {
-            // Rows of A in tensor memory move down by one (the last row is
-            // overwritten, row 0 keeps its contents) before use.
-            const unsigned ncols = (kc * a_bits + 31) / 32;
-            for (unsigned r = rows - 1; r > 0; --r)
-                for (unsigned c = 0; c < ncols; ++c) cell(t, al + r, ac + c) = cell(t, al + r - 1, ac + c);
-        }
         SharedView view;
         for (unsigned ml = 0; ml < rows; ++ml) {
             const unsigned row_lane = s.row_lane[ml];
@@ -1289,6 +1317,8 @@ void mma_fast(const MmaOp& op, uint32_t d_address, uint64_t a_operand, uint32_t 
                 }
             }
         }
+        // .ashift: A moves after this MMA has gathered it (B300-measured).
+        if (op.ashift) shift_rows_down(t, al, rows, ac, (kc * a_bits + 31) / 32);
     }
 
     // Scaled kinds: one B table per SFB table above, the factor applied as
@@ -1443,7 +1473,9 @@ extern "C" void gx_tcgen05_mma(uint32_t kind_code, uint32_t cta_group, uint32_t 
     // remains unmodeled (an all-zero mask descriptor masks nothing).
     if(op.sp||(op.ws&&std::find(op.zero_col.begin(),op.zero_col.end(),true)!=op.zero_col.end())||op.ashift||lane_mask)drperf_gpu_resource("unmodeled_work_events",1);
     const MmaMode mode = mma_mode();
-    const bool fast = mode != MmaMode::reference &&
+    // The fast path gathers one A row per output row; .ws M=64/32 with A in
+    // tensor memory reads a different A row lane per N group (reference only).
+    const bool fast = mode != MmaMode::reference && !(op.ws && a_is_tmem && op.in.m < 128) &&
                       !operands_meet_d(op, d_address, a_operand, a_is_tmem, sfa_address, sfb_address, sp_meta);
     if (mode != MmaMode::check || !fast) {
         if (mode == MmaMode::check) ++check_counts.reference;
@@ -1477,21 +1509,20 @@ extern "C" void gx_tcgen05_mma(uint32_t kind_code, uint32_t cta_group, uint32_t 
 }
 
 // ---- tcgen05.shift ------------------------------------------------------------
-// .31x256b: rows L0..L0+30 of the 32-lane block at taddr move down one lane
-// (columns C0..C0+7); the last row is overwritten and row L0 keeps its old
-// contents (PTX leaves it unspecified). cta_group::2 shifts both CTAs of the pair.
+// 32-byte elements (columns C0..C0+7) shift "down" by one row: on B300, in all
+// four 32-lane subpartitions, lane r takes lane r + 1 and the last lane of each
+// subpartition keeps its contents, whatever the (32-aligned) taddr lane (lanes
+// 0, 32 and 96 measured). cta_group::2 shifts both CTAs of the pair.
 extern "C" void gx_tcgen05_shift(uint32_t address, uint32_t cta_group) {
     if (cta_group != 1 && cta_group != 2) fail("invalid cta_group");
     if(cta_group==2) (void)gx_cluster_rank_linear_block(gx_dev_cluster_ctarank()^1u);
     const unsigned l0 = tmem_lane(address), c0 = tmem_col(address);
-    drperf_gpu_resource("tmem_read_bytes",uint64_t(31)*8*4*cta_group);
-    drperf_gpu_resource("tmem_write_bytes",uint64_t(31)*8*4*cta_group);
+    // 31 moved lanes in each of the four 32-lane subpartitions, 8 columns.
+    drperf_gpu_resource("tmem_read_bytes",uint64_t(4*31)*8*4*cta_group);
+    drperf_gpu_resource("tmem_write_bytes",uint64_t(4*31)*8*4*cta_group);
     if (l0 % 32) fail("tcgen05.shift lane must be aligned to 32");
-    for (unsigned v = 0; v < (cta_group == 2 ? 2u : 1u); ++v) {
-        GxTmemState& t = tmem_of(member_rank(v, cta_group));
-        for (unsigned r = 31; r > 0; --r)
-            for (unsigned c = 0; c < 8; ++c) cell(t, l0 + r, c0 + c) = cell(t, l0 + r - 1, c0 + c);
-    }
+    for (unsigned v = 0; v < (cta_group == 2 ? 2u : 1u); ++v)
+        shift_rows_down(tmem_of(member_rank(v, cta_group)), 0, GxTmemState::kLanes, c0, 8);
 }
 
 // ---- tcgen05.ld.red (sm_103) -------------------------------------------------

@@ -1,6 +1,6 @@
 {
   "repository": "GX/NEX",
-  "revision": "99850436e4dd849df6dd45179a6ff9cf363ab696",
+  "revision": "0d67ac7b0cbdbdb1c16f4162fea2f3f6cae4a03a",
   "files": {
     "vendor/gx/include/light/kernel_fiber.hh": {
       "source": "src/sims/gpu/include/light/kernel_fiber.hh",
@@ -359,9 +359,9 @@
     },
     "vendor/gx/tcgen05.cc": {
       "source": "src/sims/gpu/emu/ptx/tcgen05.cc",
-      "sha256": "a43514e74e02c5d171f8a36265210c776c75d507d7082d2aec52b13c5a8c6377",
-      "vendoredSha256": "69c55735d32058669d9c84d91b663b2daef6a16766338b30be136153750a1269",
-      "changes": "Standalone context and semantic counters; paired-CTA execution enabled with checked cluster geometry"
+      "sha256": "6a29a39b32dd7caf30311af2adb8246ad862767787c7a8240f202d4d6b5af11b",
+      "vendoredSha256": "231f8a6148a4b2752688c0085fa9018fb9319fae9900c07e3c4d9b341530f722",
+      "changes": "Standalone context and semantic counters; paired-CTA execution enabled with checked cluster geometry; upstream B300 fixes merged at 0d67ac7b (per-warp tcgen05.ld/st lane quarters, .ws M=64/32 A-in-TMEM per N group, measured shift/.ashift); shift byte counts cover 4 x 31 moved lanes"
     },
     "vendor/gx/tcgen05.h": {
       "source": "src/sims/gpu/emu/ptx/tcgen05.h",
@@ -506,5 +506,20 @@
       "Translation/Body.lean",
       "Translation/Module/Functions.lean"
     ]
-  }
+  },
+  "runtime_sync": [
+    {
+      "from_revision": "99850436e4dd849df6dd45179a6ff9cf363ab696",
+      "to_revision": "0d67ac7b0cbdbdb1c16f4162fea2f3f6cae4a03a",
+      "files": [
+        "vendor/gx/tcgen05.cc"
+      ],
+      "method": "3-way merge (base = from_revision source, ours = vendored file, theirs = to_revision source); drperf resource hooks kept",
+      "merged": [
+        "tcgen05.ld/st (and ld.red): accesses placed in the executing warp's 32-lane quarter (lane field 0 or own quarter)",
+        "tcgen05.mma.ws M=64/32 with A in tensor memory reads A per N group (reference path)",
+        "tcgen05.shift and .ashift as measured on B300 (lane r <- r+1 within each subpartition; .ashift after the MMA)"
+      ]
+    }
+  ]
 }
