@@ -278,6 +278,13 @@ static inline uint32_t gx_minmax_f32_bits(uint32_t a, uint32_t b,
 static inline uint32_t gx_ftz_f32_bits(uint32_t b) {
     return (b & 0x7f800000u) == 0 ? (b & 0x80000000u) : b;
 }
+// max.ftz.f32 first flushes subnormal operands to signed zero; max then
+// selects an operand (or canonical NaN), so no new subnormal can be created.
+static inline uint32_t gx_max_ftz_f32_bits(uint32_t a, uint32_t b) {
+    if ((a & 0x7fffffffu) < 0x00800000u) a &= 0x80000000u;
+    if ((b & 0x7fffffffu) < 0x00800000u) b &= 0x80000000u;
+    return gx_minmax_f32_bits(a, b, true, false, false);
+}
 static inline uint32_t gx_clz32(uint32_t x) { return x ? __builtin_clz(x) : 32; }
 static inline uint32_t gx_clz64(uint64_t x) { return x ? __builtin_clzll(x) : 64; }
 static inline uint32_t gx_popc32(uint32_t x) { return (uint32_t)__builtin_popcount(x); }
@@ -304,15 +311,28 @@ static inline float gx_ftz_f32(float value) {
 static inline float gx_div_full_f32(float a, float b) {
     return (float)((double)a / (double)b);
 }
-// PTX div.approx.f32 is defined as a * (1/b) with an approximate reciprocal;
-// RN reciprocal then RN product is a reference within that allowance (ftz
-// flushes inputs, the reciprocal and the result).
+// https://docs.nvidia.com/cuda/parallel-thread-execution/#floating-point-instructions-div
+// PTX 9.4 div.approx{.ftz}.f32 allows 2 ULP for |b| in
+// [2^-126, 2^126]. Use trusted IEEE binary64 division/f32 rounding
+// as an in-bound approximation, not a bit-identical GPU reciprocal.
+// Unlike div.full/RN, finite |b| > 2^126 MUST produce signed zero,
+// or NaN for an infinite numerator. Classify this range exactly.
+// Explicit .ftz flushes inputs and result; the plain form keeps subnormals.
 static inline float gx_div_approx_f32(float a, float b, bool ftz) {
     if (ftz) { a = gx_ftz_f32(a); b = gx_ftz_f32(b); }
-    float r = 1.0f / b;
-    if (ftz) r = gx_ftz_f32(r);
-    float d = a * r;
-    return ftz ? gx_ftz_f32(d) : d;
+    uint32_t ab, bb; memcpy(&ab, &a, 4); memcpy(&bb, &b, 4);
+    const uint32_t am = ab & 0x7fffffffu, bm = bb & 0x7fffffffu;
+    if (am > 0x7f800000u || bm > 0x7f800000u ||
+        (am == 0x7f800000u && bm > 0x7e800000u && bm < 0x7f800000u)) {
+        const uint32_t nan = 0x7fc00000u;
+        float result; memcpy(&result, &nan, 4); return result;
+    }
+    if (bm > 0x7e800000u && bm < 0x7f800000u) {
+        const uint32_t zero = (ab ^ bb) & 0x80000000u;
+        float result; memcpy(&result, &zero, 4); return result;
+    }
+    float result = gx_div_full_f32(a, b);
+    return ftz ? gx_ftz_f32(result) : result;
 }
 static inline float gx_ex2_approx_ftz_f32(float a) {
     return gx_ftz_f32(exp2f(gx_ftz_f32(a)));
@@ -1792,3 +1812,4 @@ static inline void gx_wmma_store_f32(uint64_t address,unsigned stride,const floa
 extern "C" void gx_mma_sync_i8(unsigned, bool, bool, bool, const uint32_t*, const uint32_t*, const uint32_t*, uint32_t*);
 extern "C" void gx_mma_sync(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, const uint32_t*, const uint32_t*,
                             const uint32_t*, uint32_t*);
+

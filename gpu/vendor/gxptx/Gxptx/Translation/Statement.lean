@@ -160,7 +160,9 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       if line.isEmpty then "" else "    if (" ++ gg ++ ") { " ++ line ++ " }" ++ disabled
     | _ => ""
   else
-    let parts := s.splitOn " " |>.filter (! ·.isEmpty)
+    -- The opcode ends at whitespace or at an address bracket: ptxas accepts
+    -- `tcgen05.st.sync.aligned.32x32b.x32.b32[%r1],{...}` without a space.
+    let parts := (s.takeWhile (· != '[')).splitOn " " |>.filter (! ·.isEmpty)
     match parts with
     | [] => ""
     | op :: _ =>
@@ -377,18 +379,19 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       /- Lean modeling: scalar/two-half helpers follow shallow `CMov` equalities; printing is trusted, while `gap:mov-forms`, `gap:special-register-coverage`, and sink handling delimit the route. -/
       | "mov"  =>
         -- The vector table is b16=2x8, b32=2x16/4x8,
-        -- b64=2x32/4x16. b128 remains outside this scalar ABI.
+        -- b64=2x32/4x16, b128=2x64/4x32 (PTX ISA 8.3+).
         -- Original braces select direction; explicit instruction width/count
         -- selects the helper. Actual C local sizes validate vector fields.
         let movTypes := ["pred", "b16", "b32", "b64", "b128", "u16", "u32", "u64",
                          "s16", "s32", "s64", "f32", "f64"]
-        -- b128 (PTX 8.3+): copy, or pack/unpack two b64 fields only.
-        if toks.length != 2 || !movTypes.contains (toks.getLastD "") then trapOp
+        -- drperf: scalar b128 copy is kept (vendored extension).
+        -- Vector routes use the instruction width token itself (the scalar Ty parser has no b128).
+        let vecTy := toks.getLastD ""
+        if toks.length != 2 || !movTypes.contains vecTy then trapOp
         else if let some pack := movVector then
           let count := args.length - 1
-          let valid := (tyTok == "b16" && count == 2) ||
-            ((tyTok == "b32" || tyTok == "b64") && (count == 2 || count == 4)) ||
-            (tyTok == "b128" && count == 2)
+          let valid := (vecTy == "b16" && count == 2) ||
+            ((vecTy == "b32" || vecTy == "b64" || vecTy == "b128") && (count == 2 || count == 4))
           if !valid then trapOp
           else if pack then
             let d := args.headD "_"
@@ -396,8 +399,8 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             -- An immediate field has no C register width: give an integer
             -- literal the lane's unsigned type. A float literal (0f = 32-bit,
             -- 0d = 64-bit) must already match the lane width.
-            let laneBits := (if tyTok == "b16" then 16 else if tyTok == "b32" then 32
-                             else if tyTok == "b128" then 128 else 64) / count
+            let laneBits := (if vecTy == "b16" then 16 else if vecTy == "b32" then 32
+                             else if vecTy == "b64" then 64 else 128) / count
             let immediate (x : String) : Bool :=
               match x.toList.head? with
               | some c => c.isDigit || c == '-'
@@ -411,7 +414,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
               else some s!"(uint{laneBits}_t)({oC x})"
             let typed := fields.filterMap field
             if d == "_" || fields.contains "_" || typed.length != fields.length then trapOp
-            else s!"    gx_movpack{count}<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}>({dest d}, {String.intercalate ", " typed});"
+            else s!"    gx_movpack{count}<{ctypeOf vecTy}>({dest d}, {String.intercalate ", " typed});"
           else
             let fields := args.take count
             let src := args.getLastD "_"
@@ -419,8 +422,8 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             else
               let assigns := String.intercalate " " (fields.enum.filterMap (fun (i, d) =>
                 if d == "_" then none
-                else some s!"gx_movunpack_lane<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}, {count}, {i}>({dest d}, _gx_mov_src);"))
-              s!"    \{ auto _gx_mov_src = gx_movread<{if tyTok == "b128" then "unsigned __int128" else ctypeOf tyTok}>({oC src}); {assigns} }"
+                else some s!"gx_movunpack_lane<{ctypeOf vecTy}, {count}, {i}>({dest d}, _gx_mov_src);"))
+              s!"    \{ auto _gx_mov_src = gx_movread<{ctypeOf vecTy}>({oC src}); {assigns} }"
         else match args with
         | [d, a] =>
           if d == "_" then trapOp
@@ -541,13 +544,11 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             | _ => trapOp
           | none => floatArith.getD trapOp
       /- PTX definition: integer `div` interprets operands using the declared signedness, while floating forms follow floating arithmetic. -/
-      /- Lean modeling: six integer variants select proved models; exact RN f32/f64 and full-range approximate f32 retain trusted IEEE division, while every other float mode traps. -/
+      /- Lean modeling: six integer variants select proved models; exact RN f32/f64 and full-range approximate f32 retain trusted IEEE division; narrow approximate f32 routes enforce its exceptional denominator range and explicit FTZ, while other modes trap. -/
       | "div"  =>
         let rawFloat := toks == ["div", "rn", "f32"] || toks == ["div", "rn", "f64"]
         if toks == ["div", "full", "f32"] then
           binPrint (fun a b => s!"gx_div_full_f32({a}, {b})")
-        -- PTX defines div.approx.f32 as d = a * (1/b) (hardware reciprocal is
-        -- approximate, max 2 ulp); modelled with an RN reciprocal then RN product.
         else if toks == ["div", "approx", "f32"] || toks == ["div", "approx", "ftz", "f32"] then
           binPrint (fun a b => s!"gx_div_approx_f32({a}, {b}, {if toks.contains "ftz" then "true" else "false"})")
         else if tyTok == "u16" && toks.length == 2 then binPrint printDivU16
@@ -665,7 +666,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           | _ => trapOp
         else trapOp
       /- PTX definition: `lg2.approx` computes an approximate base-two logarithm for a floating operand. -/
-      /- Lean modeling: only exact `lg2.approx.f32` selects trusted `log2f`; FTZ and every other spelling trap until modeled. -/
+      /- Lean modeling: exact `lg2.approx.f32` selects trusted `log2f`; `.ftz` flushes a subnormal input to signed zero first (the result is never subnormal); every other spelling traps. -/
       | "lg2"  =>
         -- .ftz: subnormal source flushes to zero (log2 -> -inf), result flushed.
         if toks == ["lg2", "approx", "ftz", "f32"] then
@@ -1183,12 +1184,13 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
         let spaceQ := q.filter (fun t => spaces.contains t)
         let cacheQ := q.filter (fun t => cacheOps.contains t)
         let l1Q := q.filter (fun t => l1Hints.contains t)
-        -- PTX ld grammar has separate optional L2 slots: eviction priority,
-        -- cache_hint and prefetch_size (e.g. .L2::evict_normal.L2::256B).
-        let l2Prefetch := ["L2::64B", "L2::128B", "L2::256B"]
-        let l2EvictQ := q.filter (fun t => l2Hints.contains t && !l2Prefetch.contains t && t != "L2::cache_hint")
+        -- PTX ld has three independent optional L2 slots: eviction priority, `.L2::cache_hint`
+        -- and prefetch size (e.g. `.L2::evict_normal.L2::256B`); each may appear once. All are
+        -- hints without effect on values.
+        let l2PrefetchHints := ["L2::64B", "L2::128B", "L2::256B"]
+        let l2Q := q.filter (fun t => l2Hints.contains t && !l2PrefetchHints.contains t && t != "L2::cache_hint")
         let l2HintQ := q.filter (· == "L2::cache_hint")
-        let l2SizeQ := q.filter (fun t => l2Prefetch.contains t)
+        let l2SizeQ := q.filter (fun t => l2PrefetchHints.contains t)
         let vecQ := q.filter (fun t => t == "v2" || t == "v4" || t == "v8")
         let semScopeOK :=
           if toks.contains "relaxed" || toks.contains "acquire" then scopeQ.length == 1
@@ -1206,8 +1208,8 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             -- PTX §9.7.9.8 examples permute space/sem/scope and even L2/L1
             -- policy order. Validate category membership and uniqueness without
             -- imposing a canonical order absent from the documented examples.
-            l1Q.length ≤ 1 && l2EvictQ.length ≤ 1 && l2HintQ.length ≤ 1 &&
-              l2SizeQ.length ≤ 1 && vecQ.length ≤ 1 && semScopeOK
+            l1Q.length ≤ 1 && l2Q.length ≤ 1 && l2HintQ.length ≤ 1 && l2SizeQ.length ≤ 1 &&
+              vecQ.length ≤ 1 && semScopeOK
         let n := if toks.contains "v8" then 8 else if toks.contains "v4" then 4
                  else if toks.contains "v2" then 2 else 1
         let expectedArgs := n + 1 + (if head == "ld" && toks.contains "L2::cache_hint" then 1 else 0)
@@ -2592,7 +2594,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       let dims := shape.map (fun t => (t.replace "m" " " |>.replace "n" " " |>.replace "k" " ").splitOn " " |>.filterMap String.toNat?)
       let tensor := head == "mma" || (head == "wmma" && toks.contains "mma") || (head == "wgmma" && toks.contains "mma_async")
       let tensorWork := if tensor then dims.map (fun ds => 2 * ds.foldl (· * ·) 1 / (if head == "wgmma" then 128 else 32)) |>.getD 0 else 0
-      let memory := head == "ld" || head == "st" || head == "atom" || head == "red"
+      let memory := head == "ld" || head == "ldu" || head == "st" || head == "atom" || head == "red"
       let vector := if toks.contains "v4" then 4 else if toks.contains "v2" then 2 else if toks.contains "v8" then 8 else 1
       let elemBytes := if tyTok.endsWith "128" then 16 else if tyTok.endsWith "64" then 8 else if tyTok.endsWith "16" then 2 else if tyTok.endsWith "8" then 1 else 4
       let matrixTransfer := head == "ldmatrix" || head == "stmatrix"
@@ -2603,7 +2605,7 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
                            elemBytes * (if toks.contains "a" then m*k else if toks.contains "b" then k*n else m*n) / 32) |>.getD 0 else 0
       let bytes := if memory then vector * elemBytes else matrixBytes
       let space := if isShared || matrixTransfer then 2 else if toks.contains "local" then 3 else if toks.any (fun t => t.startsWith "param") then 4 else if toks.contains "const" then 5 else if toks.contains "global" then 1 else 0
-      let reads := if head == "ld" || head == "atom" || head == "red" || head == "ldmatrix" || (wmmaMemory && toks.contains "load") then bytes else 0
+      let reads := if head == "ld" || head == "ldu" || head == "atom" || head == "red" || head == "ldmatrix" || (wmmaMemory && toks.contains "load") then bytes else 0
       let writes := if head == "st" || head == "atom" || head == "red" || head == "stmatrix" || (wmmaMemory && toks.contains "store") then bytes else 0
       let addr := if memory then (args.find? (fun a => a.startsWith "[")).map mkAddr |>.getD "0" else "0"
       -- Predicate and label recursion place these counters on executed paths.
