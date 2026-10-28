@@ -428,6 +428,11 @@ extern "C" void drperf_gpu_device_end() {
     r.exited.insert(tid);stack.pop_back();
 }
 
+// GX timing annotations (gx_annotations.cuh): they price a count-only branch under gx time. The standalone
+// runner executes the real path and counts its work, so they carry no resources here.
+extern "C" void gx_compute_event_v1(uint64_t) {}
+extern "C" void gx_segment_v1(uint32_t,int64_t,int64_t,int64_t,int64_t) {}
+
 extern "C" uint64_t drperf_gpu_region_begin(const char* name,size_t n,
         const char* const* names,const int64_t* values) {
     if(!name||!*name||n>256||(n&&(!names||!values)))throw std::invalid_argument("invalid GPU region");

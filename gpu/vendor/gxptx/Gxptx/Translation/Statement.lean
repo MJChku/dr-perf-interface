@@ -1682,6 +1682,15 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
             emitPayloadScopeCall inputs
           else if (c.splitOn "gx_ptx_payload_needed").length > 1 then
             emitPayloadNeededCall outputs inputs
+          else if (c.splitOn "gx_ptx_segment_start").length > 1 then
+            if inputs.isEmpty && outputs.isEmpty then "    /* gx_segment_start: segment boundaries are charged at gx_segment */"
+            else "    gx_ptx_trap_op(\"gx_ptx_segment_start.abi\");"
+          else if (c.splitOn "gx_ptx_segment").length > 1 then
+            if outputs.isEmpty then emitSegmentCall inputs
+            else "    gx_ptx_trap_op(\"gx_ptx_segment.abi\");"
+          else if (c.splitOn "gx_ptx_compute_event").length > 1 then
+            if outputs.isEmpty then emitComputeEventCall inputs
+            else "    gx_ptx_trap_op(\"gx_ptx_compute_event.abi\");"
           else if (c.splitOn "gx_ptx_control_load_16").length > 1 then
             match outputs, inputs with
             | [], [dst, src] =>
@@ -1772,12 +1781,12 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
           if d == "_" || kind == 8 then trapOp
           else s!"    gx_movb({dest d}, gx_redux_sync((uint32_t)({bitOperand regs "b32" value}), (uint32_t)({oC mask}), {kind}));"
         | _, _ => trapOp
-      /- PTX definition: `shfl.sync.idx/bfly.b32` exchanges a lane value and reports whether the selected source lane participates. -/
+      /- PTX definition: `shfl.sync.{idx,bfly,up,down}.b32` exchanges raw lane bits and reports whether the selected source lane participates. -/
       /- Lean modeling: lane-selection values have shallow equality and operand order is preserved; printed/runtime warp exchange is trusted and unsupported forms remain `gap:shfl-forms`. -/
       | "shfl" =>
-        -- PTX shfl.sync.{idx,bfly}.b32 has a paired `value|predicate`
+        -- PTX shfl.sync.{idx,bfly,up,down}.b32 has a paired `value|predicate`
         -- destination. gx_shfl_sync owns the warp rendezvous/data exchange;
-        -- the lane-selection arithmetic is shared by both supported modes.
+        -- the lane-selection arithmetic is shared by all four supported modes.
         match toks, args with
         | ["shfl", "sync", mode, "b32"], [dp, a, b, c, mask] =>
           if ! (mode == "idx" || mode == "bfly" || mode == "down" || mode == "up") then trapOp
@@ -1788,14 +1797,17 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
               let tpl : CommTemplate := if mode == "down" then .shflDown
                 else if mode == "up" then .shflUp
                 else if mode == "bfly" then .shflBfly else .shflIdx
-              "    " ++ tpl.print (dest d) (dest p) (oC a) (oC b) (oC c) (oC mask) ""
+              "    { uint32_t _gx_shfl_bits; " ++
+                tpl.print "_gx_shfl_bits" (dest p) (bitOperand regs "b32" a) (oC b) (oC c) (oC mask) "" ++
+                s!"\n    gx_movb({dest d}, _gx_shfl_bits);" ++ " }"
           | [d] =>
             if d.isEmpty || d == "_" then trapOp else
               let tpl : CommTemplate := if mode == "down" then .shflDown
                 else if mode == "up" then .shflUp
                 else if mode == "bfly" then .shflBfly else .shflIdx
-              "    { int _gx_ignored_pred; " ++
-                tpl.print (dest d) "_gx_ignored_pred" (oC a) (oC b) (oC c) (oC mask) "" ++ " }"
+              "    { int _gx_ignored_pred; uint32_t _gx_shfl_bits; " ++
+                tpl.print "_gx_shfl_bits" "_gx_ignored_pred" (bitOperand regs "b32" a) (oC b) (oC c) (oC mask) "" ++
+                s!"\n    gx_movb({dest d}, _gx_shfl_bits);" ++ " }"
           | _ => trapOp
         | _, _ => trapOp
       /- PTX definition: `elect.sync` chooses one active lane from the member mask and reports election status. -/
@@ -2642,6 +2654,15 @@ partial def translateStmtScoped (stmt : String) (guardGlobal : Bool)
       -- Ordinary cp.async has an immediate destination size and optional
       -- dynamic source size / ignore-source predicate; count zero-fill writes.
       let simpleCopy := head == "cp" && toks.getD 1 "" == "async" && ["ca", "cg"].contains (toks.getD 2 "")
+      -- Group/arrival operations carry ordering, not an unmodeled data copy.
+      -- Keep the executed PTX instruction count without inventing memory bytes.
+      let copyControl := head == "cp" && toks.getD 1 "" == "async" &&
+        (["commit_group", "wait_group", "wait_all", "mbarrier"].contains (toks.getD 2 "") ||
+         (toks.getD 2 "" == "bulk" && ["commit_group", "wait_group"].contains (toks.getD 3 "")))
+      -- Plain unicast bulk G2S has a runtime byte operand. Descriptor-based TMA,
+      -- multicast, OOB zero-fill and masked/reduction forms remain unmodeled.
+      let bulkG2S := (toks == ["cp", "async", "bulk", "shared::cta", "global", "mbarrier::complete_tx::bytes"] ||
+          toks == ["cp", "async", "bulk", "shared::cta", "global", "mbarrier::complete_tx::bytes", "L2::cache_hint"])
       let copyBytes := if simpleCopy then (args.getD 2 "0").toNat?.getD 0 else 0
       let copyExtra := if toks.contains "L2::cache_hint" then (args.drop 3).dropLast else args.drop 3
       let copyReads := match copyExtra with

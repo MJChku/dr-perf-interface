@@ -49,6 +49,21 @@ def emitPayloadEventCall (inputs : List String) : String :=
       s!"    gx_nccl_payload_event_v2(*(const uint64_t*)(uintptr_t)({oC address}), *(const uint64_t*)(uintptr_t)({oC bytes}), *(const uint32_t*)(uintptr_t)({oC isLoad}), *(const uint64_t*)(uintptr_t)({oC instructions}));"
   | _ => "    gx_ptx_trap_op(\"gx_ptx_payload_event.abi\");"
 
+/- PTX definition: a call to an externally defined device function passes its arguments as parameter-space objects. -/
+/- Lean modeling: the GX annotation gx_ptx_compute_event(cycles) declares SM cycles the calling block would spend on work its count-only branch skipped; it lowers to the runtime wait gx_compute_event_v1 and keeps no PTX body. -/
+def emitComputeEventCall (inputs : List String) : String :=
+  match inputs with
+  | [cycles] => s!"    gx_compute_event_v1(*(const uint64_t*)(uintptr_t)({oC cycles}));"
+  | _ => "    gx_ptx_trap_op(\"gx_ptx_compute_event.abi\");"
+
+/- PTX definition: a call to an externally defined device function passes its arguments as parameter-space objects. -/
+/- Lean modeling: the GX annotation gx_ptx_segment(id, pcv0..pcv3) ends a segment of the calling block; it lowers to the runtime gx_segment_v1, which charges the segment's fitted rule, and keeps no PTX body. -/
+def emitSegmentCall (inputs : List String) : String :=
+  match inputs with
+  | [segment, p0, p1, p2, p3] =>
+      s!"    gx_segment_v1(*(const uint32_t*)(uintptr_t)({oC segment}), *(const int64_t*)(uintptr_t)({oC p0}), *(const int64_t*)(uintptr_t)({oC p1}), *(const int64_t*)(uintptr_t)({oC p2}), *(const int64_t*)(uintptr_t)({oC p3}));"
+  | _ => "    gx_ptx_trap_op(\"gx_ptx_segment.abi\");"
+
 /- GX extension: delimit exact reduceCopy accesses for count validation. -/
 def emitPayloadScopeCall (inputs : List String) : String :=
   match inputs with

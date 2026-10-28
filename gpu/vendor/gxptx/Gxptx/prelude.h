@@ -114,6 +114,10 @@ extern "C" uint32_t gx_dev_envreg(unsigned index);
 extern "C" uint32_t gx_redux_add_sync(uint32_t value, uint32_t membermask);
 extern "C" uint32_t gx_redux_sync(uint32_t value, uint32_t membermask, unsigned operation);
 extern "C" void gx_warp_ballot_columns(uint32_t predicates, uint32_t columns, uint32_t* results);
+// gx_compute_event annotation: the calling block spends `sm_cycles` SM cycles here (count-only branch).
+extern "C" void gx_compute_event_v1(uint64_t sm_cycles);
+// gx_segment annotation: end of segment `id` of the calling block; PCVs select its fitted time (kernel rules).
+extern "C" void gx_segment_v1(uint32_t id, int64_t p0, int64_t p1, int64_t p2, int64_t p3);
 extern "C" void gx_nccl_payload_event_v2(uint64_t address, uint64_t bytes,
                                            uint32_t is_load,
                                            uint64_t instructions);

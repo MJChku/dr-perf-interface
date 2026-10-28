@@ -38,14 +38,126 @@ def forwardDecls (fns : Array (String × String × String × Bool × Nat)) : Str
     if k then s!"extern \"C\" void {nm}__gxptx(void**);"
     else s!"extern \"C\" __attribute__((visibility(\"hidden\"))) void {nm}(void**);")) ++ "\n"
 
+/- PTX definition: an uninitialized constant/global scalar or fixed-size array
+   still defines storage; array extents count elements, not bytes.
+   Lean modeling: aligned byte storage preserves its address, extent and zero
+   initialization. Constant-space writes by the host remain a runtime operation;
+   the generated host storage must therefore not be C++ `const`. -/
+def uninitializedModuleGlobal (line : String) : Option (String × Nat × Nat) := do
+  let line := strim (line.replace "\n" " " |>.replace "\r" " " |>.replace "\t" " ")
+  if !line.endsWith ";" || (line.splitOn "=").length != 1 then none else do
+    let (decl, count) ← match (line.dropRight 1).splitOn "[" with
+      | [decl] => some (decl, 1)
+      | [decl, tail] => match tail.splitOn "]" with
+        | [extent, rest] =>
+          if !(strim rest).isEmpty then none
+          else (strim extent).toNat?.map (decl, ·)
+        | _ => none
+      | _ => none
+    let toks := (decl.splitOn " ").filter (! ·.isEmpty)
+    let scalar := toks.foldl (fun bytes tok =>
+      match tok with
+      | ".b8" | ".u8" | ".s8" => 1
+      | ".b16" | ".u16" | ".s16" | ".f16" | ".bf16" => 2
+      | ".b32" | ".u32" | ".s32" | ".f32" => 4
+      | ".b64" | ".u64" | ".s64" | ".f64" => 8
+      | ".b128" => 16
+      | _ => bytes) 0
+    let elem := scalar * (if toks.contains ".v4" then 4 else if toks.contains ".v2" then 2 else 1)
+    let name := toks.getLastD ""
+    let alignment := signatureParamAlign line
+    if elem == 0 || count == 0 || name.isEmpty || alignment == 0 then none
+    else some (name, elem * count, alignment)
+
+private def startsModuleGlobal (text : String) : Bool :=
+  let tokens := (text.splitOn " ").filter (! ·.isEmpty)
+  match tokens with
+  | ".global" :: _ | ".const" :: _ => true
+  | ".visible" :: ".global" :: _ | ".visible" :: ".const" :: _ => true
+  | _ => false
+
+/- Recognize only uninitialized module declarations. Semicolons in quoted PTX
+   strings/comments are not declaration boundaries; braces exclude function
+   bodies and initialized data. Ending line numbers let the existing initialized
+   parser retain its ordering and behavior. -/
+def uninitializedModuleDeclarations (src : String) : Array (Nat × String) := Id.run do
+  let chars := src.toList.toArray
+  let mut result := #[]
+  let mut current := ""
+  let mut line := 0
+  let mut depth := 0
+  let mut quoted := false
+  let mut escaped := false
+  let mut lineComment := false
+  let mut blockComment := false
+  let mut i := 0
+  while i < chars.size do
+    let c := chars[i]!
+    let next := chars[i + 1]?
+    let sourceLine := line
+    if c == '\n' then line := line + 1
+    if lineComment then
+      if c == '\n' then
+        lineComment := false
+        let text := strim current
+        current := if depth == 0 && (text == ".visible" || startsModuleGlobal text)
+          then text ++ " " else ""
+    else if blockComment then
+      if c == '*' && next == some '/' then
+        blockComment := false
+        i := i + 1
+    else if quoted then
+      current := current.push c
+      if escaped then escaped := false
+      else if c == '\\' then escaped := true
+      else if c == '"' then quoted := false
+    else if c == '/' && next == some '/' then
+      lineComment := true
+      i := i + 1
+    else if c == '/' && next == some '*' then
+      blockComment := true
+      current := current ++ " "
+      i := i + 1
+    else if c == '"' then
+      quoted := true
+      current := current.push c
+    else if c == '{' then
+      depth := depth + 1
+      current := ""
+    else if c == '}' then
+      depth := depth - 1
+      current := ""
+    else if depth == 0 then
+      if c == ';' then
+        let decl := strim current ++ ";"
+        if startsModuleGlobal (strim current) && (uninitializedModuleGlobal decl).isSome then
+          result := result.push (sourceLine, decl)
+        current := ""
+      else if c == '\n' then
+        let text := strim current
+        current := if text == ".visible" || startsModuleGlobal text then text ++ " " else ""
+      else if c.isWhitespace then current := current ++ " "
+      else current := current.push c
+    i := i + 1
+  return result
+
 /- PTX definition: module variables may occupy constant/global state space and use bounded array initializers containing data or symbol addresses. -/
 /- Lean modeling: extent preservation keeps implicit trailing zeros, symbol entries become pointer-width integers, and chunk-zero ownership avoids duplicate definitions; linkage/host layout stay trusted. -/
 def moduleGlobals (src : String) : String × String := Id.run do
   let mut defs : Array String := #[]
   let mut externs : Array String := #[]
   let mut seen : Std.HashSet String := {}
-  for line in (src.splitOn "\n") do
-    let l := strim line
+  let mut pending := (uninitializedModuleDeclarations src).toList
+  for (lineNumber, line) in (src.splitOn "\n").enum do
+    let l := strim ((line.splitOn "//").headD "" |>.replace "\t" " ")
+    let declarations := pending.takeWhile (fun entry => entry.1 == lineNumber)
+    pending := pending.drop declarations.length
+    for (_, declaration) in declarations do
+      if let some (key, bytes, alignment) := uninitializedModuleGlobal declaration then
+        if !seen.contains key then
+          seen := seen.insert key
+          defs := defs.push ("extern \"C\" { " ++ s!"alignas({alignment}) uint8_t {key}[{bytes}] = " ++ "{}; }\n")
+          externs := externs.push s!"extern \"C\" uint8_t {key}[{bytes}];\n"
     if (l.startsWith ".global" || l.startsWith ".const" || l.startsWith ".visible .global"
         || l.startsWith ".visible .const") && (l.splitOn "= {").length > 1 then
       match (l.splitOn "= {") with

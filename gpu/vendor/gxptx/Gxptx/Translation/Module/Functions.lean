@@ -148,7 +148,10 @@ def extractFns (src : String) : Array (String × String × String × Bool × Nat
                          (nm.splitOn "gx_ptx_independent_block_cohort_width").length > 1
       let payloadScope := (nm.splitOn "gx_ptx_payload_scope").length > 1
       let abortPoll := (nm.splitOn "gx_ptx_nccl_abort_poll").length > 1
-      let payloadNeeded := (nm.splitOn "gx_ptx_payload_needed").length > 1
+      let payloadNeeded := (nm.splitOn "gx_ptx_payload_needed").length > 1 ||
+                           (nm.splitOn "gx_ptx_compute_event").length > 1 ||
+                           (nm.splitOn "gx_ptx_segment").length > 1 ||
+                           (nm.splitOn "__drperf_gpu_device_").length > 1
       let pollLoad := ["gx_ptx_control_load_16", "gx_ptx_control_poll", "gx_ptx_control_load_acquire_sys_u32", "gx_ptx_control_load_sys_u32", "gx_ptx_poll_sys_u32", "gx_ptx_poll_sys_u64", "gx_ptx_poll_gpu_u64"].any
         (fun marker => (nm.splitOn marker).length > 1)
       if !payloadEvent && !memoryEvent && !gridSync && !blockScan && !blockCopy && !uniformLoad && !payloadScope && !abortPoll && !payloadNeeded && !pollLoad && ! seen.contains nm then
